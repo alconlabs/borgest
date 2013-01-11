@@ -1,0 +1,946 @@
+unit Unitfacturascompra;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, AdvPanel, AdvGlowButton, Grids, DBGrids, StdCtrls, DB,
+  ZAbstractRODataset, ZAbstractDataset, ZDataset, UnitNumEdit, ComCtrls,
+  UnitSqlComboBox, AdvEdit, DBAdvEd, DbSqlCombo, BaseGrid, AdvGrid, DBAdvGrid, math,
+  MoneyEdit, Menus, AdvMenus;
+
+type
+  Tfacturacompra = class(TForm)
+    ZQuery2: TZQuery;
+    panelgrilla: TAdvPanel;
+    documentocompra_numero: TEdit;
+    documentocompra_fecha: TDateTimePicker;
+    Label2: TLabel;
+    Label3: TLabel;
+    proveedor_id: TSqlComboBox;
+    Label4: TLabel;
+    personal_id: TSqlComboBox;
+    btncancelar: TButton;
+    btnguardar: TButton;
+    documentocompra_condicionventa: TComboBox;
+    Label8: TLabel;
+    Label15: TLabel;
+    DBGrid1: TDBGrid;
+    ZQDocumentocompradetalles: TZQuery;
+    DTSDocumentocompradetalle: TDataSource;
+    btnagregar: TButton;
+    btnquitar: TButton;
+    btnmodificar: TButton;
+    GroupBox1: TGroupBox;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    puntoventa_id: TSqlComboBox;
+    tipodocu_id: TSqlComboBox;
+    documentocompra_neto21: TMoneyEdit;
+    documentocompra_iva21: TMoneyEdit;
+    documentocompra_neto105: TMoneyEdit;
+    documentocompra_iva105: TMoneyEdit;
+    documentocompra_total: TMoneyEdit;
+    Label1: TLabel;
+    proveedor_domicilio: TLabel;
+    Label11: TLabel;
+    proveedor_documentonro: TLabel;
+    Label12: TLabel;
+    documentocompra_listaprecio: TComboBox;
+    ZQRecibo: TZQuery;
+    ZQdocumentoventadocus: TZQuery;
+    ZQDocumentopagos: TZQuery;
+    DBGrid2: TDBGrid;
+    btnagregarpago: TButton;
+    btnquitarpago: TButton;
+    DTSPagos: TDataSource;
+    Label13: TLabel;
+    ZQpagotarjeta: TZQuery;
+    ZQDocumentopagosdocumentopago_id: TIntegerField;
+    ZQDocumentopagosdocumentopago_nombre: TStringField;
+    ZQDocumentopagosdocumentopago_importe: TFloatField;
+    ZQDocumentopagostipopago_id: TIntegerField;
+    ZQDocumentopagosdocumentoventa_id: TIntegerField;
+    ZQDocumentopagostipopago_nombre: TStringField;
+    ZQNotacredito: TZQuery;
+    ZQExecSql: TZQuery;
+    labelsucursal: TLabel;
+    sucursal_id: TSqlComboBox;
+    AdvPopupMenu1: TAdvPopupMenu;
+    Facturarnotapedido: TMenuItem;
+    Facturarpresupuesto: TMenuItem;
+    btnherramientas: TAdvGlowButton;
+    btnimprimirventa: TButton;
+    Label14: TLabel;
+    documentocompra_otrosimpuestos: TMoneyEdit;
+    documentocompra_puntoventa: TEdit;
+    procedure btnguardarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure ZQuery2AfterOpen(DataSet: TDataSet);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure solic_cuotasExit(Sender: TObject);
+    procedure solic_importecuotaExit(Sender: TObject);
+    procedure solic_prestadoExit(Sender: TObject);
+    procedure btnagregarClick(Sender: TObject);
+    procedure tipodocu_idChange(Sender: TObject);
+    procedure puntoventa_idSelect(Sender: TObject);
+    procedure proveedor_idSelect(Sender: TObject);
+    procedure btnquitarClick(Sender: TObject);
+    procedure btnagregarpagoClick(Sender: TObject);
+    procedure btncancelarClick(Sender: TObject);
+    procedure btnquitarpagoClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure sucursal_idSelect(Sender: TObject);
+    procedure FacturarnotapedidoClick(Sender: TObject);
+    procedure btnimprimirventaClick(Sender: TObject);
+  private
+    { Private declarations }
+  protected
+    VENTASCTDOPARCIALES:boolean;
+    VENTASCTDOVENTANACTACTE:boolean;
+    function control:boolean;
+    function ControlAnular:boolean;
+    procedure agregar;
+    procedure modificar;
+    procedure eliminar;
+    procedure imprimir;
+    procedure anular;
+    procedure calculartotales;
+    procedure calculartotalpagos;
+  public
+    { Public declarations }
+    abm:integer;
+    id:string;
+    documentocompra_pagado, documentocompra_saldo:real;
+    documentocompra_estado:string;
+    limpiar_al_guardar:boolean;
+    id_facturado:string;
+  end;
+
+var
+  facturacompra: Tfacturacompra;
+
+implementation
+
+uses UnitPrinc, Unitventadetalle, Unitcompradetalle, UnitFacturarDocumentos;
+
+{$R *.dfm}
+
+
+function Tfacturacompra.ControlAnular:boolean;
+var
+  error:integer;
+begin
+    error:=0;
+
+    if (documentocompra_condicionventa.Text<>'Contado') and (documentocompra_pagado>0) then
+      error:=1;
+
+
+
+    
+    Result:=error=0;
+end;
+
+
+procedure Tfacturacompra.anular;
+begin
+//    ZQExecSql.SQL.Clear;
+//    ZQExecSql.SQL.Add('begin');
+//    ZQExecSql.ExecSQL;
+//
+//    if strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+tipodocu_id.codigo+'"','tipodocu_fiscal')) then
+//      begin
+//          GenerarNC;
+//
+//      end
+//    else
+//      begin
+//          ZQDocumentocompradetalles.First;
+//          while not ZQDocumentocompradetalles.Eof do
+//              begin
+//                  Princ.actualizarstock(ZQDocumentocompradetalles.FieldByName('producto_id').AsString, ZQDocumentocompradetalles.FieldByName('documentoventadetalle_cantidad').AsFloat, tipodocu_id.codigo, true);
+//
+//                  ZQDocumentocompradetalles.Next;
+//              end;
+//
+//          ZQExecSql.sql.clear;
+//          ZQExecSql.sql.add('Update documentosventas set ');
+//          ZQExecSql.sql.add('documentocompra_estado=:documentocompra_estado');
+//          ZQExecSql.sql.add(' where documentocompra_id=:documentocompra_id');
+//          ZQExecSql.parambyname('documentocompra_estado').asstring:='ANULADA';
+//          ZQExecSql.parambyname('documentocompra_id').asstring:=id;
+//          ZQExecSql.ExecSQL;
+//
+//
+//
+//
+//          MessageDlg('La Factura fue anulada correctamente.', mtInformation, [mbOK], 0);
+//
+//      end;
+//    ZQExecSql.SQL.Clear;
+//    ZQExecSql.SQL.Add('commit');
+//    ZQExecSql.ExecSQL;
+
+end;
+
+procedure Tfacturacompra.calculartotalpagos;
+begin
+    documentocompra_saldo:=documentocompra_total.Value;
+    documentocompra_pagado:=0;
+    documentocompra_estado:='PENDIENTE';
+    if documentocompra_condicionventa.Text='Contado' then
+      begin
+          documentocompra_saldo:=0;
+          documentocompra_pagado:=documentocompra_total.Value;
+          documentocompra_estado:='PAGADA';
+      end;
+
+//    ZQDocumentopagos.First;
+//    while not ZQDocumentopagos.Eof do
+//        begin
+//            documentocompra_pagado:=documentocompra_pagado+ZQDocumentopagos.FieldByName('documentopago_importe').AsFloat;
+//
+//            documentocompra_saldo:=roundto(documentocompra_total.Value-documentocompra_pagado,-2);
+//
+//
+//            ZQDocumentopagos.Next;
+//        end;
+//
+//    btnagregarpago.Enabled:=true;
+//    if documentocompra_saldo=0 then
+//       btnagregarpago.Enabled:=false;
+end;
+
+
+procedure Tfacturacompra.calculartotales;
+var
+  bm:TBookmark;
+begin
+    bm:=ZQDocumentocompradetalles.GetBookmark;
+    ZQDocumentocompradetalles.First;
+    documentocompra_neto21.Text:='0';
+    documentocompra_iva21.Text:='0';
+    documentocompra_neto105.Text:='0';
+    documentocompra_iva105.Text:='0';
+    documentocompra_total.Text:='0';
+
+    while not ZQDocumentocompradetalles.Eof do
+        begin
+            documentocompra_neto21.Text:=floattostr(roundto(documentocompra_neto21.Value+ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto21').AsFloat,-2));
+            documentocompra_iva21.Text:=floattostr(roundto(documentocompra_iva21.Value+ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva21').AsFloat,-2));
+            documentocompra_neto105.Text:=floattostr(roundto(documentocompra_neto105.Value+ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto105').AsFloat,-2));
+            documentocompra_iva105.Text:=floattostr(roundto(documentocompra_iva105.Value+ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva105').AsFloat,-2));
+            documentocompra_total.Text:=floattostr(roundto(documentocompra_total.Value+ZQDocumentocompradetalles.FieldByName('documentocompradetalle_total').AsFloat,-2));
+
+
+
+            ZQDocumentocompradetalles.Next;
+        end;
+
+    ZQDocumentocompradetalles.GotoBookmark(bm);
+
+
+end;
+
+procedure Tfacturacompra.proveedor_idSelect(Sender: TObject);
+begin
+    proveedor_domicilio.Caption:=Princ.buscar('select proveedor_domicilio from proveedores where proveedor_id="'+proveedor_id.codigo+'"','proveedor_domicilio');
+    proveedor_documentonro.Caption:=Princ.buscar('select proveedor_documentonro from proveedores where proveedor_id="'+proveedor_id.codigo+'"','proveedor_documentonro');
+    try
+      documentocompra_condicionventa.ItemIndex:=strtoint(Princ.buscar('select proveedor_condicionventa from proveedores where proveedor_id="'+proveedor_id.codigo+'"','proveedor_condicionventa'));
+    except
+    end;
+
+//    documentocompra_listaprecio.ItemIndex:=strtoint(Princ.buscar('select proveedor_listaprecio from clientes where proveedor_id="'+proveedor_id.codigo+'"','proveedor_listaprecio'));
+
+//    if Princ.buscar('select condicioniva_id from clientes where proveedor_id="'+proveedor_id.codigo+'"','condicioniva_id')='2' then
+//      tipodocu_id.Buscar('A',true)
+//    else
+//      tipodocu_id.Buscar('B',true);
+//
+//    if tipodocu_id.Text='' then
+//      try
+//        tipodocu_id.ItemIndex:=0;
+//      finally
+//      end;
+//
+//    tipodocu_id.OnSelect(self);
+end;
+
+procedure Tfacturacompra.imprimir;
+var
+  tipodocu_archivoimpresion:string;
+begin
+    tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'tipodocu_archivoimpresion');
+
+    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\'+tipodocu_archivoimpresion;
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
+                                             'inner join documentoventadetalles on documentosventas.documentocompra_id=documentoventadetalles.documentocompra_id '+
+                                             'inner join clientes on documentosventas.proveedor_id=clientes.proveedor_id '+
+                                             'where documentosventas.documentocompra_id="'+id+'"';
+
+    
+    Princ.VCLReport1.Execute;
+end;
+
+
+procedure Tfacturacompra.eliminar;
+var
+  recibo_id:string;
+  se_puede_borrar:boolean;
+  pagado:real;
+begin
+    se_puede_borrar:=true;
+//    if documentocompra_condicionventa.Text='Contado' then
+//      begin
+//          se_puede_borrar:=true;
+//          recibo_id:=Princ.buscar('select documentocompra_id from documentoventadocus where documentocompra_idpago="'+id+'"','documentocompra_id');
+//          if recibo_id<>'' then
+//            se_puede_borrar:=Princ.BorrarDocumentoCompra(recibo_id);
+//      end;
+
+    if se_puede_borrar then
+      begin
+//          pagado:=strtofloat(Princ.buscar('select documentocompra_pagado from documentosventas where documentocompra_id="'+id+'"','documentocompra_pagado'));
+//          se_puede_borrar:= pagado=0;
+//          if se_puede_borrar then
+//            begin
+                Princ.BorrarDocumentoCompra(id);
+
+                MessageDlg('Datos Eliminados', mtInformation, [mbOK], 0);
+                Self.Close;
+//            end;
+      end;
+    if not se_puede_borrar then
+      MessageDlg('La factura todavia tiene pagos asociados, no se puede eliminar.', mtError, [mbOK], 0);
+
+
+
+end;
+
+
+
+procedure Tfacturacompra.FacturarnotapedidoClick(Sender: TObject);
+begin
+    try
+      FacturarDocumentos:= TFacturarDocumentos.Create(self);
+    finally
+      FacturarDocumentos.tipodocu_id:=Princ.buscar('select tipodocu_id from tiposdocumento where puntoventa_id="'+puntoventa_id.codigo+'" and tipodocu_nombre="Nota de Pedido"','tipodocu_id');
+      id_facturado:='';
+      if FacturarDocumentos.ShowModal=mrOk then
+        begin
+            id_facturado:=FacturarDocumentos.ZQSelect.FieldByName('documentocompra_id').AsString;
+            proveedor_id.Buscar(FacturarDocumentos.ZQSelect.FieldByName('proveedor_id').AsString);
+            personal_id.Buscar(FacturarDocumentos.ZQSelect.FieldByName('personal_id').AsString);
+            documentocompra_condicionventa.ItemIndex:=FacturarDocumentos.ZQSelect.FieldByName('documentocompra_condicionventa').AsInteger;
+//            documentocompra_listaprecio.ItemIndex:=FacturarDocumentos.ZQSelect.FieldByName('documentocompra_listaprecio').AsInteger;
+            FacturarDocumentos.ZQDocumentoventadetalles.First;
+            while not FacturarDocumentos.ZQDocumentoventadetalles.Eof do
+                begin
+                    princ.CargarDocumentoVentaDetalle(ZQDocumentocompradetalles, FacturarDocumentos.ZQDocumentoventadetalles);
+
+                    FacturarDocumentos.ZQDocumentoventadetalles.Next;
+                end;
+
+            calculartotales;
+            calculartotalpagos;
+
+        end;
+      FacturarDocumentos.Free;
+    end;
+end;
+
+procedure Tfacturacompra.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+    Self.Free;
+end;
+
+procedure Tfacturacompra.FormCreate(Sender: TObject);
+begin
+    id:='';
+    limpiar_al_guardar:=true;
+
+    sucursal_id.llenarcombo;
+    sucursal_id.Buscar(Princ.sucursal_actual);
+
+    puntoventa_id.Confsql.Text:='select * from puntodeventa where sucursal_id="'+sucursal_id.codigo+'" '+Princ.empresa_where+' order by puntoventa_numero';
+
+    puntoventa_id.llenarcombo;
+    try
+      puntoventa_id.ItemIndex:=0;
+    except
+      puntoventa_id.ItemIndex:=-1;
+    end;
+
+
+    tipodocu_id.Confsql.Text:='select * from tiposdocumento '+
+                              'where tiposdocumento.puntoventa_id="'+puntoventa_id.Codigo+'" and tipodocu_nombre="Factura de Compra"'+
+                              'order by tipodocu_letra';
+
+     tipodocu_id.llenarcombo;
+     try
+       tipodocu_id.ItemIndex:=0;
+     except
+       tipodocu_id.ItemIndex:=-1;
+     end;
+
+     documentocompra_numero.Text:='';
+
+    documentocompra_fecha.Date:=date;
+
+//    documentocompra_listaprecio.Items.Clear;
+//    documentocompra_listaprecio.Items.Add(Princ.NOMBREPRECIO1);
+//    documentocompra_listaprecio.Items.Add(Princ.NOMBREPRECIO2);
+//    documentocompra_listaprecio.Items.Add(Princ.NOMBREPRECIO3);
+//    documentocompra_listaprecio.Items.Add(Princ.NOMBREPRECIO4);
+//    documentocompra_listaprecio.ItemIndex:=0;
+
+    proveedor_id.llenarcombo;
+    proveedor_id.ItemIndex:=-1;
+
+    personal_id.llenarcombo;
+    personal_id.ItemIndex:=0;
+
+end;
+
+procedure Tfacturacompra.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    case key of
+        VK_F4:btnagregar.Click;
+        VK_F6:btnquitar.Click;
+        VK_F7:btnagregarpago.Click;
+        VK_F8:btnquitarpago.Click;
+        VK_F9:btnguardar.Click;
+    end;
+end;
+
+procedure Tfacturacompra.FormShow(Sender: TObject);
+begin
+    btnherramientas.Visible:=abm=1;
+    btnimprimirventa.Visible:=abm<>1;
+
+
+    ZQuery2.Active:=false;
+    ZQuery2.ParamByName('documentocompra_id').AsString:=id;
+    ZQuery2.Active:=true;
+
+    case abm of
+        1:btnguardar.Caption:='Guardar';
+        2:btnguardar.Caption:='Guardar';
+        3:btnguardar.Caption:='Eliminar';
+        4:btnguardar.Caption:='Imprimir';
+        5:btnguardar.Caption:='Anular';
+    end;
+end;
+
+procedure Tfacturacompra.modificar;
+begin
+
+
+    MessageDlg('Error al guardar los Datos. No se pudo modificar dato alguno', mtError, [mbOK, mbCancel], 0);
+    Self.Close;
+//    if limpiar_al_guardar then
+//      begin
+//          id:='';
+//          Self.OnShow(self);
+//      end
+//    else
+//      begin
+//          Self.Close;
+//      end;
+
+
+end;
+
+
+procedure Tfacturacompra.solic_cuotasExit(Sender: TObject);
+begin
+//    solic_total.FloatValue:=solic_cuotas.IntValue*solic_importecuota.FloatValue;
+//    solic_montoganado.FloatValue:=solic_total.FloatValue-solic_prestado.FloatValue;
+//    solic_interesganado.FloatValue:=solic_montoganado.FloatValue*100/solic_prestado.FloatValue;
+end;
+
+procedure Tfacturacompra.solic_importecuotaExit(Sender: TObject);
+begin
+//    solic_total.FloatValue:=solic_cuotas.IntValue*solic_importecuota.FloatValue;
+//    solic_montoganado.FloatValue:=solic_total.FloatValue-solic_prestado.FloatValue;
+//    solic_interesganado.FloatValue:=solic_montoganado.FloatValue*100/solic_prestado.FloatValue;
+
+
+
+end;
+
+procedure Tfacturacompra.solic_prestadoExit(Sender: TObject);
+begin
+//    solic_montoganado.FloatValue:=solic_total.FloatValue-solic_prestado.FloatValue;
+//    solic_interesganado.FloatValue:=solic_montoganado.FloatValue*100/solic_prestado.FloatValue;
+
+end;
+
+procedure Tfacturacompra.sucursal_idSelect(Sender: TObject);
+begin
+    puntoventa_id.Confsql.Text:='select * from puntodeventa where sucursal_id="'+sucursal_id.codigo+'" order by puntoventa_numero';
+    puntoventa_id.llenarcombo;
+    try
+       puntoventa_id.ItemIndex:=0;
+     except
+       puntoventa_id.ItemIndex:=-1;
+     end;
+
+    puntoventa_id.OnSelect(self);
+end;
+
+procedure Tfacturacompra.puntoventa_idSelect(Sender: TObject);
+begin
+    documentocompra_numero.Text:='';
+    tipodocu_id.Confsql.Text:='select * from tiposdocumento '+
+                              'where tiposdocumento.puntoventa_id="'+puntoventa_id.Codigo+'" and tipodocu_nombre="Factura de Compra"'+
+                              'order by tipodocu_letra';
+
+     tipodocu_id.llenarcombo;
+
+     try
+       tipodocu_id.ItemIndex:=0;
+     except
+       tipodocu_id.ItemIndex:=-1;
+     end;
+
+end;
+
+procedure Tfacturacompra.tipodocu_idChange(Sender: TObject);
+begin
+    documentocompra_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+end;
+
+procedure Tfacturacompra.ZQuery2AfterOpen(DataSet: TDataSet);
+begin
+    if abm=1 then
+      begin
+          documentocompra_fecha.Date:=date;
+          documentocompra_puntoventa.Text:='';
+          documentocompra_numero.Text:='';
+          proveedor_id.ItemIndex:=-1;
+          personal_id.ItemIndex:=0;
+
+          documentocompra_neto21.Text:='0';
+          documentocompra_iva21.Text:='0';
+          documentocompra_neto105.Text:='0';
+          documentocompra_iva105.Text:='0';
+          documentocompra_otrosimpuestos.Text:='0';
+          documentocompra_total.Text:='0';
+
+
+      end
+    else
+      begin
+          documentocompra_fecha.Date:=ZQuery2.FieldByName('documentocompra_fecha').AsDateTime;
+          sucursal_id.Buscar(ZQuery2.FieldByName('sucursal_id').AsString);
+          sucursal_id.OnSelect(self);
+          puntoventa_id.Buscar(ZQuery2.FieldByName('puntoventa_id').AsString);
+          puntoventa_id.OnSelect(self);
+          proveedor_id.Buscar(ZQuery2.FieldByName('proveedor_id').AsString);
+          tipodocu_id.buscar(ZQuery2.FieldByName('tipodocu_id').AsString);
+          documentocompra_puntoventa.Text:=ZQuery2.FieldByName('documentocompra_puntoventa').AsString;
+          documentocompra_numero.Text:=ZQuery2.FieldByName('documentocompra_numero').AsString;
+          documentocompra_condicionventa.ItemIndex:=ZQuery2.FieldByName('documentocompra_condicionventa').AsInteger;
+//          documentocompra_listaprecio.ItemIndex:=ZQuery2.FieldByName('documentocompra_listaprecio').AsInteger;
+
+          personal_id.Buscar(ZQuery2.FieldByName('personal_id').AsString);
+
+          documentocompra_neto21.Text:=ZQuery2.FieldByName('documentocompra_neto21').AsString;
+          documentocompra_iva21.Text:=ZQuery2.FieldByName('documentocompra_iva21').AsString;
+          documentocompra_neto105.Text:=ZQuery2.FieldByName('documentocompra_neto105').AsString;
+          documentocompra_iva105.Text:=ZQuery2.FieldByName('documentocompra_iva105').AsString;
+          documentocompra_otrosimpuestos.Text:=ZQuery2.FieldByName('documentocompra_otrosimpuestos').AsString;
+          documentocompra_total.Text:=ZQuery2.FieldByName('documentocompra_total').AsString;
+
+      end;
+
+
+    ZQDocumentocompradetalles.Active:=false;
+    ZQDocumentocompradetalles.SQL.Text:='select * from documentocompradetalles where documentocompra_id="'+id+'"';
+    ZQDocumentocompradetalles.Active:=true;
+
+//    ZQDocumentopagos.Active:=false;
+//    ZQDocumentopagos.SQL.Text:='select documentopagos.*, tipopago_nombre from documentopagos '+
+//                               'inner join tipospago on documentopagos.tipopago_id=tipospago.tipopago_id '+
+//                               'where documentocompra_id="'+id+'"';
+//
+//    ZQDocumentopagos.Active:=true;
+
+    calculartotales;
+    calculartotalpagos;
+
+//    try
+//      proveedor_id.SetFocus;
+//    except
+//      btnagregar.SetFocus;
+//    end;
+end;
+
+procedure Tfacturacompra.agregar;
+var
+  recibo_numero:string;
+  tipodocu_id_recibo:string;
+begin
+
+    ZQExecSql.SQL.Clear;
+    ZQExecSql.SQL.Add('begin');
+    ZQExecSql.ExecSQL;
+
+    id:=Princ.codigo('documentoscompras','documentocompra_id');
+
+    documentocompra_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+    if strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+tipodocu_id.codigo+'"','tipodocu_fiscal')) then
+      documentocompra_numero.Text:='0';
+
+
+    ZQExecSql.sql.clear;
+    ZQExecSql.sql.add('Insert into documentoscompras (documentocompra_id, documentocompra_numero, documentocompra_fecha, documentocompra_hora, ');
+    ZQExecSql.sql.add('documentocompra_neto21, documentocompra_iva21, documentocompra_neto105, documentocompra_iva105, ');
+    ZQExecSql.sql.add('documentocompra_total, documentocompra_estado, documentocompra_pagado, documentocompra_saldo, documentocompra_observacion, ');
+    ZQExecSql.sql.add('proveedor_id, personal_id, tipodocu_id, documentocompra_condicionventa, documentocompra_fechavenc) ');
+    ZQExecSql.sql.add('values (:documentocompra_id, :documentocompra_numero, :documentocompra_fecha, :documentocompra_hora, ');
+    ZQExecSql.sql.add(':documentocompra_neto21, :documentocompra_iva21, :documentocompra_neto105, :documentocompra_iva105, ');
+    ZQExecSql.sql.add(':documentocompra_total, :documentocompra_estado, :documentocompra_pagado, :documentocompra_saldo, :documentocompra_observacion, ');
+    ZQExecSql.sql.add(':proveedor_id, :personal_id, :tipodocu_id, :documentocompra_condicionventa, :documentocompra_fechavenc)');
+    ZQExecSql.ParamByName('documentocompra_id').AsString:=id;
+    ZQExecSql.ParamByName('documentocompra_numero').AsString:=documentocompra_numero.Text;
+    ZQExecSql.ParamByName('documentocompra_fecha').AsString:=formatdatetime('yyyy-mm-dd',documentocompra_fecha.Date);
+    ZQExecSql.ParamByName('documentocompra_hora').AsString:=timetostr(Princ.horaservidor);
+    ZQExecSql.ParamByName('documentocompra_neto21').AsString:=documentocompra_neto21.Text;
+    ZQExecSql.ParamByName('documentocompra_iva21').AsString:=documentocompra_iva21.Text;
+    ZQExecSql.ParamByName('documentocompra_neto105').AsString:=documentocompra_neto105.Text;
+    ZQExecSql.ParamByName('documentocompra_iva105').AsString:=documentocompra_iva105.Text;
+//    ZQExecSql.ParamByName('documentocompra_netonogravado').AsString:='0';
+    ZQExecSql.ParamByName('documentocompra_total').AsString:=documentocompra_total.Text;
+    ZQExecSql.ParamByName('documentocompra_estado').AsString:=documentocompra_estado;
+    ZQExecSql.ParamByName('documentocompra_pagado').AsFloat:=documentocompra_pagado;
+    ZQExecSql.ParamByName('documentocompra_saldo').AsFloat:=documentocompra_saldo;
+    ZQExecSql.ParamByName('documentocompra_observacion').AsString:='';
+    ZQExecSql.ParamByName('proveedor_id').AsString:=proveedor_id.codigo;
+    ZQExecSql.ParamByName('personal_id').AsString:=personal_id.codigo;
+    ZQExecSql.ParamByName('tipodocu_id').AsString:=tipodocu_id.codigo;
+    ZQExecSql.ParamByName('documentocompra_condicionventa').AsInteger:=documentocompra_condicionventa.ItemIndex;
+    ZQExecSql.ParamByName('documentocompra_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documentocompra_fecha.Date+15);
+//    ZQExecSql.ParamByName('documentocompra_listaprecio').AsInteger:=documentocompra_listaprecio.ItemIndex;
+
+    ZQExecSql.ExecSQL;
+
+//    Princ.ActualizarNumeroDocumento(tipodocu_id.codigo, documentocompra_numero.Text);
+
+    ZQDocumentocompradetalles.First;
+    while not ZQDocumentocompradetalles.Eof do
+        begin
+            ZQExecSql.sql.clear;
+            ZQExecSql.sql.add('Insert into documentocompradetalles (documentocompradetalle_id, documentocompradetalle_descripcion, documentocompradetalle_cantidad, documentocompradetalle_precio, ');
+            ZQExecSql.sql.add('documentocompradetalle_total, documentocompradetalle_neto21, documentocompradetalle_iva21, documentocompradetalle_neto105, documentocompradetalle_iva105, ');
+            ZQExecSql.sql.add('documentocompradetalle_estado, documentocompradetalle_observacion, producto_id, documentocompra_id) ');
+            ZQExecSql.sql.add('values (:documentocompradetalle_id, :documentocompradetalle_descripcion, :documentocompradetalle_cantidad, :documentocompradetalle_precio, ');
+            ZQExecSql.sql.add(':documentocompradetalle_total, :documentocompradetalle_neto21, :documentocompradetalle_iva21, :documentocompradetalle_neto105, :documentocompradetalle_iva105, ');
+            ZQExecSql.sql.add(':documentocompradetalle_estado, :documentocompradetalle_observacion, :producto_id, :documentocompra_id) ');
+            ZQExecSql.ParamByName('documentocompradetalle_id').AsString:=Princ.codigo('documentocompradetalles','documentocompradetalle_id');
+            ZQExecSql.ParamByName('documentocompradetalle_descripcion').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_descripcion').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_cantidad').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_cantidad').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_precio').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_precio').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_total').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_total').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_neto21').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto21').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_iva21').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva21').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_neto105').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto105').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_iva105').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva105').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_estado').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_estado').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_observacion').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_observacion').AsString;
+            ZQExecSql.ParamByName('producto_id').AsString:=ZQDocumentocompradetalles.FieldByName('producto_id').AsString;
+            ZQExecSql.ParamByName('documentocompra_id').AsString:=id;
+            ZQExecSql.ExecSQL;
+
+
+            Princ.actualizarstock(ZQDocumentocompradetalles.FieldByName('producto_id').AsString, ZQDocumentocompradetalles.FieldByName('documentocompradetalle_cantidad').AsFloat, tipodocu_id.codigo, false);
+
+            ZQDocumentocompradetalles.Next;
+        end;
+
+
+    ZQExecSql.SQL.Clear;
+    ZQExecSql.SQL.Add('commit');
+    ZQExecSql.ExecSQL;
+
+//    if (ZQDocumentopagos.RecordCount<1) and (documentocompra_condicionventa.Text='Contado') then
+//      begin
+//          ZQDocumentopagos.Insert;
+//          ZQDocumentopagos.FieldByName('documentopago_id').AsString:='0';
+//          ZQDocumentopagos.FieldByName('documentopago_nombre').AsString:='EFECTIVO';
+//          ZQDocumentopagos.FieldByName('documentopago_importe').AsString:=documentocompra_total.Text;
+//          ZQDocumentopagos.FieldByName('tipopago_id').AsString:='1';
+//          ZQDocumentopagos.FieldByName('tipopago_nombre').AsString:='EFECTIVO';
+//          ZQDocumentopagos.FieldByName('documentocompra_id').AsString:='0';
+//          ZQDocumentopagos.Post;
+//
+//      end;
+
+//    calculartotalpagos;
+
+//    if (ZQDocumentopagos.RecordCount>0) then
+//      begin
+//          ZQRecibo.Active:=false;
+//          ZQRecibo.Active:=true;
+//          tipodocu_id_recibo:=princ.buscar('select tipodocu_id from tiposdocumento where puntoventa_id="'+puntoventa_id.codigo+'" and tipodocu_nombre="Recibo de Venta"','tipodocu_id');
+//          recibo_numero:=Princ.NumeroDocumento(tipodocu_id_recibo);
+//          ZQRecibo.Insert;
+//          ZQRecibo.FieldByName('documentocompra_condicionventa').AsInteger:=documentocompra_condicionventa.ItemIndex;
+//          ZQRecibo.FieldByName('documentocompra_estado').AsString:='PAGADA';
+//          ZQRecibo.FieldByName('documentocompra_fecha').AsDateTime:=date;
+//          ZQRecibo.FieldByName('documentocompra_fechavenc').AsDateTime:=documentocompra_fecha.Date;
+//          ZQRecibo.FieldByName('documentocompra_hora').AsDateTime:=Now;
+//          ZQRecibo.FieldByName('documentocompra_id').asstring:=id;
+//          ZQRecibo.FieldByName('documentocompra_iva105').AsString:='0';
+//          ZQRecibo.FieldByName('documentocompra_iva21').AsString:='0';
+//          ZQRecibo.FieldByName('documentocompra_listaprecio').AsInteger:=documentocompra_listaprecio.ItemIndex;
+//          ZQRecibo.FieldByName('documentocompra_neto105').AsString:='0';
+//          ZQRecibo.FieldByName('documentocompra_neto21').AsString:='0';
+//          ZQRecibo.FieldByName('documentocompra_netonogravado').AsString:='0';
+//          ZQRecibo.FieldByName('documentocompra_numero').AsString:=recibo_numero;
+//          ZQRecibo.FieldByName('documentocompra_observacion').AsString:='';
+//          ZQRecibo.FieldByName('documentocompra_pagado').AsFloat:=documentocompra_pagado;
+//          ZQRecibo.FieldByName('documentocompra_saldo').AsString:='0';
+//          ZQRecibo.FieldByName('documentocompra_total').AsFloat:=documentocompra_pagado;
+//          ZQRecibo.FieldByName('personal_id').AsString:=personal_id.codigo;
+//          ZQRecibo.FieldByName('tipodocu_id').AsString:=tipodocu_id_recibo;
+//          ZQRecibo.FieldByName('proveedor_id').AsString:=proveedor_id.codigo;
+//          ZQRecibo.Post;
+//
+//          ZQdocumentoventadocus.Active:=false;
+//          ZQdocumentoventadocus.Active:=true;
+//          ZQdocumentoventadocus.Insert;
+//          ZQdocumentoventadocus.FieldByName('documentocompra_estado').asstring:='PAGADA';
+//          ZQdocumentoventadocus.FieldByName('documentocompra_id').asstring:='0';
+//          ZQdocumentoventadocus.FieldByName('documentocompra_idpago').asstring:=id;
+//          ZQdocumentoventadocus.FieldByName('documentocompra_pagado').AsFloat:=documentocompra_pagado;
+//          ZQdocumentoventadocus.FieldByName('documentocompra_saldo').AsFloat:=documentocompra_saldo;
+//          ZQdocumentoventadocus.FieldByName('documentoventadoc_id').asstring:='0';
+//          ZQdocumentoventadocus.FieldByName('documentoventadoc_importe').AsFloat:=documentocompra_pagado;
+//          ZQdocumentoventadocus.Post;
+//
+//          Princ.AgregarRecibo(ZQRecibo,ZQdocumentoventadocus,ZQDocumentopagos);
+//
+//
+//
+//      end;
+
+
+
+
+    MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
+
+    if Princ.buscar('select tipodocu_preimpresos from tiposdocumento where tipodocu_id="'+tipodocu_id.codigo+'"','tipodocu_preimpresos')='-1' then
+      begin
+          if (MessageDlg('Desea imprimir el comprobante?', mtConfirmation, [mbYes, mbNo], 0) = mrYes) then
+            begin
+                imprimir;
+            end;
+
+      end;
+
+      if limpiar_al_guardar then
+        begin
+            id:='';
+            Self.OnShow(self);
+        end
+      else
+        begin
+            Self.Close;
+        end;
+
+end;
+
+
+
+procedure Tfacturacompra.btnagregarClick(Sender: TObject);
+var
+  tipoiva_valor:real;
+begin
+    //  VERIFICAR SI ES NECESARIO USAR OPCION DE CONF PARA TIPOS DE CARGA DE DETALLES
+
+    try
+      compradetalle:= Tcompradetalle.Create(self);
+    finally
+//      compradetalle.producto_precioventa:=inttostr(documentocompra_listaprecio.ItemIndex+1);
+      if compradetalle.ShowModal=mrOk then
+        begin
+
+            princ.CargarDocumentoVentaDetalle(ZQDocumentocompradetalles, compradetalle.ZQDocumentocompradetalles);
+
+        end;
+
+      compradetalle.Free;
+      calculartotales;
+      calculartotalpagos;
+    end;
+end;
+
+procedure Tfacturacompra.btnagregarpagoClick(Sender: TObject);
+begin
+    calculartotalpagos;
+    if Princ.CargarPago(documentocompra_saldo,ZQDocumentopagos) then
+      calculartotalpagos;
+end;
+
+procedure Tfacturacompra.btncancelarClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea cerrar la ventana?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+      Self.Close;
+end;
+
+procedure Tfacturacompra.btnguardarClick(Sender: TObject);
+begin
+    calculartotalpagos;
+    case abm of
+        1:begin
+              if control then
+                agregar;
+
+          end;
+
+        2:begin
+              if control then
+                modificar;
+
+          end;
+
+        3:begin
+              if (MessageDlg('Seguro desea eliminar esta Factura?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+                eliminar;
+          end;
+
+          4:begin
+              imprimir;
+          end;
+
+          5:begin
+              if (MessageDlg('Seguro desea anular esta Factura?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+                anular;
+          end;
+
+    end;
+
+end;
+
+procedure Tfacturacompra.btnimprimirventaClick(Sender: TObject);
+begin
+    Self.imprimir;
+end;
+
+procedure Tfacturacompra.btnquitarClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea quitar este registro?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          try
+            ZQDocumentocompradetalles.Delete;
+          finally
+            calculartotales;
+            calculartotalpagos;
+          end;
+
+      end;
+
+end;
+
+procedure Tfacturacompra.btnquitarpagoClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea quitar este pago?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          try
+            ZQDocumentopagos.Delete;
+          finally
+            calculartotalpagos;
+          end;
+
+
+
+      end;
+end;
+
+function Tfacturacompra.control:boolean;
+var
+  error:integer;
+begin
+    error:=0;
+
+    if documentocompra_puntoventa.Text='' then
+      error:=10;
+
+//    if ZQDocumentocompradetalles.RecordCount<1 then
+//      error:=9;
+
+//    if documentocompra_listaprecio.ItemIndex=-1 then
+//      error:=8;
+
+    if documentocompra_condicionventa.ItemIndex=-1 then
+      error:=7;
+
+    if personal_id.ItemIndex=-1 then
+      error:=6;
+
+    if proveedor_id.ItemIndex=-1 then
+      error:=5;
+
+    if documentocompra_numero.Text='' then
+      error:=4;
+
+    if tipodocu_id.ItemIndex=-1 then
+      error:=3;
+
+    if puntoventa_id.ItemIndex=-1 then
+      error:=2;
+
+    if sucursal_id.ItemIndex=-1 then
+      error:=1;
+
+
+    case error of
+        1:begin
+              MessageDlg('Seleccione una sucursal', mtError, [mbOK], 0);
+          end;
+        2:begin
+              MessageDlg('Seleccione un Punto de venta', mtError, [mbOK], 0);
+          end;
+        3:begin
+              MessageDlg('Seleccione tipo de Documento', mtError, [mbOK], 0);
+          end;
+        4:begin
+              MessageDlg('Verifique numeracion', mtError, [mbOK], 0);
+          end;
+        5:begin
+              MessageDlg('Seleccione un proveedor', mtError, [mbOK], 0);
+          end;
+        6:begin
+              MessageDlg('Seleccione un vendedor', mtError, [mbOK], 0);
+          end;
+        7:begin
+              MessageDlg('Seleccione Condicion de venta', mtError, [mbOK], 0);
+          end;
+        8:begin
+              MessageDlg('Seleccione una lista de precios', mtError, [mbOK], 0);
+          end;
+        9:begin
+              MessageDlg('Ingrese detalle de compra', mtError, [mbOK], 0);
+          end;
+       10:begin
+              MessageDlg('Ingrese Punto de venta del Comprobante', mtError, [mbOK], 0);
+          end;
+    end;
+
+    if error=0 then
+      result:=true
+    else
+      result:=false;
+
+end;
+
+end.

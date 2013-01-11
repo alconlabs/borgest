@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{849d51f7-8935-471d-9247-48f6d9a8b445}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+    <DCC_DependencyCheckOutputName>Borgest.exe</DCC_DependencyCheckOutputName>
+    <MainSource>Borgest.dpr</MainSource>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_DebugInformation>False</DCC_DebugInformation>
+    <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+    <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    <DCC_Define>RELEASE</DCC_Define>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_Define>DEBUG</DCC_Define>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Delphi.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+<BorlandProject><Delphi.Personality><Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><VersionInfo><VersionInfo Name="IncludeVerInfo">True</VersionInfo><VersionInfo Name="AutoIncBuild">False</VersionInfo><VersionInfo Name="MajorVer">1</VersionInfo><VersionInfo Name="MinorVer">0</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">0</VersionInfo><VersionInfo Name="Debug">False</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">11274</VersionInfo><VersionInfo Name="CodePage">1252</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName">www.borgest.com.ar</VersionInfoKeys><VersionInfoKeys Name="FileDescription"></VersionInfoKeys><VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="InternalName"></VersionInfoKeys><VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys><VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys><VersionInfoKeys Name="ProductName">Borgest</VersionInfoKeys><VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="Comments"></VersionInfoKeys></VersionInfoKeys><Source><Source Name="MainSource">Borgest.dpr</Source></Source></Delphi.Personality><ModelSupport>False</ModelSupport></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
+  <ItemGroup>
+    <DelphiCompile Include="Borgest.dpr">
+      <MainSource>MainSource</MainSource>
+    </DelphiCompile>
+    <DCCReference Include="Formularios\Archivo\UnitActualizarProductos.pas">
+      <Form>ActualizarProductos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitbusquedaproductos.pas">
+      <Form>busquedaproductos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitcalculoprecio.pas">
+      <Form>calculoprecio</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitcalculoprecioproducto.pas">
+      <Form>calculoprecioproductos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitcobradores.pas">
+      <Form>cobradores</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitEmpresa.pas">
+      <Form>empresa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitlistacalculoprecios.pas">
+      <Form>listacalculoprecios</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitListaPerfiles.pas">
+      <Form>ListaPerfiles</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitlistapoliticasprecios.pas">
+      <Form>listapoliticasprecios</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitlistaproductos.pas">
+      <Form>listaproductos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitListaPuntosdeVenta.pas">
+      <Form>listapuntosdeventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitlistaservicios.pas">
+      <Form>listaservicios</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitListaSucursales.pas">
+      <Form>listasucursales</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitListaTiposDocumentos.pas">
+      <Form>listatiposdocumentos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitlocalidades.pas">
+      <Form>localidades</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitMostrarExcel.pas">
+      <Form>MostrarExcel</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitPersonal.pas">
+      <Form>personal</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitPoliticasPrecios.pas">
+      <Form>politicasprecios</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitProductos.pas">
+      <Form>productos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitProductosBasico.pas">
+      <Form>ProductosBasico</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitServicios.pas">
+      <Form>servicios</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitTipoDocumento.pas">
+      <Form>tipodocumento</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitvendedores.pas">
+      <Form>vendedores</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Caja\UnitCajaAsiento.pas">
+      <Form>CajaAsiento</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Caja\UnitcajaAsientoEgreso.pas">
+      <Form>CajaAsientoEgreso</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Caja\UnitCajaAsientoIngreso.pas">
+      <Form>CajaAsientoIngreso</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Caja\UnitEstadoCaja.pas">
+      <Form>EstadoCaja</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\Unitcompradetalle.pas">
+      <Form>compradetalle</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\Unitfacturascompra.pas">
+      <Form>facturacompra</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\Unitlistafacturascompra.pas">
+      <Form>listafacturascompra</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\Unitlistaproveedores.pas">
+      <Form>listaproveedores</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitProveedores.pas">
+      <Form>proveedores</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Herramientas\UnitActualizarSistema.pas">
+      <Form>ABMbase1</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Herramientas\UnitConfiguracion.pas">
+      <Form>configuracion</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Herramientas\UnitMenuConfig.pas">
+      <Form>MenuConfig</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Herramientas\UnitPerfil.pas">
+      <Form>Perfil</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\UnitABMbase.pas">
+      <Form>ABMbase</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\UnitABMInibase.pas">
+      <Form>ABMInibase</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Unitbusquedabase.pas">
+      <Form>busquedabase</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Unitlistabase.pas">
+      <Form>listabase</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\UnitPrinc.pas">
+      <Form>Princ</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\UnitProgresoBase.pas">
+      <Form>ProgresoBase</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitBusquedaClientes.pas">
+      <Form>busquedaclientes</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitCargarPagos.pas">
+      <Form>CargarPagos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitClientes.pas">
+      <Form>clientes</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitcobros.pas">
+      <Form>Cobros</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitConsultaEquipos.pas">
+      <Form>ConsultaEquipos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitconsultarvencidos.pas">
+      <Form>consultarvencidos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitdetallectas.pas">
+      <Form>detallectas</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitDocumentosVentasPendientes.pas">
+      <Form>DocumentosVentasPendientes</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitdocumentoventabase.pas">
+      <Form>documentoventabase</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitDocumentoVentaExcel.pas">
+      <Form>DocumentoVentaExcel</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitemisionrecibos.pas">
+      <Form>emisionrecibos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitestadodectas.pas">
+      <Form>estadoctas</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitFacturarDocumentos.pas">
+      <Form>FacturarDocumentos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitfacturasventa.pas">
+      <Form>facturasventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitfacturaventarapida.pas">
+      <Form>facturasventarapida</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitfacturaventasuperrapida.pas">
+      <Form>facturaventasuperrapida</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitgeneranuevasolicitud.pas">
+      <Form>generanuevasolicitud</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitImpresoraFiscal.pas">
+      <Form>impresorafiscal</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitImpresoraFiscalcola.pas">
+      <Form>impresorafiscalcola</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitinformesventas.pas">
+      <Form>InformesVentas</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitlistaclientes.pas">
+      <Form>listaclientes</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitlistacontrataciones.pas">
+      <Form>listacontrataciones</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitlistafacturasventa.pas">
+      <Form>listafacturasventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitlistanotacreditoventa.pas">
+      <Form>listanotacreditoventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitListaNotasPedido.pas">
+      <Form>ListaNotasPedido</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitListaOrdenesServicios.pas">
+      <Form>ListaOrdenesServicios</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitListaPresupuestos.pas">
+      <Form>ListaPresupuestos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitlistarecibosventa.pas">
+      <Form>listarecibosventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitListaServices.pas">
+      <Form>Listaservices</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitlistasolicitudes.pas">
+      <Form>listasolicitudes</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitnotacreditoventa.pas">
+      <Form>notacreditoventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitNotaPedidoDetalle.pas">
+      <Form>NotapedidoDetalle</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitOrdenServicio.pas">
+      <Form>ordenservicio</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitPresupuesto.pas">
+      <Form>presupuesto</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitrecibosventa.pas">
+      <Form>recibosventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitsaldoclientes.pas">
+      <Form>saldoclientes</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitsolicitudes.pas">
+      <Form>solicitudes</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitsolicitudesmodificar.pas">
+      <Form>solicitudesmodificar</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitventadetalle.pas">
+      <Form>ventadetalle</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitventadetalle2.pas">
+      <Form>ventadetalle2</Form>
+    </DCCReference>
+    <DCCReference Include="UnitImprimirListaPrecios.pas">
+      <Form>ImprimirListaPrecios</Form>
+    </DCCReference>
+    <DCCReference Include="UnitNotaPedido.pas">
+      <Form>NotaPedido</Form>
+    </DCCReference>
+  </ItemGroup>
+</Project>
