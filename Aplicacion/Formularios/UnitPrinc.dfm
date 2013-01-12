@@ -2716,4 +2716,8 @@ object Princ: TPrinc
         ParamType = ptUnknown
       end>
   end
+  object Encriptador1: TEncriptador
+    Left = 384
+    Top = 128
+  end
 end

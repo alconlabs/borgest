@@ -8,7 +8,7 @@ uses
   ZConnection, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, midaslib, ini,
   Grids, BaseGrid, AdvGrid, DBAdvGrid, StdCtrls, ADODB, rpcompobase, rpvclreport,
   UnitProgresoBase, ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
-  rpalias, GTBComboBox, ComCtrls;
+  rpalias, GTBComboBox, ComCtrls, Encriptador;
 
 
 
@@ -102,6 +102,7 @@ type
     btnlistaprecios: TAdvGlowButton;
     btnpresupuestos: TAdvGlowButton;
     ZQdocumentocompradetalles: TZQuery;
+    Encriptador1: TEncriptador;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -2166,6 +2167,7 @@ begin
 
 
     MenuConfiguracion;
+
 end;
 
 procedure TPrinc.ZBaseAfterConnect(Sender: TObject);
@@ -2190,6 +2192,9 @@ begin
 end;
 
 procedure TPrinc.ZBaseBeforeConnect(Sender: TObject);
+var
+  tipo_encriptacion:string;
+  pass:string;
 begin
     ini1.IniFilename:=ExtractFilePath(Application.ExeName)+'Config.ini';
     ZBase.Database:=ini1.ReadiniString('Connection','Database','base');
@@ -2197,7 +2202,24 @@ begin
     ZBase.Port:=strtoint(ini1.ReadiniString('Connection','Port','3306'));
     ZBase.Protocol:=ini1.ReadiniString('Connection','Protocol','mysql-5');
     ZBase.User:=ini1.ReadiniString('Connection','User','root');
-    ZBase.Password:=ini1.ReadiniString('Connection','Password','root');
+    pass:=ini1.ReadiniString('Connection','Password','root');
+    tipo_encriptacion:=ini1.ReadiniString('Config','Tipo','');
+    if tipo_encriptacion='1' then
+      begin
+          Encriptador1.ADesencriptar:=pass;
+          Encriptador1.Desencriptar;
+          pass:=Encriptador1.Desencriptado;
+      end
+    else
+      begin
+          ini1.WriteiniString('Config','Tipo','1');
+          Encriptador1.AEncriptar:=pass;
+          Encriptador1.Encriptar;
+          ini1.WriteiniString('Connection','Password',Encriptador1.Encriptado);
+      end;
+    ZBase.Password:=pass;
+
+
 
     
 
