@@ -43,6 +43,7 @@ Ventas
 		Caja
 	Informes
 		Informes
+		Detalle de Pagos
 Herramientas
 	Herramientas
 		Configuracion

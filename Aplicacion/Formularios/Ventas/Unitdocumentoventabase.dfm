@@ -159,7 +159,7 @@ object documentoventabase: Tdocumentoventabase
     end
     object Label13: TLabel
       Left = 4
-      Top = 327
+      Top = 323
       Width = 71
       Height = 13
       Caption = 'Observaciones'

@@ -177,6 +177,9 @@
     <DCCReference Include="Formularios\Ventas\Unitdetallectas.pas">
       <Form>detallectas</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitDetallePagos.pas">
+      <Form>DetallePagos</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitDocumentosVentasPendientes.pas">
       <Form>DocumentosVentasPendientes</Form>
     </DCCReference>

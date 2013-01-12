@@ -408,3 +408,7 @@ Replace config set config_valor='producto_id', config_nombre='CODIGOPRODUCTOBUSQ
 Replace config set config_valor='producto_codigo', config_nombre='CODIGOPRODUCTOBUSQUEDA2';
 110;
 Replace config set config_valor='', config_nombre='CODIGOPRODUCTOBUSQUEDA3';
+111;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('53', '>Ventas>Informes>Detalle de Pagos', '0', '', 'btndetallepagos', '0', '0');
+112;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,53,perfil_id from perfiles;

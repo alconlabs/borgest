@@ -103,6 +103,7 @@ type
     btnpresupuestos: TAdvGlowButton;
     ZQdocumentocompradetalles: TZQuery;
     Encriptador1: TEncriptador;
+    btndetallepagos: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -146,6 +147,7 @@ type
     procedure btnlistapreciosClick(Sender: TObject);
     procedure btnpresupuestosClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btndetallepagosClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -313,7 +315,7 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   UnitPersonal, UnitPerfil, UnitListaPerfiles, Unitsaldoclientes,
   Unitlistafacturascompra, Unitfacturascompra, UnitListaServices,
   UnitOrdenServicio, UnitListaOrdenesServicios, UnitImprimirListaPrecios,
-  UnitPresupuesto, UnitListaPresupuestos;
+  UnitPresupuesto, UnitListaPresupuestos, UnitDetallePagos;
 
 {$R *.dfm}
 
@@ -2294,6 +2296,15 @@ begin
       detallectas:=Tdetallectas.Create(self);
     finally
       detallectas.Show;
+    end;
+end;
+
+procedure TPrinc.btndetallepagosClick(Sender: TObject);
+begin
+    try
+      DetallePagos:=TDetallePagos.Create(self);
+    finally
+      DetallePagos.Show;
     end;
 end;
 

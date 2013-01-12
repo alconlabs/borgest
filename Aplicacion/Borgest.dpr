@@ -85,7 +85,8 @@ uses
   UnitImprimirListaPrecios in 'UnitImprimirListaPrecios.pas' {ImprimirListaPrecios},
   UnitListaPresupuestos in 'Formularios\Ventas\UnitListaPresupuestos.pas' {ListaPresupuestos},
   UnitPresupuesto in 'Formularios\Ventas\UnitPresupuesto.pas' {presupuesto},
-  Unitcompradetalle in 'Formularios\Compras\Unitcompradetalle.pas' {compradetalle};
+  Unitcompradetalle in 'Formularios\Compras\Unitcompradetalle.pas' {compradetalle},
+  UnitDetallePagos in 'Formularios\Ventas\UnitDetallePagos.pas' {DetallePagos};
 
 {$R *.res}
 

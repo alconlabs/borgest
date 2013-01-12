@@ -64,6 +64,7 @@ object recibosventa: Trecibosventa
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitTop = 8
     FullHeight = 0
     object Label2: TLabel
       Left = 693
@@ -190,7 +191,7 @@ object recibosventa: Trecibosventa
       Width = 121
       Height = 21
       ReadOnly = True
-      TabOrder = 18
+      TabOrder = 19
     end
     object documentoventa_fecha: TDateTimePicker
       Left = 729
@@ -199,7 +200,7 @@ object recibosventa: Trecibosventa
       Height = 21
       Date = 40384.000000000000000000
       Time = 40384.000000000000000000
-      TabOrder = 19
+      TabOrder = 20
     end
     object cliente_id: TSqlComboBox
       Left = 68
@@ -239,7 +240,7 @@ object recibosventa: Trecibosventa
       Width = 75
       Height = 25
       Caption = 'Cancelar'
-      TabOrder = 13
+      TabOrder = 14
       OnClick = btncancelarClick
     end
     object btnguardar: TButton
@@ -248,7 +249,7 @@ object recibosventa: Trecibosventa
       Width = 75
       Height = 25
       Caption = 'Guardar'
-      TabOrder = 12
+      TabOrder = 13
       OnClick = btnguardarClick
     end
     object documentoventa_condicionventa: TComboBox
@@ -450,7 +451,7 @@ object recibosventa: Trecibosventa
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
-      TabOrder = 16
+      TabOrder = 17
       OnSelect = puntoventa_idSelect
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -466,7 +467,7 @@ object recibosventa: Trecibosventa
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
-      TabOrder = 17
+      TabOrder = 18
       OnSelect = tipodocu_idSelect
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -484,7 +485,7 @@ object recibosventa: Trecibosventa
       Style = csDropDownList
       ItemHeight = 13
       ItemIndex = 0
-      TabOrder = 14
+      TabOrder = 15
       Text = 'Precio 1'
       Visible = False
       Items.Strings = (
@@ -500,7 +501,7 @@ object recibosventa: Trecibosventa
       Height = 120
       DataSource = DTSPagos
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
-      TabOrder = 8
+      TabOrder = 9
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
@@ -535,7 +536,7 @@ object recibosventa: Trecibosventa
       Width = 75
       Height = 25
       Caption = 'Agregar'
-      TabOrder = 9
+      TabOrder = 10
       OnClick = btnagregarpagoClick
     end
     object btnquitarpago: TButton
@@ -544,7 +545,7 @@ object recibosventa: Trecibosventa
       Width = 75
       Height = 25
       Caption = 'Quitar'
-      TabOrder = 10
+      TabOrder = 11
       OnClick = btnquitarpagoClick
     end
     object DBGrid1: TDBGrid
@@ -625,7 +626,7 @@ object recibosventa: Trecibosventa
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
-      TabOrder = 15
+      TabOrder = 16
       OnSelect = sucursal_idSelect
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -652,7 +653,7 @@ object recibosventa: Trecibosventa
       CalculatorLook.Font.Name = 'Tahoma'
       CalculatorLook.Font.Style = []
       ReadOnly = True
-      TabOrder = 11
+      TabOrder = 12
       Version = '1.1.0.1'
     end
     object btntomardocumentosAuto: TButton
@@ -681,7 +682,7 @@ object recibosventa: Trecibosventa
       CalculatorLook.Font.Name = 'Tahoma'
       CalculatorLook.Font.Style = []
       ReadOnly = True
-      TabOrder = 20
+      TabOrder = 21
       Version = '1.1.0.1'
     end
     object documentoventa_nrodetallepago: TEdit
@@ -690,7 +691,7 @@ object recibosventa: Trecibosventa
       Width = 121
       Height = 21
       TabStop = False
-      TabOrder = 21
+      TabOrder = 8
     end
   end
   object ZQuery2: TZQuery
