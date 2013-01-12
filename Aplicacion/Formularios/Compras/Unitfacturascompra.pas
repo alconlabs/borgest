@@ -77,14 +77,12 @@ type
     Label14: TLabel;
     documentocompra_otrosimpuestos: TMoneyEdit;
     documentocompra_puntoventa: TEdit;
+    ZQDocumentocompradetallesAnterior: TZQuery;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure solic_cuotasExit(Sender: TObject);
-    procedure solic_importecuotaExit(Sender: TObject);
-    procedure solic_prestadoExit(Sender: TObject);
     procedure btnagregarClick(Sender: TObject);
     procedure tipodocu_idChange(Sender: TObject);
     procedure puntoventa_idSelect(Sender: TObject);
@@ -422,6 +420,10 @@ end;
 
 procedure Tfacturacompra.FormShow(Sender: TObject);
 begin
+    if abm=1 then
+      id:='';
+
+      
     btnherramientas.Visible:=abm=1;
     btnimprimirventa.Visible:=abm<>1;
 
@@ -441,47 +443,121 @@ end;
 
 procedure Tfacturacompra.modificar;
 begin
+    ZQExecSql.SQL.Clear;
+    ZQExecSql.SQL.Add('begin');
+    ZQExecSql.ExecSQL;
+
+    ZQExecSql.sql.clear;
+    ZQExecSql.sql.add('update documentoscompras set ');
+    ZQExecSql.sql.add('documentocompra_numero=:documentocompra_numero, ');
+    ZQExecSql.sql.add('documentocompra_fecha=:documentocompra_fecha, ');
+    ZQExecSql.sql.add('documentocompra_hora=:documentocompra_hora, ');
+    ZQExecSql.sql.add('documentocompra_neto21=:documentocompra_neto21, ');
+    ZQExecSql.sql.add('documentocompra_iva21=:documentocompra_iva21, ');
+    ZQExecSql.sql.add('documentocompra_neto105=:documentocompra_neto105, ');
+    ZQExecSql.sql.add('documentocompra_iva105=:documentocompra_iva105, ');
+    ZQExecSql.sql.add('documentocompra_total=:documentocompra_total, ');
+    ZQExecSql.sql.add('documentocompra_estado=:documentocompra_estado, ');
+    ZQExecSql.sql.add('documentocompra_pagado=:documentocompra_pagado, ');
+    ZQExecSql.sql.add('documentocompra_saldo=:documentocompra_saldo, ');
+    ZQExecSql.sql.add('documentocompra_observacion=:documentocompra_observacion, ');
+    ZQExecSql.sql.add('proveedor_id=:proveedor_id, ');
+    ZQExecSql.sql.add('personal_id=:personal_id, ');
+    ZQExecSql.sql.add('tipodocu_id=:tipodocu_id, ');
+    ZQExecSql.sql.add('documentocompra_condicionventa=:documentocompra_condicionventa, ');
+    ZQExecSql.sql.add('documentocompra_fechavenc=:documentocompra_fechavenc, ');
+    ZQExecSql.sql.add('documentocompra_puntoventa=:documentocompra_puntoventa ');
+    ZQExecSql.sql.add('where documentocompra_id=:documentocompra_id ');
+    ZQExecSql.ParamByName('documentocompra_id').AsString:=id;
+    ZQExecSql.ParamByName('documentocompra_numero').AsString:=documentocompra_numero.Text;
+    ZQExecSql.ParamByName('documentocompra_fecha').AsString:=formatdatetime('yyyy-mm-dd',documentocompra_fecha.Date);
+    ZQExecSql.ParamByName('documentocompra_hora').AsString:=timetostr(Princ.horaservidor);
+    ZQExecSql.ParamByName('documentocompra_neto21').AsString:=documentocompra_neto21.Text;
+    ZQExecSql.ParamByName('documentocompra_iva21').AsString:=documentocompra_iva21.Text;
+    ZQExecSql.ParamByName('documentocompra_neto105').AsString:=documentocompra_neto105.Text;
+    ZQExecSql.ParamByName('documentocompra_iva105').AsString:=documentocompra_iva105.Text;
+    ZQExecSql.ParamByName('documentocompra_total').AsString:=documentocompra_total.Text;
+    ZQExecSql.ParamByName('documentocompra_estado').AsString:=documentocompra_estado;
+    ZQExecSql.ParamByName('documentocompra_pagado').AsFloat:=documentocompra_pagado;
+    ZQExecSql.ParamByName('documentocompra_saldo').AsFloat:=documentocompra_saldo;
+    ZQExecSql.ParamByName('documentocompra_observacion').AsString:='';
+    ZQExecSql.ParamByName('proveedor_id').AsString:=proveedor_id.codigo;
+    ZQExecSql.ParamByName('personal_id').AsString:=personal_id.codigo;
+    ZQExecSql.ParamByName('tipodocu_id').AsString:=tipodocu_id.codigo;
+    ZQExecSql.ParamByName('documentocompra_condicionventa').AsInteger:=documentocompra_condicionventa.ItemIndex;
+    ZQExecSql.ParamByName('documentocompra_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documentocompra_fecha.Date+15);
+    ZQExecSql.ParamByName('documentocompra_puntoventa').AsString:=documentocompra_puntoventa.Text;
+
+    ZQExecSql.ExecSQL;
 
 
-    MessageDlg('Error al guardar los Datos. No se pudo modificar dato alguno', mtError, [mbOK, mbCancel], 0);
-    Self.Close;
-//    if limpiar_al_guardar then
-//      begin
-//          id:='';
-//          Self.OnShow(self);
-//      end
-//    else
-//      begin
-//          Self.Close;
-//      end;
+    ZQDocumentocompradetallesAnterior.Active:=false;
+    ZQDocumentocompradetallesAnterior.ParamByName('documentocompra_id').AsString:=id;
+    ZQDocumentocompradetallesAnterior.Active:=true;
+    ZQDocumentocompradetallesAnterior.First;
+    while not ZQDocumentocompradetallesAnterior.Eof do
+        begin
+            Princ.actualizarstock(ZQDocumentocompradetallesAnterior.FieldByName('producto_id').AsString,ZQDocumentocompradetallesAnterior.FieldByName('documentocompradetalle_cantidad').AsFloat,tipodocu_id.codigo,true);
+
+            ZQDocumentocompradetallesAnterior.Next;
+        end;
+
+    ZQExecSql.SQL.Clear;
+    ZQExecSql.SQL.Text:='delete from documentocompradetalles where documentocompra_id="'+id+'"';
+    ZQExecSql.ExecSQL;
+
+
+    ZQDocumentocompradetalles.First;
+    while not ZQDocumentocompradetalles.Eof do
+        begin
+            ZQExecSql.sql.clear;
+            ZQExecSql.sql.add('Insert into documentocompradetalles (documentocompradetalle_id, documentocompradetalle_descripcion, documentocompradetalle_cantidad, documentocompradetalle_precio, ');
+            ZQExecSql.sql.add('documentocompradetalle_total, documentocompradetalle_neto21, documentocompradetalle_iva21, documentocompradetalle_neto105, documentocompradetalle_iva105, ');
+            ZQExecSql.sql.add('documentocompradetalle_estado, documentocompradetalle_observacion, producto_id, documentocompra_id) ');
+            ZQExecSql.sql.add('values (:documentocompradetalle_id, :documentocompradetalle_descripcion, :documentocompradetalle_cantidad, :documentocompradetalle_precio, ');
+            ZQExecSql.sql.add(':documentocompradetalle_total, :documentocompradetalle_neto21, :documentocompradetalle_iva21, :documentocompradetalle_neto105, :documentocompradetalle_iva105, ');
+            ZQExecSql.sql.add(':documentocompradetalle_estado, :documentocompradetalle_observacion, :producto_id, :documentocompra_id) ');
+            ZQExecSql.ParamByName('documentocompradetalle_id').AsString:=Princ.codigo('documentocompradetalles','documentocompradetalle_id');
+            ZQExecSql.ParamByName('documentocompradetalle_descripcion').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_descripcion').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_cantidad').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_cantidad').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_precio').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_precio').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_total').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_total').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_neto21').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto21').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_iva21').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva21').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_neto105').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto105').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_iva105').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva105').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_estado').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_estado').AsString;
+            ZQExecSql.ParamByName('documentocompradetalle_observacion').AsString:=ZQDocumentocompradetalles.FieldByName('documentocompradetalle_observacion').AsString;
+            ZQExecSql.ParamByName('producto_id').AsString:=ZQDocumentocompradetalles.FieldByName('producto_id').AsString;
+            ZQExecSql.ParamByName('documentocompra_id').AsString:=id;
+            ZQExecSql.ExecSQL;
+
+
+            Princ.actualizarstock(ZQDocumentocompradetalles.FieldByName('producto_id').AsString, ZQDocumentocompradetalles.FieldByName('documentocompradetalle_cantidad').AsFloat, tipodocu_id.codigo, false);
+
+            ZQDocumentocompradetalles.Next;
+        end;
+
+
+    ZQExecSql.SQL.Clear;
+    ZQExecSql.SQL.Add('commit');
+    ZQExecSql.ExecSQL;
+
+
+    MessageDlg('Datos guardados correctamente', mtInformation, [mbOK, mbCancel], 0);
+//    Self.Close;
+    if limpiar_al_guardar then
+      begin
+          Self.OnShow(self);
+      end
+    else
+      begin
+          Self.Close;
+      end;
 
 
 end;
 
-
-procedure Tfacturacompra.solic_cuotasExit(Sender: TObject);
-begin
-//    solic_total.FloatValue:=solic_cuotas.IntValue*solic_importecuota.FloatValue;
-//    solic_montoganado.FloatValue:=solic_total.FloatValue-solic_prestado.FloatValue;
-//    solic_interesganado.FloatValue:=solic_montoganado.FloatValue*100/solic_prestado.FloatValue;
-end;
-
-procedure Tfacturacompra.solic_importecuotaExit(Sender: TObject);
-begin
-//    solic_total.FloatValue:=solic_cuotas.IntValue*solic_importecuota.FloatValue;
-//    solic_montoganado.FloatValue:=solic_total.FloatValue-solic_prestado.FloatValue;
-//    solic_interesganado.FloatValue:=solic_montoganado.FloatValue*100/solic_prestado.FloatValue;
-
-
-
-end;
-
-procedure Tfacturacompra.solic_prestadoExit(Sender: TObject);
-begin
-//    solic_montoganado.FloatValue:=solic_total.FloatValue-solic_prestado.FloatValue;
-//    solic_interesganado.FloatValue:=solic_montoganado.FloatValue*100/solic_prestado.FloatValue;
-
-end;
 
 procedure Tfacturacompra.sucursal_idSelect(Sender: TObject);
 begin
@@ -596,20 +672,20 @@ begin
 
     id:=Princ.codigo('documentoscompras','documentocompra_id');
 
-    documentocompra_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
-    if strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+tipodocu_id.codigo+'"','tipodocu_fiscal')) then
-      documentocompra_numero.Text:='0';
+//    documentocompra_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+//    if strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+tipodocu_id.codigo+'"','tipodocu_fiscal')) then
+//      documentocompra_numero.Text:='0';
 
 
     ZQExecSql.sql.clear;
     ZQExecSql.sql.add('Insert into documentoscompras (documentocompra_id, documentocompra_numero, documentocompra_fecha, documentocompra_hora, ');
     ZQExecSql.sql.add('documentocompra_neto21, documentocompra_iva21, documentocompra_neto105, documentocompra_iva105, ');
     ZQExecSql.sql.add('documentocompra_total, documentocompra_estado, documentocompra_pagado, documentocompra_saldo, documentocompra_observacion, ');
-    ZQExecSql.sql.add('proveedor_id, personal_id, tipodocu_id, documentocompra_condicionventa, documentocompra_fechavenc) ');
+    ZQExecSql.sql.add('proveedor_id, personal_id, tipodocu_id, documentocompra_condicionventa, documentocompra_fechavenc, documentocompra_puntoventa) ');
     ZQExecSql.sql.add('values (:documentocompra_id, :documentocompra_numero, :documentocompra_fecha, :documentocompra_hora, ');
     ZQExecSql.sql.add(':documentocompra_neto21, :documentocompra_iva21, :documentocompra_neto105, :documentocompra_iva105, ');
     ZQExecSql.sql.add(':documentocompra_total, :documentocompra_estado, :documentocompra_pagado, :documentocompra_saldo, :documentocompra_observacion, ');
-    ZQExecSql.sql.add(':proveedor_id, :personal_id, :tipodocu_id, :documentocompra_condicionventa, :documentocompra_fechavenc)');
+    ZQExecSql.sql.add(':proveedor_id, :personal_id, :tipodocu_id, :documentocompra_condicionventa, :documentocompra_fechavenc, :documentocompra_puntoventa)');
     ZQExecSql.ParamByName('documentocompra_id').AsString:=id;
     ZQExecSql.ParamByName('documentocompra_numero').AsString:=documentocompra_numero.Text;
     ZQExecSql.ParamByName('documentocompra_fecha').AsString:=formatdatetime('yyyy-mm-dd',documentocompra_fecha.Date);
@@ -629,7 +705,7 @@ begin
     ZQExecSql.ParamByName('tipodocu_id').AsString:=tipodocu_id.codigo;
     ZQExecSql.ParamByName('documentocompra_condicionventa').AsInteger:=documentocompra_condicionventa.ItemIndex;
     ZQExecSql.ParamByName('documentocompra_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documentocompra_fecha.Date+15);
-//    ZQExecSql.ParamByName('documentocompra_listaprecio').AsInteger:=documentocompra_listaprecio.ItemIndex;
+    ZQExecSql.ParamByName('documentocompra_puntoventa').AsString:=documentocompra_puntoventa.Text;
 
     ZQExecSql.ExecSQL;
 
@@ -671,71 +747,6 @@ begin
     ZQExecSql.SQL.Add('commit');
     ZQExecSql.ExecSQL;
 
-//    if (ZQDocumentopagos.RecordCount<1) and (documentocompra_condicionventa.Text='Contado') then
-//      begin
-//          ZQDocumentopagos.Insert;
-//          ZQDocumentopagos.FieldByName('documentopago_id').AsString:='0';
-//          ZQDocumentopagos.FieldByName('documentopago_nombre').AsString:='EFECTIVO';
-//          ZQDocumentopagos.FieldByName('documentopago_importe').AsString:=documentocompra_total.Text;
-//          ZQDocumentopagos.FieldByName('tipopago_id').AsString:='1';
-//          ZQDocumentopagos.FieldByName('tipopago_nombre').AsString:='EFECTIVO';
-//          ZQDocumentopagos.FieldByName('documentocompra_id').AsString:='0';
-//          ZQDocumentopagos.Post;
-//
-//      end;
-
-//    calculartotalpagos;
-
-//    if (ZQDocumentopagos.RecordCount>0) then
-//      begin
-//          ZQRecibo.Active:=false;
-//          ZQRecibo.Active:=true;
-//          tipodocu_id_recibo:=princ.buscar('select tipodocu_id from tiposdocumento where puntoventa_id="'+puntoventa_id.codigo+'" and tipodocu_nombre="Recibo de Venta"','tipodocu_id');
-//          recibo_numero:=Princ.NumeroDocumento(tipodocu_id_recibo);
-//          ZQRecibo.Insert;
-//          ZQRecibo.FieldByName('documentocompra_condicionventa').AsInteger:=documentocompra_condicionventa.ItemIndex;
-//          ZQRecibo.FieldByName('documentocompra_estado').AsString:='PAGADA';
-//          ZQRecibo.FieldByName('documentocompra_fecha').AsDateTime:=date;
-//          ZQRecibo.FieldByName('documentocompra_fechavenc').AsDateTime:=documentocompra_fecha.Date;
-//          ZQRecibo.FieldByName('documentocompra_hora').AsDateTime:=Now;
-//          ZQRecibo.FieldByName('documentocompra_id').asstring:=id;
-//          ZQRecibo.FieldByName('documentocompra_iva105').AsString:='0';
-//          ZQRecibo.FieldByName('documentocompra_iva21').AsString:='0';
-//          ZQRecibo.FieldByName('documentocompra_listaprecio').AsInteger:=documentocompra_listaprecio.ItemIndex;
-//          ZQRecibo.FieldByName('documentocompra_neto105').AsString:='0';
-//          ZQRecibo.FieldByName('documentocompra_neto21').AsString:='0';
-//          ZQRecibo.FieldByName('documentocompra_netonogravado').AsString:='0';
-//          ZQRecibo.FieldByName('documentocompra_numero').AsString:=recibo_numero;
-//          ZQRecibo.FieldByName('documentocompra_observacion').AsString:='';
-//          ZQRecibo.FieldByName('documentocompra_pagado').AsFloat:=documentocompra_pagado;
-//          ZQRecibo.FieldByName('documentocompra_saldo').AsString:='0';
-//          ZQRecibo.FieldByName('documentocompra_total').AsFloat:=documentocompra_pagado;
-//          ZQRecibo.FieldByName('personal_id').AsString:=personal_id.codigo;
-//          ZQRecibo.FieldByName('tipodocu_id').AsString:=tipodocu_id_recibo;
-//          ZQRecibo.FieldByName('proveedor_id').AsString:=proveedor_id.codigo;
-//          ZQRecibo.Post;
-//
-//          ZQdocumentoventadocus.Active:=false;
-//          ZQdocumentoventadocus.Active:=true;
-//          ZQdocumentoventadocus.Insert;
-//          ZQdocumentoventadocus.FieldByName('documentocompra_estado').asstring:='PAGADA';
-//          ZQdocumentoventadocus.FieldByName('documentocompra_id').asstring:='0';
-//          ZQdocumentoventadocus.FieldByName('documentocompra_idpago').asstring:=id;
-//          ZQdocumentoventadocus.FieldByName('documentocompra_pagado').AsFloat:=documentocompra_pagado;
-//          ZQdocumentoventadocus.FieldByName('documentocompra_saldo').AsFloat:=documentocompra_saldo;
-//          ZQdocumentoventadocus.FieldByName('documentoventadoc_id').asstring:='0';
-//          ZQdocumentoventadocus.FieldByName('documentoventadoc_importe').AsFloat:=documentocompra_pagado;
-//          ZQdocumentoventadocus.Post;
-//
-//          Princ.AgregarRecibo(ZQRecibo,ZQdocumentoventadocus,ZQDocumentopagos);
-//
-//
-//
-//      end;
-
-
-
-
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
 
     if Princ.buscar('select tipodocu_preimpresos from tiposdocumento where tipodocu_id="'+tipodocu_id.codigo+'"','tipodocu_preimpresos')='-1' then
@@ -747,15 +758,14 @@ begin
 
       end;
 
-      if limpiar_al_guardar then
-        begin
-            id:='';
-            Self.OnShow(self);
-        end
-      else
-        begin
-            Self.Close;
-        end;
+    if limpiar_al_guardar then
+      begin
+          Self.OnShow(self);
+      end
+    else
+      begin
+          Self.Close;
+      end;
 
 end;
 

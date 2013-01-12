@@ -843,4 +843,25 @@ object facturacompra: Tfacturacompra
       Caption = 'Facturar Presupuesto'
     end
   end
+  object ZQDocumentocompradetallesAnterior: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select * from documentocompradetalles'
+      'where documentocompra_id=:documentocompra_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentocompra_id'
+        ParamType = ptUnknown
+      end>
+    Left = 240
+    Top = 224
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentocompra_id'
+        ParamType = ptUnknown
+      end>
+  end
 end
