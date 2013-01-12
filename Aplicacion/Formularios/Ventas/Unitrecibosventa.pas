@@ -128,6 +128,8 @@ type
     btntomardocumentosAuto: TButton;
     Label17: TLabel;
     documentoventa_totalimputado: TMoneyEdit;
+    Label18: TLabel;
+    documentoventa_nrodetallepago: TEdit;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -414,6 +416,7 @@ begin
           documentoventa_neto105.Text:=ZQuery2.FieldByName('documentoventa_neto105').AsString;
           documentoventa_iva105.Text:=ZQuery2.FieldByName('documentoventa_iva105').AsString;
           documentoventa_total.Text:=ZQuery2.FieldByName('documentoventa_total').AsString;
+          documentoventa_nrodetallepago.Text:=ZQuery2.FieldByName('documentoventa_nrodetallepago').AsString;
 
       end;
 
@@ -475,6 +478,8 @@ begin
     ZQRecibo.FieldByName('personal_id').AsString:=personal_id.codigo;
     ZQRecibo.FieldByName('tipodocu_id').AsString:=princ.buscar('select tipodocu_id from tiposdocumento where puntoventa_id="'+puntoventa_id.codigo+'" and tipodocu_nombre="Recibo de Venta"','tipodocu_id');
     ZQRecibo.FieldByName('cliente_id').AsString:=cliente_id.codigo;
+    ZQRecibo.FieldByName('documentoventa_nrodetallepago').AsString:=documentoventa_nrodetallepago.Text;
+
     ZQRecibo.Post;
 
 //          ZQdocumentoventadocus.Active:=false;

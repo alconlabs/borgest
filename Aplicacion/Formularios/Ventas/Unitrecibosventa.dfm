@@ -176,6 +176,14 @@ object recibosventa: Trecibosventa
       Alignment = taRightJustify
       Caption = 'Total Imputado'
     end
+    object Label18: TLabel
+      Left = 9
+      Top = 389
+      Width = 101
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Numero Detalle Pago'
+    end
     object documentoventa_numero: TEdit
       Left = 184
       Top = 34
@@ -675,6 +683,14 @@ object recibosventa: Trecibosventa
       ReadOnly = True
       TabOrder = 20
       Version = '1.1.0.1'
+    end
+    object documentoventa_nrodetallepago: TEdit
+      Left = 116
+      Top = 386
+      Width = 121
+      Height = 21
+      TabStop = False
+      TabOrder = 21
     end
   end
   object ZQuery2: TZQuery

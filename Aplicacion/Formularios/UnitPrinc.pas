@@ -1887,14 +1887,14 @@ begin
     ZQRecibos.sql.add('documentoventa_iva21, documentoventa_listaprecio, documentoventa_neto105, ');
     ZQRecibos.sql.add('documentoventa_neto21, documentoventa_netonogravado, documentoventa_numero, ');
     ZQRecibos.sql.add('documentoventa_observacion, documentoventa_pagado, documentoventa_saldo, ');
-    ZQRecibos.sql.add('documentoventa_total, personal_id, tipodocu_id) ');
+    ZQRecibos.sql.add('documentoventa_total, personal_id, tipodocu_id, documentoventa_nrodetallepago) ');
     ZQRecibos.sql.add('values (:cliente_id, :documentoventa_condicionventa, ');
     ZQRecibos.sql.add(':documentoventa_estado, :documentoventa_fecha, :documentoventa_fechavenc, ');
     ZQRecibos.sql.add(':documentoventa_hora, :documentoventa_id, :documentoventa_iva105, ');
     ZQRecibos.sql.add(':documentoventa_iva21, :documentoventa_listaprecio, :documentoventa_neto105, ');
     ZQRecibos.sql.add(':documentoventa_neto21, :documentoventa_netonogravado, :documentoventa_numero, ');
     ZQRecibos.sql.add(':documentoventa_observacion, :documentoventa_pagado, :documentoventa_saldo, ');
-    ZQRecibos.sql.add(':documentoventa_total, :personal_id, :tipodocu_id)');
+    ZQRecibos.sql.add(':documentoventa_total, :personal_id, :tipodocu_id, :documentoventa_nrodetallepago)');
     ZQRecibos.parambyname('cliente_id').asstring:=ZQCabecera.FieldByName('cliente_id').AsString;
     ZQRecibos.parambyname('documentoventa_condicionventa').asstring:=ZQCabecera.FieldByName('documentoventa_condicionventa').AsString;
     ZQRecibos.parambyname('documentoventa_estado').asstring:=ZQCabecera.FieldByName('documentoventa_estado').AsString;
@@ -1915,6 +1915,7 @@ begin
     ZQRecibos.parambyname('documentoventa_total').asstring:=ZQCabecera.FieldByName('documentoventa_total').AsString;
     ZQRecibos.parambyname('personal_id').asstring:=ZQCabecera.FieldByName('personal_id').AsString;
     ZQRecibos.parambyname('tipodocu_id').asstring:=ZQCabecera.FieldByName('tipodocu_id').AsString;
+    ZQRecibos.parambyname('documentoventa_nrodetallepago').asstring:=ZQCabecera.FieldByName('documentoventa_nrodetallepago').AsString;
     ZQRecibos.ExecSQL;
 
     ActualizarNumeroDocumento(ZQCabecera.FieldByName('tipodocu_id').AsString,ZQCabecera.FieldByName('documentoventa_numero').AsString);
