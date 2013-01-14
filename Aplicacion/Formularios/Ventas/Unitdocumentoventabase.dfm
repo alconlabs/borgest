@@ -668,6 +668,9 @@ object documentoventabase: Tdocumentoventabase
     object ZQDocumentoventadetallesdocumentoventadetalle_importe6: TFloatField
       FieldName = 'documentoventadetalle_importe6'
     end
+    object ZQDocumentoventadetallesdocumentoventadetalle_listaprecio: TIntegerField
+      FieldName = 'documentoventadetalle_listaprecio'
+    end
   end
   object DTSDocumentoventadetalle: TDataSource
     DataSet = ZQDocumentoventadetalles

@@ -79,6 +79,7 @@ type
     ZQDocumentoventadetallesdocumentoventadetalle_importe4: TFloatField;
     ZQDocumentoventadetallesdocumentoventadetalle_importe5: TFloatField;
     ZQDocumentoventadetallesdocumentoventadetalle_importe6: TFloatField;
+    ZQDocumentoventadetallesdocumentoventadetalle_listaprecio: TIntegerField;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -641,10 +642,10 @@ begin
     ZQExecSql.sql.clear;
     ZQExecSql.sql.add('Insert into documentoventadetalles (documentoventadetalle_id, documentoventadetalle_descripcion, documentoventadetalle_cantidad, documentoventadetalle_precio, ');
     ZQExecSql.sql.add('documentoventadetalle_total, documentoventadetalle_neto21, documentoventadetalle_iva21, documentoventadetalle_neto105, documentoventadetalle_iva105, documentoventadetalle_nogravado, ');
-    ZQExecSql.sql.add('documentoventadetalle_estado, documentoventadetalle_observacion, producto_id, documentoventadetalle_idorig, documentoventadetalle_cantidadpendiente, documentoventa_id) ');
+    ZQExecSql.sql.add('documentoventadetalle_estado, documentoventadetalle_observacion, producto_id, documentoventadetalle_idorig, documentoventadetalle_cantidadpendiente, documentoventa_id, documentoventadetalle_listaprecio) ');
     ZQExecSql.sql.add('values (:documentoventadetalle_id, :documentoventadetalle_descripcion, :documentoventadetalle_cantidad, :documentoventadetalle_precio, ');
     ZQExecSql.sql.add(':documentoventadetalle_total, :documentoventadetalle_neto21, :documentoventadetalle_iva21, :documentoventadetalle_neto105, :documentoventadetalle_iva105, :documentoventadetalle_nogravado, ');
-    ZQExecSql.sql.add(':documentoventadetalle_estado, :documentoventadetalle_observacion, :producto_id, :documentoventadetalle_idorig, :documentoventadetalle_cantidadpendiente, :documentoventa_id) ');
+    ZQExecSql.sql.add(':documentoventadetalle_estado, :documentoventadetalle_observacion, :producto_id, :documentoventadetalle_idorig, :documentoventadetalle_cantidadpendiente, :documentoventa_id, :documentoventadetalle_listaprecio) ');
 
     ZQDocumentoventadetalles.First;
     while not ZQDocumentoventadetalles.Eof do
@@ -666,6 +667,8 @@ begin
             ZQExecSql.ParamByName('documentoventadetalle_idorig').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_idorig').AsString;
             ZQExecSql.ParamByName('documentoventadetalle_cantidadpendiente').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidadpendiente').AsString;
             ZQExecSql.ParamByName('documentoventa_id').AsString:=id;
+            ZQExecSql.ParamByName('documentoventadetalle_listaprecio').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_listaprecio').AsString;
+
             ZQExecSql.ExecSQL;
 
             ZQDocumentoventadetalles.Edit;
@@ -695,6 +698,7 @@ begin
       ventadetalle2:= Tventadetalle2.Create(self);
     finally
       ventadetalle2.producto_precioventa:=inttostr(documentoventa_listaprecio.ItemIndex+1);
+      ventadetalle2.documentoventadetalle_listaprecio:=documentoventa_listaprecio.ItemIndex;
       if ventadetalle2.ShowModal=mrOk then
         begin
 

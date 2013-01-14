@@ -427,6 +427,28 @@ object ventadetalle2: Tventadetalle2
         OnClick = btnprecio3Click
       end
     end
+    object ventadetalle_preciounitoriginal: TDBAdvEdit
+      Left = 288
+      Top = 95
+      Width = 121
+      Height = 21
+      TabStop = False
+      EditType = etFloat
+      Precision = 2
+      LabelFont.Charset = DEFAULT_CHARSET
+      LabelFont.Color = clWindowText
+      LabelFont.Height = -11
+      LabelFont.Name = 'Tahoma'
+      LabelFont.Style = []
+      Lookup.Separator = ';'
+      Color = clWindow
+      Enabled = True
+      TabOrder = 9
+      Text = '0,00'
+      Visible = False
+      OnExit = ventadetalle_preciounitarioExit
+      Version = '2.7.0.5'
+    end
   end
   object ZQDocumentoventadetalles: TZQuery
     Connection = Princ.ZBase

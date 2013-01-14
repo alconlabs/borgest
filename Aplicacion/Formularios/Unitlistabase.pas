@@ -33,6 +33,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnanularClick(Sender: TObject);
     procedure btncancelarClick(Sender: TObject);
+    procedure fil_idKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   protected
@@ -103,6 +104,13 @@ procedure Tlistabase.btnnuevoClick(Sender: TObject);
 begin
     abm:=1;
     id:='';
+
+end;
+
+procedure Tlistabase.fil_idKeyPress(Sender: TObject; var Key: Char);
+begin
+    if key=#13 then
+      btnfiltrar.Click;
 
 end;
 

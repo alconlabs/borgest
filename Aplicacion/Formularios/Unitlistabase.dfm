@@ -223,6 +223,7 @@ object listabase: Tlistabase
         Height = 21
         Align = alLeft
         TabOrder = 0
+        OnKeyPress = fil_idKeyPress
         Tag2 = 0
       end
     end

@@ -39,6 +39,7 @@ type
     btnprecio2: TButton;
     btnprecio4: TButton;
     btnprecio3: TButton;
+    ventadetalle_preciounitoriginal: TDBAdvEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnaceptarClick(Sender: TObject);
     procedure producto_idSelect(Sender: TObject);
@@ -62,6 +63,7 @@ type
   public
     { Public declarations }
     producto_precioventa:string;
+    documentoventadetalle_listaprecio:integer;
     procedure CargarQuery;
     procedure calculartotal;
   end;
@@ -124,6 +126,7 @@ begin
           ZQDocumentoventadetalles.FieldByName('documentoventadetalle_idorig').AsString:='0';
           ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidadpendiente').AsString:='0';
           ZQDocumentoventadetalles.FieldByName('documentoventa_id').AsString:='0';
+          ZQDocumentoventadetalles.FieldByName('documentoventadetalle_listaprecio').AsInteger:=documentoventadetalle_listaprecio;
           ZQDocumentoventadetalles.Post;
 
       end;
@@ -176,9 +179,14 @@ end;
 
 procedure Tventadetalle2.calculartotal;
 begin
+    ventadetalle_preciounitoriginal.Text:=producto_id.valor('producto_precioventa'+inttostr(documentoventadetalle_listaprecio+1));
 
+    if (documentoventadetalle_listaprecio<>-1) and (producto_id.Text<>'') then
+      begin
+          if ventadetalle_preciounitario.Text<>ventadetalle_preciounitoriginal.Text then
+            documentoventadetalle_listaprecio:=-1;
+      end;
     ventadetalle_total.Text:=floattostr(ventadetalle_preciounitario.FloatValue*ventadeta_cantidad.FloatValue);
-
 end;
 
 
@@ -261,6 +269,7 @@ end;
 procedure Tventadetalle2.btnprecio1Click(Sender: TObject);
 begin
     ventadetalle_preciounitario.Text:= producto_precioventa1.Text;
+    documentoventadetalle_listaprecio:=0;
     calculartotal;
     btnaceptar.SetFocus;
 end;
@@ -268,6 +277,7 @@ end;
 procedure Tventadetalle2.btnprecio2Click(Sender: TObject);
 begin
     ventadetalle_preciounitario.Text:= producto_precioventa2.Text;
+    documentoventadetalle_listaprecio:=1;
     calculartotal;
     btnaceptar.SetFocus;
 end;
@@ -275,6 +285,7 @@ end;
 procedure Tventadetalle2.btnprecio3Click(Sender: TObject);
 begin
     ventadetalle_preciounitario.Text:= producto_precioventa3.Text;
+    documentoventadetalle_listaprecio:=2;
     calculartotal;
     btnaceptar.SetFocus;
 end;
@@ -282,6 +293,7 @@ end;
 procedure Tventadetalle2.btnprecio4Click(Sender: TObject);
 begin
     ventadetalle_preciounitario.Text:= producto_precioventa4.Text;
+    documentoventadetalle_listaprecio:=3;
     calculartotal;
     btnaceptar.SetFocus;
 end;

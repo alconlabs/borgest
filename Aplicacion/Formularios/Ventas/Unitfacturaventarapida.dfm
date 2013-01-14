@@ -6,7 +6,7 @@ inherited facturasventarapida: Tfacturasventarapida
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Height = 249
-    ExplicitHeight = 246
+    ExplicitHeight = 249
     FullHeight = 0
     inherited Label2: TLabel
       Top = 332
