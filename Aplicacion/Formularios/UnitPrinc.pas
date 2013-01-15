@@ -2130,7 +2130,7 @@ begin
     NOMBREPRECIO4:=Princ.GetConfiguracion('NOMBREPRECIO4');
 
 
-    empresa_where:='and puntodeventa.puntoventa_id not in ('+Princ.buscar('select empresa_where from empresas','empresa_where')+')';
+    empresa_where:='and puntodeventa.puntoventa_id not in ('+Princ.buscar('select empresa_where from empresas','empresa_where')+') ';
 
     MenuConfiguracion;
 end;
@@ -2141,7 +2141,7 @@ begin
     if ( Shift = [ ssalt, ssshift ] ) then
       begin
           if Key=65 then
-            empresa_where:='and 1=1';
+            empresa_where:='and 1=1 ';
       end;
 
 

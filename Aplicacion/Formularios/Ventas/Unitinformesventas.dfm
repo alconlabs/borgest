@@ -1,14 +1,14 @@
 inherited InformesVentas: TInformesVentas
   Caption = 'Informes de Ventas'
   ClientHeight = 144
-  ClientWidth = 253
+  ClientWidth = 315
   OnCreate = FormCreate
-  ExplicitWidth = 269
+  ExplicitWidth = 331
   ExplicitHeight = 182
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Width = 253
+    Width = 315
     Height = 144
     ExplicitWidth = 253
     ExplicitHeight = 144
@@ -37,9 +37,15 @@ inherited InformesVentas: TInformesVentas
       Alignment = taRightJustify
       Caption = 'Informe'
     end
+    inherited btncancelar: TButton
+      Left = 133
+      ExplicitLeft = 133
+    end
     inherited btnguardar: TButton
+      Left = 227
       Caption = 'Imprimir'
       OnClick = btnguardarClick
+      ExplicitLeft = 227
     end
     object desde_fecha: TDateTimePicker
       Left = 84
@@ -62,7 +68,7 @@ inherited InformesVentas: TInformesVentas
     object informe_tipo: TGTBComboBox
       Left = 84
       Top = 61
-      Width = 145
+      Width = 221
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
@@ -71,11 +77,13 @@ inherited InformesVentas: TInformesVentas
       Text = 'Costos por Ventas'
       Items.Strings = (
         'Costos por Ventas'
-        'Stock valorizado')
+        'Stock valorizado'
+        'Informe de Precios de Ventas')
       Tag2 = 0
       valores.Strings = (
         '0'
-        '1')
+        '1'
+        '2')
     end
   end
 end
