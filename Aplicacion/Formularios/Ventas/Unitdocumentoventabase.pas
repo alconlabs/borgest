@@ -336,6 +336,8 @@ begin
 
     eliminado:=false;
 
+//    DBGrid1.Columns.Items[1].FieldName:=Princ.CAMPO_ID_PRODUCTO;
+
 end;
 
 procedure Tdocumentoventabase.FormKeyDown(Sender: TObject; var Key: Word;

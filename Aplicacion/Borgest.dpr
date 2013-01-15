@@ -60,7 +60,7 @@ uses
   UnitMostrarExcel in 'Formularios\Archivo\UnitMostrarExcel.pas' {MostrarExcel},
   UnitDocumentoVentaExcel in 'Formularios\Ventas\UnitDocumentoVentaExcel.pas' {DocumentoVentaExcel},
   UnitMenuConfig in 'Formularios\Herramientas\UnitMenuConfig.pas' {MenuConfig},
-  UnitNotaPedido in 'UnitNotaPedido.pas' {NotaPedido},
+  UnitNotaPedido in 'Formularios\Ventas\UnitNotaPedido.pas' {NotaPedido},
   UnitListaNotasPedido in 'Formularios\Ventas\UnitListaNotasPedido.pas' {ListaNotasPedido},
   UnitNotaPedidoDetalle in 'Formularios\Ventas\UnitNotaPedidoDetalle.pas' {NotapedidoDetalle},
   UnitConsultaEquipos in 'Formularios\Ventas\UnitConsultaEquipos.pas' {ConsultaEquipos},

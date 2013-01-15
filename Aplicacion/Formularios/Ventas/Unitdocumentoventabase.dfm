@@ -264,28 +264,35 @@ object documentoventabase: Tdocumentoventabase
           Expanded = False
           FieldName = 'documentoventadetalle_cantidad'
           Title.Caption = 'Cant.'
-          Width = 65
+          Width = 41
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'producto_id'
+          Title.Caption = 'Codigo'
+          Width = 77
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'documentoventadetalle_descripcion'
           Title.Caption = 'Producto'
-          Width = 493
+          Width = 523
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'documentoventadetalle_precio'
           Title.Caption = 'Precio'
-          Width = 124
+          Width = 80
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'documentoventadetalle_total'
           Title.Caption = 'Total'
-          Width = 109
+          Width = 66
           Visible = True
         end>
     end

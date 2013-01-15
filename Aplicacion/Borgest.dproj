@@ -252,6 +252,9 @@
     <DCCReference Include="Formularios\Ventas\Unitnotacreditoventa.pas">
       <Form>notacreditoventa</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitNotaPedido.pas">
+      <Form>NotaPedido</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitNotaPedidoDetalle.pas">
       <Form>NotapedidoDetalle</Form>
     </DCCReference>
@@ -281,9 +284,6 @@
     </DCCReference>
     <DCCReference Include="UnitImprimirListaPrecios.pas">
       <Form>ImprimirListaPrecios</Form>
-    </DCCReference>
-    <DCCReference Include="UnitNotaPedido.pas">
-      <Form>NotaPedido</Form>
     </DCCReference>
   </ItemGroup>
 </Project>
