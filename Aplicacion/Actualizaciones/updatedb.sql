@@ -415,3 +415,11 @@ INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,53,perfil_id from perfiles
 113;
 ALTER TABLE `documentoventadetalles` 
 ADD COLUMN `documentoventadetalle_listaprecio` INT(3) NULL DEFAULT -1  AFTER `documentoventadetalle_importe6`;
+114;
+ALTER TABLE `clientes` ADD COLUMN `personal_id` INT(11) NOT NULL DEFAULT 1  AFTER `cliente_observaciones` , 
+  ADD CONSTRAINT `fk_clientes_personal1`
+  FOREIGN KEY (`personal_id` )
+  REFERENCES `personal` (`personal_id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+, ADD INDEX `fk_clientes_personal1` (`personal_id` ASC) ;

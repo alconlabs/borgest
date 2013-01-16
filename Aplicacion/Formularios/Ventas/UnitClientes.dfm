@@ -74,6 +74,8 @@ object clientes: Tclientes
       TabOrder = 0
       object TabSheet1: TTabSheet
         Caption = 'Datos Personales'
+        ExplicitLeft = 0
+        ExplicitTop = 30
         object Label7: TLabel
           Left = 29
           Top = 310
@@ -176,14 +178,13 @@ object clientes: Tclientes
           Height = 13
           Alignment = taRightJustify
           Caption = 'Vendedor'
-          Enabled = False
         end
         object cliente_observaciones: TMemo
           Left = 106
           Top = 307
           Width = 429
           Height = 70
-          TabOrder = 12
+          TabOrder = 14
         end
         object cliente_documentotipo: TGTBComboBox
           Left = 33
@@ -328,7 +329,7 @@ object clientes: Tclientes
           Style = csDropDownList
           ItemHeight = 13
           ItemIndex = 0
-          TabOrder = 13
+          TabOrder = 12
           Text = 'Contado'
           Items.Strings = (
             'Contado'
@@ -340,9 +341,8 @@ object clientes: Tclientes
           Width = 220
           Height = 21
           Style = csDropDownList
-          Enabled = False
           ItemHeight = 13
-          TabOrder = 14
+          TabOrder = 13
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from personal')
