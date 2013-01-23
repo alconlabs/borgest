@@ -73,7 +73,6 @@ object ActualizarProductos: TActualizarProductos
       object TabSheet2: TTabSheet
         Caption = 'Actualizar Productos'
         ImageIndex = 1
-        ExplicitHeight = 173
         object Label3: TLabel
           Left = 53
           Top = 12
@@ -263,7 +262,6 @@ object ActualizarProductos: TActualizarProductos
       object TabSheet1: TTabSheet
         Caption = 'Actualizar desde Excel'
         ImageIndex = 1
-        ExplicitHeight = 173
         object Label2: TLabel
           Left = 40
           Top = 5
@@ -715,7 +713,6 @@ object ActualizarProductos: TActualizarProductos
       ActivePage = TabSheet3
       Align = alTop
       TabOrder = 1
-      ExplicitTop = 201
       object TabSheet3: TTabSheet
         Caption = 'Productos Nuevos'
         ImageIndex = 1

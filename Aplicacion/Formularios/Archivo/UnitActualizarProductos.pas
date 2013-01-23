@@ -402,6 +402,7 @@ begin
                         if columna_codigoreferencia.ItemIndex>-1 then
                           MQNuevos.FieldByName('producto_codigoreferencia').AsString:=Princ.ADODataSet1.Fields[columna_codigoreferencia.ItemIndex].AsString;
 
+                        MQNuevos.FieldByName('producdepo_stockactual').AsString:='0';
                         if columna_stockactual.ItemIndex>-1 then
                           MQNuevos.FieldByName('producdepo_stockactual').AsString:=Princ.ADODataSet1.Fields[columna_stockactual.ItemIndex].AsString;
 
