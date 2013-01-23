@@ -202,7 +202,7 @@ object compradetalle: Tcompradetalle
     end
     object producto_id: TEditCodi
       Left = 102
-      Top = 39
+      Top = 36
       Width = 121
       Height = 21
       Flat = False
