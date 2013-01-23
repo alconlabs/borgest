@@ -64,11 +64,13 @@ end;
 
 procedure Tlistabase.btnanularClick(Sender: TObject);
 begin
-    if ZQGrilla.RecordCount>0 then
+    if ZQGrilla.Active then
       begin
-          abm:=4;
-          id:=ZQGrilla.FieldByName(campo_id).AsString;
-
+          if ZQGrilla.RecordCount>0 then
+            begin
+                abm:=4;
+                id:=ZQGrilla.FieldByName(campo_id).AsString;
+            end;
       end;
 end;
 
@@ -80,22 +82,25 @@ end;
 
 procedure Tlistabase.btneliminarClick(Sender: TObject);
 begin
-    if ZQGrilla.RecordCount>0 then
+    if ZQGrilla.Active then
       begin
-          abm:=3;
-          id:=ZQGrilla.FieldByName(campo_id).AsString;
-
+          if ZQGrilla.RecordCount>0 then
+            begin
+                abm:=3;
+                id:=ZQGrilla.FieldByName(campo_id).AsString;
+            end;
       end;
-
 end;
 
 procedure Tlistabase.btnmodificarClick(Sender: TObject);
 begin
-    if ZQGrilla.RecordCount>0 then
+    if ZQGrilla.Active then
       begin
-          abm:=2;
-          id:=ZQGrilla.FieldByName(campo_id).AsString;
-
+          if ZQGrilla.RecordCount>0 then
+            begin
+                abm:=2;
+                id:=ZQGrilla.FieldByName(campo_id).AsString;
+            end;
       end;
 
 end;

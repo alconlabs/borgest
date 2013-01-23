@@ -125,8 +125,11 @@ end;
 procedure Tpersonal.btneliminarClick(Sender: TObject);
 begin
   inherited;
-    if (MessageDlg('Seguro desea eliminar este vendedor?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
-      eliminar;
+    if ZQGrilla.Active then
+      begin
+          if (MessageDlg('Seguro desea eliminar este vendedor?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+            eliminar;
+      end;
 end;
 
 procedure Tpersonal.btnfiltrarClick(Sender: TObject);

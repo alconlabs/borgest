@@ -1,7 +1,5 @@
 inherited personal: Tpersonal
   Caption = 'Vendedores'
-  ExplicitWidth = 950
-  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
