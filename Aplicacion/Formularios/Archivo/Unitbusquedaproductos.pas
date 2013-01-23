@@ -137,7 +137,7 @@ begin
 
     case campo.ItemIndex of
         0:begin
-              producto_campo:='producto_id';
+              producto_campo:='productos.producto_id';
 
           end;
         1:begin
@@ -162,7 +162,7 @@ begin
 
 
     if fil_producto_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_id like "%'+fil_producto_id.Text+'"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and productos.producto_id like "%'+fil_producto_id.Text+'"';
 
     if fil_producto_codigo.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_codigo like "%'+fil_producto_codigo.Text+'"';

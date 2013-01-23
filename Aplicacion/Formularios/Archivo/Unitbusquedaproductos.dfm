@@ -200,6 +200,7 @@ object busquedaproductos: Tbusquedaproductos
         Height = 22
         Align = alLeft
         TabOrder = 4
+        ExplicitHeight = 21
       end
       object fil_producto_id: TEdit
         Left = 0
@@ -217,6 +218,7 @@ object busquedaproductos: Tbusquedaproductos
         Height = 22
         Align = alLeft
         TabOrder = 2
+        ExplicitHeight = 21
       end
       object fil_rubro_nombre: TEdit
         Left = 602
@@ -225,6 +227,7 @@ object busquedaproductos: Tbusquedaproductos
         Height = 22
         Align = alLeft
         TabOrder = 6
+        ExplicitHeight = 21
       end
       object fil_producto_preciocosto: TEdit
         Left = 412
@@ -233,6 +236,7 @@ object busquedaproductos: Tbusquedaproductos
         Height = 22
         Align = alLeft
         TabOrder = 3
+        ExplicitHeight = 21
       end
       object fil_producto_codigo: TEdit
         Left = 72
@@ -241,6 +245,7 @@ object busquedaproductos: Tbusquedaproductos
         Height = 22
         Align = alLeft
         TabOrder = 1
+        ExplicitHeight = 21
       end
       object fil_producdepo_stockactual: TEdit
         Left = 552
@@ -249,6 +254,7 @@ object busquedaproductos: Tbusquedaproductos
         Height = 22
         Align = alLeft
         TabOrder = 5
+        ExplicitHeight = 21
       end
       object fil_proveedor_nombre: TEdit
         Left = 702
@@ -257,6 +263,7 @@ object busquedaproductos: Tbusquedaproductos
         Height = 22
         Align = alLeft
         TabOrder = 7
+        ExplicitHeight = 21
       end
     end
     object panelbusqueda: TAdvPanel
