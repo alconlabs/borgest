@@ -198,6 +198,7 @@ object ventadetalle2: Tventadetalle2
       TabOrder = 4
       Text = '0,00'
       Visible = True
+      OnExit = ventadetalle_totalExit
       Version = '2.7.0.5'
     end
     object producto_id: TEditCodi

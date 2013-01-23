@@ -55,11 +55,13 @@ type
     procedure btnprecio2Click(Sender: TObject);
     procedure btnprecio3Click(Sender: TObject);
     procedure btnprecio4Click(Sender: TObject);
+    procedure ventadetalle_totalExit(Sender: TObject);
   private
     { Private declarations }
     PRODUCTOMODIFICARDESCR:string;
     procedure mostrarstock;
     procedure mostrarprecios;
+    function control:boolean;
   public
     { Public declarations }
     producto_precioventa:string;
@@ -76,6 +78,47 @@ implementation
 uses unitPrinc, Unitbusquedaproductos;
 
 {$R *.dfm}
+
+function Tventadetalle2.control:boolean;
+var
+  error:integer;
+begin
+    error:=0;
+
+    if ventadetalle_total.FloatValue=0 then
+      error:=3;
+
+    if ventadetalle_preciounitario.FloatValue=0 then
+      error:=2;
+
+    if ventadeta_cantidad.FloatValue=0 then
+      error:=1;
+
+
+    case error of
+        1:begin
+              MessageDlg('La cantidad no puede ser 0.', mtError, [mbOK], 0);
+          end;
+
+        2:begin
+              MessageDlg('El precio unitario no puede ser 0.', mtError, [mbOK], 0);
+          end;
+
+        3:begin
+              MessageDlg('El total no puede ser 0.', mtError, [mbOK], 0);
+          end;
+
+    end;
+
+
+
+
+
+    result:=error=0;
+end;
+
+
+
 
 procedure Tventadetalle2.mostrarprecios;
 begin
@@ -300,8 +343,13 @@ end;
 
 procedure Tventadetalle2.btnaceptarClick(Sender: TObject);
 begin
-    CargarQuery;
-    Self.ModalResult:=mrOk;
+    if control then
+      begin
+          calculartotal;
+          CargarQuery;
+          Self.ModalResult:=mrOk;
+      end;
+
 end;
 
 procedure Tventadetalle2.FormCreate(Sender: TObject);
@@ -331,6 +379,11 @@ begin
 end;
 
 procedure Tventadetalle2.ventadetalle_preciounitarioExit(Sender: TObject);
+begin
+    calculartotal;
+end;
+
+procedure Tventadetalle2.ventadetalle_totalExit(Sender: TObject);
 begin
     calculartotal;
 end;
