@@ -727,4 +727,106 @@ object documentoventabase: Tdocumentoventabase
         ParamType = ptUnknown
       end>
   end
+  object ZQDocumentoventadetallesAnterior: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select * from documentoventadetalles'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 224
+    Top = 240
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    object IntegerField1: TIntegerField
+      FieldName = 'documentoventadetalle_id'
+      Required = True
+    end
+    object StringField1: TStringField
+      FieldName = 'documentoventadetalle_descripcion'
+      Size = 150
+    end
+    object FloatField1: TFloatField
+      FieldName = 'documentoventadetalle_cantidad'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
+    end
+    object FloatField2: TFloatField
+      FieldName = 'documentoventadetalle_precio'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
+    end
+    object FloatField3: TFloatField
+      FieldName = 'documentoventadetalle_total'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
+    end
+    object FloatField4: TFloatField
+      FieldName = 'documentoventadetalle_neto21'
+    end
+    object FloatField5: TFloatField
+      FieldName = 'documentoventadetalle_iva21'
+    end
+    object FloatField6: TFloatField
+      FieldName = 'documentoventadetalle_neto105'
+    end
+    object FloatField7: TFloatField
+      FieldName = 'documentoventadetalle_iva105'
+    end
+    object FloatField8: TFloatField
+      FieldName = 'documentoventadetalle_nogravado'
+    end
+    object StringField2: TStringField
+      FieldName = 'documentoventadetalle_estado'
+      Size = 45
+    end
+    object StringField3: TStringField
+      FieldName = 'documentoventadetalle_observacion'
+      Size = 255
+    end
+    object IntegerField2: TIntegerField
+      FieldName = 'producto_id'
+      Required = True
+    end
+    object IntegerField3: TIntegerField
+      FieldName = 'documentoventadetalle_idorig'
+    end
+    object FloatField9: TFloatField
+      FieldName = 'documentoventadetalle_cantidadpendiente'
+    end
+    object IntegerField4: TIntegerField
+      FieldName = 'documentoventa_id'
+      Required = True
+    end
+    object FloatField10: TFloatField
+      FieldName = 'documentoventadetalle_importe1'
+    end
+    object FloatField11: TFloatField
+      FieldName = 'documentoventadetalle_importe2'
+    end
+    object FloatField12: TFloatField
+      FieldName = 'documentoventadetalle_importe3'
+    end
+    object FloatField13: TFloatField
+      FieldName = 'documentoventadetalle_importe4'
+    end
+    object FloatField14: TFloatField
+      FieldName = 'documentoventadetalle_importe5'
+    end
+    object FloatField15: TFloatField
+      FieldName = 'documentoventadetalle_importe6'
+    end
+    object IntegerField5: TIntegerField
+      FieldName = 'documentoventadetalle_listaprecio'
+    end
+  end
 end

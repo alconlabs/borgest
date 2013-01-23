@@ -80,6 +80,30 @@ type
     ZQDocumentoventadetallesdocumentoventadetalle_importe5: TFloatField;
     ZQDocumentoventadetallesdocumentoventadetalle_importe6: TFloatField;
     ZQDocumentoventadetallesdocumentoventadetalle_listaprecio: TIntegerField;
+    ZQDocumentoventadetallesAnterior: TZQuery;
+    IntegerField1: TIntegerField;
+    StringField1: TStringField;
+    FloatField1: TFloatField;
+    FloatField2: TFloatField;
+    FloatField3: TFloatField;
+    FloatField4: TFloatField;
+    FloatField5: TFloatField;
+    FloatField6: TFloatField;
+    FloatField7: TFloatField;
+    FloatField8: TFloatField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    IntegerField2: TIntegerField;
+    IntegerField3: TIntegerField;
+    FloatField9: TFloatField;
+    IntegerField4: TIntegerField;
+    FloatField10: TFloatField;
+    FloatField11: TFloatField;
+    FloatField12: TFloatField;
+    FloatField13: TFloatField;
+    FloatField14: TFloatField;
+    FloatField15: TFloatField;
+    IntegerField5: TIntegerField;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -412,6 +436,21 @@ begin
     ZQExecSql.ParamByName('documentoventa_id').AsString:=id;
     ZQExecSql.ExecSQL;
 
+
+    ZQDocumentoventadetallesAnterior.Active:=false;
+    ZQDocumentoventadetallesAnterior.ParamByName('documentoventa_id').AsString:=id;
+    ZQDocumentoventadetallesAnterior.Active:=true;
+    ZQDocumentoventadetallesAnterior.First;
+    while not ZQDocumentoventadetallesAnterior.Eof do
+        begin
+            Princ.actualizarstock(ZQDocumentoventadetallesAnterior.FieldByName('producto_id').AsString,ZQDocumentoventadetallesAnterior.FieldByName('documentoventadetalle_cantidad').AsFloat,tipodocu_id.codigo,true);
+
+            ZQDocumentoventadetallesAnterior.Next;
+        end;
+
+
+
+
     ZQExecSql.SQL.Clear;
     ZQExecSql.SQL.Add('delete from documentoventadetalles ');
     ZQExecSql.SQL.Add('where documentoventa_id=:documentoventa_id');
@@ -447,6 +486,8 @@ begin
             ZQExecSql.ParamByName('documentoventadetalle_cantidadpendiente').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidadpendiente').AsString;
             ZQExecSql.ParamByName('documentoventa_id').AsString:=id;
             ZQExecSql.ExecSQL;
+
+            Princ.actualizarstock(ZQDocumentoventadetalles.FieldByName('producto_id').AsString,ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat,tipodocu_id.codigo,false);
 
             ZQDocumentoventadetalles.Edit;
             ZQDocumentoventadetalles.FieldByName('documentoventadetalle_id').AsString:=documentoventadetalle_id;
