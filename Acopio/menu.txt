@@ -1,0 +1,51 @@
+Archivo
+	General
+		Vendedores
+		Servicios
+		Productos
+		Calculo Precios
+		Politicas de Precios
+		Clientes
+	Proveedores
+		Proveedores
+	Localidades
+		Localidades
+	Empresa
+		Empresa
+		Sucursales
+		Puntos de Venta
+		Tipos de Documentos
+	Listados
+		Lista de Precios
+Compras
+	Documentos
+		Facturas de Compra
+		Ordenes de Pago
+		Estado de Ctas.
+		Informes
+Ventas
+	Documentos
+		Cotratacion
+		Orden de Servicio
+		Nota de Pedido
+		Equipos
+		Facturas de Ventas
+		Venta Rapida
+		Recibos de Venta
+		Notas de Credito
+		Impresora Fiscal
+	Cuenta Corriente
+		Saldos
+		Estado de Ctas.
+		Detalle de Ctas.
+	Caja
+		Estado Caja
+		Caja
+	Informes
+		Informes
+Herramientas
+	Herramientas
+		Configuracion
+		Actualizar Productos
+	Seguridad
+		Perfiles de Seguridad
