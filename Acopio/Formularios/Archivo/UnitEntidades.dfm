@@ -2,8 +2,8 @@ object Entidades: TEntidades
   Left = 0
   Top = 0
   Caption = 'Entidades'
-  ClientHeight = 368
-  ClientWidth = 687
+  ClientHeight = 366
+  ClientWidth = 660
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,23 +14,20 @@ object Entidades: TEntidades
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 687
+    Width = 660
     Height = 311
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alTop
     TabOrder = 0
     object TabSheet2: TTabSheet
       Caption = '    Datos Principales    '
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label1: TLabel
         Left = 84
         Top = 102
@@ -190,42 +187,42 @@ object Entidades: TEntidades
         Top = 62
         Width = 529
         Height = 21
-        TabOrder = 2
+        TabOrder = 3
       end
       object entidad_piso: TEdit
         Left = 116
         Top = 141
         Width = 82
         Height = 21
-        TabOrder = 3
+        TabOrder = 6
       end
       object entidad_depto: TEdit
         Left = 116
         Top = 163
         Width = 82
         Height = 21
-        TabOrder = 4
+        TabOrder = 7
       end
       object localidad_codpostal: TEdit
         Left = 275
         Top = 164
         Width = 77
         Height = 21
-        TabOrder = 5
+        TabOrder = 10
       end
       object entidad_observaciones: TEdit
         Left = 115
         Top = 246
         Width = 529
         Height = 21
-        TabOrder = 6
+        TabOrder = 12
       end
       object Panel1: TPanel
         Left = 116
         Top = 199
         Width = 160
         Height = 43
-        TabOrder = 7
+        TabOrder = 11
         object Label43: TLabel
           Left = 36
           Top = 5
@@ -260,14 +257,14 @@ object Entidades: TEntidades
         Top = 40
         Width = 529
         Height = 21
-        TabOrder = 8
+        TabOrder = 2
       end
       object entidad_calle: TEdit
         Left = 116
         Top = 97
         Width = 529
         Height = 21
-        TabOrder = 9
+        TabOrder = 4
       end
       object entidad_puerta: TDBAdvEdit
         Left = 116
@@ -284,7 +281,7 @@ object Entidades: TEntidades
         Lookup.Separator = ';'
         Color = clWindow
         Enabled = True
-        TabOrder = 10
+        TabOrder = 5
         Text = '0'
         Visible = True
         Version = '2.7.0.5'
@@ -295,8 +292,9 @@ object Entidades: TEntidades
         Width = 368
         Height = 21
         Style = csDropDownList
-        ItemHeight = 0
-        TabOrder = 11
+        ItemHeight = 13
+        TabOrder = 8
+        OnExit = provincia_codiExit
         Confbase = Princ.ZBase
         Confsql.Strings = (
           'select * from provincia'
@@ -311,8 +309,8 @@ object Entidades: TEntidades
         Width = 368
         Height = 21
         Style = csDropDownList
-        ItemHeight = 0
-        TabOrder = 12
+        ItemHeight = 13
+        TabOrder = 9
         Confbase = Princ.ZBase
         Confsql.Strings = (
           'select * from localidad'
@@ -325,10 +323,6 @@ object Entidades: TEntidades
     object TabSheet1: TTabSheet
       Caption = '   Inscripciones    '
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label17: TLabel
         Left = 295
         Top = 308
@@ -474,8 +468,8 @@ object Entidades: TEntidades
         Top = 428
         Width = 206
         Height = 21
-        ItemHeight = 0
-        TabOrder = 0
+        ItemHeight = 13
+        TabOrder = 13
         Confbase = Princ.ZBase
         Confsql.Strings = (
           'select * from rubros'
@@ -486,179 +480,13 @@ object Entidades: TEntidades
         Tag2 = 0
         ConfNuevo = True
       end
-      object calculoprecio_id: TSqlComboBox
-        Left = 370
-        Top = 329
-        Width = 206
-        Height = 21
-        ItemHeight = 0
-        TabOrder = 1
-        Confbase = Princ.ZBase
-        Confsql.Strings = (
-          'select * from calculoprecios'
-          'order by calculoprecio_nombre')
-        ConfTabla = 'calculoprecios'
-        Confcampo_codigo = 'calculoprecio_id'
-        Confcampo_nomb = 'calculoprecio_nombre'
-        Tag2 = 0
-      end
-      object producto_precioventabase: TDBAdvEdit
-        Left = 370
-        Top = 353
-        Width = 121
-        Height = 21
-        TabStop = False
-        AutoThousandSeparator = False
-        EditType = etFloat
-        Precision = 2
-        LabelFont.Charset = DEFAULT_CHARSET
-        LabelFont.Color = clWindowText
-        LabelFont.Height = -11
-        LabelFont.Name = 'Tahoma'
-        LabelFont.Style = []
-        Lookup.Separator = ';'
-        Color = clWindow
-        Enabled = True
-        TabOrder = 2
-        Text = '0,00'
-        Visible = True
-        Version = '2.7.0.5'
-      end
-      object politicaprecio_id: TSqlComboBox
-        Left = 370
-        Top = 377
-        Width = 206
-        Height = 21
-        ItemHeight = 0
-        TabOrder = 3
-        Confbase = Princ.ZBase
-        Confsql.Strings = (
-          'select * from politicasdeprecios'
-          'order by politicaprecio_nombre')
-        ConfTabla = 'politicasdeprecios'
-        Confcampo_codigo = 'politicaprecio_id'
-        Confcampo_nomb = 'politicaprecio_nombre'
-        Tag2 = 0
-      end
-      object producto_neto1: TDBAdvEdit
-        Left = 138
-        Top = 342
-        Width = 121
-        Height = 21
-        TabStop = False
-        AutoThousandSeparator = False
-        EditType = etFloat
-        Precision = 2
-        LabelFont.Charset = DEFAULT_CHARSET
-        LabelFont.Color = clWindowText
-        LabelFont.Height = -11
-        LabelFont.Name = 'Tahoma'
-        LabelFont.Style = []
-        Lookup.Separator = ';'
-        Color = clWindow
-        Enabled = False
-        TabOrder = 4
-        Text = '0,00'
-        Visible = True
-        Version = '2.7.0.5'
-      end
-      object producto_neto2: TDBAdvEdit
-        Left = 274
-        Top = 342
-        Width = 121
-        Height = 21
-        TabStop = False
-        AutoThousandSeparator = False
-        EditType = etFloat
-        Precision = 2
-        LabelFont.Charset = DEFAULT_CHARSET
-        LabelFont.Color = clWindowText
-        LabelFont.Height = -11
-        LabelFont.Name = 'Tahoma'
-        LabelFont.Style = []
-        Lookup.Separator = ';'
-        Color = clWindow
-        Enabled = False
-        TabOrder = 5
-        Text = '0,00'
-        Visible = True
-        Version = '2.7.0.5'
-      end
-      object producto_neto3: TDBAdvEdit
-        Left = 410
-        Top = 342
-        Width = 121
-        Height = 21
-        TabStop = False
-        AutoThousandSeparator = False
-        EditType = etFloat
-        Precision = 2
-        LabelFont.Charset = DEFAULT_CHARSET
-        LabelFont.Color = clWindowText
-        LabelFont.Height = -11
-        LabelFont.Name = 'Tahoma'
-        LabelFont.Style = []
-        Lookup.Separator = ';'
-        Color = clWindow
-        Enabled = False
-        TabOrder = 6
-        Text = '0,00'
-        Visible = True
-        Version = '2.7.0.5'
-      end
-      object producto_neto4: TDBAdvEdit
-        Left = 546
-        Top = 342
-        Width = 121
-        Height = 21
-        TabStop = False
-        AutoThousandSeparator = False
-        EditType = etFloat
-        Precision = 2
-        LabelFont.Charset = DEFAULT_CHARSET
-        LabelFont.Color = clWindowText
-        LabelFont.Height = -11
-        LabelFont.Name = 'Tahoma'
-        LabelFont.Style = []
-        Lookup.Separator = ';'
-        Color = clWindow
-        Enabled = False
-        TabOrder = 7
-        Text = '0,00'
-        Visible = True
-        Version = '2.7.0.5'
-      end
-      object proveedor_id: TSqlComboBox
-        Left = 373
-        Top = 302
-        Width = 393
-        Height = 21
-        ItemHeight = 0
-        TabOrder = 8
-        Confbase = Princ.ZBase
-        Confsql.Strings = (
-          'select * from proveedores'
-          'order by proveedor_nombre')
-        ConfTabla = 'proveedores'
-        Confcampo_codigo = 'proveedor_id'
-        Confcampo_nomb = 'proveedor_nombre'
-        Tag2 = 0
-      end
-      object btncalculopreciodetaprod: TButton
-        Left = 600
-        Top = 327
-        Width = 99
-        Height = 25
-        Caption = 'Agregar Calculos'
-        TabOrder = 9
-      end
       object entidad_tipoiva: TComboBox
         Left = 322
         Top = 39
         Width = 132
         Height = 21
         ItemHeight = 13
-        TabOrder = 10
+        TabOrder = 4
         Text = 'INSCRIPTO'
         Items.Strings = (
           'INSCRIPTO'
@@ -671,7 +499,7 @@ object Entidades: TEntidades
         Height = 21
         Date = 40384.000000000000000000
         Time = 40384.000000000000000000
-        TabOrder = 11
+        TabOrder = 3
       end
       object entidad_regiacopiador: TEdit
         Left = 114
@@ -685,36 +513,36 @@ object Entidades: TEntidades
         Top = 213
         Width = 102
         Height = 21
-        TabOrder = 13
+        TabOrder = 11
       end
       object entidad_iibb: TEdit
         Left = 501
         Top = 16
         Width = 132
         Height = 21
-        TabOrder = 14
+        TabOrder = 2
       end
       object entidad_minagri: TEdit
         Left = 114
         Top = 167
         Width = 102
         Height = 21
-        TabOrder = 15
+        TabOrder = 9
       end
       object entidad_diretransporte: TEdit
         Left = 114
         Top = 190
         Width = 102
         Height = 21
-        TabOrder = 16
+        TabOrder = 10
       end
-      object GroupBox1: TGroupBox
+      object retieneIIBB: TGroupBox
         Left = 114
         Top = 72
         Width = 97
         Height = 77
         Caption = 'Retiene IIBB'
-        TabOrder = 17
+        TabOrder = 5
         object Label46: TLabel
           Left = 32
           Top = 21
@@ -744,13 +572,13 @@ object Entidades: TEntidades
           TabOrder = 1
         end
       end
-      object GroupBox2: TGroupBox
+      object retencionAFIP: TGroupBox
         Left = 217
         Top = 71
         Width = 133
         Height = 77
         Caption = 'Ag. Retenci'#243'n AFIP'
-        TabOrder = 18
+        TabOrder = 6
         object Label48: TLabel
           Left = 63
           Top = 40
@@ -780,13 +608,13 @@ object Entidades: TEntidades
           TabOrder = 1
         end
       end
-      object GroupBox3: TGroupBox
+      object multilateral: TGroupBox
         Left = 357
         Top = 72
         Width = 135
         Height = 77
         Caption = 'Conv. Multilateral'
-        TabOrder = 19
+        TabOrder = 7
         object Label50: TLabel
           Left = 63
           Top = 40
@@ -816,13 +644,13 @@ object Entidades: TEntidades
           TabOrder = 1
         end
       end
-      object GroupBox4: TGroupBox
+      object exportador: TGroupBox
         Left = 501
         Top = 72
         Width = 131
         Height = 77
         Caption = 'Exportador'
-        TabOrder = 20
+        TabOrder = 8
         object Label52: TLabel
           Left = 63
           Top = 40
@@ -852,13 +680,13 @@ object Entidades: TEntidades
           TabOrder = 1
         end
       end
-      object GroupBox5: TGroupBox
+      object regproductores: TGroupBox
         Left = 498
         Top = 167
         Width = 134
         Height = 90
         Caption = 'Insc. Reg. Productores'
-        TabOrder = 21
+        TabOrder = 15
         object Label54: TLabel
           Left = 55
           Top = 48
@@ -888,13 +716,13 @@ object Entidades: TEntidades
           TabOrder = 1
         end
       end
-      object GroupBox6: TGroupBox
+      object carnet: TGroupBox
         Left = 221
         Top = 167
         Width = 271
         Height = 90
         Caption = 'Datos de Carnet de Manejo'
-        TabOrder = 22
+        TabOrder = 14
         object Label36: TLabel
           Left = 5
           Top = 26
@@ -948,7 +776,7 @@ object Entidades: TEntidades
         Top = 16
         Width = 132
         Height = 21
-        TabOrder = 23
+        TabOrder = 1
       end
       object entidad_tipodocumento: TComboBox
         Left = 114
@@ -957,7 +785,7 @@ object Entidades: TEntidades
         Height = 21
         ItemHeight = 13
         ItemIndex = 0
-        TabOrder = 24
+        TabOrder = 0
         Text = 'DNI'
         Items.Strings = (
           'DNI'
@@ -970,10 +798,6 @@ object Entidades: TEntidades
     object TabSheet3: TTabSheet
       Caption = '   Datos Comerciales   '
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label42: TLabel
         Left = 4
         Top = 13
@@ -985,9 +809,10 @@ object Entidades: TEntidades
       object DBGrid1: TDBGrid
         Left = 3
         Top = 30
-        Width = 670
+        Width = 643
         Height = 223
         TabStop = False
+        DataSource = DSCgrilla
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
@@ -998,43 +823,73 @@ object Entidades: TEntidades
         Columns = <
           item
             Expanded = False
+            FieldName = 'entcontacto_nombre'
             Title.Caption = 'Nombre y Apellido'
-            Width = 120
+            Width = 157
             Visible = True
           end
           item
             Expanded = False
+            FieldName = 'entcontacto_puesto'
             Title.Caption = 'Puesto'
-            Width = 110
+            Width = 67
             Visible = True
           end
           item
             Expanded = False
-            Title.Caption = 'Nro Celular'
-            Width = 86
+            FieldName = 'entcontacto_celular'
+            Title.Caption = 'Nro de Celular'
+            Width = 75
             Visible = True
           end
           item
             Expanded = False
-            Title.Caption = 'E-mail'
-            Width = 88
+            FieldName = 'entcontacto_email'
+            Title.Caption = 'Email'
+            Width = 144
             Visible = True
           end
           item
             Expanded = False
+            FieldName = 'entcontacto_observaciones'
             Title.Caption = 'Observaciones'
-            Width = 235
+            Width = 177
             Visible = True
           end>
+      end
+      object btnagregar: TButton
+        Left = 1
+        Top = 254
+        Width = 70
+        Height = 24
+        Caption = 'Agregar'
+        Enabled = False
+        TabOrder = 1
+        OnClick = btnagregarClick
+      end
+      object btnmodificar: TButton
+        Left = 70
+        Top = 254
+        Width = 70
+        Height = 24
+        Caption = 'Modificar'
+        Enabled = False
+        TabOrder = 2
+      end
+      object btnquitar: TButton
+        Left = 139
+        Top = 254
+        Width = 70
+        Height = 24
+        Caption = 'Quitar'
+        Enabled = False
+        TabOrder = 3
+        OnClick = btnquitarClick
       end
     end
     object TabSheet4: TTabSheet
       Caption = 'Datos Bancarios'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBGrid2: TDBGrid
         Left = 3
         Top = 16
@@ -1074,14 +929,39 @@ object Entidades: TEntidades
             Visible = True
           end>
       end
+      object Button1: TButton
+        Left = 1
+        Top = 254
+        Width = 70
+        Height = 24
+        Caption = 'Agregar'
+        Enabled = False
+        TabOrder = 1
+        OnClick = btnagregarClick
+      end
+      object Button2: TButton
+        Left = 70
+        Top = 254
+        Width = 70
+        Height = 24
+        Caption = 'Modificar'
+        Enabled = False
+        TabOrder = 2
+      end
+      object Button3: TButton
+        Left = 139
+        Top = 254
+        Width = 70
+        Height = 24
+        Caption = 'Quitar'
+        Enabled = False
+        TabOrder = 3
+        OnClick = btnquitarClick
+      end
     end
     object TabSheet5: TTabSheet
       Caption = '   Roles   '
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object DBGrid3: TDBGrid
         Left = 3
         Top = 14
@@ -1119,8 +999,8 @@ object Entidades: TEntidades
   end
   object AdvPanel3: TAdvPanel
     Left = 0
-    Top = 350
-    Width = 687
+    Top = 348
+    Width = 660
     Height = 18
     Align = alBottom
     Font.Charset = DEFAULT_CHARSET
@@ -1188,26 +1068,6 @@ object Entidades: TEntidades
     TabOrder = 3
     OnClick = btncancelarClick
   end
-  object ZQClienteVehiculo: TZQuery
-    Connection = Princ.ZBase
-    SQL.Strings = (
-      'select * from clientevehiculo'
-      'where cliente_id=:cliente_id')
-    Params = <
-      item
-        DataType = ftUnknown
-        Name = 'cliente_id'
-        ParamType = ptUnknown
-      end>
-    Left = 400
-    Top = 192
-    ParamData = <
-      item
-        DataType = ftUnknown
-        Name = 'cliente_id'
-        ParamType = ptUnknown
-      end>
-  end
   object ZQentidad: TZQuery
     Connection = Princ.ZBase
     AfterOpen = ZQentidadAfterOpen
@@ -1221,7 +1081,7 @@ object Entidades: TEntidades
         ParamType = ptUnknown
       end>
     Left = 360
-    Top = 192
+    Top = 152
     ParamData = <
       item
         DataType = ftUnknown
@@ -1248,5 +1108,20 @@ object Entidades: TEntidades
         Name = 'cliente_id'
         ParamType = ptUnknown
       end>
+  end
+  object ZQEntidadContactos: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select * from entidadcontactos'
+      'where 1=2')
+    Params = <>
+    Left = 392
+    Top = 192
+  end
+  object DSCgrilla: TDataSource
+    DataSet = EntidadContactos.ZQEntidadContactos
+    Left = 520
+    Top = 192
   end
 end

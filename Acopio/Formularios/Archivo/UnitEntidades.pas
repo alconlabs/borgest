@@ -44,15 +44,6 @@ type
     Label18: TLabel;
     Label19: TLabel;
     rubro_id: TSqlComboBox;
-    calculoprecio_id: TSqlComboBox;
-    producto_precioventabase: TDBAdvEdit;
-    politicaprecio_id: TSqlComboBox;
-    producto_neto1: TDBAdvEdit;
-    producto_neto2: TDBAdvEdit;
-    producto_neto3: TDBAdvEdit;
-    producto_neto4: TDBAdvEdit;
-    proveedor_id: TSqlComboBox;
-    btncalculopreciodetaprod: TButton;
     Label2: TLabel;
     entidad_observaciones: TEdit;
     entidad_domirural: TRadioButton;
@@ -66,12 +57,12 @@ type
     entidad_iibb: TEdit;
     entidad_inicioactividad: TDateTimePicker;
     Label31: TLabel;
-    GroupBox1: TGroupBox;
+    retieneIIBB: TGroupBox;
     entidad_retieneiibbsi: TRadioButton;
     entidad_retieneiibbno: TRadioButton;
-    GroupBox2: TGroupBox;
-    GroupBox3: TGroupBox;
-    GroupBox4: TGroupBox;
+    retencionAFIP: TGroupBox;
+    multilateral: TGroupBox;
+    exportador: TGroupBox;
     Label32: TLabel;
     entidad_minagri: TEdit;
     Label33: TLabel;
@@ -80,8 +71,8 @@ type
     entidad_regiacopiador: TEdit;
     Label35: TLabel;
     entidad_regibalanza: TEdit;
-    GroupBox5: TGroupBox;
-    GroupBox6: TGroupBox;
+    regproductores: TGroupBox;
+    carnet: TGroupBox;
     Label36: TLabel;
     entidad_nrocarnetmanejo: TEdit;
     Label37: TLabel;
@@ -122,14 +113,25 @@ type
     DBGrid2: TDBGrid;
     TabSheet5: TTabSheet;
     DBGrid3: TDBGrid;
-    ZQClienteVehiculo: TZQuery;
     ZQentidad: TZQuery;
     ZQuery1: TZQuery;
+    btnagregar: TButton;
+    btnmodificar: TButton;
+    btnquitar: TButton;
+    ZQEntidadContactos: TZQuery;
+    DSCgrilla: TDataSource;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btncancelarClick(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ZQentidadAfterOpen(DataSet: TDataSet);
+    procedure FormShow(Sender: TObject);
+    procedure btnagregarClick(Sender: TObject);
+    procedure btnquitarClick(Sender: TObject);
+    procedure provincia_codiExit(Sender: TObject);
   private
     { Private declarations }
     function control:boolean;
@@ -148,9 +150,24 @@ var
 
 implementation
 
-uses UnitPrinc;
+uses UnitPrinc, UnitEntidadContactos;
 
 {$R *.dfm}
+
+procedure TEntidades.btnagregarClick(Sender: TObject);
+begin
+   try
+      EntidadContactos:= TEntidadContactos.Create(self);
+    finally
+      if EntidadContactos.ShowModal=mrOk then
+        begin
+
+//            princ.CargarDocumentoVentaDetalle(ZQDocumentocompradetalles, compradetalle.ZQDocumentocompradetalles);
+
+        end;
+
+    end;
+end;
 
 procedure TEntidades.btncancelarClick(Sender: TObject);
 begin
@@ -180,6 +197,18 @@ begin
 
           end;
     end;
+end;
+
+procedure TEntidades.btnquitarClick(Sender: TObject);
+begin
+  if (MessageDlg('Seguro desea quitar este registro?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          try
+            ZQEntidadContactos.Delete;
+          finally
+          end;
+
+      end;
 end;
 
 function TEntidades.control:boolean;
@@ -217,15 +246,13 @@ begin
     ZQuery1.sql.add('entidad_observaciones, provincia_codi, localidad_codi, entidad_tipodocumento, entidad_nrodocumento, ');
     ZQuery1.sql.add('entidad_iibb, entidad_inicioactividad, entidad_tipoiva, entidad_retieneiibb, entidad_agretencion, ');
     ZQuery1.sql.add('entidad_convmulti, entidad_exportador, entidad_minagri, entidad_diretransporte, entidad_regibalanza, ');
-    ZQuery1.sql.add('entidad_regiacopiador, entidad_nrocarnetmanejo, entidad_vencecarnet, entidad_expedidocarnet, entidad_inscregproducto, ');
-    ZQuery1.sql.add('entidad_convmulti, entidad_exportador, entidad_minagri, entidad_diretransporte, entidad_regibalanza ) ');
+    ZQuery1.sql.add('entidad_regiacopiador, entidad_nrocarnetmanejo, entidad_vencecarnet, entidad_expedidocarnet, entidad_inscregproducto) ');
     ZQuery1.sql.add('values (:entidad_codi, :entidad_precodi, :entidad_razonsocial, :entidad_nombfantasia,');
     ZQuery1.sql.add(':entidad_calle, :entidad_puerta, :entidad_piso , :entidad_depto, :entidad_domiurbano, :entidad_domirural, ');
     ZQuery1.sql.add(':entidad_observaciones, :provincia_codi, :localidad_codi, :entidad_tipodocumento, :entidad_nrodocumento, ');
     ZQuery1.sql.add(':entidad_iibb, :entidad_inicioactividad, :entidad_tipoiva, :entidad_retieneiibb, :entidad_agretencion, ');
     ZQuery1.sql.add(':entidad_convmulti, :entidad_exportador, :entidad_minagri, :entidad_diretransporte, :entidad_regibalanza, ');
-    ZQuery1.sql.add(':entidad_regiacopiador, :entidad_nrocarnetmanejo, :entidad_vencecarnet, :entidad_expedidocarnet, :entidad_inscregproducto, ');
-    ZQuery1.sql.add(':entidad_convmulti, :entidad_exportador, :entidad_minagri, :entidad_diretransporte, :entidad_regibalanza) ');
+    ZQuery1.sql.add(':entidad_regiacopiador, :entidad_nrocarnetmanejo, :entidad_vencecarnet, :entidad_expedidocarnet, :entidad_inscregproducto) ');
 
     ZQuery1.parambyname('entidad_codi').asstring:=id;
     ZQuery1.parambyname('entidad_precodi').asstring:=entidad_precodi.Text;
@@ -284,6 +311,7 @@ begin
     ZQuery1.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
+    close;
 //    Self.OnShow(self);
 end;
 
@@ -308,10 +336,20 @@ end;
 
 procedure TEntidades.FormCreate(Sender: TObject);
 begin
-//    provincia_codi.llenarcombo;
-//    localidad_codi.llenarcombo;
+    provincia_codi.llenarcombo;
+    localidad_codi.llenarcombo;
     PageControl1.ActivePage:=TabSheet2;
 
+end;
+
+procedure TEntidades.FormShow(Sender: TObject);
+begin
+    if abm<>1 then
+      begin
+          ZQentidad.Active:=false;
+          ZQentidad.ParamByName('entidad_codi').AsString:=id;
+          ZQentidad.Active:=true;
+      end;
 end;
 
 procedure TEntidades.modificar;
@@ -322,6 +360,7 @@ begin
     ZQuery1.sql.add('entidad_precodi=:entidad_precodi, ');
     ZQuery1.sql.add('entidad_razonsocial=:entidad_razonsocial, ');
     ZQuery1.sql.add('entidad_nombfantasia=:entidad_nombfantasia, ');
+    ZQuery1.sql.add('entidad_calle=:entidad_calle, ');
     ZQuery1.sql.add('entidad_puerta=:entidad_puerta, ');
     ZQuery1.sql.add('entidad_piso=:entidad_piso, ');
     ZQuery1.sql.add('entidad_depto=:entidad_depto, ');
@@ -330,8 +369,7 @@ begin
     ZQuery1.sql.add('entidad_observaciones=:entidad_observaciones, ');
     ZQuery1.sql.add('provincia_codi=:provincia_codi, ');
     ZQuery1.sql.add('localidad_codi=:localidad_codi, ');
-    ZQuery1.sql.add('entidad_tipodocumento=:entidad_tipodocumento ');
-
+    ZQuery1.sql.add('entidad_tipodocumento=:entidad_tipodocumento, ');
     ZQuery1.sql.add('entidad_nrodocumento=:entidad_nrodocumento, ');
     ZQuery1.sql.add('entidad_iibb=:entidad_iibb, ');
     ZQuery1.sql.add('entidad_inicioactividad=:entidad_inicioactividad, ');
@@ -407,9 +445,16 @@ begin
     ZQuery1.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
-//    Self.OnShow(self); }
+    close;
 end;
 
+
+procedure TEntidades.provincia_codiExit(Sender: TObject);
+begin
+    self.localidad_codi.Confsql.Text:='select * from localidad where provincia_codi='+provincia_codi.codigo+' '+
+                                      'order by localidad_nombre ';
+    localidad_codi.llenarcombo;
+end;
 
 procedure TEntidades.ZQentidadAfterOpen(DataSet: TDataSet);
 begin
@@ -422,10 +467,10 @@ begin
     entidad_puerta.Text:=ZQentidad.FieldByName('entidad_puerta').AsString;
     entidad_piso.Text:=ZQentidad.FieldByName('entidad_piso').AsString;
     entidad_depto.Text:=ZQentidad.FieldByName('entidad_depto').AsString;
-    if ZQuery1.parambyname('entidad_domiurbano').asstring='SI' then
-       entidad_domiurbano.Checked;
-    if ZQuery1.parambyname('entidad_domirural').asstring='SI' then
-       entidad_domirural.Checked;
+    if ZQentidad.fieldbyname('entidad_domiurbano').asstring='SI' then
+       entidad_domiurbano.Checked:=true;
+    if ZQentidad.fieldbyname('entidad_domirural').asstring='SI' then
+       entidad_domirural.Checked:=true;
     entidad_observaciones.Text:=ZQentidad.FieldByName('entidad_observaciones').AsString;
     provincia_codi.Buscar(ZQentidad.FieldByName('provincia_codi').AsString);
     localidad_codi.Buscar(ZQentidad.FieldByName('localidad_codi').AsString);
@@ -435,65 +480,69 @@ begin
     entidad_nrodocumento.Text:=ZQentidad.FieldByName('entidad_nrodocumento').AsString;
     entidad_iibb.Text:=ZQentidad.FieldByName('entidad_iibb').AsString;
 
-    if ZQentidad.parambyname('entidad_retieneiibb').asstring='SI' then
-    begin
+    if ZQentidad.FieldByName('entidad_retieneiibb').asstring='SI' then
+     begin
        entidad_retieneiibbsi.Checked:=true;
-
-    end;
-    
-
-
-
-
-
-    if entidad_retieneiibbsi.Checked then
-       ZQuery1.parambyname('entidad_retieneiibb').asstring:='SI'
+       entidad_retieneiibbno.Checked:=false;
+     end
     else
-       ZQuery1.parambyname('entidad_retieneiibb').asstring:='NO';
-    if entidad_agretencionsi.Checked then
-       ZQuery1.parambyname('entidad_agretencion').asstring:='SI'
+     begin
+       entidad_retieneiibbsi.Checked:=false;
+       entidad_retieneiibbno.Checked:=true;
+     end;
+
+    if ZQentidad.FieldByName('entidad_agretencion').asstring='SI' then
+     begin
+       entidad_agretencionsi.Checked:=true;
+       entidad_agretencionno.Checked:=false;
+     end
     else
-       ZQuery1.parambyname('entidad_agretencion').asstring:='NO';
-    if entidad_convmultisi.Checked then
-       ZQuery1.parambyname('entidad_convmulti').asstring:='SI'
+     begin
+       entidad_agretencionsi.Checked:=false;
+       entidad_agretencionno.Checked:=true;
+     end;
+
+    if ZQentidad.FieldByName('entidad_convmulti').asstring='SI' then
+     begin
+       entidad_convmultisi.Checked:=true;
+       entidad_convmultino.Checked:=false;
+     end
     else
-       ZQuery1.parambyname('entidad_convmulti').asstring:='NO';
+     begin
+       entidad_convmultisi.Checked:=false;
+       entidad_convmultino.Checked:=true;
+     end;
 
-    if entidad_exportadorsi.Checked then
-       ZQuery1.parambyname('entidad_exportador').asstring:='SI'
+    if ZQentidad.FieldByName('entidad_exportador').asstring='SI' then
+     begin
+       entidad_exportadorsi.Checked:=true;
+       entidad_exportadorno.Checked:=false;
+     end
     else
-       ZQuery1.parambyname('entidad_exportador').asstring:='NO';
+     begin
+       entidad_exportadorsi.Checked:=false;
+       entidad_exportadorno.Checked:=true;
+     end;
 
-    if entidad_inscregproductosi.Checked then
-       ZQuery1.parambyname('entidad_inscregproducto').asstring:='SI'
+    if ZQentidad.FieldByName('entidad_inscregproducto').asstring='SI' then
+     begin
+       entidad_inscregproductosi.Checked:=true;
+       entidad_inscregproductono.Checked:=false;
+     end
     else
-       ZQuery1.parambyname('entidad_inscregproducto').asstring:='NO';
-    ZQuery1.parambyname('entidad_minagri').asstring:=entidad_minagri.Text;
-    ZQuery1.parambyname('entidad_diretransporte').asstring:=entidad_diretransporte.Text;
-    ZQuery1.parambyname('entidad_regibalanza').asstring:=entidad_regibalanza.Text;
-    ZQuery1.parambyname('entidad_regiacopiador').asstring:=entidad_regiacopiador.Text;
-    ZQuery1.parambyname('entidad_nrocarnetmanejo').asstring:=entidad_nrocarnetmanejo.Text;
-    ZQuery1.parambyname('entidad_vencecarnet').asstring:=formatdatetime('yyyy-mm-dd',entidad_vencecarnet.Date);
-    ZQuery1.parambyname('entidad_expedidocarnet').asstring:=entidad_expedidocarnet.Text;
+     begin
+       entidad_inscregproductosi.Checked:=false;
+       entidad_inscregproductono.Checked:=true;
+     end;
 
+    entidad_minagri.Text:=ZQentidad.FieldByName('entidad_minagri').AsString;
+    entidad_diretransporte.Text:=ZQentidad.FieldByName('entidad_diretransporte').AsString;
+    entidad_regibalanza.Text:=ZQentidad.FieldByName('entidad_regibalanza').AsString;
+    entidad_regiacopiador.Text:=ZQentidad.FieldByName('entidad_regiacopiador').AsString;
+    entidad_nrocarnetmanejo.Text:=ZQentidad.FieldByName('entidad_nrocarnetmanejo').AsString;
 
-
-//    cliente_nombre.Text:=ZQclientes.FieldByName('cliente_nombre').AsString;
-//    cliente_domicilio.Text:=ZQclientes.FieldByName('cliente_domicilio').AsString;
-//    cliente_documentonro.Text:=ZQclientes.FieldByName('cliente_documentonro').AsString;
-//    cliente_cuit.Text:=ZQclientes.FieldByName('cliente_documentonro').AsString;
-//    cliente_documentotipo.Buscar(ZQclientes.FieldByName('cliente_documentotipo').AsString);
-//    cliente_documentotipo.OnSelect(self);
-//    cliente_telefono.Text:=ZQclientes.FieldByName('cliente_telefono').AsString;
-//    cliente_celular.Text:=ZQclientes.FieldByName('cliente_celular').AsString;
-//    condicioniva_id.Buscar(ZQclientes.FieldByName('condicioniva_id').AsString);
-//    cliente_mail.Text:=ZQclientes.FieldByName('cliente_mail').AsString;
-//    cliente_listaprecio.ItemIndex:=ZQclientes.FieldByName('cliente_listaprecio').AsInteger;
-//    cliente_condicionventa.ItemIndex:=ZQclientes.FieldByName('cliente_condicionventa').AsInteger;
-//    localidad_id.Buscar(ZQclientes.FieldByName('localidad_id').AsString);
-//    localidad_id.OnSelect(self);
-//    cliente_observaciones.Lines.Text:=ZQclientes.FieldByName('cliente_observaciones').AsString;
-//    personal_id.Buscar(ZQclientes.FieldByName('personal_id').AsString);
+    entidad_vencecarnet.date:=ZQentidad.FieldByName('entidad_vencecarnet').AsDateTime;
+    entidad_expedidocarnet.Text:=ZQentidad.FieldByName('entidad_expedidocarnet').AsString;
 end;
 
 end.

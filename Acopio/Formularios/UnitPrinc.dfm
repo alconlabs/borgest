@@ -2920,6 +2920,7 @@ object Princ: TPrinc
           FocusType = ftHot
           ParentFont = False
           TabOrder = 0
+          OnClick = AdvGlowButton1Click
           Appearance.BorderColor = 14727579
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -3120,6 +3121,7 @@ object Princ: TPrinc
           FocusType = ftHot
           ParentFont = False
           TabOrder = 1
+          OnClick = AdvGlowButton5Click
           Appearance.BorderColor = 14727579
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219

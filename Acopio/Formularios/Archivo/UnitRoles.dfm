@@ -12,6 +12,8 @@ object Roles: TRoles
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object PageControl1: TPageControl
@@ -21,7 +23,7 @@ object Roles: TRoles
     Height = 113
     ActivePage = TabSheet2
     Align = alTop
-    TabOrder = 0
+    TabOrder = 3
     object TabSheet2: TTabSheet
       Caption = 'General'
       ImageIndex = 1
@@ -47,10 +49,10 @@ object Roles: TRoles
         Alignment = taRightJustify
         Caption = 'Descripci'#243'n'
       end
-      object DBAdvEdit1: TDBAdvEdit
+      object rol_codi: TDBAdvEdit
         Left = 76
         Top = 16
-        Width = 141
+        Width = 85
         Height = 21
         AutoThousandSeparator = False
         EditType = etNumeric
@@ -69,13 +71,13 @@ object Roles: TRoles
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
-        Text = '1'
+        Text = '0'
         Visible = True
         Version = '2.7.0.5'
       end
-      object producto_codigo: TEdit
-        Left = 76
-        Top = 43
+      object rol_nombre: TEdit
+        Left = 77
+        Top = 40
         Width = 341
         Height = 21
         TabOrder = 1
@@ -94,7 +96,7 @@ object Roles: TRoles
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
-    TabOrder = 1
+    TabOrder = 0
     UseDockManager = True
     Version = '1.7.5.1'
     AutoHideChildren = False
@@ -141,7 +143,8 @@ object Roles: TRoles
     Width = 93
     Height = 24
     Caption = 'Aceptar'
-    TabOrder = 2
+    TabOrder = 1
+    OnClick = btnguardarClick
   end
   object btncancelar: TButton
     Left = 230
@@ -149,6 +152,48 @@ object Roles: TRoles
     Width = 93
     Height = 24
     Caption = 'Cancelar'
-    TabOrder = 3
+    TabOrder = 2
+    OnClick = btncancelarClick
+  end
+  object ZQSelect: TZQuery
+    Connection = Princ.ZBase
+    AfterOpen = ZQSelectAfterOpen
+    SQL.Strings = (
+      'select * from roles'
+      'where rol_codi=:rol_codi')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'rol_codi'
+        ParamType = ptUnknown
+      end>
+    Left = 304
+    Top = 24
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'rol_codi'
+        ParamType = ptUnknown
+      end>
+  end
+  object ZQExecSql: TZQuery
+    Connection = Princ.ZBase
+    SQL.Strings = (
+      'select * from roles'
+      'where rol_codi=:rol_codi')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'rol_codi'
+        ParamType = ptUnknown
+      end>
+    Left = 384
+    Top = 16
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'rol_codi'
+        ParamType = ptUnknown
+      end>
   end
 end

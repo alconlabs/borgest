@@ -81,6 +81,8 @@ type
     procedure AdvToolBarGeneralOptionClick(Sender: TObject; ClientPoint,
       ScreenPoint: TPoint);
     procedure AdvGlowButton4Click(Sender: TObject);
+    procedure AdvGlowButton1Click(Sender: TObject);
+    procedure AdvGlowButton5Click(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -219,7 +221,8 @@ implementation
 
 uses Unitlocalidades, UnitConfiguracion, UnitABMbase, UnitListaSucursales,
      UnitListaPuntosdeVenta, UnitListaTiposDocumentos, UnitPersonal,
-     UnitPerfil, UnitListaPerfiles, Unitlistatemplates, UnitlistaRoles;
+     UnitPerfil, UnitListaPerfiles, Unitlistatemplates, UnitlistaRoles,
+       UnitlistaEntidades, UnitlistaRubros;
 
 {$R *.dfm}
 
@@ -1664,13 +1667,36 @@ begin
     ADOConnection1.ConnectionString:=CONNECTION_STRING1+EXCEL_FILE+CONNECTION_STRING3;
 end;
 
+procedure TPrinc.AdvGlowButton1Click(Sender: TObject);
+begin
+
+ try
+      listaEntidades:=TlistaEntidades.Create(self);
+    finally
+      listaEntidades.campo_id:='entidad_codi';
+      listaEntidades.Show;
+    end;
+
+end;
+
 procedure TPrinc.AdvGlowButton4Click(Sender: TObject);
 begin
       try
       listaRoles:=TlistaRoles.Create(self);
     finally
-      listaRoles.Show;
-    end;     
+       listaRoles.campo_id:='rol_codi';
+      listaRoles.show;
+    end;
+end;
+
+procedure TPrinc.AdvGlowButton5Click(Sender: TObject);
+begin
+      try
+      listaRubros:=TlistaRubros.Create(self);
+    finally
+       listaRubros.campo_id:='rub_codi';
+      listaRubros.show;
+    end;
 end;
 
 procedure TPrinc.AdvToolBarGeneralOptionClick(Sender: TObject; ClientPoint,
