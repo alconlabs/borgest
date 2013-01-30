@@ -199,6 +199,11 @@ begin
     ZBase.Database:=databasename.Text;
     ZBase.User:=user.Text;
     ZBase.Password:=pass.Text;
+    if pass.Text<>'' then
+      begin
+          Encriptador1.AEncriptar:=pass.Text;
+          Encriptador1.Encriptar;
+      end;
 
     try
       ZBase.Connect;
@@ -206,7 +211,10 @@ begin
       ini1.WriteiniString('Connection','HostName',host.Text);
       ini1.WriteiniString('Connection','Database',databasename.Text);
       ini1.WriteiniString('Connection','User',user.Text);
-      ini1.WriteiniString('Connection','Password',Encriptador1.Encriptado);
+      if pass.Text<>'' then
+        ini1.WriteiniString('Connection','Password',Encriptador1.Encriptado)
+      else
+        ini1.WriteiniString('Connection','Password',pass.Text);
 
 
     finally
@@ -233,24 +241,24 @@ begin
     user.Text:=ini1.ReadiniString('Connection','User','root');
     password:=ini1.ReadiniString('Connection','Password','root');
     tipo_encriptacion:=ini1.ReadiniString('Config','Tipo','');
-    if tipo_encriptacion='1' then
+    if password<>'' then
       begin
-          Encriptador1.ADesencriptar:=password;
-          Encriptador1.Desencriptar;
-          password:=Encriptador1.Desencriptado;
-      end
-    else
-      begin
-          ini1.WriteiniString('Config','Tipo','1');
-          Encriptador1.AEncriptar:=password;
-          Encriptador1.Encriptar;
-          ini1.WriteiniString('Connection','Password',Encriptador1.Encriptado);
+          if tipo_encriptacion='1' then
+            begin
+                Encriptador1.ADesencriptar:=password;
+                Encriptador1.Desencriptar;
+                password:=Encriptador1.Desencriptado;
+            end
+          else
+            begin
+                ini1.WriteiniString('Config','Tipo','1');
+                Encriptador1.AEncriptar:=password;
+                Encriptador1.Encriptar;
+                ini1.WriteiniString('Connection','Password',Encriptador1.Encriptado);
+            end;
+
       end;
     pass.Text:=password;
-
-
-
-    
 
 end;
 
