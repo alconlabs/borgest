@@ -32,8 +32,8 @@
     <DCCReference Include="Formularios\Archivo\UnitArticulos.pas">
       <Form>Articulos</Form>
     </DCCReference>
-    <DCCReference Include="Formularios\Archivo\Unitbusquedaproductos.pas">
-      <Form>busquedaproductos</Form>
+    <DCCReference Include="Formularios\Archivo\UnitControlEntidad.pas">
+      <Form>ControlEntidad</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitEmpresa.pas">
       <Form>empresa</Form>
@@ -43,6 +43,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitEntidades.pas">
       <Form>Entidades</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitlistaControlEntidad.pas">
+      <Form>listaControlEntidad</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitlistaEntidades.pas">
       <Form>listaEntidades</Form>

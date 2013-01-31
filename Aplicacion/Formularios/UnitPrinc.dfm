@@ -2191,7 +2191,6 @@ object Princ: TPrinc
     Database = 'dbborgest'
     User = 'root'
     Password = 'root'
-    Connected = True
     BeforeConnect = ZBaseBeforeConnect
     AfterConnect = ZBaseAfterConnect
     Left = 720

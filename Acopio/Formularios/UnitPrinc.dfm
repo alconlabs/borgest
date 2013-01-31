@@ -2,8 +2,8 @@ object Princ: TPrinc
   Left = 0
   Top = 0
   Caption = 'Demo'
-  ClientHeight = 567
-  ClientWidth = 1271
+  ClientHeight = 608
+  ClientWidth = 1362
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
@@ -17,12 +17,12 @@ object Princ: TPrinc
   OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
-  TextHeight = 14
+  TextHeight = 15
   object Image1: TImage
     Left = 0
-    Top = 135
-    Width = 1271
-    Height = 432
+    Top = 145
+    Width = 1362
+    Height = 463
     Align = alClient
     AutoSize = True
     Center = True
@@ -2864,8 +2864,8 @@ object Princ: TPrinc
   object MenuPrincipal: TAdvToolBarPager
     Left = 0
     Top = 0
-    Width = 1271
-    Height = 135
+    Width = 1362
+    Height = 145
     ActivePage = AdvPageArchivo
     Caption.Visible = False
     Caption.Height = 0
@@ -2880,14 +2880,14 @@ object Princ: TPrinc
     object AdvPageArchivo: TAdvPage
       Left = 4
       Top = 26
-      Width = 1263
-      Height = 104
+      Width = 1354
+      Height = 114
       Caption = 'Archivo'
       object AdvToolBarGeneral: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 227
-        Height = 98
+        Width = 243
+        Height = 108
         AllowFloating = False
         Caption = 'Entidad'
         CaptionFont.Charset = DEFAULT_CHARSET
@@ -2908,13 +2908,13 @@ object Princ: TPrinc
         object AdvGlowButton1: TAdvGlowButton
           Left = 2
           Top = 2
-          Width = 74
-          Height = 81
+          Width = 79
+          Height = 87
           Cursor = crHandPoint
           Caption = 'Entidades'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
-          Font.Height = -9
+          Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
           FocusType = ftHot
@@ -2951,20 +2951,21 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object AdvGlowButton2: TAdvGlowButton
-          Left = 76
+          Left = 81
           Top = 2
-          Width = 73
-          Height = 81
+          Width = 79
+          Height = 87
           Cursor = crHandPoint
           Caption = 'Control de Entidades'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
-          Font.Height = -9
+          Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
           FocusType = ftHot
           ParentFont = False
           TabOrder = 1
+          OnClick = AdvGlowButton2Click
           Appearance.BorderColor = 14727579
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -2995,15 +2996,15 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object AdvGlowButton4: TAdvGlowButton
-          Left = 149
+          Left = 160
           Top = 2
-          Width = 74
-          Height = 81
+          Width = 79
+          Height = 87
           Cursor = crHandPoint
           Caption = 'Roles'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
-          Font.Height = -9
+          Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
           FocusType = ftHot
@@ -3041,10 +3042,10 @@ object Princ: TPrinc
         end
       end
       object AdvToolBar1: TAdvToolBar
-        Left = 233
+        Left = 249
         Top = 3
-        Width = 234
-        Height = 98
+        Width = 250
+        Height = 108
         AllowFloating = False
         Caption = 'Productos'
         CaptionFont.Charset = DEFAULT_CHARSET
@@ -3065,18 +3066,19 @@ object Princ: TPrinc
         object AdvGlowButton3: TAdvGlowButton
           Left = 2
           Top = 2
-          Width = 74
-          Height = 81
+          Width = 79
+          Height = 87
           Cursor = crHandPoint
           Caption = 'Art'#237'culos'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
-          Font.Height = -9
+          Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
           FocusType = ftHot
           ParentFont = False
           TabOrder = 0
+          OnClick = AdvGlowButton3Click
           Appearance.BorderColor = 14727579
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -3107,15 +3109,15 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object AdvGlowButton5: TAdvGlowButton
-          Left = 76
+          Left = 81
           Top = 2
-          Width = 73
-          Height = 81
+          Width = 79
+          Height = 87
           Cursor = crHandPoint
           Caption = 'Rubros'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
-          Font.Height = -9
+          Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
           FocusType = ftHot
@@ -3152,15 +3154,15 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object AdvGlowButton7: TAdvGlowButton
-          Left = 149
+          Left = 160
           Top = 2
-          Width = 81
-          Height = 81
+          Width = 86
+          Height = 87
           Cursor = crHandPoint
           Caption = 'Tipos de Comprobantes'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
-          Font.Height = -9
+          Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
           FocusType = ftHot
@@ -3567,7 +3569,6 @@ object Princ: TPrinc
     Port = 3306
     Database = 'acopio'
     User = 'root'
-    Password = 'root'
     Connected = True
     BeforeConnect = ZBaseBeforeConnect
     AfterConnect = ZBaseAfterConnect

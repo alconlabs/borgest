@@ -83,6 +83,8 @@ type
     procedure AdvGlowButton4Click(Sender: TObject);
     procedure AdvGlowButton1Click(Sender: TObject);
     procedure AdvGlowButton5Click(Sender: TObject);
+    procedure AdvGlowButton2Click(Sender: TObject);
+    procedure AdvGlowButton3Click(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -222,7 +224,8 @@ implementation
 uses Unitlocalidades, UnitConfiguracion, UnitABMbase, UnitListaSucursales,
      UnitListaPuntosdeVenta, UnitListaTiposDocumentos, UnitPersonal,
      UnitPerfil, UnitListaPerfiles, Unitlistatemplates, UnitlistaRoles,
-       UnitlistaEntidades, UnitlistaRubros;
+     UnitlistaEntidades, UnitlistaRubros, UnitlistaControlEntidad,
+  UnitlistaAritculos;
 
 {$R *.dfm}
 
@@ -1679,9 +1682,32 @@ begin
 
 end;
 
+procedure TPrinc.AdvGlowButton2Click(Sender: TObject);
+begin
+    try
+      listaControlEntidad:=TlistaControlEntidad.Create(self);
+    finally
+      listaControlEntidad.campo_id:='controlentidad_codi';
+      listaControlEntidad.show;
+    end;
+
+
+end;
+
+procedure TPrinc.AdvGlowButton3Click(Sender: TObject);
+begin
+    try
+      listaAritculos:=TlistaAritculos.Create(self);
+    finally
+       listaAritculos.campo_id:='articulo_codi';
+      listaAritculos.show;
+    end;
+
+end;
+
 procedure TPrinc.AdvGlowButton4Click(Sender: TObject);
 begin
-      try
+    try
       listaRoles:=TlistaRoles.Create(self);
     finally
        listaRoles.campo_id:='rol_codi';
@@ -1694,7 +1720,7 @@ begin
       try
       listaRubros:=TlistaRubros.Create(self);
     finally
-       listaRubros.campo_id:='rub_codi';
+       listaRubros.campo_id:='rubro_codi';
       listaRubros.show;
     end;
 end;

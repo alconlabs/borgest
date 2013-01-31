@@ -24,9 +24,10 @@ uses
   UnitArticulos in 'Formularios\Archivo\UnitArticulos.pas' {Articulos},
   UnitlistaEntidades in 'Formularios\Archivo\UnitlistaEntidades.pas' {listaEntidades},
   UnitEntidadContactos in 'Formularios\Archivo\UnitEntidadContactos.pas' {EntidadContactos},
-  Unitbusquedaproductos in 'Formularios\Archivo\Unitbusquedaproductos.pas' {busquedaproductos},
   UnitlistaRubros in 'Formularios\Archivo\UnitlistaRubros.pas' {listaRubros},
-  UnitRubros in 'Formularios\Archivo\UnitRubros.pas' {Rubros};
+  UnitRubros in 'Formularios\Archivo\UnitRubros.pas' {Rubros},
+  UnitlistaControlEntidad in 'Formularios\Archivo\UnitlistaControlEntidad.pas' {listaControlEntidad},
+  UnitControlEntidad in 'Formularios\Archivo\UnitControlEntidad.pas' {ControlEntidad};
 
 {$R *.res}
 
@@ -34,14 +35,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrinc, Princ);
-  Application.CreateForm(TEntidades, Entidades);
-  Application.CreateForm(TRoles, Roles);
-  Application.CreateForm(TlistaRoles, listaRoles);
-  Application.CreateForm(TArticulos, Articulos);
-  Application.CreateForm(TlistaEntidades, listaEntidades);
-  Application.CreateForm(TEntidadContactos, EntidadContactos);
-  Application.CreateForm(Tbusquedaproductos, busquedaproductos);
-  Application.CreateForm(TlistaRubros, listaRubros);
-  Application.CreateForm(TRubros, Rubros);
   Application.Run;
 end.

@@ -12,6 +12,8 @@ object Articulos: TArticulos
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object PageControl1: TPageControl
@@ -25,10 +27,6 @@ object Articulos: TArticulos
     object TabSheet2: TTabSheet
       Caption = '    Datos Generales    '
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label1: TLabel
         Left = 12
         Top = 61
@@ -91,11 +89,19 @@ object Articulos: TArticulos
         Alignment = taRightJustify
         Caption = 'Rubro'
       end
-      object DBAdvEdit1: TDBAdvEdit
+      object Label5: TLabel
+        Left = 471
+        Top = 96
+        Width = 11
+        Height = 13
+        Alignment = taRightJustify
+        Caption = '%'
+      end
+      object articulo_codi: TDBAdvEdit
         Left = 95
-        Top = 8
-        Width = 111
-        Height = 26
+        Top = 11
+        Width = 106
+        Height = 22
         AutoThousandSeparator = False
         EditType = etNumeric
         LabelFont.Charset = DEFAULT_CHARSET
@@ -108,7 +114,7 @@ object Articulos: TArticulos
         Enabled = True
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -15
+        Font.Height = -12
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
@@ -117,71 +123,63 @@ object Articulos: TArticulos
         Visible = True
         Version = '2.7.0.5'
       end
-      object Edit5: TEdit
+      object articulo_observaciones: TEdit
         Left = 96
         Top = 150
         Width = 457
         Height = 21
-        TabOrder = 1
+        TabOrder = 6
       end
-      object producto_codigo: TEdit
+      object articulo_desc: TEdit
         Left = 96
         Top = 35
         Width = 457
         Height = 21
-        TabOrder = 2
+        TabOrder = 1
       end
-      object producto_nombre: TEdit
+      object articulo_descreducida: TEdit
         Left = 96
         Top = 58
         Width = 457
         Height = 21
-        TabOrder = 3
+        TabOrder = 2
       end
-      object Edit1: TEdit
+      object articulo_unidad: TEdit
         Left = 97
         Top = 116
         Width = 250
         Height = 21
-        TabOrder = 4
+        TabOrder = 5
       end
-      object SqlComboBox3: TSqlComboBox
+      object rubro_codi: TSqlComboBox
         Left = 97
         Top = 93
         Width = 250
         Height = 21
-        ItemHeight = 0
-        TabOrder = 5
+        Style = csDropDownList
+        ItemHeight = 13
+        TabOrder = 3
         Confbase = Princ.ZBase
         Confsql.Strings = (
-          'select * from tipoiva'
-          'order by tipoiva_nombre')
-        ConfTabla = 'tipoiva'
-        Confcampo_codigo = 'tipoiva_id'
-        Confcampo_nomb = 'tipoiva_nombre'
+          'select * from rubros'
+          'order by rubro_nombre')
+        Confcampo_codigo = 'rubro_codi'
+        Confcampo_nomb = 'rubro_nombre'
         Tag2 = 0
       end
-      object SqlComboBox2: TSqlComboBox
-        Left = 408
+      object articulo_tipoiva: TComboBox
+        Left = 409
         Top = 93
-        Width = 81
+        Width = 57
         Height = 21
         ItemHeight = 13
         ItemIndex = 0
-        TabOrder = 6
-        Text = '21%'
+        TabOrder = 4
+        Text = '10.5'
         Items.Strings = (
-          '21%'
-          '10,5%'
-          '27%')
-        Confbase = Princ.ZBase
-        Confsql.Strings = (
-          'select * from tipoiva'
-          'order by tipoiva_nombre')
-        ConfTabla = 'tipoiva'
-        Confcampo_codigo = 'tipoiva_id'
-        Confcampo_nomb = 'tipoiva_nombre'
-        Tag2 = 0
+          '10.5'
+          '21'
+          '27')
       end
     end
   end
@@ -192,6 +190,7 @@ object Articulos: TArticulos
     Height = 27
     Caption = 'Guardar'
     TabOrder = 1
+    OnClick = btnguardarClick
   end
   object btncancelar: TButton
     Left = 272
@@ -200,6 +199,7 @@ object Articulos: TArticulos
     Height = 27
     Caption = 'Cancelar'
     TabOrder = 2
+    OnClick = btncancelarClick
   end
   object AdvPanel3: TAdvPanel
     Left = 0
@@ -253,5 +253,46 @@ object Articulos: TArticulos
       Font.Style = [fsBold, fsItalic]
       ParentFont = False
     end
+  end
+  object ZQuery1: TZQuery
+    Connection = Princ.ZBase
+    SQL.Strings = (
+      'select * from articulos'
+      'where articulo_codi=:articulo_codi')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'articulo_codi'
+        ParamType = ptUnknown
+      end>
+    Left = 328
+    Top = 192
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'articulo_codi'
+        ParamType = ptUnknown
+      end>
+  end
+  object ZArticulos: TZQuery
+    Connection = Princ.ZBase
+    AfterOpen = ZArticulosAfterOpen
+    SQL.Strings = (
+      'select * from articulos'
+      'where articulo_codi=:articulo_codi')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'articulo_codi'
+        ParamType = ptUnknown
+      end>
+    Left = 360
+    Top = 192
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'articulo_codi'
+        ParamType = ptUnknown
+      end>
   end
 end
