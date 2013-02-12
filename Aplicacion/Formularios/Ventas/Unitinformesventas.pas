@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UnitABMInibase, StdCtrls, GTBComboBox, ComCtrls, DB,
-  ZAbstractRODataset, ZAbstractDataset, ZDataset, ExtCtrls, AdvPanel;
+  ZAbstractRODataset, ZAbstractDataset, ZDataset, ExtCtrls, AdvPanel,
+  UnitSqlComboBox;
 
 type
   TInformesVentas = class(TABMInibase)
@@ -15,12 +16,17 @@ type
     hasta_fecha: TDateTimePicker;
     Label3: TLabel;
     informe_tipo: TGTBComboBox;
+    personal_id: TSqlComboBox;
+    Label4: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
+    procedure informe_tipoSelect(Sender: TObject);
   private
     { Private declarations }
     procedure InformeCostosporVentas;
     procedure InformeVentasPrecios;
+    procedure InformedeVentas;
+
   public
     { Public declarations }
   end;
@@ -33,6 +39,34 @@ implementation
 uses UnitPrinc;
 
 {$R *.dfm}
+
+
+procedure TInformesVentas.InformedeVentas;
+begin
+    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\informe_ventas.rep';
+    Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
+    Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
+    Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
+                                             'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                             'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                             'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                             'where documentosventas.documentoventa_estado<>"ANULADA" and '+
+                                             'tiposdocumento.tipodocu_nombre="Factura de Venta" and '+
+                                             'documentosventas.documentoventa_fecha >="'+FormatDateTime('yyyy-mm-dd',desde_fecha.Date)+'" and '+
+                                             'documentosventas.documentoventa_fecha <="'+FormatDateTime('yyyy-mm-dd',hasta_fecha.Date)+'" '+Princ.empresa_where;
+
+    if personal_id.Text<>'Todos' then
+      Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.personal_id="'+personal_id.codigo+'" ';
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero';
+
+
+    Princ.VCLReport1.Execute;
+
+end;
+
 
 
 procedure TInformesVentas.InformeVentasPrecios;
@@ -71,6 +105,20 @@ begin
 end;
 
 
+procedure TInformesVentas.informe_tipoSelect(Sender: TObject);
+begin
+  inherited;
+    Label4.Enabled:=false;
+    personal_id.Enabled:=false;
+    if informe_tipo.codigo='2' then
+      begin
+          Label4.Enabled:=true;
+          personal_id.Enabled:=true;
+
+      end;
+
+end;
+
 procedure TInformesVentas.InformeCostosporVentas;
 begin
     Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\informe_costos_ventas.rep';
@@ -100,8 +148,12 @@ begin
         0:begin
               InformeCostosporVentas;
           end;
-        2:begin
+        1:begin
               InformeVentasPrecios;
+          end;
+        2:begin
+              InformedeVentas;
+
           end;
 
     end;
@@ -112,6 +164,12 @@ begin
   inherited;
     desde_fecha.Date:=date;
     hasta_fecha.Date:=date;
+
+    personal_id.llenarcombo;
+    personal_id.ItemIndex:=0;
+
+    Label4.Enabled:=false;
+    personal_id.Enabled:=false;
 end;
 
 end.

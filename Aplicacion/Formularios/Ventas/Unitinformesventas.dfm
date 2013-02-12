@@ -1,17 +1,17 @@
 inherited InformesVentas: TInformesVentas
   Caption = 'Informes de Ventas'
-  ClientHeight = 144
-  ClientWidth = 315
+  ClientHeight = 170
+  ClientWidth = 328
   OnCreate = FormCreate
-  ExplicitWidth = 331
-  ExplicitHeight = 182
+  ExplicitWidth = 344
+  ExplicitHeight = 208
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Width = 315
-    Height = 144
-    ExplicitWidth = 253
-    ExplicitHeight = 144
+    Width = 328
+    Height = 170
+    ExplicitWidth = 328
+    ExplicitHeight = 170
     FullHeight = 0
     object Label1: TLabel [0]
       Left = 44
@@ -37,15 +37,27 @@ inherited InformesVentas: TInformesVentas
       Alignment = taRightJustify
       Caption = 'Informe'
     end
+    object Label4: TLabel [3]
+      Left = 29
+      Top = 88
+      Width = 46
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Vendedor'
+    end
     inherited btncancelar: TButton
       Left = 133
+      Top = 112
       ExplicitLeft = 133
+      ExplicitTop = 112
     end
     inherited btnguardar: TButton
       Left = 227
+      Top = 112
       Caption = 'Imprimir'
       OnClick = btnguardarClick
       ExplicitLeft = 227
+      ExplicitTop = 112
     end
     object desde_fecha: TDateTimePicker
       Left = 84
@@ -72,18 +84,33 @@ inherited InformesVentas: TInformesVentas
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
-      ItemIndex = 0
       TabOrder = 4
-      Text = 'Costos por Ventas'
+      OnSelect = informe_tipoSelect
       Items.Strings = (
         'Costos por Ventas'
-        'Stock valorizado'
-        'Informe de Precios de Ventas')
+        'Informe de Precios de Ventas'
+        'Informe de ventas')
       Tag2 = 0
       valores.Strings = (
         '0'
         '1'
         '2')
+    end
+    object personal_id: TSqlComboBox
+      Left = 84
+      Top = 85
+      Width = 220
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      TabOrder = 5
+      Confbase = Princ.ZBase
+      Confsql.Strings = (
+        'select * from personal')
+      Confcampo_codigo = 'personal_id'
+      Confcampo_nomb = 'personal_nombre'
+      Tag2 = 0
+      ConfTodos = True
     end
   end
 end
