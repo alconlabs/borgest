@@ -24,6 +24,12 @@ type
     fil_personal_nombre: TGTBEdit;
     fil_personal_domicilio: TGTBEdit;
     fil_personal_telefono: TGTBEdit;
+    personal_usuario: TEdit;
+    Label11: TLabel;
+    Label7: TLabel;
+    personal_pass: TEdit;
+    personal_pass2: TEdit;
+    Label8: TLabel;
     procedure btnfiltrarClick(Sender: TObject);
     procedure btnnuevoClick(Sender: TObject);
     procedure btnmodificarClick(Sender: TObject);
@@ -52,9 +58,54 @@ Uses Unitprinc;
 function Tpersonal.control:boolean;
 var
   error:integer;
+  personal_id_usuario_existente:string;
 begin
     error:=0;
 
+    if personal_pass.Text='' then
+      error:=1;
+
+    if personal_pass.Text<>personal_pass2.Text then
+      error:=2;
+
+    personal_id_usuario_existente:=Princ.buscar('select personal_id from personal where personal_usuario="'+personal_usuario.Text+'"','personal_id');
+
+    if abm=1 then
+      begin
+          if personal_id_usuario_existente<>'' then
+            error:=3;
+      end
+    else
+      begin
+          if personal_id_usuario_existente<>personal_id.Text then
+            error:=3;
+      end;
+
+
+
+    if personal_usuario.Text='' then
+      error:=4;
+
+
+    case error of
+        1:begin
+              MessageDlg('Ingrese una contraseña', mtError, [mbOK], 0);
+          end;
+
+        2:begin
+              MessageDlg('Las contraseña repetida no coincide con la contraseña', mtError, [mbOK], 0);
+          end;
+
+        3:begin
+              MessageDlg('Nombre de usuario repetido. Utilice otro nombre de usuario', mtError, [mbOK], 0);
+          end;
+
+        4:begin
+              MessageDlg('Ingrese nombre de usuario', mtError, [mbOK], 0);
+          end;
+
+
+    end;
 
     result:=error=0;
 end;
@@ -65,15 +116,19 @@ begin
     id:=princ.codigo('personal','personal_id');
     ZQuery2.sql.clear;
     ZQuery2.sql.add('Insert into personal (personal_id, personal_nombre, personal_domicilio, ');
-    ZQuery2.sql.add('personal_telefono, personal_mail, personal_celular) ');
+    ZQuery2.sql.add('personal_telefono, personal_mail, personal_celular, personal_usuario, personal_pass) ');
     ZQuery2.sql.add('values (:personal_id, :personal_nombre, :personal_domicilio, ');
-    ZQuery2.sql.add(':personal_telefono, :personal_mail, :personal_celular) ');
+    ZQuery2.sql.add(':personal_telefono, :personal_mail, :personal_celular, :personal_usuario, :personal_pass) ');
     ZQuery2.parambyname('personal_id').asstring:=id;
     ZQuery2.parambyname('personal_nombre').asstring:=personal_nombre.text;
     ZQuery2.parambyname('personal_domicilio').asstring:=personal_domicilio.text;
     ZQuery2.parambyname('personal_telefono').asstring:=personal_telefono.text;
     ZQuery2.parambyname('personal_celular').asstring:=personal_celular.Text;
     ZQuery2.parambyname('personal_mail').asstring:=personal_mail.Text;
+    ZQuery2.parambyname('personal_usuario').asstring:=personal_usuario.Text;
+    Princ.Encriptador1.AEncriptar:=personal_pass.Text;
+    Princ.Encriptador1.Encriptar;
+    ZQuery2.parambyname('personal_pass').asstring:=Princ.Encriptador1.Encriptado;
     ZQuery2.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
@@ -92,7 +147,9 @@ begin
     ZQuery2.sql.add('personal_domicilio=:personal_domicilio, ');
     ZQuery2.sql.add('personal_telefono=:personal_telefono, ');
     ZQuery2.sql.add('personal_celular=:personal_celular, ');
-    ZQuery2.sql.add('personal_mail=:personal_mail ');
+    ZQuery2.sql.add('personal_mail=:personal_mail, ');
+    ZQuery2.sql.add('personal_usuario=:personal_usuario, ');
+    ZQuery2.sql.add('personal_pass=:personal_pass ');
     ZQuery2.sql.add('where personal_id=:personal_id');
     ZQuery2.parambyname('personal_id').asstring:=id;
     ZQuery2.parambyname('personal_nombre').asstring:=personal_nombre.text;
@@ -100,6 +157,10 @@ begin
     ZQuery2.parambyname('personal_telefono').asstring:=personal_telefono.text;
     ZQuery2.parambyname('personal_celular').asstring:=personal_celular.Text;
     ZQuery2.parambyname('personal_mail').asstring:=personal_mail.Text;
+    ZQuery2.parambyname('personal_usuario').asstring:=personal_usuario.Text;
+    Princ.Encriptador1.AEncriptar:=personal_pass.Text;
+    Princ.Encriptador1.Encriptar;
+    ZQuery2.parambyname('personal_pass').asstring:=Princ.Encriptador1.Encriptado;
     ZQuery2.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
@@ -190,6 +251,13 @@ begin
                 personal_telefono.Text:=ZQGrilla.FieldByName('personal_telefono').AsString;
                 personal_celular.Text:=ZQGrilla.FieldByName('personal_celular').AsString;
                 personal_mail.Text:=ZQGrilla.FieldByName('personal_mail').AsString;
+                personal_usuario.Text:=ZQGrilla.FieldByName('personal_usuario').AsString;
+                Princ.Encriptador1.ADesencriptar:=ZQGrilla.FieldByName('personal_pass').AsString;
+                Princ.Encriptador1.Desencriptar;
+                personal_pass.Text:=Princ.Encriptador1.Desencriptado;
+                personal_pass2.Text:=Princ.Encriptador1.Desencriptado;
+
+
                 personal_nombre.SetFocus;
             end;
 
@@ -207,6 +275,10 @@ begin
     personal_telefono.Text:='';
     personal_celular.Text:='';
     personal_mail.Text:='';
+    personal_usuario.Text:='';
+    personal_pass.Text:='';
+    personal_pass2.Text:='';
+
 end;
 
 end.

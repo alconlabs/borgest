@@ -1,16 +1,23 @@
 inherited personal: Tpersonal
   Caption = 'Vendedores'
+  ExplicitWidth = 950
+  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
+    Height = 303
+    ExplicitHeight = 303
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
+      Height = 282
+      ExplicitHeight = 282
       FullHeight = 0
       inherited btnanular: TButton
         Visible = False
       end
     end
     inherited DBGrid1: TDBGrid
+      Height = 282
       Columns = <
         item
           Expanded = False
@@ -40,6 +47,8 @@ inherited personal: Tpersonal
         end>
     end
     inherited panelfiltros: TAdvPanel
+      Top = 282
+      ExplicitTop = 282
       FullHeight = 0
       inherited btnfiltrar: TButton
         TabOrder = 4
@@ -74,6 +83,10 @@ inherited personal: Tpersonal
     end
   end
   inherited panelabm: TAdvPanel
+    Top = 303
+    Height = 153
+    ExplicitTop = 303
+    ExplicitHeight = 153
     FullHeight = 0
     object Label1: TLabel [0]
       Left = 15
@@ -123,12 +136,36 @@ inherited personal: Tpersonal
       Alignment = taRightJustify
       Caption = 'E-mail'
     end
+    object Label11: TLabel [6]
+      Left = 364
+      Top = 81
+      Width = 36
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Usuario'
+    end
+    object Label7: TLabel [7]
+      Left = 346
+      Top = 105
+      Width = 54
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Contrase'#241'a'
+    end
+    object Label8: TLabel [8]
+      Left = 312
+      Top = 129
+      Width = 88
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Repita Contrase'#241'a'
+    end
     inherited btnguardar: TButton
-      TabOrder = 6
+      TabOrder = 9
       OnClick = btnguardarClick
     end
     inherited btncancelar: TButton
-      TabOrder = 7
+      TabOrder = 10
     end
     object personal_id: TGTBEdit
       Left = 54
@@ -179,6 +216,29 @@ inherited personal: Tpersonal
       Height = 21
       TabOrder = 5
       Tag2 = 0
+    end
+    object personal_usuario: TEdit
+      Left = 406
+      Top = 78
+      Width = 203
+      Height = 21
+      TabOrder = 6
+    end
+    object personal_pass: TEdit
+      Left = 406
+      Top = 102
+      Width = 203
+      Height = 21
+      PasswordChar = '*'
+      TabOrder = 7
+    end
+    object personal_pass2: TEdit
+      Left = 406
+      Top = 126
+      Width = 203
+      Height = 21
+      PasswordChar = '*'
+      TabOrder = 8
     end
   end
   inherited ZQGrilla: TZQuery

@@ -86,7 +86,11 @@ uses
   UnitListaPresupuestos in 'Formularios\Ventas\UnitListaPresupuestos.pas' {ListaPresupuestos},
   UnitPresupuesto in 'Formularios\Ventas\UnitPresupuesto.pas' {presupuesto},
   Unitcompradetalle in 'Formularios\Compras\Unitcompradetalle.pas' {compradetalle},
-  UnitDetallePagos in 'Formularios\Ventas\UnitDetallePagos.pas' {DetallePagos};
+  UnitDetallePagos in 'Formularios\Ventas\UnitDetallePagos.pas' {DetallePagos},
+  UnitLibroIvaVentas in 'Formularios\Ventas\UnitLibroIvaVentas.pas' {LibroIvaVentas},
+  UnitCajaBar in 'Formularios\Ventas\UnitCajaBar.pas' {CajaBar},
+  UnitCajaApertura in 'Formularios\Caja\UnitCajaApertura.pas' {CajaApertura},
+  UnitLogin in 'Formularios\UnitLogin.pas' {login};
 
 {$R *.res}
 
@@ -94,5 +98,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrinc, Princ);
+  Application.CreateForm(Tlogin, login);
   Application.Run;
 end.

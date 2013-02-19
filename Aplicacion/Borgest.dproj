@@ -103,6 +103,9 @@
     <DCCReference Include="Formularios\Archivo\Unitvendedores.pas">
       <Form>vendedores</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Caja\UnitCajaApertura.pas">
+      <Form>CajaApertura</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Caja\UnitCajaAsiento.pas">
       <Form>CajaAsiento</Form>
     </DCCReference>
@@ -154,6 +157,9 @@
     <DCCReference Include="Formularios\Unitlistabase.pas">
       <Form>listabase</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\UnitLogin.pas">
+      <Form>login</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\UnitPrinc.pas">
       <Form>Princ</Form>
     </DCCReference>
@@ -162,6 +168,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitBusquedaClientes.pas">
       <Form>busquedaclientes</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitCajaBar.pas">
+      <Form>CajaBar</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitCargarPagos.pas">
       <Form>CargarPagos</Form>
@@ -222,6 +231,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitinformesventas.pas">
       <Form>InformesVentas</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitLibroIvaVentas.pas">
+      <Form>LibroIvaVentas</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitlistaclientes.pas">
       <Form>listaclientes</Form>

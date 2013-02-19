@@ -1,4 +1,4 @@
-4;
+04;
 ALTER TABLE `tiposdocumento` ADD COLUMN `tipodocu_preimpresos` INT(11) NULL DEFAULT NULL  AFTER `tipodocufiscal_id` , ADD COLUMN `tipodocu_impresora` VARCHAR(200) NULL DEFAULT NULL  AFTER `tipodocu_preimpresos` , ADD COLUMN `tipodocu_copias` INT(11) NULL DEFAULT NULL  AFTER `tipodocu_impresora` , ADD COLUMN `tipodocu_preview` INT(11) NULL DEFAULT NULL  AFTER `tipodocu_copias` , ADD COLUMN `tipodocu_prompt` INT(11) NULL DEFAULT NULL  AFTER `tipodocu_preview` , CHANGE COLUMN `tipodocu_fiscal` `tipodocu_fiscal` INT(3) NULL DEFAULT NULL  AFTER `tipodocu_iva` ;
 5;
 CREATE  TABLE IF NOT EXISTS `cajaasientos` (
@@ -423,3 +423,54 @@ ALTER TABLE `clientes` ADD COLUMN `personal_id` INT(11) NOT NULL DEFAULT 1  AFTE
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
 , ADD INDEX `fk_clientes_personal1` (`personal_id` ASC) ;
+115;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('54', '>Ventas>Informes>Libro IVA Ventas', '0', 'btnlibroivaventas', '', '0', '0');
+116;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,54,perfil_id from perfiles;
+117;
+ALTER TABLE `tiposdocumento` ADD COLUMN `tipodocu_nombreabrev` VARCHAR(5) NULL DEFAULT NULL  AFTER `tipodocu_leyenda`;
+118;
+UPDATE `tiposdocumento` SET `tipodocu_nombreabrev`='FA' WHERE `tipodocu_nombre`='Factura de Venta';
+119;
+UPDATE `tiposdocumento` SET `tipodocu_nombreabrev`='NC' WHERE `tipodocu_nombre`='Nota de Credito de Venta';
+120;
+UPDATE `tiposdocumento` SET `tipodocu_nombreabrev`='ND' WHERE `tipodocu_nombre`='Nota de Debito de Venta';
+121;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('55', '>Ventas>Caja>Caja Bar', '0', 'btncajabar', '', '0', '0');
+122;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,55,perfil_id from perfiles;
+123;
+CREATE  TABLE IF NOT EXISTS `cajas` (
+  `caja_id` INT(11) NOT NULL ,
+  `caja_fecha` DATE NULL DEFAULT NULL ,
+  `caja_hora` TIME NULL DEFAULT NULL ,
+  `caja_estado` VARCHAR(45) NULL DEFAULT NULL ,
+  `caja_saldoinicial` FLOAT(20,2) NULL DEFAULT NULL ,
+  `caja_saldofinal` FLOAT(20,2) NULL DEFAULT NULL ,
+  `personal_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`caja_id`) ,
+  INDEX `fk_cajas_personal1` (`personal_id` ASC) ,
+  CONSTRAINT `fk_cajas_personal1`
+    FOREIGN KEY (`personal_id` )
+    REFERENCES `personal` (`personal_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+124;
+ALTER TABLE `cajaasientos` ADD COLUMN `caja_id` INT(11) NOT NULL  AFTER `concepto_id` , 
+  ADD CONSTRAINT `fk_cajaasientos_cajas1`
+  FOREIGN KEY (`caja_id` )
+  REFERENCES `cajas` (`caja_id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+, ADD INDEX `fk_cajaasientos_cajas1` (`caja_id` ASC) ;
+125;
+ALTER TABLE `documentosventas` ADD COLUMN `caja_id` INT(11) NULL DEFAULT 0  AFTER `documentoventa_trabajorealizado`;
+126;
+ALTER TABLE `personal` 
+ADD COLUMN `personal_usuario` VARCHAR(45) NULL DEFAULT NULL  AFTER `personal_mail` , 
+ADD COLUMN `personal_pass` VARCHAR(45) NULL DEFAULT NULL  AFTER `personal_usuario` ;
+127;
+UPDATE `personal` SET `personal_usuario`=`personal_id`,`personal_pass`='z3y2x1w';
