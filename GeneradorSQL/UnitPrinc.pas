@@ -33,6 +33,15 @@ type
     script: TMemo;
     btngenerar: TButton;
     Encriptador1: TEncriptador;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    Edit1: TEdit;
+    Label5: TLabel;
+    btnencriptar: TButton;
+    Edit2: TEdit;
+    Label6: TLabel;
+    Button2: TButton;
     procedure Button1Click(Sender: TObject);
     procedure tablaSelect(Sender: TObject);
     procedure btninsertClick(Sender: TObject);
@@ -40,6 +49,8 @@ type
     procedure btnupdateClick(Sender: TObject);
     procedure btndeleteClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure btnencriptarClick(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
     abm:integer;
@@ -78,6 +89,13 @@ begin
         end;
 
     abm:=3;
+end;
+
+procedure TPrinc.btnencriptarClick(Sender: TObject);
+begin
+    Encriptador1.AEncriptar:=Edit1.Text;
+    Encriptador1.Encriptar;
+    Edit2.Text:=Encriptador1.Encriptado;
 end;
 
 procedure TPrinc.btngenerarClick(Sender: TObject);
@@ -227,6 +245,13 @@ begin
 
     tabla.llenarcombo;
     tabla.ItemIndex:=0;
+end;
+
+procedure TPrinc.Button2Click(Sender: TObject);
+begin
+    Encriptador1.ADesencriptar:=Edit2.Text;
+    Encriptador1.Desencriptar;
+    Edit1.Text:=Encriptador1.Desencriptado;
 end;
 
 procedure TPrinc.FormCreate(Sender: TObject);
