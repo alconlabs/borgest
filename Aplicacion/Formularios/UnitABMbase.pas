@@ -17,6 +17,7 @@ type
     procedure btncancelarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -25,6 +26,7 @@ type
     { Public declarations }
     id:string;
     abm:integer;
+    liberar_al_cerrar:boolean;
   end;
 
 var
@@ -45,7 +47,13 @@ end;
 
 procedure TABMbase.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-    Self.Free;
+    if liberar_al_cerrar then
+      Self.Free;
+end;
+
+procedure TABMbase.FormCreate(Sender: TObject);
+begin
+    liberar_al_cerrar:=true;
 end;
 
 procedure TABMbase.FormKeyDown(Sender: TObject; var Key: Word;

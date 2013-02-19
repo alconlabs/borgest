@@ -159,7 +159,7 @@ end;
 procedure TEstadoCaja.Button2Click(Sender: TObject);
 begin
   inherited;
-    Princ.AbrirNuevoCajaAsientoIngreso;
+//    Princ.AbrirNuevoCajaAsientoIngreso;
     btnvercaja.Click;
 end;
 
@@ -180,7 +180,7 @@ end;
 procedure TEstadoCaja.Button5Click(Sender: TObject);
 begin
   inherited;
-    Princ.AbrirNuevoCajaAsientoEgreso;
+//    Princ.AbrirNuevoCajaAsientoEgreso;
     btnvercaja.Click;
 end;
 
