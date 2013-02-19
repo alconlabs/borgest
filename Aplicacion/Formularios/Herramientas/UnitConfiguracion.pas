@@ -71,6 +71,20 @@ type
     CODIGOPRODUCTOBUSQUEDA1: TGTBComboBox;
     CODIGOPRODUCTOBUSQUEDA2: TGTBComboBox;
     CODIGOPRODUCTOBUSQUEDA3: TGTBComboBox;
+    TabSheet5: TTabSheet;
+    GroupBox4: TGroupBox;
+    Label16: TLabel;
+    Label18: TLabel;
+    BARPUNTOVENTAID: TSqlComboBox;
+    BARTIPODOCUID: TSqlComboBox;
+    BARCLIENTEID: TSqlComboBox;
+    GroupBox5: TGroupBox;
+    Label19: TLabel;
+    BARFACTURAPUNTOVENTAID: TSqlComboBox;
+    BARFACTURATIPODOCUID: TSqlComboBox;
+    TabSheet6: TTabSheet;
+    Label21: TLabel;
+    CAJASALDOINICIALCONCEPTOID: TSqlComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -82,6 +96,8 @@ type
     procedure VENTARAPIDASUCURSALIDSelect(Sender: TObject);
     procedure btnactualizardbfileClick(Sender: TObject);
     procedure btnconfigurarmenuClick(Sender: TObject);
+    procedure BARPUNTOVENTAIDSelect(Sender: TObject);
+    procedure BARFACTURAPUNTOVENTAIDSelect(Sender: TObject);
   private
     { Private declarations }
   public
@@ -98,6 +114,36 @@ uses UnitPrinc, Unitventadetalle, UnitMenuConfig;
 
 {$R *.dfm}
 
+
+procedure Tconfiguracion.BARFACTURAPUNTOVENTAIDSelect(Sender: TObject);
+begin
+    BARFACTURATIPODOCUID.Confsql.Text:='select *, concat(tipodocu_nombre," - ",tipodocu_letra) as nombre from tiposdocumento '+
+                              'where tiposdocumento.puntoventa_id="'+BARFACTURAPUNTOVENTAID.Codigo+'" and tipodocu_nombre="Factura de Venta" '+
+                              'order by nombre';
+
+    BARFACTURATIPODOCUID.llenarcombo;
+
+    try
+      BARFACTURATIPODOCUID.ItemIndex:=0;
+    except
+      BARFACTURATIPODOCUID.ItemIndex:=-1;
+    end;
+end;
+
+procedure Tconfiguracion.BARPUNTOVENTAIDSelect(Sender: TObject);
+begin
+    BARTIPODOCUID.Confsql.Text:='select *, concat(tipodocu_nombre," - ",tipodocu_letra) as nombre from tiposdocumento '+
+                              'where tiposdocumento.puntoventa_id="'+BARPUNTOVENTAID.Codigo+'" and tipodocu_tipo="VENTA" '+
+                              'order by nombre';
+
+    BARTIPODOCUID.llenarcombo;
+
+    try
+      BARTIPODOCUID.ItemIndex:=0;
+    except
+      BARTIPODOCUID.ItemIndex:=-1;
+    end;
+end;
 
 procedure Tconfiguracion.btnactualizararchivosClick(Sender: TObject);
 var
@@ -230,6 +276,30 @@ begin
     ZQuery1.parambyname('config_valor').AsString:=CODIGOPRODUCTOBUSQUEDA3.codigo;
     ZQuery1.ExecSQL;
 
+    ZQuery1.parambyname('config_nombre').AsString:='BARPUNTOVENTAID';
+    ZQuery1.parambyname('config_valor').AsString:=BARPUNTOVENTAID.codigo;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='BARTIPODOCUID';
+    ZQuery1.parambyname('config_valor').AsString:=BARTIPODOCUID.codigo;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='BARCLIENTEID';
+    ZQuery1.parambyname('config_valor').AsString:=BARCLIENTEID.codigo;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='BARFACTURAPUNTOVENTAID';
+    ZQuery1.parambyname('config_valor').AsString:=BARFACTURAPUNTOVENTAID.codigo;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='BARFACTURATIPODOCUID';
+    ZQuery1.parambyname('config_valor').AsString:=BARFACTURATIPODOCUID.codigo;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='CAJASALDOINICIALCONCEPTOID';
+    ZQuery1.parambyname('config_valor').AsString:=CAJASALDOINICIALCONCEPTOID.codigo;
+    ZQuery1.ExecSQL;
+
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK, mbCancel], 0);
 
     Self.Close;
@@ -315,6 +385,23 @@ begin
 
     SUCURSALDEFECTO.llenarcombo;
 
+    BARPUNTOVENTAID.llenarcombo;
+    BARPUNTOVENTAID.ItemIndex:=0;
+
+    BARTIPODOCUID.llenarcombo;
+    BARTIPODOCUID.ItemIndex:=0;
+
+    BARCLIENTEID.llenarcombo;
+    BARCLIENTEID.ItemIndex:=0;
+
+    BARFACTURAPUNTOVENTAID.llenarcombo;
+    BARFACTURAPUNTOVENTAID.ItemIndex:=0;
+
+    BARFACTURATIPODOCUID.llenarcombo;
+    BARFACTURATIPODOCUID.ItemIndex:=0;
+
+    CAJASALDOINICIALCONCEPTOID.llenarcombo;
+    CAJASALDOINICIALCONCEPTOID.ItemIndex:=0;
 end;
 
 procedure Tconfiguracion.FormShow(Sender: TObject);
@@ -404,6 +491,23 @@ begin
     if ZQConfig.Locate('config_nombre','CODIGOPRODUCTOBUSQUEDA3',[]) then
       CODIGOPRODUCTOBUSQUEDA3.Buscar(ZQConfig.FieldByName('config_valor').AsString);
 
+    if ZQConfig.Locate('config_nombre','BARPUNTOVENTAID',[]) then
+      BARPUNTOVENTAID.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','BARTIPODOCUID',[]) then
+      BARTIPODOCUID.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','BARCLIENTEID',[]) then
+      BARCLIENTEID.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','BARFACTURAPUNTOVENTAID',[]) then
+      BARFACTURAPUNTOVENTAID.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','BARFACTURATIPODOCUID',[]) then
+      BARFACTURATIPODOCUID.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','CAJASALDOINICIALCONCEPTOID',[]) then
+      CAJASALDOINICIALCONCEPTOID.Buscar(ZQConfig.FieldByName('config_valor').AsString);
 
 end;
 

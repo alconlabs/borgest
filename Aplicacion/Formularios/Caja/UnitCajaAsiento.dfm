@@ -3,7 +3,6 @@ inherited CajaAsiento: TCajaAsiento
   Caption = 'Asiento de Caja'
   ClientHeight = 182
   ClientWidth = 554
-  OnCreate = FormCreate
   OnShow = FormShow
   ExplicitWidth = 570
   ExplicitHeight = 220

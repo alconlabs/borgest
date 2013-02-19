@@ -237,6 +237,7 @@ begin
     ZQNotacredito.FieldByName('documentoventa_total').AsString:=documentoventa_total.Text;
     ZQNotacredito.FieldByName('personal_id').AsString:=personal_id.codigo;
     ZQNotacredito.FieldByName('tipodocu_id').AsString:=tipodocu_id_NC;
+    ZQNotacredito.FieldByName('caja_id').AsString:='0';
     ZQNotacredito.FieldByName('cliente_id').AsString:=cliente_id.codigo;
     ZQNotacredito.Post;
 

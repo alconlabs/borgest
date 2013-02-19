@@ -41,9 +41,11 @@ Ventas
 	Caja
 		Estado Caja
 		Caja
+		Caja Bar
 	Informes
 		Informes
 		Detalle de Pagos
+		Libro IVA Ventas
 Herramientas
 	Herramientas
 		Configuracion

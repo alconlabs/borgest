@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageVentas
+    ActivePage = AdvPageArchivo
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -1421,7 +1421,7 @@ object Princ: TPrinc
       object AdvToolBarCaja: TAdvToolBar
         Left = 721
         Top = 3
-        Width = 106
+        Width = 206
         Height = 63
         AllowFloating = True
         Caption = 'Cajas'
@@ -1516,11 +1516,49 @@ object Princ: TPrinc
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
         end
+        object btncajabar: TAdvGlowButton
+          Left = 102
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Caja Bar'
+          TabOrder = 2
+          OnClick = btncajabarClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
       end
       object AdvToolBarInformes: TAdvToolBar
-        Left = 830
+        Left = 930
         Top = 3
-        Width = 206
+        Width = 306
         Height = 63
         AllowFloating = True
         Caption = 'Informes'
@@ -1623,6 +1661,44 @@ object Princ: TPrinc
           Caption = 'Detalle de Pagos'
           TabOrder = 2
           OnClick = btndetallepagosClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
+        object btnlibroivaventas: TAdvGlowButton
+          Left = 202
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Libro IVA Ventas'
+          TabOrder = 3
+          OnClick = btnlibroivaventasClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219

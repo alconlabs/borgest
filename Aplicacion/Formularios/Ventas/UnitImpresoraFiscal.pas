@@ -31,6 +31,7 @@ type
     procedure ImprimirRemito;
     procedure ImprimirNotadeDebito;
     procedure ImprimirReporteZ;
+    procedure ImprimirReporteX;
     procedure ImprimeTicketFactura;
     procedure ImprimeTicketNotaDebito;
     procedure ImprimeTicketNotaCredito;
@@ -94,6 +95,30 @@ implementation
 uses UnitPrinc, Unitventadetalle;
 
 {$R *.dfm}
+
+
+procedure Timpresorafiscal.ImprimirReporteX;
+begin
+    HASAR1.Modelo:=self.modelo;
+    HASAR1.Puerto:=self.puerto;
+
+    Memo1.Lines.Clear;
+    Memo1.Lines.Add('Iniciando Impresora.');
+
+    HASAR1.Comenzar;
+
+    HASAR1.TratarDeCancelarTodo;
+
+    Memo1.Lines.Add('Imprimendo Reporte Z.');
+
+    HASAR1.ReporteX;
+
+    Memo1.Lines.Add('Cerrando puerto.');
+
+    HASAR1.Finalizar;
+
+    self.ModalResult:=mrCancel;
+end;
 
 
 function Timpresorafiscal.AbrirPuerto;
@@ -853,6 +878,9 @@ begin
 
     if tipodocu_nombre='Reporte Z' then
       ImprimirReporteZ;
+
+    if tipodocu_nombre='Reporte X' then
+      ImprimirReporteX;
     
 
 end;

@@ -650,7 +650,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Lookup.Separator = ';'
       Color = clWindow
       Enabled = True
-      TabOrder = 21
+      TabOrder = 35
       Text = '0,00'
       Visible = True
       OnExit = ventadetalle_preciounitarioExit
@@ -718,7 +718,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       ExplicitWidth = 150
     end
     inherited btnherramientas: TAdvGlowButton
-      TabOrder = 34
+      TabOrder = 33
       Visible = False
     end
     inherited btnimprimirventa: TButton
@@ -773,15 +773,6 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       TabOrder = 17
       OnClick = btnbuscarclientesClick
     end
-    object btnagregarcliente: TButton
-      Left = 99
-      Top = 458
-      Width = 89
-      Height = 25
-      Caption = 'Agregar Cliente'
-      TabOrder = 33
-      OnClick = btnagregarclienteClick
-    end
     object cliente_nombre: TGTBEdit
       Left = 20
       Top = 489
@@ -818,7 +809,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Width = 75
       Height = 25
       Caption = 'Imprimir'
-      TabOrder = 35
+      TabOrder = 34
       OnClick = btnimprimirClick
     end
   end

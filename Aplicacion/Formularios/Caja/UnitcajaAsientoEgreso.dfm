@@ -6,6 +6,7 @@ inherited CajaAsientoEgreso: TCajaAsientoEgreso
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Height = 131
+    ExplicitHeight = 131
     FullHeight = 0
     inherited Label2: TLabel
       Top = 10

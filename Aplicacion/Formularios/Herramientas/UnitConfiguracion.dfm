@@ -88,7 +88,7 @@ object configuracion: Tconfiguracion
       Top = 0
       Width = 589
       Height = 425
-      ActivePage = TabSheet3
+      ActivePage = TabSheet1
       Align = alTop
       TabOrder = 2
       object TabSheet1: TTabSheet
@@ -617,9 +617,173 @@ object configuracion: Tconfiguracion
           end
         end
       end
+      object TabSheet5: TTabSheet
+        Caption = 'Bar'
+        ImageIndex = 4
+        ExplicitLeft = 0
+        ExplicitTop = 28
+        object GroupBox4: TGroupBox
+          Left = 3
+          Top = 16
+          Width = 390
+          Height = 89
+          Caption = 'Documento Bar'
+          TabOrder = 0
+          object Label16: TLabel
+            Left = 10
+            Top = 26
+            Width = 44
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Tipo Doc'
+          end
+          object Label18: TLabel
+            Left = 22
+            Top = 53
+            Width = 32
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Cliente'
+          end
+          object BARPUNTOVENTAID: TSqlComboBox
+            Left = 60
+            Top = 23
+            Width = 52
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 0
+            OnSelect = BARPUNTOVENTAIDSelect
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              'select * from puntodeventa')
+            Confcampo_codigo = 'puntoventa_id'
+            Confcampo_nomb = 'puntoventa_numero'
+            Tag2 = 0
+          end
+          object BARTIPODOCUID: TSqlComboBox
+            Left = 118
+            Top = 23
+            Width = 259
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 1
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              
+                'select *, concat(tipodocu_nombre,'#39' - '#39',tipodocu_letra) as nombre' +
+                ' from tiposdocumento'
+              'where tipodocu_tipo='#39'VENTA'#39
+              'order by nombre')
+            Confcampo_codigo = 'tipodocu_id'
+            Confcampo_nomb = 'nombre'
+            Tag2 = 0
+          end
+          object BARCLIENTEID: TSqlComboBox
+            Left = 60
+            Top = 50
+            Width = 317
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 2
+            OnSelect = VENTARAPIDACLIENTEIDSelect
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              'select * from clientes'
+              'order by cliente_nombre')
+            Confcampo_codigo = 'cliente_id'
+            Confcampo_nomb = 'cliente_nombre'
+            Tag2 = 0
+          end
+        end
+        object GroupBox5: TGroupBox
+          Left = 3
+          Top = 112
+          Width = 390
+          Height = 65
+          Caption = 'Facturar Documento Bar'
+          TabOrder = 1
+          object Label19: TLabel
+            Left = 10
+            Top = 26
+            Width = 44
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Tipo Doc'
+          end
+          object BARFACTURAPUNTOVENTAID: TSqlComboBox
+            Left = 60
+            Top = 23
+            Width = 52
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 0
+            OnSelect = BARFACTURAPUNTOVENTAIDSelect
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              'select * from puntodeventa')
+            Confcampo_codigo = 'puntoventa_id'
+            Confcampo_nomb = 'puntoventa_numero'
+            Tag2 = 0
+          end
+          object BARFACTURATIPODOCUID: TSqlComboBox
+            Left = 118
+            Top = 23
+            Width = 259
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 1
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              
+                'select *, concat(tipodocu_nombre,'#39' - '#39',tipodocu_letra) as nombre' +
+                ' from tiposdocumento'
+              'where tipodocu_nombre='#39'Factura de Venta'#39
+              'order by nombre')
+            Confcampo_codigo = 'tipodocu_id'
+            Confcampo_nomb = 'nombre'
+            Tag2 = 0
+          end
+        end
+      end
+      object TabSheet6: TTabSheet
+        Caption = 'Cajas'
+        ImageIndex = 5
+        ExplicitLeft = 8
+        ExplicitTop = 28
+        object Label21: TLabel
+          Left = 10
+          Top = 33
+          Width = 105
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Concepto Saldo inicial'
+        end
+        object CAJASALDOINICIALCONCEPTOID: TSqlComboBox
+          Left = 121
+          Top = 30
+          Width = 240
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          TabOrder = 0
+          Confbase = Princ.ZBase
+          Confsql.Strings = (
+            'select * from conceptos'
+            'order by concepto_descripcion')
+          ConfTabla = 'conceptos'
+          Confcampo_codigo = 'concepto_id'
+          Confcampo_nomb = 'concepto_descripcion'
+          Tag2 = 0
+        end
+      end
       object TabSheet4: TTabSheet
         Caption = 'Actualizaciones'
-        ImageIndex = 3
+        ImageIndex = 5
         object lblVERSIONEXE: TLabel
           Left = 469
           Top = 24
@@ -689,7 +853,7 @@ object configuracion: Tconfiguracion
     SQL.Strings = (
       'select * from config')
     Params = <>
-    Left = 448
-    Top = 176
+    Left = 520
+    Top = 248
   end
 end

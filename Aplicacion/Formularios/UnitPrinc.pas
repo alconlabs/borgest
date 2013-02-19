@@ -104,6 +104,8 @@ type
     ZQdocumentocompradetalles: TZQuery;
     Encriptador1: TEncriptador;
     btndetallepagos: TAdvGlowButton;
+    btnlibroivaventas: TAdvGlowButton;
+    btncajabar: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -148,6 +150,8 @@ type
     procedure btnpresupuestosClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btndetallepagosClick(Sender: TObject);
+    procedure btnlibroivaventasClick(Sender: TObject);
+    procedure btncajabarClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -169,6 +173,7 @@ type
     CODIGOPRODUCTOBUSQUEDA1:string;
     CODIGOPRODUCTOBUSQUEDA2:string;
     CODIGOPRODUCTOBUSQUEDA3:string;
+    CAJASALDOINICIALCONCEPTOID:string;
     empresa_where:string;
     function codigo(tabla:string;campo:string):string;
     function buscar(sql:string;campo:string):string;
@@ -178,7 +183,8 @@ type
     function GetPrecioVentaBase(producto_preciocosto:real;calculoprecio_id:string):real;
     function GetPrecioVentaBaseprod(producto_precioventabase:real;producto_id:string):real;
     procedure ActualizarSaldoDocumentoVenta(id:string; importe:real; inversa:boolean=false);
-    procedure AgregarDocumentoVenta(Cabecera:TDataset; Detalle:TDataset; Documentoventadocu:TDataset; Pagos:TDataset);
+    function AgregarDocumentoVenta(Cabecera:TDataset; Detalle:TDataset; Documentoventadocu:TDataset; Pagos:TDataset):string;
+    procedure ModificarDocumentoVenta(Cabecera:TDataset; Detalle:TDataset; Documentoventadocu:TDataset; Pagos:TDataset);
     procedure AgregarRecibo(ZQCabecera:TDataset; ZQDetalle:TDataset; ZQPagos:TDataset);
     function CargarPago(importe:real; QDocumentopagos:TDataset): boolean;
     procedure ActualizarNumeroDocumento(tipodocu_id: string; tipodocu_ultimonumero:string);
@@ -201,12 +207,12 @@ type
     procedure AbrirModificarCalculoprecios(id:string);
     procedure AbrirNuevoProveedores;
     procedure AbrirModificarProveedores(id:string);
-    procedure AbrirNuevoCajaAsiento;
+    procedure AbrirNuevoCajaAsiento(caja_id:string);
     procedure AbrirModificarCajaAsiento(id:string);
     procedure AbrirEliminarCajaAsiento(id:string);
-    procedure AbrirNuevoCajaAsientoIngreso;
+    procedure AbrirNuevoCajaAsientoIngreso(caja_id:string);
     procedure AbrirModificarCajaAsientoIngreso(id:string);
-    procedure AbrirNuevoCajaAsientoEgreso;
+    procedure AbrirNuevoCajaAsientoEgreso(caja_id:string);
     procedure AbrirModificarCajaAsientoEgreso(id:string);
     procedure IniciarProgreso(Q:TDataset);
     procedure MostrarProgreso;
@@ -215,7 +221,6 @@ type
     function EjecutarScriptDB(archivo_sql:string):boolean;
     function BorrarDocumentoVenta(documentoventa_id:string):boolean;
     function BorrarDocumentoCompra(documentocompra_id:string):boolean;
-
     function GetConfigTipoDocumento(documento_id:string; campo:string):string;
     procedure MostrarVentanaExcel;
     procedure GetBoolConfig(config_nombre:string;valor_true:string; var propiedad:boolean);
@@ -225,6 +230,9 @@ type
     procedure AbrirModificarTipoDocumento(id:string);
     procedure AbrirNuevoPerfil;
     procedure AbrirModificarPerfil(id:string);
+    procedure ImprimirDocumentoVenta(id:string);
+    function AbrirCaja(personal_id:string):string;
+    procedure CerrarCaja(caja_id:string;caja_saldofinal:real);
   end;
 
 type
@@ -315,10 +323,144 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   UnitPersonal, UnitPerfil, UnitListaPerfiles, Unitsaldoclientes,
   Unitlistafacturascompra, Unitfacturascompra, UnitListaServices,
   UnitOrdenServicio, UnitListaOrdenesServicios, UnitImprimirListaPrecios,
-  UnitPresupuesto, UnitListaPresupuestos, UnitDetallePagos;
+  UnitPresupuesto, UnitListaPresupuestos, UnitDetallePagos, UnitLibroIvaVentas,
+  UnitCajaBar;
 
 {$R *.dfm}
 
+procedure Tprinc.CerrarCaja(caja_id:string;caja_saldofinal:real);
+begin
+    ZQExcecSQL.Sql.Clear;
+    ZQExcecSQL.Sql.Add('begin');
+    ZQExcecSQL.ExecSQL;
+
+    ZQExcecSQL.Sql.Clear;
+    ZQExcecSQL.Sql.Add('update cajas set ');
+    ZQExcecSQL.Sql.Add('caja_saldofinal=:caja_saldofinal, ');
+    ZQExcecSQL.Sql.Add('caja_estado=:caja_estado ');
+    ZQExcecSQL.Sql.Add('where caja_id=:caja_id ');
+    ZQExcecSQL.ParamByName('caja_saldofinal').AsFloat:=caja_saldofinal;
+    ZQExcecSQL.ParamByName('caja_estado').AsString:='CERRADA';
+    ZQExcecSQL.ParamByName('caja_id').AsString:=caja_id;
+    ZQExcecSQL.ExecSql;
+
+    ZQExcecSQL.Sql.Clear;
+    ZQExcecSQL.Sql.Add('commit');
+    ZQExcecSQL.ExecSQL;
+end;
+
+Function TPrinc.AbrirCaja(personal_id: string):string;
+var
+  caja_id,caja_idanterior:string;
+  caja_saldoinicial:string;
+  caja_saldofinal:string;
+begin
+    caja_id:=Princ.codigo('cajas','caja_id');
+
+    caja_idanterior:=inttostr(strtoint(caja_id)-1);
+
+    caja_saldofinal:=Princ.buscar('select caja_saldofinal from cajas where caja_id="'+caja_idanterior+'"','caja_saldofinal');
+
+    caja_saldoinicial:= caja_saldofinal;
+    if caja_saldoinicial='' then
+      caja_saldoinicial:='0';
+
+    ZQExcecSQL.Sql.Clear;
+    ZQExcecSQL.Sql.Add('begin');
+    ZQExcecSQL.ExecSQL;
+
+
+    ZQExcecSQL.Sql.Clear;
+    ZQExcecSQL.Sql.Add('insert into cajas set ');
+    ZQExcecSQL.Sql.Add('personal_id=:personal_id, ');
+    ZQExcecSQL.Sql.Add('caja_saldofinal=:caja_saldofinal, ');
+    ZQExcecSQL.Sql.Add('caja_saldoinicial=:caja_saldoinicial, ');
+    ZQExcecSQL.Sql.Add('caja_estado=:caja_estado, ');
+    ZQExcecSQL.Sql.Add('caja_hora=:caja_hora, ');
+    ZQExcecSQL.Sql.Add('caja_fecha=:caja_fecha, ');
+    ZQExcecSQL.Sql.Add('caja_id=:caja_id ');
+    ZQExcecSQL.ParamByName('personal_id').AsString:=personal_id;
+    ZQExcecSQL.ParamByName('caja_saldofinal').AsString:='0';
+    ZQExcecSQL.ParamByName('caja_saldoinicial').AsString:=caja_saldoinicial;
+    ZQExcecSQL.ParamByName('caja_estado').AsString:='ABIERTA';
+    ZQExcecSQL.ParamByName('caja_hora').AsDateTime:=Princ.horaservidor;
+    ZQExcecSQL.ParamByName('caja_fecha').AsDate:=Princ.fechaservidor;
+    ZQExcecSQL.ParamByName('caja_id').AsString:=caja_id;
+    ZQExcecSQL.ExecSql;
+
+    if caja_saldoinicial<>'0' then
+      begin
+          ZQExcecSQL.Sql.Clear;
+          ZQExcecSQL.Sql.Add('insert into cajaasientos set ');
+          ZQExcecSQL.Sql.Add('caja_id=:caja_id, ');
+          ZQExcecSQL.Sql.Add('concepto_id=:concepto_id, ');
+          ZQExcecSQL.Sql.Add('cajaasiento_importe=:cajaasiento_importe, ');
+          ZQExcecSQL.Sql.Add('cajaasiento_fecha=:cajaasiento_fecha, ');
+          ZQExcecSQL.Sql.Add('cajaasiento_tipo=:cajaasiento_tipo, ');
+          ZQExcecSQL.Sql.Add('cajaasiento_descripcion=:cajaasiento_descripcion, ');
+          ZQExcecSQL.Sql.Add('cajaasiento_id=:cajaasiento_id ');
+          ZQExcecSQL.ParamByName('caja_id').AsString:=caja_id;
+          ZQExcecSQL.ParamByName('concepto_id').AsString:=CAJASALDOINICIALCONCEPTOID;
+          ZQExcecSQL.ParamByName('cajaasiento_importe').AsString:=caja_saldofinal;
+          ZQExcecSQL.ParamByName('cajaasiento_fecha').AsDate:=Princ.fechaservidor;
+          ZQExcecSQL.ParamByName('cajaasiento_tipo').AsString:='INGRESO';
+          ZQExcecSQL.ParamByName('cajaasiento_descripcion').AsString:='Saldo Inicial';
+          ZQExcecSQL.ParamByName('cajaasiento_id').AsString:=Princ.codigo('cajaasientos','cajaasiento_id');
+          ZQExcecSQL.ExecSql;
+
+
+
+      end;
+
+    ZQExcecSQL.Sql.Clear;
+    ZQExcecSQL.Sql.Add('update documentosventas set ');
+    ZQExcecSQL.Sql.Add('caja_id=:caja_id ');
+    ZQExcecSQL.Sql.Add('where documentoventa_estado=:documentoventa_estado ');
+    ZQExcecSQL.ParamByName('caja_id').AsString:=caja_id;
+    ZQExcecSQL.ParamByName('documentoventa_estado').AsString:='ABIERTA';
+    ZQExcecSQL.ExecSql;
+
+    ZQExcecSQL.Sql.Clear;
+    ZQExcecSQL.Sql.Add('commit');
+    ZQExcecSQL.ExecSQL;
+
+
+    Result:=caja_id;
+
+end;
+
+
+procedure TPrinc.ImprimirDocumentoVenta(id: string);
+var
+  tipodocu_archivoimpresion:string;
+  tipodocu_fiscal:boolean;
+  tipodocu_preimpresos:boolean;
+begin
+    tipodocu_fiscal:=strtobool(Princ.GetConfigTipoDocumento(id,'tipodocu_fiscal'));
+
+    if tipodocu_fiscal then
+      begin
+          Princ.ImprimirFiscal(id);
+      end;
+
+
+
+    tipodocu_preimpresos:=strtobool(Princ.GetConfigTipoDocumento(id,'tipodocu_preimpresos'));
+
+    if tipodocu_preimpresos then
+      begin
+          tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'tipodocu_archivoimpresion');
+
+          Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\'+tipodocu_archivoimpresion;
+          Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
+                                                   'inner join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
+                                                   'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                                   'where documentosventas.documentoventa_id="'+id+'"';
+
+          Princ.VCLReport1.Execute;
+      end;
+
+end;
 
 
 procedure TPrinc.AbrirNuevoPerfil;
@@ -937,12 +1079,13 @@ end;
 
 
 
-procedure TPrinc.AbrirNuevoCajaAsientoEgreso;
+procedure TPrinc.AbrirNuevoCajaAsientoEgreso(caja_id:string);
 begin
     try
       CajaAsientoEgreso:=TCajaAsientoEgreso.Create(self);
     finally
       CajaAsientoEgreso.abm:=1;
+      CajaAsientoEgreso.caja_id:=caja_id;
       CajaAsientoEgreso.btnguardar.Caption:='Guardar';
       CajaAsientoEgreso.Show;
     end;
@@ -964,12 +1107,13 @@ begin
 end;
 
 
-procedure TPrinc.AbrirNuevoCajaAsientoIngreso;
+procedure TPrinc.AbrirNuevoCajaAsientoIngreso(caja_id:string);
 begin
     try
       CajaAsientoIngreso:=TCajaAsientoIngreso.Create(self);
     finally
       CajaAsientoIngreso.abm:=1;
+      CajaAsientoIngreso.caja_id:=caja_id;
       CajaAsientoIngreso.btnguardar.Caption:='Guardar';
       CajaAsientoIngreso.Show;
     end;
@@ -1007,12 +1151,13 @@ end;
 
 
 
-procedure TPrinc.AbrirNuevoCajaAsiento;
+procedure TPrinc.AbrirNuevoCajaAsiento(caja_id:string);
 begin
     try
       CajaAsiento:=TCajaAsiento.Create(self);
     finally
       CajaAsiento.abm:=1;
+      CajaAsiento.caja_id:=caja_id;
       CajaAsiento.btnguardar.Caption:='Guardar';
       CajaAsiento.Show;
     end;
@@ -1422,7 +1567,7 @@ begin
 end;
 
 
-Procedure TPrinc.AgregarDocumentoVenta(Cabecera: TDataSet; Detalle: TDataSet; Documentoventadocu: TDataSet; Pagos: TDataSet);
+Function TPrinc.AgregarDocumentoVenta(Cabecera: TDataSet; Detalle: TDataSet; Documentoventadocu: TDataSet; Pagos: TDataSet):string;
 var
   id:string;
   documentoventa_numero:string;
@@ -1436,7 +1581,7 @@ begin
     documentoventa_numero:=Princ.NumeroDocumento(Cabecera.FieldByName('tipodocu_id').AsString);
     if strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+Cabecera.FieldByName('tipodocu_id').AsString+'"','tipodocu_fiscal')) then
       documentoventa_numero:='0';
-      
+
     ZQDocumentosventasABM.sql.clear;
     ZQDocumentosventasABM.sql.add('Insert into documentosventas (cliente_id, documentoventa_condicionventa, ');
     ZQDocumentosventasABM.sql.add('documentoventa_estado, documentoventa_fecha, documentoventa_fechavenc, ');
@@ -1444,14 +1589,14 @@ begin
     ZQDocumentosventasABM.sql.add('documentoventa_iva21, documentoventa_listaprecio, documentoventa_neto105, ');
     ZQDocumentosventasABM.sql.add('documentoventa_neto21, documentoventa_netonogravado, documentoventa_numero, ');
     ZQDocumentosventasABM.sql.add('documentoventa_observacion, documentoventa_pagado, documentoventa_saldo, ');
-    ZQDocumentosventasABM.sql.add('documentoventa_total, personal_id, tipodocu_id) ');
+    ZQDocumentosventasABM.sql.add('documentoventa_total, personal_id, tipodocu_id, caja_id) ');
     ZQDocumentosventasABM.sql.add('values (:cliente_id, :documentoventa_condicionventa, ');
     ZQDocumentosventasABM.sql.add(':documentoventa_estado, :documentoventa_fecha, :documentoventa_fechavenc, ');
     ZQDocumentosventasABM.sql.add(':documentoventa_hora, :documentoventa_id, :documentoventa_iva105, ');
     ZQDocumentosventasABM.sql.add(':documentoventa_iva21, :documentoventa_listaprecio, :documentoventa_neto105, ');
     ZQDocumentosventasABM.sql.add(':documentoventa_neto21, :documentoventa_netonogravado, :documentoventa_numero, ');
     ZQDocumentosventasABM.sql.add(':documentoventa_observacion, :documentoventa_pagado, :documentoventa_saldo, ');
-    ZQDocumentosventasABM.sql.add(':documentoventa_total, :personal_id, :tipodocu_id)');
+    ZQDocumentosventasABM.sql.add(':documentoventa_total, :personal_id, :tipodocu_id, :caja_id)');
     ZQDocumentosventasABM.parambyname('cliente_id').asstring:=Cabecera.FieldByName('cliente_id').AsString;
     ZQDocumentosventasABM.parambyname('documentoventa_condicionventa').asstring:=Cabecera.FieldByName('documentoventa_condicionventa').AsString;
     ZQDocumentosventasABM.parambyname('documentoventa_estado').asstring:=Cabecera.FieldByName('documentoventa_estado').AsString;
@@ -1472,6 +1617,7 @@ begin
     ZQDocumentosventasABM.parambyname('documentoventa_total').asstring:=Cabecera.FieldByName('documentoventa_total').AsString;
     ZQDocumentosventasABM.parambyname('personal_id').asstring:=Cabecera.FieldByName('personal_id').AsString;
     ZQDocumentosventasABM.parambyname('tipodocu_id').asstring:=Cabecera.FieldByName('tipodocu_id').AsString;
+    ZQDocumentosventasABM.parambyname('caja_id').asstring:=Cabecera.FieldByName('caja_id').AsString;
     ZQDocumentosventasABM.ExecSQL;
 
     ActualizarNumeroDocumento(Cabecera.FieldByName('tipodocu_id').AsString,Cabecera.FieldByName('documentoventa_numero').AsString);
@@ -1582,9 +1728,189 @@ begin
     ZQDocumentosventasABM.SQL.Add('commit');
     ZQDocumentosventasABM.ExecSQL;
 
+    result:=id;
+
+end;
+
+
+Procedure TPrinc.ModificarDocumentoVenta(Cabecera: TDataSet; Detalle: TDataSet; Documentoventadocu: TDataSet; Pagos: TDataSet);
+var
+  documentoventa_neto21, documentoventa_iva21, documentoventa_neto105, documentoventa_iva105, documentoventa_total, documentoventa_pagado, documentoventa_saldo:string;
+begin
+    ZQDocumentosventasABM.SQL.Clear;
+    ZQDocumentosventasABM.SQL.Add('begin');
+    ZQDocumentosventasABM.ExecSQL;
+
+    ZQDocumentosventasABM.Sql.Clear;
+    ZQDocumentosventasABM.Sql.Add('update documentosventas set ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_trabajorealizado=:documentoventa_trabajorealizado, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_solicitudcliente=:documentoventa_solicitudcliente, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_nrodetallepago=:documentoventa_nrodetallepago, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_formapago=:documentoventa_formapago, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_equipo2=:documentoventa_equipo2, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_equipo1=:documentoventa_equipo1, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_listaprecio=:documentoventa_listaprecio, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_fechavenc=:documentoventa_fechavenc, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_condicionventa=:documentoventa_condicionventa, ');
+    ZQDocumentosventasABM.Sql.Add('tipodocu_id=:tipodocu_id, ');
+    ZQDocumentosventasABM.Sql.Add('personal_id=:personal_id, ');
+    ZQDocumentosventasABM.Sql.Add('cliente_id=:cliente_id, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_observacion=:documentoventa_observacion, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_saldo=:documentoventa_saldo, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_pagado=:documentoventa_pagado, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_estado=:documentoventa_estado, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_total=:documentoventa_total, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_netonogravado=:documentoventa_netonogravado, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_iva105=:documentoventa_iva105, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_neto105=:documentoventa_neto105, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_iva21=:documentoventa_iva21, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_neto21=:documentoventa_neto21, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_hora=:documentoventa_hora, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_fecha=:documentoventa_fecha, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_numero=:documentoventa_numero ');
+    ZQDocumentosventasABM.Sql.Add('where documentoventa_id=:documentoventa_id ');
+    ZQDocumentosventasABM.parambyname('cliente_id').asstring:=Cabecera.FieldByName('cliente_id').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_condicionventa').asstring:=Cabecera.FieldByName('documentoventa_condicionventa').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_estado').asstring:=Cabecera.FieldByName('documentoventa_estado').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_fecha').asstring:=formatdatetime('yyyy-mm-dd',Cabecera.FieldByName('documentoventa_fecha').AsDateTime);
+    ZQDocumentosventasABM.parambyname('documentoventa_fechavenc').asstring:=formatdatetime('yyyy-mm-dd',Cabecera.FieldByName('documentoventa_fechavenc').AsDateTime);
+    ZQDocumentosventasABM.parambyname('documentoventa_hora').asstring:=Cabecera.FieldByName('documentoventa_hora').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_id').asstring:=Cabecera.FieldByName('documentoventa_id').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_iva105').asstring:=Cabecera.FieldByName('documentoventa_iva105').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_iva21').asstring:=Cabecera.FieldByName('documentoventa_iva21').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_listaprecio').asstring:=Cabecera.FieldByName('documentoventa_listaprecio').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_neto105').asstring:=Cabecera.FieldByName('documentoventa_neto105').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_neto21').asstring:=Cabecera.FieldByName('documentoventa_neto21').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_netonogravado').asstring:=Cabecera.FieldByName('documentoventa_netonogravado').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_numero').asstring:=Cabecera.FieldByName('documentoventa_numero').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_observacion').asstring:=Cabecera.FieldByName('documentoventa_observacion').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_pagado').asstring:=Cabecera.FieldByName('documentoventa_pagado').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_saldo').asstring:=Cabecera.FieldByName('documentoventa_saldo').AsString;
+    ZQDocumentosventasABM.parambyname('documentoventa_total').asstring:=Cabecera.FieldByName('documentoventa_total').AsString;
+    ZQDocumentosventasABM.parambyname('personal_id').asstring:=Cabecera.FieldByName('personal_id').AsString;
+    ZQDocumentosventasABM.parambyname('tipodocu_id').asstring:=Cabecera.FieldByName('tipodocu_id').AsString;
+    ZQDocumentosventasABM.ExecSQL;
+
+
+
+    if Detalle<>nil then
+      begin
+          ZQdocumentoventadetalles.Active:=false;
+          ZQdocumentoventadetalles.SQL.Text:='select * from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"';
+          ZQdocumentoventadetalles.Active:=true;
+          ZQdocumentoventadetalles.First;
+          while not ZQdocumentoventadetalles.Eof do
+              begin
+                  Princ.actualizarstock(ZQdocumentoventadetalles.FieldByName('producto_id').AsString,ZQdocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat,Cabecera.FieldByName('tipodocu_id').AsString,true);
+
+                  ZQdocumentoventadetalles.Next;
+              end;
+
+          ZQDocumentosventasABM.Sql.Clear;
+          ZQDocumentosventasABM.Sql.Add('delete from documentoventadetalles ');
+          ZQDocumentosventasABM.Sql.Add('where documentoventa_id=:documentoventa_id ');
+          ZQDocumentosventasABM.ParamByName('documentoventa_id').AsString:=Cabecera.FieldByName('documentoventa_id').AsString;
+          ZQDocumentosventasABM.ExecSql;
+
+          Detalle.First;
+
+          while not Detalle.Eof do
+              begin
+                  ZQDocumentosventasABM.sql.clear;
+                  ZQDocumentosventasABM.sql.add('Insert into documentoventadetalles (documentoventadetalle_id, documentoventadetalle_descripcion, documentoventadetalle_cantidad, documentoventadetalle_precio, ');
+                  ZQDocumentosventasABM.sql.add('documentoventadetalle_total, documentoventadetalle_neto21, documentoventadetalle_iva21, documentoventadetalle_neto105, documentoventadetalle_iva105, documentoventadetalle_nogravado, ');
+                  ZQDocumentosventasABM.sql.add('documentoventadetalle_estado, documentoventadetalle_observacion, producto_id, documentoventadetalle_idorig, documentoventadetalle_cantidadpendiente, documentoventa_id, documentoventadetalle_listaprecio) ');
+                  ZQDocumentosventasABM.sql.add('values (:documentoventadetalle_id, :documentoventadetalle_descripcion, :documentoventadetalle_cantidad, :documentoventadetalle_precio, ');
+                  ZQDocumentosventasABM.sql.add(':documentoventadetalle_total, :documentoventadetalle_neto21, :documentoventadetalle_iva21, :documentoventadetalle_neto105, :documentoventadetalle_iva105, :documentoventadetalle_nogravado, ');
+                  ZQDocumentosventasABM.sql.add(':documentoventadetalle_estado, :documentoventadetalle_observacion, :producto_id, :documentoventadetalle_idorig, :documentoventadetalle_cantidadpendiente, :documentoventa_id, :documentoventadetalle_listaprecio) ');
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_id').AsString:=Princ.codigo('documentoventadetalles','documentoventadetalle_id');
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_descripcion').AsString:=Detalle.FieldByName('documentoventadetalle_descripcion').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_cantidad').AsString:=Detalle.FieldByName('documentoventadetalle_cantidad').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_precio').AsString:=Detalle.FieldByName('documentoventadetalle_precio').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_total').AsString:=Detalle.FieldByName('documentoventadetalle_total').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_neto21').AsString:=Detalle.FieldByName('documentoventadetalle_neto21').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_iva21').AsString:=Detalle.FieldByName('documentoventadetalle_iva21').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_neto105').AsString:=Detalle.FieldByName('documentoventadetalle_neto105').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_iva105').AsString:=Detalle.FieldByName('documentoventadetalle_iva105').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_nogravado').AsString:=Detalle.FieldByName('documentoventadetalle_nogravado').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_estado').AsString:=Detalle.FieldByName('documentoventadetalle_estado').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_observacion').AsString:=Detalle.FieldByName('documentoventadetalle_observacion').AsString;
+                  ZQDocumentosventasABM.ParamByName('producto_id').AsString:=Detalle.FieldByName('producto_id').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_idorig').AsString:=Detalle.FieldByName('documentoventadetalle_idorig').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_cantidadpendiente').AsString:=Detalle.FieldByName('documentoventadetalle_cantidadpendiente').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventa_id').AsString:=cabecera.FieldByName('documentoventa_id').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentoventadetalle_listaprecio').AsString:=Detalle.FieldByName('documentoventadetalle_listaprecio').AsString;
+                  ZQDocumentosventasABM.ExecSQL;
+
+                  Princ.actualizarstock(Detalle.FieldByName('producto_id').AsString,Detalle.FieldByName('documentoventadetalle_cantidad').AsFloat,Cabecera.FieldByName('tipodocu_id').AsString,false);
+
+                  Detalle.Next;
+              end;
+
+          documentoventa_neto21:=princ.buscar('select sum(documentoventadetalle_neto21) as neto21 from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','neto21');
+          documentoventa_neto105:=princ.buscar('select sum(documentoventadetalle_neto105) as neto105 from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','neto105');
+          documentoventa_iva21:=princ.buscar('select sum(documentoventadetalle_iva21) as iva21 from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','iva21');
+          documentoventa_iva105:=princ.buscar('select sum(documentoventadetalle_iva105) as iva105 from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','iva105');
+          documentoventa_total:=princ.buscar('select sum(documentoventadetalle_total) as total from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','total');
+
+          ZQDocumentosventasABM.Sql.Clear;
+          ZQDocumentosventasABM.Sql.Add('update documentosventas set ');
+          ZQDocumentosventasABM.Sql.Add('documentoventa_total=:documentoventa_total, ');
+          ZQDocumentosventasABM.Sql.Add('documentoventa_iva105=:documentoventa_iva105, ');
+          ZQDocumentosventasABM.Sql.Add('documentoventa_neto105=:documentoventa_neto105, ');
+          ZQDocumentosventasABM.Sql.Add('documentoventa_iva21=:documentoventa_iva21, ');
+          ZQDocumentosventasABM.Sql.Add('documentoventa_neto21=:documentoventa_neto21 ');
+          ZQDocumentosventasABM.Sql.Add('where documentoventa_id=:documentoventa_id ');
+          ZQDocumentosventasABM.parambyname('documentoventa_iva105').asstring:=documentoventa_iva105;
+          ZQDocumentosventasABM.parambyname('documentoventa_iva21').asstring:=documentoventa_iva21;
+          ZQDocumentosventasABM.parambyname('documentoventa_neto105').asstring:=documentoventa_neto105;
+          ZQDocumentosventasABM.parambyname('documentoventa_neto21').asstring:=documentoventa_neto21;
+          ZQDocumentosventasABM.parambyname('documentoventa_total').asstring:=documentoventa_total;
+          ZQDocumentosventasABM.parambyname('documentoventa_id').asstring:=Cabecera.FieldByName('documentoventa_id').AsString;
+          ZQDocumentosventasABM.ExecSQL;
+      end;
+
+
+    if Pagos<>nil then
+      begin
+          ZQDocumentosventasABM.Sql.Clear;
+          ZQDocumentosventasABM.Sql.Add('delete from documentopagos ');
+          ZQDocumentosventasABM.Sql.Add('where documentoventa_id=:documentoventa_id ');
+          ZQDocumentosventasABM.ParamByName('documentoventa_id').AsString:=Cabecera.FieldByName('documentoventa_id').AsString;
+          ZQDocumentosventasABM.ExecSql;
+
+          Pagos.First;
+          while not Pagos.Eof do
+              begin
+                  ZQDocumentosventasABM.Sql.Clear;
+                  ZQDocumentosventasABM.Sql.Add('insert into documentopagos set ');
+                  ZQDocumentosventasABM.Sql.Add('documentoventa_id=:documentoventa_id, ');
+                  ZQDocumentosventasABM.Sql.Add('tipopago_id=:tipopago_id, ');
+                  ZQDocumentosventasABM.Sql.Add('documentopago_importe=:documentopago_importe, ');
+                  ZQDocumentosventasABM.Sql.Add('documentopago_nombre=:documentopago_nombre, ');
+                  ZQDocumentosventasABM.Sql.Add('documentopago_id=:documentopago_id ');
+                  ZQDocumentosventasABM.ParamByName('documentoventa_id').AsString:=Cabecera.FieldByName('documentoventa_id').AsString;
+                  ZQDocumentosventasABM.ParamByName('tipopago_id').AsString:=Pagos.FieldByName('tipopago_id').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentopago_importe').AsString:=Pagos.FieldByName('documentopago_importe').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentopago_nombre').AsString:=Pagos.FieldByName('documentopago_nombre').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentopago_id').AsString:=Princ.codigo('documentopagos','documentopago_id');
+                  ZQDocumentosventasABM.ExecSql;
+
+                  Pagos.Next;
+              end;
+      end;
+
+
+
+
+    ZQDocumentosventasABM.SQL.Clear;
+    ZQDocumentosventasABM.SQL.Add('commit');
+    ZQDocumentosventasABM.ExecSQL;
+
 
 
 end;
+
 
 function TPrinc.QuitarCaracteresEspeciales(texto: string):string;
 const
@@ -1700,10 +2026,17 @@ begin
 
                   ZQDocumentopagos.Next;
               end;
-      end
-    else
+      end;
+    if id='-1' then
       begin
           impresorafiscal.tipodocu_nombre:='Reporte Z';
+          impresorafiscal.modelo:=strtoint(Princ.buscar('select puntoventa_controladorfiscalmodelo from puntodeventa where puntoventa_id="'+puntoventa_id+'"','puntoventa_controladorfiscalmodelo'));
+          impresorafiscal.puerto:=strtoint(Princ.buscar('select puntoventa_controladorfiscalpuerto from puntodeventa where puntoventa_id="'+puntoventa_id+'"','puntoventa_controladorfiscalpuerto'));
+      end;
+
+    if id='-2' then
+      begin
+          impresorafiscal.tipodocu_nombre:='Reporte X';
           impresorafiscal.modelo:=strtoint(Princ.buscar('select puntoventa_controladorfiscalmodelo from puntodeventa where puntoventa_id="'+puntoventa_id+'"','puntoventa_controladorfiscalmodelo'));
           impresorafiscal.puerto:=strtoint(Princ.buscar('select puntoventa_controladorfiscalpuerto from puntodeventa where puntoventa_id="'+puntoventa_id+'"','puntoventa_controladorfiscalpuerto'));
       end;
@@ -2129,6 +2462,8 @@ begin
     NOMBREPRECIO3:=Princ.GetConfiguracion('NOMBREPRECIO3');
     NOMBREPRECIO4:=Princ.GetConfiguracion('NOMBREPRECIO4');
 
+    CAJASALDOINICIALCONCEPTOID:=Princ.GetConfiguracion('CAJASALDOINICIALCONCEPTOID');
+
 
     empresa_where:='and puntodeventa.puntoventa_id not in ('+Princ.buscar('select empresa_where from empresas','empresa_where')+') ';
 
@@ -2307,6 +2642,16 @@ begin
     finally
       DetallePagos.Show;
     end;
+    
+end;
+
+procedure TPrinc.btncajabarClick(Sender: TObject);
+begin
+    try
+      CajaBar:=TCajaBar.Create(self);
+    finally
+      CajaBar.Show;
+    end;
 end;
 
 procedure TPrinc.btncajaClick(Sender: TObject);
@@ -2343,6 +2688,15 @@ begin
       impresorafiscalcola:=Timpresorafiscalcola.Create(self);
     finally
       impresorafiscalcola.Show;
+    end;
+end;
+
+procedure TPrinc.btnlibroivaventasClick(Sender: TObject);
+begin
+    try
+      LibroIvaVentas:=TLibroIvaVentas.Create(self);
+    finally
+      LibroIvaVentas.Show;
     end;
 end;
 

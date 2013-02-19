@@ -160,7 +160,7 @@ object TRpReport
   end
   object TRpSection2: TRpSection
     Width = 10772
-    Height = 2210
+    Height = 1512
     SubReport = TRpSubReport0
     ChangeBool = False
     PageRepeat = False
@@ -243,7 +243,7 @@ object TRpReport
   end
   object TRpSection0: TRpSection
     Width = 10772
-    Height = 2290
+    Height = 192
     SubReport = TRpSubReport0
     ChangeBool = False
     PageRepeat = False
@@ -270,10 +270,10 @@ object TRpReport
     Stream = {0000000000000000}
   end
   object TRpLabel0: TRpLabel
-    Width = 5910
-    Height = 495
-    PosX = 2400
-    PosY = 165
+    Width = 10548
+    Height = 276
+    PosX = 60
+    PosY = 63
     Type1Font = poHelvetica
     FontSize = 12
     FontStyle = 1
@@ -480,7 +480,7 @@ object TRpReport
     Width = 685
     Height = 225
     PosX = 1195
-    PosY = 1940
+    PosY = 1256
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''
@@ -493,7 +493,7 @@ object TRpReport
     Width = 965
     Height = 225
     PosX = 1995
-    PosY = 1940
+    PosY = 1256
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''
@@ -506,7 +506,7 @@ object TRpReport
     Width = 395
     Height = 225
     PosX = 3080
-    PosY = 1940
+    PosY = 1256
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''
@@ -519,7 +519,7 @@ object TRpReport
     Width = 965
     Height = 225
     PosX = 3590
-    PosY = 1940
+    PosY = 1256
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''
@@ -532,7 +532,7 @@ object TRpReport
     Width = 965
     Height = 225
     PosX = 9290
-    PosY = 1940
+    PosY = 1256
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''
@@ -545,7 +545,7 @@ object TRpReport
     Width = 970
     Height = 225
     PosX = 115
-    PosY = 1940
+    PosY = 1256
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''
@@ -558,7 +558,7 @@ object TRpReport
     Width = 850
     Height = 230
     PosX = 120
-    PosY = 795
+    PosY = 396
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''
@@ -571,7 +571,7 @@ object TRpReport
     Width = 1025
     Height = 225
     PosX = 1026
-    PosY = 800
+    PosY = 401
     Type1Font = poHelvetica
     FontStyle = 1
     Alignment = 1
@@ -596,7 +596,7 @@ object TRpReport
     Width = 55
     Height = 275
     PosX = 9235
-    PosY = 1940
+    PosY = 1256
     BrushStyle = 1
     Shape = rpsVertLine
     PenWidth = 0
@@ -608,7 +608,7 @@ object TRpReport
     Width = 55
     Height = 275
     PosX = 3535
-    PosY = 1940
+    PosY = 1256
     BrushStyle = 1
     Shape = rpsVertLine
     PenWidth = 0
@@ -620,7 +620,7 @@ object TRpReport
     Width = 55
     Height = 275
     PosX = 1940
-    PosY = 1940
+    PosY = 1256
     BrushStyle = 1
     Shape = rpsVertLine
     PenWidth = 0
@@ -632,7 +632,7 @@ object TRpReport
     Width = 55
     Height = 275
     PosX = 3020
-    PosY = 1940
+    PosY = 1256
     BrushStyle = 1
     Shape = rpsVertLine
     PenWidth = 0
@@ -644,7 +644,7 @@ object TRpReport
     Width = 55
     Height = 275
     PosX = 1140
-    PosY = 1940
+    PosY = 1256
     BrushStyle = 1
     Shape = rpsVertLine
     PenWidth = 0
@@ -656,7 +656,7 @@ object TRpReport
     Width = 10315
     Height = 270
     PosX = 60
-    PosY = 1935
+    PosY = 1251
     BrushStyle = 1
     PenWidth = 0
     PrintCondition = ''
@@ -717,7 +717,7 @@ object TRpReport
   end
   object TRpSection4: TRpSection
     Width = 10772
-    Height = 660
+    Height = 396
     SubReport = TRpSubReport0
     GroupName = 'GRUPO'
     ChangeBool = False
@@ -834,7 +834,7 @@ object TRpReport
     Width = 1085
     Height = 225
     PosX = 1026
-    PosY = 1085
+    PosY = 686
     Type1Font = poHelvetica
     FontStyle = 1
     Alignment = 1
@@ -859,7 +859,7 @@ object TRpReport
     Width = 850
     Height = 230
     PosX = 120
-    PosY = 1080
+    PosY = 681
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''
@@ -872,7 +872,7 @@ object TRpReport
     Width = 2165
     Height = 225
     PosX = 1026
-    PosY = 1370
+    PosY = 971
     Type1Font = poHelvetica
     FontStyle = 1
     Alignment = 1
@@ -897,7 +897,7 @@ object TRpReport
     Width = 850
     Height = 230
     PosX = 120
-    PosY = 1365
+    PosY = 966
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''

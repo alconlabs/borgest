@@ -36,6 +36,7 @@ type
 
   public
     { Public declarations }
+    caja_id:string;
   end;
 
 var
@@ -91,16 +92,17 @@ begin
     ZQExecSQL.sql.add('Insert into cajaasientos (cajaasiento_descripcion, ');
     ZQExecSQL.sql.add('cajaasiento_fecha, cajaasiento_id, ');
     ZQExecSQL.sql.add('cajaasiento_importe, cajaasiento_tipo, ');
-    ZQExecSQL.sql.add('concepto_id) values (:cajaasiento_descripcion, ');
+    ZQExecSQL.sql.add('concepto_id, caja_id) values (:cajaasiento_descripcion, ');
     ZQExecSQL.sql.add(':cajaasiento_fecha, :cajaasiento_id, ');
     ZQExecSQL.sql.add(':cajaasiento_importe, :cajaasiento_tipo, ');
-    ZQExecSQL.sql.add(':concepto_id)');
+    ZQExecSQL.sql.add(':concepto_id, :caja_id)');
     ZQExecSQL.parambyname('cajaasiento_descripcion').asstring:=cajaasiento_descripcion.text;
     ZQExecSQL.parambyname('cajaasiento_fecha').asstring:=formatdatetime('yyyy-mm-dd',cajaasiento_fecha.Date);
     ZQExecSQL.parambyname('cajaasiento_id').asstring:=id;
     ZQExecSQL.parambyname('cajaasiento_importe').asstring:=cajaasiento_importe.text;
     ZQExecSQL.parambyname('cajaasiento_tipo').asstring:=cajaasiento_tipo.text;
     ZQExecSQL.parambyname('concepto_id').asstring:=concepto_id.codigo;
+    ZQExecSQL.parambyname('caja_id').asstring:=caja_id;
     ZQExecSQL.ExecSQL;
 
     MessageDlg('Datos guardados.', mtInformation, [mbOK], 0);
