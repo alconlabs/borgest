@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UnitABMbase, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
-  StdCtrls, ExtCtrls, AdvPanel, ComCtrls, Grids, DBGrids, GTBMemo;
+  StdCtrls, ExtCtrls, AdvPanel, ComCtrls, Grids, DBGrids, GTBMemo,
+  UnitSqlComboBox;
 
 type
   TDetallePagos = class(TABMbase)
@@ -19,6 +20,8 @@ type
     DTSPagos: TDataSource;
     Label1: TLabel;
     documentoventa_observacion: TGTBMemo;
+    Label11: TLabel;
+    sucursal_id: TSqlComboBox;
     procedure btnbuscarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
@@ -41,7 +44,13 @@ procedure TDetallePagos.btnbuscarClick(Sender: TObject);
 begin
   inherited;
     ZQSelect.Active:=false;
-    ZQSelect.ParamByName('documentoventa_nrodetallepago').AsString:=documentoventa_nrodetallepago.Text;
+    ZQSelect.SQL.Text:='select * from documentosventas '+
+                       'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                       'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                       'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                       'where documentosventas.documentoventa_nrodetallepago="'+documentoventa_nrodetallepago.Text+'" and '+
+                       'sucursal_id="'+ sucursal_id.codigo +'" '+Princ.empresa_where;
+
     ZQSelect.Active:=true;
 end;
 
@@ -49,13 +58,17 @@ procedure TDetallePagos.btnguardarClick(Sender: TObject);
 begin
   inherited;
     Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\consulta_detalle_pagos.rep';
-    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select documentopagos.*, tipopago_nombre from documentopagos '+
-                                             'inner join tipospago on documentopagos.tipopago_id=tipospago.tipopago_id '+
-                                             'inner join documentosventas on documentopagos.documentoventa_id=documentosventas.documentoventa_id '+
-                                             'where documentosventas.documentoventa_nrodetallepago="'+documentoventa_nrodetallepago.Text+'"';
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
+                                             'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                             'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                             'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                             'where documentosventas.documentoventa_nrodetallepago="'+documentoventa_nrodetallepago.Text+'" and '+
+                                             'sucursal_id="'+ sucursal_id.codigo +'" '+Princ.empresa_where;
 
     Princ.VCLReport1.Report.Params.ParamByName('fecha').Value:=documentoventa_fecha.Date;
-    Princ.VCLReport1.Report.Params.ParamByName('observaciones').AsString:=documentoventa_observacion.Text;
+    Princ.VCLReport1.Report.Params.ParamByName('observaciones').AsString:=documentoventa_observacion.Lines.Text;
+    Princ.VCLReport1.Report.Params.ParamByName('documentoventa_nrodetallepago').AsString:=documentoventa_nrodetallepago.Text;
+    Princ.VCLReport1.Report.Params.ParamByName('sucursal_nombre').AsString:=sucursal_id.Text;
 
 
 
@@ -66,6 +79,8 @@ procedure TDetallePagos.FormCreate(Sender: TObject);
 begin
   inherited;
     documentoventa_fecha.Date:=Date;
+    sucursal_id.llenarcombo;
+    sucursal_id.ItemIndex:=0;
 end;
 
 end.

@@ -2,7 +2,6 @@ inherited DetallePagos: TDetallePagos
   Caption = 'DetallePagos'
   ClientHeight = 419
   ClientWidth = 631
-  OnCreate = FormCreate
   ExplicitWidth = 647
   ExplicitHeight = 457
   PixelsPerInch = 96
@@ -11,8 +10,8 @@ inherited DetallePagos: TDetallePagos
     Width = 631
     Height = 419
     StatusBar.BevelInner = True
-    ExplicitWidth = 1026
-    ExplicitHeight = 742
+    ExplicitWidth = 631
+    ExplicitHeight = 419
     FullHeight = 0
     object Label18: TLabel [0]
       Left = 9
@@ -32,7 +31,7 @@ inherited DetallePagos: TDetallePagos
     end
     object Label13: TLabel [2]
       Left = 9
-      Top = 44
+      Top = 60
       Width = 30
       Height = 13
       Caption = 'Pagos'
@@ -44,10 +43,19 @@ inherited DetallePagos: TDetallePagos
       Height = 13
       Caption = 'Observaciones'
     end
+    object Label11: TLabel [4]
+      Left = 69
+      Top = 38
+      Width = 41
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Sucursal'
+    end
     inherited btncancelar: TButton
       Left = 548
       Top = 366
       Caption = 'Salir'
+      TabOrder = 7
       ExplicitLeft = 548
       ExplicitTop = 366
     end
@@ -55,6 +63,7 @@ inherited DetallePagos: TDetallePagos
       Left = 11
       Top = 366
       Caption = 'Imprimir'
+      TabOrder = 6
       OnClick = btnguardarClick
       ExplicitLeft = 11
       ExplicitTop = 366
@@ -64,8 +73,7 @@ inherited DetallePagos: TDetallePagos
       Top = 9
       Width = 121
       Height = 21
-      TabStop = False
-      TabOrder = 2
+      TabOrder = 0
     end
     object documentoventa_fecha: TDateTimePicker
       Left = 510
@@ -74,13 +82,13 @@ inherited DetallePagos: TDetallePagos
       Height = 21
       Date = 40384.000000000000000000
       Time = 40384.000000000000000000
-      TabOrder = 3
+      TabOrder = 1
     end
     object DBGrid2: TDBGrid
       Left = 9
-      Top = 63
+      Top = 79
       Width = 607
-      Height = 226
+      Height = 210
       DataSource = DTSPagos
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
       TabOrder = 4
@@ -92,33 +100,47 @@ inherited DetallePagos: TDetallePagos
       Columns = <
         item
           Expanded = False
-          FieldName = 'documentopago_id'
-          Title.Caption = 'Nro.'
-          Width = 34
+          FieldName = 'documentoventa_numero'
+          Title.Caption = 'Nro. Recibo'
+          Width = 65
           Visible = True
         end
         item
           Expanded = False
-          FieldName = 'tipopago_nombre'
-          Title.Caption = 'Descripcion'
-          Width = 438
+          FieldName = 'documentoventa_fecha'
+          Title.Caption = 'Fecha'
+          Width = 62
           Visible = True
         end
         item
           Expanded = False
-          FieldName = 'documentopago_importe'
+          FieldName = 'cliente_id'
+          Title.Caption = 'Codigo'
+          Width = 49
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'cliente_nombre'
+          Title.Caption = 'Cliente'
+          Width = 258
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'documentoventa_total'
           Title.Caption = 'Importe'
-          Width = 87
+          Width = 106
           Visible = True
         end>
     end
     object btnbuscar: TButton
-      Left = 243
-      Top = 7
+      Left = 323
+      Top = 33
       Width = 75
       Height = 25
       Caption = 'Buscar'
-      TabOrder = 5
+      TabOrder = 3
       OnClick = btnbuscarClick
     end
     object documentoventa_observacion: TGTBMemo
@@ -127,36 +149,43 @@ inherited DetallePagos: TDetallePagos
       Width = 604
       Height = 43
       TabStop = False
-      TabOrder = 6
+      TabOrder = 5
+      Tag2 = 0
+    end
+    object sucursal_id: TSqlComboBox
+      Left = 116
+      Top = 35
+      Width = 202
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      TabOrder = 2
+      Confbase = Princ.ZBase
+      Confsql.Strings = (
+        'select * from sucursales'
+        'order by sucursal_nombre')
+      ConfTabla = 'sucursales'
+      Confcampo_codigo = 'sucursal_id'
+      Confcampo_nomb = 'sucursal_nombre'
       Tag2 = 0
     end
   end
   inherited ZQSelect: TZQuery
     SQL.Strings = (
-      'select documentopagos.*, tipopago_nombre from documentopagos'
+      'select * from documentosventas'
       
-        'inner join tipospago on documentopagos.tipopago_id=tipospago.tip' +
-        'opago_id'
+        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
+        'ocumento.tipodocu_id'
       
-        'inner join documentosventas on documentopagos.documentoventa_id=' +
-        'documentosventas.documentoventa_id'
+        'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodev' +
+        'enta.puntoventa_id'
       
-        'where documentosventas.documentoventa_nrodetallepago=:documentov' +
-        'enta_nrodetallepago')
-    Params = <
-      item
-        DataType = ftUnknown
-        Name = 'documentoventa_nrodetallepago'
-        ParamType = ptUnknown
-      end>
+        'inner join clientes on documentosventas.cliente_id=clientes.clie' +
+        'nte_id')
+    Params = <>
     Left = 328
     Top = 160
-    ParamData = <
-      item
-        DataType = ftUnknown
-        Name = 'documentoventa_nrodetallepago'
-        ParamType = ptUnknown
-      end>
+    ParamData = <>
   end
   inherited ZQExecSQL: TZQuery
     Left = 544
