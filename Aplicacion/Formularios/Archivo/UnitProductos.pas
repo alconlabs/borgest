@@ -81,6 +81,7 @@ type
     ZQCalculopreciodetaprodproducto_id: TIntegerField;
     Label23: TLabel;
     producto_codigoreferencia: TEdit;
+    MQproductodepositoproducdepo_stockinicial: TFloatField;
     procedure FormCreate(Sender: TObject);
     procedure ZQproductosAfterOpen(DataSet: TDataSet);
     procedure FormShow(Sender: TObject);
@@ -322,14 +323,15 @@ begin
                   ZQuery1.sql.clear;
                   ZQuery1.sql.add('Insert into productodeposito (deposito_id, ');
                   ZQuery1.sql.add('producdepo_puntorepos, producdepo_stockactual, ');
-                  ZQuery1.sql.add('producdepo_stockminimo, producto_id, producdepo_id) ');
+                  ZQuery1.sql.add('producdepo_stockminimo, producto_id, producdepo_id, producdepo_stockinicial) ');
                   ZQuery1.sql.add('values (:deposito_id, ');
                   ZQuery1.sql.add(':producdepo_puntorepos, :producdepo_stockactual, ');
-                  ZQuery1.sql.add(':producdepo_stockminimo, :producto_id, :producdepo_id)');
+                  ZQuery1.sql.add(':producdepo_stockminimo, :producto_id, :producdepo_id, :producdepo_stockinicial)');
                   ZQuery1.parambyname('deposito_id').asstring:=MQproductodeposito.FieldByName('deposito_id').AsString;
                   ZQuery1.parambyname('producdepo_puntorepos').asstring:=MQproductodeposito.FieldByName('producdepo_puntorepos').AsString;
                   ZQuery1.parambyname('producdepo_stockactual').asstring:=MQproductodeposito.FieldByName('producdepo_stockactual').AsString;
                   ZQuery1.parambyname('producdepo_stockminimo').asstring:=MQproductodeposito.FieldByName('producdepo_stockminimo').AsString;
+                  ZQuery1.parambyname('producdepo_stockinicial').asstring:=MQproductodeposito.FieldByName('producdepo_stockinicial').AsString;
                   ZQuery1.parambyname('producto_id').asstring:=id;
                   ZQuery1.parambyname('producdepo_id').asstring:=Princ.codigo('productodeposito','producdepo_id');
                   ZQuery1.ExecSQL;
@@ -342,12 +344,14 @@ begin
                   ZQuery1.sql.add('Update productodeposito set ');
                   ZQuery1.sql.add('producdepo_puntorepos=:producdepo_puntorepos, ');
                   ZQuery1.sql.add('producdepo_stockactual=:producdepo_stockactual, ');
-                  ZQuery1.sql.add('producdepo_stockminimo=:producdepo_stockminimo');
+                  ZQuery1.sql.add('producdepo_stockminimo=:producdepo_stockminimo, ');
+                  ZQuery1.sql.add('producdepo_stockinicial=:producdepo_stockinicial');
                   ZQuery1.sql.add(' where producdepo_id=:producdepo_id');
                   ZQuery1.parambyname('producdepo_puntorepos').asstring:=MQproductodeposito.FieldByName('producdepo_puntorepos').AsString;
                   ZQuery1.parambyname('producdepo_stockactual').asstring:=MQproductodeposito.FieldByName('producdepo_stockactual').AsString;
                   ZQuery1.parambyname('producdepo_stockminimo').asstring:=MQproductodeposito.FieldByName('producdepo_stockminimo').AsString;
                   ZQuery1.parambyname('producdepo_id').asstring:=producdepo_id;
+                  ZQuery1.parambyname('producdepo_stockinicial').asstring:=MQproductodeposito.FieldByName('producdepo_stockinicial').AsString;
                   ZQuery1.ExecSQL;
 
 
@@ -593,32 +597,27 @@ begin
             ZQuery1.sql.clear;
             ZQuery1.sql.add('Insert into productodeposito (deposito_id, ');
             ZQuery1.sql.add('producdepo_puntorepos, producdepo_stockactual, ');
-            ZQuery1.sql.add('producdepo_stockminimo, producto_id, producdepo_id) ');
+            ZQuery1.sql.add('producdepo_stockminimo, producto_id, producdepo_id, producdepo_stockinicial) ');
             ZQuery1.sql.add('values (:deposito_id, ');
             ZQuery1.sql.add(':producdepo_puntorepos, :producdepo_stockactual, ');
-            ZQuery1.sql.add(':producdepo_stockminimo, :producto_id, :producdepo_id)');
+            ZQuery1.sql.add(':producdepo_stockminimo, :producto_id, :producdepo_id, :producdepo_stockinicial)');
             ZQuery1.parambyname('deposito_id').asstring:=MQproductodeposito.FieldByName('deposito_id').AsString;
             ZQuery1.parambyname('producdepo_puntorepos').asstring:=MQproductodeposito.FieldByName('producdepo_puntorepos').AsString;
             ZQuery1.parambyname('producdepo_stockactual').asstring:=MQproductodeposito.FieldByName('producdepo_stockactual').AsString;
             ZQuery1.parambyname('producdepo_stockminimo').asstring:=MQproductodeposito.FieldByName('producdepo_stockminimo').AsString;
+            ZQuery1.parambyname('producdepo_stockinicial').asstring:=MQproductodeposito.FieldByName('producdepo_stockinicial').AsString;
             ZQuery1.parambyname('producto_id').asstring:=id;
             ZQuery1.parambyname('producdepo_id').asstring:='0';
             ZQuery1.ExecSQL;
 
-
-
-
             MQproductodeposito.Next;
         end;
-
-
 
     ZQuery1.sql.clear;
     ZQuery1.sql.add('Delete from calculopreciodetaprod');
     ZQuery1.sql.add(' where producto_id=:producto_id');
     ZQuery1.parambyname('producto_id').asstring:=producto_id.text;
     ZQuery1.ExecSQL;
-
 
     ZQCalculopreciodetaprod.First;
     while not ZQCalculopreciodetaprod.Eof do
@@ -693,6 +692,7 @@ begin
     lblNombrePrecio4.Caption:=Princ.NOMBREPRECIO4;
 
 
+
 end;
 
 procedure Tproductos.FormKeyDown(Sender: TObject; var Key: Word;
@@ -751,6 +751,7 @@ begin
             MQproductodeposito.FieldByName('producdepo_puntorepos').AsString:='0';
             MQproductodeposito.FieldByName('producdepo_stockminimo').AsString:='0';
             MQproductodeposito.FieldByName('producdepo_stockactual').AsString:='0';
+            MQproductodeposito.FieldByName('producdepo_stockinicial').AsString:='0';
             ZQproductodeposito.Active:=false;
             ZQproductodeposito.ParamByName('producto_id').AsString:=id;
             ZQproductodeposito.ParamByName('deposito_id').AsString:=ZQDepositos.FieldByName('deposito_id').AsString;
@@ -762,6 +763,8 @@ begin
                   MQproductodeposito.FieldByName('producdepo_puntorepos').AsString:=ZQproductodeposito.FieldByName('producdepo_puntorepos').AsString;
                   MQproductodeposito.FieldByName('producdepo_stockminimo').AsString:=ZQproductodeposito.FieldByName('producdepo_stockminimo').AsString;
                   MQproductodeposito.FieldByName('producdepo_stockactual').AsString:=ZQproductodeposito.FieldByName('producdepo_stockactual').AsString;
+                  MQproductodeposito.FieldByName('producdepo_stockinicial').AsString:=ZQproductodeposito.FieldByName('producdepo_stockinicial').AsString;
+
 
               end;
 
@@ -770,6 +773,15 @@ begin
     ZQCalculopreciodetaprod.Active:=false;
     ZQCalculopreciodetaprod.SQL.Text:='select * from calculopreciodetaprod where producto_id="'+id+'" order by calculopreciodetaprod_orden';
     ZQCalculopreciodetaprod.Active:=true;
+
+    if not Princ.PRODUCTOSTOCKINICIAL then
+      begin
+          DBGrid1.Columns.Items[1].Visible:=false;
+
+
+      end;
+
+
 end;
 
 procedure Tproductos.ZQproductosAfterOpen(DataSet: TDataSet);

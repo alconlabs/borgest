@@ -98,7 +98,7 @@ object ventadetalle2: Tventadetalle2
       Caption = 'Total'
     end
     object producdepo_stockminimo: TLabel
-      Left = 388
+      Left = 484
       Top = 66
       Width = 54
       Height = 13
@@ -115,9 +115,16 @@ object ventadetalle2: Tventadetalle2
     object producto_fechaactualizacionprecio: TLabel
       Left = 229
       Top = 66
+      Width = 52
+      Height = 13
+      Caption = 'Fecha Act.'
+    end
+    object producdepo_stockinicial: TLabel
+      Left = 348
+      Top = 66
       Width = 54
       Height = 13
-      Caption = 'Stock Min: '
+      Caption = 'Stock Inic: '
     end
     object ventadeta_cantidad: TDBAdvEdit
       Left = 104

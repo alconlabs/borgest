@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageArchivo
+    ActivePage = AdvPageHerramientas
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -2267,6 +2267,7 @@ object Princ: TPrinc
     Database = 'dbborgest'
     User = 'root'
     Password = 'root'
+    Connected = True
     BeforeConnect = ZBaseBeforeConnect
     AfterConnect = ZBaseAfterConnect
     Left = 720

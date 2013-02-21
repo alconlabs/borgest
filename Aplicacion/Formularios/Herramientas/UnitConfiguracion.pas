@@ -85,6 +85,7 @@ type
     TabSheet6: TTabSheet;
     Label21: TLabel;
     CAJASALDOINICIALCONCEPTOID: TSqlComboBox;
+    PRODUCTOSTOCKINICIAL: TCheckBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -300,6 +301,10 @@ begin
     ZQuery1.parambyname('config_valor').AsString:=CAJASALDOINICIALCONCEPTOID.codigo;
     ZQuery1.ExecSQL;
 
+    ZQuery1.parambyname('config_nombre').AsString:='PRODUCTOSTOCKINICIAL';
+    ZQuery1.parambyname('config_valor').AsString:=booltostr(PRODUCTOSTOCKINICIAL.Checked);
+    ZQuery1.ExecSQL;
+
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK, mbCancel], 0);
 
     Self.Close;
@@ -508,6 +513,9 @@ begin
 
     if ZQConfig.Locate('config_nombre','CAJASALDOINICIALCONCEPTOID',[]) then
       CAJASALDOINICIALCONCEPTOID.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','PRODUCTOSTOCKINICIAL',[]) then
+      PRODUCTOSTOCKINICIAL.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
 
 end;
 

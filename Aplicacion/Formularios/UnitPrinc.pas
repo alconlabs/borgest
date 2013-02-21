@@ -174,6 +174,7 @@ type
     CODIGOPRODUCTOBUSQUEDA2:string;
     CODIGOPRODUCTOBUSQUEDA3:string;
     CAJASALDOINICIALCONCEPTOID:string;
+    PRODUCTOSTOCKINICIAL:boolean;
     empresa_where:string;
     function codigo(tabla:string;campo:string):string;
     function buscar(sql:string;campo:string):string;
@@ -1463,7 +1464,7 @@ begin
 
             ZQProductosABM.sql.clear;
             ZQProductosABM.sql.add('Insert into productodeposito ');
-            ZQProductosABM.sql.add('select 0, 0, '+id+', deposito_id, 0, 0 from depositos');
+            ZQProductosABM.sql.add('select 0, 0, '+id+', deposito_id, 0, 0, 0 from depositos');
             ZQProductosABM.ExecSQL;
 
             if existe_campo_stock then
@@ -2455,6 +2456,8 @@ begin
     empleado_id_logueado:='';
     dep_id:='1';
 
+    ZBase.Connect;
+
     sucursal_actual:=Princ.GetConfiguracion('SUCURSALDEFECTO');
 
     NOMBREPRECIO1:=Princ.GetConfiguracion('NOMBREPRECIO1');
@@ -2463,6 +2466,7 @@ begin
     NOMBREPRECIO4:=Princ.GetConfiguracion('NOMBREPRECIO4');
 
     CAJASALDOINICIALCONCEPTOID:=Princ.GetConfiguracion('CAJASALDOINICIALCONCEPTOID');
+    PRODUCTOSTOCKINICIAL:=strtobool(Princ.GetConfiguracion('PRODUCTOSTOCKINICIAL'));
 
 
     empresa_where:='and puntodeventa.puntoventa_id not in ('+Princ.buscar('select empresa_where from empresas','empresa_where')+') ';
@@ -2778,10 +2782,7 @@ begin
 
     result:=ZQBuscar.FieldByName(campo).AsString;
 
-
     ZQBuscar.Active:=false;
-
-
 end;
 
 

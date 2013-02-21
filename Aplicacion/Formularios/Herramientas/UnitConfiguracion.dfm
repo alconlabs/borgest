@@ -240,6 +240,15 @@ object configuracion: Tconfiguracion
           Caption = 'Habilitar Log DB'
           TabOrder = 5
         end
+        object PRODUCTOSTOCKINICIAL: TCheckBox
+          Left = 360
+          Top = 136
+          Width = 129
+          Height = 17
+          Alignment = taLeftJustify
+          Caption = 'Habilitar Stock inicial'
+          TabOrder = 6
+        end
       end
       object TabSheet2: TTabSheet
         Caption = 'Compras'
@@ -620,8 +629,6 @@ object configuracion: Tconfiguracion
       object TabSheet5: TTabSheet
         Caption = 'Bar'
         ImageIndex = 4
-        ExplicitLeft = 0
-        ExplicitTop = 28
         object GroupBox4: TGroupBox
           Left = 3
           Top = 16
@@ -753,8 +760,6 @@ object configuracion: Tconfiguracion
       object TabSheet6: TTabSheet
         Caption = 'Cajas'
         ImageIndex = 5
-        ExplicitLeft = 8
-        ExplicitTop = 28
         object Label21: TLabel
           Left = 10
           Top = 33

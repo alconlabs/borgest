@@ -40,6 +40,7 @@ type
     btnprecio4: TButton;
     btnprecio3: TButton;
     ventadetalle_preciounitoriginal: TDBAdvEdit;
+    producdepo_stockinicial: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnaceptarClick(Sender: TObject);
     procedure producto_idSelect(Sender: TObject);
@@ -182,6 +183,7 @@ end;
 procedure Tventadetalle2.mostrarstock;
 var
   minimo, actual:real;
+
 begin
     producdepo_stockminimo.Visible:=false;
     producdepo_stockactual.Visible:=false;
@@ -199,6 +201,7 @@ begin
           try
             minimo:=Princ.ZQProductos.FieldByName('producdepo_stockminimo').AsFloat;
             actual:=Princ.ZQProductos.FieldByName('producdepo_stockactual').AsFloat;
+
           except
             minimo:=0;
             actual:=0;
@@ -209,6 +212,8 @@ begin
 
           producdepo_stockminimo.Caption:='Stock Min: '+floattostr(minimo);
           producdepo_stockactual.Caption:='Stock: '+floattostr(actual);
+
+          producdepo_stockinicial.Caption:='Stock Inic: '+Princ.ZQProductos.FieldByName('producdepo_stockinicial').AsString;
 
           if (actual<=minimo) or (actual<=0) then
             begin
@@ -366,6 +371,8 @@ begin
     producto_id.ConfCampoBusqueda1:=Princ.CODIGOPRODUCTOBUSQUEDA1;
     producto_id.ConfCampoBusqueda2:=Princ.CODIGOPRODUCTOBUSQUEDA2;
     producto_id.ConfCampoBusqueda3:=Princ.CODIGOPRODUCTOBUSQUEDA3;
+
+    producdepo_stockinicial.Visible:=Princ.PRODUCTOSTOCKINICIAL;
 
 end;
 

@@ -625,25 +625,35 @@ object productos: Tproductos
               FieldName = 'deposito_nombre'
               ReadOnly = True
               Title.Caption = 'Deposito'
-              Width = 152
+              Width = 150
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'producdepo_stockinicial'
+              Title.Caption = 'Inicial'
+              Width = 50
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'producdepo_puntorepos'
               Title.Caption = 'Pto.Rep.'
+              Width = 50
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'producdepo_stockminimo'
               Title.Caption = 'Min.'
+              Width = 50
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'producdepo_stockactual'
               Title.Caption = 'Actual'
+              Width = 50
               Visible = True
             end>
         end
@@ -734,7 +744,7 @@ object productos: Tproductos
       
         'select i as deposito_id,t as deposito_nombre,i as producto_id,d ' +
         'as producdepo_puntorepos,d as producdepo_stockminimo,d as produc' +
-        'depo_stockactual from temp ')
+        'depo_stockactual,d as producdepo_stockinicial from temp ')
     Params = <>
     ConfCampos.Strings = (
       'deposito_id,i'
@@ -742,7 +752,8 @@ object productos: Tproductos
       'producto_id,i'
       'producdepo_puntorepos,d'
       'producdepo_stockminimo,d'
-      'producdepo_stockactual,d')
+      'producdepo_stockactual,d'
+      'producdepo_stockinicial,d')
     Left = 664
     Top = 272
     object MQproductodepositodeposito_id: TIntegerField
@@ -767,6 +778,10 @@ object productos: Tproductos
       FieldName = 'producdepo_stockactual'
       DisplayFormat = '0.00'
       EditFormat = '0.00'
+    end
+    object MQproductodepositoproducdepo_stockinicial: TFloatField
+      FieldName = 'producdepo_stockinicial'
+      DisplayFormat = '0.00'
     end
   end
   object ZQDepositos: TZQuery
