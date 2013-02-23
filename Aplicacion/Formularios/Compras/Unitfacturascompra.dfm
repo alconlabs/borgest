@@ -3,7 +3,7 @@ object facturacompra: Tfacturacompra
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Factura Compra'
-  ClientHeight = 523
+  ClientHeight = 632
   ClientWidth = 851
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -24,7 +24,7 @@ object facturacompra: Tfacturacompra
     Left = 0
     Top = 0
     Width = 851
-    Height = 523
+    Height = 632
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -152,7 +152,7 @@ object facturacompra: Tfacturacompra
     end
     object Label13: TLabel
       Left = 318
-      Top = 303
+      Top = 471
       Width = 30
       Height = 13
       Caption = 'Pagos'
@@ -215,7 +215,7 @@ object facturacompra: Tfacturacompra
     end
     object btncancelar: TButton
       Left = 763
-      Top = 473
+      Top = 585
       Width = 75
       Height = 25
       Caption = 'Cancelar'
@@ -224,7 +224,7 @@ object facturacompra: Tfacturacompra
     end
     object btnguardar: TButton
       Left = 682
-      Top = 473
+      Top = 585
       Width = 75
       Height = 25
       Caption = 'Guardar'
@@ -318,8 +318,8 @@ object facturacompra: Tfacturacompra
     object GroupBox1: TGroupBox
       Left = 4
       Top = 320
-      Width = 309
-      Height = 131
+      Width = 836
+      Height = 105
       Caption = 'Totales'
       ParentBackground = False
       TabOrder = 13
@@ -340,7 +340,7 @@ object facturacompra: Tfacturacompra
         Caption = 'IVA 21%'
       end
       object Label7: TLabel
-        Left = 159
+        Left = 143
         Top = 17
         Width = 55
         Height = 13
@@ -348,7 +348,7 @@ object facturacompra: Tfacturacompra
         Caption = 'Neto 10.5%'
       end
       object Label9: TLabel
-        Left = 165
+        Left = 149
         Top = 41
         Width = 49
         Height = 13
@@ -356,8 +356,8 @@ object facturacompra: Tfacturacompra
         Caption = 'IVA 10.5%'
       end
       object Label10: TLabel
-        Left = 111
-        Top = 97
+        Left = 639
+        Top = 65
         Width = 47
         Height = 24
         Alignment = taRightJustify
@@ -377,8 +377,72 @@ object facturacompra: Tfacturacompra
         Alignment = taRightJustify
         Caption = 'Otros'
       end
+      object Label16: TLabel
+        Left = 288
+        Top = 17
+        Width = 46
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Neto 27%'
+      end
+      object Label17: TLabel
+        Left = 294
+        Top = 41
+        Width = 40
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'IVA 27%'
+      end
+      object Label18: TLabel
+        Left = 420
+        Top = 17
+        Width = 58
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'No Gravado'
+      end
+      object Label19: TLabel
+        Left = 418
+        Top = 41
+        Width = 60
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'TISSH Perc.'
+      end
+      object Label20: TLabel
+        Left = 574
+        Top = 17
+        Width = 40
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'IVA Ret.'
+      end
+      object Label21: TLabel
+        Left = 569
+        Top = 41
+        Width = 45
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'IVA Perc.'
+      end
+      object Label22: TLabel
+        Left = 703
+        Top = 17
+        Width = 47
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'DGR Ret.'
+      end
+      object Label23: TLabel
+        Left = 698
+        Top = 41
+        Width = 52
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'DGR Perc.'
+      end
       object documentocompra_neto21: TMoneyEdit
-        Left = 68
+        Left = 60
         Top = 14
         Width = 70
         Height = 21
@@ -394,9 +458,11 @@ object facturacompra: Tfacturacompra
         CalculatorLook.Font.Style = []
         TabOrder = 0
         Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
       end
       object documentocompra_iva21: TMoneyEdit
-        Left = 68
+        Tag = 1
+        Left = 60
         Top = 38
         Width = 70
         Height = 21
@@ -412,9 +478,11 @@ object facturacompra: Tfacturacompra
         CalculatorLook.Font.Style = []
         TabOrder = 1
         Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
       end
       object documentocompra_neto105: TMoneyEdit
-        Left = 228
+        Tag = 2
+        Left = 204
         Top = 14
         Width = 70
         Height = 21
@@ -430,9 +498,11 @@ object facturacompra: Tfacturacompra
         CalculatorLook.Font.Style = []
         TabOrder = 2
         Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
       end
       object documentocompra_iva105: TMoneyEdit
-        Left = 228
+        Tag = 3
+        Left = 204
         Top = 38
         Width = 70
         Height = 21
@@ -448,10 +518,12 @@ object facturacompra: Tfacturacompra
         CalculatorLook.Font.Style = []
         TabOrder = 3
         Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
       end
       object documentocompra_total: TMoneyEdit
-        Left = 164
-        Top = 94
+        Tag = 13
+        Left = 692
+        Top = 62
         Width = 134
         Height = 32
         CalculatorLook.ButtonWidth = 24
@@ -470,12 +542,34 @@ object facturacompra: Tfacturacompra
         Font.Name = 'MS Sans Serif'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 13
         Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
       end
       object documentocompra_otrosimpuestos: TMoneyEdit
-        Left = 68
+        Tag = 12
+        Left = 60
         Top = 62
+        Width = 70
+        Height = 21
+        CalculatorLook.ButtonWidth = 24
+        CalculatorLook.ButtonHeight = 24
+        CalculatorLook.ButtonColor = clSilver
+        CalculatorLook.Color = clWhite
+        CalculatorLook.Flat = False
+        CalculatorLook.Font.Charset = DEFAULT_CHARSET
+        CalculatorLook.Font.Color = clWindowText
+        CalculatorLook.Font.Height = -11
+        CalculatorLook.Font.Name = 'Tahoma'
+        CalculatorLook.Font.Style = []
+        TabOrder = 12
+        Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
+      end
+      object documentocompra_neto27: TMoneyEdit
+        Tag = 4
+        Left = 340
+        Top = 14
         Width = 70
         Height = 21
         CalculatorLook.ButtonWidth = 24
@@ -490,6 +584,146 @@ object facturacompra: Tfacturacompra
         CalculatorLook.Font.Style = []
         TabOrder = 4
         Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
+      end
+      object documentocompra_iva27: TMoneyEdit
+        Tag = 5
+        Left = 340
+        Top = 38
+        Width = 70
+        Height = 21
+        CalculatorLook.ButtonWidth = 24
+        CalculatorLook.ButtonHeight = 24
+        CalculatorLook.ButtonColor = clSilver
+        CalculatorLook.Color = clWhite
+        CalculatorLook.Flat = False
+        CalculatorLook.Font.Charset = DEFAULT_CHARSET
+        CalculatorLook.Font.Color = clWindowText
+        CalculatorLook.Font.Height = -11
+        CalculatorLook.Font.Name = 'Tahoma'
+        CalculatorLook.Font.Style = []
+        TabOrder = 5
+        Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
+      end
+      object documentocompra_nogravado: TMoneyEdit
+        Tag = 6
+        Left = 484
+        Top = 14
+        Width = 70
+        Height = 21
+        CalculatorLook.ButtonWidth = 24
+        CalculatorLook.ButtonHeight = 24
+        CalculatorLook.ButtonColor = clSilver
+        CalculatorLook.Color = clWhite
+        CalculatorLook.Flat = False
+        CalculatorLook.Font.Charset = DEFAULT_CHARSET
+        CalculatorLook.Font.Color = clWindowText
+        CalculatorLook.Font.Height = -11
+        CalculatorLook.Font.Name = 'Tahoma'
+        CalculatorLook.Font.Style = []
+        TabOrder = 6
+        Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
+      end
+      object documentocompra_tishhperc: TMoneyEdit
+        Tag = 7
+        Left = 484
+        Top = 38
+        Width = 70
+        Height = 21
+        CalculatorLook.ButtonWidth = 24
+        CalculatorLook.ButtonHeight = 24
+        CalculatorLook.ButtonColor = clSilver
+        CalculatorLook.Color = clWhite
+        CalculatorLook.Flat = False
+        CalculatorLook.Font.Charset = DEFAULT_CHARSET
+        CalculatorLook.Font.Color = clWindowText
+        CalculatorLook.Font.Height = -11
+        CalculatorLook.Font.Name = 'Tahoma'
+        CalculatorLook.Font.Style = []
+        TabOrder = 7
+        Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
+      end
+      object documentocompra_ivaret: TMoneyEdit
+        Tag = 8
+        Left = 620
+        Top = 14
+        Width = 70
+        Height = 21
+        CalculatorLook.ButtonWidth = 24
+        CalculatorLook.ButtonHeight = 24
+        CalculatorLook.ButtonColor = clSilver
+        CalculatorLook.Color = clWhite
+        CalculatorLook.Flat = False
+        CalculatorLook.Font.Charset = DEFAULT_CHARSET
+        CalculatorLook.Font.Color = clWindowText
+        CalculatorLook.Font.Height = -11
+        CalculatorLook.Font.Name = 'Tahoma'
+        CalculatorLook.Font.Style = []
+        TabOrder = 8
+        Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
+      end
+      object documentocompra_ivaperc: TMoneyEdit
+        Tag = 9
+        Left = 620
+        Top = 38
+        Width = 70
+        Height = 21
+        CalculatorLook.ButtonWidth = 24
+        CalculatorLook.ButtonHeight = 24
+        CalculatorLook.ButtonColor = clSilver
+        CalculatorLook.Color = clWhite
+        CalculatorLook.Flat = False
+        CalculatorLook.Font.Charset = DEFAULT_CHARSET
+        CalculatorLook.Font.Color = clWindowText
+        CalculatorLook.Font.Height = -11
+        CalculatorLook.Font.Name = 'Tahoma'
+        CalculatorLook.Font.Style = []
+        TabOrder = 9
+        Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
+      end
+      object documentocompra_dgrret: TMoneyEdit
+        Tag = 10
+        Left = 756
+        Top = 14
+        Width = 70
+        Height = 21
+        CalculatorLook.ButtonWidth = 24
+        CalculatorLook.ButtonHeight = 24
+        CalculatorLook.ButtonColor = clSilver
+        CalculatorLook.Color = clWhite
+        CalculatorLook.Flat = False
+        CalculatorLook.Font.Charset = DEFAULT_CHARSET
+        CalculatorLook.Font.Color = clWindowText
+        CalculatorLook.Font.Height = -11
+        CalculatorLook.Font.Name = 'Tahoma'
+        CalculatorLook.Font.Style = []
+        TabOrder = 10
+        Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
+      end
+      object documentocompra_dgrperc: TMoneyEdit
+        Left = 756
+        Top = 38
+        Width = 70
+        Height = 21
+        CalculatorLook.ButtonWidth = 24
+        CalculatorLook.ButtonHeight = 24
+        CalculatorLook.ButtonColor = clSilver
+        CalculatorLook.Color = clWhite
+        CalculatorLook.Flat = False
+        CalculatorLook.Font.Charset = DEFAULT_CHARSET
+        CalculatorLook.Font.Color = clWindowText
+        CalculatorLook.Font.Height = -11
+        CalculatorLook.Font.Name = 'Tahoma'
+        CalculatorLook.Font.Style = []
+        TabOrder = 11
+        Version = '1.1.0.1'
+        OnExit = documentocompra_neto21Exit
       end
     end
     object puntoventa_id: TSqlComboBox
@@ -543,9 +777,9 @@ object facturacompra: Tfacturacompra
     end
     object DBGrid2: TDBGrid
       Left = 319
-      Top = 320
-      Width = 522
-      Height = 131
+      Top = 488
+      Width = 521
+      Height = 75
       TabStop = False
       DataSource = DTSPagos
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
@@ -580,7 +814,7 @@ object facturacompra: Tfacturacompra
     end
     object btnagregarpago: TButton
       Left = 319
-      Top = 457
+      Top = 569
       Width = 75
       Height = 25
       Caption = 'Agregar'
@@ -590,7 +824,7 @@ object facturacompra: Tfacturacompra
     end
     object btnquitarpago: TButton
       Left = 393
-      Top = 457
+      Top = 569
       Width = 75
       Height = 25
       Caption = 'Quitar'
@@ -752,8 +986,8 @@ object facturacompra: Tfacturacompra
         'opago_id'
       'where documentopago_id=-1')
     Params = <>
-    Left = 416
-    Top = 360
+    Left = 232
+    Top = 464
     object ZQDocumentopagosdocumentopago_id: TIntegerField
       FieldName = 'documentopago_id'
       Required = True
@@ -782,8 +1016,8 @@ object facturacompra: Tfacturacompra
   end
   object DTSPagos: TDataSource
     DataSet = ZQDocumentopagos
-    Left = 664
-    Top = 376
+    Left = 688
+    Top = 440
   end
   object ZQpagotarjeta: TZQuery
     Connection = Princ.ZBase
@@ -795,8 +1029,8 @@ object facturacompra: Tfacturacompra
         'd'
       'where documentopago_id=-1')
     Params = <>
-    Left = 576
-    Top = 368
+    Left = 552
+    Top = 448
   end
   object ZQNotacredito: TZQuery
     Connection = Princ.ZBase

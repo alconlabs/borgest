@@ -78,6 +78,22 @@ type
     documentocompra_otrosimpuestos: TMoneyEdit;
     documentocompra_puntoventa: TEdit;
     ZQDocumentocompradetallesAnterior: TZQuery;
+    Label16: TLabel;
+    Label17: TLabel;
+    documentocompra_neto27: TMoneyEdit;
+    documentocompra_iva27: TMoneyEdit;
+    Label18: TLabel;
+    Label19: TLabel;
+    documentocompra_nogravado: TMoneyEdit;
+    documentocompra_tishhperc: TMoneyEdit;
+    Label20: TLabel;
+    Label21: TLabel;
+    documentocompra_ivaret: TMoneyEdit;
+    documentocompra_ivaperc: TMoneyEdit;
+    Label22: TLabel;
+    Label23: TLabel;
+    documentocompra_dgrret: TMoneyEdit;
+    documentocompra_dgrperc: TMoneyEdit;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -95,6 +111,7 @@ type
     procedure sucursal_idSelect(Sender: TObject);
     procedure FacturarnotapedidoClick(Sender: TObject);
     procedure btnimprimirventaClick(Sender: TObject);
+    procedure documentocompra_neto21Exit(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -109,6 +126,7 @@ type
     procedure anular;
     procedure calculartotales;
     procedure calculartotalpagos;
+    procedure calculartotal(posicion:integer);
   public
     { Public declarations }
     abm:integer;
@@ -129,6 +147,38 @@ uses UnitPrinc, Unitventadetalle, Unitcompradetalle, UnitFacturarDocumentos;
 {$R *.dfm}
 
 
+
+procedure Tfacturacompra.calculartotal(posicion:integer);
+begin
+    if posicion<1 then
+      documentocompra_iva21.Text:=floattostr(roundto(documentocompra_neto21.Value*21/100,-2));
+
+    if posicion<3 then
+      documentocompra_iva105.Text:=floattostr(roundto(documentocompra_neto105.Value*10.5/100,-2));
+
+    if posicion<5 then
+      documentocompra_iva27.Text:=floattostr(roundto(documentocompra_neto27.Value*27/100,-2));
+
+    if posicion<13 then
+      documentocompra_total.Text:=floattostr(roundto(documentocompra_neto21.Value+
+                                             documentocompra_iva21.Value+
+                                             documentocompra_neto105.Value+
+                                             documentocompra_iva105.Value+
+                                             documentocompra_neto27.Value+
+                                             documentocompra_iva27.Value+
+                                             documentocompra_nogravado.Value+
+                                             documentocompra_tishhperc.Value+
+                                             documentocompra_ivaret.Value+
+                                             documentocompra_ivaperc.Value+
+                                             documentocompra_dgrret.Value+
+                                             documentocompra_dgrperc.Value+
+                                             documentocompra_otrosimpuestos.Value,-2));
+
+
+
+
+end;
+
 function Tfacturacompra.ControlAnular:boolean;
 var
   error:integer;
@@ -144,6 +194,11 @@ begin
     Result:=error=0;
 end;
 
+
+procedure Tfacturacompra.documentocompra_neto21Exit(Sender: TObject);
+begin
+    calculartotal((Sender as twincontrol).TabOrder);
+end;
 
 procedure Tfacturacompra.anular;
 begin
@@ -466,7 +521,18 @@ begin
     ZQExecSql.sql.add('tipodocu_id=:tipodocu_id, ');
     ZQExecSql.sql.add('documentocompra_condicionventa=:documentocompra_condicionventa, ');
     ZQExecSql.sql.add('documentocompra_fechavenc=:documentocompra_fechavenc, ');
-    ZQExecSql.sql.add('documentocompra_puntoventa=:documentocompra_puntoventa ');
+    ZQExecSql.sql.add('documentocompra_puntoventa=:documentocompra_puntoventa, ');
+
+    ZQExecSql.sql.add('documentocompra_neto27=:documentocompra_neto27, ');
+    ZQExecSql.sql.add('documentocompra_iva27=:documentocompra_iva27, ');
+    ZQExecSql.sql.add('documentocompra_nogravado=:documentocompra_nogravado, ');
+    ZQExecSql.sql.add('documentocompra_tishhperc=:documentocompra_tishhperc, ');
+    ZQExecSql.sql.add('documentocompra_ivaret=:documentocompra_ivaret, ');
+    ZQExecSql.sql.add('documentocompra_ivaperc=:documentocompra_ivaperc, ');
+    ZQExecSql.sql.add('documentocompra_dgrret=:documentocompra_dgrret, ');
+    ZQExecSql.sql.add('documentocompra_dgrperc=:documentocompra_dgrperc, ');
+    ZQExecSql.sql.add('documentocompra_otrosimpuestos=:documentocompra_otrosimpuestos ');
+
     ZQExecSql.sql.add('where documentocompra_id=:documentocompra_id ');
     ZQExecSql.ParamByName('documentocompra_id').AsString:=id;
     ZQExecSql.ParamByName('documentocompra_numero').AsString:=documentocompra_numero.Text;
@@ -487,6 +553,16 @@ begin
     ZQExecSql.ParamByName('documentocompra_condicionventa').AsInteger:=documentocompra_condicionventa.ItemIndex;
     ZQExecSql.ParamByName('documentocompra_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documentocompra_fecha.Date+15);
     ZQExecSql.ParamByName('documentocompra_puntoventa').AsString:=documentocompra_puntoventa.Text;
+
+    ZQExecSql.ParamByName('documentocompra_neto27').AsString:=documentocompra_neto27.Text;
+    ZQExecSql.ParamByName('documentocompra_iva27').AsString:=documentocompra_iva27.Text;
+    ZQExecSql.ParamByName('documentocompra_nogravado').AsString:=documentocompra_nogravado.Text;
+    ZQExecSql.ParamByName('documentocompra_tishhperc').AsString:=documentocompra_tishhperc.Text;
+    ZQExecSql.ParamByName('documentocompra_ivaret').AsString:=documentocompra_ivaret.Text;
+    ZQExecSql.ParamByName('documentocompra_ivaperc').AsString:=documentocompra_ivaperc.Text;
+    ZQExecSql.ParamByName('documentocompra_dgrret').AsString:=documentocompra_dgrret.Text;
+    ZQExecSql.ParamByName('documentocompra_dgrperc').AsString:=documentocompra_dgrperc.Text;
+    ZQExecSql.ParamByName('documentocompra_otrosimpuestos').AsString:=documentocompra_otrosimpuestos.Text;
 
     ZQExecSql.ExecSQL;
 
@@ -633,31 +709,25 @@ begin
           documentocompra_iva21.Text:=ZQuery2.FieldByName('documentocompra_iva21').AsString;
           documentocompra_neto105.Text:=ZQuery2.FieldByName('documentocompra_neto105').AsString;
           documentocompra_iva105.Text:=ZQuery2.FieldByName('documentocompra_iva105').AsString;
+
+          documentocompra_neto27.Text:=ZQuery2.FieldByName('documentocompra_neto27').AsString;
+          documentocompra_iva27.Text:=ZQuery2.FieldByName('documentocompra_iva27').AsString;
+          documentocompra_nogravado.Text:=ZQuery2.FieldByName('documentocompra_nogravado').AsString;
+          documentocompra_tishhperc.Text:=ZQuery2.FieldByName('documentocompra_tishhperc').AsString;
+          documentocompra_ivaret.Text:=ZQuery2.FieldByName('documentocompra_ivaret').AsString;
+          documentocompra_ivaperc.Text:=ZQuery2.FieldByName('documentocompra_ivaperc').AsString;
+          documentocompra_dgrret.Text:=ZQuery2.FieldByName('documentocompra_dgrret').AsString;
+          documentocompra_dgrperc.Text:=ZQuery2.FieldByName('documentocompra_dgrperc').AsString;
+
           documentocompra_otrosimpuestos.Text:=ZQuery2.FieldByName('documentocompra_otrosimpuestos').AsString;
           documentocompra_total.Text:=ZQuery2.FieldByName('documentocompra_total').AsString;
 
       end;
 
-
     ZQDocumentocompradetalles.Active:=false;
     ZQDocumentocompradetalles.SQL.Text:='select * from documentocompradetalles where documentocompra_id="'+id+'"';
     ZQDocumentocompradetalles.Active:=true;
 
-//    ZQDocumentopagos.Active:=false;
-//    ZQDocumentopagos.SQL.Text:='select documentopagos.*, tipopago_nombre from documentopagos '+
-//                               'inner join tipospago on documentopagos.tipopago_id=tipospago.tipopago_id '+
-//                               'where documentocompra_id="'+id+'"';
-//
-//    ZQDocumentopagos.Active:=true;
-
-    calculartotales;
-    calculartotalpagos;
-
-//    try
-//      proveedor_id.SetFocus;
-//    except
-//      btnagregar.SetFocus;
-//    end;
 end;
 
 procedure Tfacturacompra.agregar;
@@ -681,11 +751,17 @@ begin
     ZQExecSql.sql.add('Insert into documentoscompras (documentocompra_id, documentocompra_numero, documentocompra_fecha, documentocompra_hora, ');
     ZQExecSql.sql.add('documentocompra_neto21, documentocompra_iva21, documentocompra_neto105, documentocompra_iva105, ');
     ZQExecSql.sql.add('documentocompra_total, documentocompra_estado, documentocompra_pagado, documentocompra_saldo, documentocompra_observacion, ');
-    ZQExecSql.sql.add('proveedor_id, personal_id, tipodocu_id, documentocompra_condicionventa, documentocompra_fechavenc, documentocompra_puntoventa) ');
+    ZQExecSql.sql.add('proveedor_id, personal_id, tipodocu_id, documentocompra_condicionventa, documentocompra_fechavenc, documentocompra_puntoventa, ');
+    ZQExecSql.sql.add('documentocompra_neto27, documentocompra_iva27, documentocompra_nogravado, ');
+    ZQExecSql.sql.add('documentocompra_tishhperc, documentocompra_ivaret, documentocompra_ivaperc, ');
+    ZQExecSql.sql.add('documentocompra_dgrret, documentocompra_dgrperc, documentocompra_otrosimpuestos) ');
     ZQExecSql.sql.add('values (:documentocompra_id, :documentocompra_numero, :documentocompra_fecha, :documentocompra_hora, ');
     ZQExecSql.sql.add(':documentocompra_neto21, :documentocompra_iva21, :documentocompra_neto105, :documentocompra_iva105, ');
     ZQExecSql.sql.add(':documentocompra_total, :documentocompra_estado, :documentocompra_pagado, :documentocompra_saldo, :documentocompra_observacion, ');
-    ZQExecSql.sql.add(':proveedor_id, :personal_id, :tipodocu_id, :documentocompra_condicionventa, :documentocompra_fechavenc, :documentocompra_puntoventa)');
+    ZQExecSql.sql.add(':proveedor_id, :personal_id, :tipodocu_id, :documentocompra_condicionventa, :documentocompra_fechavenc, :documentocompra_puntoventa, ');
+    ZQExecSql.sql.add(':documentocompra_neto27, :documentocompra_iva27, :documentocompra_nogravado, ');
+    ZQExecSql.sql.add(':documentocompra_tishhperc, :documentocompra_ivaret, :documentocompra_ivaperc, ');
+    ZQExecSql.sql.add(':documentocompra_dgrret, :documentocompra_dgrperc, :documentocompra_otrosimpuestos) ');
     ZQExecSql.ParamByName('documentocompra_id').AsString:=id;
     ZQExecSql.ParamByName('documentocompra_numero').AsString:=documentocompra_numero.Text;
     ZQExecSql.ParamByName('documentocompra_fecha').AsString:=formatdatetime('yyyy-mm-dd',documentocompra_fecha.Date);
@@ -706,6 +782,16 @@ begin
     ZQExecSql.ParamByName('documentocompra_condicionventa').AsInteger:=documentocompra_condicionventa.ItemIndex;
     ZQExecSql.ParamByName('documentocompra_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documentocompra_fecha.Date+15);
     ZQExecSql.ParamByName('documentocompra_puntoventa').AsString:=documentocompra_puntoventa.Text;
+
+    ZQExecSql.ParamByName('documentocompra_neto27').AsString:=documentocompra_neto27.Text;
+    ZQExecSql.ParamByName('documentocompra_iva27').AsString:=documentocompra_iva27.Text;
+    ZQExecSql.ParamByName('documentocompra_nogravado').AsString:=documentocompra_nogravado.Text;
+    ZQExecSql.ParamByName('documentocompra_tishhperc').AsString:=documentocompra_tishhperc.Text;
+    ZQExecSql.ParamByName('documentocompra_ivaret').AsString:=documentocompra_ivaret.Text;
+    ZQExecSql.ParamByName('documentocompra_ivaperc').AsString:=documentocompra_ivaperc.Text;
+    ZQExecSql.ParamByName('documentocompra_dgrret').AsString:=documentocompra_dgrret.Text;
+    ZQExecSql.ParamByName('documentocompra_dgrperc').AsString:=documentocompra_dgrperc.Text;
+    ZQExecSql.ParamByName('documentocompra_otrosimpuestos').AsString:=documentocompra_otrosimpuestos.Text;
 
     ZQExecSql.ExecSQL;
 

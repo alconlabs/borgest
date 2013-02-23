@@ -476,3 +476,14 @@ ADD COLUMN `personal_pass` VARCHAR(45) NULL DEFAULT NULL  AFTER `personal_usuari
 UPDATE `personal` SET `personal_usuario`=`personal_id`,`personal_pass`='z3y2x1w';
 128;
 ALTER TABLE `productodeposito` ADD COLUMN `producdepo_stockinicial` FLOAT(20,4) NULL DEFAULT 0  AFTER `producdepo_puntorepos`;
+129;
+ALTER TABLE `documentoscompras` 
+ADD COLUMN `documentocompra_neto27` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_puntoventa` , 
+ADD COLUMN `documentocompra_iva27` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_neto27` , 
+ADD COLUMN `documentocompra_nogravado` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_iva27` , 
+ADD COLUMN `documentocompra_tishhperc` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_nogravado` , 
+ADD COLUMN `documentocompra_ivaret` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_tishhperc` , 
+ADD COLUMN `documentocompra_ivaperc` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_ivaret` , 
+ADD COLUMN `documentocompra_dgrrt` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_ivaperc` , 
+ADD COLUMN `documentocompra_dgrperc` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_dgrret` ;
+
