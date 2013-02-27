@@ -44,7 +44,6 @@ type
     EstadoCtasCompras: TAdvGlowButton;
     btnfacturascompras: TAdvGlowButton;
     btnordenespago: TAdvGlowButton;
-    btninformescompras: TAdvGlowButton;
     AdvPageHerramientas: TAdvPage;
     AdvToolBarHerramientas: TAdvToolBar;
     btnimportacion: TAdvGlowButton;
@@ -106,6 +105,10 @@ type
     btndetallepagos: TAdvGlowButton;
     btnlibroivaventas: TAdvGlowButton;
     btncajabar: TAdvGlowButton;
+    AdvToolBarInformesCompras: TAdvToolBar;
+    AdvGlowButton3: TAdvGlowButton;
+    btnlibroivacompras: TAdvGlowButton;
+    btninformescompras: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -152,6 +155,7 @@ type
     procedure btndetallepagosClick(Sender: TObject);
     procedure btnlibroivaventasClick(Sender: TObject);
     procedure btncajabarClick(Sender: TObject);
+    procedure btnlibroivacomprasClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -325,7 +329,7 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   Unitlistafacturascompra, Unitfacturascompra, UnitListaServices,
   UnitOrdenServicio, UnitListaOrdenesServicios, UnitImprimirListaPrecios,
   UnitPresupuesto, UnitListaPresupuestos, UnitDetallePagos, UnitLibroIvaVentas,
-  UnitCajaBar;
+  UnitCajaBar, UnitLibroIvaCompras;
 
 {$R *.dfm}
 
@@ -2692,6 +2696,15 @@ begin
       impresorafiscalcola:=Timpresorafiscalcola.Create(self);
     finally
       impresorafiscalcola.Show;
+    end;
+end;
+
+procedure TPrinc.btnlibroivacomprasClick(Sender: TObject);
+begin
+   try
+      LibroIvaCompras:=TLibroIvaCompras.Create(self);
+    finally
+      LibroIvaCompras.Show;
     end;
 end;
 

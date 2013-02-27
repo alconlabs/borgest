@@ -22,7 +22,9 @@ Compras
 		Facturas de Compra
 		Ordenes de Pago
 		Estado de Ctas.
+	Informes
 		Informes
+		Libro IVA Compras
 Ventas
 	Documentos
 		Cotratacion

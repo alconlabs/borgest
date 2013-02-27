@@ -484,6 +484,21 @@ ADD COLUMN `documentocompra_nogravado` FLOAT(20,4) NULL DEFAULT 0  AFTER `docume
 ADD COLUMN `documentocompra_tishhperc` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_nogravado` , 
 ADD COLUMN `documentocompra_ivaret` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_tishhperc` , 
 ADD COLUMN `documentocompra_ivaperc` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_ivaret` , 
-ADD COLUMN `documentocompra_dgrrt` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_ivaperc` , 
+ADD COLUMN `documentocompra_dgrret` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_ivaperc` , 
 ADD COLUMN `documentocompra_dgrperc` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentocompra_dgrret` ;
-
+130;
+UPDATE `menu` SET `menu_path`='>Compras>Informes>Informes' WHERE `menu_id`=20;
+131;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('56', '>Compras>Informes', '0', 'AdvToolBarInformesCompras', '', '0', '0');
+132;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,56,perfil_id from perfiles;
+133;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('57', '>Compras>Informes>Libro IVA Compras', '0', 'btninformescompras', '', '0', '0');
+134;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,57,perfil_id from perfiles;
+135;
+UPDATE `tiposdocumento` SET `tipodocu_nombreabrev`='FA' WHERE `tipodocu_nombre`='Factura de Compra';
+136;
+UPDATE `tiposdocumento` SET `tipodocu_nombreabrev`='NC' WHERE `tipodocu_nombre`='Nota de Credito de Compra';
+137;
+UPDATE `tiposdocumento` SET `tipodocu_nombreabrev`='ND' WHERE `tipodocu_nombre`='Nota de Debito de Compra';

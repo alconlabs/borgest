@@ -124,6 +124,9 @@
     <DCCReference Include="Formularios\Compras\Unitfacturascompra.pas">
       <Form>facturacompra</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitLibroIvaCompras.pas">
+      <Form>LibroIvaCompras</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Compras\Unitlistafacturascompra.pas">
       <Form>listafacturascompra</Form>
     </DCCReference>

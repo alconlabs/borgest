@@ -90,7 +90,8 @@ uses
   UnitLibroIvaVentas in 'Formularios\Ventas\UnitLibroIvaVentas.pas' {LibroIvaVentas},
   UnitCajaBar in 'Formularios\Ventas\UnitCajaBar.pas' {CajaBar},
   UnitCajaApertura in 'Formularios\Caja\UnitCajaApertura.pas' {CajaApertura},
-  UnitLogin in 'Formularios\UnitLogin.pas' {login};
+  UnitLogin in 'Formularios\UnitLogin.pas' {login},
+  UnitLibroIvaCompras in 'Formularios\Compras\UnitLibroIvaCompras.pas' {LibroIvaCompras};
 
 {$R *.res}
 
