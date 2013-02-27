@@ -53,6 +53,7 @@ type
     DSCIngresos: TDataSource;
     ZQEgresos: TZQuery;
     DSCEgresos: TDataSource;
+    btnpasarmesa: TButton;
     procedure DCSDocumentosventasDataChange(Sender: TObject; Field: TField);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -75,6 +76,7 @@ type
     procedure ZQSelectAfterOpen(DataSet: TDataSet);
     procedure Button2Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure btnpasarmesaClick(Sender: TObject);
   private
     { Private declarations }
     BARPUNTOVENTAID:string;
@@ -83,6 +85,8 @@ type
     BARFACTURAPUNTOVENTAID:string;
     BARFACTURATIPODOCUID:string;
     caja_id:string;
+    documentoventa_id_origen:string;
+    documentoventa_id_destino:string;
     procedure ConvertirDocumentoVenta;
     procedure AbrirNuevaCaja;
     procedure HabilitarBotones(estado:boolean);
@@ -241,13 +245,17 @@ begin
                                        'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
                                        'where documentosventas.tipodocu_id="'+BARTIPODOCUID+'" '+Princ.empresa_where+
                                        ' and documentosventas.caja_id="'+caja_id+'"'+
+                                       ' and documentoventa_estado<>"ANULADA" '+
                                        ' order by documentoventa_id';
 
           ZQDocumentosventas.Active:=true;
 
           if bm<>nil then
             begin
-                ZQDocumentosventas.GotoBookmark(bm);
+                try
+                  ZQDocumentosventas.GotoBookmark(bm);
+                finally
+                end;
 
             end;
 
@@ -314,6 +322,7 @@ begin
   inherited;
     if (ZQDocumentosventas.RecordCount>0) then
       begin
+
           if (MessageDlg('Seguro desea cerrar esta mesa?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
             begin
                 ZQDocumentopagos.Active:=false;
@@ -355,75 +364,102 @@ var
   id_factura:string;
 begin
   inherited;
-        if (ZQDocumentosventas.RecordCount>0) then
+    if (ZQDocumentosventas.RecordCount>0) then
       begin
-          if (MessageDlg('Seguro desea facturar esta mesa?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+          if (ZQDocumentosventas.FieldByName('documentoventa_estado').AsString='CERRADA') then
             begin
-                ZQDocumentoventa.Active:=false;
-                ZQDocumentoventa.ParamByName('documentoventa_id').AsString:=ZQDocumentosventas.FieldByName('documentoventa_id').AsString;
-                ZQDocumentoventa.Active:=true;
+                if (MessageDlg('Seguro desea facturar esta mesa?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+                  begin
+                      ZQDocumentoventa.Active:=false;
+                      ZQDocumentoventa.ParamByName('documentoventa_id').AsString:=ZQDocumentosventas.FieldByName('documentoventa_id').AsString;
+                      ZQDocumentoventa.Active:=true;
 
-                ZQDocumentoventa.Edit;
-                ZQDocumentoventa.FieldByName('documentoventa_estado').AsString:='FACTURADA';
-                ZQDocumentoventa.Post;
+                      ZQDocumentoventa.Edit;
+                      ZQDocumentoventa.FieldByName('documentoventa_estado').AsString:='FACTURADA';
+                      ZQDocumentoventa.Post;
 
-                Princ.ModificarDocumentoVenta(ZQDocumentoventa,nil,nil,nil);
+                      Princ.ModificarDocumentoVenta(ZQDocumentoventa,nil,nil,nil);
 
-//                if (MessageDlg('Desea imprimir?', mtConfirmation, [mbOK, mbCancel], 0) in [mrOk, mrCancel]) then
-                  Princ.ImprimirDocumentoVenta(ZQDocumentosventas.FieldByName('documentoventa_id').AsString);
+      //                if (MessageDlg('Desea imprimir?', mtConfirmation, [mbOK, mbCancel], 0) in [mrOk, mrCancel]) then
+                        Princ.ImprimirDocumentoVenta(ZQDocumentosventas.FieldByName('documentoventa_id').AsString);
 
-                btnactualizar.Click;
+                      btnactualizar.Click;
+
+                  end;
 
             end;
 
       end;
 
+end;
 
-
-
-
-
-
-
-
-
-
-    if (ZQDocumentosventas.FieldByName('documentoventa_estado').AsString='CERRADA') then
+procedure TCajaBar.btnpasarmesaClick(Sender: TObject);
+begin
+  inherited;
+    if ZQDocumentosventas.FieldByName('documentoventa_estado').AsString='ABIERTA' then
       begin
-          if (MessageDlg('Seguro desea facturar?', mtConfirmation, [mbOK, mbCancel], 0) in [mrOk, mrNone]) then
+          if documentoventa_id_origen='' then
             begin
-                ZQDocumentoventa.Active:=false;
-                ZQDocumentoventa.ParamByName('documentoventa_id').AsString:=ZQDocumentosventas.FieldByName('documentoventa_id').AsString;
-                ZQDocumentoventa.Active:=true;
+                documentoventa_id_origen:=ZQDocumentosventas.FieldByName('documentoventa_id').AsString;
+                btnpasarmesa.Caption:='Confirmar Paso de mesa';
 
-                ZQDocumentoventa.Edit;
-                ZQDocumentoventa.FieldByName('tipodocu_id').AsString:=BARFACTURATIPODOCUID;
-                ZQDocumentoventa.FieldByName('documentoventa_estado').AsString:='PAGADA';
-                ZQDocumentoventa.Post;
-
-                ZQDocumentopagos.Active:=false;
-                ZQDocumentopagos.ParamByName('documentoventa_id').AsString:=ZQDocumentosventas.FieldByName('documentoventa_id').AsString;
-                ZQDocumentopagos.Active:=true;
-
-                id_factura:=Princ.AgregarDocumentoVenta(ZQDocumentoventa,ZQDocumentoventadetalles,nil,ZQDocumentopagos);
-
-                ZQDocumentoventa.Active:=false;
-                ZQDocumentoventa.ParamByName('documentoventa_id').AsString:=ZQDocumentosventas.FieldByName('documentoventa_id').AsString;
-                ZQDocumentoventa.Active:=true;
-
-                ZQDocumentoventa.Edit;
-                ZQDocumentoventa.FieldByName('documentoventa_estado').AsString:='FACTURADA';
-                ZQDocumentoventa.Post;
-
-                Princ.ModificarDocumentoVenta(ZQDocumentoventa,nil,nil,nil);
-
-                if Princ.GetConfigTipoDocumento(id_factura,'tipodocu_fiscal')='-1' then
+            end
+          else
+            begin
+                if ZQDocumentosventas.FieldByName('documentoventa_id').AsString<>documentoventa_id_origen then
                   begin
-                      Princ.ImprimirFiscal(id_factura);
+                      documentoventa_id_destino:=ZQDocumentosventas.FieldByName('documentoventa_id').AsString;
+
+                      ZQDocumentoventadetalles.Active:=false;
+                      if ZQDocumentosventas.Active then
+                        begin
+                            ZQDocumentoventadetalles.SQL.Text:='select * from documentoventadetalles '+
+                                                               'where documentoventa_id in ("'+documentoventa_id_origen+'","'+documentoventa_id_destino+'") ';
+                            ZQDocumentoventadetalles.Active:=true;
+
+                            ZQDocumentoventadetalles.First;
+                            while not ZQDocumentoventadetalles.Eof do
+                                begin
+                                    ZQDocumentoventadetalles.Edit;
+                                    ZQDocumentoventadetalles.FieldByName('documentoventa_id').AsString:=documentoventa_id_destino;
+                                    ZQDocumentoventadetalles.Post;
+
+                                    ZQDocumentoventadetalles.Next;
+                                end;
+
+                            ZQDocumentoventa.Active:=false;
+                            ZQDocumentoventa.ParamByName('documentoventa_id').AsString:=documentoventa_id_destino;
+                            ZQDocumentoventa.Active:=true;
+
+                            Princ.ModificarDocumentoVenta(ZQDocumentoventa,ZQDocumentoventadetalles,nil,nil);
+
+                            ZQDocumentoventadetalles.SQL.Text:='select * from documentoventadetalles '+
+                                                               'where documentoventa_id=:documentoventa_id';
+
+
+                            ZQDocumentoventa.Active:=false;
+                            ZQDocumentoventa.ParamByName('documentoventa_id').AsString:=documentoventa_id_origen;
+                            ZQDocumentoventa.Active:=true;
+
+                            ZQDocumentoventa.Edit;
+                            ZQDocumentoventa.FieldByName('documentoventa_estado').AsString:='ANULADA';
+                            ZQDocumentoventa.FieldByName('documentoventa_observacion').AsString:='TRASPASO DE MESA';
+                            ZQDocumentoventa.Post;
+
+                            Princ.ModificarDocumentoVenta(ZQDocumentoventa,nil,nil,nil);
+
+                            btnactualizar.Click;
+
+                        end;
+
+
+
                   end;
 
-                btnactualizar.Click;  
+
+
             end;
+
       end;
 
 end;
@@ -446,6 +482,7 @@ procedure TCajaBar.DBGrid1DblClick(Sender: TObject);
 begin
   inherited;
     if ZQDocumentosventas.RecordCount>0 then
+
       begin
           if (ZQDocumentosventas.FieldByName('documentoventa_estado').AsString='CERRADA') then
             begin

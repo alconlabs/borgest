@@ -20,7 +20,7 @@ inherited CajaBar: TCajaBar
     FullHeight = 0
     object Label2: TLabel [0]
       Left = 838
-      Top = 434
+      Top = 448
       Width = 51
       Height = 13
       Alignment = taRightJustify
@@ -28,7 +28,7 @@ inherited CajaBar: TCajaBar
     end
     object caja_estado: TLabel [1]
       Left = 774
-      Top = 434
+      Top = 448
       Width = 51
       Height = 13
       Alignment = taRightJustify
@@ -36,7 +36,7 @@ inherited CajaBar: TCajaBar
     end
     object caja_saldofinal: TDBAdvEdit [2]
       Left = 895
-      Top = 431
+      Top = 445
       Width = 87
       Height = 21
       TabStop = False
@@ -57,7 +57,7 @@ inherited CajaBar: TCajaBar
     end
     object btncerrarcaja: TButton [3]
       Left = 907
-      Top = 461
+      Top = 469
       Width = 75
       Height = 25
       Caption = 'Cerrar Caja'
@@ -68,8 +68,8 @@ inherited CajaBar: TCajaBar
       Left = 0
       Top = 0
       Width = 999
-      Height = 409
-      ActivePage = TabIngrEgr
+      Height = 441
+      ActivePage = TabVentas
       Align = alTop
       TabOrder = 2
       object TabVentas: TTabSheet
@@ -90,7 +90,7 @@ inherited CajaBar: TCajaBar
           Caption = 'Mozo/Mesa'
         end
         object btnfacturar: TButton
-          Left = 311
+          Left = 312
           Top = 5
           Width = 75
           Height = 25
@@ -238,7 +238,7 @@ inherited CajaBar: TCajaBar
           Left = 6
           Top = 34
           Width = 441
-          Height = 337
+          Height = 328
           DataSource = DCSDocumentosventas
           Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
           TabOrder = 9
@@ -282,6 +282,15 @@ inherited CajaBar: TCajaBar
               Title.Caption = 'Total'
               Visible = True
             end>
+        end
+        object btnpasarmesa: TButton
+          Left = 6
+          Top = 365
+          Width = 155
+          Height = 25
+          Caption = 'Pasar Mesa'
+          TabOrder = 10
+          OnClick = btnpasarmesaClick
         end
       end
       object TabIngrEgr: TTabSheet
@@ -536,24 +545,24 @@ inherited CajaBar: TCajaBar
       end
     end
     inherited btncancelar: TButton
-      Left = 508
-      Top = 434
+      Left = 620
+      Top = 466
       TabOrder = 3
       Visible = False
-      ExplicitLeft = 508
-      ExplicitTop = 434
+      ExplicitLeft = 620
+      ExplicitTop = 466
     end
     inherited btnguardar: TButton
-      Left = 427
-      Top = 434
+      Left = 539
+      Top = 466
       TabOrder = 4
       Visible = False
-      ExplicitLeft = 427
-      ExplicitTop = 434
+      ExplicitLeft = 539
+      ExplicitTop = 466
     end
     object btnactualizar: TButton
       Left = 419
-      Top = 461
+      Top = 469
       Width = 75
       Height = 25
       Caption = 'Actualizar'
