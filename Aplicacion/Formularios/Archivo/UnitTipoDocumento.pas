@@ -32,7 +32,6 @@ type
     tipodocu_ultimonumero: TMoneyEdit;
     tipodocu_fiscal: TRadioButton;
     tipodocu_preimpresos: TRadioButton;
-    tipodocu_manual: TRadioButton;
     GroupBoxImpresion: TGroupBox;
     Label17: TLabel;
     Label11: TLabel;
@@ -48,6 +47,7 @@ type
     tipodocu_leyenda: TMemo;
     Label14: TLabel;
     Combo_tipodocu_nombre: TGTBComboBox;
+    tipodocu_manual: TCheckBox;
     procedure tipodocu_fiscalClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -81,12 +81,12 @@ begin
     ZQExecSQL.sql.add('tipodocu_stock, tipodocu_iva, tipodocu_fiscal, tipodocu_ultimonumero, ');
     ZQExecSQL.sql.add('puntoventa_id, tipodocu_letra, tipodocu_debcred, tipodocufiscal_id, ');
     ZQExecSQL.sql.add('tipodocu_preimpresos, tipodocu_impresora, tipodocu_copias, tipodocu_preview, ');
-    ZQExecSQL.sql.add('tipodocu_prompt, tipodocu_ctacte, tipodocu_archivoimpresion, tipodocu_leyenda) ');
+    ZQExecSQL.sql.add('tipodocu_prompt, tipodocu_ctacte, tipodocu_archivoimpresion, tipodocu_leyenda, tipodocu_manual) ');
     ZQExecSQL.sql.add('values (:tipodocu_id, :tipodocu_nombre, :tipodocu_tipo, :tipodocu_caja, ');
     ZQExecSQL.sql.add(':tipodocu_stock, :tipodocu_iva, :tipodocu_fiscal, :tipodocu_ultimonumero, ');
     ZQExecSQL.sql.add(':puntoventa_id, :tipodocu_letra, :tipodocu_debcred, :tipodocufiscal_id, ');
     ZQExecSQL.sql.add(':tipodocu_preimpresos, :tipodocu_impresora, :tipodocu_copias, :tipodocu_preview, ');
-    ZQExecSQL.sql.add(':tipodocu_prompt, :tipodocu_ctacte, :tipodocu_archivoimpresion, :tipodocu_leyenda) ');
+    ZQExecSQL.sql.add(':tipodocu_prompt, :tipodocu_ctacte, :tipodocu_archivoimpresion, :tipodocu_leyenda, :tipodocu_manual) ');
     ZQExecSQL.parambyname('tipodocu_id').asstring:=id;
     ZQExecSQL.parambyname('tipodocu_nombre').asstring:=tipodocu_nombre.Text;
     ZQExecSQL.parambyname('tipodocu_tipo').asstring:=tipodocu_tipo.codigo;
@@ -107,6 +107,7 @@ begin
     ZQExecSQL.parambyname('tipodocu_ctacte').asstring:='0';
     ZQExecSQL.parambyname('tipodocu_archivoimpresion').asstring:=tipodocu_archivoimpresion.Text;
     ZQExecSQL.parambyname('tipodocu_leyenda').asstring:=tipodocu_leyenda.Text;
+    ZQExecSQL.parambyname('tipodocu_manual').asstring:=booltostr(tipodocu_manual.Checked);
 
     ZQExecSQL.ExecSQL;
 
@@ -136,7 +137,8 @@ begin
     ZQExecSQL.sql.add('tipodocu_prompt=:tipodocu_prompt, ');
     ZQExecSQL.sql.add('tipodocu_ctacte=:tipodocu_ctacte, ');
     ZQExecSQL.sql.add('tipodocu_archivoimpresion=:tipodocu_archivoimpresion, ');
-    ZQExecSQL.sql.add('tipodocu_leyenda=:tipodocu_leyenda ');
+    ZQExecSQL.sql.add('tipodocu_leyenda=:tipodocu_leyenda, ');
+    ZQExecSQL.sql.add('tipodocu_manual=:tipodocu_manual ');
     ZQExecSQL.sql.add('where tipodocu_id=:tipodocu_id');
     ZQExecSQL.parambyname('tipodocu_id').asstring:=id;
     ZQExecSQL.parambyname('tipodocu_nombre').asstring:=tipodocu_nombre.Text;
@@ -158,6 +160,7 @@ begin
     ZQExecSQL.parambyname('tipodocu_ctacte').asstring:='0';
     ZQExecSQL.parambyname('tipodocu_archivoimpresion').asstring:=tipodocu_archivoimpresion.Text;
     ZQExecSQL.parambyname('tipodocu_leyenda').asstring:=tipodocu_leyenda.Text;
+    ZQExecSQL.parambyname('tipodocu_manual').asstring:=booltostr(tipodocu_manual.Checked);
     ZQExecSQL.ExecSQL;
 
 
@@ -261,7 +264,7 @@ begin
 //          tipodocu_fiscal.Checked:=strtobool(ZQSelect.FieldByName('tipodocu_fiscal').AsString);
 //          tipodocu_preimpresos.Checked:=strtobool(ZQSelect.FieldByName('tipodocu_preimpresos').AsString);
 //          tipodocu_manual.Checked:=not tipodocu_fiscal.Checked and not tipodocu_preimpresos.Checked;
-          tipodocu_manual.OnClick(self);
+//          tipodocu_manual.OnClick(self);
 //          tipodocufiscal_id.Buscar(ZQSelect.FieldByName('tipodocufiscal_id').AsString);
 //          tipodocu_impresora.Text:=ZQSelect.FieldByName('tipodocu_impresora').AsString;
 //          tipodocu_copias.Text:=ZQSelect.FieldByName('tipodocu_copias').AsString;
@@ -282,9 +285,9 @@ end;
 procedure Ttipodocumento.tipodocu_fiscalClick(Sender: TObject);
 begin
   inherited;
-    tipodocufiscal_id.Visible:= not tipodocu_manual.Checked;
-    Labeltipodocufiscal_id.Visible:=not tipodocu_manual.Checked;
-    GroupBoxImpresion.Visible:=not tipodocu_manual.Checked;
+    tipodocufiscal_id.Visible:= not tipodocu_preimpresos.Checked;
+    Labeltipodocufiscal_id.Visible:=not tipodocu_preimpresos.Checked;
+    GroupBoxImpresion.Visible:=not tipodocu_preimpresos.Checked;
 
     tipodocufiscal_id.Visible:=tipodocu_fiscal.Checked;
     Labeltipodocufiscal_id.Visible:=tipodocu_fiscal.Checked;
@@ -317,8 +320,8 @@ begin
     tipodocu_iva.Checked:=strtobool(ZQSelect.FieldByName('tipodocu_iva').AsString);
     tipodocu_fiscal.Checked:=strtobool(ZQSelect.FieldByName('tipodocu_fiscal').AsString);
     tipodocu_preimpresos.Checked:=strtobool(ZQSelect.FieldByName('tipodocu_preimpresos').AsString);
-    tipodocu_manual.Checked:=not tipodocu_fiscal.Checked and not tipodocu_preimpresos.Checked;
-    tipodocu_manual.OnClick(self);
+    tipodocu_manual.Checked:=strtobool(ZQSelect.FieldByName('tipodocu_manual').AsString);
+//    tipodocu_manual.OnClick(self);
     tipodocufiscal_id.Buscar(ZQSelect.FieldByName('tipodocufiscal_id').AsString);
     tipodocu_impresora.Text:=ZQSelect.FieldByName('tipodocu_impresora').AsString;
     tipodocu_copias.Text:=ZQSelect.FieldByName('tipodocu_copias').AsString;
@@ -330,3 +333,4 @@ begin
 end;
 
 end.
+

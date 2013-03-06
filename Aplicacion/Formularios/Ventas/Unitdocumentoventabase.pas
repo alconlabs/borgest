@@ -158,7 +158,7 @@ begin
 
     tipodocu_id_NC:=princ.buscar('select tipodocu_id from tiposdocumento where puntoventa_id="'+puntoventa_id.codigo+'" and tipodocu_nombre="Nota de Credito de Venta" and tipodocu_letra="'+tipodocu_id.Text+'"','tipodocu_id');
 
-    NC_numero:=Princ.NumeroDocumento(tipodocu_id_NC);
+    NC_numero:=Princ.NumeroDocumento(tipodocu_id_NC,'');
 
     ZQNotacredito.Insert;
     ZQNotacredito.FieldByName('documentoventa_condicionventa').AsInteger:=documentoventa_condicionventa.ItemIndex;
@@ -307,13 +307,15 @@ begin
     end;
     documentoventa_listaprecio.ItemIndex:=strtoint(Princ.buscar('select cliente_listaprecio from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_listaprecio'));
 
+    personal_id.Buscar(Princ.buscar('select personal_id from clientes where cliente_id="'+cliente_id.codigo+'"','personal_id'));
+
 end;
 
 procedure Tdocumentoventabase.imprimir;
 var
   tipodocu_archivoimpresion:string;
 begin
-    tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'tipodocu_archivoimpresion');
+    tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'','tipodocu_archivoimpresion');
 
     Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\'+tipodocu_archivoimpresion;
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
@@ -419,7 +421,9 @@ begin
     ZQExecSql.SQL.Add('documentoventa_neto105=:documentoventa_neto105, ');
     ZQExecSql.SQL.Add('documentoventa_iva105=:documentoventa_iva105, ');
     ZQExecSql.SQL.Add('documentoventa_total=:documentoventa_total, ');
-    ZQExecSql.SQL.Add('documentoventa_observacion=:documentoventa_observacion ');
+    ZQExecSql.SQL.Add('documentoventa_observacion=:documentoventa_observacion, ');
+    ZQExecSql.SQL.Add('documentoventa_numero=:documentoventa_numero, ');
+    ZQExecSql.SQL.Add('documentoventa_fecha=:documentoventa_fecha ');
     ZQExecSql.SQL.Add('where documentoventa_id=:documentoventa_id');
 
     ZQExecSql.ParamByName('tipodocu_id').AsString:=tipodocu_id.codigo;
@@ -434,6 +438,8 @@ begin
     ZQExecSql.ParamByName('documentoventa_iva105').AsString:=documentoventa_iva105.Text;
     ZQExecSql.ParamByName('documentoventa_total').AsString:=documentoventa_total.Text;
     ZQExecSql.ParamByName('documentoventa_observacion').AsString:=documentoventa_observacion.Text;
+    ZQExecSql.ParamByName('documentoventa_numero').AsString:=documentoventa_numero.Text;
+    ZQExecSql.ParamByName('documentoventa_fecha').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fecha.Date);
     ZQExecSql.ParamByName('documentoventa_id').AsString:=id;
     ZQExecSql.ExecSQL;
 
@@ -533,20 +539,20 @@ begin
      end;
 
      if tipodocu_id.ItemIndex>-1 then
-      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
 
 end;
 
 procedure Tdocumentoventabase.tipodocu_idChange(Sender: TObject);
 begin
-    documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+    documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
 end;
 
 procedure Tdocumentoventabase.tipodocu_idSelect(Sender: TObject);
 begin
     documentoventa_numero.Text:='';
     if tipodocu_id.ItemIndex>-1 then
-      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
 end;
 
 procedure Tdocumentoventabase.ZQuery2AfterOpen(DataSet: TDataSet);
@@ -577,7 +583,7 @@ begin
 
      documentoventa_numero.Text:='';
      if tipodocu_id.ItemIndex=0 then
-      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
 
 
     documentoventa_fecha.Date:=date;
@@ -646,7 +652,7 @@ begin
 
     id:=Princ.codigo('documentosventas','documentoventa_id');
 
-    documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+    documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,documentoventa_numero.Text);
     if strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+tipodocu_id.codigo+'"','tipodocu_fiscal')) then
       documentoventa_numero.Text:='0';
 

@@ -78,7 +78,7 @@ procedure Tordenservicio.btnimprimirClick(Sender: TObject);
 var
   tipodocu_archivoimpresion:string;
 begin
-    tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'tipodocu_archivoimpresion');
+    tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'','tipodocu_archivoimpresion');
 
     Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\'+tipodocu_archivoimpresion;
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+

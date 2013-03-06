@@ -226,7 +226,7 @@ begin
     cliente_domicilio.Caption:=Princ.buscar('select cliente_domicilio from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_domicilio');
     cliente_documentonro.Caption:=Princ.buscar('select cliente_documentonro from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_documentonro');
     documentoventa_listaprecio.ItemIndex:=strtoint(Princ.buscar('select cliente_listaprecio from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_listaprecio'));
-
+    personal_id.Buscar(Princ.buscar('select personal_id from clientes where cliente_id="'+cliente_id.codigo+'"','personal_id'));
 end;
 
 procedure Trecibosventa.imprimir;
@@ -280,7 +280,7 @@ begin
 
      documentoventa_numero.Text:='';
      if tipodocu_id.ItemIndex=0 then
-      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
 
 
     documentoventa_fecha.Date:=date;
@@ -373,20 +373,20 @@ begin
      end;
 
      if tipodocu_id.ItemIndex>-1 then
-      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
 
 end;
 
 procedure Trecibosventa.tipodocu_idChange(Sender: TObject);
 begin
-    documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+    documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
 end;
 
 procedure Trecibosventa.tipodocu_idSelect(Sender: TObject);
 begin
     documentoventa_numero.Text:='';
     if tipodocu_id.ItemIndex>-1 then
-      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
 end;
 
 procedure Trecibosventa.ZQuery2AfterOpen(DataSet: TDataSet);
@@ -449,13 +449,13 @@ begin
 
     id:=Princ.codigo('documentosventas','documentoventa_id');
 
-    documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+    documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,documentoventa_numero.Text);
 
 
     ZQRecibo.Active:=false;
     ZQRecibo.Active:=true;
 
-    recibo_numero:=Princ.NumeroDocumento(princ.buscar('select tipodocu_id from tiposdocumento where puntoventa_id="'+puntoventa_id.codigo+'" and tipodocu_nombre="Recibo de Venta"','tipodocu_id'));
+    recibo_numero:=Princ.NumeroDocumento(princ.buscar('select tipodocu_id from tiposdocumento where puntoventa_id="'+puntoventa_id.codigo+'" and tipodocu_nombre="Recibo de Venta"','tipodocu_id'),'');
 
     ZQRecibo.Insert;
     ZQRecibo.FieldByName('documentoventa_condicionventa').AsInteger:=documentoventa_condicionventa.ItemIndex;

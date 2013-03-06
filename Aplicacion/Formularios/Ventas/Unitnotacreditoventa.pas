@@ -255,7 +255,7 @@ begin
 
      documentoventa_numero.Text:='';
      if tipodocu_id.ItemIndex=0 then
-      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
 
 
     documentoventa_fecha.Date:=date;
@@ -431,20 +431,20 @@ begin
      end;
 
      if tipodocu_id.ItemIndex>-1 then
-      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
 
 end;
 
 procedure Tnotacreditoventa.tipodocu_idChange(Sender: TObject);
 begin
-    documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+    documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
 end;
 
 procedure Tnotacreditoventa.tipodocu_idSelect(Sender: TObject);
 begin
     documentoventa_numero.Text:='';
     if tipodocu_id.ItemIndex>-1 then
-      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
 end;
 
 procedure Tnotacreditoventa.ZQuery2AfterOpen(DataSet: TDataSet);
@@ -502,7 +502,7 @@ begin
 
     id:=Princ.codigo('documentosventas','documentoventa_id');
 
-    documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
+    documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,documentoventa_numero.Text);
     if strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+tipodocu_id.codigo+'"','tipodocu_fiscal')) then
       documentoventa_numero.Text:='0';
 
@@ -586,7 +586,7 @@ begin
 
           tipodocu_id_recibo:=princ.buscar('select tipodocu_id from tiposdocumento where puntoventa_id="'+puntoventa_id.codigo+'" and tipodocu_nombre="Recibo de Venta"','tipodocu_id');
 
-          recibo_numero:=Princ.NumeroDocumento(tipodocu_id_recibo);
+          recibo_numero:=Princ.NumeroDocumento(tipodocu_id_recibo,'');
 
           ZQRecibo.Insert;
           ZQRecibo.FieldByName('documentoventa_condicionventa').AsInteger:=documentoventa_condicionventa.ItemIndex;

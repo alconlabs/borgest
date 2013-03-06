@@ -155,7 +155,6 @@ object notacreditoventa: Tnotacreditoventa
       Top = 33
       Width = 121
       Height = 21
-      ReadOnly = True
       TabOrder = 2
     end
     object documentoventa_fecha: TDateTimePicker
@@ -173,7 +172,7 @@ object notacreditoventa: Tnotacreditoventa
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 4
       OnSelect = cliente_idSelect
       Confbase = Princ.ZBase
@@ -190,7 +189,7 @@ object notacreditoventa: Tnotacreditoventa
       Width = 220
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 5
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -457,7 +456,7 @@ object notacreditoventa: Tnotacreditoventa
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       OnSelect = puntoventa_idSelect
       Confbase = Princ.ZBase
@@ -473,7 +472,7 @@ object notacreditoventa: Tnotacreditoventa
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 1
       OnSelect = tipodocu_idSelect
       Confbase = Princ.ZBase
@@ -506,7 +505,7 @@ object notacreditoventa: Tnotacreditoventa
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 15
       OnSelect = sucursal_idSelect
       Confbase = Princ.ZBase

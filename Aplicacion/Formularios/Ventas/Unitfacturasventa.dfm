@@ -169,7 +169,6 @@ object facturasventa: Tfacturasventa
       Top = 36
       Width = 121
       Height = 21
-      ReadOnly = True
       TabOrder = 17
     end
     object documentoventa_fecha: TDateTimePicker

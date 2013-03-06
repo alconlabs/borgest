@@ -100,7 +100,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnagregarClick(Sender: TObject);
-    procedure tipodocu_idChange(Sender: TObject);
     procedure puntoventa_idSelect(Sender: TObject);
     procedure proveedor_idSelect(Sender: TObject);
     procedure btnquitarClick(Sender: TObject);
@@ -329,7 +328,7 @@ procedure Tfacturacompra.imprimir;
 var
   tipodocu_archivoimpresion:string;
 begin
-    tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'tipodocu_archivoimpresion');
+    tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'','tipodocu_archivoimpresion');
 
     Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\'+tipodocu_archivoimpresion;
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
@@ -663,11 +662,6 @@ begin
        tipodocu_id.ItemIndex:=-1;
      end;
 
-end;
-
-procedure Tfacturacompra.tipodocu_idChange(Sender: TObject);
-begin
-    documentocompra_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo);
 end;
 
 procedure Tfacturacompra.ZQuery2AfterOpen(DataSet: TDataSet);

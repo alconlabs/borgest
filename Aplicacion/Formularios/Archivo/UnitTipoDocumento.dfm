@@ -2,7 +2,6 @@ inherited tipodocumento: Ttipodocumento
   Caption = 'Tipo de Documento'
   ClientHeight = 316
   ClientWidth = 821
-  OnCreate = FormCreate
   OnShow = FormShow
   ExplicitWidth = 837
   ExplicitHeight = 354
@@ -286,16 +285,6 @@ inherited tipodocumento: Ttipodocumento
       TabOrder = 13
       OnClick = tipodocu_fiscalClick
     end
-    object tipodocu_manual: TRadioButton
-      Left = 470
-      Top = 81
-      Width = 57
-      Height = 17
-      Alignment = taLeftJustify
-      Caption = 'Manual'
-      TabOrder = 14
-      OnClick = tipodocu_fiscalClick
-    end
     object GroupBoxImpresion: TGroupBox
       Left = 545
       Top = 60
@@ -429,6 +418,15 @@ inherited tipodocumento: Ttipodocumento
         'Orden de Servicio'
         'Factura de Compra'
         'Otro')
+    end
+    object tipodocu_manual: TCheckBox
+      Left = 336
+      Top = 91
+      Width = 191
+      Height = 15
+      Alignment = taLeftJustify
+      Caption = 'Ingresar Numeracion Manualmente'
+      TabOrder = 14
     end
   end
   inherited ZQSelect: TZQuery

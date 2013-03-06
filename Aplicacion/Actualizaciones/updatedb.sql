@@ -502,3 +502,7 @@ UPDATE `tiposdocumento` SET `tipodocu_nombreabrev`='FA' WHERE `tipodocu_nombre`=
 UPDATE `tiposdocumento` SET `tipodocu_nombreabrev`='NC' WHERE `tipodocu_nombre`='Nota de Credito de Compra';
 137;
 UPDATE `tiposdocumento` SET `tipodocu_nombreabrev`='ND' WHERE `tipodocu_nombre`='Nota de Debito de Compra';
+138;
+ALTER TABLE `tiposdocumento` ADD COLUMN `tipodocu_manual` INT(3) NULL DEFAULT NULL  AFTER `tipodocu_nombreabrev` ;
+139;
+update tiposdocumento set tipodocu_manual=if(tipodocu_preimpresos=0 and tipodocu_fiscal=0,-1,0);

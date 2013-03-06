@@ -145,7 +145,7 @@ begin
                 ZQDocumentoventa.Edit;
                 ZQDocumentoventa.FieldByName('tipodocu_id').AsString:=BARFACTURATIPODOCUID;
                 ZQDocumentoventa.FieldByName('documentoventa_estado').AsString:='PAGADA';
-                ZQDocumentoventa.FieldByName('documentoventa_numero').AsString:=Princ.NumeroDocumento(BARFACTURATIPODOCUID);
+                ZQDocumentoventa.FieldByName('documentoventa_numero').AsString:=Princ.NumeroDocumento(BARFACTURATIPODOCUID,'');
                 ZQDocumentoventa.Post;
 
                 Princ.ModificarDocumentoVenta(ZQDocumentoventa,nil,nil,nil);
@@ -193,7 +193,7 @@ begin
           ZQDocumentoventa.FieldByName('documentoventa_neto21').AsString:='0';
           ZQDocumentoventa.FieldByName('documentoventa_hora').AsDateTime:=Princ.horaservidor;
           ZQDocumentoventa.FieldByName('documentoventa_fecha').AsDateTime:=Princ.fechaservidor;
-          ZQDocumentoventa.FieldByName('documentoventa_numero').AsString:=Princ.NumeroDocumento(BARTIPODOCUID);
+          ZQDocumentoventa.FieldByName('documentoventa_numero').AsString:=Princ.NumeroDocumento(BARTIPODOCUID,'');
           ZQDocumentoventa.FieldByName('documentoventa_id').AsString:=Princ.codigo('documentosventas','documentoventa_id');
           ZQDocumentoventa.FieldByName('caja_id').AsString:=caja_id;
           ZQDocumentoventa.Post;

@@ -183,7 +183,7 @@ type
     function codigo(tabla:string;campo:string):string;
     function buscar(sql:string;campo:string):string;
     function fechaservidor():TDateTime;
-    function NumeroDocumento(tipodocu_id:string):string;
+    function NumeroDocumento(tipodocu_id:string; documentoventa_numero:string):string;
     procedure actualizarstock(producto_id:string; cantidad:real; tipodocu_id:string; inversa:boolean=false );
     function GetPrecioVentaBase(producto_preciocosto:real;calculoprecio_id:string):real;
     function GetPrecioVentaBaseprod(producto_precioventabase:real;producto_id:string):real;
@@ -226,7 +226,7 @@ type
     function EjecutarScriptDB(archivo_sql:string):boolean;
     function BorrarDocumentoVenta(documentoventa_id:string):boolean;
     function BorrarDocumentoCompra(documentocompra_id:string):boolean;
-    function GetConfigTipoDocumento(documento_id:string; campo:string):string;
+    function GetConfigTipoDocumento(documento_id:string; tipodocu_id:string; campo:string):string;
     procedure MostrarVentanaExcel;
     procedure GetBoolConfig(config_nombre:string;valor_true:string; var propiedad:boolean);
     procedure AbrirDocumentoVenta(id:string;tipodocu_nombre:string;abm:integer);
@@ -441,7 +441,7 @@ var
   tipodocu_fiscal:boolean;
   tipodocu_preimpresos:boolean;
 begin
-    tipodocu_fiscal:=strtobool(Princ.GetConfigTipoDocumento(id,'tipodocu_fiscal'));
+    tipodocu_fiscal:=strtobool(Princ.GetConfigTipoDocumento(id,'','tipodocu_fiscal'));
 
     if tipodocu_fiscal then
       begin
@@ -450,11 +450,11 @@ begin
 
 
 
-    tipodocu_preimpresos:=strtobool(Princ.GetConfigTipoDocumento(id,'tipodocu_preimpresos'));
+    tipodocu_preimpresos:=strtobool(Princ.GetConfigTipoDocumento(id,'','tipodocu_preimpresos'));
 
     if tipodocu_preimpresos then
       begin
-          tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'tipodocu_archivoimpresion');
+          tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'','tipodocu_archivoimpresion');
 
           Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\'+tipodocu_archivoimpresion;
           Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
@@ -738,9 +738,12 @@ begin
 end;
 
 
-function TPrinc.GetConfigTipoDocumento(documento_id: string; campo: string):string;
+function TPrinc.GetConfigTipoDocumento(documento_id: string; tipodocu_id:string; campo: string):string;
 begin
-    Result := Princ.buscar('select '+campo+' from tiposdocumento inner join documentosventas on tiposdocumento.tipodocu_id=documentosventas.tipodocu_id where documentosventas.documentoventa_id="'+documento_id+'"',campo);
+    if tipodocu_id='' then
+      Result := Princ.buscar('select '+campo+' from tiposdocumento inner join documentosventas on tiposdocumento.tipodocu_id=documentosventas.tipodocu_id where documentosventas.documentoventa_id="'+documento_id+'"',campo)
+    else
+      Result := Princ.buscar('select '+campo+' from tiposdocumento where tipodocu_id="'+tipodocu_id+'"',campo);
 end;
 
 
@@ -1583,7 +1586,7 @@ begin
 
     id:=codigo('documentosventas', 'documentoventa_id');
 
-    documentoventa_numero:=Princ.NumeroDocumento(Cabecera.FieldByName('tipodocu_id').AsString);
+    documentoventa_numero:=Princ.NumeroDocumento(Cabecera.FieldByName('tipodocu_id').AsString,Cabecera.FieldByName('documentoventa_numero').AsString);
     if strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+Cabecera.FieldByName('tipodocu_id').AsString+'"','tipodocu_fiscal')) then
       documentoventa_numero:='0';
 
@@ -2396,20 +2399,27 @@ begin
     Result:=producto_precioventabase;
 end;
 
-function TPrinc.NumeroDocumento(tipodocu_id: string):string;
+function TPrinc.NumeroDocumento(tipodocu_id:string; documentoventa_numero:string):string;
 var
   tipodocu_numero:string;
+  tipodocu_manual:boolean;
 begin
-    tipodocu_numero:=self.buscar('select tipodocu_ultimonumero from tiposdocumento where tipodocu_id="'+tipodocu_id+'"','tipodocu_ultimonumero');
-    if tipodocu_numero<>'' then
+    tipodocu_manual:=strtobool(princ.GetConfigTipoDocumento('',tipodocu_id,'tipodocu_manual'));
+    if (not tipodocu_manual) or (documentoventa_numero='') then
       begin
-          tipodocu_numero:=inttostr(strtoint(tipodocu_numero)+1);
+          tipodocu_numero:=princ.buscar('select tipodocu_ultimonumero from tiposdocumento where tipodocu_id="'+tipodocu_id+'"','tipodocu_ultimonumero');
+          if tipodocu_numero<>'' then
+            begin
+                tipodocu_numero:=inttostr(strtoint(tipodocu_numero)+1);
+            end
+          else
+            tipodocu_numero:='1';
+
       end
     else
-      tipodocu_numero:='1';
+      tipodocu_numero:=documentoventa_numero;
 
-
-    result:=tipodocu_numero
+    result:=tipodocu_numero;
 end;
 
 procedure TPrinc.actualizarstock(producto_id:string; cantidad:real; tipodocu_id:string; inversa:boolean=false );

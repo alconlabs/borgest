@@ -64,7 +64,6 @@ object recibosventa: Trecibosventa
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitTop = 8
     FullHeight = 0
     object Label2: TLabel
       Left = 693
@@ -190,7 +189,6 @@ object recibosventa: Trecibosventa
       Top = 34
       Width = 121
       Height = 21
-      ReadOnly = True
       TabOrder = 19
     end
     object documentoventa_fecha: TDateTimePicker
