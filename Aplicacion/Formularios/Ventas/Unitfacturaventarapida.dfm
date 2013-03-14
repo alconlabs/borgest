@@ -1,11 +1,11 @@
 inherited facturasventarapida: Tfacturasventarapida
   Caption = 'Venta Rapida'
-  ClientHeight = 249
-  ExplicitHeight = 287
+  ClientHeight = 247
+  ExplicitHeight = 285
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Height = 249
+    Height = 247
     ExplicitHeight = 249
     FullHeight = 0
     inherited Label2: TLabel
@@ -81,6 +81,13 @@ inherited facturasventarapida: Tfacturasventarapida
       Visible = False
       ExplicitTop = 306
     end
+    inherited Label16: TLabel
+      Top = 300
+      Height = 23
+      Visible = False
+      ExplicitTop = 300
+      ExplicitHeight = 23
+    end
     inherited documentoventa_numero: TEdit
       Top = 329
       Visible = False
@@ -88,7 +95,7 @@ inherited facturasventarapida: Tfacturasventarapida
     end
     inherited documentoventa_fecha: TDateTimePicker
       Top = 329
-      TabOrder = 20
+      TabOrder = 21
       Visible = False
       ExplicitTop = 329
     end
@@ -230,9 +237,19 @@ inherited facturasventarapida: Tfacturasventarapida
       TabOrder = 18
       Version = '1.1.0.1'
     end
+    inherited btnherramientas: TAdvGlowButton
+      Top = 294
+      ExplicitTop = 294
+    end
     inherited btnimprimirventa: TButton
-      TabOrder = 22
+      TabOrder = 23
       Visible = False
+    end
+    inherited documentoventa_fechavenc: TDateTimePicker
+      Top = 300
+      TabStop = False
+      Visible = False
+      ExplicitTop = 300
     end
   end
   inherited ZQuery2: TZQuery

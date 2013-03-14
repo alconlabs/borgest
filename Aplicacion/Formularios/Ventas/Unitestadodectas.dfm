@@ -71,31 +71,13 @@ object estadoctas: Testadoctas
       Alignment = taRightJustify
       Caption = 'Cliente'
     end
-    object lbldesdefecha: TLabel
-      Left = 10
-      Top = 36
-      Width = 31
-      Height = 13
-      Alignment = taRightJustify
-      Caption = 'Desde'
-      Enabled = False
-    end
-    object lblhastafecha: TLabel
-      Left = 13
-      Top = 60
-      Width = 28
-      Height = 13
-      Alignment = taRightJustify
-      Caption = 'Hasta'
-      Enabled = False
-    end
     object cliente_id: TSqlComboBox
       Left = 48
       Top = 9
       Width = 608
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -107,9 +89,9 @@ object estadoctas: Testadoctas
     end
     object DBGrid1: TDBGrid
       Left = 9
-      Top = 84
+      Top = 119
       Width = 728
-      Height = 333
+      Height = 298
       DataSource = DSCPendientes
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
       TabOrder = 2
@@ -130,23 +112,30 @@ object estadoctas: Testadoctas
         end
         item
           Expanded = False
+          FieldName = 'documentoventa_fechavenc'
+          Title.Caption = 'Fecha Venc.'
+          Width = 71
+          Visible = True
+        end
+        item
+          Expanded = False
           FieldName = 'documento_nombre'
           Title.Caption = 'Documento'
-          Width = 180
+          Width = 169
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'puntoventanumero'
           Title.Caption = 'Pto. Vta.'
-          Width = 76
+          Width = 46
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'documentoventanumero'
           Title.Caption = 'Nro.'
-          Width = 92
+          Width = 69
           Visible = True
         end
         item
@@ -189,41 +178,130 @@ object estadoctas: Testadoctas
       TabOrder = 3
       OnClick = btnimprimirClick
     end
-    object desde_fecha: TDateTimePicker
-      Left = 49
-      Top = 33
-      Width = 100
-      Height = 21
-      Date = 41242.000000000000000000
-      Time = 41242.000000000000000000
-      Enabled = False
+    object GroupBox1: TGroupBox
+      Left = 9
+      Top = 36
+      Width = 185
+      Height = 77
+      Caption = 'Fecha Comprobante'
       TabOrder = 4
+      object lbldesdefecha: TLabel
+        Left = 10
+        Top = 20
+        Width = 31
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Desde'
+        Enabled = False
+      end
+      object lblhastafecha: TLabel
+        Left = 13
+        Top = 44
+        Width = 28
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Hasta'
+        Enabled = False
+      end
+      object cbdesdefecha: TCheckBox
+        Left = 155
+        Top = 20
+        Width = 14
+        Height = 17
+        TabOrder = 0
+        OnClick = cbdesdefechaClick
+      end
+      object cbhastafecha: TCheckBox
+        Left = 155
+        Top = 44
+        Width = 14
+        Height = 17
+        TabOrder = 1
+        OnClick = cbhastafechaClick
+      end
+      object desde_fecha: TDateTimePicker
+        Left = 49
+        Top = 17
+        Width = 100
+        Height = 21
+        Date = 41242.000000000000000000
+        Time = 41242.000000000000000000
+        Enabled = False
+        TabOrder = 2
+      end
+      object hasta_fecha: TDateTimePicker
+        Left = 49
+        Top = 41
+        Width = 100
+        Height = 21
+        Date = 41242.000000000000000000
+        Time = 41242.000000000000000000
+        Enabled = False
+        TabOrder = 3
+      end
     end
-    object hasta_fecha: TDateTimePicker
-      Left = 49
-      Top = 57
-      Width = 100
-      Height = 21
-      Date = 41242.000000000000000000
-      Time = 41242.000000000000000000
+    object GroupBox2: TGroupBox
+      Left = 201
+      Top = 36
+      Width = 185
+      Height = 77
+      Caption = 'Fecha Venc.'
       Enabled = False
       TabOrder = 5
-    end
-    object cbdesdefecha: TCheckBox
-      Left = 155
-      Top = 36
-      Width = 14
-      Height = 17
-      TabOrder = 6
-      OnClick = cbdesdefechaClick
-    end
-    object cbhastafecha: TCheckBox
-      Left = 155
-      Top = 60
-      Width = 14
-      Height = 17
-      TabOrder = 7
-      OnClick = cbhastafechaClick
+      object Label1: TLabel
+        Left = 10
+        Top = 20
+        Width = 31
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Desde'
+        Enabled = False
+      end
+      object Label2: TLabel
+        Left = 13
+        Top = 44
+        Width = 28
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Hasta'
+        Enabled = False
+      end
+      object CheckBox1: TCheckBox
+        Left = 155
+        Top = 20
+        Width = 14
+        Height = 17
+        TabOrder = 0
+        OnClick = cbdesdefechaClick
+      end
+      object CheckBox2: TCheckBox
+        Left = 155
+        Top = 44
+        Width = 14
+        Height = 17
+        TabOrder = 1
+        OnClick = cbhastafechaClick
+      end
+      object DateTimePicker1: TDateTimePicker
+        Left = 49
+        Top = 17
+        Width = 100
+        Height = 21
+        Date = 41242.000000000000000000
+        Time = 41242.000000000000000000
+        Enabled = False
+        TabOrder = 2
+      end
+      object DateTimePicker2: TDateTimePicker
+        Left = 49
+        Top = 41
+        Width = 100
+        Height = 21
+        Date = 41242.000000000000000000
+        Time = 41242.000000000000000000
+        Enabled = False
+        TabOrder = 3
+      end
     end
   end
   object ZQuery2: TZQuery
@@ -315,8 +393,8 @@ object estadoctas: Testadoctas
   end
   object DSCPendientes: TDataSource
     DataSet = ZQPendientes
-    Left = 232
-    Top = 128
+    Left = 312
+    Top = 176
   end
   object tipagos: TTitles
     Campos.Strings = (
@@ -431,7 +509,7 @@ object estadoctas: Testadoctas
     DataStyles.CheckBox = False
     SortOptions.ChangeCursorOnTitle = False
     OnPaintRow = CustomizeGrid1PaintRow
-    Left = 344
-    Top = 168
+    Left = 368
+    Top = 216
   end
 end

@@ -506,3 +506,5 @@ UPDATE `tiposdocumento` SET `tipodocu_nombreabrev`='ND' WHERE `tipodocu_nombre`=
 ALTER TABLE `tiposdocumento` ADD COLUMN `tipodocu_manual` INT(3) NULL DEFAULT NULL  AFTER `tipodocu_nombreabrev` ;
 139;
 update tiposdocumento set tipodocu_manual=if(tipodocu_preimpresos=0 and tipodocu_fiscal=0,-1,0);
+140;
+ALTER TABLE `clientes` ADD COLUMN `cliente_diasvenc` INT(3) NULL DEFAULT 15  AFTER `personal_id`;

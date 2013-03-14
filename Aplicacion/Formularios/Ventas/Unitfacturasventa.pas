@@ -75,6 +75,8 @@ type
     btnherramientas: TAdvGlowButton;
     btnimprimirventa: TButton;
     btnagregarcliente: TButton;
+    Label16: TLabel;
+    documentoventa_fechavenc: TDateTimePicker;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -378,6 +380,8 @@ begin
     documentoventa_listaprecio.ItemIndex:=strtoint(Princ.buscar('select cliente_listaprecio from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_listaprecio'));
     personal_id.Buscar(Princ.buscar('select personal_id from clientes where cliente_id="'+cliente_id.codigo+'"','personal_id'));
 
+    documentoventa_fechavenc.Date:=documentoventa_fecha.Date + strtoint(Princ.buscar('select cliente_diasvenc from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_diasvenc'));
+
     if Princ.buscar('select condicioniva_id from clientes where cliente_id="'+cliente_id.codigo+'"','condicioniva_id')='2' then
       tipodocu_id.Buscar('A',true)
     else
@@ -666,9 +670,10 @@ begin
     if abm=1 then
       begin
           documentoventa_fecha.Date:=date;
+
           cliente_id.ItemIndex:=-1;
           personal_id.ItemIndex:=0;
-
+          documentoventa_fechavenc.Date:=date+15;
           documentoventa_neto21.Text:='0';
           documentoventa_iva21.Text:='0';
           documentoventa_neto105.Text:='0';
@@ -679,6 +684,7 @@ begin
     else
       begin
           documentoventa_fecha.Date:=ZQuery2.FieldByName('documentoventa_fecha').AsDateTime;
+
           sucursal_id.Buscar(ZQuery2.FieldByName('sucursal_id').AsString);
           sucursal_id.OnSelect(self);
           puntoventa_id.Buscar(ZQuery2.FieldByName('puntoventa_id').AsString);
@@ -686,6 +692,7 @@ begin
           cliente_id.Buscar(ZQuery2.FieldByName('cliente_id').AsString);
           tipodocu_id.buscar(ZQuery2.FieldByName('tipodocu_id').AsString);
           tipodocu_id.OnSelect(self);
+          documentoventa_fechavenc.Date:=ZQuery2.FieldByName('documentoventa_fechavenc').AsDateTime;
           documentoventa_numero.Text:=ZQuery2.FieldByName('documentoventa_numero').AsString;
           documentoventa_condicionventa.ItemIndex:=ZQuery2.FieldByName('documentoventa_condicionventa').AsInteger;
           documentoventa_listaprecio.ItemIndex:=ZQuery2.FieldByName('documentoventa_listaprecio').AsInteger;
@@ -766,7 +773,7 @@ begin
     ZQExecSql.ParamByName('personal_id').AsString:=personal_id.codigo;
     ZQExecSql.ParamByName('tipodocu_id').AsString:=tipodocu_id.codigo;
     ZQExecSql.ParamByName('documentoventa_condicionventa').AsInteger:=documentoventa_condicionventa.ItemIndex;
-    ZQExecSql.ParamByName('documentoventa_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fecha.Date+15);
+    ZQExecSql.ParamByName('documentoventa_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fechavenc.Date);
     ZQExecSql.ParamByName('documentoventa_listaprecio').AsInteger:=documentoventa_listaprecio.ItemIndex;
 
     ZQExecSql.ExecSQL;

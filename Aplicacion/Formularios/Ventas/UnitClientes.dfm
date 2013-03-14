@@ -2,7 +2,7 @@ object clientes: Tclientes
   Left = 0
   Top = 0
   Caption = 'Cliente'
-  ClientHeight = 470
+  ClientHeight = 518
   ClientWidth = 568
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -21,7 +21,7 @@ object clientes: Tclientes
     Left = 0
     Top = 0
     Width = 568
-    Height = 470
+    Height = 518
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -68,17 +68,15 @@ object clientes: Tclientes
       Left = 0
       Top = 0
       Width = 568
-      Height = 414
+      Height = 456
       ActivePage = TabSheet1
       Align = alTop
       TabOrder = 0
       object TabSheet1: TTabSheet
         Caption = 'Datos Personales'
-        ExplicitLeft = 0
-        ExplicitTop = 30
         object Label7: TLabel
           Left = 29
-          Top = 310
+          Top = 327
           Width = 71
           Height = 13
           Alignment = taRightJustify
@@ -173,18 +171,26 @@ object clientes: Tclientes
         end
         object Label14: TLabel
           Left = 54
-          Top = 279
+          Top = 303
           Width = 46
           Height = 13
           Alignment = taRightJustify
           Caption = 'Vendedor'
         end
+        object Label15: TLabel
+          Left = 4
+          Top = 278
+          Width = 96
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Dias Venc. Facturas'
+        end
         object cliente_observaciones: TMemo
           Left = 106
-          Top = 307
+          Top = 324
           Width = 429
           Height = 70
-          TabOrder = 14
+          TabOrder = 15
         end
         object cliente_documentotipo: TGTBComboBox
           Left = 33
@@ -337,18 +343,36 @@ object clientes: Tclientes
         end
         object personal_id: TSqlComboBox
           Left = 106
-          Top = 276
+          Top = 300
           Width = 220
           Height = 21
           Style = csDropDownList
           ItemHeight = 13
-          TabOrder = 13
+          TabOrder = 14
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from personal')
           Confcampo_codigo = 'personal_id'
           Confcampo_nomb = 'personal_nombre'
           Tag2 = 0
+        end
+        object cliente_diasvenc: TMoneyEdit
+          Left = 106
+          Top = 275
+          Width = 70
+          Height = 21
+          CalculatorLook.ButtonWidth = 24
+          CalculatorLook.ButtonHeight = 24
+          CalculatorLook.ButtonColor = clSilver
+          CalculatorLook.Color = clWhite
+          CalculatorLook.Flat = False
+          CalculatorLook.Font.Charset = DEFAULT_CHARSET
+          CalculatorLook.Font.Color = clWindowText
+          CalculatorLook.Font.Height = -11
+          CalculatorLook.Font.Name = 'Tahoma'
+          CalculatorLook.Font.Style = []
+          TabOrder = 13
+          Version = '1.1.0.1'
         end
       end
       object TabSheet2: TTabSheet
@@ -450,7 +474,7 @@ object clientes: Tclientes
     end
     object btncancelar: TButton
       Left = 460
-      Top = 422
+      Top = 462
       Width = 75
       Height = 25
       Caption = 'Cancelar'
@@ -459,7 +483,7 @@ object clientes: Tclientes
     end
     object btnguardar: TButton
       Left = 379
-      Top = 423
+      Top = 463
       Width = 75
       Height = 25
       Caption = 'Guardar'

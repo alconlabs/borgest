@@ -72,8 +72,8 @@ object facturasventa: Tfacturasventa
     Styler = Princ.AdvPanelStyler1
     FullHeight = 0
     object Label2: TLabel
-      Left = 693
-      Top = 39
+      Left = 579
+      Top = 15
       Width = 30
       Height = 13
       Alignment = taRightJustify
@@ -164,6 +164,14 @@ object facturasventa: Tfacturasventa
       Alignment = taRightJustify
       Caption = 'Sucursal'
     end
+    object Label16: TLabel
+      Left = 548
+      Top = 39
+      Width = 61
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Fecha Venc.'
+    end
     object documentoventa_numero: TEdit
       Left = 184
       Top = 36
@@ -172,8 +180,8 @@ object facturasventa: Tfacturasventa
       TabOrder = 17
     end
     object documentoventa_fecha: TDateTimePicker
-      Left = 728
-      Top = 36
+      Left = 615
+      Top = 12
       Width = 106
       Height = 21
       Date = 40384.000000000000000000
@@ -608,7 +616,7 @@ object facturasventa: Tfacturasventa
     end
     object btnherramientas: TAdvGlowButton
       Left = 790
-      Top = 4
+      Top = 12
       Width = 44
       Height = 29
       Caption = 'btnherramientas'
@@ -631,7 +639,7 @@ object facturasventa: Tfacturasventa
         3F5D01274A8C4EE13C58D84F0413E234322F8CB59750A8542F773078EB7AA472
         15D04CF43FBBCF3860C180A355E4CD17C86F12C72B4BDFD335AA7A853CDA5C4E
         8D954EE03623C27BBF60F1EEC71A58306199CFFFD9}
-      TabOrder = 19
+      TabOrder = 20
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
       Appearance.ColorDisabled = 15921906
@@ -658,7 +666,7 @@ object facturasventa: Tfacturasventa
       Width = 75
       Height = 25
       Caption = 'Imprimir'
-      TabOrder = 20
+      TabOrder = 21
       OnClick = btnimprimirventaClick
     end
     object btnagregarcliente: TButton
@@ -667,9 +675,18 @@ object facturasventa: Tfacturasventa
       Width = 21
       Height = 21
       Caption = '...'
-      TabOrder = 21
+      TabOrder = 22
       TabStop = False
       OnClick = btnagregarclienteClick
+    end
+    object documentoventa_fechavenc: TDateTimePicker
+      Left = 615
+      Top = 36
+      Width = 106
+      Height = 21
+      Date = 40384.000000000000000000
+      Time = 40384.000000000000000000
+      TabOrder = 19
     end
   end
   object ZQuery2: TZQuery

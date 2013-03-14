@@ -36,6 +36,14 @@ type
     hasta_fecha: TDateTimePicker;
     cbdesdefecha: TCheckBox;
     cbhastafecha: TCheckBox;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    CheckBox1: TCheckBox;
+    CheckBox2: TCheckBox;
+    DateTimePicker1: TDateTimePicker;
+    DateTimePicker2: TDateTimePicker;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnimprimirClick(Sender: TObject);
@@ -165,7 +173,7 @@ begin
                            'sum(if(tiposdocumento.tipodocu_debcred="CREDITO",documentosventas.documentoventa_saldo,0)) as credito, '+
                            '0.00 as acumulado, '+grupo+' as grupo, '+
                            'if('+condicion_saldoanterior+',"Saldo anterior",tiposdocumento.tipodocu_nombre) as documento_nombre, '+
-                           'if('+condicion_saldoanterior+',"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",documentoventa_fecha) as documentoventafecha, '+
+                           'if('+condicion_saldoanterior+',"'+formatdatetime('dd/mm/yyyy',desde_fecha.Date)+'",DATE_FORMAT(documentoventa_fecha,"%d/%m/%Y")) as documentoventafecha, '+
                            'if('+condicion_saldoanterior+',"0",puntoventa_numero) as puntoventanumero, '+
                            'if('+condicion_saldoanterior+',"0",documentoventa_numero) as documentoventanumero '+
                            

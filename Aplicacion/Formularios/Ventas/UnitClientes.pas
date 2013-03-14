@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, AdvEdit, DBAdvEd, ComCtrls, ExtCtrls, AdvPanel,
   UnitSqlComboBox, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, Mask,
-  GTBComboBox;
+  GTBComboBox, MoneyEdit;
 
 type
   Tclientes = class(TForm)
@@ -59,6 +59,8 @@ type
     cliente_condicionventa: TComboBox;
     Label14: TLabel;
     personal_id: TSqlComboBox;
+    Label15: TLabel;
+    cliente_diasvenc: TMoneyEdit;
     procedure FormCreate(Sender: TObject);
     procedure ZQclientesAfterOpen(DataSet: TDataSet);
     procedure FormShow(Sender: TObject);
@@ -158,7 +160,8 @@ begin
     ZQuery1.sql.add('cliente_condicionventa=:cliente_condicionventa, ');
     ZQuery1.sql.add('localidad_id=:localidad_id, ');
     ZQuery1.sql.add('cliente_observaciones=:cliente_observaciones, ');
-    ZQuery1.sql.add('personal_id=:personal_id ');
+    ZQuery1.sql.add('personal_id=:personal_id, ');
+    ZQuery1.sql.add('cliente_diasvenc=:cliente_diasvenc ');
     ZQuery1.sql.add(' where cliente_id=:cliente_id');
 
     ZQuery1.parambyname('cliente_id').asstring:=id;
@@ -179,6 +182,7 @@ begin
     ZQuery1.parambyname('localidad_id').asstring:=localidad_id.codigo;
     ZQuery1.parambyname('cliente_observaciones').asstring:=cliente_observaciones.Lines.Text;
     ZQuery1.parambyname('personal_id').asstring:=personal_id.codigo;
+    ZQuery1.parambyname('cliente_diasvenc').asstring:=cliente_diasvenc.Text;
     ZQuery1.ExecSQL;
 
     if CLIENTEVEHICULO then
@@ -301,10 +305,10 @@ begin
     ZQuery1.sql.clear;
     ZQuery1.sql.add('Insert into clientes (cliente_id, cliente_nombre, cliente_domicilio, ');
     ZQuery1.sql.add('cliente_documentonro, cliente_documentotipo, cliente_telefono, cliente_celular, ');
-    ZQuery1.sql.add('cliente_mail, condicioniva_id, cliente_listaprecio, cliente_condicionventa, localidad_id, cliente_observaciones, personal_id) ');
+    ZQuery1.sql.add('cliente_mail, condicioniva_id, cliente_listaprecio, cliente_condicionventa, localidad_id, cliente_observaciones, personal_id, cliente_diasvenc) ');
     ZQuery1.sql.add('values (:cliente_id, :cliente_nombre, :cliente_domicilio, ');
     ZQuery1.sql.add(':cliente_documentonro, :cliente_documentotipo, :cliente_telefono, :cliente_celular, ');
-    ZQuery1.sql.add(':cliente_mail, :condicioniva_id, :cliente_listaprecio, :cliente_condicionventa, :localidad_id, :cliente_observaciones, :personal_id) ');
+    ZQuery1.sql.add(':cliente_mail, :condicioniva_id, :cliente_listaprecio, :cliente_condicionventa, :localidad_id, :cliente_observaciones, :personal_id, :cliente_diasvenc) ');
 
     ZQuery1.parambyname('cliente_id').asstring:=id;
     ZQuery1.parambyname('cliente_nombre').asstring:=cliente_nombre.Text;
@@ -324,7 +328,7 @@ begin
     ZQuery1.parambyname('localidad_id').asstring:=localidad_id.codigo;
     ZQuery1.parambyname('cliente_observaciones').asstring:=cliente_observaciones.Lines.Text;
     ZQuery1.parambyname('personal_id').asstring:=personal_id.codigo;
-
+    ZQuery1.parambyname('cliente_diasvenc').asstring:=cliente_diasvenc.Text;
     ZQuery1.ExecSQL;
 
     if CLIENTEVEHICULO then
@@ -362,6 +366,8 @@ begin
     personal_id.llenarcombo;
     personal_id.ItemIndex:=0;
 
+    cliente_diasvenc.Text:='15';
+
 end;
 
 procedure Tclientes.FormShow(Sender: TObject);
@@ -394,6 +400,7 @@ begin
           cliente_condicionventa.ItemIndex:=0;
           localidad_id.ItemIndex:=0;
           personal_id.ItemIndex:=0;
+          cliente_diasvenc.Text:='15';
 
           if CLIENTEVEHICULO then
             begin
@@ -433,6 +440,8 @@ begin
     localidad_id.OnSelect(self);
     cliente_observaciones.Lines.Text:=ZQclientes.FieldByName('cliente_observaciones').AsString;
     personal_id.Buscar(ZQclientes.FieldByName('personal_id').AsString);
+    cliente_diasvenc.Text:=ZQclientes.FieldByName('cliente_diasvenc').AsString;
+
 end;
 
 procedure Tclientes.ZQClienteVehiculoAfterOpen(DataSet: TDataSet);
