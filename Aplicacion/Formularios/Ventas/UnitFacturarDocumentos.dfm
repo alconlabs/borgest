@@ -116,6 +116,7 @@ inherited FacturarDocumentos: TFacturarDocumentos
   end
   object ZQDocumentoventadetalles: TZQuery
     Connection = Princ.ZBase
+    CachedUpdates = True
     SQL.Strings = (
       'select * from documentoventadetalles'
       'where documentoventa_id=:documentoventa_id')

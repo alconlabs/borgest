@@ -2,7 +2,6 @@ inherited InformesVentas: TInformesVentas
   Caption = 'Informes de Ventas'
   ClientHeight = 170
   ClientWidth = 328
-  OnCreate = FormCreate
   ExplicitWidth = 344
   ExplicitHeight = 208
   PixelsPerInch = 96

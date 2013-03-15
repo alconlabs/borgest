@@ -184,9 +184,9 @@ begin
     ZQDocumentopagos.First;
     while not ZQDocumentopagos.Eof do
         begin
-            documentoventa_pagado:=documentoventa_pagado+ZQDocumentopagos.FieldByName('documentopago_importe').AsFloat;
+            documentoventa_pagado:=roundto(documentoventa_pagado+ZQDocumentopagos.FieldByName('documentopago_importe').AsFloat,-2);
 
-            documentoventa_saldo:=documentoventa_total.Value-documentoventa_pagado;
+            documentoventa_saldo:=roundto(documentoventa_total.Value-documentoventa_pagado,-2);
 
             ZQDocumentopagos.Next;
         end;
@@ -608,7 +608,7 @@ var
 begin
     error:=0;
 
-    if documentoventa_pagado<>documentoventa_total.Value then
+    if roundto(documentoventa_pagado,-2)<>roundto(documentoventa_total.Value,-2) then
       error:=1;
 
 //    if solic_numeroimpreso.Text='' then
