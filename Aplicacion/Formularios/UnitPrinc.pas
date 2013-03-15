@@ -8,7 +8,8 @@ uses
   ZConnection, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, midaslib, ini,
   Grids, BaseGrid, AdvGrid, DBAdvGrid, StdCtrls, ADODB, rpcompobase, rpvclreport,
   UnitProgresoBase, ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
-  rpalias, GTBComboBox, ComCtrls, Encriptador;
+  rpalias, GTBComboBox, ComCtrls, Encriptador, rpexpredlgvcl, DBClient,
+  rpclientdataset;
 
 
 
@@ -109,6 +110,8 @@ type
     AdvGlowButton3: TAdvGlowButton;
     btnlibroivacompras: TAdvGlowButton;
     btninformescompras: TAdvGlowButton;
+    RpClientDataset1: TRpClientDataset;
+    RpExpreDialogVCL1: TRpExpreDialogVCL;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);

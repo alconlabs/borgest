@@ -87,7 +87,7 @@ object detallectas: Tdetallectas
       Tag2 = 0
     end
     object DBGrid1: TDBGrid
-      Left = 10
+      Left = -14
       Top = 119
       Width = 728
       Height = 298
@@ -111,9 +111,16 @@ object detallectas: Tdetallectas
         end
         item
           Expanded = False
+          FieldName = 'documentoventa_fechavenc'
+          Title.Caption = 'Fecha Venc.'
+          Width = 71
+          Visible = True
+        end
+        item
+          Expanded = False
           FieldName = 'documento_nombre'
           Title.Caption = 'Documento'
-          Width = 180
+          Width = 115
           Visible = True
         end
         item
@@ -166,7 +173,6 @@ object detallectas: Tdetallectas
       Width = 75
       Height = 25
       Caption = 'Imprimir'
-      Enabled = False
       TabOrder = 3
       OnClick = btnimprimirClick
     end
@@ -238,9 +244,8 @@ object detallectas: Tdetallectas
       Width = 185
       Height = 77
       Caption = 'Fecha Venc.'
-      Enabled = False
       TabOrder = 5
-      object Label1: TLabel
+      object lbldesdevenc: TLabel
         Left = 10
         Top = 20
         Width = 31
@@ -249,7 +254,7 @@ object detallectas: Tdetallectas
         Caption = 'Desde'
         Enabled = False
       end
-      object Label2: TLabel
+      object lblhastavenc: TLabel
         Left = 13
         Top = 44
         Width = 28
@@ -258,23 +263,23 @@ object detallectas: Tdetallectas
         Caption = 'Hasta'
         Enabled = False
       end
-      object CheckBox1: TCheckBox
+      object cbdesdefechavenc: TCheckBox
         Left = 155
         Top = 20
         Width = 14
         Height = 17
         TabOrder = 0
-        OnClick = cbdesdefechaClick
+        OnClick = cbdesdefechavencClick
       end
-      object CheckBox2: TCheckBox
+      object cbhastafechavenc: TCheckBox
         Left = 155
         Top = 44
         Width = 14
         Height = 17
         TabOrder = 1
-        OnClick = cbhastafechaClick
+        OnClick = cbhastafechavencClick
       end
-      object DateTimePicker1: TDateTimePicker
+      object desde_fecha_venc: TDateTimePicker
         Left = 49
         Top = 17
         Width = 100
@@ -284,7 +289,7 @@ object detallectas: Tdetallectas
         Enabled = False
         TabOrder = 2
       end
-      object DateTimePicker2: TDateTimePicker
+      object hasta_feecha_venc: TDateTimePicker
         Left = 49
         Top = 41
         Width = 100

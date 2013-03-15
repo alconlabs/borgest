@@ -134,6 +134,7 @@ object estadoctas: Testadoctas
         item
           Expanded = False
           FieldName = 'documentoventanumero'
+          Title.Alignment = taRightJustify
           Title.Caption = 'Nro.'
           Width = 69
           Visible = True
@@ -174,7 +175,6 @@ object estadoctas: Testadoctas
       Width = 75
       Height = 25
       Caption = 'Imprimir'
-      Enabled = False
       TabOrder = 3
       OnClick = btnimprimirClick
     end
@@ -246,9 +246,8 @@ object estadoctas: Testadoctas
       Width = 185
       Height = 77
       Caption = 'Fecha Venc.'
-      Enabled = False
       TabOrder = 5
-      object Label1: TLabel
+      object lbldesdevenc: TLabel
         Left = 10
         Top = 20
         Width = 31
@@ -257,7 +256,7 @@ object estadoctas: Testadoctas
         Caption = 'Desde'
         Enabled = False
       end
-      object Label2: TLabel
+      object lblhastavenc: TLabel
         Left = 13
         Top = 44
         Width = 28
@@ -266,23 +265,23 @@ object estadoctas: Testadoctas
         Caption = 'Hasta'
         Enabled = False
       end
-      object CheckBox1: TCheckBox
+      object cbdesdefechavenc: TCheckBox
         Left = 155
-        Top = 20
+        Top = 18
         Width = 14
         Height = 17
         TabOrder = 0
-        OnClick = cbdesdefechaClick
+        OnClick = cbdesdefechavencClick
       end
-      object CheckBox2: TCheckBox
+      object cbhastafechavenc: TCheckBox
         Left = 155
         Top = 44
         Width = 14
         Height = 17
         TabOrder = 1
-        OnClick = cbhastafechaClick
+        OnClick = cbhastafechavencClick
       end
-      object DateTimePicker1: TDateTimePicker
+      object desde_fecha_venc: TDateTimePicker
         Left = 49
         Top = 17
         Width = 100
@@ -292,7 +291,7 @@ object estadoctas: Testadoctas
         Enabled = False
         TabOrder = 2
       end
-      object DateTimePicker2: TDateTimePicker
+      object hasta_feecha_venc: TDateTimePicker
         Left = 49
         Top = 41
         Width = 100
@@ -326,6 +325,7 @@ object estadoctas: Testadoctas
   end
   object ZQPendientes: TZQuery
     Connection = Princ.ZBase
+    AutoCalcFields = False
     CachedUpdates = True
     SQL.Strings = (
       'select *, '
@@ -392,6 +392,7 @@ object estadoctas: Testadoctas
     Top = 112
   end
   object DSCPendientes: TDataSource
+    AutoEdit = False
     DataSet = ZQPendientes
     Left = 312
     Top = 176

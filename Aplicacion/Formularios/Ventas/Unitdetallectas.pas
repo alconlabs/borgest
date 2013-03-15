@@ -38,12 +38,12 @@ type
     desde_fecha: TDateTimePicker;
     hasta_fecha: TDateTimePicker;
     GroupBox2: TGroupBox;
-    Label1: TLabel;
-    Label2: TLabel;
-    CheckBox1: TCheckBox;
-    CheckBox2: TCheckBox;
-    DateTimePicker1: TDateTimePicker;
-    DateTimePicker2: TDateTimePicker;
+    lbldesdevenc: TLabel;
+    lblhastavenc: TLabel;
+    cbdesdefechavenc: TCheckBox;
+    cbhastafechavenc: TCheckBox;
+    desde_fecha_venc: TDateTimePicker;
+    hasta_feecha_venc: TDateTimePicker;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnimprimirClick(Sender: TObject);
@@ -53,8 +53,11 @@ type
     procedure DBGrid1DblClick(Sender: TObject);
     procedure cbdesdefechaClick(Sender: TObject);
     procedure cbhastafechaClick(Sender: TObject);
+    procedure cbdesdefechavencClick(Sender: TObject);
+    procedure cbhastafechavencClick(Sender: TObject);
   private
     { Private declarations }
+    procedure SetNotRequired;
   public
     { Public declarations }
     procedure cargatemporal;
@@ -67,9 +70,20 @@ var
 
 implementation
 
-uses UnitPrinc, Unitventadetalle;
+uses UnitPrinc;
 
 {$R *.dfm}
+
+
+
+procedure Tdetallectas.SetNotRequired;
+var
+  i:integer;
+begin
+    for i := 0 to ZQPendientes.Fields.Count-1 do
+      ZQPendientes.Fields.Fields[i].Required:=false;
+
+end;
 
 
 procedure Tdetallectas.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -126,10 +140,22 @@ begin
     desde_fecha.Enabled:=cbdesdefecha.Checked;
 end;
 
+procedure Tdetallectas.cbdesdefechavencClick(Sender: TObject);
+begin
+    lbldesdevenc.Enabled:=cbdesdefechavenc.Checked;
+    desde_fecha_venc.Enabled:=cbdesdefechavenc.Checked;
+end;
+
 procedure Tdetallectas.cbhastafechaClick(Sender: TObject);
 begin
     lblhastafecha.Enabled:=cbhastafecha.Checked;
     hasta_fecha.Enabled:=cbhastafecha.Checked;
+end;
+
+procedure Tdetallectas.cbhastafechavencClick(Sender: TObject);
+begin
+    lblhastavenc.Enabled:=cbhastafechavenc.Checked;
+    hasta_feecha_venc.Enabled:=cbhastafechavenc.Checked;
 end;
 
 procedure Tdetallectas.CustomizeGrid1PaintRow(DS: TDataSet;
@@ -166,12 +192,12 @@ var
   grupo, condicion_saldoanterior:string;
 begin
     ZQPendientes.Active:=false;
-    grupo:='(documentoventa_id)';
+    grupo:='(documentosventas.documentoventa_id)';
     condicion_saldoanterior:='1=2';
     if cbdesdefecha.Checked then
       begin
-          grupo:=' if(documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",0,documentoventa_id) ';
-          condicion_saldoanterior:='documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'"';
+          grupo:=' if(documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",0,documentosventas.documentoventa_id) ';
+          condicion_saldoanterior:='documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'"';
       end;
 
 
@@ -179,12 +205,15 @@ begin
                            'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas.documentoventa_total,0)) as debito, '+
                            'sum(if(tiposdocumento.tipodocu_debcred="CREDITO",documentosventas.documentoventa_total,0)) as credito, '+
                            '0.00 as acumulado, '+grupo+' as grupo, '+
-                           'if('+condicion_saldoanterior+',"Saldo anterior",tiposdocumento.tipodocu_nombre) as documento_nombre, '+
-                           'if('+condicion_saldoanterior+',"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",DATE_FORMAT(documentoventa_fecha,"%d/%m/%Y")) as documentoventafecha, '+
+                           'if('+condicion_saldoanterior+',"Saldo anterior",CONCAT(tiposdocumento.tipodocu_nombreabrev," ",tiposdocumento.tipodocu_letra)) as documento_nombre, '+
+                           'if('+condicion_saldoanterior+',"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",DATE_FORMAT(documentosventas.documentoventa_fecha,"%d/%m/%Y")) as documentoventafecha, '+
                            'if('+condicion_saldoanterior+',"0",puntoventa_numero) as puntoventanumero, '+
-                           'if('+condicion_saldoanterior+',"0",documentoventa_numero) as documentoventanumero '+
+                           'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero '+
 
                            'from documentosventas '+
+//                           'left join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
+//                           'left join documentoventadetalles documentoventadetalles2 on documentoventadetalles.documentoventadetalle_idorig=documentoventadetalles2.documentoventadetalle_id '+
+//                           'left join documentosventas documentosventas2 on documentoventadetalles2.documentoventa_id=documentosventas2.documentoventa_id '+
                            'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
                            'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
                            'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
@@ -199,12 +228,19 @@ begin
     if cbhastafecha.Checked then
       ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fecha<="'+formatdatetime('yyyy-mm-dd',hasta_fecha.Date)+'" ';
 
+    if cbdesdefechavenc.Checked then
+      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fechafenc>="'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'" ';
+
+    if cbhastafechavenc.Checked then
+      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fechafenc<="'+formatdatetime('yyyy-mm-dd',hasta_feecha_venc.Date)+'" ';
+
     ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'group by grupo ';
 
-    ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'order by documentoventa_fecha, documentoventa_id ';
+    ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_id ';
 
 
     ZQPendientes.Active:=true;
+    SetNotRequired;
     acumulado:=0;
     ZQPendientes.First;
 
@@ -224,31 +260,20 @@ end;
 
 procedure Tdetallectas.btnimprimirClick(Sender: TObject);
 begin
-    cargatemporal;
+    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\detalle_de_ctasctes.rep';
+    if cbdesdefecha.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
+    if cbhastafecha.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
+    if cbdesdefechavenc.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHAVENC').AsString:=datetostr(desde_fecha_venc.Date);
+    if cbhastafechavenc.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHAVENC').AsString:=datetostr(hasta_feecha_venc.Date);
 
-////    if tipo_resumen.ItemIndex=0 then  //DETALLE DE CTA
-//    begin
-//
-//        VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\ventas\detallecuenta.rep';
-//        VCLReport1.Report.Datainfo.Items[0].sql:='select * from tempestacuenta '+
-//                                                 'order by fecha';
-//
-//        VCLReport1.Report.Datainfo.Items[0].sql:=VCLReport1.Report.Datainfo.Items[0].sql;
-//        VCLReport1.Execute;
-//
-//    end
-////    else
-//    begin
-//
-//        VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\ventas\saldocuenta.rep';
-//        VCLReport1.Report.Datainfo.Items[0].sql:='select * from tempestacuenta '+
-//                                                 'order by fecha';
-//
-//        VCLReport1.Report.Datainfo.Items[0].sql:=VCLReport1.Report.Datainfo.Items[0].sql;
-//        VCLReport1.Execute;
-//
-//    end;
 
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=ZQPendientes.SQL.Text;
+
+    Princ.VCLReport1.Execute;
 
 
 

@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageHerramientas
+    ActivePage = AdvPageVentas
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -2932,5 +2932,17 @@ object Princ: TPrinc
   object Encriptador1: TEncriptador
     Left = 384
     Top = 128
+  end
+  object RpClientDataset1: TRpClientDataset
+    Aggregates = <>
+    MasterSource = estadoctas.DSCPendientes
+    PacketRecords = 0
+    Params = <>
+    Left = 184
+    Top = 384
+  end
+  object RpExpreDialogVCL1: TRpExpreDialogVCL
+    Left = 352
+    Top = 328
   end
 end
