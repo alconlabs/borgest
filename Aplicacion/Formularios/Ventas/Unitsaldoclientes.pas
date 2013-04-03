@@ -92,6 +92,7 @@ type
     Label1: TLabel;
     sucursal_id: TSqlComboBox;
     CBSindeuda: TCheckBox;
+    Button1: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnimprimirClick(Sender: TObject);
     procedure btnactualizarClick(Sender: TObject);

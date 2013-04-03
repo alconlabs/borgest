@@ -508,3 +508,11 @@ ALTER TABLE `tiposdocumento` ADD COLUMN `tipodocu_manual` INT(3) NULL DEFAULT NU
 update tiposdocumento set tipodocu_manual=if(tipodocu_preimpresos=0 and tipodocu_fiscal=0,-1,0);
 140;
 ALTER TABLE `clientes` ADD COLUMN `cliente_diasvenc` INT(3) NULL DEFAULT 15  AFTER `personal_id`;
+141;
+ALTER TABLE `personal` ADD COLUMN `perfil_id` INT(11) NOT NULL  AFTER `personal_pass` , 
+  ADD CONSTRAINT `fk_personal_perfiles1`
+  FOREIGN KEY (`perfil_id` )
+  REFERENCES `perfiles` (`perfil_id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+, ADD INDEX `fk_personal_perfiles1` (`perfil_id` ASC) ;

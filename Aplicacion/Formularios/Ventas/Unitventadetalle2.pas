@@ -13,7 +13,6 @@ type
     panelgrilla: TAdvPanel;
     Label3: TLabel;
     Label6: TLabel;
-    ventadeta_cantidad: TDBAdvEdit;
     Button1: TButton;
     btnaceptar: TButton;
     Label1: TLabel;
@@ -41,6 +40,7 @@ type
     btnprecio3: TButton;
     ventadetalle_preciounitoriginal: TDBAdvEdit;
     producdepo_stockinicial: TLabel;
+    ventadeta_cantidad: TMoneyEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnaceptarClick(Sender: TObject);
     procedure producto_idSelect(Sender: TObject);
@@ -92,7 +92,7 @@ begin
     if ventadetalle_preciounitario.FloatValue=0 then
       error:=2;
 
-    if ventadeta_cantidad.FloatValue=0 then
+    if ventadeta_cantidad.Value=0 then
       error:=1;
 
 
@@ -234,7 +234,7 @@ begin
           if ventadetalle_preciounitario.Text<>ventadetalle_preciounitoriginal.Text then
             documentoventadetalle_listaprecio:=-1;
       end;
-    ventadetalle_total.Text:=floattostr(ventadetalle_preciounitario.FloatValue*ventadeta_cantidad.FloatValue);
+    ventadetalle_total.Text:=floattostr(ventadetalle_preciounitario.FloatValue*ventadeta_cantidad.Value);
 end;
 
 

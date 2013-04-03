@@ -6,7 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, AdvPanel, AdvGlowButton, Grids, DBGrids, StdCtrls, DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, UnitNumEdit, ComCtrls,
-  UnitSqlComboBox, AdvEdit, DBAdvEd, Titles, MQuery, CustomizeGrid;
+  UnitSqlComboBox, AdvEdit, DBAdvEd, Titles, MQuery, CustomizeGrid, math,
+  AdvListV, UnitSqlListView;
 
 type
   Tdetallectas = class(TForm)
@@ -43,7 +44,11 @@ type
     cbdesdefechavenc: TCheckBox;
     cbhastafechavenc: TCheckBox;
     desde_fecha_venc: TDateTimePicker;
-    hasta_feecha_venc: TDateTimePicker;
+    hasta_fecha_venc: TDateTimePicker;
+    Label4: TLabel;
+    personal_id: TSqlComboBox;
+    puntoventa_id: TSqlListView;
+    Titles1: TTitles;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnimprimirClick(Sender: TObject);
@@ -94,8 +99,15 @@ end;
 procedure Tdetallectas.FormCreate(Sender: TObject);
 begin
     cliente_id.llenarcombo;
+    cliente_id.ItemIndex:=0;
     desde_fecha.Date:=Date-30;
-    hasta_fecha.DateTime:=Date;
+    hasta_fecha.Date:=Date;
+    desde_fecha_venc.Date:=desde_fecha.Date;
+    hasta_fecha_venc.Date:=hasta_fecha.Date;
+    personal_id.llenarcombo;
+    personal_id.ItemIndex:=0;
+    Titles1.Memo.Text:='select * from puntodeventa where 1=1 '+Princ.empresa_where;
+    puntoventa_id.Fill;
 end;
 
 procedure Tdetallectas.cargatemporal;
@@ -155,7 +167,7 @@ end;
 procedure Tdetallectas.cbhastafechavencClick(Sender: TObject);
 begin
     lblhastavenc.Enabled:=cbhastafechavenc.Checked;
-    hasta_feecha_venc.Enabled:=cbhastafechavenc.Checked;
+    hasta_fecha_venc.Enabled:=cbhastafechavenc.Checked;
 end;
 
 procedure Tdetallectas.CustomizeGrid1PaintRow(DS: TDataSet;
@@ -219,24 +231,32 @@ begin
                            'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
                            'where 1=1 '+Princ.empresa_where+
                            'and documentosventas.documentoventa_estado<>"ANULADA" '+
-                           'and tiposdocumento.tipodocu_debcred<>"N/A" '+
-                           'and clientes.cliente_id="'+cliente_id.codigo+'" ';
+                           'and tiposdocumento.tipodocu_debcred<>"N/A" ';
+
+    if cliente_id.codigo<>'-1' then
+      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+' and clientes.cliente_id="'+cliente_id.codigo+'" ';
+
+    if personal_id.codigo<>'-1' then
+      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+' and clientes.personal_id="'+personal_id.codigo+'" ';
 
     if not strtobool(Princ.GetConfiguracion('VENTASCTDOVENTANACTACTE')) then
       ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_condicionventa=1 ';
+
+    puntoventa_id.GenerarWhere;
+    ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+' and '+puntoventa_id.where;
 
     if cbhastafecha.Checked then
       ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fecha<="'+formatdatetime('yyyy-mm-dd',hasta_fecha.Date)+'" ';
 
     if cbdesdefechavenc.Checked then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fechafenc>="'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'" ';
+      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fechavenc>="'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'" ';
 
     if cbhastafechavenc.Checked then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fechafenc<="'+formatdatetime('yyyy-mm-dd',hasta_feecha_venc.Date)+'" ';
+      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fechavenc<="'+formatdatetime('yyyy-mm-dd',hasta_fecha_venc.Date)+'" ';
 
     ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'group by grupo ';
 
-    ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_id ';
+    ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'order by clientes.cliente_nombre, documentosventas.documentoventa_fecha, documentosventas.documentoventa_id ';
 
 
     ZQPendientes.Active:=true;
@@ -247,7 +267,7 @@ begin
     ZQPendientes.FieldByName('acumulado').ReadOnly:=false;
     while not ZQPendientes.Eof do
         begin
-            acumulado:=acumulado+ZQPendientes.FieldByName('debito').AsFloat-ZQPendientes.FieldByName('credito').AsFloat;
+            acumulado:=roundto(acumulado+ZQPendientes.FieldByName('debito').AsFloat-ZQPendientes.FieldByName('credito').AsFloat,-2);
 
             ZQPendientes.Edit;
             ZQPendientes.FieldByName('acumulado').AsFloat:=acumulado;
@@ -268,7 +288,7 @@ begin
     if cbdesdefechavenc.Checked then
       Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHAVENC').AsString:=datetostr(desde_fecha_venc.Date);
     if cbhastafechavenc.Checked then
-      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHAVENC').AsString:=datetostr(hasta_feecha_venc.Date);
+      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHAVENC').AsString:=datetostr(hasta_fecha_venc.Date);
 
 
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:=ZQPendientes.SQL.Text;

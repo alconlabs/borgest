@@ -187,6 +187,14 @@ object saldoclientes: Tsaldoclientes
       State = cbChecked
       TabOrder = 7
     end
+    object Button1: TButton
+      Left = 165
+      Top = 439
+      Width = 124
+      Height = 25
+      Caption = 'Detalle de Imputacion'
+      TabOrder = 8
+    end
   end
   object ZQuery2: TZQuery
     Connection = Princ.ZBase

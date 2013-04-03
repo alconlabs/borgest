@@ -105,13 +105,6 @@ inherited NotapedidoDetalle: TNotapedidoDetalle
       Alignment = taRightJustify
       Caption = 'Subtotal'
     end
-    inherited ventadeta_cantidad: TDBAdvEdit
-      Left = 72
-      Top = 31
-      TabOrder = 2
-      ExplicitLeft = 72
-      ExplicitTop = 31
-    end
     inherited Button1: TButton
       Left = 592
       Top = 158
@@ -164,6 +157,16 @@ inherited NotapedidoDetalle: TNotapedidoDetalle
       TabOrder = 14
       ExplicitTop = 189
       ExplicitWidth = 679
+    end
+    inherited ventadetalle_preciounitoriginal: TDBAdvEdit
+      TabOrder = 15
+    end
+    inherited ventadeta_cantidad: TMoneyEdit
+      Left = 72
+      Top = 31
+      TabOrder = 2
+      ExplicitLeft = 72
+      ExplicitTop = 31
     end
     object documentoventadetalle_importe3: TDBAdvEdit
       Left = 72

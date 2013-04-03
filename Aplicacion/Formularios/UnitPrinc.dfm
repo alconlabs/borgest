@@ -2894,6 +2894,7 @@ object Princ: TPrinc
   end
   object ZQMenu: TZQuery
     Connection = ZBase
+    CachedUpdates = True
     SQL.Strings = (
       'select * from menu')
     Params = <>

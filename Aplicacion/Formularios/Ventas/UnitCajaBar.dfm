@@ -74,10 +74,6 @@ inherited CajaBar: TCajaBar
       TabOrder = 2
       object TabVentas: TTabSheet
         Caption = 'Ventas'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label3: TLabel
           Left = 415
           Top = 10
@@ -300,10 +296,6 @@ inherited CajaBar: TCajaBar
       object TabIngrEgr: TTabSheet
         Caption = 'Ingresos/Egresos'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object GroupBox2: TGroupBox
           Left = 0
           Top = 0

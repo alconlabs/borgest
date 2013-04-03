@@ -126,27 +126,6 @@ object ventadetalle2: Tventadetalle2
       Height = 13
       Caption = 'Stock Inic: '
     end
-    object ventadeta_cantidad: TDBAdvEdit
-      Left = 104
-      Top = 7
-      Width = 121
-      Height = 21
-      EditType = etFloat
-      Precision = 2
-      LabelFont.Charset = DEFAULT_CHARSET
-      LabelFont.Color = clWindowText
-      LabelFont.Height = -11
-      LabelFont.Name = 'Tahoma'
-      LabelFont.Style = []
-      Lookup.Separator = ';'
-      Color = clWindow
-      Enabled = True
-      TabOrder = 0
-      Text = '1,00'
-      Visible = True
-      OnExit = ventadeta_cantidadExit
-      Version = '2.7.0.5'
-    end
     object Button1: TButton
       Left = 560
       Top = 114
@@ -209,7 +188,7 @@ object ventadetalle2: Tventadetalle2
       Version = '2.7.0.5'
     end
     object producto_id: TEditCodi
-      Left = 102
+      Left = 104
       Top = 36
       Width = 121
       Height = 21
@@ -456,6 +435,24 @@ object ventadetalle2: Tventadetalle2
       Visible = False
       OnExit = ventadetalle_preciounitarioExit
       Version = '2.7.0.5'
+    end
+    object ventadeta_cantidad: TMoneyEdit
+      Left = 104
+      Top = 7
+      Width = 121
+      Height = 21
+      CalculatorLook.ButtonWidth = 24
+      CalculatorLook.ButtonHeight = 24
+      CalculatorLook.ButtonColor = clSilver
+      CalculatorLook.Color = clWhite
+      CalculatorLook.Flat = False
+      CalculatorLook.Font.Charset = DEFAULT_CHARSET
+      CalculatorLook.Font.Color = clWindowText
+      CalculatorLook.Font.Height = -11
+      CalculatorLook.Font.Name = 'Tahoma'
+      CalculatorLook.Font.Style = []
+      TabOrder = 0
+      Version = '1.1.0.1'
     end
   end
   object ZQDocumentoventadetalles: TZQuery

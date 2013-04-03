@@ -998,7 +998,6 @@ object TRpReport
     DataType = rpParamInteger
     AutoExpand = False
     AutoContract = False
-    PrintOnlyOne = True
     ExportPosition = 0
     ExportSize = 1
     ExportDoNewLine = False

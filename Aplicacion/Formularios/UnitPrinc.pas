@@ -166,7 +166,8 @@ type
   public
     { Public declarations }
     EXCEL_FILE:string;
-    empleado_id_logueado:string;
+    personal_id_logueado:string;
+    perfil_id_logueado:string;
     dep_id:string;
     sucursal_actual:string;
     ProgressMax:integer;
@@ -332,7 +333,7 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   Unitlistafacturascompra, Unitfacturascompra, UnitListaServices,
   UnitOrdenServicio, UnitListaOrdenesServicios, UnitImprimirListaPrecios,
   UnitPresupuesto, UnitListaPresupuestos, UnitDetallePagos, UnitLibroIvaVentas,
-  UnitCajaBar, UnitLibroIvaCompras;
+  UnitCajaBar, UnitLibroIvaCompras, UnitLogin;
 
 {$R *.dfm}
 
@@ -679,6 +680,7 @@ var
   i:integer;
 begin
     ZQMenu.Active:=false;
+//    ZQMenu.ParamByName('perfil_id').AsString:=perfil_id_logueado;
     ZQMenu.Active:=true;
     for i := 0 to princ.ComponentCount-1 do
       begin
@@ -691,6 +693,7 @@ begin
 
                 if (princ.Components[i] is TAdvToolBar) then
                   begin
+//                      (princ.Components[i] as TAdvToolBar).Enabled:=strtobool(ZQMenu.FieldByName('menu_enabled').AsString) and strtobool(ZQMenu.FieldByName('menuperfil_habilitado').AsString);
                       (princ.Components[i] as TAdvToolBar).Enabled:=strtobool(ZQMenu.FieldByName('menu_enabled').AsString);
                       (princ.Components[i] as TAdvToolBar).Visible:=strtobool(ZQMenu.FieldByName('menu_visible').AsString);
                   end;
@@ -699,6 +702,7 @@ begin
                   begin
                       (princ.Components[i] as TAdvGlowButton).ShowHint:=true;
                       (princ.Components[i] as TAdvGlowButton).Hint:=(princ.Components[i] as TAdvGlowButton).Caption;
+//                      (princ.Components[i] as TAdvGlowButton).Enabled:=strtobool(ZQMenu.FieldByName('menu_enabled').AsString) and strtobool(ZQMenu.FieldByName('menuperfil_habilitado').AsString);
                       (princ.Components[i] as TAdvGlowButton).Enabled:=strtobool(ZQMenu.FieldByName('menu_enabled').AsString);
                       (princ.Components[i] as TAdvGlowButton).Visible:=strtobool(ZQMenu.FieldByName('menu_visible').AsString);
                       (princ.Components[i] as TAdvGlowButton).ShowHint:=true;
@@ -2470,7 +2474,8 @@ begin
     Application.UpdateFormatSettings:= False;
 
     MenuPrincipal.ActivePage:=AdvPageArchivo;
-    empleado_id_logueado:='';
+    personal_id_logueado:='';
+    perfil_id_logueado:='';
     dep_id:='1';
 
     ZBase.Connect;
@@ -2487,6 +2492,17 @@ begin
 
 
     empresa_where:='and puntodeventa.puntoventa_id not in ('+Princ.buscar('select empresa_where from empresas','empresa_where')+') ';
+
+
+//    try
+//      login:=Tlogin.Create(self);
+//    finally
+//      login.liberar_al_cerrar:=false;
+//      login.ShowModal;
+//    end;
+
+
+
 
     MenuConfiguracion;
 end;
