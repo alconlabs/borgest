@@ -1,8 +1,8 @@
-object localidades: Tlocalidades
+object provincias: Tprovincias
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
-  Caption = 'Localidades'
+  Caption = 'Provincias'
   ClientHeight = 456
   ClientWidth = 934
   Color = clBtnFace
@@ -155,21 +155,21 @@ object localidades: Tlocalidades
       Columns = <
         item
           Expanded = False
-          FieldName = 'localidad_id'
+          FieldName = 'provincia_id'
           Title.Caption = 'Codigo'
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'localidad_nombre'
-          Title.Caption = 'Localidad'
-          Width = 390
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'provincia_nombre'
           Title.Caption = 'Provincia'
+          Width = 390
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'pais_nombre'
+          Title.Caption = 'Pais'
           Width = 325
           Visible = True
         end>
@@ -229,7 +229,7 @@ object localidades: Tlocalidades
         TabOrder = 3
         OnClick = Button5Click
       end
-      object fil_provincia_nombre: TEdit
+      object fil_pais_nombre: TEdit
         Left = 475
         Top = 0
         Width = 325
@@ -237,7 +237,7 @@ object localidades: Tlocalidades
         Align = alLeft
         TabOrder = 2
       end
-      object fil_localidad_id: TEdit
+      object fil_provincia_id: TEdit
         Left = 0
         Top = 0
         Width = 85
@@ -245,7 +245,7 @@ object localidades: Tlocalidades
         Align = alLeft
         TabOrder = 0
       end
-      object fil_localidad_nombre: TEdit
+      object fil_provincia_nombre: TEdit
         Left = 85
         Top = 0
         Width = 390
@@ -300,6 +300,8 @@ object localidades: Tlocalidades
     StatusBar.Color = 12560553
     StatusBar.ColorTo = 14602191
     Styler = Princ.AdvPanelStyler1
+    ExplicitLeft = 8
+    ExplicitTop = 342
     FullHeight = 0
     object Label1: TLabel
       Left = 47
@@ -310,30 +312,22 @@ object localidades: Tlocalidades
       Caption = 'Codigo'
     end
     object Label5: TLabel
-      Left = 34
-      Top = 33
-      Width = 46
-      Height = 13
-      Alignment = taRightJustify
-      Caption = 'Localidad'
-    end
-    object Label11: TLabel
       Left = 36
-      Top = 81
+      Top = 33
       Width = 44
       Height = 13
       Alignment = taRightJustify
       Caption = 'Provincia'
     end
-    object Label2: TLabel
-      Left = 15
+    object Label11: TLabel
+      Left = 60
       Top = 57
-      Width = 65
+      Width = 20
       Height = 13
       Alignment = taRightJustify
-      Caption = 'Codigo Postal'
+      Caption = 'Pais'
     end
-    object localidad_id: TEdit
+    object provincia_id: TEdit
       Left = 86
       Top = 6
       Width = 121
@@ -348,7 +342,7 @@ object localidades: Tlocalidades
       Width = 75
       Height = 25
       Caption = 'Guardar'
-      TabOrder = 4
+      TabOrder = 3
       OnClick = Button1Click
     end
     object Button6: TButton
@@ -357,49 +351,41 @@ object localidades: Tlocalidades
       Width = 75
       Height = 25
       Caption = 'Cancelar'
-      TabOrder = 5
+      TabOrder = 4
       OnClick = Button6Click
     end
-    object localidad_nombre: TEdit
+    object provincia_nombre: TEdit
       Left = 86
       Top = 30
       Width = 634
       Height = 21
       TabOrder = 1
     end
-    object provincia_id: TSqlComboBox
-      Left = 86
-      Top = 78
-      Width = 203
-      Height = 21
-      Style = csDropDownList
-      ItemHeight = 13
-      TabOrder = 3
-      Confbase = Princ.ZBase
-      Confsql.Strings = (
-        'select * from provincias'
-        'order by provincia_nombre')
-      ConfTabla = 'provincias'
-      Confcampo_codigo = 'provincia_id'
-      Confcampo_nomb = 'provincia_nombre'
-      Tag2 = 0
-    end
-    object localidad_codigopostal: TEdit
+    object pais_id: TSqlComboBox
       Left = 86
       Top = 54
       Width = 203
       Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
       TabOrder = 2
+      Confbase = Princ.ZBase
+      Confsql.Strings = (
+        'select * from paises'
+        'order by pais_nombre')
+      ConfTabla = 'paises'
+      Confcampo_codigo = 'pais_id'
+      Confcampo_nomb = 'pais_nombre'
+      Tag2 = 0
+      ConfNuevo = True
     end
   end
   object ZQGrilla: TZQuery
     Connection = Princ.ZBase
     SQL.Strings = (
-      'select * from localidades'
-      
-        'inner join provincias on localidades.provincia_id=provincias.pro' +
-        'vincia_id'
-      'order by localidad_nombre')
+      'select * from provincias'
+      'inner join paises on provincias.pais_id=paises.pais_id'
+      'order by provincia_nombre')
     Params = <>
     Left = 216
     Top = 112

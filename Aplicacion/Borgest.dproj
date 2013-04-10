@@ -94,6 +94,9 @@
     <DCCReference Include="Formularios\Archivo\UnitProductosBasico.pas">
       <Form>ProductosBasico</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitprovincias.pas">
+      <Form>provincias</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitServicios.pas">
       <Form>servicios</Form>
     </DCCReference>

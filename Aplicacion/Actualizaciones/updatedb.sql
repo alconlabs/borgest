@@ -509,10 +509,28 @@ update tiposdocumento set tipodocu_manual=if(tipodocu_preimpresos=0 and tipodocu
 140;
 ALTER TABLE `clientes` ADD COLUMN `cliente_diasvenc` INT(3) NULL DEFAULT 15  AFTER `personal_id`;
 141;
-ALTER TABLE `personal` ADD COLUMN `perfil_id` INT(11) NOT NULL  AFTER `personal_pass` , 
+ALTER TABLE `personal` ADD COLUMN `perfil_id` INT(11) NOT NULL DEFAULT 1 AFTER `personal_pass` , 
   ADD CONSTRAINT `fk_personal_perfiles1`
   FOREIGN KEY (`perfil_id` )
   REFERENCES `perfiles` (`perfil_id` )
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
 , ADD INDEX `fk_personal_perfiles1` (`perfil_id` ASC) ;
+142;
+CREATE  TABLE IF NOT EXISTS `paises` (
+  `pais_id` INT(11) NOT NULL ,
+  `pais_nombre` VARCHAR(45) NULL DEFAULT NULL ,
+  PRIMARY KEY (`pais_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+143;
+INSERT INTO `paises` (`pais_id`, `pais_nombre`) VALUES (1, 'ARGENTINA');
+144;
+ALTER TABLE `provincias` ADD COLUMN `pais_id` INT(11) NOT NULL DEFAULT 1  AFTER `provincia_nombre` , 
+  ADD CONSTRAINT `fk_provincias_paises1`
+  FOREIGN KEY (`pais_id` )
+  REFERENCES `paises` (`pais_id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+, ADD INDEX `fk_provincias_paises1` (`pais_id` ASC) ;

@@ -112,6 +112,17 @@ type
     btninformescompras: TAdvGlowButton;
     RpClientDataset1: TRpClientDataset;
     RpExpreDialogVCL1: TRpExpreDialogVCL;
+    AdvPageComisiones: TAdvPage;
+    AdvToolBarComisionesVendedores: TAdvToolBar;
+    btncomisionesvendedores: TAdvGlowButton;
+    btnliquidacionesvendedores: TAdvGlowButton;
+    btnvendedoresdebcred: TAdvGlowButton;
+    btntipoliquidvendedores: TAdvGlowButton;
+    AdvToolBarComisionesSucursales: TAdvToolBar;
+    btncomisionessucursales: TAdvGlowButton;
+    btnliquidacionessucu: TAdvGlowButton;
+    btntipoliquidsucursales: TAdvGlowButton;
+    btndebcredsucursales: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);

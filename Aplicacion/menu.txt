@@ -10,6 +10,7 @@ Archivo
 		Proveedores
 	Localidades
 		Localidades
+		Provincias
 	Empresa
 		Empresa
 		Sucursales

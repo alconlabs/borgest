@@ -91,7 +91,8 @@ uses
   UnitCajaBar in 'Formularios\Ventas\UnitCajaBar.pas' {CajaBar},
   UnitCajaApertura in 'Formularios\Caja\UnitCajaApertura.pas' {CajaApertura},
   UnitLogin in 'Formularios\UnitLogin.pas' {login},
-  UnitLibroIvaCompras in 'Formularios\Compras\UnitLibroIvaCompras.pas' {LibroIvaCompras};
+  UnitLibroIvaCompras in 'Formularios\Compras\UnitLibroIvaCompras.pas' {LibroIvaCompras},
+  Unitprovincias in 'Formularios\Archivo\Unitprovincias.pas' {provincias};
 
 {$R *.res}
 
@@ -100,5 +101,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrinc, Princ);
   Application.CreateForm(Tlogin, login);
+  Application.CreateForm(Tprovincias, provincias);
   Application.Run;
 end.
