@@ -534,3 +534,115 @@ ALTER TABLE `provincias` ADD COLUMN `pais_id` INT(11) NOT NULL DEFAULT 1  AFTER 
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
 , ADD INDEX `fk_provincias_paises1` (`pais_id` ASC) ;
+145;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('58', '>Comisiones', '0', 'AdvPageComisiones', '', '0', '0');
+146;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,58,perfil_id from perfiles;
+147;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('59', '>Comisiones>Vendedores', '0', 'AdvToolBarComisionesVendedores', '', '0', '0');
+148;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,59,perfil_id from perfiles;
+149;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('60', '>Comisiones>Vendedores>Comisiones de Vendedores', '0', 'btncomisionesvendedores', '', '0', '0');
+150;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,60,perfil_id from perfiles;
+151;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('61', '>Comisiones>Vendedores>Vendedores Deb-Cred', '0', 'btnvendedoresdebcred', '', '0', '0');
+152;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,61,perfil_id from perfiles;
+153;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('62', '>Comisiones>Vendedores>Liquidaciones a Vendedores', '0', 'btnliquidacionesvendedores', '', '0', '0');
+154;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,62,perfil_id from perfiles;
+155;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('63', '>Comisiones>Sucursales', '0', 'AdvToolBarComisionesSucursales', '', '0', '0');
+156;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,63,perfil_id from perfiles;
+157;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('64', '>Comisiones>Sucursales>Comisiones de Sucursales', '0', 'btncomisionessucursales', '', '0', '0');
+158;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,64,perfil_id from perfiles;
+159;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('65', '>Comisiones>Sucursales>Sucursales Deb-Cred', '0', 'btndebcredsucursales', '', '0', '0');
+160;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,65,perfil_id from perfiles;
+161;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('66', '>Comisiones>Sucursales>Liquidaciones a Sucursales', '0', 'btnliquidacionessucu', '', '0', '0');
+162;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,66,perfil_id from perfiles;
+163;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('67', '>Comisiones>Notas de Pedido', '0', 'AdvToolBarNotasdepedido', '', '0', '0');
+164;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,67,perfil_id from perfiles;
+165;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('68', '>Comisiones>Notas de Pedido>Notas de Pedido', '0', 'btnlistanotasdepedido', '', '0', '0');
+166;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,68,perfil_id from perfiles;
+167;
+ALTER TABLE `sucursales` 
+ADD COLUMN `sucursal_tipoliquidvendedor` VARCHAR(45) NULL DEFAULT NULL  AFTER `empresa_id` , 
+ADD COLUMN `sucursal_tipoliquidsucursal` VARCHAR(45) NULL DEFAULT NULL  AFTER `sucursal_tipoliquidvendedor`;
+168;
+CREATE  TABLE IF NOT EXISTS `comisionesvendedor` (
+  `comisionvendedor_id` INT(11) NOT NULL ,
+  `comisionvendedor_tipo` VARCHAR(45) NULL DEFAULT NULL ,
+  `comisionvendedor_valor` FLOAT(10,4) NULL DEFAULT NULL ,
+  `personal_id` INT(11) NULL DEFAULT NULL ,
+  `producto_id` INT(11) NULL DEFAULT NULL ,
+  PRIMARY KEY (`comisionvendedor_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+169;
+ALTER TABLE `personal` CHANGE COLUMN `perfil_id` `perfil_id` int(11) NOT NULL DEFAULT 1;
+170;
+CREATE  TABLE IF NOT EXISTS `comisionessucursal` (
+  `comisionsucursal_id` INT(11) NOT NULL ,
+  `comisionsucursal_tipo` VARCHAR(45) NULL DEFAULT NULL ,
+  `comisionsucursal_valor` FLOAT(10,4) NULL DEFAULT NULL ,
+  `sucursal_id` INT(11) NULL DEFAULT NULL ,
+  `producto_id` INT(11) NULL DEFAULT NULL ,
+  PRIMARY KEY (`comisionsucursal_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+171;
+CREATE  TABLE IF NOT EXISTS `vendedoresdebcred` (
+  `vendedordebcred_id` INT(11) NOT NULL ,
+  `vendedordebcred_fecha` DATE NULL DEFAULT NULL ,
+  `vendedordebcred_descripcion` VARCHAR(255) NULL DEFAULT NULL ,
+  `vendedordebcred_tipo` VARCHAR(45) NULL DEFAULT NULL ,
+  `vendedordebcred_importe` FLOAT(20,4) NULL DEFAULT NULL ,
+  `vendedordebcred_estado` VARCHAR(45) NULL DEFAULT NULL ,
+  `liquidacionvendedor_id` INT(11) NULL DEFAULT NULL ,
+  `personal_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`vendedordebcred_id`) ,
+  INDEX `fk_vendedoresdebcred_personal1` (`personal_id` ASC) ,
+  CONSTRAINT `fk_vendedoresdebcred_personal1`
+    FOREIGN KEY (`personal_id` )
+    REFERENCES `personal` (`personal_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+172;
+CREATE  TABLE IF NOT EXISTS `sucursalesdebcred` (
+  `sucursaldebcred_id` INT(11) NOT NULL ,
+  `sucursaldebcred_fecha` DATE NULL DEFAULT NULL ,
+  `sucursaldebcred_descripcion` VARCHAR(255) NULL DEFAULT NULL ,
+  `sucursaldebcred_tipo` VARCHAR(45) NULL DEFAULT NULL ,
+  `sucursaldebcred_importe` FLOAT(20,4) NULL DEFAULT NULL ,
+  `sucursaldebcred_estado` VARCHAR(45) NULL DEFAULT NULL ,
+  `liquidacionsucursal_id` INT(11) NULL DEFAULT NULL ,
+  `sucursal_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`sucursaldebcred_id`) ,
+  INDEX `fk_sucursalesdebcred_sucursales1` (`sucursal_id` ASC) ,
+  CONSTRAINT `fk_sucursalesdebcred_sucursales1`
+    FOREIGN KEY (`sucursal_id` )
+    REFERENCES `sucursales` (`sucursal_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;

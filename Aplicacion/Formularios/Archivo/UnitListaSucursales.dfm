@@ -1,22 +1,24 @@
 inherited listasucursales: Tlistasucursales
   Caption = 'Sucursales'
+  OnShow = FormShow
   ExplicitWidth = 950
   ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
+    Height = 338
+    ExplicitHeight = 338
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
+      Height = 317
+      ExplicitHeight = 317
       FullHeight = 0
-      inherited btnmodificar: TButton
-        ExplicitLeft = 6
-        ExplicitTop = 47
-      end
       inherited btnanular: TButton
         Visible = False
       end
     end
     inherited DBGrid1: TDBGrid
+      Height = 317
       Columns = <
         item
           Expanded = False
@@ -47,6 +49,8 @@ inherited listasucursales: Tlistasucursales
         end>
     end
     inherited panelfiltros: TAdvPanel
+      Top = 317
+      ExplicitTop = 317
       FullHeight = 0
       object fil_sucursal_nombre: TGTBEdit
         Left = 85
@@ -84,9 +88,13 @@ inherited listasucursales: Tlistasucursales
     end
   end
   inherited panelabm: TAdvPanel
+    Top = 338
+    Height = 118
+    ExplicitTop = 338
+    ExplicitHeight = 118
     FullHeight = 0
     object Label11: TLabel [0]
-      Left = 495
+      Left = 543
       Top = 33
       Width = 41
       Height = 13
@@ -125,15 +133,39 @@ inherited listasucursales: Tlistasucursales
       Alignment = taRightJustify
       Caption = 'Telefono'
     end
+    object Label4: TLabel [5]
+      Left = 453
+      Top = 57
+      Width = 133
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Tipo Liquidacion Sucursales'
+    end
+    object Label6: TLabel [6]
+      Left = 448
+      Top = 81
+      Width = 138
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Tipo Liquidacion Vendedores'
+    end
     inherited btnguardar: TButton
-      TabOrder = 5
+      Left = 819
+      Top = 30
+      TabOrder = 7
       OnClick = btnguardarClick
+      ExplicitLeft = 819
+      ExplicitTop = 30
     end
     inherited btncancelar: TButton
-      TabOrder = 6
+      Left = 819
+      Top = 61
+      TabOrder = 8
+      ExplicitLeft = 819
+      ExplicitTop = 61
     end
     object empresa_id: TSqlComboBox
-      Left = 542
+      Left = 590
       Top = 30
       Width = 203
       Height = 21
@@ -182,6 +214,28 @@ inherited listasucursales: Tlistasucursales
       Height = 21
       TabOrder = 3
       Tag2 = 0
+    end
+    object sucursal_tipoliquidsucursal: TComboBox
+      Left = 592
+      Top = 54
+      Width = 201
+      Height = 21
+      ItemHeight = 13
+      TabOrder = 5
+      Items.Strings = (
+        'Precio Final'
+        'Neto')
+    end
+    object sucursal_tipoliquidvendedor: TComboBox
+      Left = 592
+      Top = 78
+      Width = 201
+      Height = 21
+      ItemHeight = 13
+      TabOrder = 6
+      Items.Strings = (
+        'Precio Final'
+        'Neto')
     end
   end
   inherited ZQGrilla: TZQuery

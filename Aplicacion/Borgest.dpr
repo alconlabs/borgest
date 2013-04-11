@@ -92,7 +92,11 @@ uses
   UnitCajaApertura in 'Formularios\Caja\UnitCajaApertura.pas' {CajaApertura},
   UnitLogin in 'Formularios\UnitLogin.pas' {login},
   UnitLibroIvaCompras in 'Formularios\Compras\UnitLibroIvaCompras.pas' {LibroIvaCompras},
-  Unitprovincias in 'Formularios\Archivo\Unitprovincias.pas' {provincias};
+  Unitprovincias in 'Formularios\Archivo\Unitprovincias.pas' {provincias},
+  UnitComisionesVendedores in 'Formularios\Comisiones\UnitComisionesVendedores.pas' {ComisionesVendedores},
+  UnitComisionesSucursales in 'Formularios\Comisiones\UnitComisionesSucursales.pas' {ComisionesSucursales},
+  Unitvendedoresdebcred in 'Formularios\Comisiones\Unitvendedoresdebcred.pas' {vendedoresdebcred},
+  Unitsucursalesdebcred in 'Formularios\Comisiones\Unitsucursalesdebcred.pas' {sucursalesdebcred};
 
 {$R *.res}
 
@@ -100,7 +104,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrinc, Princ);
-  Application.CreateForm(Tlogin, login);
-  Application.CreateForm(Tprovincias, provincias);
   Application.Run;
 end.

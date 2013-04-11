@@ -1839,7 +1839,7 @@ object Princ: TPrinc
       object AdvToolBarComisionesVendedores: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 406
+        Width = 306
         Height = 63
         AllowFloating = True
         Caption = 'Vendedores'
@@ -1858,12 +1858,13 @@ object Princ: TPrinc
         ToolBarStyler = AdvToolBarOfficeStyler1
         ParentOptionPicture = True
         object btncomisionesvendedores: TAdvGlowButton
-          Left = 102
+          Left = 2
           Top = 2
           Width = 100
           Height = 41
           Caption = 'Comisiones de Vendedores'
           TabOrder = 0
+          OnClick = btncomisionesvendedoresClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -1895,7 +1896,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object btnliquidacionesvendedores: TAdvGlowButton
-          Left = 302
+          Left = 202
           Top = 2
           Width = 100
           Height = 41
@@ -1932,49 +1933,13 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object btnvendedoresdebcred: TAdvGlowButton
-          Left = 202
+          Left = 102
           Top = 2
           Width = 100
           Height = 41
           Caption = 'Vendedores Deb/Cred'
           TabOrder = 2
-          Appearance.BorderColor = 9598070
-          Appearance.BorderColorHot = 10079963
-          Appearance.BorderColorDown = 4548219
-          Appearance.BorderColorChecked = 4548219
-          Appearance.Color = 15586496
-          Appearance.ColorTo = 15128792
-          Appearance.ColorChecked = 11918331
-          Appearance.ColorCheckedTo = 7915518
-          Appearance.ColorDisabled = 15921906
-          Appearance.ColorDisabledTo = 15921906
-          Appearance.ColorDown = 7778289
-          Appearance.ColorDownTo = 4296947
-          Appearance.ColorHot = 15465983
-          Appearance.ColorHotTo = 11332863
-          Appearance.ColorMirror = 15586496
-          Appearance.ColorMirrorTo = 13152947
-          Appearance.ColorMirrorHot = 5888767
-          Appearance.ColorMirrorHotTo = 10807807
-          Appearance.ColorMirrorDown = 946929
-          Appearance.ColorMirrorDownTo = 5021693
-          Appearance.ColorMirrorChecked = 10480637
-          Appearance.ColorMirrorCheckedTo = 5682430
-          Appearance.ColorMirrorDisabled = 11974326
-          Appearance.ColorMirrorDisabledTo = 15921906
-          Appearance.GradientHot = ggVertical
-          Appearance.GradientMirrorHot = ggVertical
-          Appearance.GradientDown = ggVertical
-          Appearance.GradientMirrorDown = ggVertical
-          Appearance.GradientChecked = ggVertical
-        end
-        object btntipoliquidvendedores: TAdvGlowButton
-          Left = 2
-          Top = 2
-          Width = 100
-          Height = 41
-          Caption = 'Sucursales'
-          TabOrder = 3
+          OnClick = btnvendedoresdebcredClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -2007,9 +1972,9 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarComisionesSucursales: TAdvToolBar
-        Left = 412
+        Left = 312
         Top = 3
-        Width = 406
+        Width = 306
         Height = 63
         AllowFloating = True
         Caption = 'Sucursales'
@@ -2028,12 +1993,13 @@ object Princ: TPrinc
         ToolBarStyler = AdvToolBarOfficeStyler1
         ParentOptionPicture = True
         object btncomisionessucursales: TAdvGlowButton
-          Left = 102
+          Left = 2
           Top = 2
           Width = 100
           Height = 41
           Caption = 'Comisiones de Sucursales'
           TabOrder = 0
+          OnClick = btncomisionessucursalesClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -2065,7 +2031,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object btnliquidacionessucu: TAdvGlowButton
-          Left = 302
+          Left = 202
           Top = 2
           Width = 100
           Height = 41
@@ -2101,13 +2067,14 @@ object Princ: TPrinc
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
         end
-        object btntipoliquidsucursales: TAdvGlowButton
-          Left = 2
+        object btndebcredsucursales: TAdvGlowButton
+          Left = 102
           Top = 2
           Width = 100
           Height = 41
-          Caption = 'Sucursales'
+          Caption = 'Sucursales Deb/Cred'
           TabOrder = 2
+          OnClick = btndebcredsucursalesClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -2138,13 +2105,34 @@ object Princ: TPrinc
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
         end
-        object btndebcredsucursales: TAdvGlowButton
-          Left = 202
+      end
+      object AdvToolBarNotasdepedido: TAdvToolBar
+        Left = 621
+        Top = 3
+        Width = 106
+        Height = 63
+        AllowFloating = True
+        CaptionFont.Charset = DEFAULT_CHARSET
+        CaptionFont.Color = clWindowText
+        CaptionFont.Height = -11
+        CaptionFont.Name = 'Tahoma'
+        CaptionFont.Style = []
+        CaptionPosition = cpBottom
+        CaptionAlignment = taCenter
+        CompactImageIndex = -1
+        ShowCaption = True
+        ShowRightHandle = False
+        TextAutoOptionMenu = 'Add or Remove Buttons'
+        TextOptionMenu = 'Options'
+        ToolBarStyler = AdvToolBarOfficeStyler1
+        ParentOptionPicture = True
+        object btnlistanotasdepedido: TAdvGlowButton
+          Left = 2
           Top = 2
           Width = 100
           Height = 41
-          Caption = 'Sucursales Deb/Cred'
-          TabOrder = 3
+          Caption = 'Notas de Pedido'
+          TabOrder = 0
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219

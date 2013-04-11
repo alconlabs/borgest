@@ -117,12 +117,12 @@ type
     btncomisionesvendedores: TAdvGlowButton;
     btnliquidacionesvendedores: TAdvGlowButton;
     btnvendedoresdebcred: TAdvGlowButton;
-    btntipoliquidvendedores: TAdvGlowButton;
     AdvToolBarComisionesSucursales: TAdvToolBar;
     btncomisionessucursales: TAdvGlowButton;
     btnliquidacionessucu: TAdvGlowButton;
-    btntipoliquidsucursales: TAdvGlowButton;
     btndebcredsucursales: TAdvGlowButton;
+    AdvToolBarNotasdepedido: TAdvToolBar;
+    btnlistanotasdepedido: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -170,6 +170,10 @@ type
     procedure btnlibroivaventasClick(Sender: TObject);
     procedure btncajabarClick(Sender: TObject);
     procedure btnlibroivacomprasClick(Sender: TObject);
+    procedure btncomisionesvendedoresClick(Sender: TObject);
+    procedure btncomisionessucursalesClick(Sender: TObject);
+    procedure btnvendedoresdebcredClick(Sender: TObject);
+    procedure btndebcredsucursalesClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -253,6 +257,7 @@ type
     procedure ImprimirDocumentoVenta(id:string);
     function AbrirCaja(personal_id:string):string;
     procedure CerrarCaja(caja_id:string;caja_saldofinal:real);
+    function GetConfiguracionMenu(menu_nomb:string; campo:string):string;
   end;
 
 type
@@ -344,7 +349,8 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   Unitlistafacturascompra, Unitfacturascompra, UnitListaServices,
   UnitOrdenServicio, UnitListaOrdenesServicios, UnitImprimirListaPrecios,
   UnitPresupuesto, UnitListaPresupuestos, UnitDetallePagos, UnitLibroIvaVentas,
-  UnitCajaBar, UnitLibroIvaCompras, UnitLogin;
+  UnitCajaBar, UnitLibroIvaCompras, UnitLogin, UnitComisionesVendedores,
+  UnitComisionesSucursales, Unitvendedoresdebcred, Unitsucursalesdebcred;
 
 {$R *.dfm}
 
@@ -368,6 +374,13 @@ begin
     ZQExcecSQL.Sql.Add('commit');
     ZQExcecSQL.ExecSQL;
 end;
+
+
+Function TPrinc.GetConfiguracionMenu(menu_nomb: string; campo: string):string;
+begin
+    result:=Princ.buscar('select * from menu where menu_path="'+menu_nomb+'"',campo);
+end;
+
 
 Function TPrinc.AbrirCaja(personal_id: string):string;
 var
@@ -2562,7 +2575,11 @@ var
   LOGDB:string;
 begin
     ZSQLMonitor1.Active:=false;
-    ZSQLMonitor1.FileName:=ExtractFilePath(Application.ExeName)+'logsql.log';
+    ZSQLMonitor1.AutoSave:=false;
+    if not DirectoryExists(ExtractFilePath(Application.ExeName)+'\logs\') then
+      CreateDir(ExtractFilePath(Application.ExeName)+'\logs\');
+
+    ZSQLMonitor1.FileName:=ExtractFilePath(Application.ExeName)+'\logs\logsql'+formatdatetime('yyyymdd',princ.fechaservidor)+'.log';
 
     LOGDB:=Princ.GetConfiguracion('LOGDB');
 
@@ -2647,6 +2664,26 @@ begin
     end;
 end;
 
+procedure TPrinc.btncomisionessucursalesClick(Sender: TObject);
+begin
+    try
+      ComisionesSucursales:=TComisionesSucursales.Create(self);
+    finally
+      ComisionesSucursales.campo_id:='producto_id';
+      ComisionesSucursales.Show;
+    end;
+end;
+
+procedure TPrinc.btncomisionesvendedoresClick(Sender: TObject);
+begin
+    try
+      ComisionesVendedores:=TComisionesVendedores.Create(self);
+    finally
+      ComisionesVendedores.campo_id:='producto_id';
+      ComisionesVendedores.Show;
+    end;
+end;
+
 procedure TPrinc.btnconfiguracionClick(Sender: TObject);
 begin
     try
@@ -2671,6 +2708,16 @@ begin
       listacontrataciones:=Tlistacontrataciones.Create(self);
     finally
       listacontrataciones.Show;
+    end;
+end;
+
+procedure TPrinc.btndebcredsucursalesClick(Sender: TObject);
+begin
+    try
+      sucursalesdebcred:=Tsucursalesdebcred.Create(self);
+    finally
+      sucursalesdebcred.campo_id:='sucursaldebcred_id';
+      sucursalesdebcred.Show;
     end;
 end;
 
@@ -2898,6 +2945,16 @@ begin
       emisionrecibos:=Temisionrecibos.Create(self);
     finally
       emisionrecibos.Show;
+    end;
+end;
+
+procedure TPrinc.btnvendedoresdebcredClick(Sender: TObject);
+begin
+    try
+      vendedoresdebcred:=Tvendedoresdebcred.Create(self);
+    finally
+      vendedoresdebcred.campo_id:='vendedordebcred_id';
+      vendedoresdebcred.Show;
     end;
 end;
 

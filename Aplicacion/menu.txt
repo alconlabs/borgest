@@ -49,6 +49,17 @@ Ventas
 		Informes
 		Detalle de Pagos
 		Libro IVA Ventas
+Comisiones
+	Vendedores
+		Comisiones de Vendedores
+		Vendedores Deb-Cred
+		Liquidaciones a Vendedores
+	Sucursales
+		Comisiones de Sucursales
+		Sucursales Deb-Cred
+		Liquidaciones a Sucursales
+	Notas de Pedido
+		Notas de Pedido
 Herramientas
 	Herramientas
 		Configuracion
