@@ -1,4 +1,4 @@
-unit Unitnotacreditoventa;
+unit UnitNotaDebitoVenta;
 
 interface
 
@@ -9,7 +9,7 @@ uses
   ComCtrls, ExtCtrls, AdvPanel;
 
 type
-  Tnotacreditoventa = class(Tdocumentoventabase)
+  TNotadebitoventa = class(Tdocumentoventabase)
     procedure btnguardarClick(Sender: TObject);
   private
     { Private declarations }
@@ -18,7 +18,7 @@ type
   end;
 
 var
-  notacreditoventa: Tnotacreditoventa;
+  Notadebitoventa: TNotadebitoventa;
 
 implementation
 
@@ -26,7 +26,7 @@ Uses UnitPrinc;
 
 {$R *.dfm}
 
-procedure Tnotacreditoventa.btnguardarClick(Sender: TObject);
+procedure TNotadebitoventa.btnguardarClick(Sender: TObject);
 begin
   inherited;
     if (abm=1) or (abm=2) then

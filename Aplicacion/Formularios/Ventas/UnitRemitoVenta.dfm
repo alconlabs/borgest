@@ -1,5 +1,5 @@
-inherited notacreditoventa: Tnotacreditoventa
-  Caption = 'Nota de Credito'
+inherited remitoventa: Tremitoventa
+  Caption = 'Remito'
   ExplicitWidth = 867
   ExplicitHeight = 542
   PixelsPerInch = 96

@@ -646,3 +646,15 @@ CREATE  TABLE IF NOT EXISTS `sucursalesdebcred` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1
 COLLATE = latin1_swedish_ci;
+173;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('69', '>Ventas>Documentos>Notas de Debito', '0', 'btnnotasdedebito', '', '0', '0');
+174;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,69,perfil_id from perfiles;
+175;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('70', '>Ventas>Documentos>Remitos', '0', 'btnremitos', '', '0', '0');
+176;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,70,perfil_id from perfiles;
+177;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('71', '>Ventas>Documentos>Presupuestos', '0', 'btnpresupuestos', '', '0', '0');
+178;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,71,perfil_id from perfiles;

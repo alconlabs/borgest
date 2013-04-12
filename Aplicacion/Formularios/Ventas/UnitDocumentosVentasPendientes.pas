@@ -54,6 +54,27 @@ type
     lblpagado: TLabel;
     btnimputardocumentos: TButton;
     lblapagar: TLabel;
+    ZQDocumentosVentasPendientesdocumentoventa_equipo1: TStringField;
+    ZQDocumentosVentasPendientesdocumentoventa_equipo2: TStringField;
+    ZQDocumentosVentasPendientesdocumentoventa_formapago: TStringField;
+    ZQDocumentosVentasPendientesdocumentoventa_nrodetallepago: TStringField;
+    ZQDocumentosVentasPendientesdocumentoventa_solicitudcliente: TStringField;
+    ZQDocumentosVentasPendientesdocumentoventa_trabajorealizado: TStringField;
+    ZQDocumentosVentasPendientescaja_id: TIntegerField;
+    ZQDocumentosVentasPendientestipodocufiscal_id: TIntegerField;
+    ZQDocumentosVentasPendientestipodocu_preimpresos: TIntegerField;
+    ZQDocumentosVentasPendientestipodocu_impresora: TStringField;
+    ZQDocumentosVentasPendientestipodocu_copias: TIntegerField;
+    ZQDocumentosVentasPendientestipodocu_preview: TIntegerField;
+    ZQDocumentosVentasPendientestipodocu_prompt: TIntegerField;
+    ZQDocumentosVentasPendientestipodocu_ctacte: TIntegerField;
+    ZQDocumentosVentasPendientestipodocu_archivoimpresion: TStringField;
+    ZQDocumentosVentasPendientestipodocu_leyenda: TStringField;
+    ZQDocumentosVentasPendientestipodocu_nombreabrev: TStringField;
+    ZQDocumentosVentasPendientestipodocu_manual: TIntegerField;
+    ZQDocumentosVentasPendientespuntoventa_controladorfiscalmodelo: TIntegerField;
+    ZQDocumentosVentasPendientespuntoventa_controladorfiscalpuerto: TIntegerField;
+    ZQDocumentosVentasPendientesdocumentoventasaldo: TFloatField;
     procedure ZQDocumentosVentasPendientesBeforePost(DataSet: TDataSet);
     procedure DBGrid1EditButtonClick(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
@@ -89,7 +110,8 @@ procedure TDocumentosVentasPendientes.ActivarConsulta;
 begin
     ZQDocumentosVentasPendientes.Active:=false;
     ZQDocumentosVentasPendientes.SQL.Clear;
-    ZQDocumentosVentasPendientes.SQL.Add('select *, 0.00 as documentoventadoc_importe ');
+    ZQDocumentosVentasPendientes.SQL.Add('select *, 0.00 as documentoventadoc_importe, ');
+    ZQDocumentosVentasPendientes.SQL.Add('if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas.documentoventa_saldo,documentosventas.documentoventa_saldo*(-1)) as documentoventasaldo ');
     ZQDocumentosVentasPendientes.SQL.Add('from documentosventas ');
     ZQDocumentosVentasPendientes.SQL.Add('inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id ');
     ZQDocumentosVentasPendientes.SQL.Add('inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id ');
@@ -110,7 +132,7 @@ begin
           ZQDocumentosVentasPendientes.First;
           while not (ZQDocumentosVentasPendientes.Eof) and (documentoventa_apagar>0) do
               begin
-                  if documentoventa_apagar<ZQDocumentosVentasPendientes.FieldByName('documentoventa_saldo').AsFloat then
+                  if documentoventa_apagar<ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat then
                     begin
                         ZQDocumentosVentasPendientes.Edit;
                         ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=documentoventa_apagar;
@@ -148,7 +170,7 @@ end;
 procedure TDocumentosVentasPendientes.DBGrid1EditButtonClick(Sender: TObject);
 begin
     ZQDocumentosVentasPendientes.Edit;
-    ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=ZQDocumentosVentasPendientes.FieldByName('documentoventa_saldo').AsFloat;
+    ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat;
     ZQDocumentosVentasPendientes.Post;
 end;
 
@@ -188,7 +210,10 @@ end;
 procedure TDocumentosVentasPendientes.ZQDocumentosVentasPendientesBeforePost(
   DataSet: TDataSet);
 begin
-    if ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat>ZQDocumentosVentasPendientes.FieldByName('documentoventa_saldo').AsFloat then
+    if (ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat<0) and (ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat>0) then
+      ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat*-1;
+
+    if ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat>ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat then
       begin
           ZQDocumentosVentasPendientes.Cancel;
 //          ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=ZQDocumentosVentasPendientes.FieldByName('documentoventa_saldo').AsFloat;

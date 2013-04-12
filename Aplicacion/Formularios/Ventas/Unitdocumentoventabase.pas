@@ -421,6 +421,8 @@ begin
     ZQExecSql.SQL.Add('documentoventa_neto105=:documentoventa_neto105, ');
     ZQExecSql.SQL.Add('documentoventa_iva105=:documentoventa_iva105, ');
     ZQExecSql.SQL.Add('documentoventa_total=:documentoventa_total, ');
+    ZQExecSql.SQL.Add('documentoventa_saldo=:documentoventa_saldo, ');
+    ZQExecSql.SQL.Add('documentoventa_pagado=:documentoventa_pagado, ');
     ZQExecSql.SQL.Add('documentoventa_observacion=:documentoventa_observacion, ');
     ZQExecSql.SQL.Add('documentoventa_numero=:documentoventa_numero, ');
     ZQExecSql.SQL.Add('documentoventa_fecha=:documentoventa_fecha ');
@@ -437,6 +439,8 @@ begin
     ZQExecSql.ParamByName('documentoventa_neto105').AsString:=documentoventa_neto105.Text;
     ZQExecSql.ParamByName('documentoventa_iva105').AsString:=documentoventa_iva105.Text;
     ZQExecSql.ParamByName('documentoventa_total').AsString:=documentoventa_total.Text;
+    ZQExecSql.ParamByName('documentoventa_pagado').AsString:='0';
+    ZQExecSql.ParamByName('documentoventa_saldo').AsString:=documentoventa_total.Text;
     ZQExecSql.ParamByName('documentoventa_observacion').AsString:=documentoventa_observacion.Text;
     ZQExecSql.ParamByName('documentoventa_numero').AsString:=documentoventa_numero.Text;
     ZQExecSql.ParamByName('documentoventa_fecha').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fecha.Date);
@@ -820,6 +824,18 @@ var
 begin
     error:=0;
 
+    if abm=2 then
+      begin
+          if ZQuery2.FieldByName('documentoventa_pagado').AsFloat>0 then
+            error:=2
+      end;
+
+    if abm=5 then
+      begin
+          if ZQuery2.FieldByName('documentoventa_pagado').AsFloat>0 then
+            error:=3
+      end;
+
 
 //    if solic_numeroimpreso.Text='' then
 //      error:=1;
@@ -830,6 +846,14 @@ begin
               MessageDlg('Ingrese numero impreso.', mtError, [mbOK], 0);
 //              solic_numeroimpreso.SetFocus;
 
+          end;
+        2:begin
+              MessageDlg('No se puede modificar el documento porque tiene pagos asociados.', mtError, [mbOK], 0);
+
+          end;
+        3:begin
+              MessageDlg('No se puede eliminar el documento porque tiene pagos asociados.', mtError, [mbOK], 0);
+              
           end;
 
     end;

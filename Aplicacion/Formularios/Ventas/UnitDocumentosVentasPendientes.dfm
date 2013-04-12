@@ -148,7 +148,7 @@ object DocumentosVentasPendientes: TDocumentosVentasPendientes
         item
           ButtonStyle = cbsNone
           Expanded = False
-          FieldName = 'documentoventa_saldo'
+          FieldName = 'documentoventasaldo'
           Title.Caption = 'Saldo'
           Width = 90
           Visible = True
@@ -197,7 +197,11 @@ object DocumentosVentasPendientes: TDocumentosVentasPendientes
     BeforePost = ZQDocumentosVentasPendientesBeforePost
     AfterPost = ZQDocumentosVentasPendientesAfterPost
     SQL.Strings = (
-      'select *, 0.00 as documentoventadoc_importe '
+      'select *, 0.00 as documentoventadoc_importe,'
+      
+        'if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas.doc' +
+        'umentoventa_saldo,documentosventas.documentoventa_saldo*(-1)) as' +
+        ' documentoventasaldo '
       'from documentosventas'
       
         'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
@@ -336,6 +340,81 @@ object DocumentosVentasPendientes: TDocumentosVentasPendientes
       FieldName = 'documentoventadoc_importe'
       DisplayFormat = '0.00'
       EditFormat = '0.00'
+    end
+    object ZQDocumentosVentasPendientesdocumentoventa_equipo1: TStringField
+      FieldName = 'documentoventa_equipo1'
+      Size = 45
+    end
+    object ZQDocumentosVentasPendientesdocumentoventa_equipo2: TStringField
+      FieldName = 'documentoventa_equipo2'
+      Size = 45
+    end
+    object ZQDocumentosVentasPendientesdocumentoventa_formapago: TStringField
+      FieldName = 'documentoventa_formapago'
+      Size = 255
+    end
+    object ZQDocumentosVentasPendientesdocumentoventa_nrodetallepago: TStringField
+      FieldName = 'documentoventa_nrodetallepago'
+      Size = 45
+    end
+    object ZQDocumentosVentasPendientesdocumentoventa_solicitudcliente: TStringField
+      FieldName = 'documentoventa_solicitudcliente'
+      Size = 255
+    end
+    object ZQDocumentosVentasPendientesdocumentoventa_trabajorealizado: TStringField
+      FieldName = 'documentoventa_trabajorealizado'
+      Size = 255
+    end
+    object ZQDocumentosVentasPendientescaja_id: TIntegerField
+      FieldName = 'caja_id'
+    end
+    object ZQDocumentosVentasPendientestipodocufiscal_id: TIntegerField
+      FieldName = 'tipodocufiscal_id'
+      Required = True
+    end
+    object ZQDocumentosVentasPendientestipodocu_preimpresos: TIntegerField
+      FieldName = 'tipodocu_preimpresos'
+    end
+    object ZQDocumentosVentasPendientestipodocu_impresora: TStringField
+      FieldName = 'tipodocu_impresora'
+      Size = 200
+    end
+    object ZQDocumentosVentasPendientestipodocu_copias: TIntegerField
+      FieldName = 'tipodocu_copias'
+    end
+    object ZQDocumentosVentasPendientestipodocu_preview: TIntegerField
+      FieldName = 'tipodocu_preview'
+    end
+    object ZQDocumentosVentasPendientestipodocu_prompt: TIntegerField
+      FieldName = 'tipodocu_prompt'
+    end
+    object ZQDocumentosVentasPendientestipodocu_ctacte: TIntegerField
+      FieldName = 'tipodocu_ctacte'
+    end
+    object ZQDocumentosVentasPendientestipodocu_archivoimpresion: TStringField
+      FieldName = 'tipodocu_archivoimpresion'
+      Size = 100
+    end
+    object ZQDocumentosVentasPendientestipodocu_leyenda: TStringField
+      FieldName = 'tipodocu_leyenda'
+      Size = 200
+    end
+    object ZQDocumentosVentasPendientestipodocu_nombreabrev: TStringField
+      FieldName = 'tipodocu_nombreabrev'
+      Size = 5
+    end
+    object ZQDocumentosVentasPendientestipodocu_manual: TIntegerField
+      FieldName = 'tipodocu_manual'
+    end
+    object ZQDocumentosVentasPendientespuntoventa_controladorfiscalmodelo: TIntegerField
+      FieldName = 'puntoventa_controladorfiscalmodelo'
+    end
+    object ZQDocumentosVentasPendientespuntoventa_controladorfiscalpuerto: TIntegerField
+      FieldName = 'puntoventa_controladorfiscalpuerto'
+    end
+    object ZQDocumentosVentasPendientesdocumentoventasaldo: TFloatField
+      FieldName = 'documentoventasaldo'
+      ReadOnly = True
     end
   end
   object DTSDocumentosVentasPendientes: TDataSource

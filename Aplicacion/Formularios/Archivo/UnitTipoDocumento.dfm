@@ -1,17 +1,19 @@
 inherited tipodocumento: Ttipodocumento
   Caption = 'Tipo de Documento'
-  ClientHeight = 316
+  ClientHeight = 386
   ClientWidth = 821
   OnShow = FormShow
   ExplicitWidth = 837
-  ExplicitHeight = 354
+  ExplicitHeight = 424
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Width = 821
-    Height = 316
+    Height = 386
+    ExplicitLeft = 24
+    ExplicitTop = 8
     ExplicitWidth = 821
-    ExplicitHeight = 316
+    ExplicitHeight = 386
     FullHeight = 0
     object Label3: TLabel [0]
       Left = 67
@@ -31,7 +33,7 @@ inherited tipodocumento: Ttipodocumento
     end
     object Label6: TLabel [2]
       Left = 50
-      Top = 60
+      Top = 84
       Width = 50
       Height = 13
       Alignment = taRightJustify
@@ -39,7 +41,7 @@ inherited tipodocumento: Ttipodocumento
     end
     object Label4: TLabel [3]
       Left = 79
-      Top = 85
+      Top = 109
       Width = 21
       Height = 13
       Alignment = taRightJustify
@@ -47,7 +49,7 @@ inherited tipodocumento: Ttipodocumento
     end
     object Label5: TLabel [4]
       Left = 76
-      Top = 108
+      Top = 132
       Width = 24
       Height = 13
       Alignment = taRightJustify
@@ -55,7 +57,7 @@ inherited tipodocumento: Ttipodocumento
     end
     object Label7: TLabel [5]
       Left = 72
-      Top = 133
+      Top = 157
       Width = 28
       Height = 13
       Alignment = taRightJustify
@@ -63,7 +65,7 @@ inherited tipodocumento: Ttipodocumento
     end
     object Label8: TLabel [6]
       Left = 12
-      Top = 156
+      Top = 180
       Width = 88
       Height = 13
       Alignment = taRightJustify
@@ -71,7 +73,7 @@ inherited tipodocumento: Ttipodocumento
     end
     object Label9: TLabel [7]
       Left = 25
-      Top = 181
+      Top = 205
       Width = 75
       Height = 13
       Alignment = taRightJustify
@@ -87,7 +89,7 @@ inherited tipodocumento: Ttipodocumento
     end
     object Label13: TLabel [9]
       Left = 41
-      Top = 227
+      Top = 251
       Width = 41
       Height = 13
       Alignment = taRightJustify
@@ -95,23 +97,31 @@ inherited tipodocumento: Ttipodocumento
     end
     object Label14: TLabel [10]
       Left = 41
-      Top = 243
+      Top = 267
       Width = 59
       Height = 13
       Alignment = taRightJustify
       Caption = 'en impresion'
     end
+    object Label15: TLabel [11]
+      Left = 29
+      Top = 60
+      Width = 71
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Nombre Abrev.'
+    end
     inherited btncancelar: TButton
       Left = 550
       Top = 264
-      TabOrder = 18
+      TabOrder = 19
       ExplicitLeft = 550
       ExplicitTop = 264
     end
     inherited btnguardar: TButton
       Left = 469
       Top = 264
-      TabOrder = 17
+      TabOrder = 18
       OnClick = btnguardarClick
       ExplicitLeft = 469
       ExplicitTop = 264
@@ -134,12 +144,12 @@ inherited tipodocumento: Ttipodocumento
     end
     object puntoventa_id: TSqlComboBox
       Left = 106
-      Top = 57
+      Top = 81
       Width = 63
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
-      TabOrder = 3
+      TabOrder = 4
       Confbase = Princ.ZBase
       Confsql.Strings = (
         'select * from puntodeventa'
@@ -150,13 +160,13 @@ inherited tipodocumento: Ttipodocumento
     end
     object tipodocu_tipo: TGTBComboBox
       Left = 106
-      Top = 82
+      Top = 106
       Width = 103
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
       ItemIndex = 0
-      TabOrder = 4
+      TabOrder = 5
       Text = 'Compra'
       Items.Strings = (
         'Compra'
@@ -168,29 +178,29 @@ inherited tipodocumento: Ttipodocumento
     end
     object tipodocu_letra: TEdit
       Left = 106
-      Top = 105
+      Top = 129
       Width = 63
       Height = 21
-      TabOrder = 5
+      TabOrder = 6
     end
     object tipodocu_caja: TCheckBox
       Left = 70
-      Top = 203
+      Top = 227
       Width = 48
       Height = 15
       Alignment = taLeftJustify
       Caption = 'Caja'
-      TabOrder = 9
+      TabOrder = 10
     end
     object tipodocu_stock: TGTBComboBox
       Left = 106
-      Top = 130
+      Top = 154
       Width = 103
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
       ItemIndex = 0
-      TabOrder = 6
+      TabOrder = 7
       Text = 'Egreso'
       Items.Strings = (
         'Egreso'
@@ -204,22 +214,22 @@ inherited tipodocumento: Ttipodocumento
     end
     object tipodocu_iva: TCheckBox
       Left = 161
-      Top = 203
+      Top = 227
       Width = 48
       Height = 15
       Alignment = taLeftJustify
       Caption = 'IVA'
-      TabOrder = 10
+      TabOrder = 11
     end
     object tipodocu_debcred: TGTBComboBox
       Left = 106
-      Top = 178
+      Top = 202
       Width = 103
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
       ItemIndex = 0
-      TabOrder = 8
+      TabOrder = 9
       Text = 'CREDITO'
       Items.Strings = (
         'CREDITO'
@@ -238,7 +248,7 @@ inherited tipodocumento: Ttipodocumento
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
-      TabOrder = 15
+      TabOrder = 16
       Confbase = Princ.ZBase
       Confsql.Strings = (
         'select * from tipodocumentofiscal'
@@ -249,7 +259,7 @@ inherited tipodocumento: Ttipodocumento
     end
     object tipodocu_ultimonumero: TMoneyEdit
       Left = 106
-      Top = 153
+      Top = 177
       Width = 103
       Height = 21
       CalculatorLook.ButtonWidth = 24
@@ -262,7 +272,7 @@ inherited tipodocumento: Ttipodocumento
       CalculatorLook.Font.Height = -11
       CalculatorLook.Font.Name = 'Tahoma'
       CalculatorLook.Font.Style = []
-      TabOrder = 7
+      TabOrder = 8
       Version = '1.1.0.1'
     end
     object tipodocu_fiscal: TRadioButton
@@ -272,7 +282,7 @@ inherited tipodocumento: Ttipodocumento
       Height = 17
       Alignment = taLeftJustify
       Caption = 'Controlador Fiscal'
-      TabOrder = 12
+      TabOrder = 13
       OnClick = tipodocu_fiscalClick
     end
     object tipodocu_preimpresos: TRadioButton
@@ -282,7 +292,7 @@ inherited tipodocumento: Ttipodocumento
       Height = 17
       Alignment = taLeftJustify
       Caption = 'Pre-Impresos'
-      TabOrder = 13
+      TabOrder = 14
       OnClick = tipodocu_fiscalClick
     end
     object GroupBoxImpresion: TGroupBox
@@ -291,7 +301,7 @@ inherited tipodocumento: Ttipodocumento
       Width = 248
       Height = 149
       Caption = 'Datos de Impresion'
-      TabOrder = 16
+      TabOrder = 17
       object Label17: TLabel
         Left = 62
         Top = 20
@@ -383,10 +393,10 @@ inherited tipodocumento: Ttipodocumento
     end
     object tipodocu_leyenda: TMemo
       Left = 106
-      Top = 224
+      Top = 248
       Width = 253
       Height = 65
-      TabOrder = 11
+      TabOrder = 12
     end
     object Combo_tipodocu_nombre: TGTBComboBox
       Left = 106
@@ -402,6 +412,7 @@ inherited tipodocumento: Ttipodocumento
         'Remito de Venta'
         'Recibo de Venta'
         'Nota de Credito de Venta'
+        'Nota de Debito de Venta'
         'Presupuesto'
         'Nota de Pedido'
         'Orden de Servicio'
@@ -413,6 +424,7 @@ inherited tipodocumento: Ttipodocumento
         'Remito de Venta'
         'Recibo de Venta'
         'Nota de Credito de Venta'
+        'Nota de Debito de Venta'
         'Presupuesto'
         'Nota de Pedido'
         'Orden de Servicio'
@@ -426,7 +438,14 @@ inherited tipodocumento: Ttipodocumento
       Height = 15
       Alignment = taLeftJustify
       Caption = 'Ingresar Numeracion Manualmente'
-      TabOrder = 14
+      TabOrder = 15
+    end
+    object tipodocu_nombreabrev: TEdit
+      Left = 106
+      Top = 57
+      Width = 63
+      Height = 21
+      TabOrder = 3
     end
   end
   inherited ZQSelect: TZQuery

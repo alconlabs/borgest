@@ -29,6 +29,7 @@ Compras
 Ventas
 	Documentos
 		Cotratacion
+		Presupuestos
 		Orden de Servicio
 		Nota de Pedido
 		Equipos
@@ -36,6 +37,8 @@ Ventas
 		Venta Rapida
 		Recibos de Venta
 		Notas de Credito
+		Notas de Debito
+		Remitos
 		Impresora Fiscal
 	Cuenta Corriente
 		Saldos

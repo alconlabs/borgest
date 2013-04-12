@@ -123,6 +123,8 @@ type
     btndebcredsucursales: TAdvGlowButton;
     AdvToolBarNotasdepedido: TAdvToolBar;
     btnlistanotasdepedido: TAdvGlowButton;
+    btnnotasdedebito: TAdvGlowButton;
+    btnremitos: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -174,6 +176,8 @@ type
     procedure btncomisionessucursalesClick(Sender: TObject);
     procedure btnvendedoresdebcredClick(Sender: TObject);
     procedure btndebcredsucursalesClick(Sender: TObject);
+    procedure btnnotasdedebitoClick(Sender: TObject);
+    procedure btnremitosClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -350,7 +354,9 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   UnitOrdenServicio, UnitListaOrdenesServicios, UnitImprimirListaPrecios,
   UnitPresupuesto, UnitListaPresupuestos, UnitDetallePagos, UnitLibroIvaVentas,
   UnitCajaBar, UnitLibroIvaCompras, UnitLogin, UnitComisionesVendedores,
-  UnitComisionesSucursales, Unitvendedoresdebcred, Unitsucursalesdebcred;
+  UnitComisionesSucursales, Unitvendedoresdebcred, Unitsucursalesdebcred,
+  UnitNotaDebitoVenta, UnitListaNotaDebitoVenta, UnitRemitoVenta,
+  UnitListaRemitoVenta;
 
 {$R *.dfm}
 
@@ -638,7 +644,34 @@ begin
           finally
             notacreditoventa.abm:=abm;
             notacreditoventa.id:=id;
+            notacreditoventa.tipodocu_nombre:=tipodocu_nombre;
             notacreditoventa.Show;
+          end;
+
+      end;
+
+    if tipodocu_nombre='Nota de Debito de Venta' then
+      begin
+          try
+            notadebitoventa:=Tnotadebitoventa.Create(self);
+          finally
+            notadebitoventa.abm:=abm;
+            notadebitoventa.id:=id;
+            notadebitoventa.tipodocu_nombre:=tipodocu_nombre;
+            notadebitoventa.Show;
+          end;
+
+      end;
+
+    if tipodocu_nombre='Remito de Venta' then
+      begin
+          try
+            remitoventa:=Tremitoventa.Create(self);
+          finally
+            remitoventa.abm:=abm;
+            remitoventa.id:=id;
+            remitoventa.tipodocu_nombre:=tipodocu_nombre;
+            remitoventa.Show;
           end;
 
       end;
@@ -2852,6 +2885,17 @@ begin
     end;
 end;
 
+procedure TPrinc.btnnotasdedebitoClick(Sender: TObject);
+begin
+    try
+      listanotadebitoventa:=Tlistanotadebitoventa.Create(self);
+    finally
+      listanotadebitoventa.tipodocu_nombre:='Nota de Debito de Venta';
+      listanotadebitoventa.campo_id:='documentoventa_id';
+      listanotadebitoventa.Show;
+    end;
+end;
+
 procedure TPrinc.btnnuevasolicitudClick(Sender: TObject);
 begin
     try
@@ -2939,13 +2983,24 @@ begin
     end;
 end;
 
+procedure TPrinc.btnremitosClick(Sender: TObject);
+begin
+    try
+      listaremitosventa:=Tlistaremitosventa.Create(self);
+    finally
+      listaremitosventa.tipodocu_nombre:='Remito de Venta';
+      listaremitosventa.campo_id:='documentoventa_id';
+      listaremitosventa.Show;
+    end;
+end;
+
 procedure TPrinc.AdvGlowButton3Click(Sender: TObject);
 begin
     try
       emisionrecibos:=Temisionrecibos.Create(self);
     finally
       emisionrecibos.Show;
-    end;
+    end;               
 end;
 
 procedure TPrinc.btnvendedoresdebcredClick(Sender: TObject);

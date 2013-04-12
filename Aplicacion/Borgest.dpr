@@ -32,7 +32,6 @@ uses
   UnitImpresoraFiscal in 'Formularios\Ventas\UnitImpresoraFiscal.pas' {impresorafiscal},
   UnitConfiguracion in 'Formularios\Herramientas\UnitConfiguracion.pas' {configuracion},
   UnitImpresoraFiscalcola in 'Formularios\Ventas\UnitImpresoraFiscalcola.pas' {impresorafiscalcola},
-  Unitnotacreditoventa in 'Formularios\Ventas\Unitnotacreditoventa.pas' {notacreditoventa},
   Unitlistanotacreditoventa in 'Formularios\Ventas\Unitlistanotacreditoventa.pas' {listanotacreditoventa},
   UnitActualizarProductos in 'Formularios\Archivo\UnitActualizarProductos.pas' {ActualizarProductos},
   Unitlistaproveedores in 'Formularios\Compras\Unitlistaproveedores.pas' {listaproveedores},
@@ -96,7 +95,12 @@ uses
   UnitComisionesVendedores in 'Formularios\Comisiones\UnitComisionesVendedores.pas' {ComisionesVendedores},
   UnitComisionesSucursales in 'Formularios\Comisiones\UnitComisionesSucursales.pas' {ComisionesSucursales},
   Unitvendedoresdebcred in 'Formularios\Comisiones\Unitvendedoresdebcred.pas' {vendedoresdebcred},
-  Unitsucursalesdebcred in 'Formularios\Comisiones\Unitsucursalesdebcred.pas' {sucursalesdebcred};
+  Unitsucursalesdebcred in 'Formularios\Comisiones\Unitsucursalesdebcred.pas' {sucursalesdebcred},
+  Unitnotacreditoventa in 'Formularios\Ventas\Unitnotacreditoventa.pas' {notacreditoventa},
+  UnitListaNotaDebitoVenta in 'Formularios\Ventas\UnitListaNotaDebitoVenta.pas' {listanotadebitoventa},
+  UnitNotaDebitoVenta in 'Formularios\Ventas\UnitNotaDebitoVenta.pas' {NotaDebitoVenta},
+  UnitRemitoVenta in 'Formularios\Ventas\UnitRemitoVenta.pas' {remitoventa},
+  UnitListaRemitoVenta in 'Formularios\Ventas\UnitListaRemitoVenta.pas' {listaremitosventa};
 
 {$R *.res}
 
@@ -104,5 +108,7 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrinc, Princ);
+  Application.CreateForm(Tremitoventa, remitoventa);
+  Application.CreateForm(Tlistaremitosventa, listaremitosventa);
   Application.Run;
 end.

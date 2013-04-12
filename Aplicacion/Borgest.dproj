@@ -265,6 +265,9 @@
     <DCCReference Include="Formularios\Ventas\Unitlistanotacreditoventa.pas">
       <Form>listanotacreditoventa</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitListaNotaDebitoVenta.pas">
+      <Form>listanotadebitoventa</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitListaNotasPedido.pas">
       <Form>ListaNotasPedido</Form>
     </DCCReference>
@@ -277,6 +280,9 @@
     <DCCReference Include="Formularios\Ventas\Unitlistarecibosventa.pas">
       <Form>listarecibosventa</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitListaRemitoVenta.pas">
+      <Form>listaremitosventa</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitListaServices.pas">
       <Form>Listaservices</Form>
     </DCCReference>
@@ -285,6 +291,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitnotacreditoventa.pas">
       <Form>notacreditoventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitNotaDebitoVenta.pas">
+      <Form>NotaDebitoVenta</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitNotaPedido.pas">
       <Form>NotaPedido</Form>
@@ -300,6 +309,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitrecibosventa.pas">
       <Form>recibosventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitRemitoVenta.pas">
+      <Form>remitoventa</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitsaldoclientes.pas">
       <Form>saldoclientes</Form>
