@@ -22,30 +22,41 @@ object TRpReport
   DataInfo = <
     item
       Alias = 'ALIAS_COMISIONES'
-      DatabaseAlias = 'CONEXION_COMISIONES'
+      DatabaseAlias = 'CONEXION_DBBORGEST'
       SQL = 
         'select * from liquidacionesvendedores'#13#10'inner join liquivendedeta' +
         ' on liquidacionesvendedores.liquidacionvendedor_id=liquivendedet' +
-        'a.liquidacionvendedor_id'#13#10'where liquidacionesvendedores.liquidac' +
-        'ionvendedor_id=1'#13#10'order by suc_nomb, facven_nume, facvendet_desc'
+        'a.liquidacionvendedor_id'#13#10'inner join documentoventadetalles on l' +
+        'iquivendedeta.documentoventadetalle_id=documentoventadetalles.do' +
+        'cumentoventadetalle_id'#13#10'inner join documentosventas on documento' +
+        'ventadetalles.documentoventa_id=documentosventas.documentoventa_' +
+        'id'#13#10'inner join clientes on documentosventas.cliente_id=clientes.' +
+        'cliente_id'#13#10'inner join tiposdocumento on documentosventas.tipodo' +
+        'cu_id=tiposdocumento.tipodocu_id'#13#10'inner join puntodeventa on tip' +
+        'osdocumento.puntoventa_id=puntodeventa.puntoventa_id'#13#10'inner join' +
+        ' sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id'#13#10 +
+        'inner join personal on liquidacionesvendedores.personal_id=perso' +
+        'nal.personal_id'#13#10'where liquidacionesvendedores.liquidacionvended' +
+        'or_id=3'#13#10'order by sucursal_nombre, documentoventa_numero, docume' +
+        'ntoventadetalle_descripcion'#13#10
     end
     item
-      Alias = 'ALIAS_COMISIONESDEBCRED'
-      DatabaseAlias = 'CONEXION_COMISIONES'
+      Alias = 'ALIAS_COMISIONESCREDITOS'
+      DatabaseAlias = 'CONEXION_DBBORGEST'
       SQL = 
         'select * from vendedoresdebcred'#13#10'where vendedordebcred_tipo="Cre' +
-        'dito" and liquidacionvendedor_id=1'
+        'dito" and liquidacionvendedor_id=3'
     end
     item
-      Alias = 'ALIAS_COMISIONESDEBITOS'
-      DatabaseAlias = 'CONEXION_COMISIONES'
+      Alias = 'ALIAS_COMISIONESDEBITO'
+      DatabaseAlias = 'CONEXION_DBBORGEST'
       SQL = 
         'select * from vendedoresdebcred'#13#10'where vendedordebcred_tipo="Deb' +
-        'ito" and liquidacionvendedor_id=1'
+        'ito" and liquidacionvendedor_id=3'
     end>
   DatabaseInfo = <
     item
-      Alias = 'CONEXION_COMISIONES'
+      Alias = 'CONEXION_DBBORGEST'
       LoadParams = True
       LoadDriverParams = True
       LoginPrompt = False
@@ -77,6 +88,9 @@ object TRpReport
         Section = TRpSection10
       end
       item
+        Section = TRpSection15
+      end
+      item
         Section = TRpSection3
       end
       item
@@ -84,6 +98,9 @@ object TRpReport
       end
       item
         Section = TRpSection4
+      end
+      item
+        Section = TRpSection19
       end
       item
         Section = TRpSection11
@@ -95,7 +112,7 @@ object TRpReport
         Section = TRpSection7
       end
       item
-        Section = TRpSection15
+        Section = TRpSection13
       end>
     Alias = 'ALIAS_COMISIONES'
   end
@@ -190,6 +207,7 @@ object TRpReport
     ExternalField = 'REPORT'
     ExternalSearchField = 'REPORT_NAME'
     StreamFormat = rpStreamText
+    Global = True
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -221,7 +239,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_COMISIONES.facven_fech'
+    Expression = 'ALIAS_COMISIONES.documentoventa_fecha'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -247,7 +265,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_COMISIONES.facven_nume'
+    Expression = 'ALIAS_COMISIONES.documentoventa_numero'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -272,7 +290,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_COMISIONES.cli_nomb'
+    Expression = 'ALIAS_COMISIONES.cliente_nombre'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -297,7 +315,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_COMISIONES.facvendet_desc'
+    Expression = 'ALIAS_COMISIONES.documentoventadetalle_descripcion'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -372,9 +390,9 @@ object TRpReport
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
-    ChangeExpression = 'ALIAS_COMISIONES.suc_nomb'
+    ChangeExpression = 'ALIAS_COMISIONES.sucursal_id'
     BeginPageExpression = ''
-    ChangeExpression = 'ALIAS_COMISIONES.suc_nomb'
+    ChangeExpression = 'ALIAS_COMISIONES.sucursal_id'
     SkipExpreV = ''
     SkipExpreH = ''
     SkipToPageExpre = ''
@@ -408,9 +426,9 @@ object TRpReport
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
-    ChangeExpression = 'ALIAS_COMISIONES.suc_nomb'
+    ChangeExpression = 'ALIAS_COMISIONES.sucursal_id'
     BeginPageExpression = ''
-    ChangeExpression = 'ALIAS_COMISIONES.suc_nomb'
+    ChangeExpression = 'ALIAS_COMISIONES.sucursal_id'
     SkipExpreV = ''
     SkipExpreH = ''
     SkipToPageExpre = ''
@@ -552,7 +570,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_COMISIONES.ven_nomb'
+    Expression = 'ALIAS_COMISIONES.personal_nombre'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -635,9 +653,9 @@ object TRpReport
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
-    ChangeExpression = 'ALIAS_COMISIONES.liquidacionvendedor_id'
+    ChangeExpression = ''
     BeginPageExpression = ''
-    ChangeExpression = 'ALIAS_COMISIONES.liquidacionvendedor_id'
+    ChangeExpression = ''
     SkipExpreV = ''
     SkipExpreH = ''
     SkipToPageExpre = ''
@@ -671,9 +689,9 @@ object TRpReport
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
-    ChangeExpression = 'ALIAS_COMISIONES.liquidacionvendedor_id'
+    ChangeExpression = ''
     BeginPageExpression = ''
-    ChangeExpression = 'ALIAS_COMISIONES.liquidacionvendedor_id'
+    ChangeExpression = ''
     SkipExpreV = ''
     SkipExpreH = ''
     SkipToPageExpre = ''
@@ -735,7 +753,7 @@ object TRpReport
       item
         Section = TRpSection9
       end>
-    Alias = 'ALIAS_COMISIONESDEBCRED'
+    Alias = 'ALIAS_COMISIONESCREDITOS'
     ParentSubReport = TRpSubReport0
     ParentSection = TRpSection11
   end
@@ -810,6 +828,7 @@ object TRpReport
     ExternalField = 'REPORT'
     ExternalSearchField = 'REPORT_NAME'
     StreamFormat = rpStreamText
+    FooterAtReportEnd = True
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -846,7 +865,6 @@ object TRpReport
     ExternalField = 'REPORT'
     ExternalSearchField = 'REPORT_NAME'
     StreamFormat = rpStreamText
-    ChildSubReport = TRpSubReport2
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -888,7 +906,7 @@ object TRpReport
   end
   object TRpSection11: TRpSection
     Width = 10772
-    Height = 570
+    Height = 1200
     SubReport = TRpSubReport0
     GroupName = 'CREDITOS'
     ChangeBool = False
@@ -898,13 +916,7 @@ object TRpReport
     SectionType = rpsecgfooter
     Components = <
       item
-        Component = TRpShape10
-      end
-      item
-        Component = TRpExpression19
-      end
-      item
-        Component = TRpExpression20
+        Component = TRpShape20
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -939,7 +951,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_COMISIONES.suc_nomb'
+    Expression = 'ALIAS_COMISIONES.sucursal_nombre'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -963,7 +975,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = #39'Comisiones '#39'+ALIAS_COMISIONES.suc_nomb'
+    Expression = #39'Comisiones '#39'+ALIAS_COMISIONES.sucursal_nombre'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -1192,9 +1204,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 
-      'IIF(ALIAS_COMISIONES.sucursaltipoliq_tipo='#39'Precio Final'#39',ALIAS_C' +
-      'OMISIONES.facvendet_prec,ALIAS_COMISIONES.facvendet_prec*1.21)'
+    Expression = 'ALIAS_COMISIONES.documentoventadetalle_total'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -1223,8 +1233,8 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 
-      'IIF(ALIAS_COMISIONES.sucursaltipoliq_tipo='#39'Precio Final'#39',ALIAS_C' +
-      'OMISIONES.facvendet_prec/1.21,ALIAS_COMISIONES.facvendet_prec)'
+      'ALIAS_COMISIONES.documentoventadetalle_neto21+ALIAS_COMISIONES.d' +
+      'ocumentoventadetalle_neto105'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -1299,7 +1309,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_COMISIONES.facvendet_cant'
+    Expression = 'ALIAS_COMISIONES.documentoventadetalle_cantidad'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -1307,9 +1317,6 @@ object TRpReport
   end
   object TRpSubReport2: TRpSubReport
     Sections = <
-      item
-        Section = TRpSection13
-      end
       item
         Section = TRpSection17
       end
@@ -1322,9 +1329,9 @@ object TRpReport
       item
         Section = TRpSection14
       end>
-    Alias = 'ALIAS_COMISIONESDEBITOS'
-    ParentSubReport = TRpSubReport1
-    ParentSection = TRpSection9
+    Alias = 'ALIAS_COMISIONESDEBITO'
+    ParentSubReport = TRpSubReport0
+    ParentSection = TRpSection16
   end
   object TRpSection12: TRpSection
     Width = 10772
@@ -1345,32 +1352,6 @@ object TRpReport
       item
         Component = TRpExpression25
       end>
-    ExternalTable = 'REPMAN_REPORTS'
-    ExternalField = 'REPORT'
-    ExternalSearchField = 'REPORT_NAME'
-    StreamFormat = rpStreamText
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    ChangeExpression = ''
-    BeginPageExpression = ''
-    ChangeExpression = ''
-    SkipExpreV = ''
-    SkipExpreH = ''
-    SkipToPageExpre = ''
-    BackExpression = ''
-    Stream = {0000000000000000}
-  end
-  object TRpSection13: TRpSection
-    Width = 10772
-    Height = 0
-    SubReport = TRpSubReport2
-    ChangeBool = False
-    PageRepeat = False
-    SkipPage = False
-    AlignBottom = False
-    SectionType = rpsecpheader
-    Components = <>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
     ExternalSearchField = 'REPORT_NAME'
@@ -1519,7 +1500,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_COMISIONESDEBCRED.vendedordebcred_descripcion'
+    Expression = 'ALIAS_COMISIONESCREDITOS.vendedordebcred_descripcion'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -1546,9 +1527,9 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 
-      'IIF(ALIAS_COMISIONESDEBCRED.vendedordebcred_tipo='#39'Credito'#39',ALIAS' +
-      '_COMISIONESDEBCRED.vendedordebcred_importe, ALIAS_COMISIONESDEBC' +
-      'RED.vendedordebcred_importe*-(1))'
+      'IIF(ALIAS_COMISIONESCREDITOS.vendedordebcred_tipo='#39'Credito'#39',ALIA' +
+      'S_COMISIONESCREDITOS.vendedordebcred_importe, ALIAS_COMISIONESCR' +
+      'EDITOS.vendedordebcred_importe*-(1))'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -1571,7 +1552,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_COMISIONESDEBCRED.vendedordebcred_fecha'
+    Expression = 'ALIAS_COMISIONESCREDITOS.vendedordebcred_fecha'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -1594,7 +1575,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_COMISIONESDEBITOS.vendedordebcred_descripcion'
+    Expression = 'ALIAS_COMISIONESDEBITO.vendedordebcred_descripcion'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -1621,9 +1602,9 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 
-      'IIF(ALIAS_COMISIONESDEBITOS.vendedordebcred_tipo='#39'Credito'#39',ALIAS' +
-      '_COMISIONESDEBITOS.vendedordebcred_importe, ALIAS_COMISIONESDEBI' +
-      'TOS.vendedordebcred_importe*-(1))'
+      'IIF(ALIAS_COMISIONESDEBITO.vendedordebcred_tipo='#39'Credito'#39',ALIAS_' +
+      'COMISIONESDEBITO.vendedordebcred_importe, ALIAS_COMISIONESDEBITO' +
+      '.vendedordebcred_importe*-(1))'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -1646,7 +1627,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_COMISIONESDEBITOS.vendedordebcred_fecha'
+    Expression = 'ALIAS_COMISIONESDEBITO.vendedordebcred_fecha'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -1675,9 +1656,9 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 
-      'IIF(ALIAS_COMISIONESDEBCRED.vendedordebcred_tipo='#39'Credito'#39',ALIAS' +
-      '_COMISIONESDEBCRED.vendedordebcred_importe, ALIAS_COMISIONESDEBC' +
-      'RED.vendedordebcred_importe*-(1))'
+      'IIF(ALIAS_COMISIONESCREDITOS.vendedordebcred_tipo='#39'Credito'#39',ALIA' +
+      'S_COMISIONESCREDITOS.vendedordebcred_importe, ALIAS_COMISIONESCR' +
+      'EDITOS.vendedordebcred_importe*-(1))'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -1709,32 +1690,6 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     WideText = 'Total Creditos'
-  end
-  object TRpSection15: TRpSection
-    Width = 10772
-    Height = 1701
-    SubReport = TRpSubReport0
-    ChangeBool = False
-    PageRepeat = False
-    SkipPage = False
-    AlignBottom = False
-    SectionType = rpsecpfooter
-    Components = <>
-    ExternalTable = 'REPMAN_REPORTS'
-    ExternalField = 'REPORT'
-    ExternalSearchField = 'REPORT_NAME'
-    StreamFormat = rpStreamText
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    ChangeExpression = ''
-    BeginPageExpression = ''
-    ChangeExpression = ''
-    SkipExpreV = ''
-    SkipExpreH = ''
-    SkipToPageExpre = ''
-    BackExpression = ''
-    Stream = {0000000000000000}
   end
   object TRpSection0: TRpSection
     Width = 10772
@@ -1781,6 +1736,7 @@ object TRpReport
     ExternalField = 'REPORT'
     ExternalSearchField = 'REPORT_NAME'
     StreamFormat = rpStreamText
+    ChildSubReport = TRpSubReport2
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1792,81 +1748,6 @@ object TRpReport
     SkipToPageExpre = ''
     BackExpression = ''
     Stream = {0000000000000000}
-  end
-  object TRpShape10: TRpShape
-    Width = 10205
-    Height = 38
-    PosX = 60
-    PosY = 79
-    Shape = rpsHorzLine
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-  end
-  object TRpShape19: TRpShape
-    Width = 10205
-    Height = 38
-    PosX = 60
-    PosY = 79
-    Shape = rpsHorzLine
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-  end
-  object TRpExpression19: TRpExpression
-    Width = 1252
-    Height = 218
-    PosX = 8924
-    PosY = 170
-    Type1Font = poHelvetica
-    FontSize = 9
-    FontStyle = 1
-    Alignment = 2
-    DataType = rpParamCurrency
-    DisplayFormat = '0.00'
-    Aggregate = rpAgGeneral
-    GroupName = ' '
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_COMISIONES.liquivendedeta_importe'
-    DisplayFormat = '0.00'
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
-  object TRpExpression20: TRpExpression
-    Width = 4200
-    Height = 264
-    PosX = 4328
-    PosY = 170
-    Type1Font = poHelvetica
-    FontStyle = 1
-    Alignment = 2
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = #39'Total Comisiones'#39
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
   end
   object TRpSection17: TRpSection
     Width = 10772
@@ -1904,6 +1785,7 @@ object TRpReport
     ExternalField = 'REPORT'
     ExternalSearchField = 'REPORT_NAME'
     StreamFormat = rpStreamText
+    FooterAtReportEnd = True
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -2090,12 +1972,188 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 
-      'IIF(ALIAS_COMISIONESDEBITOS.vendedordebcred_tipo='#39'Credito'#39',ALIAS' +
-      '_COMISIONESDEBITOS.vendedordebcred_importe, ALIAS_COMISIONESDEBI' +
-      'TOS.vendedordebcred_importe*-(1))'
+      'IIF(ALIAS_COMISIONESDEBITO.vendedordebcred_tipo='#39'Credito'#39',ALIAS_' +
+      'COMISIONESDEBITO.vendedordebcred_importe, ALIAS_COMISIONESDEBITO' +
+      '.vendedordebcred_importe*-(1))'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
     ExportExpression = ''
+  end
+  object TRpSection13: TRpSection
+    Width = 10772
+    Height = 645
+    SubReport = TRpSubReport0
+    ChangeBool = False
+    PageRepeat = False
+    SkipPage = False
+    AlignBottom = False
+    SectionType = rpsecpfooter
+    Components = <>
+    ExternalTable = 'REPMAN_REPORTS'
+    ExternalField = 'REPORT'
+    ExternalSearchField = 'REPORT_NAME'
+    StreamFormat = rpStreamText
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    ChangeExpression = ''
+    BeginPageExpression = ''
+    ChangeExpression = ''
+    SkipExpreV = ''
+    SkipExpreH = ''
+    SkipToPageExpre = ''
+    BackExpression = ''
+    Stream = {0000000000000000}
+  end
+  object TRpSection15: TRpSection
+    Width = 10772
+    Height = 0
+    SubReport = TRpSubReport0
+    GroupName = 'SUCURSALES'
+    ChangeBool = False
+    PageRepeat = False
+    SkipPage = False
+    AlignBottom = False
+    SectionType = rpsecgheader
+    Components = <>
+    ExternalTable = 'REPMAN_REPORTS'
+    ExternalField = 'REPORT'
+    ExternalSearchField = 'REPORT_NAME'
+    StreamFormat = rpStreamText
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    ChangeExpression = 'ALIAS_COMISIONES.liquidacionvendedor_id'
+    BeginPageExpression = ''
+    ChangeExpression = 'ALIAS_COMISIONES.liquidacionvendedor_id'
+    SkipExpreV = ''
+    SkipExpreH = ''
+    SkipToPageExpre = ''
+    BackExpression = ''
+    Stream = {0000000000000000}
+  end
+  object TRpSection19: TRpSection
+    Width = 10772
+    Height = 765
+    SubReport = TRpSubReport0
+    GroupName = 'SUCURSALES'
+    ChangeBool = False
+    PageRepeat = False
+    SkipPage = False
+    AlignBottom = False
+    SectionType = rpsecgfooter
+    Components = <
+      item
+        Component = TRpExpression19
+      end
+      item
+        Component = TRpExpression20
+      end
+      item
+        Component = TRpShape10
+      end>
+    ExternalTable = 'REPMAN_REPORTS'
+    ExternalField = 'REPORT'
+    ExternalSearchField = 'REPORT_NAME'
+    StreamFormat = rpStreamText
+    Global = True
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    ChangeExpression = 'ALIAS_COMISIONES.liquidacionvendedor_id'
+    BeginPageExpression = ''
+    ChangeExpression = 'ALIAS_COMISIONES.liquidacionvendedor_id'
+    SkipExpreV = ''
+    SkipExpreH = ''
+    SkipToPageExpre = ''
+    BackExpression = ''
+    Stream = {0000000000000000}
+  end
+  object TRpExpression19: TRpExpression
+    Width = 1252
+    Height = 218
+    PosX = 8924
+    PosY = 170
+    Type1Font = poHelvetica
+    FontSize = 9
+    FontStyle = 1
+    Alignment = 2
+    DataType = rpParamCurrency
+    DisplayFormat = '0.00'
+    Aggregate = rpAgGeneral
+    GroupName = 'LIQUIDACION'
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_COMISIONES.liquivendedeta_importe'
+    DisplayFormat = '0.00'
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpExpression20: TRpExpression
+    Width = 4200
+    Height = 264
+    PosX = 4328
+    PosY = 170
+    Type1Font = poHelvetica
+    FontStyle = 1
+    Alignment = 2
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = #39'Total Comisiones'#39
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpShape10: TRpShape
+    Width = 10205
+    Height = 38
+    PosX = 60
+    PosY = 79
+    Shape = rpsHorzLine
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+  end
+  object TRpShape19: TRpShape
+    Width = 10205
+    Height = 38
+    PosX = 60
+    PosY = 79
+    Shape = rpsHorzLine
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+  end
+  object TRpShape20: TRpShape
+    Width = 10205
+    Height = 38
+    PosX = 60
+    PosY = 79
+    Shape = rpsHorzLine
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
   end
 end

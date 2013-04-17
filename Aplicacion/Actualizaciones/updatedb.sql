@@ -658,3 +658,88 @@ INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,70,perfil_id from perfiles
 Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('71', '>Ventas>Documentos>Presupuestos', '0', 'btnpresupuestos', '', '0', '0');
 178;
 INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,71,perfil_id from perfiles;
+179;
+CREATE  TABLE IF NOT EXISTS `liquidacionesvendedores` (
+  `liquidacionvendedor_id` INT(11) NOT NULL ,
+  `liquidacionvendedor_fecha` DATE NULL DEFAULT NULL ,
+  `liquidacionvendedor_desdefecha` DATE NULL DEFAULT NULL ,
+  `liquidacionvendedor_hastafecha` DATE NULL DEFAULT NULL ,
+  `liquidacionvendedor_total` FLOAT(20,4) NULL DEFAULT NULL ,
+  `personal_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`liquidacionvendedor_id`) ,
+  INDEX `fk_liquidacionesvendedores_personal1` (`personal_id` ASC) ,
+  CONSTRAINT `fk_liquidacionesvendedores_personal1`
+    FOREIGN KEY (`personal_id` )
+    REFERENCES `personal` (`personal_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+180;
+CREATE  TABLE IF NOT EXISTS `liquivendedeta` (
+  `liquivendedeta_id` INT(11) NOT NULL ,
+  `comisionvendedor_tipo` VARCHAR(45) NULL DEFAULT NULL ,
+  `comisionvendedor_valor` FLOAT(10,4) NULL DEFAULT NULL ,
+  `liquivendedeta_importe` FLOAT(20,4) NULL DEFAULT NULL ,
+  `liquivendedeta_tipodetalle` VARCHAR(45) NULL DEFAULT NULL ,
+  `liquidacionvendedor_id` INT(11) NOT NULL ,
+  `documentoventadetalle_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`liquivendedeta_id`) ,
+  INDEX `fk_liquivendedeta_liquidacionesvendedores1` (`liquidacionvendedor_id` ASC) ,
+  INDEX `fk_liquivendedeta_documentoventadetalles1` (`documentoventadetalle_id` ASC) ,
+  CONSTRAINT `fk_liquivendedeta_liquidacionesvendedores1`
+    FOREIGN KEY (`liquidacionvendedor_id` )
+    REFERENCES `liquidacionesvendedores` (`liquidacionvendedor_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_liquivendedeta_documentoventadetalles1`
+    FOREIGN KEY (`documentoventadetalle_id` )
+    REFERENCES `documentoventadetalles` (`documentoventadetalle_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+181;
+CREATE  TABLE IF NOT EXISTS `documentoventapersonal` (
+  `documentoventapersonal_id` INT(11) NOT NULL ,
+  `documentoventa_id` INT(11) NOT NULL ,
+  `personal_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`documentoventapersonal_id`) ,
+  INDEX `fk_documentoventapersonal_documentosventas1` (`documentoventa_id` ASC) ,
+  INDEX `fk_documentoventapersonal_personal1` (`personal_id` ASC) ,
+  CONSTRAINT `fk_documentoventapersonal_documentosventas1`
+    FOREIGN KEY (`documentoventa_id` )
+    REFERENCES `documentosventas` (`documentoventa_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_documentoventapersonal_personal1`
+    FOREIGN KEY (`personal_id` )
+    REFERENCES `personal` (`personal_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+182;
+CREATE  TABLE IF NOT EXISTS `liquivendedoressucursales` (
+  `liquivendedoressucursales_id` INT(11) NOT NULL ,
+  `liquidacionvendedor_id` INT(11) NOT NULL ,
+  `sucursal_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`liquivendedoressucursales_id`) ,
+  INDEX `fk_liquivendedoressucursales_liquidacionesvendedores1` (`liquidacionvendedor_id` ASC) ,
+  INDEX `fk_liquivendedoressucursales_sucursales1` (`sucursal_id` ASC) ,
+  CONSTRAINT `fk_liquivendedoressucursales_liquidacionesvendedores1`
+    FOREIGN KEY (`liquidacionvendedor_id` )
+    REFERENCES `liquidacionesvendedores` (`liquidacionvendedor_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_liquivendedoressucursales_sucursales1`
+    FOREIGN KEY (`sucursal_id` )
+    REFERENCES `sucursales` (`sucursal_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;

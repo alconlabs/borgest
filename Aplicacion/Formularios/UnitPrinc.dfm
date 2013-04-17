@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageVentas
+    ActivePage = AdvPageComisiones
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -940,6 +940,7 @@ object Princ: TPrinc
         Width = 606
         Height = 63
         AllowFloating = True
+        AutoOptionMenu = True
         Caption = 'Documentos'
         CaptionFont.Charset = DEFAULT_CHARSET
         CaptionFont.Color = clWindowText
@@ -954,6 +955,7 @@ object Princ: TPrinc
         TextAutoOptionMenu = 'Add or Remove Buttons'
         TextOptionMenu = 'Options'
         ToolBarStyler = AdvToolBarOfficeStyler1
+        OptionMenu = AdvPopupMenu1
         ParentOptionPicture = True
         object btnfacturasventas: TAdvGlowButton
           Left = 302
@@ -1978,6 +1980,7 @@ object Princ: TPrinc
           Height = 41
           Caption = 'Liquidaciones a Vendedores'
           TabOrder = 1
+          OnClick = btnliquidacionesvendedoresClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -3356,5 +3359,23 @@ object Princ: TPrinc
   object RpExpreDialogVCL1: TRpExpreDialogVCL
     Left = 352
     Top = 328
+  end
+  object AdvPopupMenu1: TAdvPopupMenu
+    MenuStyler = AdvMenuStyler1
+    Version = '2.0.0.0'
+    Left = 320
+    Top = 200
+    object aver1: TMenuItem
+      Caption = 'a ver'
+    end
+    object aver21: TMenuItem
+      Caption = 'a ver2'
+    end
+    object aver31: TMenuItem
+      Caption = 'aver3'
+    end
+    object aver41: TMenuItem
+      Caption = 'aver4'
+    end
   end
 end

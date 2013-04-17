@@ -100,7 +100,9 @@ uses
   UnitListaNotaDebitoVenta in 'Formularios\Ventas\UnitListaNotaDebitoVenta.pas' {listanotadebitoventa},
   UnitNotaDebitoVenta in 'Formularios\Ventas\UnitNotaDebitoVenta.pas' {NotaDebitoVenta},
   UnitRemitoVenta in 'Formularios\Ventas\UnitRemitoVenta.pas' {remitoventa},
-  UnitListaRemitoVenta in 'Formularios\Ventas\UnitListaRemitoVenta.pas' {listaremitosventa};
+  UnitListaRemitoVenta in 'Formularios\Ventas\UnitListaRemitoVenta.pas' {listaremitosventa},
+  Unitlistacomisionesvendedores in 'Formularios\Comisiones\Unitlistacomisionesvendedores.pas' {listacomisionesvendedores},
+  Unitliquidaciones in 'Formularios\Comisiones\Unitliquidaciones.pas' {liquidaciones};
 
 {$R *.res}
 
@@ -108,7 +110,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrinc, Princ);
-  Application.CreateForm(Tremitoventa, remitoventa);
-  Application.CreateForm(Tlistaremitosventa, listaremitosventa);
   Application.Run;
 end.

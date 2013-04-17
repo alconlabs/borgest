@@ -55,7 +55,6 @@ inherited busquedaclientes: Tbusquedaclientes
     end
     inherited panelfiltros: TAdvPanel
       TabOrder = 0
-      ExplicitTop = 0
       FullHeight = 0
       inherited btnfiltrar: TButton
         TabOrder = 5

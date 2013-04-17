@@ -9,7 +9,7 @@ uses
   Grids, BaseGrid, AdvGrid, DBAdvGrid, StdCtrls, ADODB, rpcompobase, rpvclreport,
   UnitProgresoBase, ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
   rpalias, GTBComboBox, ComCtrls, Encriptador, rpexpredlgvcl, DBClient,
-  rpclientdataset;
+  rpclientdataset, Menus;
 
 
 
@@ -125,6 +125,11 @@ type
     btnlistanotasdepedido: TAdvGlowButton;
     btnnotasdedebito: TAdvGlowButton;
     btnremitos: TAdvGlowButton;
+    AdvPopupMenu1: TAdvPopupMenu;
+    aver1: TMenuItem;
+    aver21: TMenuItem;
+    aver31: TMenuItem;
+    aver41: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -178,6 +183,7 @@ type
     procedure btndebcredsucursalesClick(Sender: TObject);
     procedure btnnotasdedebitoClick(Sender: TObject);
     procedure btnremitosClick(Sender: TObject);
+    procedure btnliquidacionesvendedoresClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -356,7 +362,7 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   UnitCajaBar, UnitLibroIvaCompras, UnitLogin, UnitComisionesVendedores,
   UnitComisionesSucursales, Unitvendedoresdebcred, Unitsucursalesdebcred,
   UnitNotaDebitoVenta, UnitListaNotaDebitoVenta, UnitRemitoVenta,
-  UnitListaRemitoVenta;
+  UnitListaRemitoVenta, Unitlistacomisionesvendedores;
 
 {$R *.dfm}
 
@@ -2834,6 +2840,16 @@ begin
       LibroIvaVentas:=TLibroIvaVentas.Create(self);
     finally
       LibroIvaVentas.Show;
+    end;
+end;
+
+procedure TPrinc.btnliquidacionesvendedoresClick(Sender: TObject);
+begin
+    try
+      listacomisionesvendedores:=Tlistacomisionesvendedores.Create(self);
+    finally
+      listacomisionesvendedores.campo_id:='liquidacionvendedor_id';
+      listacomisionesvendedores.Show;
     end;
 end;
 
