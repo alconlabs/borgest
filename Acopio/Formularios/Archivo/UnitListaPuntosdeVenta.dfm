@@ -1,14 +1,36 @@
 inherited listapuntosdeventa: Tlistapuntosdeventa
   Caption = 'Sucursales'
-  ExplicitLeft = -154
+  ExplicitWidth = 950
+  ExplicitHeight = 516
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
+      ExplicitLeft = 830
+      ExplicitTop = 1
+      ExplicitHeight = 335
       FullHeight = 0
+      inherited btneliminar: TButton
+        ExplicitLeft = 1
+        ExplicitTop = 83
+        ExplicitWidth = 101
+      end
+      inherited btnmodificar: TButton
+        ExplicitLeft = 1
+        ExplicitTop = 42
+        ExplicitWidth = 101
+      end
+      inherited btnnuevo: TButton
+        ExplicitLeft = 1
+        ExplicitTop = 1
+        ExplicitWidth = 101
+      end
       inherited btnanular: TButton
         Visible = False
+        ExplicitLeft = 1
+        ExplicitTop = 124
+        ExplicitWidth = 101
       end
     end
     inherited DBGrid1: TDBGrid
@@ -42,7 +64,19 @@ inherited listapuntosdeventa: Tlistapuntosdeventa
         end>
     end
     inherited panelfiltros: TAdvPanel
+      ExplicitLeft = 1
+      ExplicitTop = 336
+      ExplicitWidth = 932
       FullHeight = 0
+      inherited btnfiltrar: TButton
+        ExplicitLeft = 828
+        ExplicitTop = 1
+        ExplicitHeight = 19
+      end
+      inherited fil_id: TGTBEdit
+        ExplicitLeft = 1
+        ExplicitTop = 1
+      end
       object fil_puntoventa_numero: TGTBEdit
         Left = 86
         Top = 1
@@ -122,6 +156,7 @@ inherited listapuntosdeventa: Tlistapuntosdeventa
       Height = 13
       Alignment = taRightJustify
       Caption = 'Impresora Fiscal'
+      Visible = False
     end
     object Label4: TLabel [5]
       Left = 417
@@ -130,6 +165,7 @@ inherited listapuntosdeventa: Tlistapuntosdeventa
       Height = 13
       Alignment = taRightJustify
       Caption = 'Puerto'
+      Visible = False
     end
     inherited btnguardar: TButton
       TabOrder = 6
@@ -191,6 +227,7 @@ inherited listapuntosdeventa: Tlistapuntosdeventa
       ItemIndex = 0
       TabOrder = 4
       Text = 'MODELO_614'
+      Visible = False
       Items.Strings = (
         'MODELO_614'
         'MODELO_615'
@@ -238,6 +275,7 @@ inherited listapuntosdeventa: Tlistapuntosdeventa
       ItemIndex = 0
       TabOrder = 5
       Text = 'COM1'
+      Visible = False
       Items.Strings = (
         'COM1'
         'COM2'

@@ -63,11 +63,11 @@ uses UnitPrinc;
 
 procedure Tlocalidades.eliminar;
 begin
-    ZQuery2.SQL.Clear;
-    ZQuery2.SQL.Add('delete from localidades ');
-    ZQuery2.SQL.Add('where localidad_id=:localidad_id');
-    ZQuery2.ParamByName('localidad_id').AsString:=ZQGrilla.FieldByName('localidad_id').AsString;
-    ZQuery2.ExecSQL;
+    ZQuery2.Sql.Clear;
+    ZQuery2.Sql.Add('delete from localidades ');
+    ZQuery2.Sql.Add('where localidad_id=:localidad_id ');
+    ZQuery2.ParamByName('localidad_id').AsString:=localidad_id.Text;
+    ZQuery2.ExecSql;
 
 
     ZQGrilla.Active:=false;
@@ -88,20 +88,17 @@ end;
 
 procedure Tlocalidades.modificar;
 begin
-    ZQuery2.sql.clear;
-    ZQuery2.sql.add('Update localidades set ');
-    ZQuery2.sql.add('localidad_nombre=:localidad_nombre, ');
-    ZQuery2.sql.add('provincia_id=:provincia_id, ');
-    ZQuery2.sql.add('localidad_codigopostal=:localidad_codigopostal ');
-    ZQuery2.sql.add('where localidad_id=:localidad_id');
-    ZQuery2.parambyname('localidad_nombre').asstring:=localidad_nombre.text;
-    ZQuery2.parambyname('provincia_id').asstring:=provincia_id.codigo;
-    ZQuery2.parambyname('localidad_id').asstring:=localidad_id.text;
-    ZQuery2.parambyname('localidad_codigopostal').asstring:=localidad_codigopostal.text;
-
-    ZQuery2.ExecSQL;
-
-
+    ZQuery2.Sql.Clear;
+    ZQuery2.Sql.Add('update localidades set ');
+    ZQuery2.Sql.Add('provincia_id=:provincia_id, ');
+    ZQuery2.Sql.Add('localidad_codigopostal=:localidad_codigopostal, ');
+    ZQuery2.Sql.Add('localidad_nombre=:localidad_nombre ');
+    ZQuery2.Sql.Add('where localidad_id=:localidad_id ');
+    ZQuery2.ParamByName('provincia_id').AsString:=provincia_id.codigo;
+    ZQuery2.ParamByName('localidad_codigopostal').AsString:=localidad_codigopostal.Text;
+    ZQuery2.ParamByName('localidad_nombre').AsString:=localidad_nombre.Text;
+    ZQuery2.ParamByName('localidad_id').AsString:=localidad_id.Text;
+    ZQuery2.ExecSql;
 
     Panelabm.Visible:=false;
 
@@ -111,22 +108,19 @@ end;
 
 procedure Tlocalidades.agregar;
 begin
-
-    ZQuery2.sql.clear;
-    ZQuery2.sql.add('Insert into localidades (localidad_id, localidad_nombre, ');
-    ZQuery2.sql.add('provincia_id, localidad_codigopostal) values (:localidad_id, :localidad_nombre, ');
-    ZQuery2.sql.add(':provincia_id, :localidad_codigopostal)');
-    ZQuery2.parambyname('localidad_id').asstring:=princ.codigo('localidades','localidad_id');
-    ZQuery2.parambyname('localidad_nombre').asstring:=localidad_nombre.text;
-    ZQuery2.parambyname('provincia_id').asstring:=provincia_id.codigo;
-    ZQuery2.parambyname('localidad_codigopostal').asstring:=localidad_codigopostal.text;
-
-    ZQuery2.ExecSQL;
-
+    ZQuery2.Sql.Clear;
+    ZQuery2.Sql.Add('insert into localidades set ');
+    ZQuery2.Sql.Add('provincia_id=:provincia_id, ');
+    ZQuery2.Sql.Add('localidad_codigopostal=:localidad_codigopostal, ');
+    ZQuery2.Sql.Add('localidad_nombre=:localidad_nombre, ');
+    ZQuery2.Sql.Add('localidad_id=:localidad_id ');
+    ZQuery2.ParamByName('provincia_id').AsString:=provincia_id.codigo;
+    ZQuery2.ParamByName('localidad_codigopostal').AsString:=localidad_codigopostal.Text;
+    ZQuery2.ParamByName('localidad_nombre').AsString:=localidad_nombre.Text;
+    ZQuery2.ParamByName('localidad_id').AsString:=princ.codigo('localidades','localidad_id');
+    ZQuery2.ExecSql;
 
     Panelabm.Visible:=false;
-
-
 end;
 
 

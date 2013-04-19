@@ -35,10 +35,10 @@ uses UnitPrinc, UnitRoles;
 procedure TlistaRoles.aplicarClick(Sender: TObject);
 begin
   inherited;
-ZQGrilla.SQL.Text:='select * from roles '+
+    ZQGrilla.SQL.Text:='select * from roles '+
                      'where 1=1 ';
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and rol_codi like "%'+fil_id.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and rol_id like "%'+fil_id.Text+'%"';
 
     if fil_rol_nombre.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and rol_nombre like "%'+fil_rol_nombre.Text+'%"';
@@ -60,7 +60,7 @@ begin
                   roles:=Troles.Create(self);
                 finally
                   roles.abm:=2;
-                  roles.id:=ZQGrilla.FieldByName('rol_codi').AsString;
+                  roles.id:=ZQGrilla.FieldByName('rol_id').AsString;
                   roles.btnguardar.Caption:='Modificar';
                   roles.Show;
                 end;
@@ -84,7 +84,7 @@ begin
                   roles:=Troles.Create(self);
                 finally
                   roles.abm:=3;
-                  roles.id:=ZQGrilla.FieldByName('rol_codi').AsString;
+                  roles.id:=ZQGrilla.FieldByName('rol_id').AsString;
                   roles.btnguardar.Caption:='Eliminar';
                   roles.Show;
                 end;

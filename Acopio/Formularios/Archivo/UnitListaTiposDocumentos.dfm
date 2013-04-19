@@ -1,15 +1,33 @@
 inherited listatiposdocumentos: Tlistatiposdocumentos
   Caption = 'Tipos de documentos'
   ExplicitWidth = 950
-  ExplicitHeight = 494
+  ExplicitHeight = 516
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
       FullHeight = 0
+      inherited btneliminar: TButton
+        ExplicitLeft = 1
+        ExplicitTop = 83
+        ExplicitWidth = 101
+      end
+      inherited btnmodificar: TButton
+        ExplicitLeft = 1
+        ExplicitTop = 42
+        ExplicitWidth = 101
+      end
+      inherited btnnuevo: TButton
+        ExplicitLeft = 1
+        ExplicitTop = 1
+        ExplicitWidth = 101
+      end
       inherited btnanular: TButton
         Visible = False
+        ExplicitLeft = 1
+        ExplicitTop = 124
+        ExplicitWidth = 101
       end
     end
     inherited DBGrid1: TDBGrid
@@ -51,41 +69,54 @@ inherited listatiposdocumentos: Tlistatiposdocumentos
     end
     inherited panelfiltros: TAdvPanel
       FullHeight = 0
+      inherited btnfiltrar: TButton
+        ExplicitLeft = 828
+        ExplicitTop = 1
+        ExplicitHeight = 19
+      end
+      inherited fil_id: TGTBEdit
+        ExplicitLeft = 1
+        ExplicitTop = 1
+      end
       object fil_tipodocu_nombre: TGTBEdit
-        Left = 85
-        Top = 0
+        Left = 86
+        Top = 1
         Width = 400
-        Height = 21
+        Height = 19
         Align = alLeft
         TabOrder = 2
         Tag2 = 0
+        ExplicitHeight = 21
       end
       object fil_tipodocu_letra: TGTBEdit
-        Left = 485
-        Top = 0
+        Left = 486
+        Top = 1
         Width = 40
-        Height = 21
+        Height = 19
         Align = alLeft
         TabOrder = 3
         Tag2 = 0
+        ExplicitHeight = 21
       end
       object fil_tipodocu_tipo: TGTBEdit
-        Left = 525
-        Top = 0
+        Left = 526
+        Top = 1
         Width = 80
-        Height = 21
+        Height = 19
         Align = alLeft
         TabOrder = 4
         Tag2 = 0
+        ExplicitHeight = 21
       end
       object fil_puntoventa_numero: TGTBEdit
-        Left = 605
-        Top = 0
+        Left = 606
+        Top = 1
         Width = 70
-        Height = 21
+        Height = 19
         Align = alLeft
         TabOrder = 5
         Tag2 = 0
+        ExplicitHeight = 21
       end
     end
   end

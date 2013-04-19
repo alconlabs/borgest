@@ -60,20 +60,53 @@ type
     AdvGlowButton2: TAdvGlowButton;
     AdvGlowButton4: TAdvGlowButton;
     AdvToolBar1: TAdvToolBar;
-    AdvGlowButton3: TAdvGlowButton;
-    AdvGlowButton5: TAdvGlowButton;
-    AdvGlowButton7: TAdvGlowButton;
+    btnespecies: TAdvGlowButton;
     AdvToolBarFantasyStyler1: TAdvToolBarFantasyStyler;
     AdvToolBarCustomizer1: TAdvToolBarCustomizer;
     AdvFormStyler1: TAdvFormStyler;
     AdvAppStyler1: TAdvAppStyler;
     Image1: TImage;
     Encriptador1: TEncriptador;
+    AdvToolBar2: TAdvToolBar;
+    AdvGlowButton7: TAdvGlowButton;
+    AdvGlowButton6: TAdvGlowButton;
+    AdvGlowButton8: TAdvGlowButton;
+    AdvGlowButton9: TAdvGlowButton;
+    AdvPage1: TAdvPage;
+    AdvPage2: TAdvPage;
+    AdvPage3: TAdvPage;
+    AdvToolBar3: TAdvToolBar;
+    AdvGlowButton10: TAdvGlowButton;
+    AdvGlowButton11: TAdvGlowButton;
+    AdvGlowButton12: TAdvGlowButton;
+    AdvToolBar4: TAdvToolBar;
+    AdvGlowButton13: TAdvGlowButton;
+    AdvGlowButton14: TAdvGlowButton;
+    AdvGlowButton15: TAdvGlowButton;
+    AdvToolBar5: TAdvToolBar;
+    btnfacturasventas: TAdvGlowButton;
+    AdvGlowButton17: TAdvGlowButton;
+    AdvGlowButton18: TAdvGlowButton;
+    AdvToolBar6: TAdvToolBar;
+    btnsaldosgranos: TAdvGlowButton;
+    AdvGlowButton20: TAdvGlowButton;
+    AdvGlowButton21: TAdvGlowButton;
+    AdvToolBar7: TAdvToolBar;
+    AdvGlowButton16: TAdvGlowButton;
+    AdvGlowButton22: TAdvGlowButton;
+    AdvGlowButton23: TAdvGlowButton;
+    btnordenesdecarga: TAdvGlowButton;
+    ZQDocumentodocus: TZQuery;
+    btncontratos: TAdvGlowButton;
+    btncontratoventa: TAdvGlowButton;
+    AdvToolBar8: TAdvToolBar;
+    AdvGlowButton3: TAdvGlowButton;
+    AdvGlowButton5: TAdvGlowButton;
+    AdvGlowButton24: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZBaseBeforeConnect(Sender: TObject);
     procedure ADOConnection1BeforeConnect(Sender: TObject);
-    procedure btnventasrapidasClick(Sender: TObject);
     procedure ZQProductosBeforeOpen(DataSet: TDataSet);
     procedure MenuPrincipalChange(Sender: TObject);
     procedure ZBaseAfterConnect(Sender: TObject);
@@ -82,9 +115,21 @@ type
       ScreenPoint: TPoint);
     procedure AdvGlowButton4Click(Sender: TObject);
     procedure AdvGlowButton1Click(Sender: TObject);
-    procedure AdvGlowButton5Click(Sender: TObject);
+    procedure btnespeciesClick(Sender: TObject);
     procedure AdvGlowButton2Click(Sender: TObject);
     procedure AdvGlowButton3Click(Sender: TObject);
+    procedure AdvGlowButton7Click(Sender: TObject);
+    procedure AdvGlowButton8Click(Sender: TObject);
+    procedure AdvGlowButton9Click(Sender: TObject);
+    procedure btnsaldosgranosClick(Sender: TObject);
+    procedure AdvGlowButton20Click(Sender: TObject);
+    procedure AdvGlowButton21Click(Sender: TObject);
+    procedure btnfacturasventasClick(Sender: TObject);
+    procedure AdvGlowButton16Click(Sender: TObject);
+    procedure AdvGlowButton17Click(Sender: TObject);
+    procedure btncontratosClick(Sender: TObject);
+    procedure btnordenesdecargaClick(Sender: TObject);
+    procedure btncontratoventaClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -107,11 +152,12 @@ type
     function codigo(tabla:string;campo:string):string;
     function buscar(sql:string;campo:string):string;
     function fechaservidor():TDateTime;
-    function NumeroDocumento(tipodocu_id:string):string;
+    function NumeroDocumento(tipodocu_id:string; documentoventa_numero:string):string;
     procedure actualizarstock(producto_id:string; cantidad:real; tipodocu_id:string; inversa:boolean=false );
     function GetPrecioVentaBase(producto_preciocosto:real;calculoprecio_id:string):real;
     function GetPrecioVentaBaseprod(producto_precioventabase:real;producto_id:string):real;
     procedure ActualizarSaldoDocumentoVenta(id:string; importe:real; inversa:boolean=false);
+    procedure ActualizarSaldoDocumento(id: string; importe: Real; inversa:boolean=false);
     procedure AgregarDocumentoVenta(Cabecera:TDataset; Detalle:TDataset; Documentoventadocu:TDataset; Pagos:TDataset);
     procedure AgregarRecibo(ZQCabecera:TDataset; ZQDetalle:TDataset; ZQPagos:TDataset);
     function CargarPago(importe:real; QDocumentopagos:TDataset): boolean;
@@ -149,7 +195,7 @@ type
     function BorrarDocumentoVenta(documentoventa_id:string):boolean;
     function BorrarDocumentoCompra(documentocompra_id:string):boolean;
 
-    function GetConfigTipoDocumento(documento_id:string; campo:string):string;
+    function GetConfigTipoDocumento(documento_id: string; tipodocu_id:string; campo: string):string;
     procedure MostrarVentanaExcel;
     procedure GetBoolConfig(config_nombre:string;valor_true:string; var propiedad:boolean);
     procedure AbrirDocumentoVenta(id:string;tipodocu_nombre:string;abm:integer);
@@ -158,6 +204,8 @@ type
     procedure AbrirModificarTipoDocumento(id:string);
     procedure AbrirNuevoPerfil;
     procedure AbrirModificarPerfil(id:string);
+    function CargarDocumentoDocu(entidad_id: string; QDocumentoDocus:TDataset;documento_apagar:real;AgregarAutomatico:boolean;especie_id:string;tipodocu_nombre:string):boolean;
+
   end;
 
 var
@@ -225,9 +273,109 @@ uses Unitlocalidades, UnitConfiguracion, UnitABMbase, UnitListaSucursales,
      UnitListaPuntosdeVenta, UnitListaTiposDocumentos, UnitPersonal,
      UnitPerfil, UnitListaPerfiles, Unitlistatemplates, UnitlistaRoles,
      UnitlistaEntidades, UnitlistaRubros, UnitlistaControlEntidad,
-  UnitlistaAritculos;
+  UnitTipoDocumento, Unitsaldoclientes, Unitestadodectas, Unitdetallectas,
+  Unitlistafacturasventa, Unitfacturasventa, Unitlistarecibosventa,
+  Unitrecibosventa, UnitListaDocumentos, UnitListaContratos,
+  Unitlistaespeciesvariedades, UnitListaOrdendeCarga, UnitDocumentosPendientes,
+  UnitListaContratosVentas;
 
 {$R *.dfm}
+
+
+
+function TPrinc.CargarDocumentoDocu(entidad_id: string; QDocumentoDocus:TDataset;documento_apagar:real;AgregarAutomatico:boolean;especie_id:string;tipodocu_nombre:string):boolean;
+begin
+    DocumentosPendientes:=TDocumentosPendientes.Create(self);
+    DocumentosPendientes.entidad_id:=entidad_id;
+    DocumentosPendientes.especie_id:=especie_id;
+    DocumentosPendientes.tipodocu_nombre:=tipodocu_nombre;
+    DocumentosPendientes.ActivarConsulta;
+    DocumentosPendientes.documento_apagar:=documento_apagar;
+    QDocumentoDocus.First;
+    while not QDocumentoDocus.Eof do
+        begin
+            if DocumentosPendientes.ZQDocumentosPendientes.Locate('documento_id',QDocumentoDocus.FieldByName('documento_idpago').AsString,[]) then
+              begin
+                  DocumentosPendientes.ZQDocumentosPendientes.Edit;
+                  DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documentodoc_importe').AsString:=QDocumentoDocus.FieldByName('documentodocu_importe').AsString;
+                  DocumentosPendientes.ZQDocumentosPendientes.Post;
+
+              end;
+
+            QDocumentoDocus.Next;
+        end;
+    if AgregarAutomatico then
+      begin
+          DocumentosPendientes.btnimputardocumentos.Click;
+      end
+    else
+      begin
+          DocumentosPendientes.Showmodal;
+      end;
+
+
+
+
+    if DocumentosPendientes.ModalResult=mrOk then
+      begin
+          DocumentosPendientes.ZQDocumentosPendientes.First;
+          while not DocumentosPendientes.ZQDocumentosPendientes.Eof do
+              begin
+                  if DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documentodoc_importe').AsFloat<>0 then
+                    begin
+                        if QDocumentoDocus.Locate('documento_idpago',DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documento_id').AsString,[]) then
+                          QDocumentoDocus.Edit
+                        else
+                          QDocumentoDocus.Insert;
+                          
+                        QDocumentoDocus.FieldByName('documento_id').AsString:='0';
+                        QDocumentoDocus.FieldByName('documento_numero').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documento_numero').AsString;
+                        QDocumentoDocus.FieldByName('documento_fecha').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documento_fecha').AsString;
+                        QDocumentoDocus.FieldByName('documento_hora').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documento_hora').AsString;
+                        QDocumentoDocus.FieldByName('documento_total').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documento_total').AsString;
+                        QDocumentoDocus.FieldByName('documento_estado').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documento_estado').AsString;
+                        QDocumentoDocus.FieldByName('documento_pagado').AsFloat:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documento_pagado').AsFloat+DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documentodoc_importe').AsFloat;
+                        QDocumentoDocus.FieldByName('documento_saldo').AsFloat:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documento_saldo').AsFloat-DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documentodoc_importe').AsFloat;
+                        QDocumentoDocus.FieldByName('entidad_id').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('entidad_id').AsString;
+                        QDocumentoDocus.FieldByName('especie_id').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('especie_id').AsString;
+                        QDocumentoDocus.FieldByName('tipodocu_id').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('tipodocu_id').AsString;
+                        QDocumentoDocus.FieldByName('tipodocu_id_1').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('tipodocu_id').AsString;
+                        QDocumentoDocus.FieldByName('tipodocu_nombre').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('tipodocu_nombre').AsString;
+                        QDocumentoDocus.FieldByName('tipodocu_tipo').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('tipodocu_tipo').AsString;
+                        QDocumentoDocus.FieldByName('puntoventa_id').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('puntoventa_id').AsString;
+                        QDocumentoDocus.FieldByName('tipodocu_letra').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('tipodocu_letra').AsString;
+                        QDocumentoDocus.FieldByName('puntoventa_id_1').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('puntoventa_id').AsString;
+                        QDocumentoDocus.FieldByName('puntoventa_numero').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('puntoventa_numero').AsString;
+                        QDocumentoDocus.FieldByName('sucursal_id').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('sucursal_id').AsString;
+                        QDocumentoDocus.FieldByName('documentodocu_importe').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documentodoc_importe').AsString;
+                        QDocumentoDocus.FieldByName('documentodocu_pagado').AsFloat:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documento_pagado').AsFloat+DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documentodoc_importe').AsFloat;
+                        QDocumentoDocus.FieldByName('documentodocu_saldo').AsFloat:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documento_saldo').AsFloat-DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documentodoc_importe').AsFloat;
+                        QDocumentoDocus.FieldByName('documentodocu_id').AsString:='0';
+                        QDocumentoDocus.FieldByName('documento_idpago').AsString:=DocumentosPendientes.ZQDocumentosPendientes.FieldByName('documento_id').AsString;
+                        QDocumentoDocus.FieldByName('documento_id_1').AsString:='0';
+                        QDocumentoDocus.Post;
+
+
+                    end;
+
+
+                  DocumentosPendientes.ZQDocumentosPendientes.Next;
+              end;
+
+          result:=true;
+      end
+    else
+      result:=false;
+
+    DocumentosPendientes.Free;
+
+
+
+
+
+end;
+
+
 
 
 
@@ -245,14 +393,31 @@ end;
 
 procedure TPrinc.AbrirNuevoTipoDocumento;
 begin
-
+    try
+      tipodocumento:=Ttipodocumento.Create(self);
+    finally
+      tipodocumento.abm:=1;
+      tipodocumento.btnguardar.Caption:='Guardar';
+      tipodocumento.Show;
+    end;
 end;
 
 
 
 procedure TPrinc.AbrirModificarTipoDocumento(id:string);
 begin
+    if id<>'' then
+      begin
+          try
+            tipodocumento:=Ttipodocumento.Create(self);
+          finally
+            tipodocumento.abm:=2;
+            tipodocumento.id:=id;
+            tipodocumento.btnguardar.Caption:='Modificar';
+            tipodocumento.Show;
+          end;
 
+      end;
 
 
 end;
@@ -308,6 +473,27 @@ end;
 
 procedure TPrinc.AbrirDocumentoVenta(id: string; tipodocu_nombre: string; abm: Integer);
 begin
+    if tipodocu_nombre='Factura de Venta' then
+      begin
+          try
+            facturasventa:=Tfacturasventa.Create(self);
+          finally
+            facturasventa.abm:=abm;
+            facturasventa.id:=id;
+            facturasventa.Show;
+          end;
+      end;
+
+    if tipodocu_nombre='Recibo de Venta' then
+      begin
+          try
+            recibosventa:=Trecibosventa.Create(self);
+          finally
+            recibosventa.abm:=abm;
+            recibosventa.id:=id;
+            recibosventa.Show;
+          end;
+      end;
 
 end;
 
@@ -377,11 +563,13 @@ begin
 end;
 
 
-function TPrinc.GetConfigTipoDocumento(documento_id: string; campo: string):string;
+function TPrinc.GetConfigTipoDocumento(documento_id: string; tipodocu_id:string; campo: string):string;
 begin
-    Result := Princ.buscar('select '+campo+' from tiposdocumento inner join documentosventas on tiposdocumento.tipodocu_id=documentosventas.tipodocu_id where documentosventas.documentoventa_id="'+documento_id+'"',campo);
+    if tipodocu_id='' then
+      Result := Princ.buscar('select '+campo+' from tiposdocumento inner join documentosventas on tiposdocumento.tipodocu_id=documentosventas.tipodocu_id where documentosventas.documentoventa_id="'+documento_id+'"',campo)
+    else
+      Result := Princ.buscar('select '+campo+' from tiposdocumento where tipodocu_id="'+tipodocu_id+'"',campo);
 end;
-
 
 function TPrinc.BorrarDocumentoVenta(documentoventa_id: string):boolean;
 var
@@ -1069,7 +1257,7 @@ begin
 
     id:=codigo('documentosventas', 'documentoventa_id');
 
-    documentoventa_numero:=Princ.NumeroDocumento(Cabecera.FieldByName('tipodocu_id').AsString);
+    documentoventa_numero:=Princ.NumeroDocumento(Cabecera.FieldByName('tipodocu_id').AsString,'');
     if strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+Cabecera.FieldByName('tipodocu_id').AsString+'"','tipodocu_fiscal')) then
       documentoventa_numero:='0';
       
@@ -1387,6 +1575,25 @@ begin
 
 end;
 
+
+procedure TPrinc.ActualizarSaldoDocumento(id: string; importe: Real; inversa:boolean=false);
+var
+  importe_real:real;
+begin
+    importe_real:=importe;
+    if inversa then
+      importe_real:=importe*-1;
+
+    ZQActualizarSaldoDocumentoVenta.Active:=false;
+    ZQActualizarSaldoDocumentoVenta.SQL.Text:='call actualizarsaldo("'+id+'","'+floattostr(importe_real)+'")';
+
+    ZQActualizarSaldoDocumentoVenta.ExecSQL;
+
+
+
+end;
+
+
 procedure TPrinc.ActualizarSaldoDocumentoVenta(id: string; importe: Real; inversa:boolean=false);
 var
   importe_real:real;
@@ -1456,21 +1663,6 @@ begin
     Result:=producto_precioventabase;
 end;
 
-function TPrinc.NumeroDocumento(tipodocu_id: string):string;
-var
-  tipodocu_numero:string;
-begin
-    tipodocu_numero:=self.buscar('select tipodocu_ultimonumero from tiposdocumento where tipodocu_id="'+tipodocu_id+'"','tipodocu_ultimonumero');
-    if tipodocu_numero<>'' then
-      begin
-          tipodocu_numero:=inttostr(strtoint(tipodocu_numero)+1);
-      end
-    else
-      tipodocu_numero:='1';
-
-
-    result:=tipodocu_numero
-end;
 
 procedure TPrinc.actualizarstock(producto_id:string; cantidad:real; tipodocu_id:string; inversa:boolean=false );
 var
@@ -1520,9 +1712,9 @@ begin
     empleado_id_logueado:='';
     dep_id:='1';
 
-{    sucursal_actual:=Princ.GetConfiguracion('SUCURSALDEFECTO');
+    sucursal_actual:='1';
 
-    NOMBREPRECIO1:=Princ.GetConfiguracion('NOMBREPRECIO1');
+{    NOMBREPRECIO1:=Princ.GetConfiguracion('NOMBREPRECIO1');
     NOMBREPRECIO2:=Princ.GetConfiguracion('NOMBREPRECIO2');
     NOMBREPRECIO3:=Princ.GetConfiguracion('NOMBREPRECIO3');
     NOMBREPRECIO4:=Princ.GetConfiguracion('NOMBREPRECIO4');
@@ -1670,16 +1862,111 @@ begin
     ADOConnection1.ConnectionString:=CONNECTION_STRING1+EXCEL_FILE+CONNECTION_STRING3;
 end;
 
+procedure TPrinc.AdvGlowButton16Click(Sender: TObject);
+begin
+    try
+      localidades:=Tlocalidades.Create(self);
+    finally
+      localidades.Show;
+    end;
+end;
+
+procedure TPrinc.AdvGlowButton17Click(Sender: TObject);
+begin
+    try
+      listarecibosventa:=Tlistarecibosventa.Create(self);
+    finally
+      listarecibosventa.Show;
+    end;
+end;
+
+procedure TPrinc.btnsaldosgranosClick(Sender: TObject);
+begin
+    try
+      saldoclientes:=Tsaldoclientes.Create(self);
+    finally
+      saldoclientes.tipodocu_tipoctacte:='STOCK';
+      saldoclientes.Show;
+    end;
+end;
+
+
+function TPrinc.NumeroDocumento(tipodocu_id:string; documentoventa_numero:string):string;
+var
+  tipodocu_numero:string;
+  tipodocu_manual:boolean;
+begin
+    tipodocu_manual:=strtobool(princ.GetConfigTipoDocumento('',tipodocu_id,'tipodocu_manual'));
+    if (not tipodocu_manual) or (documentoventa_numero='') then
+      begin
+          tipodocu_numero:=princ.GetConfigTipoDocumento('',tipodocu_id,'tipodocu_ultimonumero');
+
+          if tipodocu_numero<>'' then
+            begin
+                tipodocu_numero:=inttostr(strtoint(tipodocu_numero)+1);
+            end
+          else
+            tipodocu_numero:='1';
+
+      end
+    else
+      tipodocu_numero:=documentoventa_numero;
+
+    result:=tipodocu_numero;
+end;
+
+
 procedure TPrinc.AdvGlowButton1Click(Sender: TObject);
 begin
 
  try
       listaEntidades:=TlistaEntidades.Create(self);
     finally
-      listaEntidades.campo_id:='entidad_codi';
+      listaEntidades.campo_id:='entidad_id';
       listaEntidades.Show;
     end;
 
+end;
+
+procedure TPrinc.AdvGlowButton20Click(Sender: TObject);
+begin
+    try
+      estadoctas:=Testadoctas.Create(self);
+    finally
+      estadoctas.tipodocu_tipoctacte:='STOCK';
+      estadoctas.Show;
+    end;
+end;
+
+procedure TPrinc.AdvGlowButton21Click(Sender: TObject);
+begin
+    try
+      detallectas:=Tdetallectas.Create(self);
+    finally
+      detallectas.Show;
+    end;
+end;
+
+procedure TPrinc.btncontratosClick(Sender: TObject);
+begin
+    try
+      listacontratos:=Tlistacontratos.Create(self);
+    finally
+      listacontratos.campo_id:='documento_id';
+      listacontratos.tipodocu_nombre:='Contrato de Compra';
+      listacontratos.Show;
+    end;
+end;
+
+procedure TPrinc.btncontratoventaClick(Sender: TObject);
+begin
+    try
+      listacontratosventa:=Tlistacontratosventa.Create(self);
+    finally
+      listacontratosventa.campo_id:='documento_id';
+      listacontratosventa.tipodocu_nombre:='Contrato de Venta';
+      listacontratosventa.Show;
+    end;
 end;
 
 procedure TPrinc.AdvGlowButton2Click(Sender: TObject);
@@ -1687,7 +1974,7 @@ begin
     try
       listaControlEntidad:=TlistaControlEntidad.Create(self);
     finally
-      listaControlEntidad.campo_id:='controlentidad_codi';
+      listaControlEntidad.campo_id:='entidadrol_id';
       listaControlEntidad.show;
     end;
 
@@ -1696,12 +1983,12 @@ end;
 
 procedure TPrinc.AdvGlowButton3Click(Sender: TObject);
 begin
-    try
-      listaAritculos:=TlistaAritculos.Create(self);
-    finally
-       listaAritculos.campo_id:='articulo_codi';
-      listaAritculos.show;
-    end;
+//    try
+//      listaAritculos:=TlistaAritculos.Create(self);
+//    finally
+//       listaAritculos.campo_id:='articulo_codi';
+//      listaAritculos.show;
+//    end;
 
 end;
 
@@ -1710,18 +1997,48 @@ begin
     try
       listaRoles:=TlistaRoles.Create(self);
     finally
-       listaRoles.campo_id:='rol_codi';
+       listaRoles.campo_id:='rol_id';
       listaRoles.show;
     end;
 end;
 
-procedure TPrinc.AdvGlowButton5Click(Sender: TObject);
+procedure TPrinc.btnespeciesClick(Sender: TObject);
 begin
-      try
-      listaRubros:=TlistaRubros.Create(self);
+    try
+      listaespeciesvariedades:=Tlistaespeciesvariedades.Create(self);
     finally
-       listaRubros.campo_id:='rubro_codi';
-      listaRubros.show;
+       listaespeciesvariedades.campo_id:='especie_id';
+       listaespeciesvariedades.show;
+    end;
+end;
+
+procedure TPrinc.AdvGlowButton7Click(Sender: TObject);
+begin
+    try
+      listatiposdocumentos:=Tlistatiposdocumentos.Create(self);
+    finally
+      listatiposdocumentos.campo_id:='tipodocu_id';
+      listatiposdocumentos.show;
+    end;
+end;
+
+procedure TPrinc.AdvGlowButton8Click(Sender: TObject);
+begin
+    try
+      listasucursales:=Tlistasucursales.Create(self);
+    finally
+      listasucursales.campo_id:='sucursal_id';
+      listasucursales.Show;
+    end;
+end;
+
+procedure TPrinc.AdvGlowButton9Click(Sender: TObject);
+begin
+    try
+      listapuntosdeventa:=Tlistapuntosdeventa.Create(self);
+    finally
+      listapuntosdeventa.campo_id:='puntoventa_id';
+      listapuntosdeventa.Show;
     end;
 end;
 
@@ -1731,10 +2048,26 @@ begin
     self.AdvPopupMenu1.Popup(mouse.CursorPos.X,mouse.CursorPos.Y);
 end;
 
-procedure TPrinc.btnventasrapidasClick(Sender: TObject);
+procedure TPrinc.btnfacturasventasClick(Sender: TObject);
 begin
-  
+    try
+      listafacturasventa:=Tlistafacturasventa.Create(self);
+    finally
+      listafacturasventa.Show;
+    end;
 end;
+
+procedure TPrinc.btnordenesdecargaClick(Sender: TObject);
+begin
+    try
+      listaordendecarga:=Tlistaordendecarga.Create(self);
+    finally
+      listaordendecarga.campo_id:='documento_id';
+      listaordendecarga.tipodocu_nombre:='Orden de Carga';
+      listaordendecarga.Show;
+    end;
+end;
+
 
 //procedure TPrinc.btnperfilesClick(Snder: TObject);
 //begin

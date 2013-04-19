@@ -1,4 +1,5 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{849d51f7-8935-471d-9247-48f6d9a8b445}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -32,6 +33,9 @@
     <DCCReference Include="Formularios\Archivo\UnitArticulos.pas">
       <Form>Articulos</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitbusquedaproductos.pas">
+      <Form>busquedaproductos</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitControlEntidad.pas">
       <Form>ControlEntidad</Form>
     </DCCReference>
@@ -49,6 +53,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitlistaEntidades.pas">
       <Form>listaEntidades</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitlistaespeciesvariedades.pas">
+      <Form>listaespeciesvariedades</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitListaPerfiles.pas">
       <Form>ListaPerfiles</Form>
@@ -74,11 +81,17 @@
     <DCCReference Include="Formularios\Archivo\UnitPersonal.pas">
       <Form>personal</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitProductos.pas">
+      <Form>productos</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitRoles.pas">
       <Form>Roles</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitRubros.pas">
       <Form>Rubros</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitTipoDocumento.pas">
+      <Form>tipodocumento</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Herramientas\UnitConfiguracion.pas">
       <Form>configuracion</Form>
@@ -106,6 +119,66 @@
     </DCCReference>
     <DCCReference Include="Formularios\UnitPrinc.pas">
       <Form>Princ</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitContrato.pas">
+      <Form>contrato</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitContratoVenta.pas">
+      <Form>contratoventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitdetallectas.pas">
+      <Form>detallectas</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitDocumentoBase.pas">
+      <Form>DocumentoBase</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitDocumentosPendientes.pas">
+      <Form>DocumentosPendientes</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitDocumentosVentasPendientes.pas">
+      <Form>DocumentosVentasPendientes</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitdocumentoventabase.pas">
+      <Form>documentoventabase</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitestadodectas.pas">
+      <Form>estadoctas</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitFacturarDocumentos.pas">
+      <Form>FacturarDocumentos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitfacturasventa.pas">
+      <Form>facturasventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitListaContratos.pas">
+      <Form>listacontratos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitListaContratosVentas.pas">
+      <Form>listacontratosventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitListaDocumentos.pas">
+      <Form>listadocumentos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitlistafacturasventa.pas">
+      <Form>listafacturasventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitListaOrdendeCarga.pas">
+      <Form>listaordendecarga</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitlistarecibosventa.pas">
+      <Form>listarecibosventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitOrdenDeCarga.pas">
+      <Form>OrdendeCarga</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitrecibosventa.pas">
+      <Form>recibosventa</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitsaldoclientes.pas">
+      <Form>saldoclientes</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\Unitventadetalle2.pas">
+      <Form>ventadetalle2</Form>
     </DCCReference>
   </ItemGroup>
 </Project>

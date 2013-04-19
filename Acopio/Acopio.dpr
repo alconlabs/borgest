@@ -3,7 +3,6 @@ program Acopio;
 uses
   Forms,
   UnitPrinc in 'Formularios\UnitPrinc.pas' {Princ},
-  Unitlocalidades in 'Formularios\Archivo\Unitlocalidades.pas' {localidades},
   UnitConfiguracion in 'Formularios\Herramientas\UnitConfiguracion.pas' {configuracion},
   UnitEmpresa in 'Formularios\Archivo\UnitEmpresa.pas' {empresa},
   Unitlistabase in 'Formularios\Unitlistabase.pas' {listabase},
@@ -27,7 +26,32 @@ uses
   UnitlistaRubros in 'Formularios\Archivo\UnitlistaRubros.pas' {listaRubros},
   UnitRubros in 'Formularios\Archivo\UnitRubros.pas' {Rubros},
   UnitlistaControlEntidad in 'Formularios\Archivo\UnitlistaControlEntidad.pas' {listaControlEntidad},
-  UnitControlEntidad in 'Formularios\Archivo\UnitControlEntidad.pas' {ControlEntidad};
+  UnitControlEntidad in 'Formularios\Archivo\UnitControlEntidad.pas' {ControlEntidad},
+  UnitTipoDocumento in 'Formularios\Archivo\UnitTipoDocumento.pas' {tipodocumento},
+  Unitsaldoclientes in 'Formularios\Ventas\Unitsaldoclientes.pas' {saldoclientes},
+  Unitdetallectas in 'Formularios\Ventas\Unitdetallectas.pas' {detallectas},
+  Unitestadodectas in 'Formularios\Ventas\Unitestadodectas.pas' {estadoctas},
+  Unitdocumentoventabase in 'Formularios\Ventas\Unitdocumentoventabase.pas' {documentoventabase},
+  Unitlistafacturasventa in 'Formularios\Ventas\Unitlistafacturasventa.pas' {listafacturasventa},
+  Unitfacturasventa in 'Formularios\Ventas\Unitfacturasventa.pas' {facturasventa},
+  UnitFacturarDocumentos in 'Formularios\Ventas\UnitFacturarDocumentos.pas' {FacturarDocumentos},
+  Unitventadetalle2 in 'Formularios\Ventas\Unitventadetalle2.pas' {ventadetalle2},
+  Unitbusquedaproductos in 'Formularios\Archivo\Unitbusquedaproductos.pas' {busquedaproductos},
+  UnitProductos in 'Formularios\Archivo\UnitProductos.pas' {productos},
+  Unitlocalidades in 'Formularios\Archivo\Unitlocalidades.pas' {localidades},
+  Unitlistarecibosventa in 'Formularios\Ventas\Unitlistarecibosventa.pas' {listarecibosventa},
+  Unitrecibosventa in 'Formularios\Ventas\Unitrecibosventa.pas' {recibosventa},
+  UnitDocumentoBase in 'Formularios\Ventas\UnitDocumentoBase.pas' {DocumentoBase},
+  UnitListaDocumentos in 'Formularios\Ventas\UnitListaDocumentos.pas' {listadocumentos},
+  UnitListaContratosVentas in 'Formularios\Ventas\UnitListaContratosVentas.pas' {listacontratosventa},
+  UnitContrato in 'Formularios\Ventas\UnitContrato.pas' {contrato},
+  Unitlistaespeciesvariedades in 'Formularios\Archivo\Unitlistaespeciesvariedades.pas' {listaespeciesvariedades},
+  UnitListaOrdendeCarga in 'Formularios\Ventas\UnitListaOrdendeCarga.pas' {listaordendecarga},
+  UnitOrdenDeCarga in 'Formularios\Ventas\UnitOrdenDeCarga.pas' {OrdendeCarga},
+  UnitDocumentosVentasPendientes in 'Formularios\Ventas\UnitDocumentosVentasPendientes.pas' {DocumentosVentasPendientes},
+  UnitDocumentosPendientes in 'Formularios\Ventas\UnitDocumentosPendientes.pas' {DocumentosPendientes},
+  UnitListaContratos in 'Formularios\Ventas\UnitListaContratos.pas' {listacontratos},
+  UnitContratoVenta in 'Formularios\Ventas\UnitContratoVenta.pas' {contratoventa};
 
 {$R *.res}
 

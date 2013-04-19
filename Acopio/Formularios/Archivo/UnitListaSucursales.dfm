@@ -1,7 +1,7 @@
 inherited listasucursales: Tlistasucursales
   Caption = 'Sucursales'
   ExplicitWidth = 950
-  ExplicitHeight = 494
+  ExplicitHeight = 516
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -9,8 +9,8 @@ inherited listasucursales: Tlistasucursales
     inherited panelbotonera: TAdvPanel
       FullHeight = 0
       inherited btnmodificar: TButton
-        ExplicitLeft = 6
-        ExplicitTop = 47
+        ExplicitLeft = 1
+        ExplicitTop = 42
       end
       inherited btnanular: TButton
         Visible = False
@@ -49,37 +49,40 @@ inherited listasucursales: Tlistasucursales
     inherited panelfiltros: TAdvPanel
       FullHeight = 0
       object fil_sucursal_nombre: TGTBEdit
-        Left = 85
-        Top = 0
+        Left = 86
+        Top = 1
         Width = 250
-        Height = 21
+        Height = 19
         Align = alLeft
         TabOrder = 2
         Tag2 = 0
         FieldName = 'sucursal_nombre'
         Caption = 'Nombre'
+        ExplicitHeight = 21
       end
       object fil_sucursal_domicilio: TGTBEdit
-        Left = 335
-        Top = 0
+        Left = 336
+        Top = 1
         Width = 280
-        Height = 21
+        Height = 19
         Align = alLeft
         TabOrder = 3
         Tag2 = 0
         FieldName = 'sucursal_domicilio'
         Caption = 'Domicilio'
+        ExplicitHeight = 21
       end
       object fil_sucursal_telefono: TGTBEdit
-        Left = 615
-        Top = 0
+        Left = 616
+        Top = 1
         Width = 130
-        Height = 21
+        Height = 19
         Align = alLeft
         TabOrder = 4
         Tag2 = 0
         FieldName = 'sucursal_telefono'
         Caption = 'Telefono'
+        ExplicitHeight = 21
       end
     end
   end

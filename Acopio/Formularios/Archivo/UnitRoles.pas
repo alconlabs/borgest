@@ -12,7 +12,7 @@ type
     PageControl1: TPageControl;
     TabSheet2: TTabSheet;
     Label3: TLabel;
-    rol_codi: TDBAdvEdit;
+    rol_id: TDBAdvEdit;
     AdvPanel3: TAdvPanel;
     Label27: TLabel;
     btnguardar: TButton;
@@ -53,8 +53,8 @@ procedure TRoles.eliminar;
 begin
     ZQExecSql.sql.clear;
     ZQExecSql.sql.add('Delete from roles ');
-    ZQExecSql.sql.add('where rol_codi=:rol_codi ');
-    ZQExecSql.ParamByName('rol_codi').AsString:=id;
+    ZQExecSql.sql.add('where rol_id=:rol_id ');
+    ZQExecSql.ParamByName('rol_id').AsString:=id;
     ZQExecSql.ExecSQL;
 
     close;
@@ -67,8 +67,8 @@ begin
     ZQExecSql.sql.clear;
     ZQExecSql.sql.add('Update roles set ');
     ZQExecSql.sql.add('rol_nombre=:rol_nombre ');
-    ZQExecSql.sql.add('where rol_codi=:rol_codi ');
-    ZQExecSql.ParamByName('rol_codi').AsString:=id;
+    ZQExecSql.sql.add('where rol_id=:rol_id ');
+    ZQExecSql.ParamByName('rol_id').AsString:=id;
     ZQExecSql.ParamByName('rol_nombre').AsString:=rol_nombre.Text;
     ZQExecSql.ExecSQL;
 
@@ -112,14 +112,14 @@ end;
 function TRoles.control:boolean;
 var
   error:integer;
-  rol_codi_nombre:string;
+  rol_id_nombre:string;
 begin
  error:=0;
 
     if abm=1 then
       begin
-          rol_codi_nombre:=Princ.buscar('select rol_codi from roles where rol_nombre="'+rol_nombre.Text+'"','rol_codi');
-          if rol_codi_nombre<>'' then
+          rol_id_nombre:=Princ.buscar('select rol_id from roles where rol_nombre="'+rol_nombre.Text+'"','rol_id');
+          if rol_id_nombre<>'' then
             begin
                 error:=3;
                 if (MessageDlg('Ya existe un Rol con el mismo nombre.'+#13+#10+'Desea continuar?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
@@ -136,12 +136,12 @@ end;
 
 procedure TRoles.agregar;
 begin
-    id:=Princ.codigo('roles','rol_codi');
+    id:=Princ.codigo('roles','rol_id');
 
     ZQExecSql.sql.clear;
-    ZQExecSql.sql.add('Insert into roles (rol_codi, rol_nombre) ');
-    ZQExecSql.sql.add('values (:rol_codi, :rol_nombre) ');
-    ZQExecSql.ParamByName('rol_codi').AsString:=id;
+    ZQExecSql.sql.add('Insert into roles (rol_id, rol_nombre) ');
+    ZQExecSql.sql.add('values (:rol_id, :rol_nombre) ');
+    ZQExecSql.ParamByName('rol_id').AsString:=id;
     ZQExecSql.ParamByName('rol_nombre').AsString:=rol_nombre.Text;
     ZQExecSql.ExecSQL;
 
@@ -153,7 +153,7 @@ end;
 
 procedure TRoles.FormCreate(Sender: TObject);
 begin
-    rol_codi.Text:=Princ.codigo('roles','rol_codi');
+    rol_id.Text:=Princ.codigo('roles','rol_id');
     rol_nombre.Text:='';
 end;
 
@@ -162,7 +162,7 @@ begin
     if abm<>1 then
       begin
           ZQSelect.Active:=false;
-          ZQSelect.ParamByName('rol_codi').AsString:=id;
+          ZQSelect.ParamByName('rol_id').AsString:=id;
           ZQSelect.Active:=true;
 
 
@@ -172,7 +172,7 @@ end;
 
 procedure TRoles.ZQSelectAfterOpen(DataSet: TDataSet);
 begin
-    rol_codi.Text:=ZQSelect.FieldByName('rol_codi').AsString;
+    rol_id.Text:=ZQSelect.FieldByName('rol_id').AsString;
     rol_nombre.Text:=ZQSelect.FieldByName('rol_nombre').AsString;
 end;
 

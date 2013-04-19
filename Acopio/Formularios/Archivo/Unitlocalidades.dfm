@@ -22,8 +22,6 @@ object localidades: Tlocalidades
     Width = 934
     Height = 336
     Align = alClient
-    BevelOuter = bvNone
-    Color = 15524577
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -35,41 +33,34 @@ object localidades: Tlocalidades
     Version = '1.7.5.1'
     AutoHideChildren = False
     BorderColor = clGray
-    Caption.Color = 15722471
-    Caption.ColorTo = 11176072
+    Caption.Color = clWhite
+    Caption.ColorTo = clNone
     Caption.Font.Charset = DEFAULT_CHARSET
-    Caption.Font.Color = clBlack
+    Caption.Font.Color = clHighlightText
     Caption.Font.Height = -11
     Caption.Font.Name = 'MS Sans Serif'
     Caption.Font.Style = []
-    Caption.GradientDirection = gdVertical
     Caption.Indent = 2
     Caption.ShadeLight = 255
-    CollapsColor = clHighlight
+    CollapsColor = clBtnFace
     CollapsDelay = 0
-    ColorTo = 11769496
     ShadowColor = clBlack
     ShadowOffset = 0
     StatusBar.BorderColor = clNone
-    StatusBar.BorderStyle = bsSingle
     StatusBar.Font.Charset = DEFAULT_CHARSET
     StatusBar.Font.Color = clBlack
     StatusBar.Font.Height = -11
     StatusBar.Font.Name = 'Tahoma'
     StatusBar.Font.Style = []
-    StatusBar.Color = 12560553
-    StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
     FullHeight = 0
     object panelbotonera: TAdvPanel
-      Left = 831
-      Top = 0
+      Left = 830
+      Top = 1
       Width = 103
-      Height = 297
+      Height = 295
       Align = alRight
-      BevelOuter = bvNone
-      Color = 15524577
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -81,36 +72,31 @@ object localidades: Tlocalidades
       Version = '1.7.5.1'
       AutoHideChildren = False
       BorderColor = clGray
-      Caption.Color = 15722471
-      Caption.ColorTo = 11176072
+      Caption.Color = clWhite
+      Caption.ColorTo = clNone
       Caption.Font.Charset = DEFAULT_CHARSET
-      Caption.Font.Color = clBlack
+      Caption.Font.Color = clHighlightText
       Caption.Font.Height = -11
       Caption.Font.Name = 'MS Sans Serif'
       Caption.Font.Style = []
-      Caption.GradientDirection = gdVertical
       Caption.Indent = 2
       Caption.ShadeLight = 255
-      CollapsColor = clHighlight
+      CollapsColor = clBtnFace
       CollapsDelay = 0
-      ColorTo = 11769496
       ShadowColor = clBlack
       ShadowOffset = 0
       StatusBar.BorderColor = clNone
-      StatusBar.BorderStyle = bsSingle
       StatusBar.Font.Charset = DEFAULT_CHARSET
       StatusBar.Font.Color = clBlack
       StatusBar.Font.Height = -11
       StatusBar.Font.Name = 'Tahoma'
       StatusBar.Font.Style = []
-      StatusBar.Color = 12560553
-      StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
       FullHeight = 0
       object Button2: TButton
-        Left = 0
-        Top = 82
-        Width = 103
+        Left = 1
+        Top = 83
+        Width = 101
         Height = 41
         Align = alTop
         Caption = 'Eliminar'
@@ -118,9 +104,9 @@ object localidades: Tlocalidades
         OnClick = Button2Click
       end
       object Button3: TButton
-        Left = 0
-        Top = 41
-        Width = 103
+        Left = 1
+        Top = 42
+        Width = 101
         Height = 41
         Align = alTop
         Caption = 'Modificar'
@@ -128,9 +114,9 @@ object localidades: Tlocalidades
         OnClick = Button3Click
       end
       object Button4: TButton
-        Left = 0
-        Top = 0
-        Width = 103
+        Left = 1
+        Top = 1
+        Width = 101
         Height = 41
         Align = alTop
         Caption = 'Crear Nuevo'
@@ -139,10 +125,10 @@ object localidades: Tlocalidades
       end
     end
     object DBGrid1: TDBGrid
-      Left = 0
-      Top = 0
-      Width = 831
-      Height = 297
+      Left = 1
+      Top = 1
+      Width = 829
+      Height = 295
       Align = alClient
       DataSource = DSCgrilla
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
@@ -175,13 +161,11 @@ object localidades: Tlocalidades
         end>
     end
     object panelfiltros: TAdvPanel
-      Left = 0
-      Top = 297
-      Width = 934
+      Left = 1
+      Top = 296
+      Width = 932
       Height = 21
       Align = alBottom
-      BevelOuter = bvNone
-      Color = 15524577
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -193,65 +177,63 @@ object localidades: Tlocalidades
       Version = '1.7.5.1'
       AutoHideChildren = False
       BorderColor = clGray
-      Caption.Color = 15722471
-      Caption.ColorTo = 11176072
+      Caption.Color = clWhite
+      Caption.ColorTo = clNone
       Caption.Font.Charset = DEFAULT_CHARSET
-      Caption.Font.Color = clBlack
+      Caption.Font.Color = clHighlightText
       Caption.Font.Height = -11
       Caption.Font.Name = 'MS Sans Serif'
       Caption.Font.Style = []
-      Caption.GradientDirection = gdVertical
       Caption.Indent = 2
       Caption.ShadeLight = 255
-      CollapsColor = clHighlight
+      CollapsColor = clBtnFace
       CollapsDelay = 0
-      ColorTo = 11769496
       ShadowColor = clBlack
       ShadowOffset = 0
       StatusBar.BorderColor = clNone
-      StatusBar.BorderStyle = bsSingle
       StatusBar.Font.Charset = DEFAULT_CHARSET
       StatusBar.Font.Color = clBlack
       StatusBar.Font.Height = -11
       StatusBar.Font.Name = 'Tahoma'
       StatusBar.Font.Style = []
-      StatusBar.Color = 12560553
-      StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
       FullHeight = 0
       object Button5: TButton
-        Left = 831
-        Top = 0
+        Left = 828
+        Top = 1
         Width = 103
-        Height = 21
+        Height = 19
         Align = alRight
         Caption = 'Filtrar'
         TabOrder = 3
         OnClick = Button5Click
       end
       object fil_provincia_nombre: TEdit
-        Left = 475
-        Top = 0
+        Left = 476
+        Top = 1
         Width = 325
-        Height = 21
+        Height = 19
         Align = alLeft
         TabOrder = 2
+        ExplicitHeight = 21
       end
       object fil_localidad_id: TEdit
-        Left = 0
-        Top = 0
+        Left = 1
+        Top = 1
         Width = 85
-        Height = 21
+        Height = 19
         Align = alLeft
         TabOrder = 0
+        ExplicitHeight = 21
       end
       object fil_localidad_nombre: TEdit
-        Left = 85
-        Top = 0
+        Left = 86
+        Top = 1
         Width = 390
-        Height = 21
+        Height = 19
         Align = alLeft
         TabOrder = 1
+        ExplicitHeight = 21
       end
     end
   end
@@ -261,8 +243,6 @@ object localidades: Tlocalidades
     Width = 934
     Height = 120
     Align = alBottom
-    BevelOuter = bvNone
-    Color = 15524577
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -275,30 +255,25 @@ object localidades: Tlocalidades
     Version = '1.7.5.1'
     AutoHideChildren = False
     BorderColor = clGray
-    Caption.Color = 15722471
-    Caption.ColorTo = 11176072
+    Caption.Color = clWhite
+    Caption.ColorTo = clNone
     Caption.Font.Charset = DEFAULT_CHARSET
-    Caption.Font.Color = clBlack
+    Caption.Font.Color = clHighlightText
     Caption.Font.Height = -11
     Caption.Font.Name = 'MS Sans Serif'
     Caption.Font.Style = []
-    Caption.GradientDirection = gdVertical
     Caption.Indent = 2
     Caption.ShadeLight = 255
-    CollapsColor = clHighlight
+    CollapsColor = clBtnFace
     CollapsDelay = 0
-    ColorTo = 11769496
     ShadowColor = clBlack
     ShadowOffset = 0
     StatusBar.BorderColor = clNone
-    StatusBar.BorderStyle = bsSingle
     StatusBar.Font.Charset = DEFAULT_CHARSET
     StatusBar.Font.Color = clBlack
     StatusBar.Font.Height = -11
     StatusBar.Font.Name = 'Tahoma'
     StatusBar.Font.Style = []
-    StatusBar.Color = 12560553
-    StatusBar.ColorTo = 14602191
     Styler = Princ.AdvPanelStyler1
     FullHeight = 0
     object Label1: TLabel

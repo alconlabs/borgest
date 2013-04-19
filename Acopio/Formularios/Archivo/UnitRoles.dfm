@@ -49,8 +49,8 @@ object Roles: TRoles
         Alignment = taRightJustify
         Caption = 'Descripci'#243'n'
       end
-      object rol_codi: TDBAdvEdit
-        Left = 76
+      object rol_id: TDBAdvEdit
+        Left = 77
         Top = 16
         Width = 85
         Height = 21
@@ -160,11 +160,11 @@ object Roles: TRoles
     AfterOpen = ZQSelectAfterOpen
     SQL.Strings = (
       'select * from roles'
-      'where rol_codi=:rol_codi')
+      'where rol_id=:rol_id')
     Params = <
       item
         DataType = ftUnknown
-        Name = 'rol_codi'
+        Name = 'rol_id'
         ParamType = ptUnknown
       end>
     Left = 304
@@ -172,7 +172,7 @@ object Roles: TRoles
     ParamData = <
       item
         DataType = ftUnknown
-        Name = 'rol_codi'
+        Name = 'rol_id'
         ParamType = ptUnknown
       end>
   end

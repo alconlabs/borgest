@@ -21,7 +21,7 @@ type
     entidad_razonsocial: TEdit;
     entidad_puerta: TDBAdvEdit;
     entidad_precodi: TDBAdvEdit;
-    entidad_codi: TDBAdvEdit;
+    entidad_id: TDBAdvEdit;
     entidad_nombfantasia: TEdit;
     Label21: TLabel;
     entidad_piso: TEdit;
@@ -107,8 +107,8 @@ type
     entidad_inscregproductosi: TRadioButton;
     entidad_inscregproductono: TRadioButton;
     Label56: TLabel;
-    provincia_codi: TSqlComboBox;
-    localidad_codi: TSqlComboBox;
+    provincia_id: TSqlComboBox;
+    localidad_id: TSqlComboBox;
     DBGrid1: TDBGrid;
     DBGrid2: TDBGrid;
     TabSheet5: TTabSheet;
@@ -131,7 +131,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnagregarClick(Sender: TObject);
     procedure btnquitarClick(Sender: TObject);
-    procedure provincia_codiExit(Sender: TObject);
+    procedure provincia_idExit(Sender: TObject);
   private
     { Private declarations }
     function control:boolean;
@@ -221,7 +221,7 @@ begin
 
     if abm=1 then
       begin
-          entidad_id_nombre:=Princ.buscar('select entidad_codi from entidad where entidad_razonsocial="'+entidad_razonsocial.Text+'"','entidad_codi');
+          entidad_id_nombre:=Princ.buscar('select entidad_id from entidades where entidad_razonsocial="'+entidad_razonsocial.Text+'"','entidad_id');
           if entidad_id_nombre<>'' then
             begin
                 error:=3;
@@ -238,23 +238,23 @@ end;
 
 procedure TEntidades.agregar;
 begin
-    id:=Princ.codigo('entidad','entidad_codi');
+    id:=Princ.codigo('entidades','entidad_id');
 
     ZQuery1.sql.clear;
-    ZQuery1.sql.add('Insert into entidad (entidad_codi,entidad_precodi, entidad_razonsocial, entidad_nombfantasia, ');
+    ZQuery1.sql.add('Insert into entidades (entidad_id,entidad_precodi, entidad_razonsocial, entidad_nombfantasia, ');
     ZQuery1.sql.add('entidad_calle, entidad_puerta, entidad_piso , entidad_depto, entidad_domiurbano, entidad_domirural, ');
-    ZQuery1.sql.add('entidad_observaciones, provincia_codi, localidad_codi, entidad_tipodocumento, entidad_nrodocumento, ');
+    ZQuery1.sql.add('entidad_observaciones, provincia_id, localidad_id, entidad_tipodocumento, entidad_nrodocumento, ');
     ZQuery1.sql.add('entidad_iibb, entidad_inicioactividad, entidad_tipoiva, entidad_retieneiibb, entidad_agretencion, ');
     ZQuery1.sql.add('entidad_convmulti, entidad_exportador, entidad_minagri, entidad_diretransporte, entidad_regibalanza, ');
     ZQuery1.sql.add('entidad_regiacopiador, entidad_nrocarnetmanejo, entidad_vencecarnet, entidad_expedidocarnet, entidad_inscregproducto) ');
-    ZQuery1.sql.add('values (:entidad_codi, :entidad_precodi, :entidad_razonsocial, :entidad_nombfantasia,');
+    ZQuery1.sql.add('values (:entidad_id, :entidad_precodi, :entidad_razonsocial, :entidad_nombfantasia,');
     ZQuery1.sql.add(':entidad_calle, :entidad_puerta, :entidad_piso , :entidad_depto, :entidad_domiurbano, :entidad_domirural, ');
-    ZQuery1.sql.add(':entidad_observaciones, :provincia_codi, :localidad_codi, :entidad_tipodocumento, :entidad_nrodocumento, ');
+    ZQuery1.sql.add(':entidad_observaciones, :provincia_id, :localidad_id, :entidad_tipodocumento, :entidad_nrodocumento, ');
     ZQuery1.sql.add(':entidad_iibb, :entidad_inicioactividad, :entidad_tipoiva, :entidad_retieneiibb, :entidad_agretencion, ');
     ZQuery1.sql.add(':entidad_convmulti, :entidad_exportador, :entidad_minagri, :entidad_diretransporte, :entidad_regibalanza, ');
     ZQuery1.sql.add(':entidad_regiacopiador, :entidad_nrocarnetmanejo, :entidad_vencecarnet, :entidad_expedidocarnet, :entidad_inscregproducto) ');
 
-    ZQuery1.parambyname('entidad_codi').asstring:=id;
+    ZQuery1.parambyname('entidad_id').asstring:=id;
     ZQuery1.parambyname('entidad_precodi').asstring:=entidad_precodi.Text;
     ZQuery1.parambyname('entidad_razonsocial').asstring:=entidad_razonsocial.Text;
     ZQuery1.parambyname('entidad_nombfantasia').asstring:=entidad_nombfantasia.Text;
@@ -272,8 +272,8 @@ begin
     else
        ZQuery1.parambyname('entidad_domirural').asstring:='NO';
     ZQuery1.parambyname('entidad_observaciones').asstring:=entidad_observaciones.Text;
-    ZQuery1.parambyname('provincia_codi').asstring:=provincia_codi.codigo;
-    ZQuery1.parambyname('localidad_codi').asstring:=localidad_codi.codigo;
+    ZQuery1.parambyname('provincia_id').asstring:=provincia_id.codigo;
+    ZQuery1.parambyname('localidad_id').asstring:=localidad_id.codigo;
     ZQuery1.parambyname('entidad_tipodocumento').asstring:=entidad_tipodocumento.Text;
     ZQuery1.parambyname('entidad_inicioactividad').asstring:=formatdatetime('yyyy-mm-dd',entidad_inicioactividad.Date);
     ZQuery1.parambyname('entidad_nrodocumento').asstring:=entidad_nrodocumento.Text;
@@ -318,9 +318,9 @@ end;
 procedure TEntidades.eliminar;
 begin
     ZQuery1.sql.clear;
-    ZQuery1.sql.add('Delete from entidad');
-    ZQuery1.sql.add(' where entidad_codi=:entidad_codi');
-    ZQuery1.parambyname('entidad_codi').asstring:=entidad_codi.Text;
+    ZQuery1.sql.add('Delete from entidades');
+    ZQuery1.sql.add(' where entidad_id=:entidad_id');
+    ZQuery1.parambyname('entidad_id').asstring:=entidad_id.Text;
     ZQuery1.ExecSQL;
 
     MessageDlg('La Entidad fue eliminada', mtInformation, [mbOK], 0);
@@ -336,8 +336,8 @@ end;
 
 procedure TEntidades.FormCreate(Sender: TObject);
 begin
-    provincia_codi.llenarcombo;
-    localidad_codi.llenarcombo;
+    provincia_id.llenarcombo;
+    localidad_id.llenarcombo;
     PageControl1.ActivePage:=TabSheet2;
 
 end;
@@ -347,7 +347,7 @@ begin
     if abm<>1 then
       begin
           ZQentidad.Active:=false;
-          ZQentidad.ParamByName('entidad_codi').AsString:=id;
+          ZQentidad.ParamByName('entidad_id').AsString:=id;
           ZQentidad.Active:=true;
       end;
 end;
@@ -356,7 +356,7 @@ procedure TEntidades.modificar;
 begin
 
     ZQuery1.sql.clear;
-    ZQuery1.sql.add('Update entidad set ');
+    ZQuery1.sql.add('Update entidades set ');
     ZQuery1.sql.add('entidad_precodi=:entidad_precodi, ');
     ZQuery1.sql.add('entidad_razonsocial=:entidad_razonsocial, ');
     ZQuery1.sql.add('entidad_nombfantasia=:entidad_nombfantasia, ');
@@ -367,8 +367,8 @@ begin
     ZQuery1.sql.add('entidad_domiurbano=:entidad_domiurbano, ');
     ZQuery1.sql.add('entidad_domirural=:entidad_domirural, ');
     ZQuery1.sql.add('entidad_observaciones=:entidad_observaciones, ');
-    ZQuery1.sql.add('provincia_codi=:provincia_codi, ');
-    ZQuery1.sql.add('localidad_codi=:localidad_codi, ');
+    ZQuery1.sql.add('provincia_id=:provincia_id, ');
+    ZQuery1.sql.add('localidad_id=:localidad_id, ');
     ZQuery1.sql.add('entidad_tipodocumento=:entidad_tipodocumento, ');
     ZQuery1.sql.add('entidad_nrodocumento=:entidad_nrodocumento, ');
     ZQuery1.sql.add('entidad_iibb=:entidad_iibb, ');
@@ -386,9 +386,9 @@ begin
     ZQuery1.sql.add('entidad_vencecarnet=:entidad_vencecarnet, ');
     ZQuery1.sql.add('entidad_expedidocarnet=:entidad_expedidocarnet, ');
     ZQuery1.sql.add('entidad_inscregproducto=:entidad_inscregproducto ');
-    ZQuery1.sql.add(' where entidad_codi=:entidad_codi');
+    ZQuery1.sql.add(' where entidad_id=:entidad_id');
 
-    ZQuery1.parambyname('entidad_codi').asstring:=id;
+    ZQuery1.parambyname('entidad_id').asstring:=id;
     ZQuery1.parambyname('entidad_precodi').asstring:=entidad_precodi.Text;
     ZQuery1.parambyname('entidad_razonsocial').asstring:=entidad_razonsocial.Text;
     ZQuery1.parambyname('entidad_nombfantasia').asstring:=entidad_nombfantasia.Text;
@@ -406,8 +406,8 @@ begin
     else
        ZQuery1.parambyname('entidad_domirural').asstring:='NO';
     ZQuery1.parambyname('entidad_observaciones').asstring:=entidad_observaciones.Text;
-    ZQuery1.parambyname('provincia_codi').asstring:=provincia_codi.codigo;
-    ZQuery1.parambyname('localidad_codi').asstring:=localidad_codi.codigo;
+    ZQuery1.parambyname('provincia_id').asstring:=provincia_id.codigo;
+    ZQuery1.parambyname('localidad_id').asstring:=localidad_id.codigo;
     ZQuery1.parambyname('entidad_tipodocumento').asstring:=entidad_tipodocumento.Text;
     ZQuery1.parambyname('entidad_inicioactividad').asstring:=formatdatetime('yyyy-mm-dd',entidad_inicioactividad.Date);
     ZQuery1.parambyname('entidad_nrodocumento').asstring:=entidad_nrodocumento.Text;
@@ -449,16 +449,16 @@ begin
 end;
 
 
-procedure TEntidades.provincia_codiExit(Sender: TObject);
+procedure TEntidades.provincia_idExit(Sender: TObject);
 begin
-    self.localidad_codi.Confsql.Text:='select * from localidad where provincia_codi='+provincia_codi.codigo+' '+
+    self.localidad_id.Confsql.Text:='select * from localidades where provincia_id='+provincia_id.codigo+' '+
                                       'order by localidad_nombre ';
-    localidad_codi.llenarcombo;
+    localidad_id.llenarcombo;
 end;
 
 procedure TEntidades.ZQentidadAfterOpen(DataSet: TDataSet);
 begin
-    entidad_codi.Text:=id;
+    entidad_id.Text:=id;
 
     entidad_precodi.Text:=ZQentidad.FieldByName('entidad_precodi').AsString;
     entidad_razonsocial.Text:=ZQentidad.FieldByName('entidad_razonsocial').AsString;
@@ -467,13 +467,12 @@ begin
     entidad_puerta.Text:=ZQentidad.FieldByName('entidad_puerta').AsString;
     entidad_piso.Text:=ZQentidad.FieldByName('entidad_piso').AsString;
     entidad_depto.Text:=ZQentidad.FieldByName('entidad_depto').AsString;
-    if ZQentidad.fieldbyname('entidad_domiurbano').asstring='SI' then
        entidad_domiurbano.Checked:=true;
     if ZQentidad.fieldbyname('entidad_domirural').asstring='SI' then
        entidad_domirural.Checked:=true;
     entidad_observaciones.Text:=ZQentidad.FieldByName('entidad_observaciones').AsString;
-    provincia_codi.Buscar(ZQentidad.FieldByName('provincia_codi').AsString);
-    localidad_codi.Buscar(ZQentidad.FieldByName('localidad_codi').AsString);
+    provincia_id.Buscar(ZQentidad.FieldByName('provincia_id').AsString);
+    localidad_id.Buscar(ZQentidad.FieldByName('localidad_id').AsString);
     entidad_tipodocumento.Text:=ZQentidad.FieldByName('entidad_tipodocumento').AsString;
     entidad_inicioactividad.date:=ZQentidad.FieldByName('entidad_inicioactividad').AsDateTime;
     entidad_tipoiva.Text:=ZQentidad.FieldByName('entidad_tipoiva').AsString;

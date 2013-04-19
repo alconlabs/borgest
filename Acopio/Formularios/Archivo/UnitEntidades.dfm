@@ -156,7 +156,7 @@ object Entidades: TEntidades
         Visible = True
         Version = '2.7.0.5'
       end
-      object entidad_codi: TDBAdvEdit
+      object entidad_id: TDBAdvEdit
         Left = 190
         Top = 6
         Width = 130
@@ -286,7 +286,7 @@ object Entidades: TEntidades
         Visible = True
         Version = '2.7.0.5'
       end
-      object provincia_codi: TSqlComboBox
+      object provincia_id: TSqlComboBox
         Left = 276
         Top = 119
         Width = 368
@@ -294,16 +294,16 @@ object Entidades: TEntidades
         Style = csDropDownList
         ItemHeight = 13
         TabOrder = 8
-        OnExit = provincia_codiExit
+        OnExit = provincia_idExit
         Confbase = Princ.ZBase
         Confsql.Strings = (
-          'select * from provincia'
+          'select * from provincias'
           'order by provincia_nombre')
-        Confcampo_codigo = 'provincia_codi'
+        Confcampo_codigo = 'provincia_id'
         Confcampo_nomb = 'provincia_nombre'
         Tag2 = 0
       end
-      object localidad_codi: TSqlComboBox
+      object localidad_id: TSqlComboBox
         Left = 276
         Top = 141
         Width = 368
@@ -313,9 +313,9 @@ object Entidades: TEntidades
         TabOrder = 9
         Confbase = Princ.ZBase
         Confsql.Strings = (
-          'select * from localidad'
+          'select * from localidades'
           'order by localidad_nombre')
-        Confcampo_codigo = 'localidad_codi'
+        Confcampo_codigo = 'localidad_id'
         Confcampo_nomb = 'localidad_nombre'
         Tag2 = 0
       end
@@ -1072,20 +1072,20 @@ object Entidades: TEntidades
     Connection = Princ.ZBase
     AfterOpen = ZQentidadAfterOpen
     SQL.Strings = (
-      'select * from entidad'
-      'where entidad_codi=:entidad_codi')
+      'select * from entidades'
+      'where entidad_id=:entidad_id')
     Params = <
       item
         DataType = ftUnknown
-        Name = 'entidad_codi'
+        Name = 'entidad_id'
         ParamType = ptUnknown
       end>
-    Left = 360
-    Top = 152
+    Left = 328
+    Top = 144
     ParamData = <
       item
         DataType = ftUnknown
-        Name = 'entidad_codi'
+        Name = 'entidad_id'
         ParamType = ptUnknown
       end>
   end
@@ -1100,8 +1100,8 @@ object Entidades: TEntidades
         Name = 'cliente_id'
         ParamType = ptUnknown
       end>
-    Left = 328
-    Top = 192
+    Left = 256
+    Top = 216
     ParamData = <
       item
         DataType = ftUnknown
@@ -1116,8 +1116,8 @@ object Entidades: TEntidades
       'select * from entidadcontactos'
       'where 1=2')
     Params = <>
-    Left = 392
-    Top = 192
+    Left = 400
+    Top = 216
   end
   object DSCgrilla: TDataSource
     DataSet = EntidadContactos.ZQEntidadContactos

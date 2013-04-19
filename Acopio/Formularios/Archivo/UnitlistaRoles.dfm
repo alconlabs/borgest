@@ -14,9 +14,11 @@ inherited listaRoles: TlistaRoles
     ExplicitHeight = 51
     FullHeight = 0
     inherited btnnuevo: TAdvGlowButton
+      Left = 3
       Width = 54
       Height = 47
       Font.Height = -11
+      ExplicitLeft = 3
       ExplicitWidth = 54
       ExplicitHeight = 47
     end
@@ -82,7 +84,7 @@ inherited listaRoles: TlistaRoles
       Columns = <
         item
           Expanded = False
-          FieldName = 'rol_codi'
+          FieldName = 'rol_id'
           Title.Caption = 'C'#243'digo'
           Width = 98
           Visible = True
@@ -160,7 +162,7 @@ inherited listaRoles: TlistaRoles
   inherited ZQGrilla: TZQuery
     SQL.Strings = (
       'SELECT * FROM ROLES '
-      'order by rol_codi')
+      'order by rol_id')
     Left = 168
   end
   inherited DSCgrilla: TDataSource
