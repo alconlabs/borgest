@@ -2116,6 +2116,7 @@ object Princ: TPrinc
           Height = 41
           Caption = 'Liquidaciones a Sucursales'
           TabOrder = 1
+          OnClick = btnliquidacionessucuClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -3344,10 +3345,6 @@ object Princ: TPrinc
         ParamType = ptUnknown
       end>
   end
-  object Encriptador1: TEncriptador
-    Left = 384
-    Top = 128
-  end
   object RpClientDataset1: TRpClientDataset
     Aggregates = <>
     MasterSource = estadoctas.DSCPendientes
@@ -3377,5 +3374,10 @@ object Princ: TPrinc
     object aver41: TMenuItem
       Caption = 'aver4'
     end
+  end
+  object Encriptador1: TEncriptador
+    MetodoEncriptado = 1
+    Left = 536
+    Top = 192
   end
 end

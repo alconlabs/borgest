@@ -235,7 +235,7 @@ inherited sucursalesdebcred: Tsucursalesdebcred
       Width = 299
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 6
       Confbase = Princ.ZBase
       Confsql.Strings = (

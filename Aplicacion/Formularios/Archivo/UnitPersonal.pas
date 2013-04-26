@@ -127,8 +127,11 @@ begin
     ZQuery2.parambyname('personal_mail').asstring:=personal_mail.Text;
     ZQuery2.parambyname('personal_usuario').asstring:=personal_usuario.Text;
     Princ.Encriptador1.AEncriptar:=personal_pass.Text;
+    Princ.Encriptador1.MetodoEncriptado:=strtoint(Princ.ini1.ReadiniString('Config','Tipo','0'));
+    Princ.Encriptador1.Key:=CLAVE_ENCRIPTADO;
     Princ.Encriptador1.Encriptar;
     ZQuery2.parambyname('personal_pass').asstring:=Princ.Encriptador1.Encriptado;
+//    ZQuery2.parambyname('personal_pass').asstring:='';
     ZQuery2.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
@@ -159,9 +162,15 @@ begin
     ZQuery2.parambyname('personal_mail').asstring:=personal_mail.Text;
     ZQuery2.parambyname('personal_usuario').asstring:=personal_usuario.Text;
     Princ.Encriptador1.AEncriptar:=personal_pass.Text;
+    Princ.Encriptador1.MetodoEncriptado:=strtoint(Princ.ini1.ReadiniString('Config','Tipo','0'));
+    Princ.Encriptador1.Key:=CLAVE_ENCRIPTADO;
     Princ.Encriptador1.Encriptar;
     ZQuery2.parambyname('personal_pass').asstring:=Princ.Encriptador1.Encriptado;
+//    ZQuery2.parambyname('personal_pass').asstring:='';
     ZQuery2.ExecSQL;
+
+
+
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
     Panelabm.Visible:=false;
@@ -253,6 +262,8 @@ begin
                 personal_mail.Text:=ZQGrilla.FieldByName('personal_mail').AsString;
                 personal_usuario.Text:=ZQGrilla.FieldByName('personal_usuario').AsString;
                 Princ.Encriptador1.ADesencriptar:=ZQGrilla.FieldByName('personal_pass').AsString;
+                Princ.Encriptador1.MetodoEncriptado:=strtoint(Princ.ini1.ReadiniString('Config','Tipo','0'));
+                Princ.Encriptador1.Key:=CLAVE_ENCRIPTADO;
                 Princ.Encriptador1.Desencriptar;
                 personal_pass.Text:=Princ.Encriptador1.Desencriptado;
                 personal_pass2.Text:=Princ.Encriptador1.Desencriptado;

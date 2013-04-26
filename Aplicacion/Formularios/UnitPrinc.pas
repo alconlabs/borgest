@@ -8,8 +8,8 @@ uses
   ZConnection, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, midaslib, ini,
   Grids, BaseGrid, AdvGrid, DBAdvGrid, StdCtrls, ADODB, rpcompobase, rpvclreport,
   UnitProgresoBase, ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
-  rpalias, GTBComboBox, ComCtrls, Encriptador, rpexpredlgvcl, DBClient,
-  rpclientdataset, Menus;
+  rpalias, GTBComboBox, ComCtrls, rpexpredlgvcl, DBClient,
+  rpclientdataset, Menus, Encriptador;
 
 
 
@@ -102,7 +102,6 @@ type
     btnlistaprecios: TAdvGlowButton;
     btnpresupuestos: TAdvGlowButton;
     ZQdocumentocompradetalles: TZQuery;
-    Encriptador1: TEncriptador;
     btndetallepagos: TAdvGlowButton;
     btnlibroivaventas: TAdvGlowButton;
     btncajabar: TAdvGlowButton;
@@ -130,6 +129,7 @@ type
     aver21: TMenuItem;
     aver31: TMenuItem;
     aver41: TMenuItem;
+    Encriptador1: TEncriptador;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -184,6 +184,7 @@ type
     procedure btnnotasdedebitoClick(Sender: TObject);
     procedure btnremitosClick(Sender: TObject);
     procedure btnliquidacionesvendedoresClick(Sender: TObject);
+    procedure btnliquidacionessucuClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -325,7 +326,11 @@ const
   CONNECTION_STRING1='Provider=Microsoft.Jet.OLEDB.4.0;Data Source=';
   CONNECTION_STRING3=';Extended Properties=Excel 8.0';
 
-  VERSIONEXE='51';
+  VERSIONEXE='52';
+
+  CLAVE_ENCRIPTADO='1234567890';
+
+  VENCIMIENTO_LICENCIA='2013-07-15';
 
 
 //  CONNECTION_STRING1='Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source=';
@@ -362,7 +367,8 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   UnitCajaBar, UnitLibroIvaCompras, UnitLogin, UnitComisionesVendedores,
   UnitComisionesSucursales, Unitvendedoresdebcred, Unitsucursalesdebcred,
   UnitNotaDebitoVenta, UnitListaNotaDebitoVenta, UnitRemitoVenta,
-  UnitListaRemitoVenta, Unitlistacomisionesvendedores;
+  UnitListaRemitoVenta, Unitlistacomisionesvendedores,
+  UnitlistaComisionesSucursales;
 
 {$R *.dfm}
 
@@ -1992,7 +1998,7 @@ end;
 
 function TPrinc.QuitarCaracteresEspeciales(texto: string):string;
 const
-  VALIDOS=['0'..'9','A'..'Z','a'..'z','-','.'];
+  VALIDOS=['0'..'9','A'..'Z','a'..'z','-','.',' '];
 var
   i: Integer;
 begin
@@ -2566,7 +2572,6 @@ begin
 
 
 
-
     MenuConfiguracion;
 end;
 
@@ -2579,9 +2584,7 @@ begin
             empresa_where:='and 1=1 ';
       end;
 
-
-
-end;        
+end;
 
 procedure TPrinc.FormShow(Sender: TObject);
 begin
@@ -2612,9 +2615,56 @@ end;
 procedure TPrinc.ZBaseAfterConnect(Sender: TObject);
 var
   LOGDB:string;
+  empresa_razonsocial:string;
+  fecha_actual:string;
 begin
     ZSQLMonitor1.Active:=false;
     ZSQLMonitor1.AutoSave:=false;
+
+    if strtoint(Princ.GetConfiguracion('VERSIONDB'))>=184 then
+      begin
+          empresa_razonsocial:=Princ.buscar('select empresa_razonsocial from empresas','empresa_razonsocial');
+          Encriptador1.ADesencriptar:=empresa_razonsocial;
+          Encriptador1.Desencriptar;
+          empresa_razonsocial:=Encriptador1.Desencriptado;
+
+          if empresa_razonsocial<>'YA ERA' then
+            begin
+                if Princ.fechaservidor>=strtodate(empresa_razonsocial) then
+                  begin
+                      Encriptador1.AEncriptar:='YA ERA';
+                      Encriptador1.Encriptar;
+                      empresa_razonsocial:=Encriptador1.Encriptado;
+
+                      ZQExcecSQL.Sql.Clear;
+                      ZQExcecSQL.Sql.Add('update empresas set ');
+                      ZQExcecSQL.Sql.Add('empresa_razonsocial=:empresa_razonsocial ');
+                      ZQExcecSQL.ParamByName('empresa_razonsocial').AsString:=empresa_razonsocial;
+                      ZQExcecSQL.ExecSql;
+
+                      MessageDlg('La base de datos necesita mantenimiento.'+#13+#10+'Comuniquese con el administrador del sistema para no perder informacion.', mtError, [mbOK], 0);
+                      Application.Terminate;
+                      Exit;
+                  end
+                else
+                  begin
+                      if (strtodate(empresa_razonsocial)-Princ.fechaservidor)<=15 then
+                        begin
+                            MessageDlg('La base de datos necesita mantenimiento.'+#13+#10+'Comuniquese con el administrador del sistema para no perder informacion.', mtWarning, [mbOK], 0);
+
+                        end;
+                  end;
+            end
+          else
+            begin
+                MessageDlg('La base de datos necesita mantenimiento.'+#13+#10+'Comuniquese con el administrador del sistema para no perder informacion.', mtError, [mbOK], 0);
+                Application.Terminate;
+                Exit;
+            end;
+
+
+      end;
+
     if not DirectoryExists(ExtractFilePath(Application.ExeName)+'\logs\') then
       CreateDir(ExtractFilePath(Application.ExeName)+'\logs\');
 
@@ -2646,26 +2696,23 @@ begin
     ZBase.Protocol:=ini1.ReadiniString('Connection','Protocol','mysql-5');
     ZBase.User:=ini1.ReadiniString('Connection','User','root');
     pass:=ini1.ReadiniString('Connection','Password','root');
-    tipo_encriptacion:=ini1.ReadiniString('Config','Tipo','');
-    if tipo_encriptacion='1' then
+    tipo_encriptacion:=ini1.ReadiniString('Config','Tipo','0');
+    Encriptador1.ADesencriptar:=pass;
+    Encriptador1.MetodoEncriptado:=strtoint(tipo_encriptacion);
+    Encriptador1.Key:=CLAVE_ENCRIPTADO;
+    Encriptador1.Desencriptar;
+    pass:=Encriptador1.Desencriptado;
+    if tipo_encriptacion<>'2' then
       begin
-          Encriptador1.ADesencriptar:=pass;
-          Encriptador1.Desencriptar;
-          pass:=Encriptador1.Desencriptado;
-      end
-    else
-      begin
-          ini1.WriteiniString('Config','Tipo','1');
+          ini1.WriteiniString('Config','Tipo','2');
           Encriptador1.AEncriptar:=pass;
+          Encriptador1.MetodoEncriptado:=2;
+          Encriptador1.Key:='1234567890';
           Encriptador1.Encriptar;
           ini1.WriteiniString('Connection','Password',Encriptador1.Encriptado);
       end;
+
     ZBase.Password:=pass;
-
-
-
-    
-
 end;
 
 procedure TPrinc.ZQProductosBeforeOpen(DataSet: TDataSet);
@@ -2840,6 +2887,16 @@ begin
       LibroIvaVentas:=TLibroIvaVentas.Create(self);
     finally
       LibroIvaVentas.Show;
+    end;
+end;
+
+procedure TPrinc.btnliquidacionessucuClick(Sender: TObject);
+begin
+    try
+      listacomisionessucursales:=Tlistacomisionessucursales.Create(self);
+    finally
+      listacomisionessucursales.campo_id:='liquidacionsucursal_id';
+      listacomisionessucursales.Show;
     end;
 end;
 

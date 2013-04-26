@@ -130,6 +130,12 @@
     <DCCReference Include="Formularios\Comisiones\Unitliquidaciones.pas">
       <Form>liquidaciones</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Comisiones\Unitliquidacionessucu.pas">
+      <Form>liquidacionessucu</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Comisiones\UnitlistaComisionesSucursales.pas">
+      <Form>listacomisionessucursales</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Comisiones\Unitlistacomisionesvendedores.pas">
       <Form>listacomisionesvendedores</Form>
     </DCCReference>

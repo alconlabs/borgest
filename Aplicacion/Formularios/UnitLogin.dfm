@@ -63,8 +63,6 @@ object login: Tlogin
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitWidth = 541
-    ExplicitHeight = 312
     FullHeight = 0
     object Label7: TLabel
       Left = 10

@@ -57,9 +57,9 @@ begin
     ZQSelect.Active:=false;
     if (personal_usuario.Text<>'') and (personal_pass.Text<>'') then
       begin
-          Princ.Encriptador1.AEncriptar:=personal_pass.Text;
-          Princ.Encriptador1.Encriptar;
-          pass:=Princ.Encriptador1.Encriptado;
+//          Princ.Encriptador1.AEncriptar:=personal_pass.Text;
+//          Princ.Encriptador1.Encriptar;
+//          pass:=Princ.Encriptador1.Encriptado;
 
 
           ZQSelect.SQL.Text:='select * from personal where personal_usuario="'+personal_usuario.Text+'" and personal_pass="'+pass+'"';

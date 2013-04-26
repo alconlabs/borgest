@@ -93,7 +93,6 @@ uses
   UnitLibroIvaCompras in 'Formularios\Compras\UnitLibroIvaCompras.pas' {LibroIvaCompras},
   Unitprovincias in 'Formularios\Archivo\Unitprovincias.pas' {provincias},
   UnitComisionesVendedores in 'Formularios\Comisiones\UnitComisionesVendedores.pas' {ComisionesVendedores},
-  UnitComisionesSucursales in 'Formularios\Comisiones\UnitComisionesSucursales.pas' {ComisionesSucursales},
   Unitvendedoresdebcred in 'Formularios\Comisiones\Unitvendedoresdebcred.pas' {vendedoresdebcred},
   Unitsucursalesdebcred in 'Formularios\Comisiones\Unitsucursalesdebcred.pas' {sucursalesdebcred},
   Unitnotacreditoventa in 'Formularios\Ventas\Unitnotacreditoventa.pas' {notacreditoventa},
@@ -102,7 +101,10 @@ uses
   UnitRemitoVenta in 'Formularios\Ventas\UnitRemitoVenta.pas' {remitoventa},
   UnitListaRemitoVenta in 'Formularios\Ventas\UnitListaRemitoVenta.pas' {listaremitosventa},
   Unitlistacomisionesvendedores in 'Formularios\Comisiones\Unitlistacomisionesvendedores.pas' {listacomisionesvendedores},
-  Unitliquidaciones in 'Formularios\Comisiones\Unitliquidaciones.pas' {liquidaciones};
+  Unitliquidaciones in 'Formularios\Comisiones\Unitliquidaciones.pas' {liquidaciones},
+  UnitlistaComisionesSucursales in 'Formularios\Comisiones\UnitlistaComisionesSucursales.pas' {listacomisionessucursales},
+  UnitComisionesSucursales in 'Formularios\Comisiones\UnitComisionesSucursales.pas' {ComisionesSucursales},
+  Unitliquidacionessucu in 'Formularios\Comisiones\Unitliquidacionessucu.pas' {liquidacionessucu};
 
 {$R *.res}
 
@@ -110,5 +112,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrinc, Princ);
+  Application.CreateForm(Tliquidacionessucu, liquidacionessucu);
   Application.Run;
 end.

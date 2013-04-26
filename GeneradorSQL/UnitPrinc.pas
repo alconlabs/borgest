@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ZConnection, StdCtrls, ini, UnitSqlComboBox, Titles, ComCtrls,
-  AdvListV, UnitSqlListView, Encriptador;
+  AdvListV, UnitSqlListView, Encriptador, GTBComboBox;
 
 type
   TPrinc = class(TForm)
@@ -42,6 +42,10 @@ type
     Edit2: TEdit;
     Label6: TLabel;
     Button2: TButton;
+    metodo: TGTBComboBox;
+    Label7: TLabel;
+    Label8: TLabel;
+    clave: TEdit;
     procedure Button1Click(Sender: TObject);
     procedure tablaSelect(Sender: TObject);
     procedure btninsertClick(Sender: TObject);
@@ -94,6 +98,8 @@ end;
 procedure TPrinc.btnencriptarClick(Sender: TObject);
 begin
     Encriptador1.AEncriptar:=Edit1.Text;
+    Encriptador1.MetodoEncriptado:=metodo.ItemIndex;
+    Encriptador1.Key:=clave.Text;
     Encriptador1.Encriptar;
     Edit2.Text:=Encriptador1.Encriptado;
 end;
@@ -220,6 +226,8 @@ begin
     if pass.Text<>'' then
       begin
           Encriptador1.AEncriptar:=pass.Text;
+          Encriptador1.MetodoEncriptado:=2;
+          Encriptador1.Key:='1234567890';
           Encriptador1.Encriptar;
       end;
 
@@ -229,14 +237,9 @@ begin
       ini1.WriteiniString('Connection','HostName',host.Text);
       ini1.WriteiniString('Connection','Database',databasename.Text);
       ini1.WriteiniString('Connection','User',user.Text);
-      if pass.Text<>'' then
-        ini1.WriteiniString('Connection','Password',Encriptador1.Encriptado)
-      else
-        ini1.WriteiniString('Connection','Password',pass.Text);
-
-
+      ini1.WriteiniString('Connection','Password',Encriptador1.Encriptado);
+      ini1.WriteiniString('Config','Tipo','2');
     finally
-
     end;
 
 
@@ -250,6 +253,8 @@ end;
 procedure TPrinc.Button2Click(Sender: TObject);
 begin
     Encriptador1.ADesencriptar:=Edit2.Text;
+    Encriptador1.MetodoEncriptado:=metodo.ItemIndex;
+    Encriptador1.Key:=clave.Text;
     Encriptador1.Desencriptar;
     Edit1.Text:=Encriptador1.Desencriptado;
 end;
@@ -265,18 +270,18 @@ begin
     host.Text:=ini1.ReadiniString('Connection','HostName','localhost');
     user.Text:=ini1.ReadiniString('Connection','User','root');
     password:=ini1.ReadiniString('Connection','Password','root');
-    tipo_encriptacion:=ini1.ReadiniString('Config','Tipo','');
+    tipo_encriptacion:=ini1.ReadiniString('Config','Tipo','0');
     if password<>'' then
       begin
-          if tipo_encriptacion='1' then
+          Encriptador1.ADesencriptar:=password;
+          Encriptador1.MetodoEncriptado:=strtoint(tipo_encriptacion);
+          Encriptador1.Key:='1234567890';
+          Encriptador1.Desencriptar;
+          password:=Encriptador1.Desencriptado;
+
+          if tipo_encriptacion='0' then
             begin
-                Encriptador1.ADesencriptar:=password;
-                Encriptador1.Desencriptar;
-                password:=Encriptador1.Desencriptado;
-            end
-          else
-            begin
-                ini1.WriteiniString('Config','Tipo','1');
+                ini1.WriteiniString('Config','Tipo','2');
                 Encriptador1.AEncriptar:=password;
                 Encriptador1.Encriptar;
                 ini1.WriteiniString('Connection','Password',Encriptador1.Encriptado);

@@ -743,3 +743,54 @@ CREATE  TABLE IF NOT EXISTS `liquivendedoressucursales` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1
 COLLATE = latin1_swedish_ci;
+183;
+ALTER TABLE `empresas` 
+ADD COLUMN `empresa_idweb` VARCHAR(45) NULL DEFAULT NULL  AFTER `empresa_where` , 
+ADD COLUMN `empresa_razonsocial` VARCHAR(45) NULL DEFAULT NULL  AFTER `empresa_idweb`;
+184;
+UPDATE `empresas` SET `empresa_razonsocial`='CgAAAD1RbnrSpG95A1n+BQ3A9jI=\r\n' WHERE `empresa_id`=1;
+185;
+CREATE  TABLE IF NOT EXISTS `liquidacionessucursales` (
+  `liquidacionsucursal_id` INT(11) NOT NULL ,
+  `liquidacionsucursal_fecha` DATE NULL DEFAULT NULL ,
+  `liquidacionsucursal_desdefecha` DATE NULL DEFAULT NULL ,
+  `liquidacionsucursal_hastafecha` DATE NULL DEFAULT NULL ,
+  `liquidacionsucursal_total` FLOAT(20,4) NULL DEFAULT NULL ,
+  `sucursaltipliqsuc_tipo` VARCHAR(45) NULL DEFAULT NULL ,
+  `sucursaltipliqsuc_estado` VARCHAR(45) NULL DEFAULT NULL ,
+  `sucursal_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`liquidacionsucursal_id`) ,
+  INDEX `fk_liquidacionessucursales_sucursales1` (`sucursal_id` ASC) ,
+  CONSTRAINT `fk_liquidacionessucursales_sucursales1`
+    FOREIGN KEY (`sucursal_id` )
+    REFERENCES `sucursales` (`sucursal_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+186;
+CREATE  TABLE IF NOT EXISTS `liquisucudeta` (
+  `liquisucudeta_id` INT(11) NOT NULL ,
+  `comisionsucursal_tipo` VARCHAR(45) NULL DEFAULT NULL ,
+  `comisionsucursal_valor` FLOAT(10,4) NULL DEFAULT NULL ,
+  `liquisucudeta_importe` FLOAT(20,4) NULL DEFAULT NULL ,
+  `liquisucudeta_porcentajeliquid` FLOAT(10,4) NULL DEFAULT NULL ,
+  `liquidacionsucursal_id` INT(11) NOT NULL ,
+  `documentoventadetalle_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`liquisucudeta_id`) ,
+  INDEX `fk_liquisucudeta_liquidacionessucursales1` (`liquidacionsucursal_id` ASC) ,
+  INDEX `fk_liquisucudeta_documentoventadetalles1` (`documentoventadetalle_id` ASC) ,
+  CONSTRAINT `fk_liquisucudeta_liquidacionessucursales1`
+    FOREIGN KEY (`liquidacionsucursal_id` )
+    REFERENCES `liquidacionessucursales` (`liquidacionsucursal_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_liquisucudeta_documentoventadetalles1`
+    FOREIGN KEY (`documentoventadetalle_id` )
+    REFERENCES `documentoventadetalles` (`documentoventadetalle_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
