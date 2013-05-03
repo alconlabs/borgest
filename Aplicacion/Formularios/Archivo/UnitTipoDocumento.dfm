@@ -10,8 +10,6 @@ inherited tipodocumento: Ttipodocumento
   inherited panelgrilla: TAdvPanel
     Width = 821
     Height = 386
-    ExplicitLeft = 24
-    ExplicitTop = 8
     ExplicitWidth = 821
     ExplicitHeight = 386
     FullHeight = 0

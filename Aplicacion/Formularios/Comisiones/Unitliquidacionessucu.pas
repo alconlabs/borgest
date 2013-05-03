@@ -231,7 +231,7 @@ begin
             if detalle.FieldByName('comisionsucursal_tipo').AsString='Porcentaje' then
               begin
                   detalle.Edit;
-                  detalle.FieldByName('liquisucudeta_importe').AsFloat:=(detalle.FieldByName('documentoventadetalle_precio').AsFloat*detalle.FieldByName('liquisucudeta_porcentajeliquid').AsFloat/100)*detalle.FieldByName('comisionsucursal_valor').AsFloat/100;
+                  detalle.FieldByName('liquisucudeta_importe').AsFloat:=roundto((detalle.FieldByName('documentoventadetalle_precio').AsFloat*detalle.FieldByName('liquisucudeta_porcentajeliquid').AsFloat/100)*detalle.FieldByName('comisionsucursal_valor').AsFloat/100,-2);
                   detalle.Post;
 
 
@@ -240,7 +240,7 @@ begin
             if detalle.FieldByName('comisionsucursal_tipo').AsString='Cantidad' then
               begin
                   detalle.Edit;
-                  detalle.FieldByName('liquisucudeta_importe').AsFloat:=detalle.FieldByName('documentoventadetalle_cantidad').AsFloat*detalle.FieldByName('comisionsucursal_valor').AsFloat*detalle.FieldByName('liquisucudeta_porcentajeliquid').AsFloat/100;
+                  detalle.FieldByName('liquisucudeta_importe').AsFloat:=roundto(detalle.FieldByName('documentoventadetalle_cantidad').AsFloat*detalle.FieldByName('comisionsucursal_valor').AsFloat*detalle.FieldByName('liquisucudeta_porcentajeliquid').AsFloat/100,-2);
                   detalle.Post;
 
               end;

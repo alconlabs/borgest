@@ -77,6 +77,7 @@ type
     btnagregarcliente: TButton;
     Label16: TLabel;
     documentoventa_fechavenc: TDateTimePicker;
+    btnobservaciones: TButton;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);

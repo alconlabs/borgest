@@ -3380,4 +3380,8 @@ object Princ: TPrinc
     Left = 536
     Top = 192
   end
+  object GTBUtilidades1: TGTBUtilidades
+    Left = 456
+    Top = 320
+  end
 end

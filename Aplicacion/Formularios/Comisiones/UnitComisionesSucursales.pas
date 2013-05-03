@@ -139,7 +139,8 @@ procedure TComisionesSucursales.ZQComisionesSucursalesBeforePost(
 begin
   inherited;
     ZQComisionesSucursales.FieldByName('producto_id').AsString:=ZQGrilla.FieldByName('producto_id').AsString;
-    ZQComisionesSucursales.FieldByName('comisionsucursal_id').AsString:='0';
+    if ZQComisionesSucursales.FieldByName('comisionsucursal_id').AsString='' then
+      ZQComisionesSucursales.FieldByName('comisionsucursal_id').AsString:='0';
 end;
 
 procedure TComisionesSucursales.btnfiltrarClick(Sender: TObject);

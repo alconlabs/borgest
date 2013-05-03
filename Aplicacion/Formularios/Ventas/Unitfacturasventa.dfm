@@ -688,6 +688,14 @@ object facturasventa: Tfacturasventa
       Time = 40384.000000000000000000
       TabOrder = 19
     end
+    object btnobservaciones: TButton
+      Left = 188
+      Top = 457
+      Width = 83
+      Height = 25
+      Caption = 'Observaciones'
+      TabOrder = 23
+    end
   end
   object ZQuery2: TZQuery
     Connection = Princ.ZBase

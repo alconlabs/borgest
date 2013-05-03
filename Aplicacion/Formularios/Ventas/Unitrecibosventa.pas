@@ -153,6 +153,7 @@ type
   private
     { Private declarations }
     tipocuota:integer;
+    documentoventa_estado:string;
     function control:boolean;
     procedure agregar;
     procedure modificar;
@@ -179,18 +180,21 @@ uses UnitPrinc, Unitventadetalle, UnitDocumentosVentasPendientes;
 
 procedure Trecibosventa.calculartotalpagos;
 begin
-    documentoventa_saldo:=documentoventa_total.Value;
-    documentoventa_pagado:=0;
+    documentoventa_total.Value:=0;
     ZQDocumentopagos.First;
     while not ZQDocumentopagos.Eof do
         begin
-            documentoventa_pagado:=roundto(documentoventa_pagado+ZQDocumentopagos.FieldByName('documentopago_importe').AsFloat,-2);
-
-            documentoventa_saldo:=roundto(documentoventa_total.Value-documentoventa_pagado,-2);
+            documentoventa_total.Value:=roundto(documentoventa_total.Value+ZQDocumentopagos.FieldByName('documentopago_importe').AsFloat,-2);
 
             ZQDocumentopagos.Next;
         end;
-    Editdocumentoventa_pagado.Value:=documentoventa_pagado;
+
+    documentoventa_estado:='PENDIENTE';
+    documentoventa_saldo:=documentoventa_total.Value-documentoventa_pagado;
+    if documentoventa_saldo=0 then
+      documentoventa_estado:='PAGADA';
+
+    Editdocumentoventa_pagado.Value:=documentoventa_total.Value;
 end;
 
 
@@ -206,10 +210,11 @@ begin
     documentoventa_iva105.Text:='0';
     documentoventa_total.Text:='0';
     documentoventa_totalimputado.Text:='0';
+    documentoventa_pagado:=0;
 
     while not ZQdocumentoventadocus.Eof do
         begin
-            documentoventa_total.Text:=floattostr(roundto(documentoventa_total.Value+ZQdocumentoventadocus.FieldByName('documentoventadoc_importe').AsFloat,-2));
+            documentoventa_pagado:=roundto(documentoventa_pagado+ZQdocumentoventadocus.FieldByName('documentoventadoc_importe').AsFloat,-2);
 
 
 
@@ -217,7 +222,7 @@ begin
         end;
 
     ZQdocumentoventadocus.GotoBookmark(bm);
-    documentoventa_totalimputado.Text:=documentoventa_total.Text;
+    documentoventa_totalimputado.Value:=documentoventa_pagado;
 
 end;
 
@@ -459,7 +464,7 @@ begin
 
     ZQRecibo.Insert;
     ZQRecibo.FieldByName('documentoventa_condicionventa').AsInteger:=documentoventa_condicionventa.ItemIndex;
-    ZQRecibo.FieldByName('documentoventa_estado').AsString:='PAGADA';
+    ZQRecibo.FieldByName('documentoventa_estado').AsString:=documentoventa_estado;
     ZQRecibo.FieldByName('documentoventa_fecha').AsDateTime:=documentoventa_fecha.Date;
     ZQRecibo.FieldByName('documentoventa_fechavenc').AsDateTime:=documentoventa_fecha.Date;
     ZQRecibo.FieldByName('documentoventa_hora').AsDateTime:=Now;
@@ -472,8 +477,8 @@ begin
     ZQRecibo.FieldByName('documentoventa_netonogravado').AsString:='0';
     ZQRecibo.FieldByName('documentoventa_numero').AsString:=documentoventa_numero.Text;
     ZQRecibo.FieldByName('documentoventa_observacion').AsString:='';
-    ZQRecibo.FieldByName('documentoventa_pagado').AsString:=documentoventa_total.Text;
-    ZQRecibo.FieldByName('documentoventa_saldo').AsString:='0';
+    ZQRecibo.FieldByName('documentoventa_pagado').AsFloat:=documentoventa_pagado;
+    ZQRecibo.FieldByName('documentoventa_saldo').AsFloat:=documentoventa_saldo;
     ZQRecibo.FieldByName('documentoventa_total').AsString:=documentoventa_total.Text;
     ZQRecibo.FieldByName('personal_id').AsString:=personal_id.codigo;
     ZQRecibo.FieldByName('tipodocu_id').AsString:=princ.buscar('select tipodocu_id from tiposdocumento where puntoventa_id="'+puntoventa_id.codigo+'" and tipodocu_nombre="Recibo de Venta"','tipodocu_id');
@@ -526,7 +531,8 @@ end;
 
 procedure Trecibosventa.btnagregarpagoClick(Sender: TObject);
 begin
-    if Princ.CargarPago(documentoventa_saldo,ZQDocumentopagos) then
+    calculartotales;
+    if Princ.CargarPago(documentoventa_pagado,ZQDocumentopagos) then
       calculartotalpagos;
 end;
 
@@ -596,7 +602,7 @@ end;
 
 procedure Trecibosventa.btntomardocumentosAutoClick(Sender: TObject);
 begin
-    Princ.CargarDocumentoVentaDocu(cliente_id.codigo,ZQdocumentoventadocus,documentoventa_pagado,true);
+    Princ.CargarDocumentoVentaDocu(cliente_id.codigo,ZQdocumentoventadocus,documentoventa_total.Value,true);
 
     calculartotales;
     calculartotalpagos;
@@ -608,7 +614,7 @@ var
 begin
     error:=0;
 
-    if roundto(documentoventa_pagado,-2)<>roundto(documentoventa_total.Value,-2) then
+    if roundto(documentoventa_pagado,-2)>roundto(documentoventa_total.Value,-2) then
       error:=1;
 
 //    if solic_numeroimpreso.Text='' then
@@ -617,7 +623,7 @@ begin
 
     case error of
         1:begin
-              MessageDlg('Total de pagos no coincide con el total de documentos imputados.', mtError, [mbOK], 0);
+              MessageDlg('Total de pagos no puede ser menor que el total de documentos imputados.', mtError, [mbOK], 0);
 //              solic_numeroimpreso.SetFocus;
 
           end;

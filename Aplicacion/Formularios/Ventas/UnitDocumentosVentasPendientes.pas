@@ -213,7 +213,7 @@ begin
     if (ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat<0) and (ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat>0) then
       ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat*-1;
 
-    if ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat>ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat then
+    if abs(ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat)>abs(ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat) then
       begin
           ZQDocumentosVentasPendientes.Cancel;
 //          ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=ZQDocumentosVentasPendientes.FieldByName('documentoventa_saldo').AsFloat;

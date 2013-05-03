@@ -251,7 +251,6 @@ object liquidacionessucu: Tliquidacionessucu
           Height = 281
           Align = alTop
           DataSource = DSCliquisucudeta
-          Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -558,15 +557,21 @@ object liquidacionessucu: Tliquidacionessucu
     end
     object MQliquisucudetacomisionsucursal_valor: TFloatField
       FieldName = 'comisionsucursal_valor'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
     end
     object MQliquisucudetaliquidacionsucursal_id: TIntegerField
       FieldName = 'liquidacionsucursal_id'
     end
     object MQliquisucudetaliquisucudeta_importe: TFloatField
       FieldName = 'liquisucudeta_importe'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
     end
     object MQliquisucudetadocumentoventadetalle_precio: TFloatField
       FieldName = 'documentoventadetalle_precio'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
     end
     object MQliquisucudetapuntoventa_numero: TStringField
       FieldName = 'puntoventa_numero'
@@ -588,15 +593,23 @@ object liquidacionessucu: Tliquidacionessucu
     end
     object MQliquisucudetadocumentoventadetalle_cantidad: TFloatField
       FieldName = 'documentoventadetalle_cantidad'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
     end
     object MQliquisucudetaliquisucudeta_porcentajeliquid: TFloatField
       FieldName = 'liquisucudeta_porcentajeliquid'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
     end
     object MQliquisucudetadocumentoventa_pagado: TFloatField
       FieldName = 'documentoventa_pagado'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
     end
     object MQliquisucudetadocumentoventa_saldo: TFloatField
       FieldName = 'documentoventa_saldo'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
     end
   end
   object ZQliquidacionessucursales: TZQuery

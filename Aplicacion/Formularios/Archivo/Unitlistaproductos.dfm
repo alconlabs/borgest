@@ -261,6 +261,7 @@ object listaproductos: Tlistaproductos
         Height = 21
         Align = alLeft
         TabOrder = 0
+        OnKeyPress = fil_producto_idKeyPress
       end
       object fil_producto_nombre: TEdit
         Left = 72

@@ -57,6 +57,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure ZQGrillaBeforeOpen(DataSet: TDataSet);
     procedure FormShow(Sender: TObject);
+    procedure fil_producto_idKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     abm:integer;
@@ -96,6 +97,13 @@ end;
 
 
 
+procedure Tlistaproductos.fil_producto_idKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+    if key=#13 then
+      Button5.Click;
+end;
+
 procedure Tlistaproductos.FormCreate(Sender: TObject);
 begin
     abm:=0;
@@ -103,11 +111,19 @@ begin
 end;
 
 procedure Tlistaproductos.FormShow(Sender: TObject);
+var
+  i:integer;
 begin
     DBGrid1.Columns.Items[2].Visible:=false;
     fil_producto_preciocosto.Text:='';
     fil_producto_preciocosto.Visible:=false;
+    
+    for i:=0 to panelfiltros.ControlCount-1 do
+      begin
+          if panelfiltros.Controls[i] is TEdit then
+            (panelfiltros.Controls[i] as TEdit).OnKeyPress:=fil_producto_idKeyPress;
 
+      end;
 end;
 
 procedure Tlistaproductos.modificar;
@@ -252,19 +268,19 @@ begin
     ZQGrilla.Active:=false;
     ZQGrilla.SQL.Text:='select * from productos inner join rubros on productos.rubro_id=rubros.rubro_id where 1=1';
     if fil_producto_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and '+Princ.CAMPO_ID_PRODUCTO+' like "%'+fil_producto_id.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and '+Princ.CAMPO_ID_PRODUCTO+' like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_id.Text,' ','%')+'%"';
 
     if fil_producto_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_nombre like "%'+fil_producto_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_nombre.Text,' ','%')+'%"';
 
     if fil_producto_preciocosto.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_preciocosto like "%'+fil_producto_preciocosto.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_preciocosto like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_preciocosto.Text,' ','%')+'%"';
 
     if fil_producto_precioventa1.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_precioventa1 like "%'+fil_producto_precioventa1.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_precioventa1 like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_precioventa1.Text,' ','%')+'%"';
 
     if fil_rubro_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and rubro_nombre like "%'+fil_rubro_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and rubro_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_rubro_nombre.Text,' ','%')+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by producto_nombre';
 

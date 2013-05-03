@@ -1,12 +1,13 @@
 inherited facturasventarapida: Tfacturasventarapida
   Caption = 'Venta Rapida'
   ClientHeight = 247
+  ExplicitWidth = 867
   ExplicitHeight = 285
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Height = 247
-    ExplicitHeight = 249
+    ExplicitHeight = 247
     FullHeight = 0
     inherited Label2: TLabel
       Top = 332
@@ -83,10 +84,8 @@ inherited facturasventarapida: Tfacturasventarapida
     end
     inherited Label16: TLabel
       Top = 300
-      Height = 23
       Visible = False
       ExplicitTop = 300
-      ExplicitHeight = 23
     end
     inherited documentoventa_numero: TEdit
       Top = 329
@@ -134,7 +133,9 @@ inherited facturasventarapida: Tfacturasventarapida
       ExplicitTop = 167
     end
     inherited btnmodificar: TButton
+      Left = 77
       Top = 167
+      ExplicitLeft = 77
       ExplicitTop = 167
     end
     inherited GroupBox1: TGroupBox

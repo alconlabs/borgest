@@ -804,7 +804,10 @@ begin
     HASAR1.CerrarDNFH;
 
     documentoventa_fecha:=HASAR1.FechaHoraFiscal;
-    documentoventa_numero:=strtoint(hasar1.Respuesta[3]);
+    if tipodocu_letra='A' then
+      documentoventa_numero:=hasar1.UltimaNotaCreditoA
+    else
+      documentoventa_numero:=hasar1.UltimaNotaCreditoBC;
 
     Memo1.Lines.Add('Tomando fecha de impresora');
     if HASAR1.HuboErrorFiscal then

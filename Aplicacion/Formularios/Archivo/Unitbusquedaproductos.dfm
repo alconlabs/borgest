@@ -312,8 +312,8 @@ object busquedaproductos: Tbusquedaproductos
       Styler = Princ.AdvPanelStyler1
       FullHeight = 0
       object btnbuscar: TButton
-        Left = 444
-        Top = 1
+        Left = 443
+        Top = 0
         Width = 103
         Height = 33
         Caption = 'Buscar'
@@ -337,7 +337,7 @@ object busquedaproductos: Tbusquedaproductos
       end
       object buscar: TEdit
         Left = 144
-        Top = 7
+        Top = 6
         Width = 297
         Height = 21
         TabOrder = 0

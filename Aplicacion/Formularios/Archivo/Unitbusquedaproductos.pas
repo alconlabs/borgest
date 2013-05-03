@@ -131,7 +131,7 @@ begin
     ZQGrilla.SQL.Text:='select * from productos inner join rubros on productos.rubro_id=rubros.rubro_id '+
                        'inner join proveedores on productos.proveedor_id=proveedores.proveedor_id '+
                        'inner join productodeposito on productos.producto_id=productodeposito.producto_id '+
-                       'where 1=1 ';
+                       'where 1=1 and deposito_id="'+Princ.dep_id+'"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'and producto_codigoreferencia '+producto_codigoreferencia;
 
@@ -156,34 +156,34 @@ begin
     end;
 
     if tipo_busqueda.ItemIndex=0 then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and '+producto_campo+' like "'+buscar.Text+'%"'
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and '+producto_campo+' like "'+Princ.GTBUtilidades1.Reemplazar(buscar.Text,' ','%')+'%"'
     else
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and '+producto_campo+' like "%'+buscar.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and '+producto_campo+' like "%'+Princ.GTBUtilidades1.Reemplazar(buscar.Text,' ','%')+'%"';
 
 
     if fil_producto_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and productos.producto_id like "%'+fil_producto_id.Text+'"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and productos.producto_id like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_id.Text,' ','%')+'"';
 
     if fil_producto_codigo.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_codigo like "%'+fil_producto_codigo.Text+'"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_codigo like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_codigo.Text,' ','%')+'"';
 
     if fil_producto_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_nombre like "%'+fil_producto_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_nombre.Text,' ','%')+'%"';
 
     if fil_producto_preciocosto.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_preciocosto like "%'+fil_producto_preciocosto.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_preciocosto like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_preciocosto.Text,' ','%')+'%"';
 
     if fil_producto_precioventa1.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_precioventa1 like "%'+fil_producto_precioventa1.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_precioventa1 like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_precioventa1.Text,' ','%')+'%"';
 
     if fil_rubro_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and rubro_nombre like "%'+fil_rubro_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and rubro_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_rubro_nombre.Text,' ','%')+'%"';
 
     if fil_producdepo_stockactual.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producdepo_stockactual like "%'+fil_producdepo_stockactual.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producdepo_stockactual like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producdepo_stockactual.Text,' ','%')+'%"';
 
     if fil_proveedor_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_nombre like "%'+fil_proveedor_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_proveedor_nombre.Text,' ','%')+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by producto_nombre';
 

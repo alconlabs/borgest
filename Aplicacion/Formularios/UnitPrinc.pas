@@ -9,7 +9,7 @@ uses
   Grids, BaseGrid, AdvGrid, DBAdvGrid, StdCtrls, ADODB, rpcompobase, rpvclreport,
   UnitProgresoBase, ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
   rpalias, GTBComboBox, ComCtrls, rpexpredlgvcl, DBClient,
-  rpclientdataset, Menus, Encriptador;
+  rpclientdataset, Menus, Encriptador, Utilidades;
 
 
 
@@ -130,6 +130,7 @@ type
     aver31: TMenuItem;
     aver41: TMenuItem;
     Encriptador1: TEncriptador;
+    GTBUtilidades1: TGTBUtilidades;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -865,7 +866,7 @@ begin
     ZQDocumentoventadocus.First;
     while not ZQDocumentoventadocus.Eof do
         begin
-            ActualizarSaldoDocumentoVenta(ZQDocumentoventadocus.FieldByName('documentoventa_idpago').AsString,ZQDocumentoventadocus.FieldByName('documentoventadoc_importe').AsFloat, true);
+            ActualizarSaldoDocumentoVenta(ZQDocumentoventadocus.FieldByName('documentoventa_idpago').AsString,abs(ZQDocumentoventadocus.FieldByName('documentoventadoc_importe').AsFloat), true);
             ZQDocumentoventadocus.Next;
         end;
     ZQDocumentoventadocus.Active:=false;
@@ -2204,8 +2205,8 @@ begin
               //          QDocumentoVentaDocus.FieldByName('documentoventa_netonogravado').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_netonogravado').AsString;
                         QDocumentoVentaDocus.FieldByName('documentoventa_total').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_total').AsString;
                         QDocumentoVentaDocus.FieldByName('documentoventa_estado').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_estado').AsString;
-                        QDocumentoVentaDocus.FieldByName('documentoventa_pagado').AsFloat:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_pagado').AsFloat+DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat;
-                        QDocumentoVentaDocus.FieldByName('documentoventa_saldo').AsFloat:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_saldo').AsFloat-DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat;
+                        QDocumentoVentaDocus.FieldByName('documentoventa_pagado').AsFloat:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_pagado').AsFloat+abs(DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat);
+                        QDocumentoVentaDocus.FieldByName('documentoventa_saldo').AsFloat:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_saldo').AsFloat-abs(DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat);
               //          QDocumentoVentaDocus.FieldByName('documentoventa_observacion').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_observacion').AsString;
                         QDocumentoVentaDocus.FieldByName('cliente_id').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('cliente_id').AsString;
                         QDocumentoVentaDocus.FieldByName('personal_id').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('personal_id').AsString;
@@ -2363,7 +2364,7 @@ begin
                   ZQRecibos.parambyname('documentoventadoc_importe').asstring:=ZQDetalle.FieldByName('documentoventadoc_importe').AsString;
                   ZQRecibos.ExecSQL;
 
-                  ActualizarSaldoDocumentoVenta(ZQDetalle.FieldByName('documentoventa_idpago').AsString,ZQDetalle.FieldByName('documentoventadoc_importe').AsFloat);
+                  ActualizarSaldoDocumentoVenta(ZQDetalle.FieldByName('documentoventa_idpago').AsString,abs(ZQDetalle.FieldByName('documentoventadoc_importe').AsFloat));
 
                   ZQDetalle.Next;
               end;

@@ -34,6 +34,7 @@ type
     procedure btnanularClick(Sender: TObject);
     procedure btncancelarClick(Sender: TObject);
     procedure fil_idKeyPress(Sender: TObject; var Key: Char);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -60,6 +61,18 @@ begin
     abm:=0;
     id:='';
     campo_id:='';
+end;
+
+procedure Tlistabase.FormShow(Sender: TObject);
+var
+  i:integer;
+begin
+    for i:=0 to panelfiltros.ControlCount-1 do
+      begin
+          if panelfiltros.Controls[i] is TEdit then
+            (panelfiltros.Controls[i] as TEdit).OnKeyPress:=fil_idKeyPress;
+
+      end;
 end;
 
 procedure Tlistabase.btnanularClick(Sender: TObject);
