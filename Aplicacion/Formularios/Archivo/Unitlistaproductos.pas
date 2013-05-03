@@ -26,6 +26,7 @@ type
     ZQuery2: TZQuery;
     fil_producto_preciocosto: TEdit;
     CustomizeGrid1: TCustomizeGrid;
+    fil_proveedor_nombre: TEdit;
     ZQGrillaproducto_id: TIntegerField;
     ZQGrillaproducto_nombre: TStringField;
     ZQGrillaproducto_observaciones: TStringField;
@@ -48,8 +49,22 @@ type
     ZQGrillaproducto_neto4: TFloatField;
     ZQGrillaproveedor_id: TIntegerField;
     ZQGrillaproducto_fechaactualizacionprecio: TDateField;
+    ZQGrillaproducto_codigoreferencia: TStringField;
+    ZQGrillaproducto_imprimir: TIntegerField;
     ZQGrillarubro_id_1: TIntegerField;
     ZQGrillarubro_nombre: TStringField;
+    ZQGrillaproveedor_id_1: TIntegerField;
+    ZQGrillaproveedor_nombre: TStringField;
+    ZQGrillaproveedor_domicilio: TStringField;
+    ZQGrillaproveedor_documentonro: TStringField;
+    ZQGrillaproveedor_documentotipo: TStringField;
+    ZQGrillaproveedor_telefono: TStringField;
+    ZQGrillaproveedor_celular: TStringField;
+    ZQGrillaproveedor_mail: TStringField;
+    ZQGrillacondicioniva_id: TIntegerField;
+    ZQGrillaproveedor_condicionventa: TStringField;
+    ZQGrillaproveedor_tipo: TStringField;
+    ZQGrillalocalidad_id: TIntegerField;
     procedure btncrearClick(Sender: TObject);
     procedure btnmodiClick(Sender: TObject);
     procedure btnelimiClick(Sender: TObject);
@@ -264,9 +279,8 @@ end;
 
 procedure Tlistaproductos.Button5Click(Sender: TObject);
 begin
-
     ZQGrilla.Active:=false;
-    ZQGrilla.SQL.Text:='select * from productos inner join rubros on productos.rubro_id=rubros.rubro_id where 1=1';
+    ZQGrilla.SQL.Text:='select * from productos inner join rubros on productos.rubro_id=rubros.rubro_id inner join proveedores on productos.proveedor_id=proveedores.proveedor_id where 1=1';
     if fil_producto_id.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and '+Princ.CAMPO_ID_PRODUCTO+' like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_id.Text,' ','%')+'%"';
 
@@ -281,6 +295,9 @@ begin
 
     if fil_rubro_nombre.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and rubro_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_rubro_nombre.Text,' ','%')+'%"';
+
+    if fil_proveedor_nombre.Text<>'' then
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_proveedor_nombre.Text,' ','%')+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by producto_nombre';
 

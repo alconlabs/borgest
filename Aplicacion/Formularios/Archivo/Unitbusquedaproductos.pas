@@ -84,6 +84,7 @@ type
     procedure DBGrid1KeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure fil_producto_idKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     abm:integer;
@@ -131,7 +132,7 @@ begin
     ZQGrilla.SQL.Text:='select * from productos inner join rubros on productos.rubro_id=rubros.rubro_id '+
                        'inner join proveedores on productos.proveedor_id=proveedores.proveedor_id '+
                        'inner join productodeposito on productos.producto_id=productodeposito.producto_id '+
-                       'where 1=1 and deposito_id="'+Princ.dep_id+'"';
+                       'where 1=1 and deposito_id="'+Princ.dep_id+'" and producto_estado="DISPONIBLE" ';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'and producto_codigoreferencia '+producto_codigoreferencia;
 
@@ -203,6 +204,13 @@ begin
       end;
 end;
 
+procedure Tbusquedaproductos.fil_producto_idKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+    if key=#13 then
+      Button5.Click;
+end;
+
 procedure Tbusquedaproductos.FormCreate(Sender: TObject);
 begin
     producto_codigoreferencia:='<>"-1"';
@@ -243,10 +251,21 @@ begin
 end;
 
 procedure Tbusquedaproductos.FormShow(Sender: TObject);
+var
+  i: Integer;
+
 begin
     DBGrid1.Columns.Items[3].Visible:=false;
     fil_producto_preciocosto.Text:='';
     fil_producto_preciocosto.Visible:=false;
+
+    for i:=0 to panelfiltros.ControlCount-1 do
+      begin
+          if panelfiltros.Controls[i] is TEdit then
+            (panelfiltros.Controls[i] as TEdit).OnKeyPress:=fil_producto_idKeyPress;
+
+      end;
+
 end;
 
 end.

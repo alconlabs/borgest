@@ -4,7 +4,7 @@ object listaproductos: Tlistaproductos
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Productos'
   ClientHeight = 450
-  ClientWidth = 1003
+  ClientWidth = 1043
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,7 +21,7 @@ object listaproductos: Tlistaproductos
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 1003
+    Width = 1043
     Height = 450
     Align = alClient
     BevelOuter = bvNone
@@ -63,9 +63,10 @@ object listaproductos: Tlistaproductos
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitWidth = 1003
     FullHeight = 0
     object panelbotonera: TAdvPanel
-      Left = 900
+      Left = 940
       Top = 0
       Width = 103
       Height = 411
@@ -108,6 +109,7 @@ object listaproductos: Tlistaproductos
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
+      ExplicitLeft = 900
       FullHeight = 0
       object btnelimi: TButton
         Left = 0
@@ -143,7 +145,7 @@ object listaproductos: Tlistaproductos
     object DBGrid1: TDBGrid
       Left = 0
       Top = 0
-      Width = 900
+      Width = 940
       Height = 411
       Align = alClient
       DataSource = DSCProveedores
@@ -159,42 +161,49 @@ object listaproductos: Tlistaproductos
           Expanded = False
           FieldName = 'producto_id'
           Title.Caption = 'Codigo'
-          Width = 47
+          Width = 69
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'producto_nombre'
           Title.Caption = 'Nombre'
-          Width = 390
+          Width = 380
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'producto_preciocosto'
           Title.Caption = 'P.Compra'
-          Width = 110
+          Width = 78
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'producto_precioventa1'
           Title.Caption = 'P.Venta'
-          Width = 110
+          Width = 78
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'rubro_nombre'
           Title.Caption = 'Rubro'
-          Width = 211
+          Width = 110
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'proveedor_nombre'
+          Title.Caption = 'Proveedor'
+          Width = 160
           Visible = True
         end>
     end
     object panelfiltros: TAdvPanel
       Left = 0
       Top = 411
-      Width = 1003
+      Width = 1043
       Height = 21
       Align = alBottom
       BevelOuter = bvNone
@@ -235,9 +244,10 @@ object listaproductos: Tlistaproductos
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
+      ExplicitWidth = 1003
       FullHeight = 0
       object Button5: TButton
-        Left = 900
+        Left = 940
         Top = 0
         Width = 103
         Height = 21
@@ -245,11 +255,12 @@ object listaproductos: Tlistaproductos
         Caption = 'Filtrar'
         TabOrder = 5
         OnClick = Button5Click
+        ExplicitLeft = 900
       end
       object fil_producto_precioventa1: TEdit
-        Left = 572
+        Left = 540
         Top = 0
-        Width = 110
+        Width = 78
         Height = 21
         Align = alLeft
         TabOrder = 3
@@ -257,24 +268,24 @@ object listaproductos: Tlistaproductos
       object fil_producto_id: TEdit
         Left = 0
         Top = 0
-        Width = 72
+        Width = 82
         Height = 21
         Align = alLeft
         TabOrder = 0
         OnKeyPress = fil_producto_idKeyPress
       end
       object fil_producto_nombre: TEdit
-        Left = 72
+        Left = 82
         Top = 0
-        Width = 390
+        Width = 380
         Height = 21
         Align = alLeft
         TabOrder = 1
       end
       object fil_rubro_nombre: TEdit
-        Left = 682
+        Left = 618
         Top = 0
-        Width = 211
+        Width = 110
         Height = 21
         Align = alLeft
         TabOrder = 4
@@ -282,10 +293,18 @@ object listaproductos: Tlistaproductos
       object fil_producto_preciocosto: TEdit
         Left = 462
         Top = 0
-        Width = 110
+        Width = 78
         Height = 21
         Align = alLeft
         TabOrder = 2
+      end
+      object fil_proveedor_nombre: TEdit
+        Left = 728
+        Top = 0
+        Width = 160
+        Height = 21
+        Align = alLeft
+        TabOrder = 6
       end
     end
   end
@@ -295,6 +314,9 @@ object listaproductos: Tlistaproductos
     SQL.Strings = (
       'select * from productos'
       'inner join rubros on productos.rubro_id=rubros.rubro_id'
+      
+        'inner join proveedores on productos.proveedor_id=proveedores.pro' +
+        'veedor_id'
       'order by producto_nombre')
     Params = <>
     Left = 216
@@ -322,10 +344,12 @@ object listaproductos: Tlistaproductos
     object ZQGrillaproducto_preciocosto: TFloatField
       FieldName = 'producto_preciocosto'
       DisplayFormat = '0.00'
+      EditFormat = '0.00'
     end
     object ZQGrillaproducto_precioventabase: TFloatField
       FieldName = 'producto_precioventabase'
       DisplayFormat = '0.00'
+      EditFormat = '0.00'
     end
     object ZQGrillaproducto_estado: TStringField
       FieldName = 'producto_estado'
@@ -334,6 +358,7 @@ object listaproductos: Tlistaproductos
     object ZQGrillaproducto_precioventa1: TFloatField
       FieldName = 'producto_precioventa1'
       DisplayFormat = '0.00'
+      EditFormat = '0.00'
     end
     object ZQGrillatipoiva_id: TIntegerField
       FieldName = 'tipoiva_id'
@@ -346,14 +371,17 @@ object listaproductos: Tlistaproductos
     object ZQGrillaproducto_precioventa2: TFloatField
       FieldName = 'producto_precioventa2'
       DisplayFormat = '0.00'
+      EditFormat = '0.00'
     end
     object ZQGrillaproducto_precioventa3: TFloatField
       FieldName = 'producto_precioventa3'
       DisplayFormat = '0.00'
+      EditFormat = '0.00'
     end
     object ZQGrillaproducto_precioventa4: TFloatField
       FieldName = 'producto_precioventa4'
       DisplayFormat = '0.00'
+      EditFormat = '0.00'
     end
     object ZQGrillacalculoprecio_id: TIntegerField
       FieldName = 'calculoprecio_id'
@@ -365,19 +393,15 @@ object listaproductos: Tlistaproductos
     end
     object ZQGrillaproducto_neto1: TFloatField
       FieldName = 'producto_neto1'
-      DisplayFormat = '0.00'
     end
     object ZQGrillaproducto_neto2: TFloatField
       FieldName = 'producto_neto2'
-      DisplayFormat = '0.00'
     end
     object ZQGrillaproducto_neto3: TFloatField
       FieldName = 'producto_neto3'
-      DisplayFormat = '0.00'
     end
     object ZQGrillaproducto_neto4: TFloatField
       FieldName = 'producto_neto4'
-      DisplayFormat = '0.00'
     end
     object ZQGrillaproveedor_id: TIntegerField
       FieldName = 'proveedor_id'
@@ -386,6 +410,13 @@ object listaproductos: Tlistaproductos
     object ZQGrillaproducto_fechaactualizacionprecio: TDateField
       FieldName = 'producto_fechaactualizacionprecio'
     end
+    object ZQGrillaproducto_codigoreferencia: TStringField
+      FieldName = 'producto_codigoreferencia'
+      Size = 45
+    end
+    object ZQGrillaproducto_imprimir: TIntegerField
+      FieldName = 'producto_imprimir'
+    end
     object ZQGrillarubro_id_1: TIntegerField
       FieldName = 'rubro_id_1'
       Required = True
@@ -393,6 +424,54 @@ object listaproductos: Tlistaproductos
     object ZQGrillarubro_nombre: TStringField
       FieldName = 'rubro_nombre'
       Size = 45
+    end
+    object ZQGrillaproveedor_id_1: TIntegerField
+      FieldName = 'proveedor_id_1'
+      Required = True
+    end
+    object ZQGrillaproveedor_nombre: TStringField
+      FieldName = 'proveedor_nombre'
+      Size = 100
+    end
+    object ZQGrillaproveedor_domicilio: TStringField
+      FieldName = 'proveedor_domicilio'
+      Size = 150
+    end
+    object ZQGrillaproveedor_documentonro: TStringField
+      FieldName = 'proveedor_documentonro'
+      Size = 45
+    end
+    object ZQGrillaproveedor_documentotipo: TStringField
+      FieldName = 'proveedor_documentotipo'
+      Size = 45
+    end
+    object ZQGrillaproveedor_telefono: TStringField
+      FieldName = 'proveedor_telefono'
+      Size = 45
+    end
+    object ZQGrillaproveedor_celular: TStringField
+      FieldName = 'proveedor_celular'
+      Size = 45
+    end
+    object ZQGrillaproveedor_mail: TStringField
+      FieldName = 'proveedor_mail'
+      Size = 45
+    end
+    object ZQGrillacondicioniva_id: TIntegerField
+      FieldName = 'condicioniva_id'
+      Required = True
+    end
+    object ZQGrillaproveedor_condicionventa: TStringField
+      FieldName = 'proveedor_condicionventa'
+      Size = 45
+    end
+    object ZQGrillaproveedor_tipo: TStringField
+      FieldName = 'proveedor_tipo'
+      Size = 45
+    end
+    object ZQGrillalocalidad_id: TIntegerField
+      FieldName = 'localidad_id'
+      Required = True
     end
   end
   object DSCProveedores: TDataSource

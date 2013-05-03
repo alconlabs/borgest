@@ -209,6 +209,7 @@ object busquedaproductos: Tbusquedaproductos
         Height = 22
         Align = alLeft
         TabOrder = 0
+        OnKeyPress = fil_producto_idKeyPress
         ExplicitHeight = 21
       end
       object fil_producto_nombre: TEdit
