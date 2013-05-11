@@ -78,6 +78,7 @@ type
     Label16: TLabel;
     documentoventa_fechavenc: TDateTimePicker;
     btnobservaciones: TButton;
+    cliente_ultimaventa: TLabel;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -382,6 +383,12 @@ begin
     personal_id.Buscar(Princ.buscar('select personal_id from clientes where cliente_id="'+cliente_id.codigo+'"','personal_id'));
 
     documentoventa_fechavenc.Date:=documentoventa_fecha.Date + strtoint(Princ.buscar('select cliente_diasvenc from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_diasvenc'));
+
+    cliente_ultimaventa.Caption:='';
+
+    cliente_ultimaventa.Caption:=Princ.buscar('select documentoventa_fecha from documentosventas '+
+                                              'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                              'where tipodocu_nombre="'+TIPODOCU_FACTURAVENTA+'" and cliente_id="'+cliente_id.codigo+'"','documentoventa_fecha');
 
     if Princ.buscar('select condicioniva_id from clientes where cliente_id="'+cliente_id.codigo+'"','condicioniva_id')='2' then
       tipodocu_id.Buscar('A',true)

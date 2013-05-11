@@ -333,6 +333,10 @@ const
 
   VENCIMIENTO_LICENCIA='2013-07-15';
 
+//Tipos Documentos
+  TIPODOCU_FACTURAVENTA='Factura de Venta';
+
+
 
 //  CONNECTION_STRING1='Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source=';
 //  CONNECTION_STRING3=';Mode=Share Deny None;Jet OLEDB:System database="";Jet OLEDB:Registry Path="";Jet OLEDB:Database Password="";Jet OLEDB:Engine Type=35;'+

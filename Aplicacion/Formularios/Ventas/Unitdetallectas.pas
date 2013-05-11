@@ -256,7 +256,7 @@ begin
 
     ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'group by grupo ';
 
-    ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'order by clientes.cliente_nombre, documentosventas.documentoventa_fecha, documentosventas.documentoventa_id ';
+    ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'order by clientes.cliente_nombre, documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero ';
 
 
     ZQPendientes.Active:=true;

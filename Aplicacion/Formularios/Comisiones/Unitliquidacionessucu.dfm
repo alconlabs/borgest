@@ -422,7 +422,7 @@ object liquidacionessucu: Tliquidacionessucu
             end
             item
               Expanded = False
-              FieldName = 'sucursaldebcred_estado'
+              FieldName = 'sucursaldebcred_fecha'
               Title.Caption = 'Fecha'
               Width = 93
               Visible = True

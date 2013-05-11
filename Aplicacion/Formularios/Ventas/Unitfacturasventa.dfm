@@ -172,6 +172,12 @@ object facturasventa: Tfacturasventa
       Alignment = taRightJustify
       Caption = 'Fecha Venc.'
     end
+    object cliente_ultimaventa: TLabel
+      Left = 331
+      Top = 93
+      Width = 3
+      Height = 13
+    end
     object documentoventa_numero: TEdit
       Left = 184
       Top = 36

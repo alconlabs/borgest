@@ -40,14 +40,20 @@ end;
 
 procedure Tfacturasventarapida.btnguardarClick(Sender: TObject);
 begin
-    ZQDocumentopagos.Insert;
-    ZQDocumentopagos.FieldByName('documentopago_id').asstring:='0';
-    ZQDocumentopagos.FieldByName('documentopago_importe').asstring:=documentoventa_total.Text;
-    ZQDocumentopagos.FieldByName('documentopago_nombre').asstring:='EVECTIVO';
-    ZQDocumentopagos.FieldByName('documentoventa_id').asstring:='0';
-    ZQDocumentopagos.FieldByName('tipopago_id').asstring:='1';
-    ZQDocumentopagos.Post;
-    calculartotalpagos;
+    if documentoventa_saldo>0 then
+      begin
+          ZQDocumentopagos.Insert;
+          ZQDocumentopagos.FieldByName('documentopago_id').asstring:='0';
+          ZQDocumentopagos.FieldByName('documentopago_importe').AsFloat:=documentoventa_saldo;
+          ZQDocumentopagos.FieldByName('documentopago_nombre').asstring:='EVECTIVO';
+          ZQDocumentopagos.FieldByName('documentoventa_id').asstring:='0';
+          ZQDocumentopagos.FieldByName('tipopago_id').asstring:='1';
+          ZQDocumentopagos.Post;
+          calculartotalpagos;
+
+      end;
+
+
   inherited;
   documentoventa_total2.Value:=0;
 end;

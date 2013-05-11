@@ -92,7 +92,7 @@ inherited FacturarDocumentos: TFacturarDocumentos
       
         'inner join clientes on documentosventas.cliente_id=clientes.clie' +
         'nte_id'
-      'where documentosventas.documentoventa_estado<>'#39'FACTURADO'#39' and '
+      'where documentosventas.documentoventa_estado<>'#39'ANULADA'#39' and '
       'documentosventas.tipodocu_id=:tipodocu_id'
       'order by documentoventa_fecha')
     Params = <

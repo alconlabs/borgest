@@ -515,7 +515,7 @@ object recibosventa: Trecibosventa
         end
         item
           Expanded = False
-          FieldName = 'tipopago_nombre'
+          FieldName = 'documentopago_nombre'
           Title.Caption = 'Descripcion'
           Width = 297
           Visible = True

@@ -1,7 +1,6 @@
 inherited facturasventarapida: Tfacturasventarapida
   Caption = 'Venta Rapida'
   ClientHeight = 247
-  ExplicitWidth = 867
   ExplicitHeight = 285
   PixelsPerInch = 96
   TextHeight = 13
@@ -207,11 +206,6 @@ inherited facturasventarapida: Tfacturasventarapida
       Visible = False
       ExplicitTop = 463
     end
-    inherited sucursal_id: TSqlComboBox
-      Top = 303
-      Visible = False
-      ExplicitTop = 303
-    end
     object documentoventa_total2: TMoneyEdit [33]
       Left = 742
       Top = 167
@@ -238,12 +232,17 @@ inherited facturasventarapida: Tfacturasventarapida
       TabOrder = 18
       Version = '1.1.0.1'
     end
+    inherited sucursal_id: TSqlComboBox
+      Top = 303
+      Visible = False
+      ExplicitTop = 303
+    end
     inherited btnherramientas: TAdvGlowButton
       Top = 294
       ExplicitTop = 294
     end
     inherited btnimprimirventa: TButton
-      TabOrder = 23
+      TabOrder = 24
       Visible = False
     end
     inherited documentoventa_fechavenc: TDateTimePicker
