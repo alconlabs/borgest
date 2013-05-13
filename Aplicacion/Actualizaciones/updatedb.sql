@@ -802,3 +802,7 @@ ALTER TABLE `liquidacionessucursales` ADD COLUMN `documentoventa_id` INT(11) NUL
 ALTER TABLE `liquidacionessucursales` 
 DROP COLUMN `sucursaltipliqsuc_estado` , 
 ADD COLUMN `liquidacionsucursal_estado` VARCHAR(45) NULL DEFAULT 'PENDIENTE'  AFTER `sucursaltipliqsuc_tipo` ;
+190;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('72', '>Archivo>Localidades>Provincias', '0', 'btnprovincias', '', '0', '0');
+191;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,72,perfil_id from perfiles;

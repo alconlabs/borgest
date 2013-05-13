@@ -131,6 +131,7 @@ type
     aver41: TMenuItem;
     Encriptador1: TEncriptador;
     GTBUtilidades1: TGTBUtilidades;
+    btnprovincias: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -186,6 +187,7 @@ type
     procedure btnremitosClick(Sender: TObject);
     procedure btnliquidacionesvendedoresClick(Sender: TObject);
     procedure btnliquidacionessucuClick(Sender: TObject);
+    procedure btnprovinciasClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -377,7 +379,7 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   UnitComisionesSucursales, Unitvendedoresdebcred, Unitsucursalesdebcred,
   UnitNotaDebitoVenta, UnitListaNotaDebitoVenta, UnitRemitoVenta,
   UnitListaRemitoVenta, Unitlistacomisionesvendedores,
-  UnitlistaComisionesSucursales;
+  UnitlistaComisionesSucursales, Unitprovincias;
 
 {$R *.dfm}
 
@@ -3159,6 +3161,15 @@ begin
       listaproveedores:=Tlistaproveedores.Create(self);
     finally
       listaproveedores.Show;
+    end;
+end;
+
+procedure TPrinc.btnprovinciasClick(Sender: TObject);
+begin
+    try
+      provincias:=Tprovincias.Create(self);
+    finally
+      provincias.Show;
     end;
 end;
 
