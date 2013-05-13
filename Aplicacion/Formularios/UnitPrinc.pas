@@ -333,8 +333,12 @@ const
 
   VENCIMIENTO_LICENCIA='2013-07-15';
 
+  CONDICIONVENTA_CONTADO='0';
+  CONDICIONVENTA_CTACTE='1';
+
 //Tipos Documentos
   TIPODOCU_FACTURAVENTA='Factura de Venta';
+  TIPODOCU_RECIBOVENTA='Recibo de Venta';
 
 
 
@@ -2041,7 +2045,7 @@ begin
           impresorafiscal.tipodocufiscal_id:=ZQDocumentosventas.FieldByName('tipodocufiscal_id').AsInteger;
           impresorafiscal.tipodocu_nombre:=ZQDocumentosventas.FieldByName('tipodocu_nombre').AsString;
           impresorafiscal.tipodocu_letra:=ZQDocumentosventas.FieldByName('tipodocu_letra').AsString;
-          impresorafiscal.tipodocu_leyenda:=ZQDocumentosventas.FieldByName('tipodocu_leyenda').AsString;
+          impresorafiscal.tipodocu_leyenda:=ZQDocumentosventas.FieldByName('documentoventa_observacion').AsString;
           impresorafiscal.Nombre_cliente:=QuitarCaracteresEspeciales(ZQDocumentosventas.FieldByName('cliente_nombre').AsString);
           impresorafiscal.Direccion_cliente:=QuitarCaracteresEspeciales(ZQDocumentosventas.FieldByName('cliente_domicilio').AsString);
           if impresorafiscal.Direccion_cliente='' then
@@ -2574,8 +2578,6 @@ begin
 //      login.liberar_al_cerrar:=false;
 //      login.ShowModal;
 //    end;
-
-
 
     MenuConfiguracion;
 end;

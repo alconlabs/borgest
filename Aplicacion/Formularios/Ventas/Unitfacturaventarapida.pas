@@ -45,7 +45,7 @@ begin
           ZQDocumentopagos.Insert;
           ZQDocumentopagos.FieldByName('documentopago_id').asstring:='0';
           ZQDocumentopagos.FieldByName('documentopago_importe').AsFloat:=documentoventa_saldo;
-          ZQDocumentopagos.FieldByName('documentopago_nombre').asstring:='EVECTIVO';
+          ZQDocumentopagos.FieldByName('documentopago_nombre').asstring:='EFECTIVO';
           ZQDocumentopagos.FieldByName('documentoventa_id').asstring:='0';
           ZQDocumentopagos.FieldByName('tipopago_id').asstring:='1';
           ZQDocumentopagos.Post;

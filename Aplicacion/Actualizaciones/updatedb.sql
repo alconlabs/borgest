@@ -794,3 +794,11 @@ CREATE  TABLE IF NOT EXISTS `liquisucudeta` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1
 COLLATE = latin1_swedish_ci;
+187;
+INSERT INTO `config` SET `config_nombre`='CONEXIONREPORTES',`config_valor`='CONEXION_DBBORGEST';
+188;
+ALTER TABLE `liquidacionessucursales` ADD COLUMN `documentoventa_id` INT(11) NULL DEFAULT 0  AFTER `sucursal_id` ;
+189;
+ALTER TABLE `liquidacionessucursales` 
+DROP COLUMN `sucursaltipliqsuc_estado` , 
+ADD COLUMN `liquidacionsucursal_estado` VARCHAR(45) NULL DEFAULT 'PENDIENTE'  AFTER `sucursaltipliqsuc_tipo` ;

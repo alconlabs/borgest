@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageVentas
+    ActivePage = AdvPageComisiones
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -3354,8 +3354,8 @@ object Princ: TPrinc
     Top = 384
   end
   object RpExpreDialogVCL1: TRpExpreDialogVCL
-    Left = 352
-    Top = 328
+    Left = 336
+    Top = 304
   end
   object AdvPopupMenu1: TAdvPopupMenu
     MenuStyler = AdvMenuStyler1

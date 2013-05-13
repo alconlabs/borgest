@@ -7,7 +7,8 @@ uses
   Dialogs, ExtCtrls, AdvPanel, AdvGlowButton, Grids, DBGrids, StdCtrls, DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, UnitNumEdit, ComCtrls,
   UnitSqlComboBox, AdvEdit, DBAdvEd, BaseGrid, AdvGrid, DBAdvGrid, Titles,
-  AdvListV, UnitSqlListView, MQuery, math, rpcompobase, rpvclreport;
+  AdvListV, UnitSqlListView, MQuery, math, rpcompobase, rpvclreport, AdvEdBtn,
+  EditCodi, MoneyEdit;
 
 type
   Tliquidacionessucu = class(TForm)
@@ -78,6 +79,35 @@ type
     ZQsucursalesdebcredsucursal_id: TIntegerField;
     ZQsucursalesdebcredimporte: TFloatField;
     TabSheet3: TTabSheet;
+    Label6: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label15: TLabel;
+    Label11: TLabel;
+    cliente_domicilio: TLabel;
+    Label12: TLabel;
+    cliente_documentonro: TLabel;
+    Label14: TLabel;
+    labelsucursal: TLabel;
+    Label16: TLabel;
+    documentoventa_numero: TEdit;
+    documentoventa_fecha: TDateTimePicker;
+    cliente_id: TSqlComboBox;
+    personal_id: TSqlComboBox;
+    documentoventa_condicionventa: TComboBox;
+    puntoventa_id: TSqlComboBox;
+    tipodocu_id: TSqlComboBox;
+    documentoventa_listaprecio: TComboBox;
+    sucursalfactura_id: TSqlComboBox;
+    documentoventa_fechavenc: TDateTimePicker;
+    Label17: TLabel;
+    producto_id: TEditCodi;
+    producto_nombre: TEdit;
+    btngenerarfactura: TButton;
+    ZQDocumentoventa: TZQuery;
+    ZQDocumentoventadetalles: TZQuery;
+    btnverfactura: TButton;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -91,6 +121,11 @@ type
     procedure btnquitarClick(Sender: TObject);
     procedure sucursal_idSelect(Sender: TObject);
     procedure btnquitardebcredClick(Sender: TObject);
+    procedure sucursalfactura_idSelect(Sender: TObject);
+    procedure puntoventa_idSelect(Sender: TObject);
+    procedure tipodocu_idSelect(Sender: TObject);
+    procedure btngenerarfacturaClick(Sender: TObject);
+    procedure btnverfacturaClick(Sender: TObject);
   private
     { Private declarations }
     tipocuota:integer;
@@ -98,6 +133,7 @@ type
     porcentajeliquid:real;
     porcentajeliquid_max:real;
     sucursaltipliqsuc_tipo:string;
+    documentoventa_id:string;
     function control:boolean;
     procedure agregar;
     procedure modificar;
@@ -123,7 +159,7 @@ var
 
 implementation
 
-uses UnitPrinc, Unitventadetalle;
+uses UnitPrinc, Unitventadetalle, Unitventadetalle2;
 
 {$R *.dfm}
 
@@ -206,9 +242,48 @@ begin
 end;
 
 
+procedure Tliquidacionessucu.puntoventa_idSelect(Sender: TObject);
+begin
+    documentoventa_numero.Text:='';
+    tipodocu_id.Confsql.Text:='select * from tiposdocumento '+
+                              'where tiposdocumento.puntoventa_id="'+puntoventa_id.Codigo+'" and tipodocu_nombre="'+TIPODOCU_FACTURAVENTA+'"'+
+                              'order by tipodocu_letra';
+
+     tipodocu_id.llenarcombo;
+
+     try
+       tipodocu_id.ItemIndex:=0;
+     except
+       tipodocu_id.ItemIndex:=-1;
+     end;
+
+     if tipodocu_id.ItemIndex>-1 then
+      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
+end;
+
+procedure Tliquidacionessucu.sucursalfactura_idSelect(Sender: TObject);
+begin
+    puntoventa_id.Confsql.Text:='select * from puntodeventa where sucursal_id="'+sucursalfactura_id.codigo+'" '+Princ.empresa_where+' order by puntoventa_numero';
+    puntoventa_id.llenarcombo;
+    try
+       puntoventa_id.ItemIndex:=0;
+     except
+       puntoventa_id.ItemIndex:=-1;
+     end;
+
+    puntoventa_id.OnSelect(self);
+end;
+
 procedure Tliquidacionessucu.sucursal_idSelect(Sender: TObject);
 begin
     sucursaltipliqsuc_tipo:=Princ.buscar('select sucursal_tipoliquidsucursal from sucursales where sucursal_id="'+sucursal_id.codigo+'"','sucursal_tipoliquidsucursal');
+end;
+
+procedure Tliquidacionessucu.tipodocu_idSelect(Sender: TObject);
+begin
+    documentoventa_numero.Text:='';
+    if tipodocu_id.ItemIndex>-1 then
+      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
 end;
 
 procedure Tliquidacionessucu.TraerDetalles;
@@ -420,6 +495,53 @@ begin
     sucursal_id.llenarcombo;
     sucursal_id.ItemIndex:=-1;
 
+
+    sucursalfactura_id.llenarcombo;
+    sucursalfactura_id.Buscar(Princ.sucursal_actual);
+
+    puntoventa_id.Confsql.Text:='select * from puntodeventa where sucursal_id="'+sucursalfactura_id.codigo+'" '+Princ.empresa_where+' order by puntoventa_numero';
+
+    puntoventa_id.llenarcombo;
+    try
+      puntoventa_id.ItemIndex:=0;
+    except
+      puntoventa_id.ItemIndex:=-1;
+    end;
+
+
+    tipodocu_id.Confsql.Text:='select * from tiposdocumento '+
+                              'where tiposdocumento.puntoventa_id="'+puntoventa_id.Codigo+'" and tipodocu_nombre="'+TIPODOCU_FACTURAVENTA+'"'+
+                              'order by tipodocu_letra';
+
+     tipodocu_id.llenarcombo;
+     try
+       tipodocu_id.ItemIndex:=0;
+     except
+       tipodocu_id.ItemIndex:=-1;
+     end;
+
+     documentoventa_numero.Text:='';
+     if tipodocu_id.ItemIndex=0 then
+      documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
+
+
+    documentoventa_fecha.Date:=date;
+
+    documentoventa_listaprecio.Items.Clear;
+    documentoventa_listaprecio.Items.Add(Princ.NOMBREPRECIO1);
+    documentoventa_listaprecio.Items.Add(Princ.NOMBREPRECIO2);
+    documentoventa_listaprecio.Items.Add(Princ.NOMBREPRECIO3);
+    documentoventa_listaprecio.Items.Add(Princ.NOMBREPRECIO4);
+    documentoventa_listaprecio.ItemIndex:=0;
+
+    cliente_id.llenarcombo;
+    cliente_id.ItemIndex:=-1;
+    
+    personal_id.llenarcombo;
+    personal_id.ItemIndex:=0;
+
+
+
 end;
 
 procedure Tliquidacionessucu.FormShow(Sender: TObject);
@@ -512,7 +634,7 @@ begin
     ZQuery2.Sql.Clear;
     ZQuery2.Sql.Add('update liquidacionessucursales set ');
     ZQuery2.Sql.Add('sucursal_id=:sucursal_id, ');
-    ZQuery2.Sql.Add('sucursaltipliqsuc_estado=:sucursaltipliqsuc_estado, ');
+    ZQuery2.Sql.Add('liquidacionsucursal_estado=:liquidacionsucursal_estado, ');
     ZQuery2.Sql.Add('sucursaltipliqsuc_tipo=:sucursaltipliqsuc_tipo, ');
     ZQuery2.Sql.Add('liquidacionsucursal_total=:liquidacionsucursal_total, ');
     ZQuery2.Sql.Add('liquidacionsucursal_hastafecha=:liquidacionsucursal_hastafecha, ');
@@ -520,7 +642,7 @@ begin
     ZQuery2.Sql.Add('liquidacionsucursal_fecha=:liquidacionsucursal_fecha ');
     ZQuery2.Sql.Add('where liquidacionsucursal_id=:liquidacionsucursal_id ');
     ZQuery2.ParamByName('sucursal_id').AsString:=sucursal_id.codigo;
-    ZQuery2.ParamByName('sucursaltipliqsuc_estado').AsString:='PENDIENTE';
+    ZQuery2.ParamByName('liquidacionsucursal_estado').AsString:='PENDIENTE';
     ZQuery2.parambyname('sucursaltipliqsuc_tipo').asstring:=sucursaltipliqsuc_tipo;
     ZQuery2.ParamByName('liquidacionsucursal_total').AsString:=liquidacionsucursal_total.Text;
     ZQuery2.ParamByName('liquidacionsucursal_hastafecha').AsString:=formatdatetime('yyyy-mm-dd',liquidacionsucursal_hastafecha.Date);
@@ -544,7 +666,7 @@ begin
 //
 //      end
 //    else
-      Self.Close;
+//      Self.Close;
 
 end;
 
@@ -560,6 +682,9 @@ begin
           liquidacionsucursal_desdefecha.Date:=date;
           liquidacionsucursal_hastafecha.Date:=date;
 
+          btngenerarfactura.Enabled:=true;
+          btnverfactura.Enabled:=false;
+
       end
     else
       begin
@@ -570,10 +695,22 @@ begin
           sucursal_id.Buscar(ZQliquidacionessucursales.FieldByName('sucursal_id').AsString);
           sucursaltipliqsuc_tipo:=ZQliquidacionessucursales.FieldByName('sucursaltipliqsuc_tipo').AsString;
 
+          documentoventa_id:=ZQliquidacionessucursales.FieldByName('documentoventa_id').AsString;
+
+
+          btnguardar.Enabled:=true;
+          btngenerarfactura.Enabled:=true;
+          btnverfactura.Enabled:=false;
+
+          if ZQliquidacionessucursales.FieldByName('liquidacionsucursal_estado').AsString='FACTURADA' then
+            begin
+                btnguardar.Enabled:=false;
+                btngenerarfactura.Enabled:=false;
+                btnverfactura.Enabled:=true;
+            end;
+
           TraerDetalles;
-
       end;
-
 
 end;
 procedure Tliquidacionessucu.agregar;
@@ -590,7 +727,7 @@ begin
     ZQuery2.Sql.Clear;
     ZQuery2.Sql.Add('insert into liquidacionessucursales set ');
     ZQuery2.Sql.Add('sucursal_id=:sucursal_id, ');
-    ZQuery2.Sql.Add('sucursaltipliqsuc_estado=:sucursaltipliqsuc_estado, ');
+    ZQuery2.Sql.Add('liquidacionsucursal_estado=:liquidacionsucursal_estado, ');
     ZQuery2.Sql.Add('sucursaltipliqsuc_tipo=:sucursaltipliqsuc_tipo, ');
     ZQuery2.Sql.Add('liquidacionsucursal_total=:liquidacionsucursal_total, ');
     ZQuery2.Sql.Add('liquidacionsucursal_hastafecha=:liquidacionsucursal_hastafecha, ');
@@ -598,7 +735,7 @@ begin
     ZQuery2.Sql.Add('liquidacionsucursal_fecha=:liquidacionsucursal_fecha, ');
     ZQuery2.Sql.Add('liquidacionsucursal_id=:liquidacionsucursal_id ');
     ZQuery2.ParamByName('sucursal_id').AsString:=sucursal_id.codigo;
-    ZQuery2.ParamByName('sucursaltipliqsuc_estado').AsString:='PENDIENTE';
+    ZQuery2.ParamByName('liquidacionsucursal_estado').AsString:='PENDIENTE';
     ZQuery2.ParamByName('sucursaltipliqsuc_tipo').AsString:=sucursaltipliqsuc_tipo;
     ZQuery2.ParamByName('liquidacionsucursal_total').AsString:=liquidacionsucursal_total.Text;
     ZQuery2.ParamByName('liquidacionsucursal_hastafecha').AsString:=formatdatetime('yyyy-mm-dd',liquidacionsucursal_hastafecha.Date);
@@ -692,6 +829,81 @@ begin
     Self.Close;
 end;
 
+procedure Tliquidacionessucu.btngenerarfacturaClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea generar la Factura?', mtInformation, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          modificar;
+
+          ZQDocumentoventa.Active:=false;
+          ZQDocumentoventa.ParamByName('documentoventa_id').AsString:='-1';
+          ZQDocumentoventa.Active:=true;
+
+          ZQDocumentoventa.Insert;
+          ZQDocumentoventa.FieldByName('documentoventa_trabajorealizado').AsString:='';
+          ZQDocumentoventa.FieldByName('documentoventa_solicitudcliente').AsString:='';
+          ZQDocumentoventa.FieldByName('documentoventa_nrodetallepago').AsString:='';
+          ZQDocumentoventa.FieldByName('documentoventa_formapago').AsString:='';
+          ZQDocumentoventa.FieldByName('documentoventa_equipo2').AsString:='';
+          ZQDocumentoventa.FieldByName('documentoventa_equipo1').AsString:='';
+          ZQDocumentoventa.FieldByName('documentoventa_listaprecio').AsInteger:=documentoventa_listaprecio.ItemIndex;
+          ZQDocumentoventa.FieldByName('documentoventa_fechavenc').AsDateTime:=Princ.fechaservidor;
+          ZQDocumentoventa.FieldByName('documentoventa_condicionventa').AsInteger:=documentoventa_condicionventa.ItemIndex;
+          ZQDocumentoventa.FieldByName('tipodocu_id').AsString:=tipodocu_id.codigo;
+          ZQDocumentoventa.FieldByName('personal_id').AsString:=personal_id.codigo;
+          ZQDocumentoventa.FieldByName('cliente_id').AsString:=cliente_id.codigo;
+          ZQDocumentoventa.FieldByName('documentoventa_observacion').AsString:='';
+          ZQDocumentoventa.FieldByName('documentoventa_saldo').AsString:='0';
+          ZQDocumentoventa.FieldByName('documentoventa_pagado').AsString:='0';
+          ZQDocumentoventa.FieldByName('documentoventa_estado').AsString:='PENDIENTE';
+          ZQDocumentoventa.FieldByName('documentoventa_total').AsString:='0';
+          ZQDocumentoventa.FieldByName('documentoventa_netonogravado').AsString:='0';
+          ZQDocumentoventa.FieldByName('documentoventa_iva105').AsString:='0';
+          ZQDocumentoventa.FieldByName('documentoventa_neto105').AsString:='0';
+          ZQDocumentoventa.FieldByName('documentoventa_iva21').AsString:='0';
+          ZQDocumentoventa.FieldByName('documentoventa_neto21').AsString:='0';
+          ZQDocumentoventa.FieldByName('documentoventa_hora').AsDateTime:=Princ.horaservidor;
+          ZQDocumentoventa.FieldByName('documentoventa_fecha').AsDateTime:=Princ.fechaservidor;
+          ZQDocumentoventa.FieldByName('documentoventa_numero').AsString:=Princ.NumeroDocumento(tipodocu_id.codigo,documentoventa_numero.Text);
+          ZQDocumentoventa.FieldByName('documentoventa_id').AsString:=Princ.codigo('documentosventas','documentoventa_id');
+          ZQDocumentoventa.FieldByName('caja_id').AsString:='0';
+          ZQDocumentoventa.Post;
+
+          ZQDocumentoventadetalles.Active:=false;
+          ZQDocumentoventadetalles.ParamByName('documentoventa_id').AsString:='';
+          ZQDocumentoventadetalles.Active:=true;
+          try
+            ventadetalle2:= Tventadetalle2.Create(self);
+          finally
+            ventadetalle2.producto_precioventa:='1';
+            ventadetalle2.ventadeta_cantidad.Text:='1';
+            ventadetalle2.producto_id.Search(producto_id.Text);
+            ventadetalle2.producto_nombre.Text:=producto_nombre.Text;
+            ventadetalle2.ventadetalle_preciounitario.Text:=liquidacionsucursal_total.Text;
+            ventadetalle2.calculartotal;
+            ventadetalle2.CargarQuery;
+            princ.CargarDocumentoVentaDetalle(ZQDocumentoventadetalles, ventadetalle2.ZQDocumentoventadetalles);
+          end;
+          ventadetalle2.Free;
+
+          documentoventa_id:=Princ.AgregarDocumentoVenta(ZQDocumentoventa,ZQDocumentoventadetalles,nil,nil);
+
+          ZQuery2.Sql.Clear;
+          ZQuery2.Sql.Add('update liquidacionessucursales set ');
+          ZQuery2.Sql.Add('documentoventa_id=:documentoventa_id, ');
+          ZQuery2.Sql.Add('liquidacionsucursal_estado=:liquidacionsucursal_estado ');
+          ZQuery2.Sql.Add('where liquidacionsucursal_id=:liquidacionsucursal_id ');
+          ZQuery2.ParamByName('documentoventa_id').AsString:=documentoventa_id;
+          ZQuery2.ParamByName('liquidacionsucursal_estado').AsString:='FACTURADA';
+          ZQuery2.ParamByName('liquidacionsucursal_id').AsString:=id;
+          ZQuery2.ExecSql;
+
+
+
+
+      end;
+end;
+
 procedure Tliquidacionessucu.btnguardarClick(Sender: TObject);
 begin
     case abm of
@@ -770,9 +982,37 @@ begin
       end;
 end;
 
+procedure Tliquidacionessucu.btnverfacturaClick(Sender: TObject);
+begin
+    Princ.AbrirDocumentoVenta(documentoventa_id,TIPODOCU_FACTURAVENTA,2);
+end;
+
 procedure Tliquidacionessucu.cliente_idSelect(Sender: TObject);
 begin
-//    cliente_dni.Text:=Princ.buscar('select cliente_dni from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_dni');
+    cliente_domicilio.Caption:=Princ.buscar('select cliente_domicilio from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_domicilio');
+    cliente_documentonro.Caption:=Princ.buscar('select cliente_documentonro from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_documentonro');
+    try
+      documentoventa_condicionventa.ItemIndex:=strtoint(Princ.buscar('select cliente_condicionventa from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_condicionventa'));
+    except
+    end;
+
+    documentoventa_listaprecio.ItemIndex:=strtoint(Princ.buscar('select cliente_listaprecio from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_listaprecio'));
+    personal_id.Buscar(Princ.buscar('select personal_id from clientes where cliente_id="'+cliente_id.codigo+'"','personal_id'));
+
+    documentoventa_fechavenc.Date:=documentoventa_fecha.Date + strtoint(Princ.buscar('select cliente_diasvenc from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_diasvenc'));
+
+    if Princ.buscar('select condicioniva_id from clientes where cliente_id="'+cliente_id.codigo+'"','condicioniva_id')='2' then
+      tipodocu_id.Buscar('A',true)
+    else
+      tipodocu_id.Buscar('B',true);
+
+    if tipodocu_id.Text='' then
+      try
+        tipodocu_id.ItemIndex:=0;
+      finally
+      end;
+
+    tipodocu_id.OnSelect(self);
 end;
 
 function Tliquidacionessucu.control:boolean;

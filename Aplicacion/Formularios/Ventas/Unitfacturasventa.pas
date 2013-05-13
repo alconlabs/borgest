@@ -102,6 +102,7 @@ type
     procedure btnimprimirventaClick(Sender: TObject);
     procedure btnagregarclienteClick(Sender: TObject);
     procedure FacturarpresupuestoClick(Sender: TObject);
+    procedure btnobservacionesClick(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -126,6 +127,7 @@ type
     documentoventa_pagado, documentoventa_saldo:real;
     limpiar_al_guardar:boolean;
     id_facturado:string;
+    documentoventa_observacion:tstrings;
   end;
 
 var
@@ -133,7 +135,8 @@ var
 
 implementation
 
-uses UnitPrinc, Unitventadetalle, Unitventadetalle2, UnitFacturarDocumentos;
+uses UnitPrinc, Unitventadetalle, Unitventadetalle2, UnitFacturarDocumentos,
+  UnitObservaciones;
 
 {$R *.dfm}
 
@@ -176,6 +179,7 @@ begin
     ZQExecSql.SQL.Clear;
     ZQExecSql.SQL.Add('update documentosventas set documentoventa_estado=:documentovneta_estado ');
     ZQExecSql.SQL.Add('where documentoventa_id=:documentoventa_id ');
+    ZQExecSql.ParamByName('documentovneta_estado').AsString:='FACTURADA';
     ZQExecSql.ParamByName('documentoventa_id').AsString:=documento_idorig;
     ZQExecSql.ExecSQL;
 
@@ -503,6 +507,9 @@ end;
 
 procedure Tfacturasventa.FormCreate(Sender: TObject);
 begin
+    documentoventa_observacion:=tstringlist.Create;
+    documentoventa_observacion.Text:='';
+
     id:='';
     limpiar_al_guardar:=true;
 
@@ -572,6 +579,7 @@ begin
     btnherramientas.Visible:=abm=1;
     btnimprimirventa.Visible:=abm<>1;
 
+    cliente_ultimaventa.Caption:='';
 
     ZQuery2.Active:=false;
     ZQuery2.ParamByName('documentoventa_id').AsString:=id;
@@ -647,7 +655,7 @@ procedure Tfacturasventa.puntoventa_idSelect(Sender: TObject);
 begin
     documentoventa_numero.Text:='';
     tipodocu_id.Confsql.Text:='select * from tiposdocumento '+
-                              'where tiposdocumento.puntoventa_id="'+puntoventa_id.Codigo+'" and tipodocu_nombre="Factura de Venta"'+
+                              'where tiposdocumento.puntoventa_id="'+puntoventa_id.Codigo+'" and tipodocu_nombre="'+TIPODOCU_FACTURAVENTA+'"'+
                               'order by tipodocu_letra';
 
      tipodocu_id.llenarcombo;
@@ -673,6 +681,9 @@ begin
     documentoventa_numero.Text:='';
     if tipodocu_id.ItemIndex>-1 then
       documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
+
+
+    documentoventa_observacion.Text:=Princ.GetConfigTipoDocumento('',tipodocu_id.codigo,'tipodocu_leyenda');  
 end;
 
 procedure Tfacturasventa.ZQuery2AfterOpen(DataSet: TDataSet);
@@ -689,6 +700,8 @@ begin
           documentoventa_neto105.Text:='0';
           documentoventa_iva105.Text:='0';
           documentoventa_total.Text:='0';
+
+          documentoventa_observacion.Text:=Princ.GetConfigTipoDocumento('',tipodocu_id.codigo,'tipodocu_leyenda');
 
       end
     else
@@ -714,6 +727,8 @@ begin
           documentoventa_neto105.Text:=ZQuery2.FieldByName('documentoventa_neto105').AsString;
           documentoventa_iva105.Text:=ZQuery2.FieldByName('documentoventa_iva105').AsString;
           documentoventa_total.Text:=ZQuery2.FieldByName('documentoventa_total').AsString;
+
+          documentoventa_observacion.Text:=ZQuery2.FieldByName('documentoventa_observacion').AsString;
 
       end;
 
@@ -778,7 +793,7 @@ begin
     ZQExecSql.ParamByName('documentoventa_estado').AsString:='PENDIENTE';
     ZQExecSql.ParamByName('documentoventa_pagado').AsString:='0';
     ZQExecSql.ParamByName('documentoventa_saldo').AsString:=documentoventa_total.Text;;
-    ZQExecSql.ParamByName('documentoventa_observacion').AsString:='';
+    ZQExecSql.ParamByName('documentoventa_observacion').AsString:=documentoventa_observacion.Text;
     ZQExecSql.ParamByName('cliente_id').AsString:=cliente_id.codigo;
     ZQExecSql.ParamByName('personal_id').AsString:=personal_id.codigo;
     ZQExecSql.ParamByName('tipodocu_id').AsString:=tipodocu_id.codigo;
@@ -1004,6 +1019,22 @@ end;
 procedure Tfacturasventa.btnimprimirventaClick(Sender: TObject);
 begin
     Self.imprimir;
+end;
+
+procedure Tfacturasventa.btnobservacionesClick(Sender: TObject);
+begin
+    try
+      observaciones:= Tobservaciones.Create(self);
+      observaciones.liberar_al_cerrar:=false;
+      observaciones.documentoventa_observacion.Text:=documentoventa_observacion.Text;
+    finally
+      if observaciones.ShowModal=mrOk then
+        begin
+            documentoventa_observacion.Text:=observaciones.documentoventa_observacion.Text;
+        end;
+
+    end;
+
 end;
 
 procedure Tfacturasventa.btnquitarClick(Sender: TObject);

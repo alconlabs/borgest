@@ -72,8 +72,8 @@ object facturasventa: Tfacturasventa
     Styler = Princ.AdvPanelStyler1
     FullHeight = 0
     object Label2: TLabel
-      Left = 579
-      Top = 15
+      Left = 585
+      Top = 7
       Width = 30
       Height = 13
       Alignment = taRightJustify
@@ -81,23 +81,23 @@ object facturasventa: Tfacturasventa
     end
     object Label3: TLabel
       Left = 30
-      Top = 66
+      Top = 55
       Width = 32
       Height = 13
       Alignment = taRightJustify
       Caption = 'Cliente'
     end
     object Label4: TLabel
-      Left = 563
-      Top = 66
+      Left = 569
+      Top = 55
       Width = 46
       Height = 13
       Alignment = taRightJustify
       Caption = 'Vendedor'
     end
     object Label8: TLabel
-      Left = 516
-      Top = 93
+      Left = 522
+      Top = 79
       Width = 93
       Height = 13
       Alignment = taRightJustify
@@ -105,7 +105,7 @@ object facturasventa: Tfacturasventa
     end
     object Label15: TLabel
       Left = 25
-      Top = 39
+      Top = 31
       Width = 37
       Height = 13
       Alignment = taRightJustify
@@ -113,7 +113,7 @@ object facturasventa: Tfacturasventa
     end
     object Label1: TLabel
       Left = 20
-      Top = 93
+      Top = 79
       Width = 42
       Height = 13
       Alignment = taRightJustify
@@ -121,14 +121,14 @@ object facturasventa: Tfacturasventa
     end
     object cliente_domicilio: TLabel
       Left = 68
-      Top = 93
+      Top = 79
       Width = 42
       Height = 13
       Caption = 'Domicilio'
     end
     object Label11: TLabel
       Left = 13
-      Top = 117
+      Top = 103
       Width = 49
       Height = 13
       Alignment = taRightJustify
@@ -136,37 +136,37 @@ object facturasventa: Tfacturasventa
     end
     object cliente_documentonro: TLabel
       Left = 68
-      Top = 117
+      Top = 103
       Width = 49
       Height = 13
       Caption = 'CUIT/DNI'
     end
     object Label12: TLabel
-      Left = 534
-      Top = 117
+      Left = 540
+      Top = 103
       Width = 75
       Height = 13
       Alignment = taRightJustify
       Caption = 'Lista de Precios'
     end
     object Label13: TLabel
-      Left = 318
-      Top = 303
+      Left = 331
+      Top = 289
       Width = 30
       Height = 13
       Caption = 'Pagos'
     end
     object labelsucursal: TLabel
       Left = 21
-      Top = 10
+      Top = 7
       Width = 41
       Height = 13
       Alignment = taRightJustify
       Caption = 'Sucursal'
     end
     object Label16: TLabel
-      Left = 548
-      Top = 39
+      Left = 554
+      Top = 31
       Width = 61
       Height = 13
       Alignment = taRightJustify
@@ -174,20 +174,21 @@ object facturasventa: Tfacturasventa
     end
     object cliente_ultimaventa: TLabel
       Left = 331
-      Top = 93
-      Width = 3
+      Top = 79
+      Width = 27
       Height = 13
+      Caption = 'fecha'
     end
     object documentoventa_numero: TEdit
       Left = 184
-      Top = 36
+      Top = 28
       Width = 121
       Height = 21
       TabOrder = 17
     end
     object documentoventa_fecha: TDateTimePicker
-      Left = 615
-      Top = 12
+      Left = 621
+      Top = 4
       Width = 106
       Height = 21
       Date = 40384.000000000000000000
@@ -196,7 +197,7 @@ object facturasventa: Tfacturasventa
     end
     object cliente_id: TSqlComboBox
       Left = 68
-      Top = 63
+      Top = 52
       Width = 317
       Height = 21
       Style = csDropDownList
@@ -212,8 +213,8 @@ object facturasventa: Tfacturasventa
       Tag2 = 0
     end
     object personal_id: TSqlComboBox
-      Left = 614
-      Top = 63
+      Left = 620
+      Top = 52
       Width = 220
       Height = 21
       Style = csDropDownList
@@ -245,8 +246,8 @@ object facturasventa: Tfacturasventa
       OnClick = btnguardarClick
     end
     object documentoventa_condicionventa: TComboBox
-      Left = 615
-      Top = 90
+      Left = 621
+      Top = 76
       Width = 219
       Height = 21
       Style = csDropDownList
@@ -260,7 +261,7 @@ object facturasventa: Tfacturasventa
     end
     object DBGrid1: TDBGrid
       Left = 4
-      Top = 138
+      Top = 124
       Width = 836
       Height = 153
       TabStop = False
@@ -311,7 +312,7 @@ object facturasventa: Tfacturasventa
     end
     object btnagregar: TButton
       Left = 4
-      Top = 292
+      Top = 277
       Width = 75
       Height = 25
       Caption = 'Agregar'
@@ -320,7 +321,7 @@ object facturasventa: Tfacturasventa
     end
     object btnquitar: TButton
       Left = 151
-      Top = 292
+      Top = 277
       Width = 75
       Height = 25
       Caption = 'Quitar'
@@ -329,7 +330,7 @@ object facturasventa: Tfacturasventa
     end
     object btnmodificar: TButton
       Left = 78
-      Top = 292
+      Top = 277
       Width = 75
       Height = 25
       Caption = 'Modificar'
@@ -338,9 +339,9 @@ object facturasventa: Tfacturasventa
     end
     object GroupBox1: TGroupBox
       Left = 4
-      Top = 320
-      Width = 309
-      Height = 120
+      Top = 308
+      Width = 316
+      Height = 118
       Caption = 'Totales'
       ParentBackground = False
       TabOrder = 8
@@ -501,7 +502,7 @@ object facturasventa: Tfacturasventa
     end
     object puntoventa_id: TSqlComboBox
       Left = 68
-      Top = 36
+      Top = 28
       Width = 52
       Height = 21
       Style = csDropDownList
@@ -517,7 +518,7 @@ object facturasventa: Tfacturasventa
     end
     object tipodocu_id: TSqlComboBox
       Left = 126
-      Top = 36
+      Top = 28
       Width = 52
       Height = 21
       Style = csDropDownList
@@ -533,8 +534,8 @@ object facturasventa: Tfacturasventa
       Tag2 = 0
     end
     object documentoventa_listaprecio: TComboBox
-      Left = 615
-      Top = 114
+      Left = 621
+      Top = 100
       Width = 219
       Height = 21
       Style = csDropDownList
@@ -549,9 +550,9 @@ object facturasventa: Tfacturasventa
         'Precio 4')
     end
     object DBGrid2: TDBGrid
-      Left = 319
-      Top = 320
-      Width = 522
+      Left = 331
+      Top = 306
+      Width = 509
       Height = 120
       TabStop = False
       DataSource = DTSPagos
@@ -565,29 +566,22 @@ object facturasventa: Tfacturasventa
       Columns = <
         item
           Expanded = False
-          FieldName = 'documentopago_id'
-          Title.Caption = 'Nro.'
-          Width = 34
-          Visible = True
-        end
-        item
-          Expanded = False
           FieldName = 'tipopago_nombre'
           Title.Caption = 'Descripcion'
-          Width = 297
+          Width = 332
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'documentopago_importe'
           Title.Caption = 'Importe'
-          Width = 87
+          Width = 103
           Visible = True
         end>
     end
     object btnagregarpago: TButton
-      Left = 319
-      Top = 441
+      Left = 331
+      Top = 427
       Width = 75
       Height = 25
       Caption = 'Agregar'
@@ -595,8 +589,8 @@ object facturasventa: Tfacturasventa
       OnClick = btnagregarpagoClick
     end
     object btnquitarpago: TButton
-      Left = 393
-      Top = 441
+      Left = 405
+      Top = 427
       Width = 75
       Height = 25
       Caption = 'Quitar'
@@ -605,7 +599,7 @@ object facturasventa: Tfacturasventa
     end
     object sucursal_id: TSqlComboBox
       Left = 68
-      Top = 7
+      Top = 4
       Width = 317
       Height = 21
       Style = csDropDownList
@@ -622,7 +616,7 @@ object facturasventa: Tfacturasventa
     end
     object btnherramientas: TAdvGlowButton
       Left = 790
-      Top = 12
+      Top = 4
       Width = 44
       Height = 29
       Caption = 'btnherramientas'
@@ -677,7 +671,7 @@ object facturasventa: Tfacturasventa
     end
     object btnagregarcliente: TButton
       Left = 389
-      Top = 63
+      Top = 52
       Width = 21
       Height = 21
       Caption = '...'
@@ -686,8 +680,8 @@ object facturasventa: Tfacturasventa
       OnClick = btnagregarclienteClick
     end
     object documentoventa_fechavenc: TDateTimePicker
-      Left = 615
-      Top = 36
+      Left = 621
+      Top = 28
       Width = 106
       Height = 21
       Date = 40384.000000000000000000
@@ -695,12 +689,13 @@ object facturasventa: Tfacturasventa
       TabOrder = 19
     end
     object btnobservaciones: TButton
-      Left = 188
-      Top = 457
+      Left = 4
+      Top = 427
       Width = 83
       Height = 25
       Caption = 'Observaciones'
       TabOrder = 23
+      OnClick = btnobservacionesClick
     end
   end
   object ZQuery2: TZQuery
@@ -721,8 +716,8 @@ object facturasventa: Tfacturasventa
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 568
-    Top = 296
+    Left = 504
+    Top = 368
     ParamData = <
       item
         DataType = ftUnknown
@@ -751,8 +746,8 @@ object facturasventa: Tfacturasventa
       'select * from documentosventas'
       'where documentoventa_id=-1')
     Params = <>
-    Left = 624
-    Top = 48
+    Left = 776
+    Top = 208
   end
   object ZQdocumentoventadocus: TZQuery
     Connection = Princ.ZBase
@@ -761,8 +756,8 @@ object facturasventa: Tfacturasventa
       'select * from documentoventadocus'
       'where documentoventadoc_id=-1')
     Params = <>
-    Left = 456
-    Top = 72
+    Left = 520
+    Top = 224
   end
   object ZQDocumentopagos: TZQuery
     Connection = Princ.ZBase
@@ -774,8 +769,8 @@ object facturasventa: Tfacturasventa
         'opago_id'
       'where documentopago_id=-1')
     Params = <>
-    Left = 416
-    Top = 360
+    Left = 320
+    Top = 240
     object ZQDocumentopagosdocumentopago_id: TIntegerField
       FieldName = 'documentopago_id'
       Required = True
@@ -855,8 +850,8 @@ object facturasventa: Tfacturasventa
   end
   object AdvPopupMenu1: TAdvPopupMenu
     Version = '2.0.0.0'
-    Left = 488
-    Top = 16
+    Left = 392
+    Top = 240
     object Facturarnotapedido: TMenuItem
       Caption = 'Facturar Nota de pedido'
       OnClick = FacturarnotapedidoClick

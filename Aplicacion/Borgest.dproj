@@ -313,6 +313,9 @@
     <DCCReference Include="Formularios\Ventas\UnitNotaPedidoDetalle.pas">
       <Form>NotapedidoDetalle</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitObservaciones.pas">
+      <Form>observaciones</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitOrdenServicio.pas">
       <Form>ordenservicio</Form>
     </DCCReference>

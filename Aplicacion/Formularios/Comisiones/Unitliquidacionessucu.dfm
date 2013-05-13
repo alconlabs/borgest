@@ -1,7 +1,7 @@
 object liquidacionessucu: Tliquidacionessucu
   Left = 0
   Top = 0
-  Caption = 'Liquidacion a Vendedores'
+  Caption = 'Liquidacion a Sucursales'
   ClientHeight = 502
   ClientWidth = 1011
   Color = clBtnFace
@@ -472,6 +472,311 @@ object liquidacionessucu: Tliquidacionessucu
       object TabSheet3: TTabSheet
         Caption = 'Facturar Liquidacion'
         ImageIndex = 2
+        ExplicitLeft = 8
+        ExplicitTop = 28
+        object Label6: TLabel
+          Left = 489
+          Top = 7
+          Width = 30
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Fecha'
+        end
+        object Label8: TLabel
+          Left = 30
+          Top = 55
+          Width = 32
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Cliente'
+        end
+        object Label9: TLabel
+          Left = 473
+          Top = 55
+          Width = 46
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Vendedor'
+        end
+        object Label10: TLabel
+          Left = 426
+          Top = 79
+          Width = 93
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Condicion de Venta'
+        end
+        object Label15: TLabel
+          Left = 25
+          Top = 31
+          Width = 37
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Numero'
+        end
+        object Label11: TLabel
+          Left = 20
+          Top = 79
+          Width = 42
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Domicilio'
+        end
+        object cliente_domicilio: TLabel
+          Left = 68
+          Top = 79
+          Width = 42
+          Height = 13
+          Caption = 'Domicilio'
+        end
+        object Label12: TLabel
+          Left = 13
+          Top = 103
+          Width = 49
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'CUIT/DNI'
+        end
+        object cliente_documentonro: TLabel
+          Left = 68
+          Top = 103
+          Width = 49
+          Height = 13
+          Caption = 'CUIT/DNI'
+        end
+        object Label14: TLabel
+          Left = 444
+          Top = 103
+          Width = 75
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Lista de Precios'
+          Visible = False
+        end
+        object labelsucursal: TLabel
+          Left = 21
+          Top = 7
+          Width = 41
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Sucursal'
+        end
+        object Label16: TLabel
+          Left = 458
+          Top = 31
+          Width = 61
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Fecha Venc.'
+        end
+        object Label17: TLabel
+          Left = 19
+          Top = 143
+          Width = 43
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Producto'
+        end
+        object documentoventa_numero: TEdit
+          Left = 184
+          Top = 28
+          Width = 121
+          Height = 21
+          TabOrder = 0
+        end
+        object documentoventa_fecha: TDateTimePicker
+          Left = 525
+          Top = 4
+          Width = 106
+          Height = 21
+          Date = 40384.000000000000000000
+          Time = 40384.000000000000000000
+          TabOrder = 1
+        end
+        object cliente_id: TSqlComboBox
+          Left = 68
+          Top = 52
+          Width = 317
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          TabOrder = 2
+          OnSelect = cliente_idSelect
+          Confbase = Princ.ZBase
+          Confsql.Strings = (
+            'select * from clientes'
+            'order by cliente_nombre')
+          Confcampo_codigo = 'cliente_id'
+          Confcampo_nomb = 'cliente_nombre'
+          Tag2 = 0
+        end
+        object personal_id: TSqlComboBox
+          Left = 524
+          Top = 52
+          Width = 220
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          TabOrder = 3
+          Confbase = Princ.ZBase
+          Confsql.Strings = (
+            'select * from personal')
+          Confcampo_codigo = 'personal_id'
+          Confcampo_nomb = 'personal_nombre'
+          Tag2 = 0
+        end
+        object documentoventa_condicionventa: TComboBox
+          Left = 525
+          Top = 76
+          Width = 219
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          ItemIndex = 0
+          TabOrder = 4
+          Text = 'Contado'
+          Items.Strings = (
+            'Contado'
+            'Cuenta Corriente')
+        end
+        object puntoventa_id: TSqlComboBox
+          Left = 68
+          Top = 28
+          Width = 52
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          TabOrder = 5
+          OnSelect = puntoventa_idSelect
+          Confbase = Princ.ZBase
+          Confsql.Strings = (
+            'select * from puntodeventa')
+          Confcampo_codigo = 'puntoventa_id'
+          Confcampo_nomb = 'puntoventa_numero'
+          Tag2 = 0
+        end
+        object tipodocu_id: TSqlComboBox
+          Left = 126
+          Top = 28
+          Width = 52
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          TabOrder = 6
+          OnSelect = tipodocu_idSelect
+          Confbase = Princ.ZBase
+          Confsql.Strings = (
+            'select * from tiposdocumento'
+            'where tipodocu_nombre="Factura de Venta"')
+          Confcampo_codigo = 'tipodocu_id'
+          Confcampo_nomb = 'tipodocu_letra'
+          Tag2 = 0
+        end
+        object documentoventa_listaprecio: TComboBox
+          Left = 525
+          Top = 100
+          Width = 219
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          ItemIndex = 0
+          TabOrder = 7
+          Text = 'Precio 1'
+          Visible = False
+          Items.Strings = (
+            'Precio 1'
+            'Precio 2'
+            'Precio 3'
+            'Precio 4')
+        end
+        object sucursalfactura_id: TSqlComboBox
+          Left = 68
+          Top = 4
+          Width = 317
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          TabOrder = 8
+          OnSelect = sucursalfactura_idSelect
+          Confbase = Princ.ZBase
+          Confsql.Strings = (
+            'select * from sucursales'
+            'order by sucursal_nombre')
+          Confcampo_codigo = 'sucursal_id'
+          Confcampo_nomb = 'sucursal_nombre'
+          Tag2 = 0
+        end
+        object documentoventa_fechavenc: TDateTimePicker
+          Left = 525
+          Top = 28
+          Width = 106
+          Height = 21
+          Date = 40384.000000000000000000
+          Time = 40384.000000000000000000
+          TabOrder = 9
+        end
+        object producto_id: TEditCodi
+          Left = 68
+          Top = 140
+          Width = 121
+          Height = 21
+          Flat = False
+          LabelFont.Charset = DEFAULT_CHARSET
+          LabelFont.Color = clWindowText
+          LabelFont.Height = -11
+          LabelFont.Name = 'Tahoma'
+          LabelFont.Style = []
+          Lookup.Separator = ';'
+          Color = clWindow
+          Enabled = True
+          TabOrder = 10
+          Visible = True
+          Version = '1.3.0.1'
+          ButtonStyle = bsButton
+          ButtonWidth = 16
+          Etched = False
+          abm = False
+          ConfCampoCodigo = 'producto_id'
+          ConfCampoCodigo1 = 'producto_codigo'
+          ConfCampoCodigo2 = 'producto_codigobarras'
+          ConfCampoTexto = 'producto_nombre'
+          ConfSqlConnection = Princ.ZBase
+          ConfSql.Strings = (
+            'select * from productos'
+            'order by producto_nombre')
+          ConfTexto = producto_nombre
+          ConfIni = Princ.ini1
+          ConfLimpiar = True
+          ConfSearchLimpio = True
+          ConfCampoBusqueda1 = 'producto_codigo'
+        end
+        object producto_nombre: TEdit
+          Left = 193
+          Top = 140
+          Width = 217
+          Height = 21
+          TabStop = False
+          ReadOnly = True
+          TabOrder = 11
+        end
+        object btngenerarfactura: TButton
+          Left = 76
+          Top = 194
+          Width = 91
+          Height = 25
+          Caption = 'Generar Factura'
+          TabOrder = 12
+          OnClick = btngenerarfacturaClick
+        end
+        object btnverfactura: TButton
+          Left = 180
+          Top = 194
+          Width = 91
+          Height = 25
+          Caption = 'Ver Factura'
+          TabOrder = 13
+          OnClick = btnverfacturaClick
+        end
       end
     end
   end
@@ -497,8 +802,8 @@ object liquidacionessucu: Tliquidacionessucu
   end
   object DSCliquisucudeta: TDataSource
     DataSet = MQliquisucudeta
-    Left = 88
-    Top = 344
+    Left = 64
+    Top = 416
   end
   object MQliquisucudeta: TMQuery
     Connection = Princ.ZBase
@@ -538,8 +843,8 @@ object liquidacionessucu: Tliquidacionessucu
       'liquisucudeta_porcentajeliquid,d'
       'documentoventa_pagado,d'
       'documentoventa_saldo,d')
-    Left = 184
-    Top = 216
+    Left = 192
+    Top = 424
     object MQliquisucudetaliquisucudeta_id: TIntegerField
       FieldName = 'liquisucudeta_id'
     end
@@ -624,8 +929,8 @@ object liquidacionessucu: Tliquidacionessucu
         Name = 'liquidacionsucursal_id'
         ParamType = ptUnknown
       end>
-    Left = 520
-    Top = 216
+    Left = 440
+    Top = 416
     ParamData = <
       item
         DataType = ftUnknown
@@ -641,8 +946,8 @@ object liquidacionessucu: Tliquidacionessucu
         'inner join facturasventadeta on facturasventa.facven_id=facturas' +
         'ventadeta.facven_id')
     Params = <>
-    Left = 384
-    Top = 296
+    Left = 296
+    Top = 424
   end
   object ZQcomisionessucursales: TZQuery
     Connection = Princ.ZBase
@@ -652,8 +957,8 @@ object liquidacionessucu: Tliquidacionessucu
         'inner join facturasventadeta on facturasventa.facven_id=facturas' +
         'ventadeta.facven_id')
     Params = <>
-    Left = 600
-    Top = 312
+    Left = 648
+    Top = 400
   end
   object ZQControlDetalle: TZQuery
     Connection = Princ.ZBase
@@ -663,8 +968,8 @@ object liquidacionessucu: Tliquidacionessucu
         'inner join facturasventadeta on facturasventa.facven_id=facturas' +
         'ventadeta.facven_id')
     Params = <>
-    Left = 560
-    Top = 392
+    Left = 552
+    Top = 416
   end
   object ZQliquivendedeta: TZQuery
     Connection = Princ.ZBase
@@ -677,8 +982,8 @@ object liquidacionessucu: Tliquidacionessucu
         Name = 'liquidacionvendedor_id'
         ParamType = ptUnknown
       end>
-    Left = 712
-    Top = 392
+    Left = 640
+    Top = 456
     ParamData = <
       item
         DataType = ftUnknown
@@ -707,8 +1012,8 @@ object liquidacionessucu: Tliquidacionessucu
         Name = 'liquidacionsucursal_id'
         ParamType = ptUnknown
       end>
-    Left = 880
-    Top = 176
+    Left = 968
+    Top = 408
     ParamData = <
       item
         DataType = ftUnknown
@@ -752,6 +1057,48 @@ object liquidacionessucu: Tliquidacionessucu
   object DSCsucursalesdebcred: TDataSource
     DataSet = ZQsucursalesdebcred
     Left = 880
-    Top = 248
+    Top = 416
+  end
+  object ZQDocumentoventa: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select * from documentosventas'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 936
+    Top = 137
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+  end
+  object ZQDocumentoventadetalles: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select * from documentoventadetalles'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 920
+    Top = 232
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
   end
 end

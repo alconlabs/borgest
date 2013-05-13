@@ -104,7 +104,8 @@ uses
   Unitliquidaciones in 'Formularios\Comisiones\Unitliquidaciones.pas' {liquidaciones},
   UnitlistaComisionesSucursales in 'Formularios\Comisiones\UnitlistaComisionesSucursales.pas' {listacomisionessucursales},
   UnitComisionesSucursales in 'Formularios\Comisiones\UnitComisionesSucursales.pas' {ComisionesSucursales},
-  Unitliquidacionessucu in 'Formularios\Comisiones\Unitliquidacionessucu.pas' {liquidacionessucu};
+  Unitliquidacionessucu in 'Formularios\Comisiones\Unitliquidacionessucu.pas' {liquidacionessucu},
+  UnitObservaciones in 'Formularios\Ventas\UnitObservaciones.pas' {observaciones};
 
 {$R *.res}
 
@@ -113,5 +114,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrinc, Princ);
   Application.CreateForm(Tliquidacionessucu, liquidacionessucu);
+  Application.CreateForm(Tobservaciones, observaciones);
   Application.Run;
 end.

@@ -1,11 +1,14 @@
 inherited facturasventarapida: Tfacturasventarapida
   Caption = 'Venta Rapida'
   ClientHeight = 247
+  ExplicitWidth = 867
   ExplicitHeight = 285
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Height = 247
+    ExplicitLeft = 0
+    ExplicitTop = 0
     ExplicitHeight = 247
     FullHeight = 0
     inherited Label2: TLabel
