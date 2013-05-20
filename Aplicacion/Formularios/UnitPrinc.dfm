@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageArchivo
+    ActivePage = AdvPageVentas
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -2909,8 +2909,8 @@ object Princ: TPrinc
   end
   object ini1: Tini
     IniFilename = 'c:\program files\codegear\rad studio\5.0\bin\config.ini'
-    Left = 376
-    Top = 232
+    Left = 368
+    Top = 288
   end
   object ZQCalculopreciodeta: TZQuery
     Connection = ZBase
@@ -3316,8 +3316,8 @@ object Princ: TPrinc
   object BackupDB1: TBackupDB
     KVersionMySql = 0
     Kbase = ZBase
-    Left = 472
-    Top = 232
+    Left = 440
+    Top = 248
   end
   object ZQDocumentoventadocus: TZQuery
     Connection = ZBase
@@ -3451,8 +3451,8 @@ object Princ: TPrinc
   end
   object Encriptador1: TEncriptador
     MetodoEncriptado = 1
-    Left = 536
-    Top = 192
+    Left = 512
+    Top = 200
   end
   object GTBUtilidades1: TGTBUtilidades
     Left = 456
