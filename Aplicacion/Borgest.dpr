@@ -37,7 +37,6 @@ uses
   Unitlistaproveedores in 'Formularios\Compras\Unitlistaproveedores.pas' {listaproveedores},
   UnitProveedores in 'Formularios\Compras\UnitProveedores.pas' {proveedores},
   Unitlistacalculoprecios in 'Formularios\Archivo\Unitlistacalculoprecios.pas' {listacalculoprecios},
-  UnitEmpresa in 'Formularios\Archivo\UnitEmpresa.pas' {empresa},
   Unitventadetalle2 in 'Formularios\Ventas\Unitventadetalle2.pas' {ventadetalle2},
   Unitbusquedaproductos in 'Formularios\Archivo\Unitbusquedaproductos.pas' {busquedaproductos},
   Unitlistaservicios in 'Formularios\Archivo\Unitlistaservicios.pas' {listaservicios},
@@ -110,7 +109,8 @@ uses
   UnitListaDebCred in 'Formularios\Ventas\UnitListaDebCred.pas' {listaconceptosdebcred},
   UnitConceptoDebCred in 'Formularios\Archivo\UnitConceptoDebCred.pas' {ConceptoDebCred},
   UnitventadetalleConcepto in 'Formularios\Ventas\UnitventadetalleConcepto.pas' {ventadetalleconcepto},
-  UnitNotadeDebito2 in 'Formularios\Ventas\UnitNotadeDebito2.pas' {NotadeDebito2};
+  UnitNotadeDebito2 in 'Formularios\Ventas\UnitNotadeDebito2.pas' {NotadeDebito2},
+  UnitEmpresa in 'Formularios\Archivo\UnitEmpresa.pas' {empresa};
 
 {$R *.res}
 
@@ -119,5 +119,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrinc, Princ);
   Application.CreateForm(TNotadeDebito2, NotadeDebito2);
+  Application.CreateForm(Tempresa, empresa);
   Application.Run;
 end.

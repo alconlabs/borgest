@@ -189,6 +189,7 @@ type
     procedure btnliquidacionessucuClick(Sender: TObject);
     procedure btnprovinciasClick(Sender: TObject);
     procedure btnconceptosdebcredClick(Sender: TObject);
+    procedure btnempresaClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -384,7 +385,7 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   UnitNotaDebitoVenta, UnitListaNotaDebitoVenta, UnitRemitoVenta,
   UnitListaRemitoVenta, Unitlistacomisionesvendedores,
   UnitlistaComisionesSucursales, Unitprovincias, UnitNotadeCredito2,
-  UnitListaDebCred, UnitNotadeDebito2;
+  UnitListaDebCred, UnitNotadeDebito2, UnitEmpresa;
 
 {$R *.dfm}
 
@@ -2908,6 +2909,16 @@ begin
       listacalculoprecios:=Tlistacalculoprecios.Create(self);
     finally
       listacalculoprecios.Show;
+    end;
+end;
+
+procedure TPrinc.btnempresaClick(Sender: TObject);
+begin
+    try
+      empresa:=Tempresa.Create(self);
+    finally
+//      empresa.abm:=1;
+      empresa.Show;
     end;
 end;
 
