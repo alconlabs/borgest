@@ -49,6 +49,9 @@
     <DCCReference Include="Formularios\Archivo\Unitcobradores.pas">
       <Form>cobradores</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitConceptoDebCred.pas">
+      <Form>ConceptoDebCred</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitEmpresa.pas">
       <Form>empresa</Form>
     </DCCReference>
@@ -271,6 +274,9 @@
     <DCCReference Include="Formularios\Ventas\Unitlistacontrataciones.pas">
       <Form>listacontrataciones</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitListaDebCred.pas">
+      <Form>listaconceptosdebcred</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitlistafacturasventa.pas">
       <Form>listafacturasventa</Form>
     </DCCReference>
@@ -307,6 +313,12 @@
     <DCCReference Include="Formularios\Ventas\UnitNotaDebitoVenta.pas">
       <Form>NotaDebitoVenta</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitNotadeCredito2.pas">
+      <Form>NotadeCredito2</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitNotadeDebito2.pas">
+      <Form>NotadeDebito2</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitNotaPedido.pas">
       <Form>NotaPedido</Form>
     </DCCReference>
@@ -342,6 +354,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitventadetalle2.pas">
       <Form>ventadetalle2</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitventadetalleConcepto.pas">
+      <Form>ventadetalleconcepto</Form>
     </DCCReference>
     <DCCReference Include="UnitImprimirListaPrecios.pas">
       <Form>ImprimirListaPrecios</Form>

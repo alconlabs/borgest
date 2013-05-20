@@ -525,8 +525,8 @@ procedure Trecibosventa.btnagregarClick(Sender: TObject);
 begin
     Princ.CargarDocumentoVentaDocu(cliente_id.codigo,ZQdocumentoventadocus,documentoventa_pagado,false);
 
-      calculartotales;
-      calculartotalpagos;
+    calculartotales;
+    calculartotalpagos;
 end;
 
 procedure Trecibosventa.btnagregarpagoClick(Sender: TObject);

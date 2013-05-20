@@ -806,3 +806,15 @@ ADD COLUMN `liquidacionsucursal_estado` VARCHAR(45) NULL DEFAULT 'PENDIENTE'  AF
 Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('72', '>Archivo>Localidades>Provincias', '0', 'btnprovincias', '', '0', '0');
 191;
 INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,72,perfil_id from perfiles;
+192;
+ALTER TABLE `sucursales` ADD COLUMN `cliente_id` INT(11) NULL DEFAULT 0  AFTER `sucursal_tipoliquidsucursal` ;
+193;
+ALTER TABLE `productos` ADD COLUMN `producto_tipo` VARCHAR(45) NULL DEFAULT 'PRODUCTO'  AFTER `producto_imprimir`;
+194;
+ALTER TABLE `documentoventadetalles` ADD COLUMN `producto_tipo` VARCHAR(45) NULL DEFAULT 'PRODUCTO'  AFTER `documentoventadetalle_listaprecio`;
+195;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('73', '>Archivo>General>Conceptos Deb-Cred', '0', 'btnconceptosdebcred', '', '0', '0');
+196;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,73,perfil_id from perfiles;
+197;
+Replace config set config_valor='0', config_nombre='VENTASNCNDCONCEPTOS';

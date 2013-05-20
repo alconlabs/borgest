@@ -110,7 +110,7 @@ inherited InformesVentas: TInformesVentas
       Width = 197
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 5
       Confbase = Princ.ZBase
       Confsql.Strings = (

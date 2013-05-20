@@ -110,7 +110,6 @@ type
     btnlibroivacompras: TAdvGlowButton;
     btninformescompras: TAdvGlowButton;
     RpClientDataset1: TRpClientDataset;
-    RpExpreDialogVCL1: TRpExpreDialogVCL;
     AdvPageComisiones: TAdvPage;
     AdvToolBarComisionesVendedores: TAdvToolBar;
     btncomisionesvendedores: TAdvGlowButton;
@@ -132,6 +131,7 @@ type
     Encriptador1: TEncriptador;
     GTBUtilidades1: TGTBUtilidades;
     btnprovincias: TAdvGlowButton;
+    btnconceptosdebcred: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -188,6 +188,7 @@ type
     procedure btnliquidacionesvendedoresClick(Sender: TObject);
     procedure btnliquidacionessucuClick(Sender: TObject);
     procedure btnprovinciasClick(Sender: TObject);
+    procedure btnconceptosdebcredClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -212,6 +213,7 @@ type
     CODIGOPRODUCTOBUSQUEDA3:string;
     CAJASALDOINICIALCONCEPTOID:string;
     PRODUCTOSTOCKINICIAL:boolean;
+    VENTASNCNDCONCEPTOS:string;
     empresa_where:string;
     function codigo(tabla:string;campo:string):string;
     function buscar(sql:string;campo:string):string;
@@ -226,7 +228,7 @@ type
     procedure AgregarRecibo(ZQCabecera:TDataset; ZQDetalle:TDataset; ZQPagos:TDataset);
     function CargarPago(importe:real; QDocumentopagos:TDataset): boolean;
     procedure ActualizarNumeroDocumento(tipodocu_id: string; tipodocu_ultimonumero:string);
-    function CargarDocumentoVentaDocu(cliente_id: string; QDocumentoVentaDocus:TDataset;documentoventa_apagar:real;AgregarAutomatico:boolean):boolean;
+    function CargarDocumentoVentaDocu(cliente_id: string; QDocumentoVentaDocus:TDataset;documentoventa_apagar:real;AgregarAutomatico:boolean;where_tipodocu:string=' and 1=1 '):boolean;
     function ImprimirFiscal(id:string; puntoventa_id:string=''):boolean;
     function GetConfiguracion(config_nombre:string):string;
     function QuitarCaracteresEspeciales(texto:string):string;
@@ -341,6 +343,8 @@ const
 //Tipos Documentos
   TIPODOCU_FACTURAVENTA='Factura de Venta';
   TIPODOCU_RECIBOVENTA='Recibo de Venta';
+  TIPODOCU_NOTACREDITOVENTA='Nota de Credito de Venta';
+  TIPODOCU_NOTADEBITOVENTA='Nota de Debito de Venta';
 
 
 
@@ -379,7 +383,8 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   UnitComisionesSucursales, Unitvendedoresdebcred, Unitsucursalesdebcred,
   UnitNotaDebitoVenta, UnitListaNotaDebitoVenta, UnitRemitoVenta,
   UnitListaRemitoVenta, Unitlistacomisionesvendedores,
-  UnitlistaComisionesSucursales, Unitprovincias;
+  UnitlistaComisionesSucursales, Unitprovincias, UnitNotadeCredito2,
+  UnitListaDebCred, UnitNotadeDebito2;
 
 {$R *.dfm}
 
@@ -662,27 +667,59 @@ begin
 
     if tipodocu_nombre='Nota de Credito de Venta' then
       begin
-          try
-            notacreditoventa:=Tnotacreditoventa.Create(self);
-          finally
-            notacreditoventa.abm:=abm;
-            notacreditoventa.id:=id;
-            notacreditoventa.tipodocu_nombre:=tipodocu_nombre;
-            notacreditoventa.Show;
-          end;
+          if not strtobool(VENTASNCNDCONCEPTOS) then
+            begin
+                try
+                  notacreditoventa:=Tnotacreditoventa.Create(self);
+                finally
+                  notacreditoventa.abm:=abm;
+                  notacreditoventa.id:=id;
+                  notacreditoventa.tipodocu_nombre:=tipodocu_nombre;
+                  notacreditoventa.Show;
+                end;
+
+            end
+          else
+            begin
+                try
+                  NotadeCredito2:=TNotadeCredito2.Create(self);
+                finally
+                  NotadeCredito2.abm:=abm;
+                  NotadeCredito2.id:=id;
+                  NotadeCredito2.tipodocu_nombre:=tipodocu_nombre;
+                  NotadeCredito2.Show;
+                end;
+
+            end;
 
       end;
 
     if tipodocu_nombre='Nota de Debito de Venta' then
       begin
-          try
-            notadebitoventa:=Tnotadebitoventa.Create(self);
-          finally
-            notadebitoventa.abm:=abm;
-            notadebitoventa.id:=id;
-            notadebitoventa.tipodocu_nombre:=tipodocu_nombre;
-            notadebitoventa.Show;
-          end;
+          if not strtobool(VENTASNCNDCONCEPTOS) then
+            begin
+                try
+                  notadebitoventa:=Tnotadebitoventa.Create(self);
+                finally
+                  notadebitoventa.abm:=abm;
+                  notadebitoventa.id:=id;
+                  notadebitoventa.tipodocu_nombre:=tipodocu_nombre;
+                  notadebitoventa.Show;
+                end;
+
+            end
+          else
+            begin
+                try
+                  NotadeDebito2:=TNotadeDebito2.Create(self);
+                finally
+                  NotadeDebito2.abm:=abm;
+                  NotadeDebito2.id:=id;
+                  NotadeDebito2.tipodocu_nombre:=tipodocu_nombre;
+                  NotadeDebito2.Show;
+                end;
+
+            end;
 
       end;
 
@@ -2161,10 +2198,11 @@ begin
     result:=false;
 end;
 
-function TPrinc.CargarDocumentoVentaDocu(cliente_id: string; QDocumentoVentaDocus:TDataset;documentoventa_apagar:real;AgregarAutomatico:boolean):boolean;
+function TPrinc.CargarDocumentoVentaDocu(cliente_id: string; QDocumentoVentaDocus:TDataset;documentoventa_apagar:real;AgregarAutomatico:boolean;where_tipodocu:string=' and 1=1 '):boolean;
 begin
     DocumentosVentasPendientes:=TDocumentosVentasPendientes.Create(self);
     DocumentosVentasPendientes.cliente_id:=cliente_id;
+    DocumentosVentasPendientes.where_tipodocu:=where_tipodocu;
     DocumentosVentasPendientes.ActivarConsulta;
     DocumentosVentasPendientes.documentoventa_apagar:=documentoventa_apagar;
     QDocumentoVentaDocus.First;
@@ -2616,6 +2654,7 @@ begin
     CODIGOPRODUCTOBUSQUEDA2:=Princ.GetConfiguracion('CODIGOPRODUCTOBUSQUEDA2');
     CODIGOPRODUCTOBUSQUEDA3:=Princ.GetConfiguracion('CODIGOPRODUCTOBUSQUEDA3');
 
+    VENTASNCNDCONCEPTOS:=Princ.GetConfiguracion('VENTASNCNDCONCEPTOS');
 
     MenuConfiguracion;
 
@@ -2776,6 +2815,16 @@ begin
     finally
       ComisionesVendedores.campo_id:='producto_id';
       ComisionesVendedores.Show;
+    end;
+end;
+
+procedure TPrinc.btnconceptosdebcredClick(Sender: TObject);
+begin
+    try
+      listaconceptosdebcred:=Tlistaconceptosdebcred.Create(self);
+    finally
+      listaconceptosdebcred.campo_id:='producto_id';
+      listaconceptosdebcred.Show;
     end;
 end;
 
@@ -2972,7 +3021,7 @@ begin
     try
       listanotadebitoventa:=Tlistanotadebitoventa.Create(self);
     finally
-      listanotadebitoventa.tipodocu_nombre:='Nota de Debito de Venta';
+      listanotadebitoventa.tipodocu_nombre:=TIPODOCU_NOTADEBITOVENTA;
       listanotadebitoventa.campo_id:='documentoventa_id';
       listanotadebitoventa.Show;
     end;

@@ -1,8 +1,8 @@
 object ventadetalle: Tventadetalle
   Left = 0
   Top = 0
-  ClientHeight = 147
-  ClientWidth = 432
+  ClientHeight = 150
+  ClientWidth = 442
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,8 +17,8 @@ object ventadetalle: Tventadetalle
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 432
-    Height = 147
+    Width = 442
+    Height = 150
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -59,14 +59,16 @@ object ventadetalle: Tventadetalle
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitWidth = 432
+    ExplicitHeight = 147
     FullHeight = 0
     object Label3: TLabel
-      Left = 47
+      Left = 44
       Top = 39
-      Width = 43
+      Width = 46
       Height = 13
       Alignment = taRightJustify
-      Caption = 'Producto'
+      Caption = 'Concepto'
     end
     object Label6: TLabel
       Left = 48
@@ -75,14 +77,15 @@ object ventadetalle: Tventadetalle
       Height = 13
       Alignment = taRightJustify
       Caption = 'Cantidad'
+      Visible = False
     end
     object Label1: TLabel
-      Left = 21
+      Left = 55
       Top = 66
-      Width = 69
+      Width = 35
       Height = 13
       Alignment = taRightJustify
-      Caption = 'Precio Unitario'
+      Caption = 'Importe'
     end
     object Label2: TLabel
       Left = 66
@@ -91,6 +94,7 @@ object ventadetalle: Tventadetalle
       Height = 13
       Alignment = taRightJustify
       Caption = 'Total'
+      Visible = False
     end
     object producto_id: TSqlComboBox
       Left = 104
@@ -125,7 +129,7 @@ object ventadetalle: Tventadetalle
       Enabled = True
       TabOrder = 0
       Text = '1,00'
-      Visible = True
+      Visible = False
       OnExit = ventadeta_cantidadExit
       Version = '2.7.0.5'
     end
@@ -186,7 +190,7 @@ object ventadetalle: Tventadetalle
       Enabled = True
       TabOrder = 3
       Text = '0,00'
-      Visible = True
+      Visible = False
       Version = '2.7.0.5'
     end
   end

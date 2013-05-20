@@ -382,6 +382,10 @@ object liquidacionessucu: Tliquidacionessucu
       object TabSheet2: TTabSheet
         Caption = 'Debitos y Creditos'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label7: TLabel
           Left = 814
           Top = 287
@@ -472,8 +476,10 @@ object liquidacionessucu: Tliquidacionessucu
       object TabSheet3: TTabSheet
         Caption = 'Facturar Liquidacion'
         ImageIndex = 2
-        ExplicitLeft = 8
-        ExplicitTop = 28
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label6: TLabel
           Left = 489
           Top = 7
@@ -582,7 +588,7 @@ object liquidacionessucu: Tliquidacionessucu
           Top = 28
           Width = 121
           Height = 21
-          TabOrder = 0
+          TabOrder = 3
         end
         object documentoventa_fecha: TDateTimePicker
           Left = 525
@@ -591,7 +597,7 @@ object liquidacionessucu: Tliquidacionessucu
           Height = 21
           Date = 40384.000000000000000000
           Time = 40384.000000000000000000
-          TabOrder = 1
+          TabOrder = 5
         end
         object cliente_id: TSqlComboBox
           Left = 68
@@ -599,8 +605,8 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 317
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
-          TabOrder = 2
+          ItemHeight = 0
+          TabOrder = 4
           OnSelect = cliente_idSelect
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -616,8 +622,8 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 220
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
-          TabOrder = 3
+          ItemHeight = 0
+          TabOrder = 7
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from personal')
@@ -631,9 +637,9 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 219
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
+          ItemHeight = 0
           ItemIndex = 0
-          TabOrder = 4
+          TabOrder = 8
           Text = 'Contado'
           Items.Strings = (
             'Contado'
@@ -645,8 +651,8 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 52
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
-          TabOrder = 5
+          ItemHeight = 0
+          TabOrder = 1
           OnSelect = puntoventa_idSelect
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -661,8 +667,8 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 52
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
-          TabOrder = 6
+          ItemHeight = 0
+          TabOrder = 2
           OnSelect = tipodocu_idSelect
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -678,9 +684,9 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 219
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
+          ItemHeight = 0
           ItemIndex = 0
-          TabOrder = 7
+          TabOrder = 9
           Text = 'Precio 1'
           Visible = False
           Items.Strings = (
@@ -695,8 +701,8 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 317
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
-          TabOrder = 8
+          ItemHeight = 0
+          TabOrder = 0
           OnSelect = sucursalfactura_idSelect
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -713,7 +719,7 @@ object liquidacionessucu: Tliquidacionessucu
           Height = 21
           Date = 40384.000000000000000000
           Time = 40384.000000000000000000
-          TabOrder = 9
+          TabOrder = 6
         end
         object producto_id: TEditCodi
           Left = 68
@@ -755,8 +761,6 @@ object liquidacionessucu: Tliquidacionessucu
           Top = 140
           Width = 217
           Height = 21
-          TabStop = False
-          ReadOnly = True
           TabOrder = 11
         end
         object btngenerarfactura: TButton

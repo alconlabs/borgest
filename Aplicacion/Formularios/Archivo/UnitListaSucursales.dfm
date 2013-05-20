@@ -1,24 +1,27 @@
 inherited listasucursales: Tlistasucursales
   Caption = 'Sucursales'
-  OnShow = FormShow
   ExplicitWidth = 950
   ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Height = 338
+    Height = 281
     ExplicitHeight = 338
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
-      Height = 317
+      Height = 260
       ExplicitHeight = 317
       FullHeight = 0
+      inherited btnnuevo: TButton
+        ExplicitLeft = 6
+        ExplicitTop = -6
+      end
       inherited btnanular: TButton
         Visible = False
       end
     end
     inherited DBGrid1: TDBGrid
-      Height = 317
+      Height = 260
       Columns = <
         item
           Expanded = False
@@ -49,7 +52,7 @@ inherited listasucursales: Tlistasucursales
         end>
     end
     inherited panelfiltros: TAdvPanel
-      Top = 317
+      Top = 260
       ExplicitTop = 317
       FullHeight = 0
       object fil_sucursal_nombre: TGTBEdit
@@ -88,10 +91,10 @@ inherited listasucursales: Tlistasucursales
     end
   end
   inherited panelabm: TAdvPanel
-    Top = 338
-    Height = 118
-    ExplicitTop = 338
-    ExplicitHeight = 118
+    Top = 281
+    Height = 175
+    ExplicitTop = 281
+    ExplicitHeight = 175
     FullHeight = 0
     object Label11: TLabel [0]
       Left = 543
@@ -148,6 +151,14 @@ inherited listasucursales: Tlistasucursales
       Height = 13
       Alignment = taRightJustify
       Caption = 'Tipo Liquidacion Vendedores'
+    end
+    object Label8: TLabel [7]
+      Left = 48
+      Top = 105
+      Width = 32
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Cliente'
     end
     inherited btnguardar: TButton
       Left = 819
@@ -236,6 +247,22 @@ inherited listasucursales: Tlistasucursales
       Items.Strings = (
         'Precio Final'
         'Neto')
+    end
+    object cliente_id: TSqlComboBox
+      Left = 86
+      Top = 102
+      Width = 317
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      TabOrder = 9
+      Confbase = Princ.ZBase
+      Confsql.Strings = (
+        'select * from clientes'
+        'order by cliente_nombre')
+      Confcampo_codigo = 'cliente_id'
+      Confcampo_nomb = 'cliente_nombre'
+      Tag2 = 0
     end
   end
   inherited ZQGrilla: TZQuery

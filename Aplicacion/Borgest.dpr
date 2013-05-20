@@ -105,7 +105,12 @@ uses
   UnitlistaComisionesSucursales in 'Formularios\Comisiones\UnitlistaComisionesSucursales.pas' {listacomisionessucursales},
   UnitComisionesSucursales in 'Formularios\Comisiones\UnitComisionesSucursales.pas' {ComisionesSucursales},
   Unitliquidacionessucu in 'Formularios\Comisiones\Unitliquidacionessucu.pas' {liquidacionessucu},
-  UnitObservaciones in 'Formularios\Ventas\UnitObservaciones.pas' {observaciones};
+  UnitObservaciones in 'Formularios\Ventas\UnitObservaciones.pas' {observaciones},
+  UnitNotadeCredito2 in 'Formularios\Ventas\UnitNotadeCredito2.pas' {NotadeCredito2},
+  UnitListaDebCred in 'Formularios\Ventas\UnitListaDebCred.pas' {listaconceptosdebcred},
+  UnitConceptoDebCred in 'Formularios\Archivo\UnitConceptoDebCred.pas' {ConceptoDebCred},
+  UnitventadetalleConcepto in 'Formularios\Ventas\UnitventadetalleConcepto.pas' {ventadetalleconcepto},
+  UnitNotadeDebito2 in 'Formularios\Ventas\UnitNotadeDebito2.pas' {NotadeDebito2};
 
 {$R *.res}
 
@@ -113,7 +118,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrinc, Princ);
-  Application.CreateForm(Tliquidacionessucu, liquidacionessucu);
-  Application.CreateForm(Tobservaciones, observaciones);
+  Application.CreateForm(TNotadeDebito2, NotadeDebito2);
   Application.Run;
 end.

@@ -88,7 +88,7 @@ object configuracion: Tconfiguracion
       Top = 0
       Width = 589
       Height = 425
-      ActivePage = TabSheet4
+      ActivePage = TabSheet3
       Align = alTop
       TabOrder = 2
       object TabSheet1: TTabSheet
@@ -257,6 +257,8 @@ object configuracion: Tconfiguracion
       object TabSheet3: TTabSheet
         Caption = 'Ventas'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 28
         object Label1: TLabel
           Left = 49
           Top = 44
@@ -624,6 +626,14 @@ object configuracion: Tconfiguracion
               'producto_codigo'
               'producto_codigobarras')
           end
+        end
+        object VENTASNCNDCONCEPTOS: TCheckBox
+          Left = 296
+          Top = 291
+          Width = 169
+          Height = 17
+          Caption = 'Usar NC y ND con conceptos'
+          TabOrder = 9
         end
       end
       object TabSheet5: TTabSheet

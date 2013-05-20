@@ -91,6 +91,7 @@ type
   public
     { Public declarations }
     cliente_id:string;
+    where_tipodocu:string;
     documentoventa_pagado:real;
     documentoventa_apagar:real;
     procedure ActivarConsulta;
@@ -116,7 +117,7 @@ begin
     ZQDocumentosVentasPendientes.SQL.Add('inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id ');
     ZQDocumentosVentasPendientes.SQL.Add('inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id ');
     ZQDocumentosVentasPendientes.SQL.Add('where documentoventa_estado="PENDIENTE" and documentosventas.cliente_id="'+cliente_id+'" ');
-    ZQDocumentosVentasPendientes.SQL.Add('and tiposdocumento.tipodocu_debcred<>"N/A" '+Princ.empresa_where);
+    ZQDocumentosVentasPendientes.SQL.Add('and tiposdocumento.tipodocu_debcred<>"N/A" '+where_tipodocu+Princ.empresa_where);
     ZQDocumentosVentasPendientes.Active:=true;
 
     ZQDocumentosVentasPendientes.Active:=true;
@@ -184,6 +185,7 @@ end;
 procedure TDocumentosVentasPendientes.FormCreate(Sender: TObject);
 begin
     documentoventa_pagado:=0;
+    where_tipodocu:=' and 1=1 ';
 end;
 
 procedure TDocumentosVentasPendientes.FormKeyDown(Sender: TObject;

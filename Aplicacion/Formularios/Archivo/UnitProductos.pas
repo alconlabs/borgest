@@ -109,6 +109,7 @@ type
     { Public declarations }
     id:string;
     abm:integer;
+    producto_tipo:string;
   end;
 
 var
@@ -282,7 +283,9 @@ begin
     ZQuery1.sql.add('producto_neto4=:producto_neto4, ');
     ZQuery1.sql.add('proveedor_id=:proveedor_id, ');
     ZQuery1.sql.add('producto_fechaactualizacionprecio=:producto_fechaactualizacionprecio, ');
-    ZQuery1.sql.add('producto_codigoreferencia=:producto_codigoreferencia ');
+    ZQuery1.sql.add('producto_codigoreferencia=:producto_codigoreferencia, ');
+    ZQuery1.sql.add('producto_tipo=:producto_tipo ');
+
     ZQuery1.sql.add('where producto_id=:producto_id');
     ZQuery1.parambyname('producto_id').asstring:=id;
     ZQuery1.parambyname('producto_nombre').asstring:=producto_nombre.Text;
@@ -311,6 +314,7 @@ begin
 
     ZQuery1.parambyname('proveedor_id').asstring:=proveedor_id.codigo;
     ZQuery1.parambyname('producto_codigoreferencia').asstring:=producto_codigoreferencia.Text;
+    ZQuery1.parambyname('producto_tipo').asstring:=producto_tipo;
     ZQuery1.ExecSQL;
 
 
@@ -554,7 +558,7 @@ begin
     ZQuery1.sql.add('producto_neto4, producto_nombre, producto_observaciones, ');
     ZQuery1.sql.add('producto_preciocosto, producto_precioventa1, producto_precioventa2, ');
     ZQuery1.sql.add('producto_precioventa3, producto_precioventa4, producto_precioventabase, ');
-    ZQuery1.sql.add('proveedor_id, rubro_id, tipoiva_id, producto_fechaactualizacionprecio, producto_codigoreferencia) ');
+    ZQuery1.sql.add('proveedor_id, rubro_id, tipoiva_id, producto_fechaactualizacionprecio, producto_codigoreferencia, producto_tipo) ');
     ZQuery1.sql.add('values (:calculoprecio_id, ');
     ZQuery1.sql.add(':politicaprecio_id, :producto_codigo, :producto_codigobarras, ');
     ZQuery1.sql.add(':producto_estado, :producto_id, :producto_neto1, ');
@@ -562,7 +566,7 @@ begin
     ZQuery1.sql.add(':producto_nombre, :producto_observaciones, :producto_preciocosto, ');
     ZQuery1.sql.add(':producto_precioventa1, :producto_precioventa2, :producto_precioventa3, ');
     ZQuery1.sql.add(':producto_precioventa4, :producto_precioventabase, :proveedor_id, ');
-    ZQuery1.sql.add(':rubro_id, :tipoiva_id, :producto_fechaactualizacionprecio, :producto_codigoreferencia)');
+    ZQuery1.sql.add(':rubro_id, :tipoiva_id, :producto_fechaactualizacionprecio, :producto_codigoreferencia, :producto_tipo)');
 
     ZQuery1.parambyname('producto_id').asstring:=id;
     ZQuery1.parambyname('producto_nombre').asstring:=producto_nombre.Text;
@@ -587,6 +591,7 @@ begin
     ZQuery1.parambyname('proveedor_id').asstring:=proveedor_id.codigo;
     ZQuery1.parambyname('producto_fechaactualizacionprecio').asstring:=formatdatetime('yyyy-mm-dd',date);
     ZQuery1.parambyname('producto_codigoreferencia').asstring:=producto_codigoreferencia.Text;
+    ZQuery1.parambyname('producto_tipo').asstring:=producto_tipo;
 
     ZQuery1.ExecSQL;
 
@@ -691,7 +696,7 @@ begin
     lblNombrePrecio3.Caption:=Princ.NOMBREPRECIO3;
     lblNombrePrecio4.Caption:=Princ.NOMBREPRECIO4;
 
-
+    producto_tipo:='PRODUCTO';
 
 end;
 

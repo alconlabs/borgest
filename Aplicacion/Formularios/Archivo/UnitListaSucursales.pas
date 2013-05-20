@@ -26,6 +26,8 @@ type
     sucursal_tipoliquidsucursal: TComboBox;
     Label6: TLabel;
     sucursal_tipoliquidvendedor: TComboBox;
+    Label8: TLabel;
+    cliente_id: TSqlComboBox;
     procedure btnfiltrarClick(Sender: TObject);
     procedure btnnuevoClick(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
@@ -57,9 +59,9 @@ begin
     id:=princ.codigo('sucursales','sucursal_id');
     ZQuery2.sql.clear;
     ZQuery2.sql.add('Insert into sucursales (sucursal_id, sucursal_nombre, sucursal_domicilio, ');
-    ZQuery2.sql.add('sucursal_telefono, empresa_id, sucursal_tipoliquidsucursal, sucursal_tipoliquidvendedor) ');
+    ZQuery2.sql.add('sucursal_telefono, empresa_id, sucursal_tipoliquidsucursal, sucursal_tipoliquidvendedor, cliente_id) ');
     ZQuery2.sql.add('values (:sucursal_id, :sucursal_nombre, :sucursal_domicilio, ');
-    ZQuery2.sql.add(':sucursal_telefono, :empresa_id, :sucursal_tipoliquidsucursal, :sucursal_tipoliquidvendedor) ');
+    ZQuery2.sql.add(':sucursal_telefono, :empresa_id, :sucursal_tipoliquidsucursal, :sucursal_tipoliquidvendedor, :cliente_id) ');
     ZQuery2.parambyname('sucursal_id').asstring:=id;
     ZQuery2.parambyname('sucursal_nombre').asstring:=sucursal_nombre.text;
     ZQuery2.parambyname('sucursal_domicilio').asstring:=sucursal_domicilio.text;
@@ -67,6 +69,7 @@ begin
     ZQuery2.parambyname('empresa_id').asstring:=empresa_id.codigo;
     ZQuery2.parambyname('sucursal_tipoliquidsucursal').asstring:=sucursal_tipoliquidsucursal.text;
     ZQuery2.parambyname('sucursal_tipoliquidvendedor').asstring:=sucursal_tipoliquidvendedor.text;
+    ZQuery2.parambyname('cliente_id').asstring:=cliente_id.codigo;
     ZQuery2.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
@@ -85,7 +88,8 @@ begin
     ZQuery2.sql.add('sucursal_telefono=:sucursal_telefono, ');
     ZQuery2.sql.add('empresa_id=:empresa_id, ');
     ZQuery2.sql.add('sucursal_tipoliquidsucursal=:sucursal_tipoliquidsucursal, ');
-    ZQuery2.sql.add('sucursal_tipoliquidvendedor=:sucursal_tipoliquidvendedor ');
+    ZQuery2.sql.add('sucursal_tipoliquidvendedor=:sucursal_tipoliquidvendedor, ');
+    ZQuery2.sql.add('cliente_id=:cliente_id ');
     ZQuery2.sql.add('where sucursal_id=:sucursal_id');
     ZQuery2.parambyname('sucursal_id').asstring:=id;
     ZQuery2.parambyname('sucursal_nombre').asstring:=sucursal_nombre.text;
@@ -94,6 +98,7 @@ begin
     ZQuery2.parambyname('empresa_id').asstring:=empresa_id.codigo;
     ZQuery2.parambyname('sucursal_tipoliquidsucursal').asstring:=sucursal_tipoliquidsucursal.text;
     ZQuery2.parambyname('sucursal_tipoliquidvendedor').asstring:=sucursal_tipoliquidvendedor.text;
+    ZQuery2.parambyname('cliente_id').asstring:=cliente_id.codigo;
     ZQuery2.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
@@ -119,6 +124,9 @@ begin
     Label4.Visible:=strtobool(Princ.GetConfiguracionMenu('>Comisiones','menu_visible'));
     sucursal_tipoliquidvendedor.Visible:=strtobool(Princ.GetConfiguracionMenu('>Comisiones','menu_visible'));
     Label6.Visible:=strtobool(Princ.GetConfiguracionMenu('>Comisiones','menu_visible'));
+
+    Label8.Visible:=strtobool(Princ.GetConfiguracionMenu('>Comisiones','menu_visible'));
+    cliente_id.Visible:=strtobool(Princ.GetConfiguracionMenu('>Comisiones','menu_visible'));
 
 end;
 
@@ -201,6 +209,9 @@ begin
                 sucursal_tipoliquidsucursal.Text:=ZQGrilla.FieldByName('sucursal_tipoliquidsucursal').AsString;
                 sucursal_tipoliquidvendedor.Text:=ZQGrilla.FieldByName('sucursal_tipoliquidvendedor').AsString;
                 sucursal_nombre.SetFocus;
+
+                cliente_id.llenarcombo;
+                cliente_id.Buscar(ZQGrilla.FieldByName('cliente_id').AsString);
             end;
 
       end;
@@ -220,6 +231,9 @@ begin
     sucursal_nombre.SetFocus;
     sucursal_tipoliquidsucursal.ItemIndex:=-1;
     sucursal_tipoliquidvendedor.ItemIndex:=-1;
+
+    cliente_id.llenarcombo;
+    cliente_id.ItemIndex:=0;
 end;
 
 end.

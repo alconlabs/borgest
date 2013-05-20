@@ -277,6 +277,9 @@ end;
 procedure Tliquidacionessucu.sucursal_idSelect(Sender: TObject);
 begin
     sucursaltipliqsuc_tipo:=Princ.buscar('select sucursal_tipoliquidsucursal from sucursales where sucursal_id="'+sucursal_id.codigo+'"','sucursal_tipoliquidsucursal');
+
+    cliente_id.Buscar(princ.buscar('select cliente_id from sucursales where sucursal_id="'+sucursal_id.codigo+'"','cliente_id'));
+
 end;
 
 procedure Tliquidacionessucu.tipodocu_idSelect(Sender: TObject);
@@ -458,19 +461,21 @@ begin
     ZQuery2.parambyname('liquidacionsucursal_id').asstring:=id;
     ZQuery2.ExecSQL;
 
+    ZQuery2.Sql.Clear;
+    ZQuery2.Sql.Add('update sucursalesdebcred set ');
+    ZQuery2.Sql.Add('liquidacionsucursal_id=:liquidacionsucursal_id, ');
+    ZQuery2.Sql.Add('sucursaldebcred_estado=:sucursaldebcred_estado ');
+    ZQuery2.Sql.Add('where liquidacionsucursal_id=:liquidacionsucursal_id1 ');
+    ZQuery2.ParamByName('liquidacionsucursal_id').AsString:='0';
+    ZQuery2.ParamByName('sucursaldebcred_estado').AsString:='PENDIENTE';
+    ZQuery2.ParamByName('liquidacionsucursal_id1').AsString:=id;
+    ZQuery2.ExecSql;
+
     ZQuery2.sql.clear;
     ZQuery2.sql.add('Delete from liquidacionessucursales');
     ZQuery2.sql.add(' where liquidacionsucursal_id=:liquidacionsucursal_id');
     ZQuery2.parambyname('liquidacionsucursal_id').asstring:=id;
     ZQuery2.ExecSQL;
-
-    ZQuery2.sql.clear;
-    ZQuery2.sql.add('Delete from sucursalesdebcred');
-    ZQuery2.sql.add(' where liquidacionsucursal_id=:liquidacionsucursal_id');
-    ZQuery2.parambyname('liquidacionsucursal_id').asstring:=id;
-    ZQuery2.ExecSQL;
-
-
 
 
     ZQuery2.SQL.Clear;
@@ -886,7 +891,13 @@ begin
           end;
           ventadetalle2.Free;
 
-          documentoventa_id:=Princ.AgregarDocumentoVenta(ZQDocumentoventa,ZQDocumentoventadetalles,nil,nil);
+          documentoventa_id:=Princ.AgregarDocumentoVenta(ZQDocumentoventa,nil,nil,nil);
+
+          ZQDocumentoventa.Edit;
+          ZQDocumentoventa.FieldByName('documentoventa_id').AsString:=documentoventa_id;
+          ZQDocumentoventa.Post;
+
+          Princ.ModificarDocumentoVenta(ZQDocumentoventa,ZQDocumentoventadetalles,nil,nil);
 
           ZQuery2.Sql.Clear;
           ZQuery2.Sql.Add('update liquidacionessucursales set ');
@@ -920,7 +931,7 @@ begin
           end;
 
         3:begin
-              if (MessageDlg('Seguro desea eliminar esta solicitud?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+              if (MessageDlg('Seguro desea eliminar esta liquidacion?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
                 eliminar;
           end;
 

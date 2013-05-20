@@ -6,6 +6,7 @@ Archivo
 		Calculo Precios
 		Politicas de Precios
 		Clientes
+		Conceptos Deb-Cred
 	Proveedores
 		Proveedores
 	Localidades

@@ -1,8 +1,8 @@
-object ventadetalle2: Tventadetalle2
+object ventadetalleconcepto: Tventadetalleconcepto
   Left = 0
   Top = 0
-  Caption = 'Cargar Detalle'
-  ClientHeight = 208
+  Caption = 'Cargar Detalle Concepto'
+  ClientHeight = 113
   ClientWidth = 660
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -21,7 +21,7 @@ object ventadetalle2: Tventadetalle2
     Left = 0
     Top = 0
     Width = 660
-    Height = 208
+    Height = 113
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -66,69 +66,75 @@ object ventadetalle2: Tventadetalle2
     Styler = Princ.AdvPanelStyler1
     FullHeight = 0
     object Label3: TLabel
-      Left = 47
-      Top = 39
-      Width = 43
+      Left = 12
+      Top = 15
+      Width = 46
       Height = 13
       Alignment = taRightJustify
-      Caption = 'Producto'
+      Caption = 'Concepto'
     end
     object Label6: TLabel
       Left = 48
-      Top = 10
+      Top = 154
       Width = 42
       Height = 13
       Alignment = taRightJustify
       Caption = 'Cantidad'
+      Visible = False
     end
     object Label1: TLabel
-      Left = 21
-      Top = 66
-      Width = 69
+      Left = 23
+      Top = 42
+      Width = 35
       Height = 13
       Alignment = taRightJustify
-      Caption = 'Precio Unitario'
+      Caption = 'Importe'
     end
     object Label2: TLabel
       Left = 66
-      Top = 98
+      Top = 130
       Width = 24
       Height = 13
       Alignment = taRightJustify
       Caption = 'Total'
+      Visible = False
     end
     object producdepo_stockminimo: TLabel
       Left = 484
-      Top = 66
+      Top = 154
       Width = 54
       Height = 13
       Caption = 'Stock Min: '
+      Visible = False
     end
     object producdepo_stockactual: TLabel
       Left = 612
-      Top = 66
+      Top = 154
       Width = 34
       Height = 13
       Alignment = taRightJustify
       Caption = 'Stock: '
+      Visible = False
     end
     object producto_fechaactualizacionprecio: TLabel
       Left = 229
-      Top = 66
+      Top = 154
       Width = 52
       Height = 13
       Caption = 'Fecha Act.'
+      Visible = False
     end
     object producdepo_stockinicial: TLabel
       Left = 348
-      Top = 66
+      Top = 154
       Width = 54
       Height = 13
       Caption = 'Stock Inic: '
+      Visible = False
     end
     object Button1: TButton
       Left = 560
-      Top = 114
+      Top = 64
       Width = 75
       Height = 25
       Cancel = True
@@ -138,7 +144,7 @@ object ventadetalle2: Tventadetalle2
     end
     object btnaceptar: TButton
       Left = 479
-      Top = 114
+      Top = 64
       Width = 75
       Height = 25
       Caption = 'Aceptar'
@@ -146,8 +152,8 @@ object ventadetalle2: Tventadetalle2
       OnClick = btnaceptarClick
     end
     object ventadetalle_preciounitario: TDBAdvEdit
-      Left = 104
-      Top = 63
+      Left = 72
+      Top = 39
       Width = 121
       Height = 21
       EditType = etFloat
@@ -168,7 +174,7 @@ object ventadetalle2: Tventadetalle2
     end
     object ventadetalle_total: TDBAdvEdit
       Left = 104
-      Top = 95
+      Top = 127
       Width = 121
       Height = 21
       EditType = etFloat
@@ -183,13 +189,13 @@ object ventadetalle2: Tventadetalle2
       Enabled = True
       TabOrder = 4
       Text = '0,00'
-      Visible = True
+      Visible = False
       OnExit = ventadetalle_totalExit
       Version = '2.7.0.5'
     end
     object producto_id: TEditCodi
-      Left = 104
-      Top = 36
+      Left = 72
+      Top = 12
       Width = 121
       Height = 21
       Flat = False
@@ -217,7 +223,7 @@ object ventadetalle2: Tventadetalle2
       ConfSqlConnection = Princ.ZBase
       ConfSql.Strings = (
         'select * from productos'
-        'where producto_tipo="PRODUCTO"'
+        'where producto_tipo="CONCEPTO"'
         'order by producto_nombre')
       ConfTexto = producto_nombre
       AfterSearch = producto_idAfterSearch
@@ -227,17 +233,15 @@ object ventadetalle2: Tventadetalle2
       ConfCampoBusqueda1 = 'producto_codigo'
     end
     object producto_nombre: TEdit
-      Left = 229
-      Top = 36
+      Left = 197
+      Top = 12
       Width = 417
       Height = 21
-      TabStop = False
-      ReadOnly = True
       TabOrder = 2
     end
     object btnherramientas: TAdvGlowButton
-      Left = 602
-      Top = 4
+      Left = 544
+      Top = 119
       Width = 44
       Height = 29
       Caption = 'btnherramientas'
@@ -278,20 +282,21 @@ object ventadetalle2: Tventadetalle2
       Appearance.ColorMirrorCheckedTo = 16768988
       Appearance.ColorMirrorDisabled = 11974326
       Appearance.ColorMirrorDisabledTo = 15921906
+      Enabled = False
       Layout = blGlyphTop
       DropDownButton = True
       DropDownMenu = AdvPopupMenu1
     end
     object GroupBoxPrecios: TGroupBox
       Left = 0
-      Top = 143
+      Top = 183
       Width = 660
       Height = 47
-      Align = alBottom
       Caption = 'Precios'
       ParentBackground = False
       TabOrder = 8
       TabStop = True
+      Visible = False
       object producto_precioventa1: TMoneyEdit
         Left = 88
         Top = 14
@@ -417,7 +422,7 @@ object ventadetalle2: Tventadetalle2
     end
     object ventadetalle_preciounitoriginal: TDBAdvEdit
       Left = 288
-      Top = 95
+      Top = 127
       Width = 121
       Height = 21
       TabStop = False
@@ -439,7 +444,7 @@ object ventadetalle2: Tventadetalle2
     end
     object ventadeta_cantidad: TMoneyEdit
       Left = 104
-      Top = 7
+      Top = 151
       Width = 121
       Height = 21
       CalculatorLook.ButtonWidth = 24
@@ -453,6 +458,7 @@ object ventadetalle2: Tventadetalle2
       CalculatorLook.Font.Name = 'Tahoma'
       CalculatorLook.Font.Style = []
       TabOrder = 0
+      Visible = False
       Version = '1.1.0.1'
     end
   end

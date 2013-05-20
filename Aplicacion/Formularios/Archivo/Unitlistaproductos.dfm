@@ -63,7 +63,6 @@ object listaproductos: Tlistaproductos
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitWidth = 1003
     FullHeight = 0
     object panelbotonera: TAdvPanel
       Left = 940
@@ -109,7 +108,6 @@ object listaproductos: Tlistaproductos
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
-      ExplicitLeft = 900
       FullHeight = 0
       object btnelimi: TButton
         Left = 0
@@ -120,6 +118,7 @@ object listaproductos: Tlistaproductos
         Caption = 'Eliminar'
         TabOrder = 2
         OnClick = btnelimiClick
+        ExplicitLeft = 6
       end
       object btnmodi: TButton
         Left = 0
@@ -244,7 +243,6 @@ object listaproductos: Tlistaproductos
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
-      ExplicitWidth = 1003
       FullHeight = 0
       object Button5: TButton
         Left = 940
@@ -255,7 +253,6 @@ object listaproductos: Tlistaproductos
         Caption = 'Filtrar'
         TabOrder = 5
         OnClick = Button5Click
-        ExplicitLeft = 900
       end
       object fil_producto_precioventa1: TEdit
         Left = 540

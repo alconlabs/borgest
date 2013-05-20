@@ -79,6 +79,8 @@ procedure TInformesVentas.InformedeCobros;
 begin
     puntoventa_id.GenerarWhere;
     Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\informe_cobros.rep';
+//    Princ.VCLReport1.ConnectionName:=Princ.GetConfiguracion('CONEXIONREPORTES');
+//    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\informe_cobros.rep';
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;

@@ -76,6 +76,7 @@ type
   private
     { Private declarations }
     abm:integer;
+    producto_tipo:string;
     function control:boolean;
     procedure agregar;
     procedure modificar;
@@ -257,12 +258,7 @@ begin
                   productos.Show;
                 end;
             end;
-
-
       end;
-
-
-
 end;
 
 procedure Tlistaproductos.btncrearClick(Sender: TObject);
@@ -280,7 +276,7 @@ end;
 procedure Tlistaproductos.Button5Click(Sender: TObject);
 begin
     ZQGrilla.Active:=false;
-    ZQGrilla.SQL.Text:='select * from productos inner join rubros on productos.rubro_id=rubros.rubro_id inner join proveedores on productos.proveedor_id=proveedores.proveedor_id where 1=1';
+    ZQGrilla.SQL.Text:='select * from productos inner join rubros on productos.rubro_id=rubros.rubro_id inner join proveedores on productos.proveedor_id=proveedores.proveedor_id where 1=1 and producto_tipo="PRODUCTO"';
     if fil_producto_id.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and '+Princ.CAMPO_ID_PRODUCTO+' like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_id.Text,' ','%')+'%"';
 
