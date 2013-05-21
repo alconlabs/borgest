@@ -87,6 +87,7 @@ type
     CAJASALDOINICIALCONCEPTOID: TSqlComboBox;
     PRODUCTOSTOCKINICIAL: TCheckBox;
     VENTASNCNDCONCEPTOS: TCheckBox;
+    VENTASEMITIRREMITOCTACTE: TCheckBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -310,6 +311,10 @@ begin
     ZQuery1.parambyname('config_valor').AsString:=booltostr(VENTASNCNDCONCEPTOS.Checked);
     ZQuery1.ExecSQL;
 
+    ZQuery1.parambyname('config_nombre').AsString:='VENTASEMITIRREMITOCTACTE';
+    ZQuery1.parambyname('config_valor').AsString:=booltostr(VENTASEMITIRREMITOCTACTE.Checked);
+    ZQuery1.ExecSQL;
+
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK, mbCancel], 0);
 
     Self.Close;
@@ -522,8 +527,8 @@ begin
     if ZQConfig.Locate('config_nombre','PRODUCTOSTOCKINICIAL',[]) then
       PRODUCTOSTOCKINICIAL.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
 
-    if ZQConfig.Locate('config_nombre','VENTASNCNDCONCEPTOS',[]) then
-      VENTASNCNDCONCEPTOS.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
+    if ZQConfig.Locate('config_nombre','VENTASEMITIRREMITOCTACTE',[]) then
+      VENTASEMITIRREMITOCTACTE.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
 
 end;
 

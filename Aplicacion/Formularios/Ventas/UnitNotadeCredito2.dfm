@@ -487,7 +487,7 @@ object NotadeCredito2: TNotadeCredito2
       Top = 135
       Width = 836
       Height = 185
-      ActivePage = TabSheet1
+      ActivePage = TabSheet2
       TabOrder = 13
       object TabSheet1: TTabSheet
         Caption = 'Productos'
@@ -767,6 +767,15 @@ object NotadeCredito2: TNotadeCredito2
           Version = '1.1.0.1'
         end
       end
+    end
+    object btnimprimir: TButton
+      Left = 10
+      Top = 457
+      Width = 75
+      Height = 25
+      Caption = 'Imprimir'
+      TabOrder = 14
+      OnClick = btnimprimirClick
     end
   end
   object ZQuery2: TZQuery

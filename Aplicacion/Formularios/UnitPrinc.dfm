@@ -3252,6 +3252,7 @@ object Princ: TPrinc
   object VCLReport1: TVCLReport
     ConnectionName = 'conexion_prueba'
     AsyncExecution = False
+    OnBeforePrint = VCLReport1BeforePrint
     Title = 'Untitled'
     Left = 288
     Top = 136

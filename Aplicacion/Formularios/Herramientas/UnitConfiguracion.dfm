@@ -257,8 +257,6 @@ object configuracion: Tconfiguracion
       object TabSheet3: TTabSheet
         Caption = 'Ventas'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 28
         object Label1: TLabel
           Left = 49
           Top = 44
@@ -634,6 +632,14 @@ object configuracion: Tconfiguracion
           Height = 17
           Caption = 'Usar NC y ND con conceptos'
           TabOrder = 9
+        end
+        object VENTASEMITIRREMITOCTACTE: TCheckBox
+          Left = 296
+          Top = 307
+          Width = 169
+          Height = 17
+          Caption = 'Emitir remito con Fac Cta. Cte.'
+          TabOrder = 10
         end
       end
       object TabSheet5: TTabSheet

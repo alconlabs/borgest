@@ -137,6 +137,7 @@ type
     btnquitarconceptos: TButton;
     ZQDocumentoventadetallesproducto_tipo: TStringField;
     ZQDocumentoventadetallesConceptosproducto_tipo: TStringField;
+    btnimprimir: TButton;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -152,6 +153,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure sucursal_idSelect(Sender: TObject);
     procedure btnagregarconceptosClick(Sender: TObject);
+    procedure btnimprimirClick(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -351,9 +353,15 @@ begin
 
     Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\'+tipodocu_archivoimpresion;
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
-                                             'inner join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
-                                             'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
-                                             'where documentosventas.documentoventa_id="'+id+'"';
+                                                   'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                                   'inner join localidades on clientes.localidad_id=localidades.localidad_id '+
+                                                   'inner join provincias on localidades.provincia_id=provincias.provincia_id '+
+                                                   'inner join paises on provincias.pais_id=paises.pais_id '+
+                                                   'inner join condicioniva on clientes.condicioniva_id=condicioniva.condicioniva_id '+
+                                                   'where documentosventas.documentoventa_id="'+id+'"';
+
+    Princ.VCLReport1.Report.Datainfo.Items[2].sql:='select * from documentoventadetalles '+
+                                                   'where producto_tipo="CONCEPTO" and documentoventadetalles.documentoventa_id="'+id+'"';
 
 
     Princ.VCLReport1.Execute;
@@ -429,6 +437,8 @@ begin
         5:btnguardar.Caption:='Anular';
     end;
 
+    btnimprimir.Visible:=abm<>1;
+    
     limpiar_al_guardar:=abm=1;
     PageControl1.ActivePage:=TabSheet1;
 end;
@@ -459,7 +469,7 @@ begin
     ZQExecSql.SQL.Add('documentoventa_pagado=:documentoventa_pagado, ');
     ZQExecSql.SQL.Add('documentoventa_observacion=:documentoventa_observacion, ');
     ZQExecSql.SQL.Add('documentoventa_numero=:documentoventa_numero, ');
-    ZQExecSql.SQL.Add('documentoventa_fecha=:documentoventa_fecha ');
+    ZQExecSql.SQL.Add('documentoventa_fechavenc=:documentoventa_fechavenc ');
     ZQExecSql.SQL.Add('where documentoventa_id=:documentoventa_id');
 
     ZQExecSql.ParamByName('tipodocu_id').AsString:=tipodocu_id.codigo;
@@ -477,7 +487,7 @@ begin
     ZQExecSql.ParamByName('documentoventa_saldo').AsString:=documentoventa_total.Text;
     ZQExecSql.ParamByName('documentoventa_observacion').AsString:=documentoventa_observacion.Text;
     ZQExecSql.ParamByName('documentoventa_numero').AsString:=documentoventa_numero.Text;
-    ZQExecSql.ParamByName('documentoventa_fecha').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fecha.Date);
+    ZQExecSql.ParamByName('documentoventa_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fecha.Date + strtoint(Princ.buscar('select cliente_diasvenc from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_diasvenc')));
     ZQExecSql.ParamByName('documentoventa_id').AsString:=id;
     ZQExecSql.ExecSQL;
 
@@ -787,7 +797,7 @@ begin
     ZQExecSql.ParamByName('personal_id').AsString:=personal_id.codigo;
     ZQExecSql.ParamByName('tipodocu_id').AsString:=tipodocu_id.codigo;
     ZQExecSql.ParamByName('documentoventa_condicionventa').AsInteger:=documentoventa_condicionventa.ItemIndex;
-    ZQExecSql.ParamByName('documentoventa_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fecha.Date+15);
+    ZQExecSql.ParamByName('documentoventa_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fecha.Date + strtoint(Princ.buscar('select cliente_diasvenc from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_diasvenc')));
     ZQExecSql.ParamByName('documentoventa_listaprecio').AsInteger:=documentoventa_listaprecio.ItemIndex;
     ZQExecSql.ParamByName('documentoventa_observacion').AsString:=documentoventa_observacion.Text;
     ZQExecSql.ExecSQL;
@@ -993,6 +1003,11 @@ begin
       begin
           Self.Close;
       end;
+end;
+
+procedure TNotadeDebito2.btnimprimirClick(Sender: TObject);
+begin
+    imprimir;
 end;
 
 procedure TNotadeDebito2.btnquitarClick(Sender: TObject);

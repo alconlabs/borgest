@@ -9,6 +9,8 @@ inherited ConceptoDebCred: TConceptoDebCred
   inherited panelgrilla: TAdvPanel
     Width = 656
     Height = 223
+    ExplicitWidth = 656
+    ExplicitHeight = 223
     FullHeight = 0
     inherited btncancelar: TButton
       Left = 562
@@ -25,12 +27,11 @@ inherited ConceptoDebCred: TConceptoDebCred
     inherited PageControl1: TPageControl
       Width = 656
       Height = 161
-      ExplicitTop = 5
       ExplicitWidth = 656
       ExplicitHeight = 161
       inherited TabSheet2: TTabSheet
-        ExplicitLeft = 0
-        ExplicitTop = 25
+        ExplicitWidth = 648
+        ExplicitHeight = 133
         inherited Label17: TLabel
           Top = 228
           Enabled = False
@@ -83,8 +84,8 @@ inherited ConceptoDebCred: TConceptoDebCred
           ExplicitTop = 81
         end
         inherited Label8: TLabel
-          Top = 58
-          ExplicitTop = 58
+          Top = 60
+          ExplicitTop = 60
         end
         inherited lblNombrePrecio2: TLabel
           Top = 358
@@ -176,6 +177,10 @@ inherited ConceptoDebCred: TConceptoDebCred
           Visible = False
           ExplicitTop = 397
         end
+        inherited producto_id: TEdit
+          TabStop = False
+          ReadOnly = True
+        end
         inherited producto_codigo: TEdit
           Top = 449
           Enabled = False
@@ -195,8 +200,8 @@ inherited ConceptoDebCred: TConceptoDebCred
           ExplicitHeight = 42
         end
         inherited tipoiva_id: TSqlComboBox
-          Top = 55
-          ExplicitTop = 55
+          Top = 57
+          ExplicitTop = 57
         end
         inherited producto_precioventa1: TDBAdvEdit
           Top = 373
@@ -301,6 +306,7 @@ inherited ConceptoDebCred: TConceptoDebCred
     Top = 56
   end
   inherited ZQCalculopreciodetaprod: TZQuery
-    Top = 136
+    Left = 488
+    Top = 112
   end
 end

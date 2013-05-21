@@ -640,6 +640,15 @@ object NotadeDebito2: TNotadeDebito2
         end
       end
     end
+    object btnimprimir: TButton
+      Left = 10
+      Top = 457
+      Width = 75
+      Height = 25
+      Caption = 'Imprimir'
+      TabOrder = 14
+      OnClick = btnimprimirClick
+    end
   end
   object ZQuery2: TZQuery
     Connection = Princ.ZBase

@@ -62,7 +62,7 @@ begin
   inherited;
     if ZQGrilla.Active then
       begin
-          if ZQGrilla.RecordCount>1 then
+          if ZQGrilla.RecordCount>0 then
             begin
                 Princ.AbrirModificarTipoDocumento(ZQGrilla.FieldByName(campo_id).AsString);
             end;

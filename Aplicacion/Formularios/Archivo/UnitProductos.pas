@@ -99,6 +99,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
+
     function control:boolean;
     procedure agregar;
     procedure modificar;
@@ -110,6 +111,9 @@ type
     id:string;
     abm:integer;
     producto_tipo:string;
+  protected
+    { Protected declarations }
+    controlar_codigos:boolean;
   end;
 
 var
@@ -506,14 +510,14 @@ var
 begin
     error:=0;
 
-    if producto_codigo.Text<>'' then
+    if (producto_codigo.Text<>'') and (controlar_codigos) then
       begin
           if not Princ.ControlCodigoProducto(producto_codigo.Text,id,'producto_codigo',false) then
             error:=1;
 
       end;
 
-    if producto_codigobarras.Text<>'' then
+    if (producto_codigobarras.Text<>'') and (controlar_codigos) then
       begin
           if not Princ.ControlCodigoProducto(producto_codigobarras.Text,id,'producto_codigobarras',false) then
             error:=2;
@@ -697,6 +701,8 @@ begin
     lblNombrePrecio4.Caption:=Princ.NOMBREPRECIO4;
 
     producto_tipo:='PRODUCTO';
+
+    controlar_codigos:=true;
 
 end;
 

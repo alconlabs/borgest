@@ -220,6 +220,8 @@ begin
                            'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
                            'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
                            'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                           'inner join personal on documentosventas.personal_id=personal.personal_id '+
+                           'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
                            'where 1=1 '+Princ.empresa_where+
                            'and tiposdocumento.tipodocu_debcred<>"N/A" '+
                            'and documentosventas.documentoventa_estado="PENDIENTE" ';

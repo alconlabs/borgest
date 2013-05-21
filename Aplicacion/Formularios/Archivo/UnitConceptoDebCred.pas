@@ -10,6 +10,7 @@ uses
 
 type
   TConceptoDebCred = class(Tproductos)
+    procedure btnguardarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -22,5 +23,12 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TConceptoDebCred.btnguardarClick(Sender: TObject);
+begin
+  controlar_codigos:=false;
+  inherited;
+
+end;
 
 end.

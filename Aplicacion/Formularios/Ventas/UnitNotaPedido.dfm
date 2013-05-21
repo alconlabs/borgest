@@ -1,5 +1,7 @@
 inherited NotaPedido: TNotaPedido
   Caption = 'Nota de Pedido'
+  ExplicitWidth = 867
+  ExplicitHeight = 542
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -207,6 +209,12 @@ inherited NotaPedido: TNotaPedido
   inherited ZQuery2: TZQuery
     Left = 400
     Top = 128
+  end
+  inherited ZQDocumentoventadetalles: TZQuery
+    object ZQDocumentoventadetallesproducto_tipo: TStringField
+      FieldName = 'producto_tipo'
+      Size = 45
+    end
   end
   inherited DTSDocumentoventadetalle: TDataSource
     Left = 344

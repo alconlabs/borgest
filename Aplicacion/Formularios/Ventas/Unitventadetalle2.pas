@@ -368,7 +368,7 @@ begin
     btnprecio3.Caption:=Princ.NOMBREPRECIO3;
     btnprecio4.Caption:=Princ.NOMBREPRECIO4;
 
-    producto_id.ConfSql.Text:='select * from productos where producto_estado="DISPONIBLE" order by producto_nombre';
+    producto_id.ConfSql.Text:='select * from productos where producto_estado="DISPONIBLE" and producto_tipo="PRODUCTO" order by producto_nombre';
     producto_id.ConfCampoBusqueda1:=Princ.CODIGOPRODUCTOBUSQUEDA1;
     producto_id.ConfCampoBusqueda2:=Princ.CODIGOPRODUCTOBUSQUEDA2;
     producto_id.ConfCampoBusqueda3:=Princ.CODIGOPRODUCTOBUSQUEDA3;

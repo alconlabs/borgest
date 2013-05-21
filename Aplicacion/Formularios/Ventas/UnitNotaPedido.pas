@@ -17,6 +17,7 @@ type
     Label17: TLabel;
     documentoventa_equipo2: TGTBEdit;
     btnimprimir: TButton;
+    ZQDocumentoventadetallesproducto_tipo: TStringField;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnagregarClick(Sender: TObject);

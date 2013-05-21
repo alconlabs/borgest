@@ -190,6 +190,7 @@ type
     procedure btnprovinciasClick(Sender: TObject);
     procedure btnconceptosdebcredClick(Sender: TObject);
     procedure btnempresaClick(Sender: TObject);
+    procedure VCLReport1BeforePrint(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -3005,6 +3006,11 @@ begin
     finally
       estadoctas.Show;
     end;
+end;
+
+procedure TPrinc.VCLReport1BeforePrint(Sender: TObject);
+begin
+    VCLReport1.Report.SetLanguage(1);
 end;
 
 procedure TPrinc.btnnotapedidoClick(Sender: TObject);

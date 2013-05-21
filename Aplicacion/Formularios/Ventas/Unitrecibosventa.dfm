@@ -691,6 +691,15 @@ object recibosventa: Trecibosventa
       TabStop = False
       TabOrder = 8
     end
+    object btnimprimir: TButton
+      Left = 10
+      Top = 472
+      Width = 75
+      Height = 25
+      Caption = 'Imprimir'
+      TabOrder = 22
+      OnClick = btnimprimirClick
+    end
   end
   object ZQuery2: TZQuery
     Connection = Princ.ZBase
