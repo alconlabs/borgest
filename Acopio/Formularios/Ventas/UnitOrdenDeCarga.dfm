@@ -1,18 +1,18 @@
 inherited OrdendeCarga: TOrdendeCarga
   Caption = 'OrdendeCarga'
-  ClientHeight = 482
+  ClientHeight = 523
   ClientWidth = 719
   OnCreate = FormCreate
   OnShow = FormShow
   ExplicitWidth = 735
-  ExplicitHeight = 520
+  ExplicitHeight = 561
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Width = 719
-    Height = 482
-    ExplicitWidth = 1015
-    ExplicitHeight = 516
+    Height = 523
+    ExplicitWidth = 719
+    ExplicitHeight = 482
     FullHeight = 0
     object Label2: TLabel [0]
       Left = 565
@@ -95,7 +95,7 @@ inherited OrdendeCarga: TOrdendeCarga
     end
     object Label18: TLabel [10]
       Left = 15
-      Top = 403
+      Top = 443
       Width = 71
       Height = 13
       Caption = 'Observaciones'
@@ -160,18 +160,18 @@ inherited OrdendeCarga: TOrdendeCarga
     end
     inherited btncancelar: TButton
       Left = 628
-      Top = 446
+      Top = 486
       TabOrder = 9
       ExplicitLeft = 628
-      ExplicitTop = 446
+      ExplicitTop = 486
     end
     inherited btnguardar: TButton
       Left = 547
-      Top = 446
+      Top = 486
       TabOrder = 8
       OnClick = btnguardarClick
       ExplicitLeft = 547
-      ExplicitTop = 446
+      ExplicitTop = 486
     end
     object documento_numero: TEdit
       Left = 92
@@ -267,7 +267,7 @@ inherited OrdendeCarga: TOrdendeCarga
     end
     object documento_observaciones: TGTBMemo
       Left = 92
-      Top = 400
+      Top = 440
       Width = 615
       Height = 41
       TabOrder = 7
@@ -362,13 +362,12 @@ inherited OrdendeCarga: TOrdendeCarga
       Left = 7
       Top = 187
       Width = 700
-      Height = 198
-      ActivePage = TabSheet1
+      Height = 247
+      ActivePage = TabSheet4
       TabOrder = 6
       object TabSheet1: TTabSheet
         Caption = 'Carta de Porte / Remito'
-        ExplicitLeft = 26
-        ExplicitWidth = 748
+        ExplicitHeight = 170
         object Label6: TLabel
           Left = 110
           Top = 88
@@ -417,13 +416,14 @@ inherited OrdendeCarga: TOrdendeCarga
           Alignment = taRightJustify
           Caption = 'Tara'
         end
-        object Label22: TLabel
-          Left = 79
-          Top = 128
-          Width = 61
+        object Label30: TLabel
+          Left = 365
+          Top = 64
+          Width = 50
           Height = 13
           Alignment = taRightJustify
-          Caption = 'Transportista'
+          Caption = 'Tarifa flete'
+          Enabled = False
         end
         object documento_total: TMoneyEdit
           Left = 146
@@ -450,7 +450,7 @@ inherited OrdendeCarga: TOrdendeCarga
           Height = 21
           Style = csDropDownList
           ItemHeight = 13
-          TabOrder = 5
+          TabOrder = 4
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from calidades'
@@ -468,7 +468,7 @@ inherited OrdendeCarga: TOrdendeCarga
           Height = 21
           Style = csDropDownList
           ItemHeight = 13
-          TabOrder = 6
+          TabOrder = 5
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from especies'
@@ -522,14 +522,111 @@ inherited OrdendeCarga: TOrdendeCarga
           Version = '1.1.0.1'
           OnExit = documento_kgbrutosExit
         end
+        object MoneyEdit2: TMoneyEdit
+          Left = 428
+          Top = 61
+          Width = 122
+          Height = 21
+          CalculatorLook.ButtonWidth = 24
+          CalculatorLook.ButtonHeight = 24
+          CalculatorLook.ButtonColor = clSilver
+          CalculatorLook.Color = clWhite
+          CalculatorLook.Flat = False
+          CalculatorLook.Font.Charset = DEFAULT_CHARSET
+          CalculatorLook.Font.Color = clWindowText
+          CalculatorLook.Font.Height = -11
+          CalculatorLook.Font.Name = 'Tahoma'
+          CalculatorLook.Font.Style = []
+          Enabled = False
+          TabOrder = 6
+          Version = '1.1.0.1'
+        end
+      end
+      object TabSheet4: TTabSheet
+        Caption = 'Transportista'
+        ImageIndex = 3
+        ExplicitLeft = -28
+        ExplicitTop = 56
+        ExplicitHeight = 170
+        object Label22: TLabel
+          Left = 15
+          Top = 48
+          Width = 61
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Transportista'
+        end
+        object Label25: TLabel
+          Left = 47
+          Top = 74
+          Width = 31
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Chofer'
+          Enabled = False
+        end
+        object Label26: TLabel
+          Left = 1
+          Top = 24
+          Width = 75
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Dador de Carga'
+          Enabled = False
+        end
+        object Label27: TLabel
+          Left = 47
+          Top = 122
+          Width = 31
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Chasis'
+          Enabled = False
+        end
+        object Label28: TLabel
+          Left = 33
+          Top = 146
+          Width = 45
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Acoplado'
+          Enabled = False
+        end
+        object Label29: TLabel
+          Left = 503
+          Top = 122
+          Width = 38
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Anticipo'
+          Enabled = False
+        end
+        object Label31: TLabel
+          Left = 493
+          Top = 56
+          Width = 50
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Tarifa flete'
+          Enabled = False
+        end
+        object Label32: TLabel
+          Left = 53
+          Top = 98
+          Width = 25
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'CUIT'
+          Enabled = False
+        end
         object entidadtransportista_id: TSqlComboBox
-          Left = 146
-          Top = 125
+          Left = 82
+          Top = 45
           Width = 316
           Height = 21
           Style = csDropDownList
           ItemHeight = 13
-          TabOrder = 4
+          TabOrder = 0
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from entidades'
@@ -538,11 +635,98 @@ inherited OrdendeCarga: TOrdendeCarga
           Confcampo_nomb = 'entidad_razonsocial'
           Tag2 = 0
         end
+        object Edit1: TEdit
+          Left = 84
+          Top = 71
+          Width = 313
+          Height = 21
+          Enabled = False
+          TabOrder = 1
+        end
+        object SqlComboBox1: TSqlComboBox
+          Left = 82
+          Top = 21
+          Width = 316
+          Height = 21
+          Style = csDropDownList
+          Enabled = False
+          ItemHeight = 13
+          TabOrder = 2
+          Confbase = Princ.ZBase
+          Confsql.Strings = (
+            'select * from entidades'
+            'order by entidad_razonsocial')
+          Confcampo_codigo = 'entidad_id'
+          Confcampo_nomb = 'entidad_razonsocial'
+          Tag2 = 0
+        end
+        object Edit2: TEdit
+          Left = 84
+          Top = 119
+          Width = 121
+          Height = 21
+          Enabled = False
+          TabOrder = 3
+        end
+        object Edit3: TEdit
+          Left = 84
+          Top = 143
+          Width = 121
+          Height = 21
+          Enabled = False
+          TabOrder = 4
+        end
+        object MoneyEdit1: TMoneyEdit
+          Left = 554
+          Top = 119
+          Width = 122
+          Height = 21
+          CalculatorLook.ButtonWidth = 24
+          CalculatorLook.ButtonHeight = 24
+          CalculatorLook.ButtonColor = clSilver
+          CalculatorLook.Color = clWhite
+          CalculatorLook.Flat = False
+          CalculatorLook.Font.Charset = DEFAULT_CHARSET
+          CalculatorLook.Font.Color = clWindowText
+          CalculatorLook.Font.Height = -11
+          CalculatorLook.Font.Name = 'Tahoma'
+          CalculatorLook.Font.Style = []
+          Enabled = False
+          TabOrder = 5
+          Version = '1.1.0.1'
+        end
+        object MoneyEdit3: TMoneyEdit
+          Left = 556
+          Top = 53
+          Width = 122
+          Height = 21
+          CalculatorLook.ButtonWidth = 24
+          CalculatorLook.ButtonHeight = 24
+          CalculatorLook.ButtonColor = clSilver
+          CalculatorLook.Color = clWhite
+          CalculatorLook.Flat = False
+          CalculatorLook.Font.Charset = DEFAULT_CHARSET
+          CalculatorLook.Font.Color = clWindowText
+          CalculatorLook.Font.Height = -11
+          CalculatorLook.Font.Name = 'Tahoma'
+          CalculatorLook.Font.Style = []
+          Enabled = False
+          TabOrder = 6
+          Version = '1.1.0.1'
+        end
+        object Edit4: TEdit
+          Left = 84
+          Top = 95
+          Width = 121
+          Height = 21
+          Enabled = False
+          TabOrder = 7
+        end
       end
       object TabSheet2: TTabSheet
         Caption = 'Origen'
         ImageIndex = 1
-        ExplicitWidth = 876
+        ExplicitHeight = 170
         object Label23: TLabel
           Left = 2
           Top = 0
@@ -554,7 +738,7 @@ inherited OrdendeCarga: TOrdendeCarga
         object DBGrid1: TDBGrid
           Left = 2
           Top = 19
-          Width = 647
+          Width = 687
           Height = 105
           DataSource = DTSContratosCompras
           TabOrder = 1
@@ -599,15 +783,15 @@ inherited OrdendeCarga: TOrdendeCarga
               ButtonStyle = cbsNone
               Expanded = False
               FieldName = 'documento_total'
-              Title.Caption = 'Importe'
-              Width = 90
+              Title.Caption = 'Kgs. Contratados'
+              Width = 97
               Visible = True
             end
             item
               ButtonStyle = cbsNone
               Expanded = False
               FieldName = 'documentodocu_importe'
-              Title.Caption = 'Pagado'
+              Title.Caption = 'Entrega actual'
               Width = 90
               Visible = True
             end
@@ -633,7 +817,7 @@ inherited OrdendeCarga: TOrdendeCarga
       object TabSheet3: TTabSheet
         Caption = 'Destino'
         ImageIndex = 2
-        ExplicitWidth = 876
+        ExplicitHeight = 170
         object Label24: TLabel
           Left = 2
           Top = 0
@@ -645,7 +829,7 @@ inherited OrdendeCarga: TOrdendeCarga
         object DBGrid2: TDBGrid
           Left = 2
           Top = 19
-          Width = 647
+          Width = 687
           Height = 105
           DataSource = DTSContratosVentas
           TabOrder = 1
@@ -690,15 +874,15 @@ inherited OrdendeCarga: TOrdendeCarga
               ButtonStyle = cbsNone
               Expanded = False
               FieldName = 'documento_total'
-              Title.Caption = 'Importe'
-              Width = 90
+              Title.Caption = 'Kgs Contratados'
+              Width = 105
               Visible = True
             end
             item
               ButtonStyle = cbsNone
               Expanded = False
               FieldName = 'documentodocu_importe'
-              Title.Caption = 'Pagado'
+              Title.Caption = 'Entrega actual'
               Width = 90
               Visible = True
             end
@@ -777,8 +961,8 @@ inherited OrdendeCarga: TOrdendeCarga
         Name = 'documento_id'
         ParamType = ptUnknown
       end>
-    Left = 40
-    Top = 232
+    Left = 184
+    Top = 416
     ParamData = <
       item
         DataType = ftUnknown
@@ -1034,13 +1218,13 @@ inherited OrdendeCarga: TOrdendeCarga
   end
   object DTSContratosCompras: TDataSource
     DataSet = ZQContratosCompras
-    Left = 40
-    Top = 296
+    Left = 56
+    Top = 416
   end
   object DTSContratosVentas: TDataSource
     DataSet = ZQContratosVentas
-    Left = 528
-    Top = 304
+    Left = 600
+    Top = 400
   end
   object ZQContratosVentas: TZQuery
     Connection = Princ.ZBase
@@ -1071,8 +1255,8 @@ inherited OrdendeCarga: TOrdendeCarga
         Name = 'documento_id'
         ParamType = ptUnknown
       end>
-    Left = 488
-    Top = 248
+    Left = 440
+    Top = 392
     ParamData = <
       item
         DataType = ftUnknown
@@ -1353,8 +1537,8 @@ inherited OrdendeCarga: TOrdendeCarga
         Name = 'documento_id'
         ParamType = ptUnknown
       end>
-    Left = 256
-    Top = 240
+    Left = 296
+    Top = 392
     ParamData = <
       item
         DataType = ftUnknown

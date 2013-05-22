@@ -79,6 +79,9 @@ type
     documentoventa_fechavenc: TDateTimePicker;
     btnobservaciones: TButton;
     cliente_ultimaventa: TLabel;
+    VENTASEMITIRREMITOCTACTE: TCheckBox;
+    ZQRemito: TZQuery;
+    ZQRemitoDetalles: TZQuery;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -103,6 +106,7 @@ type
     procedure btnagregarclienteClick(Sender: TObject);
     procedure FacturarpresupuestoClick(Sender: TObject);
     procedure btnobservacionesClick(Sender: TObject);
+    procedure documentoventa_condicionventaSelect(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -120,6 +124,7 @@ type
     procedure calculartotales;
     procedure calculartotalpagos;
     procedure FacturarDocumento(tipodocunombre:string);
+    procedure GenerarRemito;
   public
     { Public declarations }
     abm:integer;
@@ -140,6 +145,35 @@ uses UnitPrinc, Unitventadetalle, Unitventadetalle2, UnitFacturarDocumentos,
 
 {$R *.dfm}
 
+
+procedure Tfacturasventa.GenerarRemito;
+var
+  remito_id:string;
+begin
+    ZQRemito.Active:=false;
+    ZQRemito.ParamByName('documentoventa_id').AsString:=id;
+    ZQRemito.Active:=true;
+
+    ZQRemitoDetalles.Active:=false;
+    ZQRemitoDetalles.ParamByName('documentoventa_id').AsString:=id;
+    ZQRemitoDetalles.Active:=true;
+
+    ZQdocumentoventadocus.Active:=false;
+    ZQdocumentoventadocus.Active:=true;
+    ZQdocumentoventadocus.Insert;
+    ZQdocumentoventadocus.FieldByName('documentoventa_estado').asstring:='';
+    ZQdocumentoventadocus.FieldByName('documentoventa_id').asstring:='0';
+    ZQdocumentoventadocus.FieldByName('documentoventa_idpago').asstring:=id;
+    ZQdocumentoventadocus.FieldByName('documentoventa_pagado').asstring:='0';
+    ZQdocumentoventadocus.FieldByName('documentoventa_saldo').asstring:='0';
+    ZQdocumentoventadocus.FieldByName('documentoventadoc_id').asstring:='0';
+    ZQdocumentoventadocus.FieldByName('documentoventadoc_importe').asstring:='0';
+    ZQdocumentoventadocus.FieldByName('documentoventadoc_tiporelacion').asstring:='RELACION';
+    ZQdocumentoventadocus.Post;
+
+    
+
+end;
 
 procedure Tfacturasventa.FacturarDocumento(tipodocunombre:string);
 begin
@@ -198,6 +232,11 @@ begin
 
     
     Result:=error=0;
+end;
+
+procedure Tfacturasventa.documentoventa_condicionventaSelect(Sender: TObject);
+begin
+    VENTASEMITIRREMITOCTACTE.Checked:=(abm=1) and (documentoventa_condicionventa.ItemIndex=strtoint(CONDICIONVENTA_CTACTE)) and strtobool(Princ.GetConfiguracion('VENTASEMITIRREMITOCTACTE'));
 end;
 
 procedure Tfacturasventa.GenerarNC;
@@ -553,12 +592,14 @@ begin
 
     cliente_id.llenarcombo;
     cliente_id.ItemIndex:=-1;
-    
+
     personal_id.llenarcombo;
     personal_id.ItemIndex:=0;
 
     VENTASCTDOPARCIALES:=strtobool(Princ.GetConfiguracion('VENTASCTDOPARCIALES'));
     VENTASCTDOVENTANACTACTE:=strtobool(Princ.GetConfiguracion('VENTASCTDOVENTANACTACTE'));
+
+    VENTASEMITIRREMITOCTACTE.Visible:=abm=1
 
 end;
 

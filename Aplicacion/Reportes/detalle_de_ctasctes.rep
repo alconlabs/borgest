@@ -35,13 +35,11 @@ object TRpReport
         'ntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoven' +
         'ta_id '#13#10'inner join clientes on documentosventas.cliente_id=clien' +
         'tes.cliente_id '#13#10'inner join personal on documentosventas.persona' +
-        'l_id=personal.personal_id'#13#10'inner join sucursales on puntodeventa' +
-        '.sucursal_id=sucursales.sucursal_id'#13#10'where tiposdocumento.tipodo' +
-        'cu_debcred<>"N/A" and '#13#10'documentosventas.documentoventa_estado="' +
-        'PENDIENTE" and '#13#10'clientes.cliente_id="16"'#13#10'and documentosventas.' +
-        'documentoventa_fecha<="2013-12-31" '#13#10'group by grupo '#13#10'order by d' +
-        'ocumentosventas.documentoventa_fecha, documentosventas.documento' +
-        'venta_id'
+        'l_id=personal.personal_id'#13#10'inner join personal as pesronalclient' +
+        'e on clientes.personal_id=pesronalcliente.personal_id'#13#10'inner joi' +
+        'n sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id'#13 +
+        #10'group by grupo '#13#10'order by documentosventas.documentoventa_fecha' +
+        ', documentosventas.documentoventa_id'
     end
     item
       Alias = 'ALIAS_EMPRESA'
@@ -1274,9 +1272,9 @@ object TRpReport
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
-    ChangeExpression = 'ALIAS_DBBORGEST.personal_id'
+    ChangeExpression = 'ALIAS_DBBORGEST.personal_id_3'
     BeginPageExpression = ''
-    ChangeExpression = 'ALIAS_DBBORGEST.personal_id'
+    ChangeExpression = 'ALIAS_DBBORGEST.personal_id_3'
     SkipExpreV = ''
     SkipExpreH = ''
     SkipToPageExpre = ''
@@ -1304,9 +1302,9 @@ object TRpReport
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
-    ChangeExpression = 'ALIAS_DBBORGEST.personal_id'
+    ChangeExpression = 'ALIAS_DBBORGEST.personal_id_3'
     BeginPageExpression = ''
-    ChangeExpression = 'ALIAS_DBBORGEST.personal_id'
+    ChangeExpression = 'ALIAS_DBBORGEST.personal_id_3'
     SkipExpreV = ''
     SkipExpreH = ''
     SkipToPageExpre = ''
@@ -1343,7 +1341,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.personal_nombre'
+    Expression = 'ALIAS_DBBORGEST.personal_nombre_1'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'

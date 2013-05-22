@@ -63,6 +63,7 @@ type
   private
     { Private declarations }
     procedure SetNotRequired;
+    function GenerarWhere:string;
   public
     { Public declarations }
     procedure cargatemporal;
@@ -78,6 +79,40 @@ implementation
 uses UnitPrinc;
 
 {$R *.dfm}
+
+
+function Tdetallectas.GenerarWhere:string;
+var
+  where:string;
+begin
+    where:=' 1=1 '+Princ.empresa_where+
+                           'and documentosventas.documentoventa_estado<>"ANULADA" '+
+                           'and tiposdocumento.tipodocu_debcred<>"N/A" ';
+
+    if cliente_id.codigo<>'-1' then
+      where:=where+' and clientes.cliente_id="'+cliente_id.codigo+'" ';
+
+    if personal_id.codigo<>'-1' then
+      where:=where+' and clientes.personal_id="'+personal_id.codigo+'" ';
+
+    if not strtobool(Princ.GetConfiguracion('VENTASCTDOVENTANACTACTE')) then
+      where:=where+'and documentosventas.documentoventa_condicionventa=1 ';
+
+    puntoventa_id.GenerarWhere;
+    where:=where+'and '+puntoventa_id.where;
+
+    if cbhastafecha.Checked then
+      where:=where+'and documentosventas.documentoventa_fecha<="'+formatdatetime('yyyy-mm-dd',hasta_fecha.Date)+'" ';
+
+    if cbdesdefechavenc.Checked then
+      where:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fechavenc>="'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'" ';
+
+    if cbhastafechavenc.Checked then
+      where:=where+'and documentosventas.documentoventa_fechavenc<="'+formatdatetime('yyyy-mm-dd',hasta_fecha_venc.Date)+'" ';
+
+    Result:=where;
+
+end;
 
 
 
@@ -229,35 +264,14 @@ begin
                            'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
                            'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
                            'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
-                           'where 1=1 '+Princ.empresa_where+
-                           'and documentosventas.documentoventa_estado<>"ANULADA" '+
-                           'and tiposdocumento.tipodocu_debcred<>"N/A" ';
+                           'inner join personal on documentosventas.personal_id=personal.personal_id '+
+                           'inner join personal as pesronalcliente on clientes.personal_id=pesronalcliente.personal_id '+
+                           'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
+                           'group by grupo '+
+                           'order by clientes.cliente_nombre, documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero ';
 
-    if cliente_id.codigo<>'-1' then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+' and clientes.cliente_id="'+cliente_id.codigo+'" ';
 
-    if personal_id.codigo<>'-1' then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+' and clientes.personal_id="'+personal_id.codigo+'" ';
-
-    if not strtobool(Princ.GetConfiguracion('VENTASCTDOVENTANACTACTE')) then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_condicionventa=1 ';
-
-    puntoventa_id.GenerarWhere;
-    ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+' and '+puntoventa_id.where;
-
-    if cbhastafecha.Checked then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fecha<="'+formatdatetime('yyyy-mm-dd',hasta_fecha.Date)+'" ';
-
-    if cbdesdefechavenc.Checked then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fechavenc>="'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'" ';
-
-    if cbhastafechavenc.Checked then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fechavenc<="'+formatdatetime('yyyy-mm-dd',hasta_fecha_venc.Date)+'" ';
-
-    ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'group by grupo ';
-
-    ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'order by clientes.cliente_nombre, documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero ';
-
+    ZQPendientes.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQPendientes.SQL.Text,GenerarWhere);
 
     ZQPendientes.Active:=true;
     SetNotRequired;

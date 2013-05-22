@@ -176,7 +176,7 @@ object estadoctas: Testadoctas
     end
     object btnactualizar: TButton
       Left = 662
-      Top = 7
+      Top = 6
       Width = 75
       Height = 25
       Caption = 'Actualizar'

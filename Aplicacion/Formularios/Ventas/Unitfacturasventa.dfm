@@ -255,6 +255,7 @@ object facturasventa: Tfacturasventa
       ItemIndex = 0
       TabOrder = 2
       Text = 'Contado'
+      OnSelect = documentoventa_condicionventaSelect
       Items.Strings = (
         'Contado'
         'Cuenta Corriente')
@@ -697,6 +698,15 @@ object facturasventa: Tfacturasventa
       TabOrder = 23
       OnClick = btnobservacionesClick
     end
+    object VENTASEMITIRREMITOCTACTE: TCheckBox
+      Left = 554
+      Top = 461
+      Width = 86
+      Height = 17
+      TabStop = False
+      Caption = 'Emitir Remito'
+      TabOrder = 24
+    end
   end
   object ZQuery2: TZQuery
     Connection = Princ.ZBase
@@ -716,7 +726,7 @@ object facturasventa: Tfacturasventa
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 504
+    Left = 456
     Top = 368
     ParamData = <
       item
@@ -769,8 +779,8 @@ object facturasventa: Tfacturasventa
         'opago_id'
       'where documentopago_id=-1')
     Params = <>
-    Left = 320
-    Top = 240
+    Left = 272
+    Top = 232
     object ZQDocumentopagosdocumentopago_id: TIntegerField
       FieldName = 'documentopago_id'
       Required = True
@@ -860,5 +870,46 @@ object facturasventa: Tfacturasventa
       Caption = 'Facturar Presupuesto'
       OnClick = FacturarpresupuestoClick
     end
+  end
+  object ZQRemito: TZQuery
+    Connection = Princ.ZBase
+    SQL.Strings = (
+      'select * from documentosventas'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 528
+    Top = 312
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+  end
+  object ZQRemitoDetalles: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select * from documentoventadetalles'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 384
+    Top = 320
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
   end
 end

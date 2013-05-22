@@ -48,6 +48,10 @@ type
     Label14: TLabel;
     documento_condicioncalidad: TGTBComboBox;
     Label17: TLabel;
+    Label19: TLabel;
+    Edit1: TEdit;
+    Label20: TLabel;
+    Edit2: TEdit;
     procedure btnguardarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);

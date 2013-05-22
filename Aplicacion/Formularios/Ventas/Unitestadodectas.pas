@@ -63,6 +63,7 @@ type
   private
     { Private declarations }
     procedure SetNotRequired;
+    function GenerarWhere:string;
   public
     { Public declarations }
     procedure cargatemporal;
@@ -79,6 +80,40 @@ uses UnitPrinc, Unitventadetalle;
 
 {$R *.dfm}
 
+
+function Testadoctas.GenerarWhere:string;
+var
+  where:string;
+begin
+    where:='1=1 '+Princ.empresa_where+
+           'and tiposdocumento.tipodocu_debcred<>"N/A" '+
+           'and documentosventas.documentoventa_estado="PENDIENTE" ';
+
+    if cliente_id.codigo<>'-1' then
+      where:=where+' and clientes.cliente_id="'+cliente_id.codigo+'" ';
+
+    if personal_id.codigo<>'-1' then
+      where:=where+' and clientes.personal_id="'+personal_id.codigo+'" ';
+
+    puntoventa_id.GenerarWhere;
+    where:=where+' and '+puntoventa_id.where;
+
+
+    if not strtobool(Princ.GetConfiguracion('VENTASCTDOVENTANACTACTE')) then
+      where:=where+'and documentosventas.documentoventa_condicionventa=1 ';
+
+    if cbhastafecha.Checked then
+      where:=where+'and documentosventas.documentoventa_fecha<="'+formatdatetime('yyyy-mm-dd',hasta_fecha.Date)+'" ';
+
+    if cbdesdefechavenc.Checked then
+      where:=where+'and documentosventas.documentoventa_fechavenc>="'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'" ';
+
+    if cbhastafechavenc.Checked then
+      where:=where+'and documentosventas.documentoventa_fechavenc<="'+formatdatetime('yyyy-mm-dd',hasta_fecha_venc.Date)+'" ';
+
+    Result:=where;
+
+end;
 
 procedure Testadoctas.SetNotRequired;
 var
@@ -221,39 +256,14 @@ begin
                            'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
                            'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
                            'inner join personal on documentosventas.personal_id=personal.personal_id '+
+                           'inner join personal as pesronalcliente on clientes.personal_id=pesronalcliente.personal_id '+
                            'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
-                           'where 1=1 '+Princ.empresa_where+
-                           'and tiposdocumento.tipodocu_debcred<>"N/A" '+
-                           'and documentosventas.documentoventa_estado="PENDIENTE" ';
+                           'group by grupo '+
+                           'order by clientes.cliente_nombre, documentosventas.documentoventa_fecha, documentosventas.documentoventa_id ';
 
 
 
-    if cliente_id.codigo<>'-1' then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+' and clientes.cliente_id="'+cliente_id.codigo+'" ';
-
-    if personal_id.codigo<>'-1' then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+' and clientes.personal_id="'+personal_id.codigo+'" ';
-
-    puntoventa_id.GenerarWhere;
-    ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+' and '+puntoventa_id.where;
-
-
-    if not strtobool(Princ.GetConfiguracion('VENTASCTDOVENTANACTACTE')) then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_condicionventa=1 ';
-
-    if cbhastafecha.Checked then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fecha<="'+formatdatetime('yyyy-mm-dd',hasta_fecha.Date)+'" ';
-
-    if cbdesdefechavenc.Checked then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fechavenc>="'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'" ';
-
-    if cbhastafechavenc.Checked then
-      ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fechavenc<="'+formatdatetime('yyyy-mm-dd',hasta_fecha_venc.Date)+'" ';
-
-    ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'group by grupo ';
-
-
-    ZQPendientes.SQL.Text:=ZQPendientes.SQL.Text+'order by clientes.cliente_nombre, documentosventas.documentoventa_fecha, documentosventas.documentoventa_id ';
+    ZQPendientes.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQPendientes.SQL.Text,GenerarWhere);
 
 
     ZQPendientes.Active:=true;

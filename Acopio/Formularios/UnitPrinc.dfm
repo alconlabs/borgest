@@ -2866,7 +2866,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1271
     Height = 135
-    ActivePage = AdvPage2
+    ActivePage = AdvPage4
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -3779,6 +3779,149 @@ object Princ: TPrinc
         end
       end
     end
+    object AdvPage4: TAdvPage
+      Left = 4
+      Top = 26
+      Width = 1263
+      Height = 104
+      Caption = 'Orden de Carga'
+      object AdvToolBar9: TAdvToolBar
+        Left = 3
+        Top = 3
+        Width = 80
+        Height = 98
+        AllowFloating = False
+        Caption = 'Movimientos'
+        CaptionFont.Charset = DEFAULT_CHARSET
+        CaptionFont.Color = clWindowText
+        CaptionFont.Height = -12
+        CaptionFont.Name = 'Arial'
+        CaptionFont.Style = []
+        CaptionPosition = cpBottom
+        CaptionAlignment = taCenter
+        CompactImageIndex = -1
+        ShowCaption = True
+        ShowRightHandle = False
+        TextAutoOptionMenu = 'Add or Remove Buttons'
+        TextOptionMenu = 'Options'
+        ToolBarStyler = AdvToolBarFantasyStyler1
+        ParentOptionPicture = True
+        OnOptionClick = AdvToolBarGeneralOptionClick
+        object btnordenesdecarga: TAdvGlowButton
+          Left = 2
+          Top = 2
+          Width = 74
+          Height = 81
+          Cursor = crHandPoint
+          Caption = 'Ordenes de Carga'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          FocusType = ftHot
+          ParentFont = False
+          TabOrder = 0
+          OnClick = btnordenesdecargaClick
+          Appearance.BorderColor = 14727579
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.Color = 15653832
+          Appearance.ColorTo = 16178633
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 16245200
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
+      end
+      object AdvToolBar10: TAdvToolBar
+        Left = 86
+        Top = 3
+        Width = 111
+        Height = 98
+        AllowFloating = False
+        Caption = 'Dadores de Carga'
+        CaptionFont.Charset = DEFAULT_CHARSET
+        CaptionFont.Color = clWindowText
+        CaptionFont.Height = -12
+        CaptionFont.Name = 'Arial'
+        CaptionFont.Style = []
+        CaptionPosition = cpBottom
+        CaptionAlignment = taCenter
+        CompactImageIndex = -1
+        ShowCaption = True
+        ShowRightHandle = False
+        TextAutoOptionMenu = 'Add or Remove Buttons'
+        TextOptionMenu = 'Options'
+        ToolBarStyler = AdvToolBarFantasyStyler1
+        ParentOptionPicture = True
+        OnOptionClick = AdvToolBarGeneralOptionClick
+        object AdvGlowButton19: TAdvGlowButton
+          Left = 2
+          Top = 2
+          Width = 105
+          Height = 81
+          Cursor = crHandPoint
+          Caption = 'Estado de Cta.'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          FocusType = ftHot
+          ParentFont = False
+          TabOrder = 0
+          OnClick = btnordenesdecargaClick
+          Appearance.BorderColor = 14727579
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.Color = 15653832
+          Appearance.ColorTo = 16178633
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 16245200
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
+      end
+    end
     object AdvPage2: TAdvPage
       Left = 4
       Top = 26
@@ -3788,7 +3931,7 @@ object Princ: TPrinc
       object AdvToolBar5: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 375
+        Width = 301
         Height = 98
         AllowFloating = False
         Caption = 'Movimientos'
@@ -3808,7 +3951,7 @@ object Princ: TPrinc
         ParentOptionPicture = True
         OnOptionClick = AdvToolBarGeneralOptionClick
         object btnfacturasventas: TAdvGlowButton
-          Left = 150
+          Left = 76
           Top = 2
           Width = 74
           Height = 81
@@ -3841,7 +3984,7 @@ object Princ: TPrinc
           Appearance.ColorMirrorDisabledTo = 15921906
         end
         object AdvGlowButton17: TAdvGlowButton
-          Left = 224
+          Left = 150
           Top = 2
           Width = 73
           Height = 81
@@ -3874,7 +4017,7 @@ object Princ: TPrinc
           Appearance.ColorMirrorDisabledTo = 15921906
         end
         object AdvGlowButton18: TAdvGlowButton
-          Left = 297
+          Left = 223
           Top = 2
           Width = 74
           Height = 81
@@ -3905,51 +4048,6 @@ object Princ: TPrinc
           Appearance.ColorMirrorDisabled = 11974326
           Appearance.ColorMirrorDisabledTo = 15921906
         end
-        object btnordenesdecarga: TAdvGlowButton
-          Left = 76
-          Top = 2
-          Width = 74
-          Height = 81
-          Cursor = crHandPoint
-          Caption = 'Ordenes de Carga'
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -9
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          FocusType = ftHot
-          ParentFont = False
-          TabOrder = 3
-          OnClick = btnordenesdecargaClick
-          Appearance.BorderColor = 14727579
-          Appearance.BorderColorHot = 10079963
-          Appearance.BorderColorDown = 4548219
-          Appearance.Color = 15653832
-          Appearance.ColorTo = 16178633
-          Appearance.ColorChecked = 11918331
-          Appearance.ColorCheckedTo = 7915518
-          Appearance.ColorDisabled = 15921906
-          Appearance.ColorDisabledTo = 15921906
-          Appearance.ColorDown = 7778289
-          Appearance.ColorDownTo = 4296947
-          Appearance.ColorHot = 15465983
-          Appearance.ColorHotTo = 11332863
-          Appearance.ColorMirror = 15586496
-          Appearance.ColorMirrorTo = 16245200
-          Appearance.ColorMirrorHot = 5888767
-          Appearance.ColorMirrorHotTo = 10807807
-          Appearance.ColorMirrorDown = 946929
-          Appearance.ColorMirrorDownTo = 5021693
-          Appearance.ColorMirrorChecked = 10480637
-          Appearance.ColorMirrorCheckedTo = 5682430
-          Appearance.ColorMirrorDisabled = 11974326
-          Appearance.ColorMirrorDisabledTo = 15921906
-          Appearance.GradientHot = ggVertical
-          Appearance.GradientMirrorHot = ggVertical
-          Appearance.GradientDown = ggVertical
-          Appearance.GradientMirrorDown = ggVertical
-          Appearance.GradientChecked = ggVertical
-        end
         object btncontratoventa: TAdvGlowButton
           Left = 2
           Top = 2
@@ -3964,7 +4062,7 @@ object Princ: TPrinc
           Font.Style = []
           FocusType = ftHot
           ParentFont = False
-          TabOrder = 4
+          TabOrder = 3
           OnClick = btncontratoventaClick
           Appearance.BorderColor = 14727579
           Appearance.BorderColorHot = 10079963
@@ -3997,7 +4095,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBar6: TAdvToolBar
-        Left = 381
+        Left = 307
         Top = 3
         Width = 227
         Height = 98
@@ -4154,7 +4252,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBar8: TAdvToolBar
-        Left = 611
+        Left = 537
         Top = 3
         Width = 227
         Height = 98
@@ -5539,6 +5637,7 @@ object Princ: TPrinc
     Top = 272
   end
   object Encriptador1: TEncriptador
+    MetodoEncriptado = 1
     Left = 144
     Top = 224
   end

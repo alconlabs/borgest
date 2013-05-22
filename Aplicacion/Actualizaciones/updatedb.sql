@@ -818,3 +818,5 @@ Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enab
 INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,73,perfil_id from perfiles;
 197;
 Replace config set config_valor='0', config_nombre='VENTASNCNDCONCEPTOS';
+198;
+ALTER TABLE `documentoventadocus` ADD COLUMN `documentoventadoc_tiporelacion` VARCHAR(45) NULL DEFAULT 'IMPUTACION'  AFTER `documentoventa_idpago` ;

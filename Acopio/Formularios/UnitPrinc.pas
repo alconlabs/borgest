@@ -95,7 +95,6 @@ type
     AdvGlowButton16: TAdvGlowButton;
     AdvGlowButton22: TAdvGlowButton;
     AdvGlowButton23: TAdvGlowButton;
-    btnordenesdecarga: TAdvGlowButton;
     ZQDocumentodocus: TZQuery;
     btncontratos: TAdvGlowButton;
     btncontratoventa: TAdvGlowButton;
@@ -103,6 +102,11 @@ type
     AdvGlowButton3: TAdvGlowButton;
     AdvGlowButton5: TAdvGlowButton;
     AdvGlowButton24: TAdvGlowButton;
+    AdvPage4: TAdvPage;
+    AdvToolBar9: TAdvToolBar;
+    btnordenesdecarga: TAdvGlowButton;
+    AdvToolBar10: TAdvToolBar;
+    AdvGlowButton19: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZBaseBeforeConnect(Sender: TObject);
