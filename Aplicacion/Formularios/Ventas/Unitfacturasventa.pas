@@ -149,14 +149,29 @@ uses UnitPrinc, Unitventadetalle, Unitventadetalle2, UnitFacturarDocumentos,
 procedure Tfacturasventa.GenerarRemito;
 var
   remito_id:string;
+  tipodocu_id_remito:string;
+  documentoventa_id_remito:string;
 begin
+    tipodocu_id_remito:=princ.buscar('select tipodocu_id from tiposdocumento where puntoventa_id="'+puntoventa_id.codigo+'" and tipodocu_nombre="'+TIPODOCU_REMITOVENTA+'"','tipodocu_id');
     ZQRemito.Active:=false;
     ZQRemito.ParamByName('documentoventa_id').AsString:=id;
     ZQRemito.Active:=true;
 
+    ZQRemito.First;
+    ZQRemito.Edit;
+    ZQRemito.FieldByName('tipodocu_id').AsString:=tipodocu_id_remito;
+    ZQRemito.FieldByName('documentoventa_numero').AsString:='';
+    ZQRemito.Post;
+
+
     ZQRemitoDetalles.Active:=false;
     ZQRemitoDetalles.ParamByName('documentoventa_id').AsString:=id;
     ZQRemitoDetalles.Active:=true;
+
+    ZQRemitoDetalles.First;
+    ZQRemitoDetalles.Edit;
+    ZQRemitoDetalles.FieldByName('documentoventadetalle_idorig').AsString:=id;
+    ZQRemitoDetalles.Post;
 
     ZQdocumentoventadocus.Active:=false;
     ZQdocumentoventadocus.Active:=true;
@@ -171,8 +186,18 @@ begin
     ZQdocumentoventadocus.FieldByName('documentoventadoc_tiporelacion').asstring:='RELACION';
     ZQdocumentoventadocus.Post;
 
-    
+    documentoventa_id_remito:=Princ.AgregarDocumentoVenta(ZQRemito,ZQRemitoDetalles,ZQdocumentoventadocus,nil);
 
+    MessageDlg('Remito generado correctamente.', mtInformation, [mbOK], 0);
+
+    if Princ.buscar('select tipodocu_preimpresos from tiposdocumento where tipodocu_id="'+tipodocu_id_remito+'"','tipodocu_preimpresos')='-1' then
+      begin
+          if (MessageDlg('Desea imprimir el Remito?', mtConfirmation, [mbYes, mbNo], 0) = mrYes) then
+            begin
+                Princ.ImprimirDocumentoVenta(documentoventa_id_remito);
+            end;
+
+      end;
 end;
 
 procedure Tfacturasventa.FacturarDocumento(tipodocunombre:string);
@@ -599,8 +624,6 @@ begin
     VENTASCTDOPARCIALES:=strtobool(Princ.GetConfiguracion('VENTASCTDOPARCIALES'));
     VENTASCTDOVENTANACTACTE:=strtobool(Princ.GetConfiguracion('VENTASCTDOVENTANACTACTE'));
 
-    VENTASEMITIRREMITOCTACTE.Visible:=abm=1
-
 end;
 
 procedure Tfacturasventa.FormKeyDown(Sender: TObject; var Key: Word;
@@ -633,6 +656,8 @@ begin
         4:btnguardar.Caption:='Imprimir';
         5:btnguardar.Caption:='Anular';
     end;
+
+    VENTASEMITIRREMITOCTACTE.Visible:=abm=1
 end;
 
 procedure Tfacturasventa.modificar;
@@ -967,15 +992,22 @@ begin
 
       end;
 
-      if limpiar_al_guardar then
-        begin
-            id:='';
-            Self.OnShow(self);
-        end
-      else
-        begin
-            Self.Close;
-        end;
+
+    if VENTASEMITIRREMITOCTACTE.Checked then
+      begin
+          GenerarRemito;
+      end;
+
+
+    if limpiar_al_guardar then
+      begin
+          id:='';
+          Self.OnShow(self);
+      end
+    else
+      begin
+          Self.Close;
+      end;
 
 end;
 

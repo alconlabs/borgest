@@ -347,6 +347,7 @@ const
   TIPODOCU_RECIBOVENTA='Recibo de Venta';
   TIPODOCU_NOTACREDITOVENTA='Nota de Credito de Venta';
   TIPODOCU_NOTADEBITOVENTA='Nota de Debito de Venta';
+  TIPODOCU_REMITOVENTA='Remito de Venta';
 
 
 
@@ -1754,7 +1755,7 @@ begin
     ZQDocumentosventasABM.parambyname('caja_id').asstring:=Cabecera.FieldByName('caja_id').AsString;
     ZQDocumentosventasABM.ExecSQL;
 
-    ActualizarNumeroDocumento(Cabecera.FieldByName('tipodocu_id').AsString,Cabecera.FieldByName('documentoventa_numero').AsString);
+    ActualizarNumeroDocumento(Cabecera.FieldByName('tipodocu_id').AsString,documentoventa_numero);
 
 
     if Detalle<>nil then
@@ -1788,10 +1789,6 @@ begin
                   ZQDocumentosventasABM.ParamByName('documentoventadetalle_listaprecio').AsString:=Detalle.FieldByName('documentoventadetalle_listaprecio').AsString;
                   ZQDocumentosventasABM.ExecSQL;
 
-
-
-
-
                   Detalle.Next;
               end;
 
@@ -1807,11 +1804,11 @@ begin
                   ZQDocumentosventasABM.sql.add('Insert into documentoventadocus (documentoventa_estado, ');
                   ZQDocumentosventasABM.sql.add('documentoventa_id, documentoventa_idpago, ');
                   ZQDocumentosventasABM.sql.add('documentoventa_pagado, documentoventa_saldo, ');
-                  ZQDocumentosventasABM.sql.add('documentoventadoc_id, documentoventadoc_importe) ');
+                  ZQDocumentosventasABM.sql.add('documentoventadoc_id, documentoventadoc_importe, documentoventadoc_tiporelacion) ');
                   ZQDocumentosventasABM.sql.add('values (:documentoventa_estado, :documentoventa_id, ');
                   ZQDocumentosventasABM.sql.add(':documentoventa_idpago, :documentoventa_pagado, ');
                   ZQDocumentosventasABM.sql.add(':documentoventa_saldo, :documentoventadoc_id, ');
-                  ZQDocumentosventasABM.sql.add(':documentoventadoc_importe)');
+                  ZQDocumentosventasABM.sql.add(':documentoventadoc_importe, :documentoventadoc_tiporelacion)');
                   ZQDocumentosventasABM.parambyname('documentoventa_estado').asstring:=Documentoventadocu.FieldByName('documentoventa_estado').AsString;
                   ZQDocumentosventasABM.parambyname('documentoventa_id').asstring:=id;
                   ZQDocumentosventasABM.parambyname('documentoventa_idpago').asstring:=Documentoventadocu.FieldByName('documentoventa_idpago').AsString;
@@ -1819,15 +1816,14 @@ begin
                   ZQDocumentosventasABM.parambyname('documentoventa_saldo').asstring:=Documentoventadocu.FieldByName('documentoventa_saldo').AsString;
                   ZQDocumentosventasABM.parambyname('documentoventadoc_id').asstring:=codigo('documentoventadocus', 'documentoventadoc_id');
                   ZQDocumentosventasABM.parambyname('documentoventadoc_importe').asstring:=Documentoventadocu.FieldByName('documentoventadoc_importe').AsString;
+                  ZQDocumentosventasABM.parambyname('documentoventadoc_tiporelacion').asstring:=Documentoventadocu.FieldByName('documentoventadoc_tiporelacion').AsString;
                   ZQDocumentosventasABM.ExecSQL;
 
-                  ActualizarSaldoDocumentoVenta(Documentoventadocu.FieldByName('documentoventa_idpago').AsString,Documentoventadocu.FieldByName('documentoventadoc_importe').AsFloat);
+                  if Documentoventadocu.FieldByName('documentoventadoc_tiporelacion').AsString='IMPUTACION' then
+                    ActualizarSaldoDocumentoVenta(Documentoventadocu.FieldByName('documentoventa_idpago').AsString,Documentoventadocu.FieldByName('documentoventadoc_importe').AsFloat);
 
                   Documentoventadocu.Next;
               end;
-
-
-
 
       end;
 
@@ -1850,13 +1846,10 @@ begin
                   ZQDocumentosventasABM.parambyname('tipopago_id').asstring:=Pagos.FieldByName('tipopago_id').AsString;
                   ZQDocumentosventasABM.ExecSQL;
 
-
                   Pagos.Next;
               end;
 
-
       end;
-
 
     ZQDocumentosventasABM.SQL.Clear;
     ZQDocumentosventasABM.SQL.Add('commit');
@@ -1924,8 +1917,6 @@ begin
     ZQDocumentosventasABM.parambyname('personal_id').asstring:=Cabecera.FieldByName('personal_id').AsString;
     ZQDocumentosventasABM.parambyname('tipodocu_id').asstring:=Cabecera.FieldByName('tipodocu_id').AsString;
     ZQDocumentosventasABM.ExecSQL;
-
-
 
     if Detalle<>nil then
       begin
@@ -2034,14 +2025,9 @@ begin
               end;
       end;
 
-
-
-
     ZQDocumentosventasABM.SQL.Clear;
     ZQDocumentosventasABM.SQL.Add('commit');
     ZQDocumentosventasABM.ExecSQL;
-
-
 
 end;
 

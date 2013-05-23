@@ -235,7 +235,6 @@ type
     procedure modificar;
     procedure eliminar;
     procedure imprimir;
-    procedure GenerarNC;
     procedure anular;
     procedure calculartotales;
   public
@@ -256,112 +255,9 @@ uses UnitPrinc, Unitventadetalle, Unitventadetalle2, UnitventadetalleConcepto;
 
 {$R *.dfm}
 
-procedure TNotadeCredito2.GenerarNC;
-var
-  tipodocu_id_NC:string;
-  NC_numero:string;
-begin
-    ZQNotacredito.Active:=false;
-    ZQNotacredito.Active:=true;
-
-    tipodocu_id_NC:=princ.buscar('select tipodocu_id from tiposdocumento where puntoventa_id="'+puntoventa_id.codigo+'" and tipodocu_nombre="Nota de Credito de Venta" and tipodocu_letra="'+tipodocu_id.Text+'"','tipodocu_id');
-
-    NC_numero:=Princ.NumeroDocumento(tipodocu_id_NC,'');
-
-    ZQNotacredito.Insert;
-    ZQNotacredito.FieldByName('documentoventa_condicionventa').AsInteger:=documentoventa_condicionventa.ItemIndex;
-
-    if ZQuery2.FieldByName('documentoventa_estado').AsString='PAGADA' then
-      begin
-          ZQNotacredito.FieldByName('documentoventa_estado').AsString:='PENDIENTE';
-          ZQNotacredito.FieldByName('documentoventa_pagado').AsString:='0';
-          ZQNotacredito.FieldByName('documentoventa_saldo').AsString:=documentoventa_total.Text;
-      end
-    else
-      begin
-          ZQNotacredito.FieldByName('documentoventa_estado').AsString:='PAGADA';
-          ZQNotacredito.FieldByName('documentoventa_pagado').AsString:=documentoventa_total.Text;
-          ZQNotacredito.FieldByName('documentoventa_saldo').AsString:='0';
-
-      end;
-
-
-    ZQNotacredito.FieldByName('documentoventa_fecha').AsDateTime:=date;
-    ZQNotacredito.FieldByName('documentoventa_fechavenc').AsDateTime:=date;
-    ZQNotacredito.FieldByName('documentoventa_hora').AsDateTime:=Now;
-    ZQNotacredito.FieldByName('documentoventa_id').asstring:='0';
-    ZQNotacredito.FieldByName('documentoventa_iva105').AsString:=documentoventa_iva105.Text;
-    ZQNotacredito.FieldByName('documentoventa_iva21').AsString:=documentoventa_iva21.Text;
-    ZQNotacredito.FieldByName('documentoventa_listaprecio').AsInteger:=documentoventa_listaprecio.ItemIndex;
-    ZQNotacredito.FieldByName('documentoventa_neto105').AsString:=documentoventa_neto105.Text;
-    ZQNotacredito.FieldByName('documentoventa_neto21').AsString:=documentoventa_neto21.Text;
-    ZQNotacredito.FieldByName('documentoventa_netonogravado').AsString:='0';
-    ZQNotacredito.FieldByName('documentoventa_numero').AsString:=NC_numero;
-    ZQNotacredito.FieldByName('documentoventa_observacion').AsString:='';
-    ZQNotacredito.FieldByName('documentoventa_total').AsString:=documentoventa_total.Text;
-    ZQNotacredito.FieldByName('personal_id').AsString:=personal_id.codigo;
-    ZQNotacredito.FieldByName('tipodocu_id').AsString:=tipodocu_id_NC;
-    ZQNotacredito.FieldByName('caja_id').AsString:='0';
-    ZQNotacredito.FieldByName('cliente_id').AsString:=cliente_id.codigo;
-    ZQNotacredito.Post;
-
-    ZQdocumentoventadocus.Active:=false;
-    ZQdocumentoventadocus.Active:=true;
-//    if ZQuery2.FieldByName('documentoventa_estado').AsString='PENDIENTE' then
-//      begin
-          ZQdocumentoventadocus.Insert;
-          ZQdocumentoventadocus.FieldByName('documentoventa_estado').asstring:='PAGADA';
-          ZQdocumentoventadocus.FieldByName('documentoventa_id').asstring:='0';
-          ZQdocumentoventadocus.FieldByName('documentoventa_idpago').asstring:=id;
-          ZQdocumentoventadocus.FieldByName('documentoventa_pagado').asstring:=documentoventa_total.Text;
-          ZQdocumentoventadocus.FieldByName('documentoventa_saldo').asstring:='0';
-          ZQdocumentoventadocus.FieldByName('documentoventadoc_id').asstring:='0';
-          ZQdocumentoventadocus.FieldByName('documentoventadoc_importe').asstring:=documentoventa_total.Text;
-          ZQdocumentoventadocus.Post;
-
-//      end;
-
-    ZQDocumentoventadetalles.First;
-    while not ZQDocumentoventadetalles.Eof do
-        begin
-            ZQDocumentoventadetalles.Edit;
-            ZQDocumentoventadetalles.FieldByName('documentoventadetalle_idorig').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_id').AsString;
-            ZQDocumentoventadetalles.Post;
-
-            ZQDocumentoventadetalles.Next;
-        end;
-    Princ.AgregarDocumentoVenta(ZQNotacredito,ZQDocumentoventadetalles,ZQdocumentoventadocus,nil);
-
-    MessageDlg('Se genero una Nota de Credito para anular la Factura.', mtInformation, [mbOK], 0);
-
-end;
-
 procedure TNotadeCredito2.anular;
 begin
-//    if strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+tipodocu_id.codigo+'"','tipodocu_fiscal')) then
-//      begin
-//          GenerarNC;
-//      end
-//    else
-//      begin
-//          ZQDocumentoventadetalles.First;
-//          while not ZQDocumentoventadetalles.Eof do
-//              begin
-//                  Princ.actualizarstock(ZQDocumentoventadetalles.FieldByName('producto_id').AsString, ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat, tipodocu_id.codigo, true);
-//                  ZQDocumentoventadetalles.Next;
-//              end;
-//
-//          ZQExecSql.sql.clear;
-//          ZQExecSql.sql.add('Update documentosventas set ');
-//          ZQExecSql.sql.add('documentoventa_estado=:documentoventa_estado');
-//          ZQExecSql.sql.add(' where documentoventa_id=:documentoventa_id');
-//          ZQExecSql.parambyname('documentoventa_estado').asstring:='ANULADA';
-//          ZQExecSql.parambyname('documentoventa_id').asstring:=id;
-//          ZQExecSql.ExecSQL;
-//
-//          MessageDlg('La Factura fue anulada correctamente.', mtInformation, [mbOK], 0);
-//
-//      end;
+
 end;
 
 
