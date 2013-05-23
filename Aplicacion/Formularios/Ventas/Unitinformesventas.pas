@@ -30,6 +30,7 @@ type
     procedure InformeVentasPrecios;
     procedure InformedeVentas;
     procedure InformedeCobros;
+    procedure RankingProductos;
 
   public
     { Public declarations }
@@ -43,6 +44,37 @@ implementation
 uses UnitPrinc;
 
 {$R *.dfm}
+
+
+
+procedure TInformesVentas.RankingProductos;
+begin
+    puntoventa_id.GenerarWhere;
+    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\ranking_ventas_productos.rep';
+    Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
+    Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, '+
+                                                   'sum(if(tiposdocumento.tipodocu_stock=1,documentoventadetalle_cantidad,documentoventadetalle_cantidad*-1)) as cantidad, '+
+                                                   'sum(if(tiposdocumento.tipodocu_stock=1,documentoventadetalle_total,documentoventadetalle_total*-1)) as total_ventas '+
+                                                   'from documentoventadetalles '+
+                                                   'inner join documentosventas on documentoventadetalles.documentoventa_id=documentosventas.documentoventa_id '+
+                                                   'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                                   'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                                   'inner join productos on documentoventadetalles.producto_id=productos.producto_id '+
+                                                   'where documentoventadetalles.producto_tipo="PRODUCTO" and documentosventas.documentoventa_estado<>"ANULADA" and '+
+                                                   'tiposdocumento.tipodocu_stock<>0 and '+
+                                                   'documentosventas.documentoventa_fecha >="'+FormatDateTime('yyyy-mm-dd',desde_fecha.Date)+'" and '+
+                                                   'documentosventas.documentoventa_fecha <="'+FormatDateTime('yyyy-mm-dd',hasta_fecha.Date)+'" '+Princ.empresa_where+
+                                                   ' and '+puntoventa_id.where;
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+'group by documentoventadetalles.producto_id ';
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+'order by cantidad desc, documentoventadetalle_descripcion';
+
+
+    Princ.VCLReport1.Execute;
+
+end;
 
 
 procedure TInformesVentas.InformedeVentas;
@@ -202,6 +234,10 @@ begin
           end;
         3:begin
               InformedeCobros;
+
+          end;
+        4:begin
+              RankingProductos;
 
           end;
 

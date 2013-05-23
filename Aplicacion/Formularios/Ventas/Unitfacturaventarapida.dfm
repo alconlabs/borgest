@@ -7,8 +7,6 @@ inherited facturasventarapida: Tfacturasventarapida
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Height = 247
-    ExplicitLeft = 0
-    ExplicitTop = 0
     ExplicitHeight = 247
     FullHeight = 0
     inherited Label2: TLabel
@@ -245,7 +243,7 @@ inherited facturasventarapida: Tfacturasventarapida
       ExplicitTop = 294
     end
     inherited btnimprimirventa: TButton
-      TabOrder = 24
+      TabOrder = 25
       Visible = False
     end
     inherited documentoventa_fechavenc: TDateTimePicker
@@ -253,6 +251,9 @@ inherited facturasventarapida: Tfacturasventarapida
       TabStop = False
       Visible = False
       ExplicitTop = 300
+    end
+    inherited VENTASEMITIRREMITOCTACTE: TCheckBox
+      Visible = False
     end
   end
   inherited ZQuery2: TZQuery

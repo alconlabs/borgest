@@ -1,13 +1,13 @@
 inherited InformesVentas: TInformesVentas
   Caption = 'Informes de Ventas'
   ClientHeight = 198
-  ClientWidth = 420
-  ExplicitWidth = 436
+  ClientWidth = 493
+  ExplicitWidth = 509
   ExplicitHeight = 236
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Width = 420
+    Width = 493
     Height = 198
     ExplicitWidth = 420
     ExplicitHeight = 198
@@ -45,24 +45,24 @@ inherited InformesVentas: TInformesVentas
       Caption = 'Vendedor'
     end
     object Label5: TLabel [4]
-      Left = 289
+      Left = 353
       Top = 8
       Width = 74
       Height = 13
       Caption = 'Punto de Venta'
     end
     inherited btncancelar: TButton
-      Left = 181
+      Left = 293
       Top = 144
-      ExplicitLeft = 181
+      ExplicitLeft = 293
       ExplicitTop = 144
     end
     inherited btnguardar: TButton
-      Left = 275
+      Left = 387
       Top = 144
       Caption = 'Imprimir'
       OnClick = btnguardarClick
-      ExplicitLeft = 275
+      ExplicitLeft = 387
       ExplicitTop = 144
     end
     object desde_fecha: TDateTimePicker
@@ -86,7 +86,7 @@ inherited InformesVentas: TInformesVentas
     object informe_tipo: TGTBComboBox
       Left = 84
       Top = 77
-      Width = 197
+      Width = 263
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
@@ -96,21 +96,23 @@ inherited InformesVentas: TInformesVentas
         'Costos por Ventas'
         'Informe de Precios de Ventas'
         'Informe de ventas'
-        'Informe de Cobros')
+        'Informe de Cobros'
+        'Ranking de Ventas de Productos')
       Tag2 = 0
       valores.Strings = (
         '0'
         '1'
         '2'
-        '3')
+        '3'
+        '4')
     end
     object personal_id: TSqlComboBox
       Left = 84
       Top = 101
-      Width = 197
+      Width = 263
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 5
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -121,7 +123,7 @@ inherited InformesVentas: TInformesVentas
       ConfTodos = True
     end
     object puntoventa_id: TSqlListView
-      Left = 289
+      Left = 353
       Top = 22
       Width = 112
       Height = 116
