@@ -12,7 +12,7 @@ inherited contrato: Tcontrato
     Width = 753
     Height = 510
     ExplicitWidth = 753
-    ExplicitHeight = 430
+    ExplicitHeight = 510
     FullHeight = 0
     object Label2: TLabel [0]
       Left = 597

@@ -260,6 +260,10 @@ const
 
   VERSIONEXE='49';
 
+  ABM_NUEVO=1;
+  ABM_MODIFICAR=2;
+  ABM_ELIMINAR=3;
+
 
 //  CONNECTION_STRING1='Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source=';
 //  CONNECTION_STRING3=';Mode=Share Deny None;Jet OLEDB:System database="";Jet OLEDB:Registry Path="";Jet OLEDB:Database Password="";Jet OLEDB:Engine Type=35;'+
