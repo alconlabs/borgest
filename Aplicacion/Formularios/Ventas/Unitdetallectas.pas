@@ -293,6 +293,8 @@ begin
 end;
 
 procedure Tdetallectas.btnimprimirClick(Sender: TObject);
+var
+  grupo, condicion_saldoanterior:string;
 begin
     Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\detalle_de_ctasctes.rep';
     if cbdesdefecha.Checked then
@@ -305,7 +307,40 @@ begin
       Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHAVENC').AsString:=datetostr(hasta_fecha_venc.Date);
 
 
-    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=ZQPendientes.SQL.Text;
+
+    grupo:='(documentosventas.documentoventa_id)';
+    condicion_saldoanterior:='1=2';
+    if cbdesdefecha.Checked then
+      begin
+          grupo:=' if(documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",0,documentosventas.documentoventa_id) ';
+          condicion_saldoanterior:='documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'"';
+      end;
+
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, '+
+                           'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas.documentoventa_total,0)) as debito, '+
+                           'sum(if(tiposdocumento.tipodocu_debcred="CREDITO",documentosventas.documentoventa_total,0)) as credito, '+
+                           '0.00 as acumulado, '+grupo+' as grupo, '+
+                           'if('+condicion_saldoanterior+',"Saldo anterior",CONCAT(tiposdocumento.tipodocu_nombreabrev," ",tiposdocumento.tipodocu_letra)) as documento_nombre, '+
+                           'if('+condicion_saldoanterior+',"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",DATE_FORMAT(documentosventas.documentoventa_fecha,"%d/%m/%Y")) as documentoventafecha, '+
+                           'if('+condicion_saldoanterior+',"0",puntoventa_numero) as puntoventanumero, '+
+                           'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero '+
+
+                           'from documentosventas '+
+//                           'left join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
+//                           'left join documentoventadetalles documentoventadetalles2 on documentoventadetalles.documentoventadetalle_idorig=documentoventadetalles2.documentoventadetalle_id '+
+//                           'left join documentosventas documentosventas2 on documentoventadetalles2.documentoventa_id=documentosventas2.documentoventa_id '+
+                           'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                           'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                           'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                           'inner join personal on documentosventas.personal_id=personal.personal_id '+
+                           'inner join personal as pesronalcliente on clientes.personal_id=pesronalcliente.personal_id '+
+                           'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
+                           'group by grupo '+
+                           'order by pesronalcliente.personal_nombre, sucursal_nombre, cliente_nombre, clientes.cliente_id, documentoventa_fecha, documentoventa_numero ';
+
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.GTBUtilidades1.AgregarWhere(Princ.VCLReport1.Report.Datainfo.Items[0].sql,GenerarWhere);
 
     Princ.VCLReport1.Execute;
 

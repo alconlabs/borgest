@@ -747,7 +747,7 @@ object facturasventa: Tfacturasventa
   object DTSDocumentoventadetalle: TDataSource
     DataSet = ZQDocumentoventadetalles
     Left = 416
-    Top = 168
+    Top = 160
   end
   object ZQRecibo: TZQuery
     Connection = Princ.ZBase
@@ -860,8 +860,8 @@ object facturasventa: Tfacturasventa
   end
   object AdvPopupMenu1: TAdvPopupMenu
     Version = '2.0.0.0'
-    Left = 392
-    Top = 240
+    Left = 440
+    Top = 8
     object Facturarnotapedido: TMenuItem
       Caption = 'Facturar Nota de pedido'
       OnClick = FacturarnotapedidoClick

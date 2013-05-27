@@ -112,6 +112,8 @@ type
   protected
     VENTASCTDOPARCIALES:boolean;
     VENTASCTDOVENTANACTACTE:boolean;
+    documentoventa_equipo1:string;
+    documentoventa_equipo2:string;
     function control:boolean;
     function ControlAnular:boolean;
     procedure agregar;
@@ -215,6 +217,8 @@ begin
             personal_id.Buscar(FacturarDocumentos.ZQSelect.FieldByName('personal_id').AsString);
             documentoventa_condicionventa.ItemIndex:=FacturarDocumentos.ZQSelect.FieldByName('documentoventa_condicionventa').AsInteger;
             documentoventa_listaprecio.ItemIndex:=FacturarDocumentos.ZQSelect.FieldByName('documentoventa_listaprecio').AsInteger;
+            documentoventa_equipo1:=FacturarDocumentos.ZQSelect.FieldByName('documentoventa_equipo1').AsString;
+            documentoventa_equipo2:=FacturarDocumentos.ZQSelect.FieldByName('documentoventa_equipo2').AsString;
             FacturarDocumentos.ZQDocumentoventadetalles.First;
             while not FacturarDocumentos.ZQDocumentoventadetalles.Eof do
                 begin
@@ -624,6 +628,9 @@ begin
     VENTASCTDOPARCIALES:=strtobool(Princ.GetConfiguracion('VENTASCTDOPARCIALES'));
     VENTASCTDOVENTANACTACTE:=strtobool(Princ.GetConfiguracion('VENTASCTDOVENTANACTACTE'));
 
+    documentoventa_equipo1:='';
+    documentoventa_equipo2:='';
+
 end;
 
 procedure Tfacturasventa.FormKeyDown(Sender: TObject; var Key: Word;
@@ -841,11 +848,11 @@ begin
     ZQExecSql.sql.add('Insert into documentosventas (documentoventa_id, documentoventa_numero, documentoventa_fecha, documentoventa_hora, ');
     ZQExecSql.sql.add('documentoventa_neto21, documentoventa_iva21, documentoventa_neto105, documentoventa_iva105, documentoventa_netonogravado, ');
     ZQExecSql.sql.add('documentoventa_total, documentoventa_estado, documentoventa_pagado, documentoventa_saldo, documentoventa_observacion, ');
-    ZQExecSql.sql.add('cliente_id, personal_id, tipodocu_id, documentoventa_condicionventa, documentoventa_fechavenc, documentoventa_listaprecio) ');
+    ZQExecSql.sql.add('cliente_id, personal_id, tipodocu_id, documentoventa_condicionventa, documentoventa_fechavenc, documentoventa_listaprecio, documentoventa_equipo1, documentoventa_equipo2) ');
     ZQExecSql.sql.add('values (:documentoventa_id, :documentoventa_numero, :documentoventa_fecha, :documentoventa_hora, ');
     ZQExecSql.sql.add(':documentoventa_neto21, :documentoventa_iva21, :documentoventa_neto105, :documentoventa_iva105, :documentoventa_netonogravado, ');
     ZQExecSql.sql.add(':documentoventa_total, :documentoventa_estado, :documentoventa_pagado, :documentoventa_saldo, :documentoventa_observacion, ');
-    ZQExecSql.sql.add(':cliente_id, :personal_id, :tipodocu_id, :documentoventa_condicionventa, :documentoventa_fechavenc, :documentoventa_listaprecio)');
+    ZQExecSql.sql.add(':cliente_id, :personal_id, :tipodocu_id, :documentoventa_condicionventa, :documentoventa_fechavenc, :documentoventa_listaprecio, :documentoventa_equipo1, :documentoventa_equipo2)');
     ZQExecSql.ParamByName('documentoventa_id').AsString:=id;
     ZQExecSql.ParamByName('documentoventa_numero').AsString:=documentoventa_numero.Text;
     ZQExecSql.ParamByName('documentoventa_fecha').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fecha.Date);
@@ -866,6 +873,8 @@ begin
     ZQExecSql.ParamByName('documentoventa_condicionventa').AsInteger:=documentoventa_condicionventa.ItemIndex;
     ZQExecSql.ParamByName('documentoventa_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fechavenc.Date);
     ZQExecSql.ParamByName('documentoventa_listaprecio').AsInteger:=documentoventa_listaprecio.ItemIndex;
+    ZQExecSql.ParamByName('documentoventa_equipo1').AsString:=documentoventa_equipo1;
+    ZQExecSql.ParamByName('documentoventa_equipo2').AsString:=documentoventa_equipo2;
 
     ZQExecSql.ExecSQL;
 

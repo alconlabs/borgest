@@ -677,6 +677,10 @@ object documentoventabase: Tdocumentoventabase
     object ZQDocumentoventadetallesdocumentoventadetalle_listaprecio: TIntegerField
       FieldName = 'documentoventadetalle_listaprecio'
     end
+    object ZQDocumentoventadetallesproducto_tipo: TStringField
+      FieldName = 'producto_tipo'
+      Size = 45
+    end
   end
   object DTSDocumentoventadetalle: TDataSource
     DataSet = ZQDocumentoventadetalles

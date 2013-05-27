@@ -104,6 +104,7 @@ type
     FloatField14: TFloatField;
     FloatField15: TFloatField;
     IntegerField5: TIntegerField;
+    ZQDocumentoventadetallesproducto_tipo: TStringField;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
