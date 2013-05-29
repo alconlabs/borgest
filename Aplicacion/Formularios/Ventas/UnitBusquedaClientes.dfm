@@ -1,7 +1,5 @@
 inherited busquedaclientes: Tbusquedaclientes
   Caption = 'Busqueda de clientes'
-  ExplicitWidth = 1019
-  ExplicitHeight = 548
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -79,7 +77,6 @@ inherited busquedaclientes: Tbusquedaclientes
         OnKeyPress = fil_cliente_nombreKeyPress
         Tag2 = 0
         Caption = 'Nombre'
-        ExplicitLeft = 72
         ExplicitHeight = 21
       end
       object fil_cliente_documentonro: TGTBEdit
@@ -93,7 +90,6 @@ inherited busquedaclientes: Tbusquedaclientes
         OnExit = fil_idExit
         Tag2 = 0
         Caption = 'Documento'
-        ExplicitLeft = 251
         ExplicitHeight = 21
       end
       object fil_cliente_domicilio: TGTBEdit
@@ -107,7 +103,6 @@ inherited busquedaclientes: Tbusquedaclientes
         OnExit = fil_idExit
         Tag2 = 0
         Caption = 'Domicilio'
-        ExplicitLeft = 362
         ExplicitHeight = 21
       end
       object fil_cliente_telefono: TGTBEdit
@@ -121,7 +116,6 @@ inherited busquedaclientes: Tbusquedaclientes
         OnExit = fil_idExit
         Tag2 = 0
         Caption = 'Telefono'
-        ExplicitLeft = 572
         ExplicitHeight = 21
       end
       object fil_cliente_mail: TGTBEdit
@@ -135,7 +129,6 @@ inherited busquedaclientes: Tbusquedaclientes
         OnExit = fil_idExit
         Tag2 = 0
         Caption = 'E-mail'
-        ExplicitLeft = 683
         ExplicitHeight = 21
       end
     end

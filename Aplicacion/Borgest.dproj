@@ -37,6 +37,9 @@
     <DCCReference Include="Formularios\Archivo\UnitActualizarProductos.pas">
       <Form>ActualizarProductos</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitBusquedaConceptosDebCred.pas">
+      <Form>BusquedaConceptosDebCred</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Archivo\Unitbusquedaproductos.pas">
       <Form>busquedaproductos</Form>
     </DCCReference>

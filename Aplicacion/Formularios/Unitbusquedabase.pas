@@ -23,6 +23,8 @@ type
     fil_id: TGTBEdit;
     procedure btnfiltrarClick(Sender: TObject);
     procedure btnaceptarClick(Sender: TObject);
+    procedure fil_idKeyPress(Sender: TObject; var Key: Char);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     abm:integer;
@@ -57,6 +59,24 @@ end;
 procedure Tbusquedabase.btnfiltrarClick(Sender: TObject);
 begin
     ZQGrilla.Active:=false;
+end;
+
+procedure Tbusquedabase.fil_idKeyPress(Sender: TObject; var Key: Char);
+begin
+    if key=#13 then
+      btnfiltrar.Click;
+end;
+
+procedure Tbusquedabase.FormShow(Sender: TObject);
+var
+  i:integer;
+begin
+    for i:=0 to panelfiltros.ControlCount-1 do
+      begin
+          if panelfiltros.Controls[i] is TEdit then
+            (panelfiltros.Controls[i] as TEdit).OnKeyPress:=fil_idKeyPress;
+
+      end;
 end;
 
 end.

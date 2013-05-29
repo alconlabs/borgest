@@ -14,6 +14,7 @@ object busquedabase: Tbusquedabase
   KeyPreview = True
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object panelgrilla: TAdvPanel
@@ -146,7 +147,9 @@ object busquedabase: Tbusquedabase
         Height = 22
         Align = alLeft
         TabOrder = 0
+        OnKeyPress = fil_idKeyPress
         Tag2 = 0
+        ExplicitHeight = 21
       end
     end
     object AdvPanel1: TAdvPanel

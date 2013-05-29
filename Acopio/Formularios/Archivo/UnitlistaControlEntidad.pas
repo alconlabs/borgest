@@ -53,8 +53,6 @@ begin
                   ControlEntidad.Show;
                 end;
             end;
-
-
       end;
 end;
 
@@ -74,8 +72,6 @@ begin
                   ControlEntidad.Show;
                 end;
             end;
-
-
       end;
 end;
 

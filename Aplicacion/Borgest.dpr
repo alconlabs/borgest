@@ -110,7 +110,8 @@ uses
   UnitConceptoDebCred in 'Formularios\Archivo\UnitConceptoDebCred.pas' {ConceptoDebCred},
   UnitventadetalleConcepto in 'Formularios\Ventas\UnitventadetalleConcepto.pas' {ventadetalleconcepto},
   UnitNotadeDebito2 in 'Formularios\Ventas\UnitNotadeDebito2.pas' {NotadeDebito2},
-  UnitEmpresa in 'Formularios\Archivo\UnitEmpresa.pas' {empresa};
+  UnitEmpresa in 'Formularios\Archivo\UnitEmpresa.pas' {empresa},
+  UnitBusquedaConceptosDebCred in 'Formularios\Archivo\UnitBusquedaConceptosDebCred.pas' {BusquedaConceptosDebCred};
 
 {$R *.res}
 
@@ -118,7 +119,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrinc, Princ);
-  Application.CreateForm(TNotadeDebito2, NotadeDebito2);
-  Application.CreateForm(Tempresa, empresa);
   Application.Run;
 end.

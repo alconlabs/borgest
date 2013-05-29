@@ -76,7 +76,7 @@ var
 
 implementation
 
-uses unitPrinc, Unitbusquedaproductos;
+uses unitPrinc, UnitBusquedaConceptosDebCred;
 
 {$R *.dfm}
 
@@ -241,16 +241,16 @@ end;
 
 procedure Tventadetalleconcepto.Codigodereferencia1Click(Sender: TObject);
 begin
-    busquedaproductos:=Tbusquedaproductos.Create(self);
-    busquedaproductos.producto_codigoreferencia:='="'+producto_id.valor('producto_codigoreferencia')+'"';
-    busquedaproductos.btnbuscar.Click;
-    if busquedaproductos.ShowModal=mrOk then
-      begin
-          producto_id.Search(busquedaproductos.producto_id);
-
-      end;
-
-    busquedaproductos.Free;
+//    busquedaproductos:=Tbusquedaproductos.Create(self);
+//    busquedaproductos.producto_codigoreferencia:='="'+producto_id.valor('producto_codigoreferencia')+'"';
+//    busquedaproductos.btnbuscar.Click;
+//    if busquedaproductos.ShowModal=mrOk then
+//      begin
+//          producto_id.Search(busquedaproductos.producto_id);
+//
+//      end;
+//
+//    busquedaproductos.Free;
 end;
 
 procedure Tventadetalleconcepto.producto_idAfterSearch(Sender: TObject);
@@ -269,34 +269,33 @@ end;
 
 procedure Tventadetalleconcepto.producto_idClickBtn(Sender: TObject);
 begin
-//    busquedaproductos:=Tbusquedaproductos.Create(self);
-//    busquedaproductos.ConfCampoBusqueda1:=producto_id.ConfCampoBusqueda1;
-//    if busquedaproductos.ShowModal=mrOk then
-//      begin
-//          producto_id.Text:=busquedaproductos.producto_id;
-//          producto_id.Search(busquedaproductos.producto_id);
-//
-//      end;
-//
-//    busquedaproductos.Free;
+    BusquedaConceptosDebCred:=TBusquedaConceptosDebCred.Create(self);
+    BusquedaConceptosDebCred.campo_id:='producto_id';
+    if BusquedaConceptosDebCred.ShowModal=mrOk then
+      begin
+          producto_id.Text:=BusquedaConceptosDebCred.id;
+          producto_id.Search(BusquedaConceptosDebCred.id);
+      end;
+
+    BusquedaConceptosDebCred.Free;
 end;
 
 procedure Tventadetalleconcepto.producto_idKeyPress(Sender: TObject; var Key: Char);
 begin
-//    if key='+' then
-//      begin
-//          key:=#0;
-//          producto_id.OnClickBtn(self);
-//
-//      end;
+    if key='+' then
+      begin
+          key:=#0;
+          producto_id.OnClickBtn(self);
 
-//    if key=#13 then
-//      begin
-//          key:=#0;
-//          producto_id.Search(producto_id.Text);
-//
-//
-//      end;
+      end;
+
+    if key=#13 then
+      begin
+          key:=#0;
+          producto_id.Search(producto_id.Text);
+
+
+      end;
 end;
 
 procedure Tventadetalleconcepto.producto_idSelect(Sender: TObject);
