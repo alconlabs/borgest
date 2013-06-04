@@ -171,7 +171,17 @@ end;
 procedure TDocumentosVentasPendientes.DBGrid1EditButtonClick(Sender: TObject);
 begin
     ZQDocumentosVentasPendientes.Edit;
-    ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat;
+    if documentoventa_apagar>0 then
+      begin
+          if documentoventa_apagar-documentoventa_pagado<ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat then
+            ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=documentoventa_apagar-documentoventa_pagado
+          else
+            ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat;
+      end
+    else
+      ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat;
+
+
     ZQDocumentosVentasPendientes.Post;
 end;
 

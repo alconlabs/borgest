@@ -873,6 +873,7 @@ object facturasventa: Tfacturasventa
   end
   object ZQRemito: TZQuery
     Connection = Princ.ZBase
+    CachedUpdates = True
     SQL.Strings = (
       'select * from documentosventas'
       'where documentoventa_id=:documentoventa_id')

@@ -1015,7 +1015,7 @@ object Princ: TPrinc
       object AdvToolBarDocVentas: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 606
+        Width = 706
         Height = 63
         AllowFloating = True
         AutoOptionMenu = True
@@ -1461,7 +1461,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object btnnotasdedebito: TAdvGlowButton
-          Left = 402
+          Left = 502
           Top = 2
           Width = 100
           Height = 41
@@ -1499,7 +1499,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object btnremitos: TAdvGlowButton
-          Left = 502
+          Left = 602
           Top = 2
           Width = 100
           Height = 41
@@ -1536,9 +1536,47 @@ object Princ: TPrinc
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
         end
+        object btnRecibosPendientes: TAdvGlowButton
+          Left = 402
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Aplicar Recibos Pendientes'
+          TabOrder = 13
+          OnClick = btnRecibosPendientesClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
       end
       object AdvToolBarCtasCtesVentas: TAdvToolBar
-        Left = 612
+        Left = 712
         Top = 3
         Width = 306
         Height = 63
@@ -1674,7 +1712,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarCaja: TAdvToolBar
-        Left = 921
+        Left = 1021
         Top = 3
         Width = 206
         Height = 63
@@ -1811,7 +1849,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarInformes: TAdvToolBar
-        Left = 1130
+        Left = 1230
         Top = 3
         Width = 306
         Height = 63

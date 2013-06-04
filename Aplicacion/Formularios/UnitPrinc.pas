@@ -132,6 +132,7 @@ type
     GTBUtilidades1: TGTBUtilidades;
     btnprovincias: TAdvGlowButton;
     btnconceptosdebcred: TAdvGlowButton;
+    btnRecibosPendientes: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -191,6 +192,7 @@ type
     procedure btnconceptosdebcredClick(Sender: TObject);
     procedure btnempresaClick(Sender: TObject);
     procedure VCLReport1BeforePrint(Sender: TObject);
+    procedure btnRecibosPendientesClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -387,7 +389,8 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   UnitNotaDebitoVenta, UnitListaNotaDebitoVenta, UnitRemitoVenta,
   UnitListaRemitoVenta, Unitlistacomisionesvendedores,
   UnitlistaComisionesSucursales, Unitprovincias, UnitNotadeCredito2,
-  UnitListaDebCred, UnitNotadeDebito2, UnitEmpresa;
+  UnitListaDebCred, UnitNotadeDebito2, UnitEmpresa,
+  UnitAplicarRecibosPendientes;
 
 {$R *.dfm}
 
@@ -1862,7 +1865,7 @@ end;
 
 Procedure TPrinc.ModificarDocumentoVenta(Cabecera: TDataSet; Detalle: TDataSet; Documentoventadocu: TDataSet; Pagos: TDataSet);
 var
-  documentoventa_neto21, documentoventa_iva21, documentoventa_neto105, documentoventa_iva105, documentoventa_total, documentoventa_pagado, documentoventa_saldo:string;
+  documentoventa_neto21, documentoventa_iva21, documentoventa_neto105, documentoventa_iva105, documentoventa_total, documentoventa_pagado, documentoventa_saldo, documentoventa_estado:string;
 begin
     ZQDocumentosventasABM.SQL.Clear;
     ZQDocumentosventasABM.SQL.Add('begin');
@@ -1995,6 +1998,74 @@ begin
           ZQDocumentosventasABM.ExecSQL;
       end;
 
+
+
+    if Documentoventadocu<>nil then
+      begin
+          ZQDocumentoventadocus.Active:=false;
+          ZQDocumentoventadocus.SQL.Text:='select * from documentoventadocus where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"';
+          ZQDocumentoventadocus.Active:=true;
+          ZQDocumentoventadocus.First;
+          while not ZQDocumentoventadocus.Eof do
+              begin
+                  ActualizarSaldoDocumentoVenta(ZQDocumentoventadocus.FieldByName('documentoventa_idpago').AsString,abs(ZQDocumentoventadocus.FieldByName('documentoventadoc_importe').AsFloat), true);
+                  ZQDocumentoventadocus.Next;
+              end;
+          ZQDocumentoventadocus.Active:=false;
+
+          ZQDocumentosventasABM.SQL.Text:='delete from documentoventadocus where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"';
+          ZQDocumentosventasABM.ExecSQL;
+
+          if Documentoventadocu<>nil then
+            begin
+                Documentoventadocu.First;
+                ZQDocumentosventasABM.sql.clear;
+                ZQDocumentosventasABM.sql.add('Insert into documentoventadocus (documentoventa_estado, ');
+                ZQDocumentosventasABM.sql.add('documentoventa_id, documentoventa_idpago, ');
+                ZQDocumentosventasABM.sql.add('documentoventa_pagado, documentoventa_saldo, ');
+                ZQDocumentosventasABM.sql.add('documentoventadoc_id, documentoventadoc_importe, documentoventadoc_tiporelacion) ');
+                ZQDocumentosventasABM.sql.add('values (:documentoventa_estado, :documentoventa_id, ');
+                ZQDocumentosventasABM.sql.add(':documentoventa_idpago, :documentoventa_pagado, ');
+                ZQDocumentosventasABM.sql.add(':documentoventa_saldo, :documentoventadoc_id, ');
+                ZQDocumentosventasABM.sql.add(':documentoventadoc_importe, :documentoventadoc_tiporelacion)');
+                while not Documentoventadocu.Eof do
+                    begin
+                        ZQDocumentosventasABM.parambyname('documentoventa_estado').asstring:=Documentoventadocu.FieldByName('documentoventa_estado').AsString;
+                        ZQDocumentosventasABM.parambyname('documentoventa_id').asstring:=Cabecera.FieldByName('documentoventa_id').AsString;
+                        ZQDocumentosventasABM.parambyname('documentoventa_idpago').asstring:=Documentoventadocu.FieldByName('documentoventa_idpago').AsString;
+                        ZQDocumentosventasABM.parambyname('documentoventa_pagado').asstring:=Documentoventadocu.FieldByName('documentoventa_pagado').AsString;
+                        ZQDocumentosventasABM.parambyname('documentoventa_saldo').asstring:=Documentoventadocu.FieldByName('documentoventa_saldo').AsString;
+                        ZQDocumentosventasABM.parambyname('documentoventadoc_id').asstring:=codigo('documentoventadocus', 'documentoventadoc_id');
+                        ZQDocumentosventasABM.parambyname('documentoventadoc_importe').asstring:=Documentoventadocu.FieldByName('documentoventadoc_importe').AsString;
+                        ZQDocumentosventasABM.parambyname('documentoventadoc_tiporelacion').asstring:=Documentoventadocu.FieldByName('documentoventadoc_tiporelacion').AsString;
+                        ZQDocumentosventasABM.ExecSQL;
+
+                        if Documentoventadocu.FieldByName('documentoventadoc_tiporelacion').AsString='IMPUTACION' then
+                          ActualizarSaldoDocumentoVenta(Documentoventadocu.FieldByName('documentoventa_idpago').AsString,Documentoventadocu.FieldByName('documentoventadoc_importe').AsFloat);
+
+                        Documentoventadocu.Next;
+                    end;
+
+                documentoventa_pagado:=princ.buscar('select sum(documentoventadoc_importe) as pagado from documentoventadocus where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','pagado');
+                documentoventa_saldo:=floattostr(Cabecera.FieldByName('documentoventa_total').AsFloat-strtofloat(documentoventa_pagado));
+                documentoventa_estado:='PAGADA';
+                if strtofloat(documentoventa_saldo)>0then
+                  documentoventa_estado:='PENDIENTE';
+
+                ZQDocumentosventasABM.Sql.Clear;
+                ZQDocumentosventasABM.Sql.Add('update documentosventas set ');
+                ZQDocumentosventasABM.Sql.Add('documentoventa_saldo=:documentoventa_saldo, ');
+                ZQDocumentosventasABM.Sql.Add('documentoventa_pagado=:documentoventa_pagado, ');
+                ZQDocumentosventasABM.Sql.Add('documentoventa_estado=:documentoventa_estado ');
+                ZQDocumentosventasABM.Sql.Add('where documentoventa_id=:documentoventa_id ');
+                ZQDocumentosventasABM.ParamByName('documentoventa_saldo').AsString:=documentoventa_saldo;
+                ZQDocumentosventasABM.ParamByName('documentoventa_pagado').AsString:=documentoventa_pagado;
+                ZQDocumentosventasABM.ParamByName('documentoventa_estado').AsString:=documentoventa_estado;
+                ZQDocumentosventasABM.ParamByName('documentoventa_id').AsString:=Cabecera.FieldByName('documentoventa_id').AsString;
+                ZQDocumentosventasABM.ExecSql;
+
+            end;
+      end;
 
     if Pagos<>nil then
       begin
@@ -2200,6 +2271,7 @@ begin
               begin
                   DocumentosVentasPendientes.ZQDocumentosVentasPendientes.Edit;
                   DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsString:=QDocumentoVentaDocus.FieldByName('documentoventadoc_importe').AsString;
+
                   DocumentosVentasPendientes.ZQDocumentosVentasPendientes.Post;
 
               end;
@@ -2268,6 +2340,7 @@ begin
                         QDocumentoVentaDocus.FieldByName('documentoventadoc_id').AsString:='0';
                         QDocumentoVentaDocus.FieldByName('documentoventa_idpago').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_id').AsString;
                         QDocumentoVentaDocus.FieldByName('documentoventa_id_1').AsString:='0';
+                        QDocumentoVentaDocus.FieldByName('documentoventadoc_tiporelacion').AsString:='IMPUTACION';
                         QDocumentoVentaDocus.Post;
 
 
@@ -3114,6 +3187,15 @@ begin
       listarecibosventa:=Tlistarecibosventa.Create(self);
     finally
       listarecibosventa.Show;
+    end;
+end;
+
+procedure TPrinc.btnRecibosPendientesClick(Sender: TObject);
+begin
+    try
+      AplicarRecibosPendientes:=TAplicarRecibosPendientes.Create(self);
+    finally
+      AplicarRecibosPendientes.Show;
     end;
 end;
 

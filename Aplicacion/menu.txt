@@ -37,6 +37,7 @@ Ventas
 		Facturas de Ventas
 		Venta Rapida
 		Recibos de Venta
+		Aplicar Recibos Pendientes
 		Notas de Credito
 		Notas de Debito
 		Remitos

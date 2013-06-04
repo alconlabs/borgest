@@ -202,6 +202,9 @@
     <DCCReference Include="Formularios\UnitProgresoBase.pas">
       <Form>ProgresoBase</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitAplicarRecibosPendientes.pas">
+      <Form>AplicarRecibosPendientes</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitBusquedaClientes.pas">
       <Form>busquedaclientes</Form>
     </DCCReference>

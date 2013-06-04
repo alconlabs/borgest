@@ -11,7 +11,9 @@ type
   TMostrarExcel = class(TABMbase)
     DBGrid1: TDBGrid;
     DataSource1: TDataSource;
+    lblfila: TLabel;
     procedure FormShow(Sender: TObject);
+    procedure DataSource1DataChange(Sender: TObject; Field: TField);
   private
     { Private declarations }
   public
@@ -26,6 +28,16 @@ implementation
 Uses UnitPrinc;
 
 {$R *.dfm}
+
+procedure TMostrarExcel.DataSource1DataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+    lblfila.Caption:='';
+    try
+        lblfila.Caption:='Fila '+inttostr(Princ.ADOTable1.RecNo);
+    finally
+    end;
+end;
 
 procedure TMostrarExcel.FormShow(Sender: TObject);
 var

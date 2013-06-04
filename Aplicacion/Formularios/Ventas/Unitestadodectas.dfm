@@ -97,7 +97,7 @@ object estadoctas: Testadoctas
       ConfTodos = True
     end
     object DBGrid1: TDBGrid
-      Left = 9
+      Left = 10
       Top = 184
       Width = 728
       Height = 233

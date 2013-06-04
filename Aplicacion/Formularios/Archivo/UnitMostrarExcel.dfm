@@ -13,6 +13,13 @@ inherited MostrarExcel: TMostrarExcel
     ExplicitWidth = 828
     ExplicitHeight = 508
     FullHeight = 0
+    object lblfila: TLabel [0]
+      Left = 8
+      Top = 462
+      Width = 23
+      Height = 13
+      Caption = 'lblfila'
+    end
     inherited btncancelar: TButton
       Left = 748
       Top = 462
@@ -44,6 +51,7 @@ inherited MostrarExcel: TMostrarExcel
   end
   object DataSource1: TDataSource
     DataSet = Princ.ADOTable1
+    OnDataChange = DataSource1DataChange
     Left = 304
     Top = 104
   end
