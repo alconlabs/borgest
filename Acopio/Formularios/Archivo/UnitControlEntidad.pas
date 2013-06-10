@@ -52,7 +52,7 @@ uses UnitPrinc;
 
 procedure TControlEntidad.btnguardarClick(Sender: TObject);
 begin
- case abm of
+    case abm of
         1:begin
               if control then
                 agregar;

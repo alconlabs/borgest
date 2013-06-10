@@ -1,11 +1,33 @@
 inherited listacontratos: Tlistacontratos
   Caption = 'Contratos de Compra'
+  ExplicitWidth = 950
+  ExplicitHeight = 516
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
       FullHeight = 0
+      inherited btneliminar: TButton
+        ExplicitLeft = 1
+        ExplicitTop = 83
+        ExplicitWidth = 101
+      end
+      inherited btnmodificar: TButton
+        ExplicitLeft = 1
+        ExplicitTop = 42
+        ExplicitWidth = 101
+      end
+      inherited btnnuevo: TButton
+        ExplicitLeft = 1
+        ExplicitTop = 1
+        ExplicitWidth = 101
+      end
+      inherited btnanular: TButton
+        ExplicitLeft = 1
+        ExplicitTop = 124
+        ExplicitWidth = 101
+      end
     end
     inherited DBGrid1: TDBGrid
       Columns = <
@@ -47,8 +69,15 @@ inherited listacontratos: Tlistacontratos
     end
     inherited panelfiltros: TAdvPanel
       FullHeight = 0
+      inherited btnfiltrar: TButton
+        ExplicitLeft = 828
+        ExplicitTop = 1
+        ExplicitHeight = 19
+      end
       inherited fil_id: TGTBEdit
         Width = 82
+        ExplicitLeft = 1
+        ExplicitTop = 1
         ExplicitWidth = 82
       end
       object fil_puntoventa_numero: TGTBEdit

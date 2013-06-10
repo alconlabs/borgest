@@ -125,7 +125,7 @@ begin
     ZQExecSQL.ParamByName('documento_saldo').AsString:=documento_total.Text;
     ZQExecSQL.ParamByName('documento_total').AsString:=documento_total.Text;
     ZQExecSQL.ParamByName('documento_numero').AsString:=documento_numero.Text;
-    ZQExecSQL.ParamByName('documento_hora').AsString:=timetostr(princ.horaservidor);
+    ZQExecSQL.ParamByName('documento_hora').AsString:=(princ.horaservidor);
     ZQExecSQL.ParamByName('documento_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documento_fechavenc.Date);
     ZQExecSQL.ParamByName('documento_fecha').AsString:=formatdatetime('yyyy-mm-dd',documento_fecha.Date);
     ZQExecSQL.ParamByName('documento_fechacumplimiento').AsString:=formatdatetime('yyyy-mm-dd',documento_fechacumplimiento.Date);
@@ -190,7 +190,7 @@ begin
     ZQExecSQL.ParamByName('documento_saldo').AsString:=documento_total.Text;
     ZQExecSQL.ParamByName('documento_total').AsString:=documento_total.Text;
     ZQExecSQL.ParamByName('documento_numero').AsString:=documento_numero.Text;
-    ZQExecSQL.ParamByName('documento_hora').AsString:=timetostr(time);
+    ZQExecSQL.ParamByName('documento_hora').AsString:=Princ.horaservidor;
     ZQExecSQL.ParamByName('documento_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documento_fechavenc.Date);
     ZQExecSQL.ParamByName('documento_fecha').AsString:=formatdatetime('yyyy-mm-dd',documento_fecha.Date);
     ZQExecSQL.ParamByName('documento_fechacumplimiento').AsString:=formatdatetime('yyyy-mm-dd',documento_fechacumplimiento.Date);

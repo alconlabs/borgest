@@ -758,7 +758,7 @@ begin
     ZQExecSql.ParamByName('documentoventa_id').AsString:=id;
     ZQExecSql.ParamByName('documentoventa_numero').AsString:=documentoventa_numero.Text;
     ZQExecSql.ParamByName('documentoventa_fecha').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fecha.Date);
-    ZQExecSql.ParamByName('documentoventa_hora').AsString:=timetostr(Princ.horaservidor);
+    ZQExecSql.ParamByName('documentoventa_hora').AsString:=(Princ.horaservidor);
     ZQExecSql.ParamByName('documentoventa_neto21').AsString:=documentoventa_neto21.Text;
     ZQExecSql.ParamByName('documentoventa_iva21').AsString:=documentoventa_iva21.Text;
     ZQExecSql.ParamByName('documentoventa_neto105').AsString:=documentoventa_neto105.Text;

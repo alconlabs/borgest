@@ -174,7 +174,7 @@ type
     procedure AgregarProductos(QProductos:TDataset);
     procedure ActualizarPrecios(QProductos:TDataset);
     function QuitarEspecialesNros(const Cad: string): string;
-    function horaservidor():Ttime;
+    function horaservidor():string;
     function ControlCodigoProducto(codigo:string; producto_id:string; mostrar_mensaje:boolean):boolean;
     procedure CargarDocumentoVentaDetalle(QDocumentoVentaDetalles:TDataset; Detalle:TDataset);
     procedure AbrirNuevoServicio;
@@ -1016,13 +1016,13 @@ end;
 
 
 
-function TPrinc.horaservidor():Ttime;
+function TPrinc.horaservidor():string;
 var
   hora:string;
 begin
     hora:=buscar('select TIME_FORMAT(CURTIME(),"%H:%i:%s") as hora','hora');
 
-    Result:=StrToTime(hora);
+    Result:=(hora);
 
 end;
 
