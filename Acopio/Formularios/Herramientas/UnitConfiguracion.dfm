@@ -122,7 +122,7 @@ object configuracion: Tconfiguracion
       object TabSheet4: TTabSheet
         Caption = 'Actualizaciones'
         ImageIndex = 3
-        object VERSIONEXE: TLabel
+        object lblVERSIONEXE: TLabel
           Left = 469
           Top = 24
           Width = 59

@@ -107,6 +107,9 @@ type
     btnordenesdecarga: TAdvGlowButton;
     AdvToolBar10: TAdvToolBar;
     AdvGlowButton19: TAdvGlowButton;
+    AdvToolBar11: TAdvToolBar;
+    btnconfiguracion: TAdvGlowButton;
+    btnperfiles: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZBaseBeforeConnect(Sender: TObject);
@@ -134,6 +137,8 @@ type
     procedure btncontratosClick(Sender: TObject);
     procedure btnordenesdecargaClick(Sender: TObject);
     procedure btncontratoventaClick(Sender: TObject);
+    procedure btnconfiguracionClick(Sender: TObject);
+    procedure btnperfilesClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -258,7 +263,7 @@ const
   CONNECTION_STRING1='Provider=Microsoft.Jet.OLEDB.4.0;Data Source=';
   CONNECTION_STRING3=';Extended Properties=Excel 8.0';
 
-  VERSIONEXE='49';
+  VERSIONEXE='10';
 
   ABM_NUEVO=1;
   ABM_MODIFICAR=2;
@@ -1955,6 +1960,15 @@ begin
     end;
 end;
 
+procedure TPrinc.btnconfiguracionClick(Sender: TObject);
+begin
+    try
+      configuracion:=Tconfiguracion.Create(self);
+    finally
+      configuracion.Show;
+    end;
+end;
+
 procedure TPrinc.btncontratosClick(Sender: TObject);
 begin
     try
@@ -2076,6 +2090,16 @@ begin
     end;
 end;
 
+
+procedure TPrinc.btnperfilesClick(Sender: TObject);
+begin
+    try
+      listaperfiles:=Tlistaperfiles.Create(self);
+    finally
+      ListaPerfiles.campo_id:='perfil_id';
+      listaperfiles.Show;
+    end;
+end;
 
 //procedure TPrinc.btnperfilesClick(Snder: TObject);
 //begin

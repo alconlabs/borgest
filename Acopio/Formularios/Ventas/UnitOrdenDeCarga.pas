@@ -289,21 +289,21 @@ type
     Label22: TLabel;
     entidadtransportista_id: TSqlComboBox;
     Label25: TLabel;
-    Edit1: TEdit;
+    documento_chofer: TEdit;
     Label26: TLabel;
-    SqlComboBox1: TSqlComboBox;
+    entidaddadorcarga_id: TSqlComboBox;
     Label27: TLabel;
-    Edit2: TEdit;
+    documento_transpchasis: TEdit;
     Label28: TLabel;
-    Edit3: TEdit;
+    documento_transpacoplado: TEdit;
     Label29: TLabel;
-    MoneyEdit1: TMoneyEdit;
+    documento_transpanticipo: TMoneyEdit;
     Label30: TLabel;
-    MoneyEdit2: TMoneyEdit;
+    documento_cartaportetarifaflete: TMoneyEdit;
     Label31: TLabel;
-    MoneyEdit3: TMoneyEdit;
+    documento_transptarifaflete: TMoneyEdit;
     Label32: TLabel;
-    Edit4: TEdit;
+    documento_chofercuit: TEdit;
     procedure btnguardarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -372,6 +372,14 @@ begin
     ZQExecSQL.Sql.Add('documento_tara=:documento_tara, ');
     ZQExecSQL.Sql.Add('especie_id=:especie_id, ');
     ZQExecSQL.Sql.Add('documento_tipooperacion=:documento_tipooperacion, ');
+    ZQExecSQL.Sql.Add('entidaddadorcarga_id=:entidaddadorcarga_id, ');
+    ZQExecSQL.Sql.Add('documento_chofer=:documento_chofer, ');
+    ZQExecSQL.Sql.Add('documento_chofercuit=:documento_chofercuit, ');
+    ZQExecSQL.Sql.Add('documento_transpchasis=:documento_transpchasis, ');
+    ZQExecSQL.Sql.Add('documento_transpacoplado=:documento_transpacoplado, ');
+    ZQExecSQL.Sql.Add('documento_transptarifaflete=:documento_transptarifaflete, ');
+    ZQExecSQL.Sql.Add('documento_transpanticipo=:documento_transpanticipo, ');
+    ZQExecSQL.Sql.Add('documento_cartaportetarifaflete=:documento_cartaportetarifaflete, ');
     ZQExecSQL.Sql.Add('documento_id=:documento_id ');
     ZQExecSQL.ParamByName('entidadtransportista_id').AsString:=entidadtransportista_id.codigo;
     ZQExecSQL.ParamByName('entidad_id').AsString:=entidad_id.codigo;
@@ -397,6 +405,14 @@ begin
     ZQExecSQL.ParamByName('documento_kgbrutos').AsString:=documento_kgbrutos.Text;
     ZQExecSQL.ParamByName('documento_tara').AsString:=documento_tara.Text;
     ZQExecSQL.ParamByName('especie_id').AsString:=especie_id.codigo;
+    ZQExecSQL.ParamByName('entidaddadorcarga_id').AsString:=entidaddadorcarga_id.codigo;
+    ZQExecSQL.ParamByName('documento_chofer').AsString:=documento_chofer.Text;
+    ZQExecSQL.ParamByName('documento_chofercuit').AsString:=documento_chofercuit.Text;
+    ZQExecSQL.ParamByName('documento_transpchasis').AsString:=documento_transpchasis.Text;
+    ZQExecSQL.ParamByName('documento_transpacoplado').AsString:=documento_transpacoplado.Text;
+    ZQExecSQL.ParamByName('documento_transptarifaflete').AsString:=documento_transptarifaflete.Text;
+    ZQExecSQL.ParamByName('documento_transpanticipo').AsString:=documento_transpanticipo.Text;
+    ZQExecSQL.ParamByName('documento_cartaportetarifaflete').AsString:=documento_cartaportetarifaflete.Text;
     ZQExecSQL.ParamByName('documento_tipooperacion').AsString:=documento_tipooperacion.Text;
     ZQExecSQL.ParamByName('documento_id').AsString:=id;
     ZQExecSQL.ExecSql;
@@ -501,6 +517,14 @@ begin
     ZQExecSQL.Sql.Add('documento_moneda=:documento_moneda, ');
     ZQExecSQL.Sql.Add('documento_lugarentrega=:documento_lugarentrega, ');
     ZQExecSQL.Sql.Add('entidadtransportista_id=:entidadtransportista_id, ');
+    ZQExecSQL.Sql.Add('entidaddadorcarga_id=:entidaddadorcarga_id, ');
+    ZQExecSQL.Sql.Add('documento_chofer=:documento_chofer, ');
+    ZQExecSQL.Sql.Add('documento_chofercuit=:documento_chofercuit, ');
+    ZQExecSQL.Sql.Add('documento_transpchasis=:documento_transpchasis, ');
+    ZQExecSQL.Sql.Add('documento_transpacoplado=:documento_transpacoplado, ');
+    ZQExecSQL.Sql.Add('documento_transptarifaflete=:documento_transptarifaflete, ');
+    ZQExecSQL.Sql.Add('documento_transpanticipo=:documento_transpanticipo, ');
+    ZQExecSQL.Sql.Add('documento_cartaportetarifaflete=:documento_cartaportetarifaflete, ');
     ZQExecSQL.Sql.Add('documento_fechacumplimiento=:documento_fechacumplimiento ');
     ZQExecSQL.Sql.Add('where documento_id=:documento_id ');
     ZQExecSQL.ParamByName('entidad_id').AsString:=entidad_id.codigo;
@@ -528,6 +552,14 @@ begin
     ZQExecSQL.ParamByName('documento_tara').AsString:=documento_tara.Text;
     ZQExecSQL.ParamByName('especie_id').AsString:=especie_id.codigo;
     ZQExecSQL.ParamByName('documento_tipooperacion').AsString:=documento_tipooperacion.Text;
+    ZQExecSQL.ParamByName('entidaddadorcarga_id').AsString:=entidaddadorcarga_id.codigo;
+    ZQExecSQL.ParamByName('documento_chofer').AsString:=documento_chofer.Text;
+    ZQExecSQL.ParamByName('documento_chofercuit').AsString:=documento_chofercuit.Text;
+    ZQExecSQL.ParamByName('documento_transpchasis').AsString:=documento_transpchasis.Text;
+    ZQExecSQL.ParamByName('documento_transpacoplado').AsString:=documento_transpacoplado.Text;
+    ZQExecSQL.ParamByName('documento_transptarifaflete').AsString:=documento_transptarifaflete.Text;
+    ZQExecSQL.ParamByName('documento_transpanticipo').AsString:=documento_transpanticipo.Text;
+    ZQExecSQL.ParamByName('documento_cartaportetarifaflete').AsString:=documento_cartaportetarifaflete.Text;
     ZQExecSQL.ParamByName('documento_id').AsString:=id;
     ZQExecSQL.ExecSql;
 
@@ -706,6 +738,14 @@ begin
           documento_moneda.ItemIndex:=-1;
           documento_lugarentrega.Text:='PUERTO DE ROSARIO';
           documento_observaciones.Text:='';
+          entidaddadorcarga_id.ItemIndex:=-1;
+          documento_chofer.Text:='';
+          documento_chofercuit.Text:='';
+          documento_transpchasis.Text:='';
+          documento_transpacoplado.Text:='';
+          documento_transptarifaflete.Value:=0;
+          documento_transpanticipo.Value:=0;
+          documento_cartaportetarifaflete.Value:=0;
       end
     else
       begin
@@ -737,6 +777,15 @@ begin
           documento_kgbrutos.Text:=ZQSelect.FieldByName('documento_kgbrutos').AsString;
           documento_tara.Text:=ZQSelect.FieldByName('documento_tara').AsString;
           entidadtransportista_id.Buscar(ZQSelect.FieldByName('entidadtransportista_id').AsString);
+
+          entidaddadorcarga_id.Buscar(ZQSelect.FieldByName('entidaddadorcarga_id').AsString);
+          documento_chofer.Text:=ZQSelect.FieldByName('documento_chofer').AsString;
+          documento_chofercuit.Text:=ZQSelect.FieldByName('documento_chofercuit').AsString;
+          documento_transpchasis.Text:=ZQSelect.FieldByName('documento_transpchasis').AsString;
+          documento_transpacoplado.Text:=ZQSelect.FieldByName('documento_transpacoplado').AsString;
+          documento_transptarifaflete.Text:=ZQSelect.FieldByName('documento_transptarifaflete').AsString;
+          documento_transpanticipo.Text:=ZQSelect.FieldByName('documento_transpanticipo').AsString;
+          documento_cartaportetarifaflete.Text:=ZQSelect.FieldByName('documento_cartaportetarifaflete').AsString;
 
       end;
 
@@ -806,6 +855,8 @@ begin
 
     especie_id.llenarcombo;
 
+    entidaddadorcarga_id.llenarcombo;
+    entidadtransportista_id.ItemIndex:=-1;
 end;
 
 procedure TOrdendeCarga.FormShow(Sender: TObject);

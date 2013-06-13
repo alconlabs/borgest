@@ -25,7 +25,7 @@ type
     LINKARCHIVOS: TEdit;
     btnactualizardb: TButton;
     LINKSCRIPTDB: TEdit;
-    VERSIONEXE: TLabel;
+    lblVERSIONEXE: TLabel;
     VERSIONDB: TLabel;
     Label14: TLabel;
     SUCURSALDEFECTO: TSqlComboBox;
@@ -131,7 +131,7 @@ procedure Tconfiguracion.btnactualizardbClick(Sender: TObject);
 var
   script_db:string;
 begin
-    script_db:=ExtractFilePath(Application.ExeName)+'Actualizaciones\updatedb.sql';
+    script_db:=ExtractFilePath(Application.ExeName)+'Actualizaciones\updatedb_acopio.sql';
     DeleteFile(script_db);
 
     if Princ.DescargarArchivo(LINKSCRIPTDB.Text, script_db) then
@@ -151,10 +151,6 @@ begin
       begin
           if Princ.EjecutarScriptDB(Princ.OpenDialog1.FileName) then
             MessageDlg('Base de Datos actualizada.'+#13+#10+'Debe reiniciar el sistema para ver los cambios.', mtInformation, [mbOK], 0);
-
-
-
-
       end;
 end;
 
@@ -193,8 +189,10 @@ begin
     if ZQConfig.Locate('config_nombre','LINKSCRIPTDB',[]) then
       LINKSCRIPTDB.Text:=ZQConfig.FieldByName('config_valor').AsString;
 
-    if ZQConfig.Locate('config_nombre','VERSIONEXE',[]) then
-      VERSIONEXE.Caption:='Version EXE: '+ZQConfig.FieldByName('config_valor').AsString;
+//    if ZQConfig.Locate('config_nombre','VERSIONEXE',[]) then
+//      VERSIONEXE.Caption:='Version EXE: '+ZQConfig.FieldByName('config_valor').AsString;
+
+    lblVERSIONEXE.Caption:='Version EXE: '+VERSIONEXE;
 
     if ZQConfig.Locate('config_nombre','VERSIONDB',[]) then
       VERSIONDB.Caption:='Version DB: '+ZQConfig.FieldByName('config_valor').AsString;
