@@ -107,6 +107,7 @@ type
     procedure FacturarpresupuestoClick(Sender: TObject);
     procedure btnobservacionesClick(Sender: TObject);
     procedure documentoventa_condicionventaSelect(Sender: TObject);
+    procedure btnmodificarClick(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -127,6 +128,7 @@ type
     procedure calculartotalpagos;
     procedure FacturarDocumento(tipodocunombre:string);
     procedure GenerarRemito;
+    function control_modificar_elimiar:boolean;
   public
     { Public declarations }
     abm:integer;
@@ -148,6 +150,31 @@ uses UnitPrinc, Unitventadetalle, Unitventadetalle2, UnitFacturarDocumentos,
 {$R *.dfm}
 
 
+
+function Tfacturasventa.control_modificar_elimiar;
+var
+  error:integer;
+begin
+    error:=0;
+
+    if (documentoventa_condicionventa.Text='Cuenta Corriente') and (documentoventa_pagado>0) then
+      error:=1;
+
+    if (ZQuery2.FieldByName('documentoventa_estado').AsString ='ANULADA') and (abm=ABM_MODIFICAR) then
+      error:=2;
+
+    case error of
+        1:begin
+              MessageDlg('La factura todavia tiene pagos asociados, no se puede eliminar.', mtError, [mbOK], 0);
+          end;
+
+        2:begin
+              MessageDlg('No se puede modificar una factura anulada.', mtError, [mbOK], 0);
+          end;
+    end;
+
+    Result:=error=0;
+end;
 procedure Tfacturasventa.GenerarRemito;
 var
   remito_id:string;
@@ -259,7 +286,7 @@ begin
 
 
 
-    
+
     Result:=error=0;
 end;
 
@@ -669,7 +696,38 @@ end;
 
 procedure Tfacturasventa.modificar;
 begin
+    ZQuery2.Edit;
+    ZQuery2.FieldByName('documentoventa_listaprecio').AsInteger:=documentoventa_listaprecio.ItemIndex;
+    ZQuery2.FieldByName('documentoventa_fechavenc').AsDateTime:=documentoventa_fechavenc.Date;
 
+    ZQuery2.FieldByName('tipodocu_id').AsString:=tipodocu_id.codigo;
+    ZQuery2.FieldByName('personal_id').AsString:=personal_id.codigo;
+    ZQuery2.FieldByName('cliente_id').AsString:=cliente_id.codigo;
+    ZQuery2.FieldByName('documentoventa_observacion').AsString:=documentoventa_observacion.Text;
+
+    ZQuery2.FieldByName('documentoventa_saldo').AsString:='0';
+    ZQuery2.FieldByName('documentoventa_pagado').AsString:=documentoventa_total.Text;
+    ZQuery2.FieldByName('documentoventa_estado').AsString:='PAGADA';
+    if documentoventa_condicionventa.ItemIndex=strtoint(CONDICIONVENTA_CTACTE) then
+      begin
+          ZQuery2.FieldByName('documentoventa_saldo').AsString:=documentoventa_total.Text;
+          ZQuery2.FieldByName('documentoventa_pagado').AsString:='0';
+          ZQuery2.FieldByName('documentoventa_estado').AsString:='PENDIENTE';
+      end;
+
+    ZQuery2.FieldByName('documentoventa_total').AsString:=documentoventa_total.Text;
+    ZQuery2.FieldByName('documentoventa_netonogravado').AsString:='0';
+    ZQuery2.FieldByName('documentoventa_iva105').AsString:=documentoventa_iva105.Text;
+    ZQuery2.FieldByName('documentoventa_neto105').AsString:=documentoventa_neto105.Text;
+    ZQuery2.FieldByName('documentoventa_iva21').AsString:=documentoventa_iva21.Text;
+    ZQuery2.FieldByName('documentoventa_neto21').AsString:=documentoventa_neto21.Text;
+    ZQuery2.FieldByName('documentoventa_hora').AsString:=timetostr(Princ.horaservidor);
+    ZQuery2.FieldByName('documentoventa_fecha').AsDateTime:=documentoventa_fecha.Date;
+    ZQuery2.FieldByName('documentoventa_numero').AsString:=documentoventa_numero.Text;
+    ZQuery2.FieldByName('documentoventa_condicionventa').AsInteger:=documentoventa_condicionventa.ItemIndex;
+    ZQuery2.Post;
+
+    Princ.ModificarDocumentoVenta(ZQuery2,ZQDocumentoventadetalles,nil,nil);
 
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK, mbCancel], 0);
     Self.Close;
@@ -1026,8 +1084,6 @@ procedure Tfacturasventa.btnagregarClick(Sender: TObject);
 var
   tipoiva_valor:real;
 begin
-    //  VERIFICAR SI ES NECESARIO USAR OPCION DE CONF PARA TIPOS DE CARGA DE DETALLES
-
     try
       ventadetalle2:= Tventadetalle2.Create(self);
     finally
@@ -1076,7 +1132,10 @@ begin
 
         2:begin
               if control then
-                modificar;
+                begin
+                    if control_modificar_elimiar then
+                      modificar;
+                end;
 
           end;
 
@@ -1101,6 +1160,36 @@ end;
 procedure Tfacturasventa.btnimprimirventaClick(Sender: TObject);
 begin
     Self.imprimir;
+end;
+
+procedure Tfacturasventa.btnmodificarClick(Sender: TObject);
+var
+  tipoiva_valor:real;
+begin
+    try
+      ventadetalle2:= Tventadetalle2.Create(self);
+    finally
+      ventadetalle2.ventadeta_cantidad.Value:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat;
+      ventadetalle2.producto_id.Text:=ZQDocumentoventadetalles.FieldByName('producto_id').AsString;
+      ventadetalle2.producto_id.Search(ZQDocumentoventadetalles.FieldByName('producto_id').AsString);
+      ventadetalle2.ventadetalle_preciounitario.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat;
+      ventadetalle2.calculartotal;
+
+      ventadetalle2.producto_precioventa:=inttostr(documentoventa_listaprecio.ItemIndex+1);
+      ventadetalle2.documentoventadetalle_listaprecio:=documentoventa_listaprecio.ItemIndex;
+
+
+      if ventadetalle2.ShowModal=mrOk then
+        begin
+
+            princ.CargarDocumentoVentaDetalle(ZQDocumentoventadetalles, ventadetalle2.ZQDocumentoventadetalles,2,ZQDocumentoventadetalles.GetBookmark);
+
+        end;
+
+      ventadetalle2.Free;
+      calculartotales;
+      calculartotalpagos;
+    end;
 end;
 
 procedure Tfacturasventa.btnobservacionesClick(Sender: TObject);

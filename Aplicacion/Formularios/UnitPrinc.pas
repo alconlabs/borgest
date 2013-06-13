@@ -242,7 +242,7 @@ type
     function QuitarEspecialesNros(const Cad: string): string;
     function horaservidor():Ttime;
     function ControlCodigoProducto(codigo:string; producto_id:string;campo:string; mostrar_mensaje:boolean):boolean;
-    procedure CargarDocumentoVentaDetalle(QDocumentoVentaDetalles:TDataset; Detalle:TDataset);
+    procedure CargarDocumentoVentaDetalle(QDocumentoVentaDetalles:TDataset; Detalle:TDataset; abm:integer=1; bm:pointer=nil);
     procedure AbrirNuevoServicio;
     procedure AbrirModificarServicio(id:string);
     procedure AbrirNuevoCliente;
@@ -335,7 +335,7 @@ const
   CONNECTION_STRING1='Provider=Microsoft.Jet.OLEDB.4.0;Data Source=';
   CONNECTION_STRING3=';Extended Properties=Excel 8.0';
 
-  VERSIONEXE='52';
+  VERSIONEXE='53';
 
   CLAVE_ENCRIPTADO='1234567890';
 
@@ -351,7 +351,13 @@ const
   TIPODOCU_NOTADEBITOVENTA='Nota de Debito de Venta';
   TIPODOCU_REMITOVENTA='Remito de Venta';
 
-
+  ABM_AGREGAR=1;
+  ABM_MODIFICAR=2;
+  ABM_ELIMINAR=3;
+  ABM_IMPRIMIR=4;
+  ABM_ANULAR=5;
+  ABM_MOSTRAR=6;
+  ABM_CLONAR=7;
 
 //  CONNECTION_STRING1='Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source=';
 //  CONNECTION_STRING3=';Mode=Share Deny None;Jet OLEDB:System database="";Jet OLEDB:Registry Path="";Jet OLEDB:Database Password="";Jet OLEDB:Engine Type=35;'+
@@ -1423,14 +1429,24 @@ end;
 
 
 
-procedure TPrinc.CargarDocumentoVentaDetalle(QDocumentoVentaDetalles:TDataset; Detalle:TDataset);
+procedure TPrinc.CargarDocumentoVentaDetalle(QDocumentoVentaDetalles:TDataset; Detalle:TDataset; abm:integer=1; bm:pointer=nil);
 var
   i:integer;
 begin
-    QDocumentoventadetalles.Last;
-    QDocumentoventadetalles.Next;
+    if abm=1 then
+      begin
+          QDocumentoventadetalles.Last;
+          QDocumentoventadetalles.Next;
+          QDocumentoventadetalles.Insert;
 
-    QDocumentoventadetalles.Insert;
+      end;
+    if abm=2 then
+      begin
+          QDocumentoventadetalles.GotoBookmark(bm);
+
+          QDocumentoventadetalles.Edit;
+      end;
+
     for i := 0 to Detalle.FieldCount-1 do
       begin
           QDocumentoventadetalles.Fields[i].Value:=Detalle.Fields[i].Value;

@@ -159,7 +159,9 @@ inherited NotapedidoDetalle: TNotapedidoDetalle
       ExplicitWidth = 679
     end
     inherited ventadetalle_preciounitoriginal: TDBAdvEdit
+      Top = 151
       TabOrder = 15
+      ExplicitTop = 151
     end
     inherited ventadeta_cantidad: TMoneyEdit
       Left = 72

@@ -10,7 +10,7 @@ inherited AplicarRecibosPendientes: TAplicarRecibosPendientes
   inherited panelgrilla: TAdvPanel
     Width = 753
     Height = 421
-    ExplicitWidth = 850
+    ExplicitWidth = 753
     ExplicitHeight = 421
     FullHeight = 0
     object Label3: TLabel [0]
@@ -68,7 +68,7 @@ inherited AplicarRecibosPendientes: TAplicarRecibosPendientes
       Caption = 'Total'
     end
     object documentoventa_total: TLabel [7]
-      Left = 152
+      Left = 160
       Top = 115
       Width = 21
       Height = 13
@@ -84,7 +84,7 @@ inherited AplicarRecibosPendientes: TAplicarRecibosPendientes
       Caption = 'Pagado'
     end
     object documentoventa_pagado: TLabel [9]
-      Left = 152
+      Left = 160
       Top = 139
       Width = 21
       Height = 13
@@ -100,7 +100,7 @@ inherited AplicarRecibosPendientes: TAplicarRecibosPendientes
       Caption = 'Saldo'
     end
     object documentoventa_saldo: TLabel [11]
-      Left = 152
+      Left = 160
       Top = 163
       Width = 21
       Height = 13

@@ -226,6 +226,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure btnagregarconceptosClick(Sender: TObject);
     procedure btnimprimirClick(Sender: TObject);
+    procedure btnmodificarconceptosClick(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -1039,6 +1040,26 @@ end;
 procedure TNotadeCredito2.btnimprimirClick(Sender: TObject);
 begin
     imprimir;
+end;
+
+procedure TNotadeCredito2.btnmodificarconceptosClick(Sender: TObject);
+begin
+    try
+      ventadetalleconcepto:= Tventadetalleconcepto.Create(self);
+    finally
+      ventadetalleconcepto.producto_precioventa:=inttostr(documentoventa_listaprecio.ItemIndex+1);
+      ventadetalleconcepto.documentoventadetalle_listaprecio:=documentoventa_listaprecio.ItemIndex;
+      ventadetalleconcepto.producto_id.Search(ZQDocumentoventadetallesConceptos.FieldByName('producto_id').AsString);
+      ventadetalleconcepto.ventadetalle_preciounitario.FloatValue:=ZQDocumentoventadetallesConceptos.FieldByName('documentoventadetalle_precio').AsFloat;
+      if ventadetalleconcepto.ShowModal=mrOk then
+        begin
+            princ.CargarDocumentoVentaDetalle(ZQDocumentoventadetallesConceptos, ventadetalleconcepto.ZQDocumentoventadetalles,ABM_MODIFICAR);
+
+        end;
+
+      ventadetalleconcepto.Free;
+      calculartotales;
+    end;
 end;
 
 procedure TNotadeCredito2.btnquitarClick(Sender: TObject);

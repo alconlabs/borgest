@@ -574,6 +574,10 @@ object NotadeDebito2: TNotadeDebito2
       object TabSheet2: TTabSheet
         Caption = 'Conceptos'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object DBGrid2: TDBGrid
           Left = 0
           Top = 0

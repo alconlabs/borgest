@@ -331,9 +331,9 @@ end;
 procedure TAplicarRecibosPendientes.ZQSelectAfterOpen(DataSet: TDataSet);
 begin
   inherited;
-    documentoventa_total.Caption:=ZQSelect.FieldByName('documentoventa_total').AsString;
-    documentoventa_pagado.Caption:=ZQSelect.FieldByName('documentoventa_pagado').AsString;
-    documentoventa_saldo.Caption:=ZQSelect.FieldByName('documentoventa_saldo').AsString;
+    documentoventa_total.Caption:=floattostr(roundto(ZQSelect.FieldByName('documentoventa_total').AsFloat,-2));
+    documentoventa_pagado.Caption:=floattostr(roundto(ZQSelect.FieldByName('documentoventa_pagado').AsFloat,-2));
+    documentoventa_saldo.Caption:=floattostr(roundto(ZQSelect.FieldByName('documentoventa_saldo').AsFloat,-2));
 
     pagado:=ZQSelect.FieldByName('documentoventa_pagado').AsFloat;
     saldo:=ZQSelect.FieldByName('documentoventa_saldo').AsFloat;

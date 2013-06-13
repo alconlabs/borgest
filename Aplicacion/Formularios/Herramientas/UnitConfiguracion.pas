@@ -152,24 +152,41 @@ procedure Tconfiguracion.btnactualizararchivosClick(Sender: TObject);
 var
   version_anterior, menu_version_anterior:string;
   exe_descargado, menu_descargado, sql_descargado:boolean;
+  FileHandle: Integer;
+  FileSize: DWord;
 begin
     version_anterior:=ExtractFilePath(Application.ExeName)+'Borgest '+FormatDateTime('dd-mm-yyyy', now)+'.exe';
     menu_version_anterior:=ExtractFilePath(Application.ExeName)+'menu '+FormatDateTime('dd-mm-yyyy', now)+'.txt';
 
-    DeleteFile(ExtractFilePath(Application.ExeName)+'Actualizaciones\Borgest.exe');
+    DeleteFile(ExtractFilePath(Application.ExeName)+'Actualizaciones\'+ExtractFileName(Application.ExeName));
     DeleteFile(ExtractFilePath(Application.ExeName)+'Actualizaciones\menu.txt');
 
     menu_descargado:=Princ.DescargarArchivo(LINKARCHIVOS.Text+'/menu.txt', ExtractFilePath(Application.ExeName)+'Actualizaciones\menu.txt');
-    exe_descargado:=Princ.DescargarArchivo(LINKARCHIVOS.Text+'/Borgest.exe', ExtractFilePath(Application.ExeName)+'Actualizaciones\Borgest.exe');
+    exe_descargado:=Princ.DescargarArchivo(LINKARCHIVOS.Text+'/Borgest.exe', ExtractFilePath(Application.ExeName)+'Actualizaciones\'+ExtractFileName(Application.ExeName));
 
     if  exe_descargado and menu_descargado then
       begin
-          RenameFile(Application.ExeName,version_anterior);
-          RenameFile(ExtractFilePath(Application.ExeName)+'menu.txt',menu_version_anterior);
+          FileHandle := FileOpen(ExtractFilePath(Application.ExeName)+'Actualizaciones\'+ExtractFileName(Application.ExeName), fmOpenRead);
+          try
+            FileSize := GetFileSize(FileHandle, nil);
+          except
+          end;
 
-          CopyFile(PChar(ExtractFilePath(Application.ExeName)+'Actualizaciones\Borgest.exe'),PChar(ExtractFilePath(Application.ExeName)+'Borgest.exe'),true);
-          CopyFile(PChar(ExtractFilePath(Application.ExeName)+'Actualizaciones\menu.txt'),PChar(ExtractFilePath(Application.ExeName)+'menu.txt'),true);
-          MessageDlg('Archivos actualizados.'+#13+#10+'Debe reiniciar el sistema para ver los cambios.', mtInformation, [mbOK], 0);
+          FileClose(FileHandle);
+          if (FileSize/1048576)>5 then
+            begin
+                RenameFile(Application.ExeName,version_anterior);
+                RenameFile(ExtractFilePath(Application.ExeName)+'menu.txt',menu_version_anterior);
+
+                CopyFile(PChar(ExtractFilePath(Application.ExeName)+'Actualizaciones\'+ExtractFileName(Application.ExeName)),PChar(Application.ExeName),true);
+                CopyFile(PChar(ExtractFilePath(Application.ExeName)+'Actualizaciones\menu.txt'),PChar(ExtractFilePath(Application.ExeName)+'menu.txt'),true);
+                MessageDlg('Archivos actualizados.'+#13+#10+'Debe reiniciar el sistema para ver los cambios.', mtInformation, [mbOK], 0);
+
+            end
+          else
+            begin
+                MessageDlg('Error al descargar los archivos.'+#13+#10+'Intente nuevamente', mtInformation, [mbOK], 0);
+            end;
 
       end
     else
@@ -178,7 +195,18 @@ begin
 end;
 
 procedure Tconfiguracion.btnactualizarClick(Sender: TObject);
+var
+  FileHandle: Integer;
+  FileSize: DWord;
+
 begin
+    FileHandle := FileOpen(ExtractFilePath(Application.ExeName)+'Actualizaciones\updatedb.sql', fmOpenRead);
+    FileSize := GetFileSize(FileHandle, nil);
+    MessageDlg('tamaño '+IntToStr(FileSize), mtWarning, [mbOK], 0);
+
+    FileClose(FileHandle);
+
+
     ZQuery1.sql.clear;
     ZQuery1.sql.add('Replace config set ');
     ZQuery1.sql.add('config_valor=:config_valor, ');
@@ -315,7 +343,7 @@ begin
     ZQuery1.parambyname('config_valor').AsString:=booltostr(VENTASEMITIRREMITOCTACTE.Checked);
     ZQuery1.ExecSQL;
 
-    MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK, mbCancel], 0);
+    MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK], 0);
 
     Self.Close;
 
@@ -526,6 +554,9 @@ begin
 
     if ZQConfig.Locate('config_nombre','PRODUCTOSTOCKINICIAL',[]) then
       PRODUCTOSTOCKINICIAL.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','VENTASNCNDCONCEPTOS',[]) then
+      VENTASNCNDCONCEPTOS.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
 
     if ZQConfig.Locate('config_nombre','VENTASEMITIRREMITOCTACTE',[]) then
       VENTASEMITIRREMITOCTACTE.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);

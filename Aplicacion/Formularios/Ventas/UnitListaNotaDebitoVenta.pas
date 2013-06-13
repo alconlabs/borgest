@@ -40,7 +40,7 @@ begin
     if ZQGrilla.Active then
       begin
           if ZQGrilla.RecordCount>0 then
-            Princ.AbrirDocumentoVenta(ZQGrilla.FieldByName('documentoventa_id').AsString,tipodocu_nombre,4);
+            Princ.AbrirDocumentoVenta(ZQGrilla.FieldByName('documentoventa_id').AsString,tipodocu_nombre,ABM_ELIMINAR);
       end;
 end;
 
@@ -84,14 +84,14 @@ begin
     if ZQGrilla.Active then
       begin
           if ZQGrilla.RecordCount>0 then
-            Princ.AbrirDocumentoVenta(ZQGrilla.FieldByName('documentoventa_id').AsString,tipodocu_nombre,2);
+            Princ.AbrirDocumentoVenta(ZQGrilla.FieldByName('documentoventa_id').AsString,tipodocu_nombre,ABM_MODIFICAR);
       end;
 end;
 
 procedure Tlistanotadebitoventa.btnnuevoClick(Sender: TObject);
 begin
   inherited;
-    Princ.AbrirDocumentoVenta('',tipodocu_nombre,1);
+    Princ.AbrirDocumentoVenta('',tipodocu_nombre,ABM_AGREGAR);
 end;
 
 end.

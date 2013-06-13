@@ -314,13 +314,13 @@ object documentoventabase: Tdocumentoventabase
       OnClick = btnquitarClick
     end
     object btnmodificar: TButton
-      Left = 78
+      Left = 77
       Top = 292
       Width = 75
       Height = 25
       Caption = 'Modificar'
-      Enabled = False
       TabOrder = 6
+      OnClick = btnmodificarClick
     end
     object GroupBox1: TGroupBox
       Left = 531

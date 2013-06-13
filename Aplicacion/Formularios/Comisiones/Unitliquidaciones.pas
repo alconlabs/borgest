@@ -323,7 +323,7 @@ begin
             if detalle.FieldByName('comisionvendedor_tipo').AsString='Porcentaje' then
               begin
                   detalle.Edit;
-                  detalle.FieldByName('liquivendedeta_importe').AsFloat:=detalle.FieldByName('documentoventadetalle_precio').AsFloat*detalle.FieldByName('comisionvendedor_valor').AsFloat/100;
+                  detalle.FieldByName('liquivendedeta_importe').AsFloat:=roundto(detalle.FieldByName('documentoventadetalle_precio').AsFloat*detalle.FieldByName('comisionvendedor_valor').AsFloat/100,-2);
                   detalle.Post;
 
 
@@ -332,7 +332,7 @@ begin
             if detalle.FieldByName('comisionvendedor_tipo').AsString='Cantidad' then
               begin
                   detalle.Edit;
-                  detalle.FieldByName('liquivendedeta_importe').AsFloat:=detalle.FieldByName('documentoventadetalle_cantidad').AsFloat*detalle.FieldByName('comisionvendedor_valor').AsFloat;
+                  detalle.FieldByName('liquivendedeta_importe').AsFloat:=roundto(detalle.FieldByName('documentoventadetalle_cantidad').AsFloat*detalle.FieldByName('comisionvendedor_valor').AsFloat,-2);
                   detalle.Post;
 
               end;
@@ -483,7 +483,9 @@ begin
                   QDest.FieldByName('sucursal_tipoliquidvendedor').AsString:=princ.buscar('select sucursal_tipoliquidvendedor from sucursales where sucursal_id="'+Qorig.FieldByName('sucursal_id').AsString+'"','sucursal_tipoliquidvendedor');
                   QDest.FieldByName('documentoventadetalle_precio').AsString:=Qorig.FieldByName('documentoventadetalle_total').AsString;
                   if QDest.FieldByName('sucursal_tipoliquidvendedor').AsString='Neto' then
-                    QDest.FieldByName('documentoventadetalle_precio').AsString:=Qorig.FieldByName('documentoventadetalle_neto21').AsString;
+                    QDest.FieldByName('documentoventadetalle_precio').AsFloat:=roundto(QDest.FieldByName('documentoventadetalle_precio').AsFloat/1.21,-2);
+
+//                    QDest.FieldByName('documentoventadetalle_precio').AsFloat:=Qorig.FieldByName('documentoventadetalle_neto21').AsFloat+Qorig.FieldByName('documentoventadetalle_neto105').AsFloat;
 
                   QDest.FieldByName('liquivendedeta_importe').AsString:='0';
                   QDest.FieldByName('puntoventa_numero').AsString:=Qorig.FieldByName('puntoventa_numero').AsString;

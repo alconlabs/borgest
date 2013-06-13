@@ -335,8 +335,8 @@ object facturasventa: Tfacturasventa
       Width = 75
       Height = 25
       Caption = 'Modificar'
-      Enabled = False
       TabOrder = 6
+      OnClick = btnmodificarClick
     end
     object GroupBox1: TGroupBox
       Left = 4
@@ -711,6 +711,7 @@ object facturasventa: Tfacturasventa
   object ZQuery2: TZQuery
     Connection = Princ.ZBase
     AfterOpen = ZQuery2AfterOpen
+    CachedUpdates = True
     SQL.Strings = (
       'select * from documentosventas'
       

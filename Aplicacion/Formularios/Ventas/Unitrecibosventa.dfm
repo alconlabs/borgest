@@ -774,7 +774,6 @@ object recibosventa: Trecibosventa
       end>
     object ZQdocumentoventadocusdocumentoventadoc_id: TIntegerField
       FieldName = 'documentoventadoc_id'
-      Required = True
     end
     object ZQdocumentoventadocusdocumentoventadoc_importe: TFloatField
       FieldName = 'documentoventadoc_importe'
@@ -797,15 +796,12 @@ object recibosventa: Trecibosventa
     end
     object ZQdocumentoventadocusdocumentoventa_id: TIntegerField
       FieldName = 'documentoventa_id'
-      Required = True
     end
     object ZQdocumentoventadocusdocumentoventa_idpago: TIntegerField
       FieldName = 'documentoventa_idpago'
-      Required = True
     end
     object ZQdocumentoventadocusdocumentoventa_id_1: TIntegerField
       FieldName = 'documentoventa_id_1'
-      Required = True
     end
     object ZQdocumentoventadocusdocumentoventa_numero: TIntegerField
       FieldName = 'documentoventa_numero'
@@ -852,15 +848,12 @@ object recibosventa: Trecibosventa
     end
     object ZQdocumentoventadocuscliente_id: TIntegerField
       FieldName = 'cliente_id'
-      Required = True
     end
     object ZQdocumentoventadocuspersonal_id: TIntegerField
       FieldName = 'personal_id'
-      Required = True
     end
     object ZQdocumentoventadocustipodocu_id: TIntegerField
       FieldName = 'tipodocu_id'
-      Required = True
     end
     object ZQdocumentoventadocusdocumentoventa_condicionventa: TIntegerField
       FieldName = 'documentoventa_condicionventa'
@@ -873,7 +866,6 @@ object recibosventa: Trecibosventa
     end
     object ZQdocumentoventadocustipodocu_id_1: TIntegerField
       FieldName = 'tipodocu_id_1'
-      Required = True
     end
     object ZQdocumentoventadocustipodocu_nombre: TStringField
       FieldName = 'tipodocu_nombre'
@@ -900,7 +892,6 @@ object recibosventa: Trecibosventa
     end
     object ZQdocumentoventadocuspuntoventa_id: TIntegerField
       FieldName = 'puntoventa_id'
-      Required = True
     end
     object ZQdocumentoventadocustipodocu_letra: TStringField
       FieldName = 'tipodocu_letra'
@@ -908,7 +899,6 @@ object recibosventa: Trecibosventa
     end
     object ZQdocumentoventadocuspuntoventa_id_1: TIntegerField
       FieldName = 'puntoventa_id_1'
-      Required = True
     end
     object ZQdocumentoventadocuspuntoventa_numero: TIntegerField
       FieldName = 'puntoventa_numero'
@@ -919,7 +909,84 @@ object recibosventa: Trecibosventa
     end
     object ZQdocumentoventadocussucursal_id: TIntegerField
       FieldName = 'sucursal_id'
-      Required = True
+    end
+    object ZQdocumentoventadocusdocumentoventadoc_tiporelacion: TStringField
+      FieldName = 'documentoventadoc_tiporelacion'
+      Size = 45
+    end
+    object ZQdocumentoventadocusdocumentoventa_equipo1: TStringField
+      FieldName = 'documentoventa_equipo1'
+      Size = 45
+    end
+    object ZQdocumentoventadocusdocumentoventa_equipo2: TStringField
+      FieldName = 'documentoventa_equipo2'
+      Size = 45
+    end
+    object ZQdocumentoventadocusdocumentoventa_formapago: TStringField
+      FieldName = 'documentoventa_formapago'
+      Size = 255
+    end
+    object ZQdocumentoventadocusdocumentoventa_nrodetallepago: TStringField
+      FieldName = 'documentoventa_nrodetallepago'
+      Size = 45
+    end
+    object ZQdocumentoventadocusdocumentoventa_solicitudcliente: TStringField
+      FieldName = 'documentoventa_solicitudcliente'
+      Size = 255
+    end
+    object ZQdocumentoventadocusdocumentoventa_trabajorealizado: TStringField
+      FieldName = 'documentoventa_trabajorealizado'
+      Size = 255
+    end
+    object ZQdocumentoventadocuscaja_id: TIntegerField
+      FieldName = 'caja_id'
+    end
+    object ZQdocumentoventadocustipodocu_debcred: TStringField
+      FieldName = 'tipodocu_debcred'
+      Size = 45
+    end
+    object ZQdocumentoventadocustipodocufiscal_id: TIntegerField
+      FieldName = 'tipodocufiscal_id'
+    end
+    object ZQdocumentoventadocustipodocu_preimpresos: TIntegerField
+      FieldName = 'tipodocu_preimpresos'
+    end
+    object ZQdocumentoventadocustipodocu_impresora: TStringField
+      FieldName = 'tipodocu_impresora'
+      Size = 200
+    end
+    object ZQdocumentoventadocustipodocu_copias: TIntegerField
+      FieldName = 'tipodocu_copias'
+    end
+    object ZQdocumentoventadocustipodocu_preview: TIntegerField
+      FieldName = 'tipodocu_preview'
+    end
+    object ZQdocumentoventadocustipodocu_prompt: TIntegerField
+      FieldName = 'tipodocu_prompt'
+    end
+    object ZQdocumentoventadocustipodocu_ctacte: TIntegerField
+      FieldName = 'tipodocu_ctacte'
+    end
+    object ZQdocumentoventadocustipodocu_archivoimpresion: TStringField
+      FieldName = 'tipodocu_archivoimpresion'
+      Size = 100
+    end
+    object ZQdocumentoventadocustipodocu_leyenda: TStringField
+      FieldName = 'tipodocu_leyenda'
+      Size = 200
+    end
+    object ZQdocumentoventadocustipodocu_nombreabrev: TStringField
+      FieldName = 'tipodocu_nombreabrev'
+      Size = 5
+    end
+    object ZQdocumentoventadocustipodocu_manual: TIntegerField
+      FieldName = 'tipodocu_manual'
+    end
+    object ZQdocumentoventadocuspuntoventa_controladorfiscalmodelo: TIntegerField
+      FieldName = 'puntoventa_controladorfiscalmodelo'
+    end
+    object ZQdocumentoventadocuspuntoventa_controladorfiscalpuerto: TIntegerField
+      FieldName = 'puntoventa_controladorfiscalpuerto'
     end
   end
   object ZQDocumentopagos: TZQuery

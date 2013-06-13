@@ -186,7 +186,7 @@ object NotadeCredito2: TNotadeCredito2
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       OnSelect = cliente_idSelect
       Confbase = Princ.ZBase
@@ -203,7 +203,7 @@ object NotadeCredito2: TNotadeCredito2
       Width = 220
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 1
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -413,7 +413,7 @@ object NotadeCredito2: TNotadeCredito2
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 9
       OnSelect = puntoventa_idSelect
       Confbase = Princ.ZBase
@@ -429,7 +429,7 @@ object NotadeCredito2: TNotadeCredito2
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 10
       OnSelect = tipodocu_idSelect
       Confbase = Princ.ZBase
@@ -462,7 +462,7 @@ object NotadeCredito2: TNotadeCredito2
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 8
       OnSelect = sucursal_idSelect
       Confbase = Princ.ZBase
@@ -491,10 +491,6 @@ object NotadeCredito2: TNotadeCredito2
       TabOrder = 13
       object TabSheet1: TTabSheet
         Caption = 'Productos'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGrid1: TDBGrid
           Left = 0
           Top = 0
@@ -578,10 +574,6 @@ object NotadeCredito2: TNotadeCredito2
       object TabSheet2: TTabSheet
         Caption = 'Conceptos'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGrid2: TDBGrid
           Left = 0
           Top = 0
@@ -635,8 +627,8 @@ object NotadeCredito2: TNotadeCredito2
           Width = 75
           Height = 25
           Caption = 'Modificar'
-          Enabled = False
           TabOrder = 2
+          OnClick = btnmodificarconceptosClick
         end
         object btnquitarconceptos: TButton
           Left = 151
@@ -650,10 +642,6 @@ object NotadeCredito2: TNotadeCredito2
       object TabSheet3: TTabSheet
         Caption = 'Facturas'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label17: TLabel
           Left = 677
           Top = 129

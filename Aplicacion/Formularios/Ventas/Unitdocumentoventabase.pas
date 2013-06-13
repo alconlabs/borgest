@@ -119,6 +119,7 @@ type
     procedure btncancelarClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure sucursal_idSelect(Sender: TObject);
+    procedure btnmodificarClick(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -805,6 +806,34 @@ begin
     end;
 end;
 
+procedure Tdocumentoventabase.btnmodificarClick(Sender: TObject);
+var
+  tipoiva_valor:real;
+begin
+    try
+      ventadetalle2:= Tventadetalle2.Create(self);
+    finally
+      ventadetalle2.ventadeta_cantidad.Value:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat;
+      ventadetalle2.producto_id.Text:=ZQDocumentoventadetalles.FieldByName('producto_id').AsString;
+      ventadetalle2.producto_id.Search(ZQDocumentoventadetalles.FieldByName('producto_id').AsString);
+      ventadetalle2.ventadetalle_preciounitario.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat;
+      ventadetalle2.calculartotal;
+
+      ventadetalle2.producto_precioventa:=inttostr(documentoventa_listaprecio.ItemIndex+1);
+      ventadetalle2.documentoventadetalle_listaprecio:=documentoventa_listaprecio.ItemIndex;
+
+
+      if ventadetalle2.ShowModal=mrOk then
+        begin
+
+            princ.CargarDocumentoVentaDetalle(ZQDocumentoventadetalles, ventadetalle2.ZQDocumentoventadetalles,2);
+
+        end;
+
+      ventadetalle2.Free;
+      calculartotales;
+    end;
+end;
 procedure Tdocumentoventabase.btnquitarClick(Sender: TObject);
 begin
     if (MessageDlg('Seguro desea quitar este registro?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
