@@ -6,10 +6,12 @@ Archivo
 		Calculo Precios
 		Politicas de Precios
 		Clientes
+		Conceptos Deb-Cred
 	Proveedores
 		Proveedores
 	Localidades
 		Localidades
+		Provincias
 	Empresa
 		Empresa
 		Sucursales
@@ -22,17 +24,23 @@ Compras
 		Facturas de Compra
 		Ordenes de Pago
 		Estado de Ctas.
+	Informes
 		Informes
+		Libro IVA Compras
 Ventas
 	Documentos
 		Cotratacion
+		Presupuestos
 		Orden de Servicio
 		Nota de Pedido
 		Equipos
 		Facturas de Ventas
 		Venta Rapida
 		Recibos de Venta
+		Aplicar Recibos Pendientes
 		Notas de Credito
+		Notas de Debito
+		Remitos
 		Impresora Fiscal
 	Cuenta Corriente
 		Saldos
@@ -41,8 +49,22 @@ Ventas
 	Caja
 		Estado Caja
 		Caja
+		Caja Bar
 	Informes
 		Informes
+		Detalle de Pagos
+		Libro IVA Ventas
+Comisiones
+	Vendedores
+		Comisiones de Vendedores
+		Vendedores Deb-Cred
+		Liquidaciones a Vendedores
+	Sucursales
+		Comisiones de Sucursales
+		Sucursales Deb-Cred
+		Liquidaciones a Sucursales
+	Notas de Pedido
+		Notas de Pedido
 Herramientas
 	Herramientas
 		Configuracion

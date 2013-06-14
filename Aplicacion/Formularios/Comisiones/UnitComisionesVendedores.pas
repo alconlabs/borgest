@@ -141,7 +141,9 @@ procedure TComisionesVendedores.ZQComisionesVendedoresBeforePost(
 begin
   inherited;
     ZQComisionesVendedores.FieldByName('producto_id').AsString:=ZQGrilla.FieldByName('producto_id').AsString;
-    ZQComisionesVendedores.FieldByName('comisionvendedor_id').AsString:='0';
+    if ZQComisionesVendedores.FieldByName('comisionvendedor_id').AsString='' then
+      ZQComisionesVendedores.FieldByName('comisionvendedor_id').AsString:='0';
+
 end;
 
 procedure TComisionesVendedores.btnfiltrarClick(Sender: TObject);

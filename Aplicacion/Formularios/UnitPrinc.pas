@@ -193,6 +193,7 @@ type
     procedure btnempresaClick(Sender: TObject);
     procedure VCLReport1BeforePrint(Sender: TObject);
     procedure btnRecibosPendientesClick(Sender: TObject);
+    procedure btnlistanotasdepedidoClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -396,7 +397,7 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   UnitListaRemitoVenta, Unitlistacomisionesvendedores,
   UnitlistaComisionesSucursales, Unitprovincias, UnitNotadeCredito2,
   UnitListaDebCred, UnitNotadeDebito2, UnitEmpresa,
-  UnitAplicarRecibosPendientes;
+  UnitAplicarRecibosPendientes, UnitListaNotasPedidoComisiones;
 
 {$R *.dfm}
 
@@ -3052,6 +3053,17 @@ begin
     finally
       listacomisionesvendedores.campo_id:='liquidacionvendedor_id';
       listacomisionesvendedores.Show;
+    end;
+end;
+
+procedure TPrinc.btnlistanotasdepedidoClick(Sender: TObject);
+begin
+    try
+      ListaNotasPedidoComisiones:=TListaNotasPedidoComisiones.Create(self);
+    finally
+      ListaNotasPedidoComisiones.tipodocu_nombre:='Nota de Pedidos - Comisiones';
+      ListaNotasPedidoComisiones.campo_id:='documentoventa_id';
+      ListaNotasPedidoComisiones.Show;
     end;
 end;
 

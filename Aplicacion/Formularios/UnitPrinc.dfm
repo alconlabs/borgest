@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageVentas
+    ActivePage = AdvPageComisiones
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -2329,6 +2329,7 @@ object Princ: TPrinc
           Height = 41
           Caption = 'Notas de Pedido'
           TabOrder = 0
+          OnClick = btnlistanotasdepedidoClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219

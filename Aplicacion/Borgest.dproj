@@ -145,6 +145,12 @@
     <DCCReference Include="Formularios\Comisiones\Unitlistacomisionesvendedores.pas">
       <Form>listacomisionesvendedores</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Comisiones\UnitListaNotasPedidoComisiones.pas">
+      <Form>ListaNotasPedidoComisiones</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Comisiones\UnitNotaPedidoComisiones.pas">
+      <Form>NotaPedidoComisiones</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Comisiones\Unitsucursalesdebcred.pas">
       <Form>sucursalesdebcred</Form>
     </DCCReference>

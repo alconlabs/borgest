@@ -106,6 +106,8 @@ object listabase: Tlistabase
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
+      ExplicitLeft = 837
+      ExplicitTop = -6
       FullHeight = 0
       object btneliminar: TButton
         Left = 0
