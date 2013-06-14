@@ -9,7 +9,7 @@ inherited InformesVentas: TInformesVentas
   inherited panelgrilla: TAdvPanel
     Width = 493
     Height = 198
-    ExplicitWidth = 420
+    ExplicitWidth = 493
     ExplicitHeight = 198
     FullHeight = 0
     object Label1: TLabel [0]
@@ -97,14 +97,16 @@ inherited InformesVentas: TInformesVentas
         'Informe de Precios de Ventas'
         'Informe de ventas'
         'Informe de Cobros'
-        'Ranking de Ventas de Productos')
+        'Ranking de Ventas de Productos'
+        'Informe de ventas C/Equipos')
       Tag2 = 0
       valores.Strings = (
         '0'
         '1'
         '2'
         '3'
-        '4')
+        '4'
+        '5')
     end
     object personal_id: TSqlComboBox
       Left = 84

@@ -31,6 +31,7 @@ type
     procedure InformedeVentas;
     procedure InformedeCobros;
     procedure RankingProductos;
+    procedure InformedeVentasCEquipos;
 
   public
     { Public declarations }
@@ -81,6 +82,34 @@ procedure TInformesVentas.InformedeVentas;
 begin
     puntoventa_id.GenerarWhere;
     Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\informe_ventas.rep';
+    Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
+    Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
+    Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
+                                             'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                             'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                             'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                             'where documentosventas.documentoventa_estado<>"ANULADA" and '+
+                                             'tiposdocumento.tipodocu_nombre="'+TIPODOCU_FACTURAVENTA+'" and '+
+                                             'documentosventas.documentoventa_fecha >="'+FormatDateTime('yyyy-mm-dd',desde_fecha.Date)+'" and '+
+                                             'documentosventas.documentoventa_fecha <="'+FormatDateTime('yyyy-mm-dd',hasta_fecha.Date)+'" '+Princ.empresa_where+
+                                             ' and '+puntoventa_id.where;
+
+    if personal_id.Text<>'Todos' then
+      Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.personal_id="'+personal_id.codigo+'" ';
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero';
+
+
+    Princ.VCLReport1.Execute;
+
+end;
+
+procedure TInformesVentas.InformedeVentasCEquipos;
+begin
+    puntoventa_id.GenerarWhere;
+    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\informe_ventas_equipos.rep';
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
@@ -238,6 +267,10 @@ begin
           end;
         4:begin
               RankingProductos;
+
+          end;
+        5:begin
+              InformedeVentasCEquipos;
 
           end;
 
