@@ -19,6 +19,8 @@ type
     tiProdcutos: TTitles;
     btnimprimir: TButton;
     producto_precioventa: TGTBComboBox;
+    Label1: TLabel;
+    producto_nombre: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure btncancelarClick(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
@@ -50,6 +52,9 @@ begin
 
     if proveedor_id.Text<>'Todos' then
       tiProdcutos.Memo.Text:=tiProdcutos.Memo.Text+' and proveedores.proveedor_id="'+proveedor_id.codigo+'"';
+
+    if producto_nombre.Text<>'' then
+      tiProdcutos.Memo.Text:=tiProdcutos.Memo.Text+' and productos.producto_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(producto_nombre.Text,' ','%')+'%"';
 
     tiProdcutos.Memo.Text:=tiProdcutos.Memo.Text+' order by producto_nombre';
 
@@ -84,12 +89,21 @@ begin
     productos.LlenarMQuery;
     productos.GenerarWhere;
 
+    if producto_precioventa.ItemIndex<4 then
+      begin
+          Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\lista_precios_productos.rep';
+          Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, '+producto_precioventa.codigo+' as precio from productos '+
+                                                         'inner join rubros on productos.rubro_id=rubros.rubro_id '+
+                                                         'where 1=1 and '+productos.where+' order by producto_nombre';
 
-    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\lista_precios_productos.rep';
-    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, '+producto_precioventa.codigo+' as precio from productos '+
-                                             'inner join rubros on productos.rubro_id=rubros.rubro_id '+
-                                             'where 1=1 and '+productos.where+' order by producto_nombre';
-
+      end
+    else
+      begin
+          Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\listado_productos.rep';
+          Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from productos '+
+                                                         'inner join rubros on productos.rubro_id=rubros.rubro_id '+
+                                                         'where 1=1 and '+productos.where+' order by producto_nombre';
+      end;
 
 
 
@@ -110,6 +124,7 @@ begin
     producto_precioventa.Items.Add(Princ.NOMBREPRECIO2);
     producto_precioventa.Items.Add(Princ.NOMBREPRECIO3);
     producto_precioventa.Items.Add(Princ.NOMBREPRECIO4);
+    producto_precioventa.Items.Add('SIN PRECIOS');
     producto_precioventa.ItemIndex:=0;
 
     tiProdcutos.Titulos.Clear;
@@ -118,6 +133,8 @@ begin
     tiProdcutos.Titulos.Add('Proveedor');
     tiProdcutos.Titulos.Add('Rubro');
     tiProdcutos.Titulos.Add('P. Costo');
+
+
     tiProdcutos.Titulos.Add(Princ.NOMBREPRECIO1);
     tiProdcutos.Titulos.Add(Princ.NOMBREPRECIO2);
     tiProdcutos.Titulos.Add(Princ.NOMBREPRECIO3);

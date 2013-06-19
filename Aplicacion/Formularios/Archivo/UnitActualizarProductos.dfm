@@ -3,7 +3,7 @@ object ActualizarProductos: TActualizarProductos
   Top = 0
   Caption = 'ActualizarProductos'
   ClientHeight = 580
-  ClientWidth = 895
+  ClientWidth = 1023
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object ActualizarProductos: TActualizarProductos
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 895
+    Width = 1023
     Height = 580
     Align = alClient
     BevelOuter = bvNone
@@ -61,18 +61,21 @@ object ActualizarProductos: TActualizarProductos
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitWidth = 895
     FullHeight = 0
     object PgCtrlSettings: TPageControl
       Left = 0
       Top = 0
-      Width = 895
+      Width = 1023
       Height = 230
       ActivePage = TabSheet1
       Align = alTop
       TabOrder = 0
+      ExplicitWidth = 895
       object TabSheet2: TTabSheet
         Caption = 'Actualizar Productos'
         ImageIndex = 1
+        ExplicitWidth = 887
         object Label3: TLabel
           Left = 53
           Top = 12
@@ -262,6 +265,7 @@ object ActualizarProductos: TActualizarProductos
       object TabSheet1: TTabSheet
         Caption = 'Actualizar desde Excel'
         ImageIndex = 1
+        ExplicitWidth = 887
         object Label2: TLabel
           Left = 40
           Top = 5
@@ -708,14 +712,16 @@ object ActualizarProductos: TActualizarProductos
     object PgCtrlGrids: TPageControl
       Left = 0
       Top = 230
-      Width = 895
+      Width = 1023
       Height = 328
       ActivePage = TabSheet3
       Align = alTop
       TabOrder = 1
+      ExplicitWidth = 895
       object TabSheet3: TTabSheet
         Caption = 'Productos Nuevos'
         ImageIndex = 1
+        ExplicitWidth = 887
         object lblcantidadnuevos: TLabel
           Left = 7
           Top = 245
@@ -726,7 +732,7 @@ object ActualizarProductos: TActualizarProductos
         object DBGrid1: TDBGrid
           Left = 0
           Top = 0
-          Width = 887
+          Width = 1015
           Height = 241
           Align = alTop
           DataSource = DTSNuevos
@@ -762,7 +768,7 @@ object ActualizarProductos: TActualizarProductos
               Expanded = False
               FieldName = 'producto_nombre'
               Title.Caption = 'Descripcion'
-              Width = 199
+              Width = 274
               Visible = True
             end
             item
@@ -811,7 +817,7 @@ object ActualizarProductos: TActualizarProductos
             end>
         end
         object btnagregarnuevos: TButton
-          Left = 624
+          Left = 848
           Top = 271
           Width = 147
           Height = 25
@@ -832,6 +838,7 @@ object ActualizarProductos: TActualizarProductos
       object TabSheet4: TTabSheet
         Caption = 'A Incrementar'
         ImageIndex = 2
+        ExplicitWidth = 887
         object lblcantidadincrementar: TLabel
           Left = 7
           Top = 245
@@ -840,7 +847,7 @@ object ActualizarProductos: TActualizarProductos
           Caption = 'Cantidad de registros'
         end
         object btnincrementarprecios: TButton
-          Left = 672
+          Left = 848
           Top = 271
           Width = 99
           Height = 25
@@ -851,7 +858,7 @@ object ActualizarProductos: TActualizarProductos
         object DBGrid2: TDBGrid
           Left = 0
           Top = 0
-          Width = 887
+          Width = 1015
           Height = 241
           Align = alTop
           DataSource = DTSIncrementar
@@ -936,6 +943,13 @@ object ActualizarProductos: TActualizarProductos
               Title.Caption = 'P.Venta4'
               Width = 55
               Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'producto_codigoreferencia'
+              Title.Caption = 'Cod. Referencia'
+              Width = 140
+              Visible = True
             end>
         end
         object btnquitarincrementar: TButton
@@ -947,10 +961,20 @@ object ActualizarProductos: TActualizarProductos
           TabOrder = 2
           OnClick = btnquitarincrementarClick
         end
+        object btncodigosreferenciaincrementar: TButton
+          Left = 664
+          Top = 271
+          Width = 171
+          Height = 25
+          Caption = 'Actualizar Codigos de Referencia'
+          Enabled = False
+          TabOrder = 3
+        end
       end
       object TabSheet5: TTabSheet
         Caption = 'A Disminuir'
         ImageIndex = 3
+        ExplicitWidth = 887
         object lblcantidadisminuir: TLabel
           Left = 7
           Top = 245
@@ -959,7 +983,7 @@ object ActualizarProductos: TActualizarProductos
           Caption = 'Cantidad de registros'
         end
         object btndisminuirprecios: TButton
-          Left = 672
+          Left = 848
           Top = 271
           Width = 99
           Height = 25
@@ -970,7 +994,7 @@ object ActualizarProductos: TActualizarProductos
         object DBGrid3: TDBGrid
           Left = 0
           Top = 0
-          Width = 887
+          Width = 1015
           Height = 241
           Align = alTop
           DataSource = DTSDisminuir
@@ -1055,6 +1079,13 @@ object ActualizarProductos: TActualizarProductos
               Title.Caption = 'P.Venta4'
               Width = 55
               Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'producto_codigoreferencia'
+              Title.Caption = 'Cod. Referencia'
+              Width = 140
+              Visible = True
             end>
         end
         object btnquitardisminuir: TButton
@@ -1066,10 +1097,20 @@ object ActualizarProductos: TActualizarProductos
           TabOrder = 2
           OnClick = btnquitardisminuirClick
         end
+        object btncodigosreferenciadisminuir: TButton
+          Left = 664
+          Top = 271
+          Width = 171
+          Height = 25
+          Caption = 'Actualizar Codigos de Referencia'
+          Enabled = False
+          TabOrder = 3
+        end
       end
       object TabSheet6: TTabSheet
         Caption = 'Sin Cambios'
         ImageIndex = 3
+        ExplicitWidth = 887
         object lblcantidadsincambios: TLabel
           Left = 7
           Top = 245
@@ -1080,7 +1121,7 @@ object ActualizarProductos: TActualizarProductos
         object DBGrid4: TDBGrid
           Left = 0
           Top = 0
-          Width = 887
+          Width = 1015
           Height = 241
           Align = alTop
           DataSource = DTSSincambios
@@ -1116,7 +1157,7 @@ object ActualizarProductos: TActualizarProductos
               Expanded = False
               FieldName = 'producto_nombre'
               Title.Caption = 'Descripcion'
-              Width = 228
+              Width = 327
               Visible = True
             end
             item
@@ -1148,7 +1189,23 @@ object ActualizarProductos: TActualizarProductos
               FieldName = 'producto_precioventa4'
               Title.Caption = 'P.Venta4'
               Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'producto_codigoreferencia'
+              Title.Caption = 'Cod. Referencia'
+              Width = 140
+              Visible = True
             end>
+        end
+        object btncodigosreferenciasincambios: TButton
+          Left = 664
+          Top = 271
+          Width = 171
+          Height = 25
+          Caption = 'Actualizar Codigos de Referencia'
+          Enabled = False
+          TabOrder = 1
         end
       end
     end
@@ -1422,7 +1479,8 @@ object ActualizarProductos: TActualizarProductos
         'd as producto_precioventa4,i as calculoprecio_id,i as politicapr' +
         'ecio_id,i as tipoiva_id,i as rubro_id,i as proveedor_id,d as pro' +
         'ducto_neto1,d as producto_neto2,d as producto_neto3,d as product' +
-        'o_neto4,d as diferencia,d as producdepo_stockactual from temp ')
+        'o_neto4,d as diferencia,d as producdepo_stockactual,t as product' +
+        'o_codigoreferencia from temp ')
     Params = <>
     ConfCampos.Strings = (
       'producto_id,i'
@@ -1450,9 +1508,10 @@ object ActualizarProductos: TActualizarProductos
       'producto_neto3,d'
       'producto_neto4,d'
       'diferencia,d'
-      'producdepo_stockactual,d')
+      'producdepo_stockactual,d'
+      'producto_codigoreferencia,t')
     Left = 312
-    Top = 360
+    Top = 376
     object MQIncrementarproducto_id: TIntegerField
       FieldName = 'producto_id'
     end
@@ -1551,6 +1610,10 @@ object ActualizarProductos: TActualizarProductos
     object MQIncrementarproducdepo_stockactual: TFloatField
       FieldName = 'producdepo_stockactual'
     end
+    object MQIncrementarproducto_codigoreferencia: TStringField
+      FieldName = 'producto_codigoreferencia'
+      Size = 255
+    end
   end
   object MQDisminuir: TMQuery
     Connection = Princ.ZBase
@@ -1566,7 +1629,8 @@ object ActualizarProductos: TActualizarProductos
         'd as producto_precioventa4,i as calculoprecio_id,i as politicapr' +
         'ecio_id,i as tipoiva_id,i as rubro_id,i as proveedor_id,d as pro' +
         'ducto_neto1,d as producto_neto2,d as producto_neto3,d as product' +
-        'o_neto4,d as diferencia,d as producdepo_stockactual from temp ')
+        'o_neto4,d as diferencia,d as producdepo_stockactual,t as product' +
+        'o_codigoreferencia from temp ')
     Params = <>
     ConfCampos.Strings = (
       'producto_id,i'
@@ -1594,7 +1658,8 @@ object ActualizarProductos: TActualizarProductos
       'producto_neto3,d'
       'producto_neto4,d'
       'diferencia,d'
-      'producdepo_stockactual,d')
+      'producdepo_stockactual,d'
+      'producto_codigoreferencia,t')
     Left = 312
     Top = 424
     object MQDisminuirproducto_id: TIntegerField
@@ -1678,6 +1743,10 @@ object ActualizarProductos: TActualizarProductos
     object MQDisminuirproducdepo_stockactual: TFloatField
       FieldName = 'producdepo_stockactual'
     end
+    object MQDisminuirproducto_codigoreferencia: TStringField
+      FieldName = 'producto_codigoreferencia'
+      Size = 255
+    end
   end
   object DTSNuevos: TDataSource
     AutoEdit = False
@@ -1703,7 +1772,8 @@ object ActualizarProductos: TActualizarProductos
         ',i as calculoprecio_id,i as politicaprecio_id,i as tipoiva_id,i ' +
         'as rubro_id,i as proveedor_id,d as producto_neto1,d as producto_' +
         'neto2,d as producto_neto3,d as producto_neto4,d as producdepo_st' +
-        'ockminimo,d as producdepo_stockactual from temp ')
+        'ockminimo,d as producdepo_stockactual,t as producto_codigorefere' +
+        'ncia from temp ')
     Params = <>
     ConfCampos.Strings = (
       'producto_id,i'
@@ -1726,7 +1796,8 @@ object ActualizarProductos: TActualizarProductos
       'producto_neto3,d'
       'producto_neto4,d'
       'producdepo_stockminimo,d'
-      'producdepo_stockactual,d')
+      'producdepo_stockactual,d'
+      'producto_codigoreferencia,t')
     Left = 192
     Top = 448
     object IntegerField1: TIntegerField
@@ -1800,6 +1871,10 @@ object ActualizarProductos: TActualizarProductos
     end
     object MQSincambiosproducdepo_stockactual: TFloatField
       FieldName = 'producdepo_stockactual'
+    end
+    object MQSincambiosproducto_codigoreferencia: TStringField
+      FieldName = 'producto_codigoreferencia'
+      Size = 255
     end
   end
   object DTSSincambios: TDataSource

@@ -203,6 +203,12 @@ type
     MQDisminuirproducdepo_stockactual: TFloatField;
     MQSincambiosproducdepo_stockminimo: TFloatField;
     MQSincambiosproducdepo_stockactual: TFloatField;
+    MQIncrementarproducto_codigoreferencia: TStringField;
+    MQDisminuirproducto_codigoreferencia: TStringField;
+    MQSincambiosproducto_codigoreferencia: TStringField;
+    btncodigosreferenciaincrementar: TButton;
+    btncodigosreferenciadisminuir: TButton;
+    btncodigosreferenciasincambios: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnexaminarClick(Sender: TObject);
     procedure btnabrirarchivoClick(Sender: TObject);
@@ -427,6 +433,9 @@ begin
                                     MQIncrementar.FieldByName('rubro_id').AsString:=ZQproductos.FieldByName('rubro_id').AsString;
                                     MQIncrementar.FieldByName('proveedor_id').AsString:=ZQproductos.FieldByName('proveedor_id').AsString;
                                     MQIncrementar.FieldByName('diferencia').AsFloat:=MQIncrementar.FieldByName('producto_preciocostoprev').AsFloat-MQIncrementar.FieldByName('producto_preciocosto').AsFloat;
+                                    MQIncrementar.FieldByName('producto_codigoreferencia').AsString:='';
+                                    if columna_codigoreferencia.ItemIndex>-1 then
+                                      MQIncrementar.FieldByName('producto_codigoreferencia').AsString:=Princ.ADODataSet1.Fields[columna_codigoreferencia.ItemIndex].AsString;
                                     MQIncrementar.Post;
                                 end
                               else
@@ -453,7 +462,9 @@ begin
                                           MQSincambios.FieldByName('producto_neto2').AsString:=ZQproductos.FieldByName('producto_neto2').AsString;
                                           MQSincambios.FieldByName('producto_neto3').AsString:=ZQproductos.FieldByName('producto_neto3').AsString;
                                           MQSincambios.FieldByName('producto_neto4').AsString:=ZQproductos.FieldByName('producto_neto4').AsString;
-
+                                          MQSincambios.FieldByName('producto_codigoreferencia').AsString:='';
+                                          if columna_codigoreferencia.ItemIndex>-1 then
+                                            MQSincambios.FieldByName('producto_codigoreferencia').AsString:=Princ.ADODataSet1.Fields[columna_codigoreferencia.ItemIndex].AsString;
                                           MQSincambios.Post;
                                       end
                                     else
@@ -471,6 +482,9 @@ begin
                                           MQDisminuir.FieldByName('rubro_id').AsString:=ZQproductos.FieldByName('rubro_id').AsString;
                                           MQDisminuir.FieldByName('proveedor_id').AsString:=ZQproductos.FieldByName('proveedor_id').AsString;
                                           MQDisminuir.FieldByName('diferencia').AsFloat:=MQDisminuir.FieldByName('producto_preciocostoprev').AsFloat-MQDisminuir.FieldByName('producto_preciocosto').AsFloat;
+                                          MQDisminuir.FieldByName('producto_codigoreferencia').AsString:='';
+                                          if columna_codigoreferencia.ItemIndex>-1 then
+                                            MQDisminuir.FieldByName('producto_codigoreferencia').AsString:=Princ.ADODataSet1.Fields[columna_codigoreferencia.ItemIndex].AsString;
                                           MQDisminuir.Post;
                                       end;
                                 end;

@@ -1,16 +1,15 @@
 inherited ImprimirListaPrecios: TImprimirListaPrecios
   Caption = 'Imprimir Lista de Precios'
   ClientHeight = 519
-  ClientWidth = 735
-  OnCreate = FormCreate
-  ExplicitWidth = 751
+  ClientWidth = 865
+  ExplicitWidth = 881
   ExplicitHeight = 557
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Width = 735
+    Width = 865
     Height = 519
-    ExplicitWidth = 743
+    ExplicitWidth = 735
     ExplicitHeight = 519
     FullHeight = 0
     object Label21: TLabel [0]
@@ -28,6 +27,14 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
       Height = 13
       Alignment = taRightJustify
       Caption = 'Proveedor'
+    end
+    object Label1: TLabel [2]
+      Left = 23
+      Top = 68
+      Width = 37
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Nombre'
     end
     inherited btncancelar: TButton
       Left = 51
@@ -81,21 +88,21 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
     end
     object btnfiltrar: TButton
       Left = 465
-      Top = 39
+      Top = 63
       Width = 75
       Height = 25
       Caption = 'Filtrar'
-      TabOrder = 4
+      TabOrder = 5
       OnClick = btncancelarClick
     end
     object productos: TSqlListView
       Left = 11
-      Top = 70
-      Width = 718
-      Height = 388
+      Top = 94
+      Width = 846
+      Height = 364
       Columns = <>
       HoverTime = -1
-      TabOrder = 5
+      TabOrder = 6
       ViewStyle = vsReport
       AutoHint = False
       ClipboardEnable = False
@@ -188,30 +195,38 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
       ConfField = tiProdcutos
       ConfIni = Princ.ini1
       Tag2 = 0
+      ConfTodosCheckeados = True
     end
     object btnimprimir: TButton
-      Left = 654
+      Left = 782
       Top = 464
       Width = 75
       Height = 25
       Caption = 'Imprimir'
-      TabOrder = 6
+      TabOrder = 7
       OnClick = btnimprimirClick
     end
     object producto_precioventa: TGTBComboBox
-      Left = 503
+      Left = 631
       Top = 466
       Width = 145
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
-      TabOrder = 7
+      TabOrder = 8
       Tag2 = 0
       valores.Strings = (
         'producto_precioventa1'
         'producto_precioventa2'
         'producto_precioventa3'
         'producto_precioventa4')
+    end
+    object producto_nombre: TEdit
+      Left = 66
+      Top = 65
+      Width = 393
+      Height = 21
+      TabOrder = 4
     end
   end
   inherited ZQExecSQL: TZQuery

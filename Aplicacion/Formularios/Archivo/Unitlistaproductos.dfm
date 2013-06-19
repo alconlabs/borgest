@@ -118,7 +118,6 @@ object listaproductos: Tlistaproductos
         Caption = 'Eliminar'
         TabOrder = 2
         OnClick = btnelimiClick
-        ExplicitLeft = 6
       end
       object btnmodi: TButton
         Left = 0
