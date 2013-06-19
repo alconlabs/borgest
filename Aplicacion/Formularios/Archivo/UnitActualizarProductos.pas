@@ -28,9 +28,9 @@ type
     Label3: TLabel;
     Label4: TLabel;
     Label5: TLabel;
-    producto_id: TEdit;
-    producto_codigo: TEdit;
-    producto_codigobarras: TEdit;
+    fil_producto_id: TEdit;
+    fil_producto_codigo: TEdit;
+    fil_producto_codigobarras: TEdit;
     TabSheet1: TTabSheet;
     PgCtrlGrids: TPageControl;
     TabSheet3: TTabSheet;
@@ -38,19 +38,19 @@ type
     TabSheet5: TTabSheet;
     MQNuevos: TMQuery;
     Label1: TLabel;
-    producto_nombre: TEdit;
+    fil_producto_nombre: TEdit;
     Label21: TLabel;
-    act_rubro_id: TSqlComboBox;
+    fil_rubro_id: TSqlComboBox;
     Label12: TLabel;
-    act_calculoprecio_id: TSqlComboBox;
+    fil_calculoprecio_id: TSqlComboBox;
     btnexaminar: TButton;
     Label2: TLabel;
     archivo_excel: TEdit;
     btnabrirarchivo: TButton;
-    act_politicaprecio_id: TSqlComboBox;
+    fil_politicaprecio_id: TSqlComboBox;
     Label14: TLabel;
     Label8: TLabel;
-    act_tipoiva_id: TSqlComboBox;
+    fil_tipoiva_id: TSqlComboBox;
     DTSDisminuir: TDataSource;
     Hojas: TComboBox;
     Label6: TLabel;
@@ -59,7 +59,7 @@ type
     btnincrementarprecios: TButton;
     btndisminuirprecios: TButton;
     Label7: TLabel;
-    act_proveedor_id: TSqlComboBox;
+    fil_proveedor_id: TSqlComboBox;
     Label9: TLabel;
     xls_rubro_id: TSqlComboBox;
     Label10: TLabel;
@@ -209,6 +209,35 @@ type
     btncodigosreferenciaincrementar: TButton;
     btncodigosreferenciadisminuir: TButton;
     btncodigosreferenciasincambios: TButton;
+    PanelGrillasExcel: TPanel;
+    DBGrid5: TDBGrid;
+    btnfiltrar: TButton;
+    ZQProductosAactualizar: TZQuery;
+    DTSProductosAactualizar: TDataSource;
+    GroupBox1: TGroupBox;
+    Label25: TLabel;
+    porc_nuevopreciocompra: TDBAdvEdit;
+    Label27: TLabel;
+    btnAplcarPCompra: TButton;
+    Label28: TLabel;
+    Label29: TLabel;
+    GroupBox2: TGroupBox;
+    Label30: TLabel;
+    Label31: TLabel;
+    Label32: TLabel;
+    porc_nuevoprecioventa: TDBAdvEdit;
+    btnAplicarPVenta: TButton;
+    GroupBox3: TGroupBox;
+    Label35: TLabel;
+    btnAplicarCalculo: TButton;
+    nuevo_calculoprecio_id: TSqlComboBox;
+    GroupBox4: TGroupBox;
+    Label34: TLabel;
+    Label33: TLabel;
+    Label36: TLabel;
+    btnAplicarPolitica: TButton;
+    btnquitarAactualizar: TButton;
+    nuevo_politicaprecio_id: TSqlComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btnexaminarClick(Sender: TObject);
     procedure btnabrirarchivoClick(Sender: TObject);
@@ -221,6 +250,13 @@ type
     procedure btnquitarincrementarClick(Sender: TObject);
     procedure btnquitarnuevoClick(Sender: TObject);
     procedure btnverarchivoClick(Sender: TObject);
+    procedure DBGrid5DblClick(Sender: TObject);
+    procedure btnfiltrarClick(Sender: TObject);
+    procedure btnquitarAactualizarClick(Sender: TObject);
+    procedure btnAplcarPCompraClick(Sender: TObject);
+    procedure btnAplicarPVentaClick(Sender: TObject);
+    procedure btnAplicarCalculoClick(Sender: TObject);
+    procedure btnAplicarPoliticaClick(Sender: TObject);
   private
     { Private declarations }
     destino:string;
@@ -249,6 +285,98 @@ begin
           Princ.AgregarProductos(MQNuevos);
 
       end;
+end;
+
+procedure TActualizarProductos.btnAplcarPCompraClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea actualizar precios?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          btnAplcarPCompra.Enabled:=false;
+          ZQProductosAactualizar.First;
+          while not ZQProductosAactualizar.Eof do
+              begin
+                  ZQProductosAactualizar.Edit;
+                  ZQProductosAactualizar.FieldByName('producto_preciocosto').AsFloat:=roundto(ZQProductosAactualizar.FieldByName('producto_preciocosto').AsFloat+(ZQProductosAactualizar.FieldByName('producto_preciocosto').AsFloat*porc_nuevopreciocompra.FloatValue/100),-2);
+                  ZQProductosAactualizar.Post;
+
+                  ZQProductosAactualizar.Next;
+              end;
+          Princ.CalcularPreciosProducto(ZQProductosAactualizar,true);
+
+      end;
+end;
+
+procedure TActualizarProductos.btnAplicarCalculoClick(Sender: TObject);
+begin
+    if nuevo_calculoprecio_id.codigo<>'-1' then
+      begin
+          if (MessageDlg('Seguro desea actualizar precios?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+            begin
+                btnAplicarCalculo.Enabled:=false;
+                ZQProductosAactualizar.First;
+                while not ZQProductosAactualizar.Eof do
+                    begin
+                        ZQProductosAactualizar.Edit;
+                        ZQProductosAactualizar.FieldByName('calculoprecio_id').AsString:=nuevo_calculoprecio_id.codigo;
+                        ZQProductosAactualizar.Post;
+
+                        ZQProductosAactualizar.Next;
+                    end;
+                Princ.CalcularPreciosProducto(ZQProductosAactualizar,true);
+
+            end;
+
+      end;
+
+end;
+
+procedure TActualizarProductos.btnAplicarPoliticaClick(Sender: TObject);
+begin
+    if nuevo_politicaprecio_id.codigo<>'-1' then
+      begin
+          if (MessageDlg('Seguro desea actualizar precios?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+            begin
+                btnAplicarPolitica.Enabled:=false;
+                ZQProductosAactualizar.First;
+                while not ZQProductosAactualizar.Eof do
+                    begin
+                        ZQProductosAactualizar.Edit;
+                        ZQProductosAactualizar.FieldByName('politicaprecio_id').AsString:=nuevo_politicaprecio_id.codigo;
+                        ZQProductosAactualizar.Post;
+
+                        ZQProductosAactualizar.Next;
+                    end;
+                Princ.CalcularPreciosProducto(ZQProductosAactualizar,true);
+
+
+            end;
+
+
+      end;
+end;
+
+procedure TActualizarProductos.btnAplicarPVentaClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea actualizar precios?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          btnAplicarPVenta.Enabled:=false;
+          ZQProductosAactualizar.First;
+          while not ZQProductosAactualizar.Eof do
+              begin
+                  ZQProductosAactualizar.Edit;
+                  ZQProductosAactualizar.FieldByName('producto_precioventa1').AsFloat:=roundto(ZQProductosAactualizar.FieldByName('producto_precioventa1').AsFloat+(ZQProductosAactualizar.FieldByName('producto_precioventa1').AsFloat*porc_nuevoprecioventa.FloatValue/100),-2);
+                  ZQProductosAactualizar.FieldByName('producto_precioventa2').AsFloat:=roundto(ZQProductosAactualizar.FieldByName('producto_precioventa2').AsFloat+(ZQProductosAactualizar.FieldByName('producto_precioventa2').AsFloat*porc_nuevoprecioventa.FloatValue/100),-2);
+                  ZQProductosAactualizar.FieldByName('producto_precioventa3').AsFloat:=roundto(ZQProductosAactualizar.FieldByName('producto_precioventa3').AsFloat+(ZQProductosAactualizar.FieldByName('producto_precioventa3').AsFloat*porc_nuevoprecioventa.FloatValue/100),-2);
+                  ZQProductosAactualizar.FieldByName('producto_precioventa4').AsFloat:=roundto(ZQProductosAactualizar.FieldByName('producto_precioventa4').AsFloat+(ZQProductosAactualizar.FieldByName('producto_precioventa4').AsFloat*porc_nuevoprecioventa.FloatValue/100),-2);
+                  ZQProductosAactualizar.Post;
+
+                  ZQProductosAactualizar.Next;
+              end;
+
+      end;
+
+
+    Princ.ActualizarPrecios(ZQProductosAactualizar);
 end;
 
 procedure TActualizarProductos.btndisminuirpreciosClick(Sender: TObject);
@@ -298,6 +426,55 @@ begin
     Princ.OpenDialog1.Filter:='';
 end;
 
+procedure TActualizarProductos.btnfiltrarClick(Sender: TObject);
+begin
+    ZQProductosAactualizar.Active:=false;
+    ZQProductosAactualizar.SQL.Text:='select * from productos '+
+                                     'inner join rubros on productos.rubro_id=rubros.rubro_id '+
+                                     'inner join proveedores on productos.proveedor_id=proveedores.proveedor_id '+
+                                     'inner join politicasdeprecios on productos.politicaprecio_id=politicasdeprecios.politicaprecio_id '+
+                                     'inner join calculoprecios on productos.calculoprecio_id=calculoprecios.calculoprecio_id '+
+                                     'inner join tipoiva on productos.tipoiva_id=tipoiva.tipoiva_id ';
+
+    if fil_producto_id.Text<>'' then
+      ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.producto_id like "%'+fil_producto_id.Text+'%"');
+
+    if fil_producto_codigo.Text<>'' then
+      ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.producto_codigo like "%'+fil_producto_codigo.Text+'%"');
+
+    if fil_producto_codigobarras.Text<>'' then
+      ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.producto_codigobarras like "%'+fil_producto_codigobarras.Text+'%"');
+
+    if fil_producto_nombre.Text<>'' then
+      ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.producto_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_nombre.Text,' ','%')+'%"');
+
+    if fil_proveedor_id.codigo<>'-1' then
+      ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.proveedor_id="'+fil_proveedor_id.codigo+'"');
+
+    if fil_calculoprecio_id.codigo<>'-1' then
+      ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.calculoprecio_id="'+fil_calculoprecio_id.codigo+'"');
+
+    if fil_rubro_id.codigo<>'-1' then
+      ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.rubro_id="'+fil_rubro_id.codigo+'"');
+
+    if fil_politicaprecio_id.codigo<>'-1' then
+      ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.politicaprecio_id="'+fil_politicaprecio_id.codigo+'"');
+
+    if fil_tipoiva_id.codigo<>'-1' then
+      ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.tipoiva_id="'+fil_tipoiva_id.codigo+'"');
+
+
+
+
+    btnAplcarPCompra.Enabled:=true;
+    btnAplicarPVenta.Enabled:=true;
+    btnAplicarCalculo.Enabled:=true;
+    btnAplicarPolitica.Enabled:=true;
+
+    ZQProductosAactualizar.Active:=true;
+
+end;
+
 procedure TActualizarProductos.btnincrementarpreciosClick(Sender: TObject);
 begin
     if (MessageDlg('Seguro desea actualizar estos precios?', mtConfirmation, [mbOK, mbCancel], 0) in [mrOk, mrNone]) then
@@ -305,6 +482,17 @@ begin
           btnincrementarprecios.Enabled:=false;
           Princ.ActualizarPrecios(MQIncrementar);
 
+      end;
+end;
+
+procedure TActualizarProductos.btnquitarAactualizarClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea quitar de la lista?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          try
+            ZQProductosAactualizar.Delete;
+          except
+          end;
       end;
 end;
 
@@ -352,6 +540,17 @@ begin
     Princ.ADOTable1.Active:=true;
 
     Princ.MostrarVentanaExcel;
+end;
+
+procedure TActualizarProductos.DBGrid5DblClick(Sender: TObject);
+begin
+    if ZQProductosAactualizar.Active then
+      begin
+          if ZQProductosAactualizar.RecordCount>0 then
+            begin
+                Princ.AbrirModificarProducto(ZQProductosAactualizar.FieldByName('producto_id').AsString);
+            end;
+      end;
 end;
 
 procedure TActualizarProductos.btnabrirarchivoClick(Sender: TObject);
@@ -524,20 +723,20 @@ end;
 
 procedure TActualizarProductos.FormCreate(Sender: TObject);
 begin
-    act_rubro_id.llenarcombo;
-    act_rubro_id.Buscar('-1');
+    fil_rubro_id.llenarcombo;
+    fil_rubro_id.Buscar('-1');
 
-    act_calculoprecio_id.llenarcombo;
-    act_calculoprecio_id.Buscar('-1');
+    fil_calculoprecio_id.llenarcombo;
+    fil_calculoprecio_id.Buscar('-1');
 
-    act_politicaprecio_id.llenarcombo;
-    act_politicaprecio_id.Buscar('-1');
+    fil_politicaprecio_id.llenarcombo;
+    fil_politicaprecio_id.Buscar('-1');
 
-    act_tipoiva_id.llenarcombo;
-    act_tipoiva_id.Buscar('-1');
+    fil_tipoiva_id.llenarcombo;
+    fil_tipoiva_id.Buscar('-1');
 
-    act_proveedor_id.llenarcombo;
-    act_proveedor_id.Buscar('-1');
+    fil_proveedor_id.llenarcombo;
+    fil_proveedor_id.Buscar('-1');
 
 
     xls_rubro_id.llenarcombo;
@@ -556,6 +755,9 @@ begin
     xls_proveedor_id.Buscar('-1');
 
     destino:='';
+
+    nuevo_calculoprecio_id.llenarcombo;
+    nuevo_politicaprecio_id.llenarcombo;
 end;
 
 procedure TActualizarProductos.tipo_codigoSelect(Sender: TObject);

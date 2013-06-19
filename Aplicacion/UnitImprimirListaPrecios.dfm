@@ -9,7 +9,7 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
   inherited panelgrilla: TAdvPanel
     Width = 865
     Height = 519
-    ExplicitWidth = 735
+    ExplicitWidth = 865
     ExplicitHeight = 519
     FullHeight = 0
     object Label21: TLabel [0]

@@ -279,6 +279,7 @@ type
     function AbrirCaja(personal_id:string):string;
     procedure CerrarCaja(caja_id:string;caja_saldofinal:real);
     function GetConfiguracionMenu(menu_nomb:string; campo:string):string;
+    procedure AbrirModificarProducto(id:string);
   end;
 
 type
@@ -1198,6 +1199,22 @@ end;
 
 
 
+procedure TPrinc.AbrirModificarProducto(id:string);
+begin
+    try
+      productos:=Tproductos.Create(self);
+    finally
+      productos.abm:=2;
+      productos.id:=id;
+      productos.btnguardar.Caption:='Modificar';
+      productos.Show;
+    end;
+
+
+end;
+
+
+
 procedure TPrinc.AbrirEliminarCajaAsiento(id: string);
 begin
     if (MessageDlg('Seguro desea eliminar este registro?', mtConfirmation, [mbOK, mbCancel], 0) in [mrOk, mrNone]) then
@@ -1510,7 +1527,11 @@ begin
 end;
 
 Procedure TPrinc.ActualizarPrecios(QProductos: TDataSet);
+var
+  producto_fechaactualizacionprecio:string;
 begin
+    producto_fechaactualizacionprecio:=formatdatetime('yyyy-mm-dd',Princ.fechaservidor);
+
     QProductos.First;
     while not QProductos.Eof do
         begin
@@ -1539,7 +1560,7 @@ begin
             ZQProductosABM.parambyname('producto_precioventa4').asstring:=QProductos.FieldByName('producto_precioventa4').AsString;
             ZQProductosABM.parambyname('producto_precioventabase').asstring:=QProductos.FieldByName('producto_precioventabase').AsString;
             ZQProductosABM.parambyname('producto_id').asstring:=QProductos.FieldByName('producto_id').AsString;
-            ZQProductosABM.parambyname('producto_fechaactualizacionprecio').asstring:=formatdatetime('yyyy-mm-dd',Princ.fechaservidor);
+            ZQProductosABM.parambyname('producto_fechaactualizacionprecio').asstring:=producto_fechaactualizacionprecio;
             ZQProductosABM.ExecSQL;
 
             QProductos.Next;
@@ -1689,6 +1710,10 @@ begin
                   ZQExcecSQL.sql.clear;
                   ZQExcecSQL.sql.add('Update productos set ');
                   ZQExcecSQL.sql.add('producto_fechaactualizacionprecio=curdate(), ');
+                  ZQExcecSQL.sql.add('producto_preciocosto=:producto_preciocosto, ');
+                  ZQExcecSQL.sql.add('producto_precioventabase=:producto_precioventabase, ');
+                  ZQExcecSQL.sql.add('calculoprecio_id=:calculoprecio_id, ');
+                  ZQExcecSQL.sql.add('politicaprecio_id=:politicaprecio_id, ');
                   ZQExcecSQL.sql.add('producto_neto1=:producto_neto1, ');
                   ZQExcecSQL.sql.add('producto_neto2=:producto_neto2, ');
                   ZQExcecSQL.sql.add('producto_neto3=:producto_neto3, ');
@@ -1708,6 +1733,10 @@ begin
                   ZQExcecSQL.parambyname('producto_precioventa3').asstring:=QProductos.FieldByName('producto_precioventa3').AsString;
                   ZQExcecSQL.parambyname('producto_precioventa4').asstring:=QProductos.FieldByName('producto_precioventa4').AsString;
                   ZQExcecSQL.parambyname('producto_precioventabase').asstring:=QProductos.FieldByName('producto_precioventabase').AsString;
+                  ZQExcecSQL.parambyname('producto_preciocosto').asstring:=QProductos.FieldByName('producto_preciocosto').AsString;
+                  ZQExcecSQL.parambyname('producto_precioventabase').asstring:=QProductos.FieldByName('producto_precioventabase').AsString;
+                  ZQExcecSQL.parambyname('calculoprecio_id').asstring:=QProductos.FieldByName('calculoprecio_id').AsString;
+                  ZQExcecSQL.parambyname('politicaprecio_id').asstring:=QProductos.FieldByName('politicaprecio_id').AsString;
                   ZQExcecSQL.parambyname('producto_id').asstring:=QProductos.FieldByName('producto_id').AsString;
                   ZQExcecSQL.ExecSQL;
 

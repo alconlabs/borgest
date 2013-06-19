@@ -2,8 +2,8 @@ object ActualizarProductos: TActualizarProductos
   Left = 0
   Top = 0
   Caption = 'ActualizarProductos'
-  ClientHeight = 580
-  ClientWidth = 1023
+  ClientHeight = 588
+  ClientWidth = 1035
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,8 +19,8 @@ object ActualizarProductos: TActualizarProductos
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 1023
-    Height = 580
+    Width = 1035
+    Height = 588
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -61,21 +61,24 @@ object ActualizarProductos: TActualizarProductos
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitWidth = 895
+    ExplicitWidth = 1023
+    ExplicitHeight = 580
     FullHeight = 0
     object PgCtrlSettings: TPageControl
       Left = 0
       Top = 0
-      Width = 1023
-      Height = 230
-      ActivePage = TabSheet1
-      Align = alTop
+      Width = 1035
+      Height = 570
+      ActivePage = TabSheet2
+      Align = alClient
       TabOrder = 0
-      ExplicitWidth = 895
+      ExplicitWidth = 1023
+      ExplicitHeight = 465
       object TabSheet2: TTabSheet
         Caption = 'Actualizar Productos'
         ImageIndex = 1
-        ExplicitWidth = 887
+        ExplicitLeft = 8
+        ExplicitTop = 28
         object Label3: TLabel
           Left = 53
           Top = 12
@@ -117,16 +120,16 @@ object ActualizarProductos: TActualizarProductos
           Caption = 'Rubro'
         end
         object Label12: TLabel
-          Left = 401
-          Top = 60
+          Left = 9
+          Top = 84
           Width = 83
           Height = 13
           Alignment = taRightJustify
           Caption = 'Calculo de Precio'
         end
         object Label14: TLabel
-          Left = 10
-          Top = 84
+          Left = 402
+          Top = 60
           Width = 82
           Height = 13
           Alignment = taRightJustify
@@ -134,7 +137,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object Label8: TLabel
           Left = 443
-          Top = 84
+          Top = 83
           Width = 41
           Height = 13
           Alignment = taRightJustify
@@ -148,41 +151,42 @@ object ActualizarProductos: TActualizarProductos
           Alignment = taRightJustify
           Caption = 'Proveedor'
         end
-        object producto_id: TEdit
+        object fil_producto_id: TEdit
           Left = 98
           Top = 9
           Width = 103
           Height = 21
           TabOrder = 0
         end
-        object producto_codigo: TEdit
+        object fil_producto_codigo: TEdit
           Left = 266
           Top = 9
           Width = 103
           Height = 21
           TabOrder = 1
         end
-        object producto_codigobarras: TEdit
+        object fil_producto_codigobarras: TEdit
           Left = 490
           Top = 9
           Width = 151
           Height = 21
           TabOrder = 2
         end
-        object producto_nombre: TEdit
+        object fil_producto_nombre: TEdit
           Left = 98
           Top = 33
           Width = 271
           Height = 21
           TabOrder = 3
         end
-        object act_rubro_id: TSqlComboBox
+        object fil_rubro_id: TSqlComboBox
           Left = 490
           Top = 33
           Width = 151
           Height = 21
+          Style = csDropDownList
           ItemHeight = 13
-          TabOrder = 4
+          TabOrder = 6
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from rubros'
@@ -193,13 +197,14 @@ object ActualizarProductos: TActualizarProductos
           Tag2 = 0
           ConfTodos = True
         end
-        object act_calculoprecio_id: TSqlComboBox
-          Left = 490
-          Top = 57
+        object fil_calculoprecio_id: TSqlComboBox
+          Left = 98
+          Top = 81
           Width = 151
           Height = 21
+          Style = csDropDownList
           ItemHeight = 13
-          TabOrder = 6
+          TabOrder = 5
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from calculoprecios'
@@ -210,11 +215,12 @@ object ActualizarProductos: TActualizarProductos
           Tag2 = 0
           ConfTodos = True
         end
-        object act_politicaprecio_id: TSqlComboBox
-          Left = 98
-          Top = 80
+        object fil_politicaprecio_id: TSqlComboBox
+          Left = 490
+          Top = 57
           Width = 151
           Height = 21
+          Style = csDropDownList
           ItemHeight = 13
           TabOrder = 7
           Confbase = Princ.ZBase
@@ -227,11 +233,12 @@ object ActualizarProductos: TActualizarProductos
           Tag2 = 0
           ConfTodos = True
         end
-        object act_tipoiva_id: TSqlComboBox
+        object fil_tipoiva_id: TSqlComboBox
           Left = 490
-          Top = 81
+          Top = 80
           Width = 121
           Height = 21
+          Style = csDropDownList
           ItemHeight = 13
           TabOrder = 8
           Confbase = Princ.ZBase
@@ -244,13 +251,14 @@ object ActualizarProductos: TActualizarProductos
           Tag2 = 0
           ConfTodos = True
         end
-        object act_proveedor_id: TSqlComboBox
+        object fil_proveedor_id: TSqlComboBox
           Left = 98
           Top = 57
           Width = 271
           Height = 21
+          Style = csDropDownList
           ItemHeight = 13
-          TabOrder = 5
+          TabOrder = 4
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from proveedores'
@@ -261,11 +269,381 @@ object ActualizarProductos: TActualizarProductos
           Tag2 = 0
           ConfTodos = True
         end
+        object DBGrid5: TDBGrid
+          Left = 3
+          Top = 107
+          Width = 1021
+          Height = 241
+          DataSource = DTSProductosAactualizar
+          Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+          TabOrder = 10
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'MS Sans Serif'
+          TitleFont.Style = []
+          OnDblClick = DBGrid5DblClick
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'producto_id'
+              Title.Caption = 'Codigo1'
+              Width = 55
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'producto_codigo'
+              Title.Caption = 'Codigo2'
+              Width = 55
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'producto_nombre'
+              Title.Caption = 'Descripcion'
+              Width = 274
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'producto_preciocosto'
+              Title.Caption = 'P.Compra'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'producto_precioventa1'
+              Title.Caption = 'P.Venta1'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'producto_precioventa2'
+              Title.Caption = 'P.Venta2'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'producto_precioventa3'
+              Title.Caption = 'P.Venta3'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'producto_precioventa4'
+              Title.Caption = 'P.Venta4'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'producto_codigoreferencia'
+              Title.Caption = 'Cod. Referencia'
+              Width = 120
+              Visible = True
+            end>
+        end
+        object btnfiltrar: TButton
+          Left = 690
+          Top = 78
+          Width = 90
+          Height = 25
+          Caption = 'Filtrar'
+          TabOrder = 9
+          OnClick = btnfiltrarClick
+        end
+        object GroupBox1: TGroupBox
+          Left = 275
+          Top = 354
+          Width = 182
+          Height = 119
+          Caption = 'Precio Compra'
+          TabOrder = 11
+          object Label25: TLabel
+            Left = 10
+            Top = 18
+            Width = 64
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Nuevo precio'
+          end
+          object Label27: TLabel
+            Left = 156
+            Top = 18
+            Width = 14
+            Height = 16
+            Caption = '%'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object Label28: TLabel
+            Left = 2
+            Top = 50
+            Width = 139
+            Height = 13
+            Caption = 'Aplicar sobre P.Compra'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold, fsItalic]
+            ParentFont = False
+          end
+          object Label29: TLabel
+            Left = 2
+            Top = 66
+            Width = 163
+            Height = 13
+            Caption = 'y calcular Precios de Venta'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold, fsItalic]
+            ParentFont = False
+          end
+          object porc_nuevopreciocompra: TDBAdvEdit
+            Left = 80
+            Top = 15
+            Width = 73
+            Height = 21
+            EditType = etFloat
+            Precision = 2
+            LabelFont.Charset = DEFAULT_CHARSET
+            LabelFont.Color = clWindowText
+            LabelFont.Height = -11
+            LabelFont.Name = 'Tahoma'
+            LabelFont.Style = []
+            Lookup.Separator = ';'
+            Color = clWindow
+            Enabled = True
+            TabOrder = 0
+            Text = '0,00'
+            Visible = True
+            Version = '2.7.0.5'
+          end
+          object btnAplcarPCompra: TButton
+            Left = 7
+            Top = 83
+            Width = 91
+            Height = 25
+            Caption = 'Aplicar'
+            TabOrder = 1
+            OnClick = btnAplcarPCompraClick
+          end
+        end
+        object GroupBox2: TGroupBox
+          Left = 463
+          Top = 354
+          Width = 182
+          Height = 119
+          Caption = 'Precio Venta'
+          TabOrder = 12
+          object Label30: TLabel
+            Left = 10
+            Top = 18
+            Width = 64
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Nuevo precio'
+          end
+          object Label31: TLabel
+            Left = 156
+            Top = 18
+            Width = 14
+            Height = 16
+            Caption = '%'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+          end
+          object Label32: TLabel
+            Left = 2
+            Top = 50
+            Width = 180
+            Height = 13
+            Caption = 'Aplicar sobre precios de venta'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold, fsItalic]
+            ParentFont = False
+          end
+          object porc_nuevoprecioventa: TDBAdvEdit
+            Left = 80
+            Top = 15
+            Width = 73
+            Height = 21
+            EditType = etFloat
+            Precision = 2
+            LabelFont.Charset = DEFAULT_CHARSET
+            LabelFont.Color = clWindowText
+            LabelFont.Height = -11
+            LabelFont.Name = 'Tahoma'
+            LabelFont.Style = []
+            Lookup.Separator = ';'
+            Color = clWindow
+            Enabled = True
+            TabOrder = 0
+            Text = '0,00'
+            Visible = True
+            Version = '2.7.0.5'
+          end
+          object btnAplicarPVenta: TButton
+            Left = 10
+            Top = 83
+            Width = 91
+            Height = 25
+            Caption = 'Aplicar'
+            TabOrder = 1
+            OnClick = btnAplicarPVentaClick
+          end
+        end
+        object GroupBox3: TGroupBox
+          Left = 652
+          Top = 354
+          Width = 182
+          Height = 119
+          Caption = 'Calculo de precio'
+          TabOrder = 13
+          object Label35: TLabel
+            Left = -1
+            Top = 50
+            Width = 108
+            Height = 13
+            Caption = 'Asignar y calcular'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold, fsItalic]
+            ParentFont = False
+          end
+          object Label34: TLabel
+            Left = 2
+            Top = 66
+            Width = 122
+            Height = 13
+            Caption = 'los precios de venta'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold, fsItalic]
+            ParentFont = False
+          end
+          object btnAplicarCalculo: TButton
+            Left = 3
+            Top = 83
+            Width = 91
+            Height = 25
+            Caption = 'Aplicar'
+            TabOrder = 0
+            OnClick = btnAplicarCalculoClick
+          end
+          object nuevo_calculoprecio_id: TSqlComboBox
+            Left = 9
+            Top = 15
+            Width = 151
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 1
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              'select * from calculoprecios'
+              'order by calculoprecio_nombre')
+            ConfTabla = 'calculoprecios'
+            Confcampo_codigo = 'calculoprecio_id'
+            Confcampo_nomb = 'calculoprecio_nombre'
+            Tag2 = 0
+          end
+        end
+        object GroupBox4: TGroupBox
+          Left = 840
+          Top = 354
+          Width = 182
+          Height = 119
+          Caption = 'Politica de Precio'
+          TabOrder = 14
+          object Label33: TLabel
+            Left = -1
+            Top = 50
+            Width = 108
+            Height = 13
+            Caption = 'Asignar y calcular'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold, fsItalic]
+            ParentFont = False
+          end
+          object Label36: TLabel
+            Left = 2
+            Top = 66
+            Width = 122
+            Height = 13
+            Caption = 'los precios de venta'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold, fsItalic]
+            ParentFont = False
+          end
+          object btnAplicarPolitica: TButton
+            Left = 3
+            Top = 83
+            Width = 91
+            Height = 25
+            Caption = 'Aplicar'
+            Enabled = False
+            TabOrder = 0
+            OnClick = btnAplicarPoliticaClick
+          end
+          object nuevo_politicaprecio_id: TSqlComboBox
+            Left = 7
+            Top = 17
+            Width = 151
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 1
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              'select * from politicasdeprecios'
+              'order by politicaprecio_nombre')
+            ConfTabla = 'politicasdeprecios'
+            Confcampo_codigo = 'politicaprecio_id'
+            Confcampo_nomb = 'politicaprecio_nombre'
+            Tag2 = 0
+          end
+        end
+        object btnquitarAactualizar: TButton
+          Left = 3
+          Top = 351
+          Width = 99
+          Height = 25
+          Caption = 'Quitar de la lista'
+          TabOrder = 15
+          OnClick = btnquitarAactualizarClick
+        end
       end
       object TabSheet1: TTabSheet
         Caption = 'Actualizar desde Excel'
         ImageIndex = 1
-        ExplicitWidth = 887
+        ExplicitLeft = 0
+        ExplicitTop = 28
+        ExplicitWidth = 1015
         object Label2: TLabel
           Left = 40
           Top = 5
@@ -416,7 +794,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 151
           Height = 25
           Caption = 'Abrir archivo'
-          TabOrder = 16
+          TabOrder = 19
           OnClick = btnabrirarchivoClick
         end
         object Hojas: TComboBox
@@ -425,7 +803,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 271
           Height = 21
           ItemHeight = 13
-          TabOrder = 2
+          TabOrder = 3
         end
         object xls_rubro_id: TSqlComboBox
           Left = 602
@@ -433,7 +811,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 151
           Height = 21
           ItemHeight = 13
-          TabOrder = 13
+          TabOrder = 16
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from rubros'
@@ -449,7 +827,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 271
           Height = 21
           ItemHeight = 13
-          TabOrder = 11
+          TabOrder = 14
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from proveedores'
@@ -465,7 +843,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 151
           Height = 21
           ItemHeight = 13
-          TabOrder = 12
+          TabOrder = 15
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from calculoprecios'
@@ -481,7 +859,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 151
           Height = 21
           ItemHeight = 13
-          TabOrder = 14
+          TabOrder = 17
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from politicasdeprecios'
@@ -497,7 +875,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 121
           Height = 21
           ItemHeight = 13
-          TabOrder = 15
+          TabOrder = 18
           Confbase = Princ.ZBase
           Confsql.Strings = (
             'select * from tipoiva'
@@ -513,7 +891,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 73
           Height = 21
           ItemHeight = 13
-          TabOrder = 3
+          TabOrder = 4
           Items.Strings = (
             'A'
             'B'
@@ -538,7 +916,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 73
           Height = 21
           ItemHeight = 13
-          TabOrder = 7
+          TabOrder = 8
           Items.Strings = (
             'A'
             'B'
@@ -563,7 +941,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 73
           Height = 21
           ItemHeight = 13
-          TabOrder = 8
+          TabOrder = 9
           Items.Strings = (
             'A'
             'B'
@@ -596,7 +974,7 @@ object ActualizarProductos: TActualizarProductos
           Lookup.Separator = ';'
           Color = clWindow
           Enabled = True
-          TabOrder = 9
+          TabOrder = 12
           Text = '0'
           Visible = True
           Version = '2.7.0.5'
@@ -607,7 +985,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 144
           Height = 21
           ItemHeight = 13
-          TabOrder = 4
+          TabOrder = 5
           OnSelect = tipo_codigoSelect
           Items.Strings = (
             'Codigo1'
@@ -628,7 +1006,7 @@ object ActualizarProductos: TActualizarProductos
           Lookup.Separator = ';'
           Color = clWindow
           Enabled = True
-          TabOrder = 10
+          TabOrder = 13
           Text = '0'
           Visible = True
           Version = '2.7.0.5'
@@ -638,14 +1016,14 @@ object ActualizarProductos: TActualizarProductos
           Top = 74
           Width = 73
           Height = 21
-          TabOrder = 6
+          TabOrder = 7
         end
         object prefijo: TEdit
           Left = 82
           Top = 74
           Width = 73
           Height = 21
-          TabOrder = 5
+          TabOrder = 6
         end
         object btnverarchivo: TButton
           Left = 386
@@ -654,7 +1032,7 @@ object ActualizarProductos: TActualizarProductos
           Height = 25
           Caption = 'Ver archivo'
           Enabled = False
-          TabOrder = 17
+          TabOrder = 2
           OnClick = btnverarchivoClick
         end
         object columna_codigoreferencia: TComboBox
@@ -663,7 +1041,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 73
           Height = 21
           ItemHeight = 13
-          TabOrder = 18
+          TabOrder = 10
           Items.Strings = (
             'A'
             'B'
@@ -688,7 +1066,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 73
           Height = 21
           ItemHeight = 13
-          TabOrder = 19
+          TabOrder = 11
           Items.Strings = (
             'A'
             'B'
@@ -707,505 +1085,523 @@ object ActualizarProductos: TActualizarProductos
             'O'
             'P')
         end
-      end
-    end
-    object PgCtrlGrids: TPageControl
-      Left = 0
-      Top = 230
-      Width = 1023
-      Height = 328
-      ActivePage = TabSheet3
-      Align = alTop
-      TabOrder = 1
-      ExplicitWidth = 895
-      object TabSheet3: TTabSheet
-        Caption = 'Productos Nuevos'
-        ImageIndex = 1
-        ExplicitWidth = 887
-        object lblcantidadnuevos: TLabel
-          Left = 7
-          Top = 245
-          Width = 99
-          Height = 13
-          Caption = 'Cantidad de registros'
-        end
-        object DBGrid1: TDBGrid
+        object PanelGrillasExcel: TPanel
           Left = 0
-          Top = 0
-          Width = 1015
-          Height = 241
-          Align = alTop
-          DataSource = DTSNuevos
-          TabOrder = 0
-          TitleFont.Charset = DEFAULT_CHARSET
-          TitleFont.Color = clWindowText
-          TitleFont.Height = -11
-          TitleFont.Name = 'MS Sans Serif'
-          TitleFont.Style = []
-          Columns = <
-            item
-              Expanded = False
-              FieldName = 'producto_id'
-              Title.Caption = 'Codigo1'
-              Width = 55
-              Visible = True
+          Top = 197
+          Width = 1027
+          Height = 345
+          Align = alBottom
+          BevelOuter = bvNone
+          Caption = 'PanelGrillasExcel'
+          TabOrder = 20
+          ExplicitWidth = 1015
+          object PgCtrlGrids: TPageControl
+            Left = 0
+            Top = 0
+            Width = 1027
+            Height = 345
+            ActivePage = TabSheet3
+            Align = alClient
+            TabOrder = 0
+            ExplicitLeft = -822
+            ExplicitTop = -263
+            ExplicitWidth = 1023
+            ExplicitHeight = 328
+            object TabSheet3: TTabSheet
+              Caption = 'Productos Nuevos'
+              ImageIndex = 1
+              ExplicitWidth = 1015
+              ExplicitHeight = 300
+              object lblcantidadnuevos: TLabel
+                Left = 7
+                Top = 245
+                Width = 99
+                Height = 13
+                Caption = 'Cantidad de registros'
+              end
+              object DBGrid1: TDBGrid
+                Left = 0
+                Top = 0
+                Width = 1019
+                Height = 241
+                Align = alTop
+                DataSource = DTSNuevos
+                TabOrder = 0
+                TitleFont.Charset = DEFAULT_CHARSET
+                TitleFont.Color = clWindowText
+                TitleFont.Height = -11
+                TitleFont.Name = 'MS Sans Serif'
+                TitleFont.Style = []
+                Columns = <
+                  item
+                    Expanded = False
+                    FieldName = 'producto_id'
+                    Title.Caption = 'Codigo1'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_codigo'
+                    Title.Caption = 'Codigo2'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_codigobarras'
+                    Title.Caption = 'Cod.Barras'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_nombre'
+                    Title.Caption = 'Descripcion'
+                    Width = 274
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_preciocosto'
+                    Title.Caption = 'P.Compra'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa1'
+                    Title.Caption = 'P.Venta1'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa2'
+                    Title.Caption = 'P.Venta2'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa3'
+                    Title.Caption = 'P.Venta3'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa4'
+                    Title.Caption = 'P.Venta4'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_codigoreferencia'
+                    Title.Caption = 'Cod. Referencia'
+                    Width = 120
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producdepo_stockactual'
+                    Title.Caption = 'Stock'
+                    Width = 39
+                    Visible = True
+                  end>
+              end
+              object btnagregarnuevos: TButton
+                Left = 848
+                Top = 271
+                Width = 147
+                Height = 25
+                Caption = 'Agregar Nuevos Productos'
+                TabOrder = 1
+                OnClick = btnagregarnuevosClick
+              end
+              object btnquitarnuevo: TButton
+                Left = 8
+                Top = 271
+                Width = 99
+                Height = 25
+                Caption = 'Quitar de la lista'
+                TabOrder = 2
+                OnClick = btnquitarnuevoClick
+              end
             end
-            item
-              Expanded = False
-              FieldName = 'producto_codigo'
-              Title.Caption = 'Codigo2'
-              Width = 55
-              Visible = True
+            object TabSheet4: TTabSheet
+              Caption = 'A Incrementar'
+              ImageIndex = 2
+              ExplicitWidth = 1015
+              ExplicitHeight = 300
+              object lblcantidadincrementar: TLabel
+                Left = 7
+                Top = 245
+                Width = 99
+                Height = 13
+                Caption = 'Cantidad de registros'
+              end
+              object btnincrementarprecios: TButton
+                Left = 848
+                Top = 271
+                Width = 99
+                Height = 25
+                Caption = 'Actualizar Precios'
+                TabOrder = 0
+                OnClick = btnincrementarpreciosClick
+              end
+              object DBGrid2: TDBGrid
+                Left = 0
+                Top = 0
+                Width = 1019
+                Height = 241
+                Align = alTop
+                DataSource = DTSIncrementar
+                Options = [dgEditing, dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+                TabOrder = 1
+                TitleFont.Charset = DEFAULT_CHARSET
+                TitleFont.Color = clWindowText
+                TitleFont.Height = -11
+                TitleFont.Name = 'MS Sans Serif'
+                TitleFont.Style = []
+                Columns = <
+                  item
+                    Expanded = False
+                    FieldName = 'producto_id'
+                    Title.Caption = 'Codigo1'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_codigo'
+                    Title.Caption = 'Codigo2'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_codigobarras'
+                    Title.Caption = 'Cod.Barras'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_nombre'
+                    Title.Caption = 'Descripcion'
+                    Width = 228
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_preciocostoprev'
+                    Title.Caption = 'P.Compra'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_preciocosto'
+                    Title.Caption = 'P.Compra Nuevo'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'diferencia'
+                    Title.Caption = 'Diferencia'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa1'
+                    Title.Caption = 'P.Venta1'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa2'
+                    Title.Caption = 'P.Venta2'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa3'
+                    Title.Caption = 'P.Venta3'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa4'
+                    Title.Caption = 'P.Venta4'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_codigoreferencia'
+                    Title.Caption = 'Cod. Referencia'
+                    Width = 140
+                    Visible = True
+                  end>
+              end
+              object btnquitarincrementar: TButton
+                Left = 3
+                Top = 271
+                Width = 99
+                Height = 25
+                Caption = 'Quitar de la lista'
+                TabOrder = 2
+                OnClick = btnquitarincrementarClick
+              end
+              object btncodigosreferenciaincrementar: TButton
+                Left = 664
+                Top = 271
+                Width = 171
+                Height = 25
+                Caption = 'Actualizar Codigos de Referencia'
+                Enabled = False
+                TabOrder = 3
+              end
             end
-            item
-              Expanded = False
-              FieldName = 'producto_codigobarras'
-              Title.Caption = 'Cod.Barras'
-              Width = 55
-              Visible = True
+            object TabSheet5: TTabSheet
+              Caption = 'A Disminuir'
+              ImageIndex = 3
+              ExplicitWidth = 1015
+              ExplicitHeight = 300
+              object lblcantidadisminuir: TLabel
+                Left = 7
+                Top = 245
+                Width = 99
+                Height = 13
+                Caption = 'Cantidad de registros'
+              end
+              object btndisminuirprecios: TButton
+                Left = 848
+                Top = 271
+                Width = 99
+                Height = 25
+                Caption = 'Actualizar Precios'
+                TabOrder = 0
+                OnClick = btndisminuirpreciosClick
+              end
+              object DBGrid3: TDBGrid
+                Left = 0
+                Top = 0
+                Width = 1019
+                Height = 241
+                Align = alTop
+                DataSource = DTSDisminuir
+                Options = [dgEditing, dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+                TabOrder = 1
+                TitleFont.Charset = DEFAULT_CHARSET
+                TitleFont.Color = clWindowText
+                TitleFont.Height = -11
+                TitleFont.Name = 'MS Sans Serif'
+                TitleFont.Style = []
+                Columns = <
+                  item
+                    Expanded = False
+                    FieldName = 'producto_id'
+                    Title.Caption = 'Codigo1'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_codigo'
+                    Title.Caption = 'Codigo2'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_codigobarras'
+                    Title.Caption = 'Cod.Barras'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_nombre'
+                    Title.Caption = 'Descripcion'
+                    Width = 228
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_preciocostoprev'
+                    Title.Caption = 'P.Compra'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_preciocosto'
+                    Title.Caption = 'P.Compra Nuevo'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'diferencia'
+                    Title.Caption = 'Diferencia'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa1'
+                    Title.Caption = 'P.Venta1'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa2'
+                    Title.Caption = 'P.Venta2'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa3'
+                    Title.Caption = 'P.Venta3'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa4'
+                    Title.Caption = 'P.Venta4'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_codigoreferencia'
+                    Title.Caption = 'Cod. Referencia'
+                    Width = 140
+                    Visible = True
+                  end>
+              end
+              object btnquitardisminuir: TButton
+                Left = 3
+                Top = 271
+                Width = 99
+                Height = 25
+                Caption = 'Quitar de la lista'
+                TabOrder = 2
+                OnClick = btnquitardisminuirClick
+              end
+              object btncodigosreferenciadisminuir: TButton
+                Left = 664
+                Top = 271
+                Width = 171
+                Height = 25
+                Caption = 'Actualizar Codigos de Referencia'
+                Enabled = False
+                TabOrder = 3
+              end
             end
-            item
-              Expanded = False
-              FieldName = 'producto_nombre'
-              Title.Caption = 'Descripcion'
-              Width = 274
-              Visible = True
+            object TabSheet6: TTabSheet
+              Caption = 'Sin Cambios'
+              ImageIndex = 3
+              ExplicitWidth = 1015
+              ExplicitHeight = 300
+              object lblcantidadsincambios: TLabel
+                Left = 7
+                Top = 245
+                Width = 99
+                Height = 13
+                Caption = 'Cantidad de registros'
+              end
+              object DBGrid4: TDBGrid
+                Left = 0
+                Top = 0
+                Width = 1019
+                Height = 241
+                Align = alTop
+                DataSource = DTSSincambios
+                TabOrder = 0
+                TitleFont.Charset = DEFAULT_CHARSET
+                TitleFont.Color = clWindowText
+                TitleFont.Height = -11
+                TitleFont.Name = 'MS Sans Serif'
+                TitleFont.Style = []
+                Columns = <
+                  item
+                    Expanded = False
+                    FieldName = 'producto_id'
+                    Title.Caption = 'Codigo1'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_codigo'
+                    Title.Caption = 'Codigo2'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_codigobarras'
+                    Title.Caption = 'Cod.Barras'
+                    Width = 55
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_nombre'
+                    Title.Caption = 'Descripcion'
+                    Width = 327
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_preciocosto'
+                    Title.Caption = 'P.Compra'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa1'
+                    Title.Caption = 'P.Venta1'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa2'
+                    Title.Caption = 'P.Venta2'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa3'
+                    Title.Caption = 'P.Venta3'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_precioventa4'
+                    Title.Caption = 'P.Venta4'
+                    Visible = True
+                  end
+                  item
+                    Expanded = False
+                    FieldName = 'producto_codigoreferencia'
+                    Title.Caption = 'Cod. Referencia'
+                    Width = 140
+                    Visible = True
+                  end>
+              end
+              object btncodigosreferenciasincambios: TButton
+                Left = 664
+                Top = 271
+                Width = 171
+                Height = 25
+                Caption = 'Actualizar Codigos de Referencia'
+                Enabled = False
+                TabOrder = 1
+              end
             end
-            item
-              Expanded = False
-              FieldName = 'producto_preciocosto'
-              Title.Caption = 'P.Costo'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa1'
-              Title.Caption = 'P.Venta1'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa2'
-              Title.Caption = 'P.Venta2'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa3'
-              Title.Caption = 'P.Venta3'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa4'
-              Title.Caption = 'P.Venta4'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_codigoreferencia'
-              Title.Caption = 'Cod. Referencia'
-              Width = 120
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producdepo_stockactual'
-              Title.Caption = 'Stock'
-              Width = 39
-              Visible = True
-            end>
-        end
-        object btnagregarnuevos: TButton
-          Left = 848
-          Top = 271
-          Width = 147
-          Height = 25
-          Caption = 'Agregar Nuevos Productos'
-          TabOrder = 1
-          OnClick = btnagregarnuevosClick
-        end
-        object btnquitarnuevo: TButton
-          Left = 8
-          Top = 271
-          Width = 99
-          Height = 25
-          Caption = 'Quitar de la lista'
-          TabOrder = 2
-          OnClick = btnquitarnuevoClick
-        end
-      end
-      object TabSheet4: TTabSheet
-        Caption = 'A Incrementar'
-        ImageIndex = 2
-        ExplicitWidth = 887
-        object lblcantidadincrementar: TLabel
-          Left = 7
-          Top = 245
-          Width = 99
-          Height = 13
-          Caption = 'Cantidad de registros'
-        end
-        object btnincrementarprecios: TButton
-          Left = 848
-          Top = 271
-          Width = 99
-          Height = 25
-          Caption = 'Actualizar Precios'
-          TabOrder = 0
-          OnClick = btnincrementarpreciosClick
-        end
-        object DBGrid2: TDBGrid
-          Left = 0
-          Top = 0
-          Width = 1015
-          Height = 241
-          Align = alTop
-          DataSource = DTSIncrementar
-          Options = [dgEditing, dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
-          TabOrder = 1
-          TitleFont.Charset = DEFAULT_CHARSET
-          TitleFont.Color = clWindowText
-          TitleFont.Height = -11
-          TitleFont.Name = 'MS Sans Serif'
-          TitleFont.Style = []
-          Columns = <
-            item
-              Expanded = False
-              FieldName = 'producto_id'
-              Title.Caption = 'Codigo1'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_codigo'
-              Title.Caption = 'Codigo2'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_codigobarras'
-              Title.Caption = 'Cod.Barras'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_nombre'
-              Title.Caption = 'Descripcion'
-              Width = 228
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_preciocostoprev'
-              Title.Caption = 'P.Costo'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_preciocosto'
-              Title.Caption = 'P.Costo Nuevo'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'diferencia'
-              Title.Caption = 'Diferencia'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa1'
-              Title.Caption = 'P.Venta1'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa2'
-              Title.Caption = 'P.Venta2'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa3'
-              Title.Caption = 'P.Venta3'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa4'
-              Title.Caption = 'P.Venta4'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_codigoreferencia'
-              Title.Caption = 'Cod. Referencia'
-              Width = 140
-              Visible = True
-            end>
-        end
-        object btnquitarincrementar: TButton
-          Left = 3
-          Top = 271
-          Width = 99
-          Height = 25
-          Caption = 'Quitar de la lista'
-          TabOrder = 2
-          OnClick = btnquitarincrementarClick
-        end
-        object btncodigosreferenciaincrementar: TButton
-          Left = 664
-          Top = 271
-          Width = 171
-          Height = 25
-          Caption = 'Actualizar Codigos de Referencia'
-          Enabled = False
-          TabOrder = 3
-        end
-      end
-      object TabSheet5: TTabSheet
-        Caption = 'A Disminuir'
-        ImageIndex = 3
-        ExplicitWidth = 887
-        object lblcantidadisminuir: TLabel
-          Left = 7
-          Top = 245
-          Width = 99
-          Height = 13
-          Caption = 'Cantidad de registros'
-        end
-        object btndisminuirprecios: TButton
-          Left = 848
-          Top = 271
-          Width = 99
-          Height = 25
-          Caption = 'Actualizar Precios'
-          TabOrder = 0
-          OnClick = btndisminuirpreciosClick
-        end
-        object DBGrid3: TDBGrid
-          Left = 0
-          Top = 0
-          Width = 1015
-          Height = 241
-          Align = alTop
-          DataSource = DTSDisminuir
-          Options = [dgEditing, dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
-          TabOrder = 1
-          TitleFont.Charset = DEFAULT_CHARSET
-          TitleFont.Color = clWindowText
-          TitleFont.Height = -11
-          TitleFont.Name = 'MS Sans Serif'
-          TitleFont.Style = []
-          Columns = <
-            item
-              Expanded = False
-              FieldName = 'producto_id'
-              Title.Caption = 'Codigo1'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_codigo'
-              Title.Caption = 'Codigo2'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_codigobarras'
-              Title.Caption = 'Cod.Barras'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_nombre'
-              Title.Caption = 'Descripcion'
-              Width = 228
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_preciocostoprev'
-              Title.Caption = 'P.Costo'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_preciocosto'
-              Title.Caption = 'P.Costo Nuevo'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'diferencia'
-              Title.Caption = 'Diferencia'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa1'
-              Title.Caption = 'P.Venta1'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa2'
-              Title.Caption = 'P.Venta2'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa3'
-              Title.Caption = 'P.Venta3'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa4'
-              Title.Caption = 'P.Venta4'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_codigoreferencia'
-              Title.Caption = 'Cod. Referencia'
-              Width = 140
-              Visible = True
-            end>
-        end
-        object btnquitardisminuir: TButton
-          Left = 3
-          Top = 271
-          Width = 99
-          Height = 25
-          Caption = 'Quitar de la lista'
-          TabOrder = 2
-          OnClick = btnquitardisminuirClick
-        end
-        object btncodigosreferenciadisminuir: TButton
-          Left = 664
-          Top = 271
-          Width = 171
-          Height = 25
-          Caption = 'Actualizar Codigos de Referencia'
-          Enabled = False
-          TabOrder = 3
-        end
-      end
-      object TabSheet6: TTabSheet
-        Caption = 'Sin Cambios'
-        ImageIndex = 3
-        ExplicitWidth = 887
-        object lblcantidadsincambios: TLabel
-          Left = 7
-          Top = 245
-          Width = 99
-          Height = 13
-          Caption = 'Cantidad de registros'
-        end
-        object DBGrid4: TDBGrid
-          Left = 0
-          Top = 0
-          Width = 1015
-          Height = 241
-          Align = alTop
-          DataSource = DTSSincambios
-          TabOrder = 0
-          TitleFont.Charset = DEFAULT_CHARSET
-          TitleFont.Color = clWindowText
-          TitleFont.Height = -11
-          TitleFont.Name = 'MS Sans Serif'
-          TitleFont.Style = []
-          Columns = <
-            item
-              Expanded = False
-              FieldName = 'producto_id'
-              Title.Caption = 'Codigo1'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_codigo'
-              Title.Caption = 'Codigo2'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_codigobarras'
-              Title.Caption = 'Cod.Barras'
-              Width = 55
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_nombre'
-              Title.Caption = 'Descripcion'
-              Width = 327
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_preciocosto'
-              Title.Caption = 'P.Costo'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa1'
-              Title.Caption = 'P.Venta1'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa2'
-              Title.Caption = 'P.Venta2'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa3'
-              Title.Caption = 'P.Venta3'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_precioventa4'
-              Title.Caption = 'P.Venta4'
-              Visible = True
-            end
-            item
-              Expanded = False
-              FieldName = 'producto_codigoreferencia'
-              Title.Caption = 'Cod. Referencia'
-              Width = 140
-              Visible = True
-            end>
-        end
-        object btncodigosreferenciasincambios: TButton
-          Left = 664
-          Top = 271
-          Width = 171
-          Height = 25
-          Caption = 'Actualizar Codigos de Referencia'
-          Enabled = False
-          TabOrder = 1
+          end
         end
       end
     end
@@ -1221,8 +1617,8 @@ object ActualizarProductos: TActualizarProductos
         Name = 'producto_id'
         ParamType = ptUnknown
       end>
-    Left = 448
-    Top = 312
+    Left = 952
+    Top = 208
     ParamData = <
       item
         DataType = ftUnknown
@@ -1241,8 +1637,8 @@ object ActualizarProductos: TActualizarProductos
         Name = 'producto_id'
         ParamType = ptUnknown
       end>
-    Left = 312
-    Top = 312
+    Left = 952
+    Top = 256
     ParamData = <
       item
         DataType = ftUnknown
@@ -1253,8 +1649,8 @@ object ActualizarProductos: TActualizarProductos
   object DTSExcel: TDataSource
     AutoEdit = False
     DataSet = Princ.ADODataSet1
-    Left = 216
-    Top = 304
+    Left = 832
+    Top = 64
   end
   object MQproductodeposito: TMQuery
     Connection = Princ.ZBase
@@ -1272,8 +1668,8 @@ object ActualizarProductos: TActualizarProductos
       'producdepo_puntorepos,d'
       'producdepo_stockminimo,d'
       'producdepo_stockactual,d')
-    Left = 680
-    Top = 344
+    Left = 952
+    Top = 64
     object MQproductodepositodeposito_id: TIntegerField
       FieldName = 'deposito_id'
     end
@@ -1303,8 +1699,8 @@ object ActualizarProductos: TActualizarProductos
     SQL.Strings = (
       'select * from depositos')
     Params = <>
-    Left = 600
-    Top = 304
+    Left = 952
+    Top = 112
   end
   object ZQproductodeposito: TZQuery
     Connection = Princ.ZBase
@@ -1323,8 +1719,8 @@ object ActualizarProductos: TActualizarProductos
         Name = 'producto_id'
         ParamType = ptUnknown
       end>
-    Left = 520
-    Top = 344
+    Left = 952
+    Top = 160
     ParamData = <
       item
         DataType = ftUnknown
@@ -1376,8 +1772,8 @@ object ActualizarProductos: TActualizarProductos
       'producto_observaciones,t'
       'producto_codigoreferencia,t'
       'producdepo_stockactual,d')
-    Left = 192
-    Top = 360
+    Left = 952
+    Top = 448
     object MQNuevosproducto_id: TIntegerField
       FieldName = 'producto_id'
     end
@@ -1462,8 +1858,8 @@ object ActualizarProductos: TActualizarProductos
   end
   object DTSDisminuir: TDataSource
     DataSet = MQDisminuir
-    Left = 480
-    Top = 408
+    Left = 832
+    Top = 112
   end
   object MQIncrementar: TMQuery
     Connection = Princ.ZBase
@@ -1510,8 +1906,8 @@ object ActualizarProductos: TActualizarProductos
       'diferencia,d'
       'producdepo_stockactual,d'
       'producto_codigoreferencia,t')
-    Left = 312
-    Top = 376
+    Left = 952
+    Top = 304
     object MQIncrementarproducto_id: TIntegerField
       FieldName = 'producto_id'
     end
@@ -1660,8 +2056,8 @@ object ActualizarProductos: TActualizarProductos
       'diferencia,d'
       'producdepo_stockactual,d'
       'producto_codigoreferencia,t')
-    Left = 312
-    Top = 424
+    Left = 952
+    Top = 352
     object MQDisminuirproducto_id: TIntegerField
       FieldName = 'producto_id'
     end
@@ -1751,14 +2147,14 @@ object ActualizarProductos: TActualizarProductos
   object DTSNuevos: TDataSource
     AutoEdit = False
     DataSet = MQNuevos
-    Left = 136
-    Top = 320
+    Left = 832
+    Top = 160
   end
   object DTSIncrementar: TDataSource
     AutoEdit = False
     DataSet = MQIncrementar
-    Left = 128
-    Top = 392
+    Left = 832
+    Top = 208
   end
   object MQSincambios: TMQuery
     Connection = Princ.ZBase
@@ -1798,8 +2194,8 @@ object ActualizarProductos: TActualizarProductos
       'producdepo_stockminimo,d'
       'producdepo_stockactual,d'
       'producto_codigoreferencia,t')
-    Left = 192
-    Top = 448
+    Left = 952
+    Top = 400
     object IntegerField1: TIntegerField
       FieldName = 'producto_id'
     end
@@ -1880,7 +2276,33 @@ object ActualizarProductos: TActualizarProductos
   object DTSSincambios: TDataSource
     AutoEdit = False
     DataSet = MQSincambios
-    Left = 112
-    Top = 448
+    Left = 832
+    Top = 256
+  end
+  object ZQProductosAactualizar: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select * from productos'
+      'inner join rubros on productos.rubro_id=rubros.rubro_id'
+      
+        'inner join proveedores on productos.proveedor_id=proveedores.pro' +
+        'veedor_id'
+      
+        'inner join politicasdeprecios on productos.politicaprecio_id=pol' +
+        'iticasdeprecios.politicaprecio_id'
+      
+        'inner join calculoprecios on productos.calculoprecio_id=calculop' +
+        'recios.calculoprecio_id'
+      'inner join tipoiva on productos.tipoiva_id=tipoiva.tipoiva_id')
+    Params = <>
+    Left = 952
+    Top = 504
+  end
+  object DTSProductosAactualizar: TDataSource
+    AutoEdit = False
+    DataSet = ZQProductosAactualizar
+    Left = 832
+    Top = 312
   end
 end
