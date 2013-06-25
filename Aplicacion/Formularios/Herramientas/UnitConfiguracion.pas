@@ -88,6 +88,7 @@ type
     PRODUCTOSTOCKINICIAL: TCheckBox;
     VENTASNCNDCONCEPTOS: TCheckBox;
     VENTASEMITIRREMITOCTACTE: TCheckBox;
+    VENTASVENDEDORCLIENTEADOCUMENTOS: TCheckBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -195,18 +196,7 @@ begin
 end;
 
 procedure Tconfiguracion.btnactualizarClick(Sender: TObject);
-var
-  FileHandle: Integer;
-  FileSize: DWord;
-
 begin
-    FileHandle := FileOpen(ExtractFilePath(Application.ExeName)+'Actualizaciones\updatedb.sql', fmOpenRead);
-    FileSize := GetFileSize(FileHandle, nil);
-    MessageDlg('tamaño '+IntToStr(FileSize), mtWarning, [mbOK], 0);
-
-    FileClose(FileHandle);
-
-
     ZQuery1.sql.clear;
     ZQuery1.sql.add('Replace config set ');
     ZQuery1.sql.add('config_valor=:config_valor, ');
@@ -341,6 +331,10 @@ begin
 
     ZQuery1.parambyname('config_nombre').AsString:='VENTASEMITIRREMITOCTACTE';
     ZQuery1.parambyname('config_valor').AsString:=booltostr(VENTASEMITIRREMITOCTACTE.Checked);
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='VENTASVENDEDORCLIENTEADOCUMENTOS';
+    ZQuery1.parambyname('config_valor').AsString:=booltostr(VENTASVENDEDORCLIENTEADOCUMENTOS.Checked);
     ZQuery1.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK], 0);
@@ -560,6 +554,9 @@ begin
 
     if ZQConfig.Locate('config_nombre','VENTASEMITIRREMITOCTACTE',[]) then
       VENTASEMITIRREMITOCTACTE.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','VENTASVENDEDORCLIENTEADOCUMENTOS',[]) then
+      VENTASVENDEDORCLIENTEADOCUMENTOS.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
 
 end;
 

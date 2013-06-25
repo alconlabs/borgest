@@ -352,13 +352,14 @@ const
   TIPODOCU_NOTACREDITOVENTA='Nota de Credito de Venta';
   TIPODOCU_NOTADEBITOVENTA='Nota de Debito de Venta';
   TIPODOCU_REMITOVENTA='Remito de Venta';
+  TIPODOCU_NOTAPEDIDO='Nota de Pedido';
 
   ABM_AGREGAR=1;
   ABM_MODIFICAR=2;
   ABM_ELIMINAR=3;
   ABM_IMPRIMIR=4;
   ABM_ANULAR=5;
-  ABM_MOSTRAR=6;
+  ABM_VER=6;
   ABM_CLONAR=7;
 
 //  CONNECTION_STRING1='Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source=';
@@ -536,6 +537,10 @@ begin
           Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
                                                    'inner join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
                                                    'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                                   'inner join localidades on clientes.localidad_id=localidades.localidad_id '+
+                                                   'inner join provincias on localidades.provincia_id=provincias.provincia_id '+
+                                                   'inner join paises on provincias.pais_id=paises.pais_id '+
+                                                   'inner join condicioniva on clientes.condicioniva_id=condicioniva.condicioniva_id '+
                                                    'where documentosventas.documentoventa_id="'+id+'"';
 
           Princ.VCLReport1.Execute;
@@ -2049,7 +2054,7 @@ begin
     if Documentoventadocu<>nil then
       begin
           ZQDocumentoventadocus.Active:=false;
-          ZQDocumentoventadocus.SQL.Text:='select * from documentoventadocus where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"';
+          ZQDocumentoventadocus.SQL.Text:='select * from documentoventadocus where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'" and documentoventadoc_tiporelacion="IMPUTACION"';
           ZQDocumentoventadocus.Active:=true;
           ZQDocumentoventadocus.First;
           while not ZQDocumentoventadocus.Eof do

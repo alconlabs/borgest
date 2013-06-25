@@ -80,6 +80,7 @@ type
     procedure modificar;
     procedure eliminar;
     procedure guardarclientevehiculo;
+    procedure ActualizarVendedorDocumentos;
   public
     { Public declarations }
     id:string;
@@ -95,6 +96,22 @@ uses Unitprinc;
 
 {$R *.dfm}
 
+
+procedure Tclientes.ActualizarVendedorDocumentos;
+begin
+    if (MessageDlg('Desea asignar documentos de este cliente al vendedor seleccionado?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          ZQuery1.Sql.Clear;
+          ZQuery1.Sql.Add('update documentosventas set ');
+          ZQuery1.Sql.Add('personal_id=:personal_id ');
+          ZQuery1.Sql.Add('where cliente_id=:cliente_id ');
+          ZQuery1.ParamByName('personal_id').AsString:=personal_id.codigo;
+          ZQuery1.ParamByName('cliente_id').AsString:=id;
+          ZQuery1.ExecSql;
+
+      end;
+
+end;
 
 procedure Tclientes.guardarclientevehiculo;
 begin
@@ -190,6 +207,18 @@ begin
 
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
+
+    if ZQclientes.FieldByName('personal_id').AsString<>personal_id.codigo then
+      begin
+          if strtobool(princ.GetConfiguracion('VENTASVENDEDORCLIENTEADOCUMENTOS')) then
+            begin
+                ActualizarVendedorDocumentos;
+            end;
+
+
+
+      end;
+
     Self.OnShow(self);
 
 

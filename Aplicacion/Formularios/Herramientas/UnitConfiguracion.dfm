@@ -88,7 +88,7 @@ object configuracion: Tconfiguracion
       Top = 0
       Width = 589
       Height = 425
-      ActivePage = TabSheet4
+      ActivePage = TabSheet1
       Align = alTop
       TabOrder = 2
       object TabSheet1: TTabSheet
@@ -640,6 +640,14 @@ object configuracion: Tconfiguracion
           Height = 17
           Caption = 'Emitir remito con Fac Cta. Cte.'
           TabOrder = 10
+        end
+        object VENTASVENDEDORCLIENTEADOCUMENTOS: TCheckBox
+          Left = 296
+          Top = 323
+          Width = 282
+          Height = 17
+          Caption = 'Al cambiar vendedor en clientes actualizar documentos'
+          TabOrder = 11
         end
       end
       object TabSheet5: TTabSheet

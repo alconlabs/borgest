@@ -172,10 +172,6 @@ begin
                                              documentocompra_dgrret.Value+
                                              documentocompra_dgrperc.Value+
                                              documentocompra_otrosimpuestos.Value,-2));
-
-
-
-
 end;
 
 function Tfacturacompra.ControlAnular:boolean;

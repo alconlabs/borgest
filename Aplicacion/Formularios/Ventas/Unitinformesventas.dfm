@@ -1,16 +1,16 @@
 inherited InformesVentas: TInformesVentas
   Caption = 'Informes de Ventas'
-  ClientHeight = 198
-  ClientWidth = 493
-  ExplicitWidth = 509
-  ExplicitHeight = 236
+  ClientHeight = 232
+  ClientWidth = 475
+  ExplicitWidth = 491
+  ExplicitHeight = 270
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Width = 493
-    Height = 198
-    ExplicitWidth = 493
-    ExplicitHeight = 198
+    Width = 475
+    Height = 232
+    ExplicitWidth = 475
+    ExplicitHeight = 232
     FullHeight = 0
     object Label1: TLabel [0]
       Left = 44
@@ -37,7 +37,7 @@ inherited InformesVentas: TInformesVentas
       Caption = 'Informe'
     end
     object Label4: TLabel [3]
-      Left = 29
+      Left = 32
       Top = 104
       Width = 46
       Height = 13
@@ -51,19 +51,27 @@ inherited InformesVentas: TInformesVentas
       Height = 13
       Caption = 'Punto de Venta'
     end
+    object Label6: TLabel [5]
+      Left = 46
+      Top = 128
+      Width = 32
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Cliente'
+    end
     inherited btncancelar: TButton
       Left = 293
-      Top = 144
+      Top = 176
       ExplicitLeft = 293
-      ExplicitTop = 144
+      ExplicitTop = 176
     end
     inherited btnguardar: TButton
       Left = 387
-      Top = 144
+      Top = 176
       Caption = 'Imprimir'
       OnClick = btnguardarClick
       ExplicitLeft = 387
-      ExplicitTop = 144
+      ExplicitTop = 176
     end
     object desde_fecha: TDateTimePicker
       Left = 84
@@ -91,14 +99,14 @@ inherited InformesVentas: TInformesVentas
       Style = csDropDownList
       ItemHeight = 13
       TabOrder = 4
-      OnSelect = informe_tipoSelect
       Items.Strings = (
         'Costos por Ventas'
         'Informe de Precios de Ventas'
         'Informe de ventas'
         'Informe de Cobros'
         'Ranking de Ventas de Productos'
-        'Informe de ventas C/Equipos')
+        'Informe de ventas C/Equipos'
+        'Informe de Equipos')
       Tag2 = 0
       valores.Strings = (
         '0'
@@ -106,7 +114,8 @@ inherited InformesVentas: TInformesVentas
         '2'
         '3'
         '4'
-        '5')
+        '5'
+        '6')
     end
     object personal_id: TSqlComboBox
       Left = 84
@@ -128,7 +137,7 @@ inherited InformesVentas: TInformesVentas
       Left = 353
       Top = 22
       Width = 112
-      Height = 116
+      Height = 124
       Columns = <>
       HoverTime = -1
       TabOrder = 6
@@ -226,10 +235,30 @@ inherited InformesVentas: TInformesVentas
       Tag2 = 0
       ConfTodosCheckeados = True
     end
+    object cliente_id: TSqlComboBox
+      Left = 84
+      Top = 125
+      Width = 263
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      TabOrder = 7
+      Confbase = Princ.ZBase
+      Confsql.Strings = (
+        'select * from clientes')
+      Confcampo_codigo = 'cliente_id'
+      Confcampo_nomb = 'cliente_nombre'
+      Tag2 = 0
+      ConfTodos = True
+    end
   end
   inherited ZQSelect: TZQuery
-    Left = 488
-    Top = 88
+    Left = 536
+    Top = 152
+  end
+  inherited ZQExecSQL: TZQuery
+    Left = 528
+    Top = 80
   end
   object Titles1: TTitles
     cam_codi = 'puntodeventa.puntoventa_id'
@@ -243,7 +272,7 @@ inherited InformesVentas: TInformesVentas
     Memo.Strings = (
       'select * from puntodeventa'
       'order by puntoventa_numero')
-    Left = 488
-    Top = 168
+    Left = 536
+    Top = 232
   end
 end

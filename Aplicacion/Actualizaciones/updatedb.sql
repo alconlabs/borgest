@@ -824,3 +824,5 @@ ALTER TABLE `documentoventadocus` ADD COLUMN `documentoventadoc_tiporelacion` VA
 Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible) values ('74', '>Ventas>Documentos>Aplicar Recibos Pendientes', '0', 'btnRecibosPendientes', '', '0', '0');
 200;
 INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,74,perfil_id from perfiles;
+201;
+Replace config set config_valor='0', config_nombre='VENTASVENDEDORCLIENTEADOCUMENTOS';

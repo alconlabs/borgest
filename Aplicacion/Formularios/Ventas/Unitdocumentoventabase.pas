@@ -323,6 +323,10 @@ begin
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
                                              'inner join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
                                              'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                             'inner join localidades on clientes.localidad_id=localidades.localidad_id '+
+                                             'inner join provincias on localidades.provincia_id=provincias.provincia_id '+
+                                             'inner join paises on provincias.pais_id=paises.pais_id '+
+                                             'inner join condicioniva on clientes.condicioniva_id=condicioniva.condicioniva_id '+
                                              'where documentosventas.documentoventa_id="'+id+'"';
 
 

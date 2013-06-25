@@ -21,9 +21,10 @@ type
     puntoventa_id: TSqlListView;
     Titles1: TTitles;
     Label5: TLabel;
+    Label6: TLabel;
+    cliente_id: TSqlComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
-    procedure informe_tipoSelect(Sender: TObject);
   private
     { Private declarations }
     procedure InformeCostosporVentas;
@@ -32,6 +33,7 @@ type
     procedure InformedeCobros;
     procedure RankingProductos;
     procedure InformedeVentasCEquipos;
+    procedure InformedeEquipos;
 
   public
     { Public declarations }
@@ -45,6 +47,41 @@ implementation
 uses UnitPrinc;
 
 {$R *.dfm}
+
+
+
+
+procedure TInformesVentas.InformedeEquipos;
+begin
+    puntoventa_id.GenerarWhere;
+    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\informe_equipos.rep';
+    Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
+    Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
+    Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
+    Princ.VCLReport1.Report.Params.ParamByName('CLIENTE_NOMBRE').AsString:=cliente_id.Text;
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
+                                             'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                             'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                             'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                             'where documentosventas.documentoventa_estado<>"ANULADA" and '+
+                                             'tiposdocumento.tipodocu_nombre="'+TIPODOCU_NOTAPEDIDO+'" and '+
+                                             'documentosventas.documentoventa_fecha >="'+FormatDateTime('yyyy-mm-dd',desde_fecha.Date)+'" and '+
+                                             'documentosventas.documentoventa_fecha <="'+FormatDateTime('yyyy-mm-dd',hasta_fecha.Date)+'" '+Princ.empresa_where+
+                                             ' and '+puntoventa_id.where;
+
+    if personal_id.Text<>'Todos' then
+      Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.personal_id="'+personal_id.codigo+'" ';
+
+    if cliente_id.Text<>'Todos' then
+      Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.cliente_id="'+cliente_id.codigo+'" ';
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero';
+
+
+    Princ.VCLReport1.Execute;
+
+end;
 
 
 
@@ -85,6 +122,7 @@ begin
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
+    Princ.VCLReport1.Report.Params.ParamByName('CLIENTE_NOMBRE').AsString:=cliente_id.Text;
 
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
                                              'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
@@ -98,6 +136,9 @@ begin
 
     if personal_id.Text<>'Todos' then
       Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.personal_id="'+personal_id.codigo+'" ';
+
+    if cliente_id.Text<>'Todos' then
+      Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.cliente_id="'+cliente_id.codigo+'" ';
 
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero';
 
@@ -113,6 +154,7 @@ begin
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
+    Princ.VCLReport1.Report.Params.ParamByName('CLIENTE_NOMBRE').AsString:=cliente_id.Text;
 
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
                                              'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
@@ -126,6 +168,9 @@ begin
 
     if personal_id.Text<>'Todos' then
       Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.personal_id="'+personal_id.codigo+'" ';
+
+    if cliente_id.Text<>'Todos' then
+      Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.cliente_id="'+cliente_id.codigo+'" ';
 
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero';
 
@@ -145,6 +190,7 @@ begin
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
+    Princ.VCLReport1.Report.Params.ParamByName('CLIENTE_NOMBRE').AsString:=cliente_id.Text;
 
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
                                              'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
@@ -159,6 +205,9 @@ begin
 
     if personal_id.Text<>'Todos' then
       Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.personal_id="'+personal_id.codigo+'" ';
+
+    if cliente_id.Text<>'Todos' then
+      Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.cliente_id="'+cliente_id.codigo+'" ';
 
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero';
 
@@ -207,20 +256,6 @@ begin
 
 end;
 
-
-procedure TInformesVentas.informe_tipoSelect(Sender: TObject);
-begin
-  inherited;
-    Label4.Enabled:=false;
-    personal_id.Enabled:=false;
-    if informe_tipo.codigo='2' then
-      begin
-          Label4.Enabled:=true;
-          personal_id.Enabled:=true;
-
-      end;
-
-end;
 
 procedure TInformesVentas.InformeCostosporVentas;
 begin
@@ -273,6 +308,10 @@ begin
               InformedeVentasCEquipos;
 
           end;
+        6:begin
+              InformedeEquipos;
+
+          end;
 
     end;
 end;
@@ -286,8 +325,8 @@ begin
     personal_id.llenarcombo;
     personal_id.ItemIndex:=0;
 
-    Label4.Enabled:=false;
-    personal_id.Enabled:=false;
+    cliente_id.llenarcombo;
+    cliente_id.ItemIndex:=0;
 
     Titles1.Memo.Text:='select * from puntodeventa where 1=1 '+Princ.empresa_where;
     puntoventa_id.Fill;
