@@ -1,7 +1,7 @@
 object Princ: TPrinc
   Left = 0
   Top = 0
-  Caption = 'Demo'
+  Caption = 'Sistema Control de Granos y Cuentas Corrientes'
   ClientHeight = 567
   ClientWidth = 1271
   Color = clBtnFace
@@ -3931,7 +3931,7 @@ object Princ: TPrinc
       object AdvToolBar5: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 301
+        Width = 373
         Height = 98
         AllowFloating = False
         Caption = 'Movimientos'
@@ -3983,13 +3983,13 @@ object Princ: TPrinc
           Appearance.ColorMirrorDisabled = 11974326
           Appearance.ColorMirrorDisabledTo = 15921906
         end
-        object AdvGlowButton17: TAdvGlowButton
+        object btnrecibos: TAdvGlowButton
           Left = 150
           Top = 2
           Width = 73
           Height = 81
           Cursor = crHandPoint
-          Caption = 'Recibos de Ventas'
+          Caption = 'Recibos'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -9
@@ -3998,39 +3998,7 @@ object Princ: TPrinc
           FocusType = ftHot
           ParentFont = False
           TabOrder = 1
-          OnClick = AdvGlowButton17Click
-          Appearance.ColorChecked = 16111818
-          Appearance.ColorCheckedTo = 16367008
-          Appearance.ColorDisabled = 15921906
-          Appearance.ColorDisabledTo = 15921906
-          Appearance.ColorDown = 16111818
-          Appearance.ColorDownTo = 16367008
-          Appearance.ColorHot = 16117985
-          Appearance.ColorHotTo = 16372402
-          Appearance.ColorMirrorHot = 16107693
-          Appearance.ColorMirrorHotTo = 16775412
-          Appearance.ColorMirrorDown = 16102556
-          Appearance.ColorMirrorDownTo = 16768988
-          Appearance.ColorMirrorChecked = 16102556
-          Appearance.ColorMirrorCheckedTo = 16768988
-          Appearance.ColorMirrorDisabled = 11974326
-          Appearance.ColorMirrorDisabledTo = 15921906
-        end
-        object AdvGlowButton18: TAdvGlowButton
-          Left = 223
-          Top = 2
-          Width = 74
-          Height = 81
-          Cursor = crHandPoint
-          Caption = 'Remitos'
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -9
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          FocusType = ftHot
-          ParentFont = False
-          TabOrder = 2
+          OnClick = btnrecibosClick
           Appearance.ColorChecked = 16111818
           Appearance.ColorCheckedTo = 16367008
           Appearance.ColorDisabled = 15921906
@@ -4062,8 +4030,98 @@ object Princ: TPrinc
           Font.Style = []
           FocusType = ftHot
           ParentFont = False
-          TabOrder = 3
+          TabOrder = 2
           OnClick = btncontratoventaClick
+          Appearance.BorderColor = 14727579
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.Color = 15653832
+          Appearance.ColorTo = 16178633
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 16245200
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
+        object btnnotasdecredito: TAdvGlowButton
+          Left = 223
+          Top = 2
+          Width = 73
+          Height = 81
+          Cursor = crHandPoint
+          Caption = 'Notas de Credito'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          FocusType = ftHot
+          ParentFont = False
+          TabOrder = 3
+          OnClick = btnnotasdecreditoClick
+          Appearance.BorderColor = 14727579
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.Color = 15653832
+          Appearance.ColorTo = 16178633
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 16245200
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
+        object BtnNotasdeDebito: TAdvGlowButton
+          Left = 296
+          Top = 2
+          Width = 73
+          Height = 81
+          Cursor = crHandPoint
+          Caption = 'Notas de Debito'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          FocusType = ftHot
+          ParentFont = False
+          TabOrder = 4
+          OnClick = BtnNotasdeDebitoClick
           Appearance.BorderColor = 14727579
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -4095,7 +4153,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBar6: TAdvToolBar
-        Left = 307
+        Left = 379
         Top = 3
         Width = 227
         Height = 98
@@ -4252,7 +4310,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBar8: TAdvToolBar
-        Left = 537
+        Left = 609
         Top = 3
         Width = 227
         Height = 98
@@ -4777,8 +4835,8 @@ object Princ: TPrinc
     TabAppearance.BackGround.Color = 15128792
     TabAppearance.BackGround.ColorTo = 15128792
     TabAppearance.BackGround.Direction = gdHorizontal
-    Left = 768
-    Top = 448
+    Left = 728
+    Top = 504
   end
   object AdvMenuStyler1: TAdvMenuStyler
     Background.Position = bpCenter
@@ -4887,8 +4945,8 @@ object Princ: TPrinc
     Settings.URLColor = clBlue
     Settings.Width = 0
     Style = psWindowsXP
-    Left = 736
-    Top = 448
+    Left = 744
+    Top = 440
   end
   object ZBase: TZConnection
     Protocol = 'mysql-5'
@@ -4947,8 +5005,8 @@ object Princ: TPrinc
   end
   object ini1: Tini
     IniFilename = 'c:\program files\codegear\rad studio\5.0\bin\config.ini'
-    Left = 736
-    Top = 416
+    Left = 768
+    Top = 376
   end
   object ZQCalculopreciodeta: TZQuery
     Connection = ZBase
@@ -4976,7 +5034,7 @@ object Princ: TPrinc
         ParamType = ptUnknown
       end>
   end
-  object ZQActualizarSaldoDocumentoVenta: TZQuery
+  object ZQActualizarSaldoDocumentos: TZQuery
     Connection = ZBase
     SQL.Strings = (
       
@@ -5266,7 +5324,7 @@ object Princ: TPrinc
     Mode = cmShareDenyNone
     Provider = 'Microsoft.Jet.OLEDB.4.0'
     BeforeConnect = ADOConnection1BeforeConnect
-    Left = 864
+    Left = 944
     Top = 416
   end
   object ADODataSet1: TADODataSet
@@ -5278,7 +5336,7 @@ object Princ: TPrinc
     Top = 200
   end
   object OpenDialog1: TOpenDialog
-    Left = 672
+    Left = 656
     Top = 448
   end
   object ZQProductosABM: TZQuery
@@ -5322,8 +5380,8 @@ object Princ: TPrinc
     Params = <>
     Connection = ZBase
     Delimiter = ';'
-    Left = 800
-    Top = 416
+    Left = 1112
+    Top = 304
   end
   object ZQCalculopreciodetaprod: TZQuery
     Connection = ZBase
@@ -5355,7 +5413,7 @@ object Princ: TPrinc
     KVersionMySql = 0
     Kbase = ZBase
     Left = 704
-    Top = 416
+    Top = 384
   end
   object ZQDocumentoventadocus: TZQuery
     Connection = ZBase
@@ -5433,8 +5491,8 @@ object Princ: TPrinc
   end
   object ZSQLMonitor1: TZSQLMonitor
     MaxTraceCount = 100
-    Left = 768
-    Top = 416
+    Left = 1024
+    Top = 392
   end
   object ZQdocumentocompradetalles: TZQuery
     Connection = ZBase
@@ -5451,8 +5509,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 704
-    Top = 448
+    Left = 672
+    Top = 504
     ParamData = <
       item
         DataType = ftUnknown
@@ -5690,8 +5748,8 @@ object Princ: TPrinc
     TabAppearance.BackGround.Color = clWhite
     TabAppearance.BackGround.ColorTo = clBtnFace
     TabAppearance.BackGround.Direction = gdHorizontal
-    Left = 800
-    Top = 448
+    Left = 792
+    Top = 496
   end
   object AdvToolBarCustomizer1: TAdvToolBarCustomizer
     Commands = <>
@@ -5733,14 +5791,14 @@ object Princ: TPrinc
     Options.AddSeparator = True
     Options.Delete = True
     Options.DeleteAll = False
-    Left = 832
-    Top = 448
+    Left = 1080
+    Top = 464
   end
   object AdvFormStyler1: TAdvFormStyler
     AutoThemeAdapt = False
     Style = tsOffice2003Blue
-    Left = 864
-    Top = 448
+    Left = 888
+    Top = 496
   end
   object AdvAppStyler1: TAdvAppStyler
     AutoThemeAdapt = False

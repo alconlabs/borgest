@@ -27,7 +27,7 @@ type
     ZQActualizarStock: TZQuery;
     ini1: Tini;
     ZQCalculopreciodeta: TZQuery;
-    ZQActualizarSaldoDocumentoVenta: TZQuery;
+    ZQActualizarSaldoDocumentos: TZQuery;
     ZQRecibos: TZQuery;
     ZQZQActualizarNumeroDocumento: TZQuery;
     ZQDocumentosVentasPendientes: TZQuery;
@@ -85,8 +85,7 @@ type
     AdvGlowButton15: TAdvGlowButton;
     AdvToolBar5: TAdvToolBar;
     btnfacturasventas: TAdvGlowButton;
-    AdvGlowButton17: TAdvGlowButton;
-    AdvGlowButton18: TAdvGlowButton;
+    btnrecibos: TAdvGlowButton;
     AdvToolBar6: TAdvToolBar;
     btnsaldosgranos: TAdvGlowButton;
     AdvGlowButton20: TAdvGlowButton;
@@ -110,6 +109,8 @@ type
     AdvToolBar11: TAdvToolBar;
     btnconfiguracion: TAdvGlowButton;
     btnperfiles: TAdvGlowButton;
+    btnnotasdecredito: TAdvGlowButton;
+    BtnNotasdeDebito: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZBaseBeforeConnect(Sender: TObject);
@@ -133,12 +134,14 @@ type
     procedure AdvGlowButton21Click(Sender: TObject);
     procedure btnfacturasventasClick(Sender: TObject);
     procedure AdvGlowButton16Click(Sender: TObject);
-    procedure AdvGlowButton17Click(Sender: TObject);
+    procedure btnrecibosClick(Sender: TObject);
     procedure btncontratosClick(Sender: TObject);
     procedure btnordenesdecargaClick(Sender: TObject);
     procedure btncontratoventaClick(Sender: TObject);
     procedure btnconfiguracionClick(Sender: TObject);
     procedure btnperfilesClick(Sender: TObject);
+    procedure btnnotasdecreditoClick(Sender: TObject);
+    procedure BtnNotasdeDebitoClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -214,7 +217,10 @@ type
     procedure AbrirNuevoPerfil;
     procedure AbrirModificarPerfil(id:string);
     function CargarDocumentoDocu(entidad_id: string; QDocumentoDocus:TDataset;documento_apagar:real;AgregarAutomatico:boolean;especie_id:string;tipodocu_nombre:string):boolean;
-
+    Procedure AgregarDocumento(Cabecera: TDataSet; DocumentodocuImputacion: TDataSet; DocumentodocuRelacion: TDataSet; Pagos: TDataSet);
+    Procedure ModificarDocumento(Cabecera: TDataSet; DocumentodocuImputacion: TDataSet; DocumentodocuRelacion: TDataSet; Pagos: TDataSet);
+    procedure AbrirDocumento(id: string; tipodocu_nombre: string; abm: Integer);
+    function CargarDocumentoMonetarioDocu(entidad_id: string; QDocumentoDocus:TDataset;documento_apagar:real; AgregarAutomatico:boolean; tipodocu_tipo:string; where_tipodocu:string=' and 1=1 '):boolean;
   end;
 
 var
@@ -265,10 +271,20 @@ const
 
   VERSIONEXE='10';
 
-  ABM_NUEVO=1;
+  //Tipos Documentos
+  TIPODOCU_FACTURAVENTA='Factura de Venta';
+  TIPODOCU_RECIBO='Recibo';
+  TIPODOCU_NOTACREDITOVENTA='Nota de Credito de Venta';
+  TIPODOCU_NOTADEBITOVENTA='Nota de Debito de Venta';
+  TIPODOCU_REMITOVENTA='Remito de Venta';
+
+  ABM_AGREGAR=1;
   ABM_MODIFICAR=2;
   ABM_ELIMINAR=3;
-
+  ABM_IMPRIMIR=4;
+  ABM_ANULAR=5;
+  ABM_MOSTRAR=6;
+  ABM_CLONAR=7;
 
 //  CONNECTION_STRING1='Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source=';
 //  CONNECTION_STRING3=';Mode=Share Deny None;Jet OLEDB:System database="";Jet OLEDB:Registry Path="";Jet OLEDB:Database Password="";Jet OLEDB:Engine Type=35;'+
@@ -287,12 +303,108 @@ uses Unitlocalidades, UnitConfiguracion, UnitABMbase, UnitListaSucursales,
      UnitPerfil, UnitListaPerfiles, Unitlistatemplates, UnitlistaRoles,
      UnitlistaEntidades, UnitlistaRubros, UnitlistaControlEntidad,
   UnitTipoDocumento, Unitsaldoclientes, Unitestadodectas, Unitdetallectas,
-  Unitlistafacturasventa, Unitfacturasventa, Unitlistarecibosventa,
   Unitrecibosventa, UnitListaDocumentos, UnitListaContratos,
   Unitlistaespeciesvariedades, UnitListaOrdendeCarga, UnitDocumentosPendientes,
-  UnitListaContratosVentas;
+  UnitListaContratosVentas, Unitlistarecibos, UnitRecibo, UnitCargarPagos,
+  UnitlistaNotasCreditoVentas, UnitNotaCreditoVenta, UnitlistaFacturasVentas,
+  UnitFacturaVenta, UnitNotaDebitoVenta, UnitlistaNotasDebitoVentas,
+  UnitDocumentosDineroPendientes;
 
 {$R *.dfm}
+
+
+function TPrinc.CargarDocumentoMonetarioDocu(entidad_id: string; QDocumentoDocus:TDataset;documento_apagar:real; AgregarAutomatico:boolean; tipodocu_tipo:string; where_tipodocu:string=' and 1=1 '):boolean;
+begin
+    DocumentosDineroPendientes:=TDocumentosDineroPendientes.Create(self);
+    DocumentosDineroPendientes.entidad_id:=entidad_id;
+    DocumentosDineroPendientes.where_tipodocu:=where_tipodocu;
+    DocumentosDineroPendientes.tipodocu_tipo:=tipodocu_tipo;
+    DocumentosDineroPendientes.ActivarConsulta;
+    DocumentosDineroPendientes.documento_apagar:=documento_apagar;
+    QDocumentoDocus.First;
+    while not QDocumentoDocus.Eof do
+        begin
+            if DocumentosDineroPendientes.ZQDocumentosPendientes.Locate('documento_id',QDocumentoDocus.FieldByName('documento_idpago').AsString,[]) then
+              begin
+                  DocumentosDineroPendientes.ZQDocumentosPendientes.Edit;
+                  DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documentodocu_importe').AsString:=QDocumentoDocus.FieldByName('documentodocu_importe').AsString;
+
+                  DocumentosDineroPendientes.ZQDocumentosPendientes.Post;
+
+              end;
+
+            QDocumentoDocus.Next;
+        end;
+    if AgregarAutomatico then
+      begin
+          DocumentosDineroPendientes.btnimputardocumentos.Click;
+      end
+    else
+      begin
+          DocumentosDineroPendientes.Showmodal;
+      end;
+
+
+
+
+    if DocumentosDineroPendientes.ModalResult=mrOk then
+      begin
+          DocumentosDineroPendientes.ZQDocumentosPendientes.First;
+          while not DocumentosDineroPendientes.ZQDocumentosPendientes.Eof do
+              begin
+                  if DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documentodoc_importe').AsFloat<>0 then
+                    begin
+                        if QDocumentoDocus.Locate('documento_idpago',DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documento_id').AsString,[]) then
+                          QDocumentoDocus.Edit
+                        else
+                          QDocumentoDocus.Insert;
+                          
+                        QDocumentoDocus.FieldByName('documento_id').AsString:='0';
+                        QDocumentoDocus.FieldByName('documento_numero').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documento_numero').AsString;
+                        QDocumentoDocus.FieldByName('documento_fecha').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documento_fecha').AsString;
+                        QDocumentoDocus.FieldByName('documento_hora').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documento_hora').AsString;
+                        QDocumentoDocus.FieldByName('documento_total').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documento_total').AsString;
+                        QDocumentoDocus.FieldByName('documento_estado').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documento_estado').AsString;
+                        QDocumentoDocus.FieldByName('documento_pagado').AsFloat:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documento_pagado').AsFloat+abs(DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documentodoc_importe').AsFloat);
+                        QDocumentoDocus.FieldByName('documento_saldo').AsFloat:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documento_saldo').AsFloat-abs(DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documentodoc_importe').AsFloat);
+                        QDocumentoDocus.FieldByName('entidad_id').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('entidad_id').AsString;
+                        QDocumentoDocus.FieldByName('tipodocu_id').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('tipodocu_id').AsString;
+                        QDocumentoDocus.FieldByName('tipodocu_id_1').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('tipodocu_id').AsString;
+                        QDocumentoDocus.FieldByName('tipodocu_nombre').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('tipodocu_nombre').AsString;
+                        QDocumentoDocus.FieldByName('tipodocu_tipo').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('tipodocu_tipo').AsString;
+                        QDocumentoDocus.FieldByName('puntoventa_id').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('puntoventa_id').AsString;
+                        QDocumentoDocus.FieldByName('tipodocu_letra').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('tipodocu_letra').AsString;
+                        QDocumentoDocus.FieldByName('puntoventa_id_1').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('puntoventa_id').AsString;
+                        QDocumentoDocus.FieldByName('puntoventa_numero').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('puntoventa_numero').AsString;
+                        QDocumentoDocus.FieldByName('sucursal_id').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('sucursal_id').AsString;
+                        QDocumentoDocus.FieldByName('documentodocu_importe').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documentodoc_importe').AsString;
+                        QDocumentoDocus.FieldByName('documentodocu_id').AsString:='0';
+                        QDocumentoDocus.FieldByName('documento_idpago').AsString:=DocumentosDineroPendientes.ZQDocumentosPendientes.FieldByName('documento_id').AsString;
+                        QDocumentoDocus.FieldByName('documento_id_1').AsString:='0';
+                        QDocumentoDocus.FieldByName('documentodocu_tiporelacion').AsString:='IMPUTACION';
+                        QDocumentoDocus.Post;
+
+
+                    end;
+
+
+                  DocumentosDineroPendientes.ZQDocumentosPendientes.Next;
+              end;
+
+          result:=true;
+      end
+    else
+      result:=false;
+
+    DocumentosDineroPendientes.Free;
+
+
+
+
+
+end;
+
+
 
 
 
@@ -484,16 +596,69 @@ begin
 
 end;
 
+procedure TPrinc.AbrirDocumento(id: string; tipodocu_nombre: string; abm: Integer);
+begin
+    if tipodocu_nombre=TIPODOCU_RECIBO then
+      begin
+          try
+            recibo:=Trecibo.Create(self);
+          finally
+            recibo.abm:=abm;
+            recibo.id:=id;
+            recibo.tipodocu_nombre:=tipodocu_nombre;
+            recibo.Show;
+          end;
+      end;
+
+    if tipodocu_nombre=TIPODOCU_NOTACREDITOVENTA then
+      begin
+          try
+            NotaCreditoVenta:=TNotaCreditoVenta.Create(self);
+          finally
+            NotaCreditoVenta.abm:=abm;
+            NotaCreditoVenta.id:=id;
+            NotaCreditoVenta.tipodocu_nombre:=tipodocu_nombre;
+            NotaCreditoVenta.Show;
+          end;
+      end;
+
+    if tipodocu_nombre=TIPODOCU_FACTURAVENTA then
+      begin
+          try
+            facturaventa:=Tfacturaventa.Create(self);
+          finally
+            facturaventa.abm:=abm;
+            facturaventa.id:=id;
+            facturaventa.tipodocu_nombre:=tipodocu_nombre;
+            facturaventa.Show;
+          end;
+      end;
+
+    if tipodocu_nombre=TIPODOCU_NOTADEBITOVENTA then
+      begin
+          try
+            NotaDebitoVenta:=TNotaDebitoVenta.Create(self);
+          finally
+            NotaDebitoVenta.abm:=abm;
+            NotaDebitoVenta.id:=id;
+            NotaDebitoVenta.tipodocu_nombre:=tipodocu_nombre;
+            NotaDebitoVenta.Show;
+          end;
+      end;
+
+
+end;
+
 procedure TPrinc.AbrirDocumentoVenta(id: string; tipodocu_nombre: string; abm: Integer);
 begin
     if tipodocu_nombre='Factura de Venta' then
       begin
           try
-            facturasventa:=Tfacturasventa.Create(self);
+            FacturaVenta:=TFacturaVenta.Create(self);
           finally
-            facturasventa.abm:=abm;
-            facturasventa.id:=id;
-            facturasventa.Show;
+            FacturaVenta.abm:=abm;
+            FacturaVenta.id:=id;
+            FacturaVenta.Show;
           end;
       end;
 
@@ -579,7 +744,7 @@ end;
 function TPrinc.GetConfigTipoDocumento(documento_id: string; tipodocu_id:string; campo: string):string;
 begin
     if tipodocu_id='' then
-      Result := Princ.buscar('select '+campo+' from tiposdocumento inner join documentosventas on tiposdocumento.tipodocu_id=documentosventas.tipodocu_id where documentosventas.documentoventa_id="'+documento_id+'"',campo)
+      Result := Princ.buscar('select '+campo+' from tiposdocumento inner join documentos on tiposdocumento.tipodocu_id=documentosventas.tipodocu_id where documentos.documento_id="'+documento_id+'"',campo)
     else
       Result := Princ.buscar('select '+campo+' from tiposdocumento where tipodocu_id="'+tipodocu_id+'"',campo);
 end;
@@ -1259,6 +1424,458 @@ begin
 end;
 
 
+Procedure TPrinc.ModificarDocumento(Cabecera: TDataSet; DocumentodocuImputacion: TDataSet; DocumentodocuRelacion: TDataSet; Pagos: TDataSet);
+var
+  documento_pagado:string;
+  documento_saldo:string;
+  documento_estado:string;
+begin
+    ZQExcecSQL.SQL.Clear;
+    ZQExcecSQL.SQL.Add('begin');
+    ZQExcecSQL.ExecSQL;
+
+    ZQExcecSQL.Sql.Clear;
+    ZQExcecSQL.Sql.Add('update documentos set ');
+    ZQExcecSQL.Sql.Add('documento_cartaportetarifaflete=:documento_cartaportetarifaflete, ');
+    ZQExcecSQL.Sql.Add('documento_transpanticipo=:documento_transpanticipo, ');
+    ZQExcecSQL.Sql.Add('documento_transptarifaflete=:documento_transptarifaflete, ');
+    ZQExcecSQL.Sql.Add('documento_transpacoplado=:documento_transpacoplado, ');
+    ZQExcecSQL.Sql.Add('documento_transpchasis=:documento_transpchasis, ');
+    ZQExcecSQL.Sql.Add('documento_chofercuit=:documento_chofercuit, ');
+    ZQExcecSQL.Sql.Add('documento_chofer=:documento_chofer, ');
+    ZQExcecSQL.Sql.Add('entidaddadorcarga_id=:entidaddadorcarga_id, ');
+    ZQExcecSQL.Sql.Add('documento_tara=:documento_tara, ');
+    ZQExcecSQL.Sql.Add('documento_kgbrutos=:documento_kgbrutos, ');
+    ZQExcecSQL.Sql.Add('documento_numerocartaporte=:documento_numerocartaporte, ');
+    ZQExcecSQL.Sql.Add('documento_tipodestino=:documento_tipodestino, ');
+    ZQExcecSQL.Sql.Add('documento_condicioncalidad=:documento_condicioncalidad, ');
+    ZQExcecSQL.Sql.Add('documento_tipooperacion=:documento_tipooperacion, ');
+    ZQExcecSQL.Sql.Add('documento_lugarentrega=:documento_lugarentrega, ');
+    ZQExcecSQL.Sql.Add('documento_preciounitario=:documento_preciounitario, ');
+    ZQExcecSQL.Sql.Add('documento_moneda=:documento_moneda, ');
+    ZQExcecSQL.Sql.Add('documento_fechacumplimiento=:documento_fechacumplimiento, ');
+    ZQExcecSQL.Sql.Add('especie_id=:especie_id, ');
+    ZQExcecSQL.Sql.Add('entidadtransportista_id=:entidadtransportista_id, ');
+    ZQExcecSQL.Sql.Add('entidad_id=:entidad_id, ');
+    ZQExcecSQL.Sql.Add('tipodocu_id=:tipodocu_id, ');
+    ZQExcecSQL.Sql.Add('documento_documentacion=:documento_documentacion, ');
+    ZQExcecSQL.Sql.Add('documento_calidad=:documento_calidad, ');
+    ZQExcecSQL.Sql.Add('documento_otrosimpuestos=:documento_otrosimpuestos, ');
+    ZQExcecSQL.Sql.Add('documento_dgrperc=:documento_dgrperc, ');
+    ZQExcecSQL.Sql.Add('documento_dgrret=:documento_dgrret, ');
+    ZQExcecSQL.Sql.Add('documento_ivaperc=:documento_ivaperc, ');
+    ZQExcecSQL.Sql.Add('documento_ivaret=:documento_ivaret, ');
+    ZQExcecSQL.Sql.Add('documento_observaciones=:documento_observaciones, ');
+    ZQExcecSQL.Sql.Add('documento_iva27=:documento_iva27, ');
+    ZQExcecSQL.Sql.Add('documento_neto27=:documento_neto27, ');
+    ZQExcecSQL.Sql.Add('documento_iva105=:documento_iva105, ');
+    ZQExcecSQL.Sql.Add('documento_neto105=:documento_neto105, ');
+    ZQExcecSQL.Sql.Add('documento_iva21=:documento_iva21, ');
+    ZQExcecSQL.Sql.Add('documento_neto21=:documento_neto21, ');
+    ZQExcecSQL.Sql.Add('documento_estado=:documento_estado, ');
+    ZQExcecSQL.Sql.Add('documento_pagado=:documento_pagado, ');
+    ZQExcecSQL.Sql.Add('documento_saldo=:documento_saldo, ');
+    ZQExcecSQL.Sql.Add('documento_total=:documento_total, ');
+    ZQExcecSQL.Sql.Add('documento_numero=:documento_numero, ');
+    ZQExcecSQL.Sql.Add('documento_hora=:documento_hora, ');
+    ZQExcecSQL.Sql.Add('documento_fechavenc=:documento_fechavenc, ');
+    ZQExcecSQL.Sql.Add('documento_fecha=:documento_fecha, ');
+    ZQExcecSQL.Sql.Add('documento_nogravado=:documento_nogravado ');
+    ZQExcecSQL.Sql.Add('where documento_id=:documento_id ');
+    ZQExcecSQL.ParamByName('documento_cartaportetarifaflete').AsString:=Cabecera.FieldByName('documento_cartaportetarifaflete').AsString;
+    ZQExcecSQL.ParamByName('documento_transpanticipo').AsString:=Cabecera.FieldByName('documento_transpanticipo').AsString;
+    ZQExcecSQL.ParamByName('documento_transptarifaflete').AsString:=Cabecera.FieldByName('documento_transptarifaflete').AsString;
+    ZQExcecSQL.ParamByName('documento_transpacoplado').AsString:=Cabecera.FieldByName('documento_transpacoplado').AsString;
+    ZQExcecSQL.ParamByName('documento_transpchasis').AsString:=Cabecera.FieldByName('documento_transpchasis').AsString;
+    ZQExcecSQL.ParamByName('documento_chofercuit').AsString:=Cabecera.FieldByName('documento_chofercuit').AsString;
+    ZQExcecSQL.ParamByName('documento_chofer').AsString:=Cabecera.FieldByName('documento_chofer').AsString;
+    ZQExcecSQL.ParamByName('entidaddadorcarga_id').AsString:=Cabecera.FieldByName('entidaddadorcarga_id').AsString;
+    ZQExcecSQL.ParamByName('documento_tara').AsString:=Cabecera.FieldByName('documento_tara').AsString;
+    ZQExcecSQL.ParamByName('documento_kgbrutos').AsString:=Cabecera.FieldByName('documento_kgbrutos').AsString;
+    ZQExcecSQL.ParamByName('documento_numerocartaporte').AsString:=Cabecera.FieldByName('documento_numerocartaporte').AsString;
+    ZQExcecSQL.ParamByName('documento_tipodestino').AsString:=Cabecera.FieldByName('documento_tipodestino').AsString;
+    ZQExcecSQL.ParamByName('documento_condicioncalidad').AsString:=Cabecera.FieldByName('documento_condicioncalidad').AsString;
+    ZQExcecSQL.ParamByName('documento_tipooperacion').AsString:=Cabecera.FieldByName('documento_tipooperacion').AsString;
+    ZQExcecSQL.ParamByName('documento_lugarentrega').AsString:=Cabecera.FieldByName('documento_lugarentrega').AsString;
+    ZQExcecSQL.ParamByName('documento_preciounitario').AsString:=Cabecera.FieldByName('documento_preciounitario').AsString;
+    ZQExcecSQL.ParamByName('documento_moneda').AsString:=Cabecera.FieldByName('documento_moneda').AsString;
+    ZQExcecSQL.ParamByName('documento_fechacumplimiento').AsString:=formatdatetime('yyyy-mm-dd',Cabecera.FieldByName('documento_fechacumplimiento').AsDateTime);
+    ZQExcecSQL.ParamByName('especie_id').AsString:=Cabecera.FieldByName('especie_id').AsString;
+    ZQExcecSQL.ParamByName('entidadtransportista_id').AsString:=Cabecera.FieldByName('entidadtransportista_id').AsString;
+    ZQExcecSQL.ParamByName('entidad_id').AsString:=Cabecera.FieldByName('entidad_id').AsString;
+    ZQExcecSQL.ParamByName('tipodocu_id').AsString:=Cabecera.FieldByName('tipodocu_id').AsString;
+    ZQExcecSQL.ParamByName('documento_documentacion').AsString:=Cabecera.FieldByName('documento_documentacion').AsString;
+    ZQExcecSQL.ParamByName('documento_calidad').AsString:=Cabecera.FieldByName('documento_calidad').AsString;
+    ZQExcecSQL.ParamByName('documento_otrosimpuestos').AsString:=Cabecera.FieldByName('documento_otrosimpuestos').AsString;
+    ZQExcecSQL.ParamByName('documento_dgrperc').AsString:=Cabecera.FieldByName('documento_dgrperc').AsString;
+    ZQExcecSQL.ParamByName('documento_dgrret').AsString:=Cabecera.FieldByName('documento_dgrret').AsString;
+    ZQExcecSQL.ParamByName('documento_ivaperc').AsString:=Cabecera.FieldByName('documento_ivaperc').AsString;
+    ZQExcecSQL.ParamByName('documento_ivaret').AsString:=Cabecera.FieldByName('documento_ivaret').AsString;
+    ZQExcecSQL.ParamByName('documento_observaciones').AsString:=Cabecera.FieldByName('documento_observaciones').AsString;
+    ZQExcecSQL.ParamByName('documento_iva27').AsString:=Cabecera.FieldByName('documento_iva27').AsString;
+    ZQExcecSQL.ParamByName('documento_neto27').AsString:=Cabecera.FieldByName('documento_neto27').AsString;
+    ZQExcecSQL.ParamByName('documento_iva105').AsString:=Cabecera.FieldByName('documento_iva105').AsString;
+    ZQExcecSQL.ParamByName('documento_neto105').AsString:=Cabecera.FieldByName('documento_neto105').AsString;
+    ZQExcecSQL.ParamByName('documento_iva21').AsString:=Cabecera.FieldByName('documento_iva21').AsString;
+    ZQExcecSQL.ParamByName('documento_neto21').AsString:=Cabecera.FieldByName('documento_neto21').AsString;
+    ZQExcecSQL.ParamByName('documento_estado').AsString:=Cabecera.FieldByName('documento_estado').AsString;
+    ZQExcecSQL.ParamByName('documento_pagado').AsString:=Cabecera.FieldByName('documento_pagado').AsString;
+    ZQExcecSQL.ParamByName('documento_saldo').AsString:=Cabecera.FieldByName('documento_saldo').AsString;
+    ZQExcecSQL.ParamByName('documento_total').AsString:=Cabecera.FieldByName('documento_total').AsString;
+    ZQExcecSQL.ParamByName('documento_numero').AsString:=Cabecera.FieldByName('documento_numero').AsString;
+    ZQExcecSQL.ParamByName('documento_hora').AsString:=Cabecera.FieldByName('documento_hora').AsString;
+    ZQExcecSQL.ParamByName('documento_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',Cabecera.FieldByName('documento_fechavenc').AsDateTime);
+    ZQExcecSQL.ParamByName('documento_fecha').AsString:=formatdatetime('yyyy-mm-dd',Cabecera.FieldByName('documento_fecha').AsDateTime);
+    ZQExcecSQL.ParamByName('documento_nogravado').AsString:=Cabecera.FieldByName('documento_nogravado').AsString;
+    ZQExcecSQL.ParamByName('documento_id').AsString:=Cabecera.FieldByName('documento_id').AsString;
+    ZQExcecSQL.ExecSql;
+
+
+    if DocumentodocuImputacion<>nil then
+      begin
+          ZQDocumentodocus.Active:=false;
+          ZQDocumentodocus.SQL.Text:='select * from documentosdocu where documento_id="'+Cabecera.FieldByName('documento_id').AsString+'" and documentodocu_tiporelacion="IMPUTACION"';
+          ZQDocumentodocus.Active:=true;
+          ZQDocumentodocus.First;
+          while not ZQDocumentodocus.Eof do
+              begin
+                  ActualizarSaldoDocumento(ZQDocumentodocus.FieldByName('documento_idpago').AsString,abs(ZQDocumentodocus.FieldByName('documentodocu_importe').AsFloat), true);
+                  ZQDocumentodocus.Next;
+              end;
+          ZQDocumentodocus.Active:=false;
+
+          ZQExcecSQL.SQL.Text:='delete from documentosdocu where documento_id="'+Cabecera.FieldByName('documento_id').AsString+'" and documentodocu_tiporelacion="IMPUTACION"';
+          ZQExcecSQL.ExecSQL;
+
+          ZQExcecSQL.Sql.Clear;
+          ZQExcecSQL.Sql.Add('insert into documentosdocu set ');
+          ZQExcecSQL.Sql.Add('documentodocu_tiporelacion=:documentodocu_tiporelacion, ');
+          ZQExcecSQL.Sql.Add('documento_idpago=:documento_idpago, ');
+          ZQExcecSQL.Sql.Add('documento_id=:documento_id, ');
+          ZQExcecSQL.Sql.Add('documentodocu_saldo=:documentodocu_saldo, ');
+          ZQExcecSQL.Sql.Add('documentodocu_pagado=:documentodocu_pagado, ');
+          ZQExcecSQL.Sql.Add('documentodocu_estado=:documentodocu_estado, ');
+          ZQExcecSQL.Sql.Add('documentodocu_importe=:documentodocu_importe, ');
+          ZQExcecSQL.Sql.Add('documentodocu_id=:documentodocu_id ');
+          DocumentodocuImputacion.First;
+          while not DocumentodocuImputacion.Eof do
+              begin
+                  ZQExcecSQL.ParamByName('documentodocu_tiporelacion').AsString:=DocumentodocuImputacion.FieldByName('documentodocu_tiporelacion').AsString;
+                  ZQExcecSQL.ParamByName('documento_idpago').AsString:=DocumentodocuImputacion.FieldByName('documento_idpago').AsString;
+                  ZQExcecSQL.ParamByName('documento_id').AsString:=Cabecera.FieldByName('documento_id').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_saldo').AsString:=DocumentodocuImputacion.FieldByName('documentodocu_saldo').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_pagado').AsString:=DocumentodocuImputacion.FieldByName('documentodocu_pagado').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_estado').AsString:=DocumentodocuImputacion.FieldByName('documentodocu_estado').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_importe').AsString:=DocumentodocuImputacion.FieldByName('documentodocu_importe').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_id').AsString:=Princ.codigo('documentosdocu','documentodocu_id');
+                  ZQExcecSQL.ExecSql;
+
+                  ActualizarSaldoDocumentoVenta(DocumentodocuImputacion.FieldByName('documento_idpago').AsString,DocumentodocuImputacion.FieldByName('documentodoc_importe').AsFloat);
+
+                  DocumentodocuImputacion.Next;
+              end;
+
+          documento_pagado:=princ.buscar('select sum(documentodocu_importe) as pagado from documentosdocu where documento_id="'+Cabecera.FieldByName('documento_id').AsString+'"','pagado');
+          if documento_pagado='' then
+            documento_pagado:='0';
+
+          documento_saldo:=floattostr(Cabecera.FieldByName('documento_total').AsFloat-strtofloat(documento_pagado));
+          documento_estado:='PAGADA';
+          if strtofloat(documento_saldo)>0then
+            documento_estado:='PENDIENTE';
+
+          ZQExcecSQL.Sql.Clear;
+          ZQExcecSQL.Sql.Add('update documentos set ');
+          ZQExcecSQL.Sql.Add('documento_estado=:documento_estado, ');
+          ZQExcecSQL.Sql.Add('documento_pagado=:documento_pagado, ');
+          ZQExcecSQL.Sql.Add('documento_saldo=:documento_saldo ');
+          ZQExcecSQL.Sql.Add('where documento_id=:documento_id ');
+          ZQExcecSQL.ParamByName('documento_estado').AsString:=documento_estado;
+          ZQExcecSQL.ParamByName('documento_pagado').AsString:=documento_pagado;
+          ZQExcecSQL.ParamByName('documento_saldo').AsString:=documento_saldo;
+          ZQExcecSQL.ParamByName('documento_id').AsString:=Cabecera.FieldByName('documento_id').AsString;
+          ZQExcecSQL.ExecSql;
+
+
+      end;
+
+    if DocumentodocuRelacion<>nil then
+      begin
+          ZQExcecSQL.SQL.Text:='delete from documentosdocu where documento_id="'+Cabecera.FieldByName('documento_id').AsString+'" and documentodocu_tiporelacion="RELACION"';
+          ZQExcecSQL.ExecSQL;
+
+          ZQExcecSQL.Sql.Clear;
+          ZQExcecSQL.Sql.Add('insert into documentosdocu set ');
+          ZQExcecSQL.Sql.Add('documentodocu_tiporelacion=:documentodocu_tiporelacion, ');
+          ZQExcecSQL.Sql.Add('documento_idpago=:documento_idpago, ');
+          ZQExcecSQL.Sql.Add('documento_id=:documento_id, ');
+          ZQExcecSQL.Sql.Add('documentodocu_saldo=:documentodocu_saldo, ');
+          ZQExcecSQL.Sql.Add('documentodocu_pagado=:documentodocu_pagado, ');
+          ZQExcecSQL.Sql.Add('documentodocu_estado=:documentodocu_estado, ');
+          ZQExcecSQL.Sql.Add('documentodocu_importe=:documentodocu_importe, ');
+          ZQExcecSQL.Sql.Add('documentodocu_id=:documentodocu_id ');
+          DocumentodocuRelacion.First;
+          while not DocumentodocuRelacion.Eof do
+              begin
+                  ZQExcecSQL.ParamByName('documentodocu_tiporelacion').AsString:=DocumentodocuRelacion.FieldByName('documentodocu_tiporelacion').AsString;
+                  ZQExcecSQL.ParamByName('documento_idpago').AsString:=DocumentodocuRelacion.FieldByName('documento_idpago').AsString;
+                  ZQExcecSQL.ParamByName('documento_id').AsString:=Cabecera.FieldByName('documento_id').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_saldo').AsString:=DocumentodocuRelacion.FieldByName('documentodocu_saldo').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_pagado').AsString:=DocumentodocuRelacion.FieldByName('documentodocu_pagado').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_estado').AsString:=DocumentodocuRelacion.FieldByName('documentodocu_estado').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_importe').AsString:=DocumentodocuRelacion.FieldByName('documentodocu_importe').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_id').AsString:=Princ.codigo('documentosdocu','documentodocu_id');
+                  ZQExcecSQL.ExecSql;
+
+                  DocumentodocuImputacion.Next;
+              end;
+
+      end;
+
+    if Pagos<>nil then
+      begin
+          ZQExcecSQL.Sql.Clear;
+          ZQExcecSQL.Sql.Add('delete from documentopagos ');
+          ZQExcecSQL.Sql.Add('where documento_id=:documento_id ');
+          ZQExcecSQL.ParamByName('documento_id').AsString:=Cabecera.FieldByName('documento_id').AsString;
+          ZQExcecSQL.ExecSql;
+
+          Pagos.First;
+          while not Pagos.Eof do
+              begin
+                  ZQExcecSQL.Sql.Clear;
+                  ZQExcecSQL.Sql.Add('insert into documentopagos set ');
+                  ZQExcecSQL.Sql.Add('documento_id=:documento_id, ');
+                  ZQExcecSQL.Sql.Add('tipopago_id=:tipopago_id, ');
+                  ZQExcecSQL.Sql.Add('documentopago_importe=:documentopago_importe, ');
+                  ZQExcecSQL.Sql.Add('documentopago_nombre=:documentopago_nombre, ');
+                  ZQExcecSQL.Sql.Add('documentopago_id=:documentopago_id ');
+                  ZQExcecSQL.ParamByName('documento_id').AsString:=Cabecera.FieldByName('documento_id').AsString;
+                  ZQExcecSQL.ParamByName('tipopago_id').AsString:=Pagos.FieldByName('tipopago_id').AsString;
+                  ZQExcecSQL.ParamByName('documentopago_importe').AsString:=Pagos.FieldByName('documentopago_importe').AsString;
+                  ZQExcecSQL.ParamByName('documentopago_nombre').AsString:=Pagos.FieldByName('documentopago_nombre').AsString;
+                  ZQExcecSQL.ParamByName('documentopago_id').AsString:=Princ.codigo('documentopagos','documentopago_id');
+                  ZQExcecSQL.ExecSql;
+
+                  Pagos.Next;
+              end;
+      end;
+
+    ZQExcecSQL.SQL.Clear;
+    ZQExcecSQL.SQL.Add('commit');
+    ZQExcecSQL.ExecSQL;
+
+end;
+
+
+Procedure TPrinc.AgregarDocumento(Cabecera: TDataSet; DocumentodocuImputacion: TDataSet; DocumentodocuRelacion: TDataSet; Pagos: TDataSet);
+var
+  id:string;
+  documento_numero:string;
+begin
+    ZQExcecSQL.SQL.Clear;
+    ZQExcecSQL.SQL.Add('begin');
+    ZQExcecSQL.ExecSQL;
+
+    id:=codigo('documentos', 'documento_id');
+    Cabecera.First;
+    documento_numero:=Princ.NumeroDocumento(Cabecera.FieldByName('tipodocu_id').AsString,Cabecera.FieldByName('documento_numero').AsString);
+    if strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+Cabecera.FieldByName('tipodocu_id').AsString+'"','tipodocu_fiscal')) then
+      documento_numero:='0';
+
+
+    ZQExcecSQL.Sql.Clear;
+    ZQExcecSQL.Sql.Add('insert into documentos set ');
+    ZQExcecSQL.Sql.Add('documento_cartaportetarifaflete=:documento_cartaportetarifaflete, ');
+    ZQExcecSQL.Sql.Add('documento_transpanticipo=:documento_transpanticipo, ');
+    ZQExcecSQL.Sql.Add('documento_transptarifaflete=:documento_transptarifaflete, ');
+    ZQExcecSQL.Sql.Add('documento_transpacoplado=:documento_transpacoplado, ');
+    ZQExcecSQL.Sql.Add('documento_transpchasis=:documento_transpchasis, ');
+    ZQExcecSQL.Sql.Add('documento_chofercuit=:documento_chofercuit, ');
+    ZQExcecSQL.Sql.Add('documento_chofer=:documento_chofer, ');
+    ZQExcecSQL.Sql.Add('entidaddadorcarga_id=:entidaddadorcarga_id, ');
+    ZQExcecSQL.Sql.Add('documento_tara=:documento_tara, ');
+    ZQExcecSQL.Sql.Add('documento_kgbrutos=:documento_kgbrutos, ');
+    ZQExcecSQL.Sql.Add('documento_numerocartaporte=:documento_numerocartaporte, ');
+    ZQExcecSQL.Sql.Add('documento_tipodestino=:documento_tipodestino, ');
+    ZQExcecSQL.Sql.Add('documento_condicioncalidad=:documento_condicioncalidad, ');
+    ZQExcecSQL.Sql.Add('documento_tipooperacion=:documento_tipooperacion, ');
+    ZQExcecSQL.Sql.Add('documento_lugarentrega=:documento_lugarentrega, ');
+    ZQExcecSQL.Sql.Add('documento_preciounitario=:documento_preciounitario, ');
+    ZQExcecSQL.Sql.Add('documento_moneda=:documento_moneda, ');
+    ZQExcecSQL.Sql.Add('documento_fechacumplimiento=:documento_fechacumplimiento, ');
+    ZQExcecSQL.Sql.Add('especie_id=:especie_id, ');
+    ZQExcecSQL.Sql.Add('entidadtransportista_id=:entidadtransportista_id, ');
+    ZQExcecSQL.Sql.Add('entidad_id=:entidad_id, ');
+    ZQExcecSQL.Sql.Add('tipodocu_id=:tipodocu_id, ');
+    ZQExcecSQL.Sql.Add('documento_documentacion=:documento_documentacion, ');
+    ZQExcecSQL.Sql.Add('documento_calidad=:documento_calidad, ');
+    ZQExcecSQL.Sql.Add('documento_otrosimpuestos=:documento_otrosimpuestos, ');
+    ZQExcecSQL.Sql.Add('documento_dgrperc=:documento_dgrperc, ');
+    ZQExcecSQL.Sql.Add('documento_dgrret=:documento_dgrret, ');
+    ZQExcecSQL.Sql.Add('documento_ivaperc=:documento_ivaperc, ');
+    ZQExcecSQL.Sql.Add('documento_ivaret=:documento_ivaret, ');
+    ZQExcecSQL.Sql.Add('documento_observaciones=:documento_observaciones, ');
+    ZQExcecSQL.Sql.Add('documento_iva27=:documento_iva27, ');
+    ZQExcecSQL.Sql.Add('documento_neto27=:documento_neto27, ');
+    ZQExcecSQL.Sql.Add('documento_iva105=:documento_iva105, ');
+    ZQExcecSQL.Sql.Add('documento_neto105=:documento_neto105, ');
+    ZQExcecSQL.Sql.Add('documento_iva21=:documento_iva21, ');
+    ZQExcecSQL.Sql.Add('documento_neto21=:documento_neto21, ');
+    ZQExcecSQL.Sql.Add('documento_estado=:documento_estado, ');
+    ZQExcecSQL.Sql.Add('documento_pagado=:documento_pagado, ');
+    ZQExcecSQL.Sql.Add('documento_saldo=:documento_saldo, ');
+    ZQExcecSQL.Sql.Add('documento_total=:documento_total, ');
+    ZQExcecSQL.Sql.Add('documento_numero=:documento_numero, ');
+    ZQExcecSQL.Sql.Add('documento_hora=:documento_hora, ');
+    ZQExcecSQL.Sql.Add('documento_fechavenc=:documento_fechavenc, ');
+    ZQExcecSQL.Sql.Add('documento_fecha=:documento_fecha, ');
+    ZQExcecSQL.Sql.Add('documento_nogravado=:documento_nogravado, ');
+    ZQExcecSQL.Sql.Add('documento_id=:documento_id ');
+    ZQExcecSQL.ParamByName('documento_cartaportetarifaflete').AsString:=Cabecera.FieldByName('documento_cartaportetarifaflete').AsString;
+    ZQExcecSQL.ParamByName('documento_transpanticipo').AsString:=Cabecera.FieldByName('documento_transpanticipo').AsString;
+    ZQExcecSQL.ParamByName('documento_transptarifaflete').AsString:=Cabecera.FieldByName('documento_transptarifaflete').AsString;
+    ZQExcecSQL.ParamByName('documento_transpacoplado').AsString:=Cabecera.FieldByName('documento_transpacoplado').AsString;
+    ZQExcecSQL.ParamByName('documento_transpchasis').AsString:=Cabecera.FieldByName('documento_transpchasis').AsString;
+    ZQExcecSQL.ParamByName('documento_chofercuit').AsString:=Cabecera.FieldByName('documento_chofercuit').AsString;
+    ZQExcecSQL.ParamByName('documento_chofer').AsString:=Cabecera.FieldByName('documento_chofer').AsString;
+    ZQExcecSQL.ParamByName('entidaddadorcarga_id').AsString:=Cabecera.FieldByName('entidaddadorcarga_id').AsString;
+    ZQExcecSQL.ParamByName('documento_tara').AsString:=Cabecera.FieldByName('documento_tara').AsString;
+    ZQExcecSQL.ParamByName('documento_kgbrutos').AsString:=Cabecera.FieldByName('documento_kgbrutos').AsString;
+    ZQExcecSQL.ParamByName('documento_numerocartaporte').AsString:=Cabecera.FieldByName('documento_numerocartaporte').AsString;
+    ZQExcecSQL.ParamByName('documento_tipodestino').AsString:=Cabecera.FieldByName('documento_tipodestino').AsString;
+    ZQExcecSQL.ParamByName('documento_condicioncalidad').AsString:=Cabecera.FieldByName('documento_condicioncalidad').AsString;
+    ZQExcecSQL.ParamByName('documento_tipooperacion').AsString:=Cabecera.FieldByName('documento_tipooperacion').AsString;
+    ZQExcecSQL.ParamByName('documento_lugarentrega').AsString:=Cabecera.FieldByName('documento_lugarentrega').AsString;
+    ZQExcecSQL.ParamByName('documento_preciounitario').AsString:=Cabecera.FieldByName('documento_preciounitario').AsString;
+    ZQExcecSQL.ParamByName('documento_moneda').AsString:=Cabecera.FieldByName('documento_moneda').AsString;
+    ZQExcecSQL.ParamByName('documento_fechacumplimiento').AsString:=formatdatetime('yyyy-mm-dd',Cabecera.FieldByName('documento_fechacumplimiento').AsDateTime);
+    ZQExcecSQL.ParamByName('especie_id').AsString:=Cabecera.FieldByName('especie_id').AsString;
+    ZQExcecSQL.ParamByName('entidadtransportista_id').AsString:=Cabecera.FieldByName('entidadtransportista_id').AsString;
+    ZQExcecSQL.ParamByName('entidad_id').AsString:=Cabecera.FieldByName('entidad_id').AsString;
+    ZQExcecSQL.ParamByName('tipodocu_id').AsString:=Cabecera.FieldByName('tipodocu_id').AsString;
+    ZQExcecSQL.ParamByName('documento_documentacion').AsString:=Cabecera.FieldByName('documento_documentacion').AsString;
+    ZQExcecSQL.ParamByName('documento_calidad').AsString:=Cabecera.FieldByName('documento_calidad').AsString;
+    ZQExcecSQL.ParamByName('documento_otrosimpuestos').AsString:=Cabecera.FieldByName('documento_otrosimpuestos').AsString;
+    ZQExcecSQL.ParamByName('documento_dgrperc').AsString:=Cabecera.FieldByName('documento_dgrperc').AsString;
+    ZQExcecSQL.ParamByName('documento_dgrret').AsString:=Cabecera.FieldByName('documento_dgrret').AsString;
+    ZQExcecSQL.ParamByName('documento_ivaperc').AsString:=Cabecera.FieldByName('documento_ivaperc').AsString;
+    ZQExcecSQL.ParamByName('documento_ivaret').AsString:=Cabecera.FieldByName('documento_ivaret').AsString;
+    ZQExcecSQL.ParamByName('documento_observaciones').AsString:=Cabecera.FieldByName('documento_observaciones').AsString;
+    ZQExcecSQL.ParamByName('documento_iva27').AsString:=Cabecera.FieldByName('documento_iva27').AsString;
+    ZQExcecSQL.ParamByName('documento_neto27').AsString:=Cabecera.FieldByName('documento_neto27').AsString;
+    ZQExcecSQL.ParamByName('documento_iva105').AsString:=Cabecera.FieldByName('documento_iva105').AsString;
+    ZQExcecSQL.ParamByName('documento_neto105').AsString:=Cabecera.FieldByName('documento_neto105').AsString;
+    ZQExcecSQL.ParamByName('documento_iva21').AsString:=Cabecera.FieldByName('documento_iva21').AsString;
+    ZQExcecSQL.ParamByName('documento_neto21').AsString:=Cabecera.FieldByName('documento_neto21').AsString;
+    ZQExcecSQL.ParamByName('documento_estado').AsString:=Cabecera.FieldByName('documento_estado').AsString;
+    ZQExcecSQL.ParamByName('documento_pagado').AsString:=Cabecera.FieldByName('documento_pagado').AsString;
+    ZQExcecSQL.ParamByName('documento_saldo').AsString:=Cabecera.FieldByName('documento_saldo').AsString;
+    ZQExcecSQL.ParamByName('documento_total').AsString:=Cabecera.FieldByName('documento_total').AsString;
+    ZQExcecSQL.ParamByName('documento_numero').AsString:=documento_numero;
+    ZQExcecSQL.ParamByName('documento_hora').AsString:=Cabecera.FieldByName('documento_hora').AsString;
+    ZQExcecSQL.ParamByName('documento_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',Cabecera.FieldByName('documento_fechavenc').AsDateTime);
+    ZQExcecSQL.ParamByName('documento_fecha').AsString:=formatdatetime('yyyy-mm-dd',Cabecera.FieldByName('documento_fecha').AsDateTime);
+    ZQExcecSQL.ParamByName('documento_nogravado').AsString:=Cabecera.FieldByName('documento_nogravado').AsString;
+    ZQExcecSQL.ParamByName('documento_id').AsString:=id;
+    ZQExcecSQL.ExecSql;
+
+    ActualizarNumeroDocumento(Cabecera.FieldByName('tipodocu_id').AsString,documento_numero);
+
+    if DocumentodocuImputacion<>nil then
+      begin
+          ZQExcecSQL.Sql.Clear;
+          ZQExcecSQL.Sql.Add('insert into documentosdocu set ');
+          ZQExcecSQL.Sql.Add('documentodocu_tiporelacion=:documentodocu_tiporelacion, ');
+          ZQExcecSQL.Sql.Add('documento_idpago=:documento_idpago, ');
+          ZQExcecSQL.Sql.Add('documento_id=:documento_id, ');
+          ZQExcecSQL.Sql.Add('documentodocu_saldo=:documentodocu_saldo, ');
+          ZQExcecSQL.Sql.Add('documentodocu_pagado=:documentodocu_pagado, ');
+          ZQExcecSQL.Sql.Add('documentodocu_estado=:documentodocu_estado, ');
+          ZQExcecSQL.Sql.Add('documentodocu_importe=:documentodocu_importe, ');
+          ZQExcecSQL.Sql.Add('documentodocu_id=:documentodocu_id ');
+          DocumentodocuImputacion.First;
+          while not DocumentodocuImputacion.Eof do
+              begin
+                  ZQExcecSQL.ParamByName('documentodocu_tiporelacion').AsString:=DocumentodocuImputacion.FieldByName('documentodocu_tiporelacion').AsString;
+                  ZQExcecSQL.ParamByName('documento_idpago').AsString:=DocumentodocuImputacion.FieldByName('documento_idpago').AsString;
+                  ZQExcecSQL.ParamByName('documento_id').AsString:=id;
+                  ZQExcecSQL.ParamByName('documentodocu_saldo').AsString:=DocumentodocuImputacion.FieldByName('documento_saldo').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_pagado').AsString:=DocumentodocuImputacion.FieldByName('documento_pagado').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_estado').AsString:=DocumentodocuImputacion.FieldByName('documento_estado').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_importe').AsString:=DocumentodocuImputacion.FieldByName('documentodocu_importe').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_id').AsString:=Princ.codigo('documentosdocu','documentodocu_id');
+                  ZQExcecSQL.ExecSql;
+
+                  ActualizarSaldoDocumento(DocumentodocuImputacion.FieldByName('documento_idpago').AsString,abs(DocumentodocuImputacion.FieldByName('documentodocu_importe').AsFloat));
+
+                  DocumentodocuImputacion.Next;
+              end;
+
+
+
+      end;
+
+
+    if DocumentodocuRelacion<>nil then
+      begin
+          ZQExcecSQL.Sql.Clear;
+          ZQExcecSQL.Sql.Add('insert into documentosdocu set ');
+          ZQExcecSQL.Sql.Add('documentodocu_tiporelacion=:documentodocu_tiporelacion, ');
+          ZQExcecSQL.Sql.Add('documento_idpago=:documento_idpago, ');
+          ZQExcecSQL.Sql.Add('documento_id=:documento_id, ');
+          ZQExcecSQL.Sql.Add('documentodocu_saldo=:documentodocu_saldo, ');
+          ZQExcecSQL.Sql.Add('documentodocu_pagado=:documentodocu_pagado, ');
+          ZQExcecSQL.Sql.Add('documentodocu_estado=:documentodocu_estado, ');
+          ZQExcecSQL.Sql.Add('documentodocu_importe=:documentodocu_importe, ');
+          ZQExcecSQL.Sql.Add('documentodocu_id=:documentodocu_id ');
+          DocumentodocuRelacion.First;
+          while not DocumentodocuRelacion.Eof do
+              begin
+                  ZQExcecSQL.ParamByName('documentodocu_tiporelacion').AsString:=DocumentodocuRelacion.FieldByName('documentodocu_tiporelacion').AsString;
+                  ZQExcecSQL.ParamByName('documento_idpago').AsString:=DocumentodocuRelacion.FieldByName('documento_idpago').AsString;
+                  ZQExcecSQL.ParamByName('documento_id').AsString:=id;
+                  ZQExcecSQL.ParamByName('documentodocu_saldo').AsString:=DocumentodocuRelacion.FieldByName('documentodocu_saldo').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_pagado').AsString:=DocumentodocuRelacion.FieldByName('documentodocu_pagado').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_estado').AsString:=DocumentodocuRelacion.FieldByName('documentodocu_estado').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_importe').AsString:=DocumentodocuRelacion.FieldByName('documentodocu_importe').AsString;
+                  ZQExcecSQL.ParamByName('documentodocu_id').AsString:=Princ.codigo('documentosdocu','documentodocu_id');
+                  ZQExcecSQL.ExecSql;
+
+                  DocumentodocuRelacion.Next;
+              end;
+
+      end;
+
+    if Pagos<>nil then
+      begin
+          Pagos.First;
+          while not Pagos.Eof do
+              begin
+                  ZQExcecSQL.Sql.Clear;
+                  ZQExcecSQL.Sql.Add('insert into documentopagos set ');
+                  ZQExcecSQL.Sql.Add('documento_id=:documento_id, ');
+                  ZQExcecSQL.Sql.Add('tipopago_id=:tipopago_id, ');
+                  ZQExcecSQL.Sql.Add('documentopago_importe=:documentopago_importe, ');
+                  ZQExcecSQL.Sql.Add('documentopago_nombre=:documentopago_nombre, ');
+                  ZQExcecSQL.Sql.Add('documentopago_id=:documentopago_id ');
+                  ZQExcecSQL.ParamByName('documento_id').AsString:=id;
+                  ZQExcecSQL.ParamByName('tipopago_id').AsString:=Pagos.FieldByName('tipopago_id').AsString;
+                  ZQExcecSQL.ParamByName('documentopago_importe').AsString:=Pagos.FieldByName('documentopago_importe').AsString;
+                  ZQExcecSQL.ParamByName('documentopago_nombre').AsString:=Pagos.FieldByName('documentopago_nombre').AsString;
+                  ZQExcecSQL.ParamByName('documentopago_id').AsString:=Princ.codigo('documentopagos','documentopago_id');
+                  ZQExcecSQL.ExecSql;
+
+
+                  Pagos.Next;
+              end;
+      end;
+
+    ZQExcecSQL.SQL.Clear;
+    ZQExcecSQL.SQL.Add('commit');
+    ZQExcecSQL.ExecSQL;
+end;
+
 Procedure TPrinc.AgregarDocumentoVenta(Cabecera: TDataSet; Detalle: TDataSet; Documentoventadocu: TDataSet; Pagos: TDataSet);
 var
   id:string;
@@ -1462,15 +2079,33 @@ var
 begin
     if tipodocu_ultimonumero<>'0' then
       begin
-          ZQActualizarSaldoDocumentoVenta.Active:=false;
-          ZQActualizarSaldoDocumentoVenta.SQL.Text:='update tiposdocumento set tipodocu_ultimonumero="'+tipodocu_ultimonumero+'" where tipodocu_id="'+tipodocu_id+'"';
-          ZQActualizarSaldoDocumentoVenta.ExecSQL;
+          ZQExcecSQL.Active:=false;
+          ZQExcecSQL.SQL.Text:='update tiposdocumento set tipodocu_ultimonumero="'+tipodocu_ultimonumero+'" where tipodocu_id="'+tipodocu_id+'"';
+          ZQExcecSQL.ExecSQL;
       end;
 end;
 
-
 function TPrinc.CargarPago(importe:real; QDocumentopagos: TDataSet):boolean;
 begin
+    CargarPagos:=TCargarPagos.Create(self);
+    CargarPagos.documentopago_importe.Value:=importe;
+    if CargarPagos.ShowModal=mrOK then
+      begin
+          QDocumentopagos.Insert;
+          QDocumentopagos.FieldByName('documentopago_id').AsString:='0';
+          QDocumentopagos.FieldByName('documentopago_nombre').AsString:=CargarPagos.documentopago_nombre.Text;
+          QDocumentopagos.FieldByName('documentopago_importe').AsString:=CargarPagos.documentopago_importe.Text;
+          QDocumentopagos.FieldByName('tipopago_id').AsString:=CargarPagos.tipopago_id.codigo;
+          QDocumentopagos.FieldByName('tipopago_nombre').AsString:=CargarPagos.tipopago_id.Text;
+          QDocumentopagos.FieldByName('documento_id').AsString:='0';
+          QDocumentopagos.Post;
+
+          Result:=true;
+
+      end;
+
+    CargarPagos.Free;
+
 end;
 
 procedure TPrinc.AgregarRecibo(ZQCabecera: TDataset; ZQDetalle: TDataset; ZQPagos: TDataset);
@@ -1597,10 +2232,10 @@ begin
     if inversa then
       importe_real:=importe*-1;
 
-    ZQActualizarSaldoDocumentoVenta.Active:=false;
-    ZQActualizarSaldoDocumentoVenta.SQL.Text:='call actualizarsaldo("'+id+'","'+floattostr(importe_real)+'")';
+    ZQActualizarSaldoDocumentos.Active:=false;
+    ZQActualizarSaldoDocumentos.SQL.Text:='call actualizarsaldo("'+id+'","'+floattostr(importe_real)+'")';
 
-    ZQActualizarSaldoDocumentoVenta.ExecSQL;
+    ZQActualizarSaldoDocumentos.ExecSQL;
 
 
 
@@ -1615,10 +2250,10 @@ begin
     if inversa then
       importe_real:=importe*-1;
 
-    ZQActualizarSaldoDocumentoVenta.Active:=false;
-    ZQActualizarSaldoDocumentoVenta.SQL.Text:='call actualizarsaldoventa("'+id+'","'+floattostr(importe_real)+'")';
+    ZQActualizarSaldoDocumentos.Active:=false;
+    ZQActualizarSaldoDocumentos.SQL.Text:='call actualizarsaldoventa("'+id+'","'+floattostr(importe_real)+'")';
 
-    ZQActualizarSaldoDocumentoVenta.ExecSQL;
+    ZQActualizarSaldoDocumentos.ExecSQL;
 
 
 
@@ -1775,20 +2410,21 @@ procedure TPrinc.ZBaseAfterConnect(Sender: TObject);
 var
   LOGDB:string;
 begin
-//    ZSQLMonitor1.Active:=false;
-//    ZSQLMonitor1.FileName:=ExtractFilePath(Application.ExeName)+'logsql.log';
-//
-//    LOGDB:=Princ.GetConfiguracion('LOGDB');
-//
-//    if LOGDB<>'' then
-//      begin
-//          if strtobool(LOGDB) then
-//            begin
-//                ZSQLMonitor1.AutoSave:=true;
-//                ZSQLMonitor1.Active:=true;
-//            end;
-//      end;
+    if not DirectoryExists(ExtractFilePath(Application.ExeName)+'\logs\') then
+      CreateDir(ExtractFilePath(Application.ExeName)+'\logs\');
 
+    ZSQLMonitor1.FileName:=ExtractFilePath(Application.ExeName)+'\logs\logsql'+formatdatetime('yyyymdd',princ.fechaservidor)+'.log';
+
+    LOGDB:=Princ.GetConfiguracion('LOGDB');
+
+    if LOGDB<>'' then
+      begin
+          if strtobool(LOGDB) then
+            begin
+                ZSQLMonitor1.AutoSave:=true;
+                ZSQLMonitor1.Active:=true;
+            end;
+      end;
 
 end;
 
@@ -1884,12 +2520,13 @@ begin
     end;
 end;
 
-procedure TPrinc.AdvGlowButton17Click(Sender: TObject);
+procedure TPrinc.btnrecibosClick(Sender: TObject);
 begin
     try
-      listarecibosventa:=Tlistarecibosventa.Create(self);
+      listarecibos:=Tlistarecibos.Create(self);
     finally
-      listarecibosventa.Show;
+      listarecibos.campo_id:='documento_id';
+      listarecibos.Show;
     end;
 end;
 
@@ -2073,9 +2710,29 @@ end;
 procedure TPrinc.btnfacturasventasClick(Sender: TObject);
 begin
     try
-      listafacturasventa:=Tlistafacturasventa.Create(self);
+      ListaFacturasVenta:=TListaFacturasVenta.Create(self);
     finally
-      listafacturasventa.Show;
+      ListaFacturasVenta.Show;
+    end;
+end;
+
+procedure TPrinc.btnnotasdecreditoClick(Sender: TObject);
+begin
+    try
+      ListaNotasCreditoVenta:=TListaNotasCreditoVenta.Create(self);
+    finally
+      ListaNotasCreditoVenta.campo_id:='documento_id';
+      ListaNotasCreditoVenta.Show;
+    end;
+end;
+
+procedure TPrinc.BtnNotasdeDebitoClick(Sender: TObject);
+begin
+    try
+      ListaNotasDebitoVenta:=TListaNotasDebitoVenta.Create(self);
+    finally
+      ListaNotasDebitoVenta.campo_id:='documento_id';
+      ListaNotasDebitoVenta.Show;
     end;
 end;
 

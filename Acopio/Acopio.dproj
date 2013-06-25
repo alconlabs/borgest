@@ -111,14 +111,44 @@
     <DCCReference Include="Formularios\Unitbusquedabase.pas">
       <Form>busquedabase</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\UnitCargarPagos.pas">
+      <Form>CargarPagos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\UnitDocumentosDineroPendientes.pas">
+      <Form>DocumentosDineroPendientes</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\UnitFacturaVenta.pas">
+      <Form>FacturaVenta</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Unitlistabase.pas">
       <Form>listabase</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\UnitlistaFacturasVentas.pas">
+      <Form>ListaFacturasVenta</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\UnitlistaNotasCreditoVentas.pas">
+      <Form>ListaNotasCreditoVenta</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\UnitlistaNotasDebitoVentas.pas">
+      <Form>ListaNotasDebitoVenta</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Unitlistarecibos.pas">
+      <Form>ListaRecibos</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Unitlistatemplates.pas">
       <Form>listatemplates</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\UnitNotaCreditoVenta.pas">
+      <Form>NotaCreditoVenta</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\UnitNotaDebitoVenta.pas">
+      <Form>NotaDebitoVenta</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\UnitPrinc.pas">
       <Form>Princ</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\UnitRecibo.pas">
+      <Form>Recibo</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitContrato.pas">
       <Form>contrato</Form>
@@ -147,9 +177,6 @@
     <DCCReference Include="Formularios\Ventas\UnitFacturarDocumentos.pas">
       <Form>FacturarDocumentos</Form>
     </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitfacturasventa.pas">
-      <Form>facturasventa</Form>
-    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitListaContratos.pas">
       <Form>listacontratos</Form>
     </DCCReference>
@@ -159,14 +186,8 @@
     <DCCReference Include="Formularios\Ventas\UnitListaDocumentos.pas">
       <Form>listadocumentos</Form>
     </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitlistafacturasventa.pas">
-      <Form>listafacturasventa</Form>
-    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitListaOrdendeCarga.pas">
       <Form>listaordendecarga</Form>
-    </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitlistarecibosventa.pas">
-      <Form>listarecibosventa</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitOrdenDeCarga.pas">
       <Form>OrdendeCarga</Form>

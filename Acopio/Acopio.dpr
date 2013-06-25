@@ -32,14 +32,11 @@ uses
   Unitdetallectas in 'Formularios\Ventas\Unitdetallectas.pas' {detallectas},
   Unitestadodectas in 'Formularios\Ventas\Unitestadodectas.pas' {estadoctas},
   Unitdocumentoventabase in 'Formularios\Ventas\Unitdocumentoventabase.pas' {documentoventabase},
-  Unitlistafacturasventa in 'Formularios\Ventas\Unitlistafacturasventa.pas' {listafacturasventa},
-  Unitfacturasventa in 'Formularios\Ventas\Unitfacturasventa.pas' {facturasventa},
   UnitFacturarDocumentos in 'Formularios\Ventas\UnitFacturarDocumentos.pas' {FacturarDocumentos},
   Unitventadetalle2 in 'Formularios\Ventas\Unitventadetalle2.pas' {ventadetalle2},
   Unitbusquedaproductos in 'Formularios\Archivo\Unitbusquedaproductos.pas' {busquedaproductos},
   UnitProductos in 'Formularios\Archivo\UnitProductos.pas' {productos},
   Unitlocalidades in 'Formularios\Archivo\Unitlocalidades.pas' {localidades},
-  Unitlistarecibosventa in 'Formularios\Ventas\Unitlistarecibosventa.pas' {listarecibosventa},
   Unitrecibosventa in 'Formularios\Ventas\Unitrecibosventa.pas' {recibosventa},
   UnitDocumentoBase in 'Formularios\Ventas\UnitDocumentoBase.pas' {DocumentoBase},
   UnitListaDocumentos in 'Formularios\Ventas\UnitListaDocumentos.pas' {listadocumentos},
@@ -51,7 +48,17 @@ uses
   UnitDocumentosVentasPendientes in 'Formularios\Ventas\UnitDocumentosVentasPendientes.pas' {DocumentosVentasPendientes},
   UnitDocumentosPendientes in 'Formularios\Ventas\UnitDocumentosPendientes.pas' {DocumentosPendientes},
   UnitListaContratos in 'Formularios\Ventas\UnitListaContratos.pas' {listacontratos},
-  UnitContratoVenta in 'Formularios\Ventas\UnitContratoVenta.pas' {contratoventa};
+  UnitContratoVenta in 'Formularios\Ventas\UnitContratoVenta.pas' {contratoventa},
+  UnitRecibo in 'Formularios\UnitRecibo.pas' {Recibo},
+  Unitlistarecibos in 'Formularios\Unitlistarecibos.pas' {ListaRecibos},
+  UnitCargarPagos in 'Formularios\UnitCargarPagos.pas' {CargarPagos},
+  UnitNotaCreditoVenta in 'Formularios\UnitNotaCreditoVenta.pas' {NotaCreditoVenta},
+  UnitlistaNotasCreditoVentas in 'Formularios\UnitlistaNotasCreditoVentas.pas' {ListaNotasCreditoVenta},
+  UnitNotaDebitoVenta in 'Formularios\UnitNotaDebitoVenta.pas' {NotaDebitoVenta},
+  UnitlistaNotasDebitoVentas in 'Formularios\UnitlistaNotasDebitoVentas.pas' {ListaNotasDebitoVenta},
+  UnitlistaFacturasVentas in 'Formularios\UnitlistaFacturasVentas.pas' {ListaFacturasVenta},
+  UnitFacturaVenta in 'Formularios\UnitFacturaVenta.pas' {FacturaVenta},
+  UnitDocumentosDineroPendientes in 'Formularios\UnitDocumentosDineroPendientes.pas' {DocumentosDineroPendientes};
 
 {$R *.res}
 
@@ -59,5 +66,7 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrinc, Princ);
+  Application.CreateForm(TFacturaVenta, FacturaVenta);
+  Application.CreateForm(TDocumentosDineroPendientes, DocumentosDineroPendientes);
   Application.Run;
 end.

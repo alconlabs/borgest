@@ -12,7 +12,7 @@ inherited tipodocumento: Ttipodocumento
     Width = 821
     Height = 351
     ExplicitWidth = 821
-    ExplicitHeight = 316
+    ExplicitHeight = 351
     FullHeight = 0
     object Label3: TLabel [0]
       Left = 67
@@ -383,8 +383,9 @@ inherited tipodocumento: Ttipodocumento
       Items.Strings = (
         'Factura de Venta'
         'Remito de Venta'
-        'Recibo de Venta'
+        'Recibo'
         'Nota de Credito de Venta'
+        'Nota de Debito de Venta'
         'Presupuesto'
         'Nota de Pedido'
         'Orden de Servicio'
@@ -392,13 +393,15 @@ inherited tipodocumento: Ttipodocumento
         'Contrato de Compra'
         'Contrato de Venta'
         'Orden de Carga'
+        'Orden de Pago'
         'Otro')
       Tag2 = 0
       valores.Strings = (
         'Factura de Venta'
         'Remito de Venta'
-        'Recibo de Venta'
+        'Recibo'
         'Nota de Credito de Venta'
+        'Nota de Debito de Venta'
         'Presupuesto'
         'Nota de Pedido'
         'Orden de Servicio'
@@ -406,6 +409,7 @@ inherited tipodocumento: Ttipodocumento
         'Contrato de Compra'
         'Contrato de Venta'
         'Orden de Carga'
+        'Orden de Pago'
         'Otro')
     end
     object tipodocu_manual: TCheckBox

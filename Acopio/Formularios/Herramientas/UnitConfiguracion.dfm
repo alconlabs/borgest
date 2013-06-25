@@ -81,7 +81,7 @@ object configuracion: Tconfiguracion
       Top = 1
       Width = 587
       Height = 305
-      ActivePage = TabSheet4
+      ActivePage = TabSheet1
       Align = alTop
       TabOrder = 2
       object TabSheet1: TTabSheet
@@ -109,6 +109,15 @@ object configuracion: Tconfiguracion
           Confcampo_codigo = 'sucursal_id'
           Confcampo_nomb = 'sucursal_nombre'
           Tag2 = 0
+        end
+        object LOGDB: TCheckBox
+          Left = 56
+          Top = 34
+          Width = 105
+          Height = 17
+          Alignment = taLeftJustify
+          Caption = 'Habilitar Log DB'
+          TabOrder = 1
         end
       end
       object TabSheet2: TTabSheet
@@ -176,6 +185,15 @@ object configuracion: Tconfiguracion
           Caption = 'Actualizar DB desde archivo'
           TabOrder = 4
           OnClick = btnactualizardbfileClick
+        end
+        object btnprocedimientosalamcenados: TButton
+          Left = 3
+          Top = 229
+          Width = 198
+          Height = 25
+          Caption = 'ReCrear Procedimientos almacenados'
+          TabOrder = 5
+          OnClick = btnprocedimientosalamcenadosClick
         end
       end
     end

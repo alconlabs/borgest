@@ -30,6 +30,8 @@ type
     Label14: TLabel;
     SUCURSALDEFECTO: TSqlComboBox;
     btnactualizardbfile: TButton;
+    LOGDB: TCheckBox;
+    btnprocedimientosalamcenados: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -38,6 +40,7 @@ type
     procedure btnactualizardbClick(Sender: TObject);
     procedure btnactualizardbfileClick(Sender: TObject);
     procedure btnconfigurarmenuClick(Sender: TObject);
+    procedure btnprocedimientosalamcenadosClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -119,6 +122,10 @@ begin
     ZQuery1.parambyname('config_valor').AsString:=SUCURSALDEFECTO.codigo;
     ZQuery1.ExecSQL;
 
+    ZQuery1.parambyname('config_nombre').AsString:='LOGDB';
+    ZQuery1.parambyname('config_valor').AsString:=booltostr(LOGDB.Checked);
+    ZQuery1.ExecSQL;
+
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK, mbCancel], 0);
 
     Self.Close;
@@ -163,6 +170,25 @@ begin
     end;
 end;
 
+procedure Tconfiguracion.btnprocedimientosalamcenadosClick(Sender: TObject);
+begin
+    Princ.ZQExcecSQL.SQL.Text:='DROP PROCEDURE IF EXISTS `actualizarsaldo`';
+    Princ.ZQExcecSQL.ExecSQL;
+
+    Princ.ZQExcecSQL.SQL.Text:='CREATE PROCEDURE `actualizarsaldo`(id int, pago float) '+
+                               'BEGIN '+
+                               '    update documentos set documento_saldo=documento_saldo-(pago),  '+
+                               '    documento_pagado=documento_pagado+(pago), '+
+                               '    documento_estado=if(documento_saldo=0,"PAGADA","PENDIENTE") '+
+                               '    where documento_id=id; '+
+                               'END;';
+
+    Princ.ZQExcecSQL.ExecSQL;
+
+    MessageDlg('Procedimientos Recreados.', mtInformation, [mbOK], 0);
+
+end;
+
 procedure Tconfiguracion.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
     Self.Free;
@@ -199,6 +225,9 @@ begin
 
     if ZQConfig.Locate('config_nombre','SUCURSALDEFECTO',[]) then
       SUCURSALDEFECTO.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','LOGDB',[]) then
+      LOGDB.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
 end;
 
 end.
