@@ -61,8 +61,6 @@ object ActualizarProductos: TActualizarProductos
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitWidth = 1023
-    ExplicitHeight = 580
     FullHeight = 0
     object PgCtrlSettings: TPageControl
       Left = 0
@@ -72,13 +70,9 @@ object ActualizarProductos: TActualizarProductos
       ActivePage = TabSheet2
       Align = alClient
       TabOrder = 0
-      ExplicitWidth = 1023
-      ExplicitHeight = 465
       object TabSheet2: TTabSheet
         Caption = 'Actualizar Productos'
         ImageIndex = 1
-        ExplicitLeft = 8
-        ExplicitTop = 28
         object Label3: TLabel
           Left = 53
           Top = 12
@@ -641,9 +635,6 @@ object ActualizarProductos: TActualizarProductos
       object TabSheet1: TTabSheet
         Caption = 'Actualizar desde Excel'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 28
-        ExplicitWidth = 1015
         object Label2: TLabel
           Left = 40
           Top = 5
@@ -1094,24 +1085,17 @@ object ActualizarProductos: TActualizarProductos
           BevelOuter = bvNone
           Caption = 'PanelGrillasExcel'
           TabOrder = 20
-          ExplicitWidth = 1015
           object PgCtrlGrids: TPageControl
             Left = 0
             Top = 0
             Width = 1027
             Height = 345
-            ActivePage = TabSheet3
+            ActivePage = TabSheet4
             Align = alClient
             TabOrder = 0
-            ExplicitLeft = -822
-            ExplicitTop = -263
-            ExplicitWidth = 1023
-            ExplicitHeight = 328
             object TabSheet3: TTabSheet
               Caption = 'Productos Nuevos'
               ImageIndex = 1
-              ExplicitWidth = 1015
-              ExplicitHeight = 300
               object lblcantidadnuevos: TLabel
                 Left = 7
                 Top = 245
@@ -1228,8 +1212,6 @@ object ActualizarProductos: TActualizarProductos
             object TabSheet4: TTabSheet
               Caption = 'A Incrementar'
               ImageIndex = 2
-              ExplicitWidth = 1015
-              ExplicitHeight = 300
               object lblcantidadincrementar: TLabel
                 Left = 7
                 Top = 245
@@ -1365,8 +1347,10 @@ object ActualizarProductos: TActualizarProductos
             object TabSheet5: TTabSheet
               Caption = 'A Disminuir'
               ImageIndex = 3
-              ExplicitWidth = 1015
-              ExplicitHeight = 300
+              ExplicitLeft = 0
+              ExplicitTop = 0
+              ExplicitWidth = 0
+              ExplicitHeight = 0
               object lblcantidadisminuir: TLabel
                 Left = 7
                 Top = 245
@@ -1502,8 +1486,6 @@ object ActualizarProductos: TActualizarProductos
             object TabSheet6: TTabSheet
               Caption = 'Sin Cambios'
               ImageIndex = 3
-              ExplicitWidth = 1015
-              ExplicitHeight = 300
               object lblcantidadsincambios: TLabel
                 Left = 7
                 Top = 245

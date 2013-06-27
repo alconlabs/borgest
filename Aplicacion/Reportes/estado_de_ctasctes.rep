@@ -1056,10 +1056,10 @@ object TRpReport
     Stream = {0000000000000000}
   end
   object TRpExpression16: TRpExpression
-    Width = 4331
-    Height = 229
+    Width = 6555
+    Height = 230
     PosX = 1710
-    PosY = -1
+    PosY = 0
     Type1Font = poHelvetica
     Alignment = 1
     DataType = rpParamDate
@@ -1119,7 +1119,7 @@ object TRpReport
     WideText = 'Vendedor'
   end
   object TRpExpression15: TRpExpression
-    Width = 4200
+    Width = 6555
     Height = 230
     PosX = 1710
     PosY = 0
