@@ -147,7 +147,7 @@ begin
 
 
     MessageDlg('Datos guardados correctamente', mtInformation, [mbOK], 0);
-
+    self.Close;
 end;
 
 
@@ -208,7 +208,7 @@ begin
     ZQExecSQL.ExecSql;
 
     MessageDlg('Datos guardados correctamente', mtInformation, [mbOK], 0);
-
+    self.Close;
 end;
 
 
@@ -263,6 +263,7 @@ procedure Tcontrato.ZQSelectAfterOpen(DataSet: TDataSet);
 begin
   inherited;
     sucursal_id.llenarcombo;
+    sucursal_id.ItemIndex:=0;
 
     puntoventa_id.Confsql.Text:='select * from puntodeventa where sucursal_id="'+sucursal_id.codigo+'" order by puntoventa_numero';
 
@@ -345,7 +346,8 @@ begin
     ZQExecSQL.Sql.Add('where documento_id=:documento_id ');
     ZQExecSQL.ParamByName('documento_id').AsString:=id;
     ZQExecSQL.ExecSql;
-
+    MessageDlg('Datos eliminados.', mtInformation, [mbOK], 0);
+    self.Close;
 end;
 
 

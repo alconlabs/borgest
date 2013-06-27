@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, MoneyEdit, AdvEdit, DBAdvEd, UnitSqlComboBox,
   AdvPanel, ComCtrls, Grids, DBGrids, DB, ZAbstractRODataset, ZAbstractDataset,
-  ZDataset;
+  ZDataset, Mask;
 
 type
   TEntidades = class(TForm)
@@ -123,6 +123,7 @@ type
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
+    entidad_nrodocumento_cuit: TMaskEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btncancelarClick(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
@@ -132,6 +133,7 @@ type
     procedure btnagregarClick(Sender: TObject);
     procedure btnquitarClick(Sender: TObject);
     procedure provincia_idExit(Sender: TObject);
+    procedure entidad_tipodocumentoChange(Sender: TObject);
   private
     { Private declarations }
     function control:boolean;
@@ -277,6 +279,10 @@ begin
     ZQuery1.parambyname('entidad_tipodocumento').asstring:=entidad_tipodocumento.Text;
     ZQuery1.parambyname('entidad_inicioactividad').asstring:=formatdatetime('yyyy-mm-dd',entidad_inicioactividad.Date);
     ZQuery1.parambyname('entidad_nrodocumento').asstring:=entidad_nrodocumento.Text;
+
+    if entidad_tipodocumento.Text='CUIT' then
+      ZQuery1.parambyname('entidad_nrodocumento').asstring:=entidad_nrodocumento_cuit.Text;
+
     ZQuery1.parambyname('entidad_iibb').asstring:=entidad_iibb.Text;
     ZQuery1.parambyname('entidad_tipoiva').asstring:=entidad_tipoiva.Text;
     if entidad_retieneiibbsi.Checked then
@@ -329,6 +335,17 @@ end;
 
 
 
+procedure TEntidades.entidad_tipodocumentoChange(Sender: TObject);
+begin
+    entidad_nrodocumento_cuit.Visible:=false;
+    entidad_nrodocumento.Visible:=true;
+    if entidad_tipodocumento.Text='CUIT' then
+      begin
+          entidad_nrodocumento_cuit.Visible:=true;
+          entidad_nrodocumento.Visible:=false;
+      end;
+end;
+
 procedure TEntidades.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
    free;
@@ -349,12 +366,17 @@ begin
           ZQentidad.Active:=false;
           ZQentidad.ParamByName('entidad_id').AsString:=id;
           ZQentidad.Active:=true;
+      end
+    else
+      begin
+          entidad_id.Text:=Princ.codigo('entidades','entidad_id');
+
+
       end;
 end;
 
 procedure TEntidades.modificar;
 begin
-
     ZQuery1.sql.clear;
     ZQuery1.sql.add('Update entidades set ');
     ZQuery1.sql.add('entidad_precodi=:entidad_precodi, ');
@@ -411,6 +433,10 @@ begin
     ZQuery1.parambyname('entidad_tipodocumento').asstring:=entidad_tipodocumento.Text;
     ZQuery1.parambyname('entidad_inicioactividad').asstring:=formatdatetime('yyyy-mm-dd',entidad_inicioactividad.Date);
     ZQuery1.parambyname('entidad_nrodocumento').asstring:=entidad_nrodocumento.Text;
+
+    if entidad_tipodocumento.Text='CUIT' then
+      ZQuery1.parambyname('entidad_nrodocumento').asstring:=entidad_nrodocumento_cuit.Text;
+
     ZQuery1.parambyname('entidad_iibb').asstring:=entidad_iibb.Text;
     ZQuery1.parambyname('entidad_tipoiva').asstring:=entidad_tipoiva.Text;
     if entidad_retieneiibbsi.Checked then
@@ -477,6 +503,8 @@ begin
     entidad_inicioactividad.date:=ZQentidad.FieldByName('entidad_inicioactividad').AsDateTime;
     entidad_tipoiva.Text:=ZQentidad.FieldByName('entidad_tipoiva').AsString;
     entidad_nrodocumento.Text:=ZQentidad.FieldByName('entidad_nrodocumento').AsString;
+    entidad_nrodocumento_cuit.Text:=ZQentidad.FieldByName('entidad_nrodocumento').AsString;
+    entidad_tipodocumento.OnSelect(self);
     entidad_iibb.Text:=ZQentidad.FieldByName('entidad_iibb').AsString;
 
     if ZQentidad.FieldByName('entidad_retieneiibb').asstring='SI' then

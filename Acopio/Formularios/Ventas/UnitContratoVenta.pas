@@ -48,6 +48,10 @@ type
     Label14: TLabel;
     documento_condicioncalidad: TGTBComboBox;
     Label17: TLabel;
+    Label19: TLabel;
+    Edit1: TEdit;
+    Label20: TLabel;
+    Edit2: TEdit;
     procedure btnguardarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -142,6 +146,7 @@ begin
 
 
     MessageDlg('Datos guardados correctamente', mtInformation, [mbOK], 0);
+    self.Close;
 
 end;
 
@@ -203,7 +208,7 @@ begin
     ZQExecSQL.ExecSql;
 
     MessageDlg('Datos guardados correctamente', mtInformation, [mbOK], 0);
-
+    self.Close;
 end;
 
 
@@ -258,6 +263,7 @@ procedure Tcontratoventa.ZQSelectAfterOpen(DataSet: TDataSet);
 begin
   inherited;
     sucursal_id.llenarcombo;
+    sucursal_id.ItemIndex:=0;
 
     puntoventa_id.Confsql.Text:='select * from puntodeventa where sucursal_id="'+sucursal_id.codigo+'" order by puntoventa_numero';
 
@@ -341,6 +347,8 @@ begin
     ZQExecSQL.ParamByName('documento_id').AsString:=id;
     ZQExecSQL.ExecSql;
 
+    MessageDlg('Datos eliminados.', mtInformation, [mbOK], 0);
+    self.Close;
 end;
 
 

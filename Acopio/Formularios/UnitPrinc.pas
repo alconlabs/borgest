@@ -2568,8 +2568,7 @@ end;
 
 procedure TPrinc.AdvGlowButton1Click(Sender: TObject);
 begin
-
- try
+    try
       listaEntidades:=TlistaEntidades.Create(self);
     finally
       listaEntidades.campo_id:='entidad_id';

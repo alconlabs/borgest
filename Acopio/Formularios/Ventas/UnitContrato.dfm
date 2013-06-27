@@ -93,12 +93,12 @@ inherited contrato: Tcontrato
       Caption = 'Tipo Documento'
     end
     object Label6: TLabel [10]
-      Left = 69
+      Left = 89
       Top = 208
-      Width = 42
+      Width = 22
       Height = 13
       Alignment = taRightJustify
-      Caption = 'Cantidad'
+      Caption = 'Kilos'
     end
     object Label16: TLabel [11]
       Left = 536

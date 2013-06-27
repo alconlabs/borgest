@@ -542,10 +542,6 @@ inherited OrdendeCarga: TOrdendeCarga
       object TabSheet4: TTabSheet
         Caption = 'Transportista'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label22: TLabel
           Left = 15
           Top = 48
@@ -616,7 +612,7 @@ inherited OrdendeCarga: TOrdendeCarga
           Width = 316
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 1
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -639,7 +635,7 @@ inherited OrdendeCarga: TOrdendeCarga
           Width = 316
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 0
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -710,10 +706,6 @@ inherited OrdendeCarga: TOrdendeCarga
       object TabSheet2: TTabSheet
         Caption = 'Origen'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label23: TLabel
           Left = 2
           Top = 0
@@ -804,10 +796,6 @@ inherited OrdendeCarga: TOrdendeCarga
       object TabSheet3: TTabSheet
         Caption = 'Destino'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label24: TLabel
           Left = 2
           Top = 0

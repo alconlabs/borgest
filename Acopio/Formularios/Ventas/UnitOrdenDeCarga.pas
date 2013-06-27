@@ -481,7 +481,7 @@ begin
 
 
     MessageDlg('Datos guardados correctamente', mtInformation, [mbOK], 0);
-
+    self.Close;
 end;
 
 
@@ -640,7 +640,7 @@ begin
     ZQExecSQL.ExecSQL;
 
     MessageDlg('Datos guardados correctamente', mtInformation, [mbOK], 0);
-
+    self.Close;
 end;
 
 
@@ -835,6 +835,8 @@ begin
     ZQExecSQL.Sql.Add('commit ');
     ZQExecSQL.ExecSQL;
 
+    MessageDlg('Datos eliminados.', mtInformation, [mbOK], 0);
+    self.Close;
 end;
 
 

@@ -1,16 +1,16 @@
 inherited contratoventa: Tcontratoventa
-  Caption = 'contratoventa'
-  ClientHeight = 430
+  Caption = 'Contrato de Venta'
+  ClientHeight = 510
   ClientWidth = 753
   OnCreate = FormCreate
   OnShow = FormShow
   ExplicitWidth = 769
-  ExplicitHeight = 468
+  ExplicitHeight = 548
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Width = 753
-    Height = 430
+    Height = 510
     ExplicitWidth = 753
     ExplicitHeight = 430
     FullHeight = 0
@@ -93,12 +93,12 @@ inherited contratoventa: Tcontratoventa
       Caption = 'Tipo Documento'
     end
     object Label6: TLabel [10]
-      Left = 69
+      Left = 89
       Top = 208
-      Width = 42
+      Width = 22
       Height = 13
       Alignment = taRightJustify
-      Caption = 'Cantidad'
+      Caption = 'Kilos'
     end
     object Label16: TLabel [11]
       Left = 536
@@ -110,7 +110,7 @@ inherited contratoventa: Tcontratoventa
     end
     object Label18: TLabel [12]
       Left = 47
-      Top = 315
+      Top = 403
       Width = 71
       Height = 13
       Caption = 'Observaciones'
@@ -149,7 +149,7 @@ inherited contratoventa: Tcontratoventa
     end
     object Label10: TLabel [17]
       Left = 36
-      Top = 293
+      Top = 381
       Width = 82
       Height = 13
       Alignment = taRightJustify
@@ -179,20 +179,38 @@ inherited contratoventa: Tcontratoventa
       Alignment = taRightJustify
       Caption = 'Punto de Venta'
     end
+    object Label19: TLabel [21]
+      Left = 83
+      Top = 298
+      Width = 35
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Calidad'
+      Enabled = False
+    end
+    object Label20: TLabel [22]
+      Left = 58
+      Top = 322
+      Width = 60
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Procedencia'
+      Enabled = False
+    end
     inherited btncancelar: TButton
       Left = 676
-      Top = 390
+      Top = 478
       TabOrder = 18
       ExplicitLeft = 676
-      ExplicitTop = 390
+      ExplicitTop = 478
     end
     inherited btnguardar: TButton
       Left = 595
-      Top = 390
+      Top = 478
       TabOrder = 17
       OnClick = btnguardarClick
       ExplicitLeft = 595
-      ExplicitTop = 390
+      ExplicitTop = 478
     end
     object documento_numero: TEdit
       Left = 124
@@ -323,7 +341,7 @@ inherited contratoventa: Tcontratoventa
     end
     object documento_observaciones: TGTBMemo
       Left = 124
-      Top = 317
+      Top = 405
       Width = 316
       Height = 98
       TabOrder = 16
@@ -391,7 +409,7 @@ inherited contratoventa: Tcontratoventa
     end
     object documento_lugarentrega: TGTBEdit
       Left = 124
-      Top = 290
+      Top = 378
       Width = 316
       Height = 21
       TabOrder = 15
@@ -427,6 +445,22 @@ inherited contratoventa: Tcontratoventa
       valores.Strings = (
         'Condicional'
         'Conforme')
+    end
+    object Edit1: TEdit
+      Left = 124
+      Top = 295
+      Width = 121
+      Height = 21
+      Enabled = False
+      TabOrder = 19
+    end
+    object Edit2: TEdit
+      Left = 124
+      Top = 319
+      Width = 316
+      Height = 21
+      Enabled = False
+      TabOrder = 20
     end
   end
   inherited ZQSelect: TZQuery

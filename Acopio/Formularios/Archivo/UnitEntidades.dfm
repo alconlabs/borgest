@@ -187,6 +187,7 @@ object Entidades: TEntidades
         Top = 62
         Width = 529
         Height = 21
+        CharCase = ecUpperCase
         TabOrder = 3
       end
       object entidad_piso: TEdit
@@ -194,6 +195,7 @@ object Entidades: TEntidades
         Top = 141
         Width = 82
         Height = 21
+        CharCase = ecUpperCase
         TabOrder = 6
       end
       object entidad_depto: TEdit
@@ -201,6 +203,7 @@ object Entidades: TEntidades
         Top = 163
         Width = 82
         Height = 21
+        CharCase = ecUpperCase
         TabOrder = 7
       end
       object localidad_codpostal: TEdit
@@ -215,11 +218,12 @@ object Entidades: TEntidades
         Top = 246
         Width = 529
         Height = 21
+        CharCase = ecUpperCase
         TabOrder = 12
       end
       object Panel1: TPanel
-        Left = 116
-        Top = 199
+        Left = 114
+        Top = 200
         Width = 160
         Height = 43
         TabOrder = 11
@@ -257,6 +261,7 @@ object Entidades: TEntidades
         Top = 40
         Width = 529
         Height = 21
+        CharCase = ecUpperCase
         TabOrder = 2
       end
       object entidad_calle: TEdit
@@ -264,6 +269,7 @@ object Entidades: TEntidades
         Top = 97
         Width = 529
         Height = 21
+        CharCase = ecUpperCase
         TabOrder = 4
       end
       object entidad_puerta: TDBAdvEdit
@@ -469,7 +475,7 @@ object Entidades: TEntidades
         Width = 206
         Height = 21
         ItemHeight = 13
-        TabOrder = 13
+        TabOrder = 14
         Confbase = Princ.ZBase
         Confsql.Strings = (
           'select * from rubros'
@@ -486,7 +492,7 @@ object Entidades: TEntidades
         Width = 132
         Height = 21
         ItemHeight = 13
-        TabOrder = 4
+        TabOrder = 5
         Text = 'INSCRIPTO'
         Items.Strings = (
           'INSCRIPTO'
@@ -499,42 +505,47 @@ object Entidades: TEntidades
         Height = 21
         Date = 40384.000000000000000000
         Time = 40384.000000000000000000
-        TabOrder = 3
+        TabOrder = 4
       end
       object entidad_regiacopiador: TEdit
         Left = 114
         Top = 236
         Width = 102
         Height = 21
-        TabOrder = 12
+        CharCase = ecUpperCase
+        TabOrder = 13
       end
       object entidad_regibalanza: TEdit
         Left = 114
         Top = 213
         Width = 102
         Height = 21
-        TabOrder = 11
+        CharCase = ecUpperCase
+        TabOrder = 12
       end
       object entidad_iibb: TEdit
         Left = 501
         Top = 16
         Width = 132
         Height = 21
-        TabOrder = 2
+        CharCase = ecUpperCase
+        TabOrder = 3
       end
       object entidad_minagri: TEdit
         Left = 114
         Top = 167
         Width = 102
         Height = 21
-        TabOrder = 9
+        CharCase = ecUpperCase
+        TabOrder = 10
       end
       object entidad_diretransporte: TEdit
         Left = 114
         Top = 190
         Width = 102
         Height = 21
-        TabOrder = 10
+        CharCase = ecUpperCase
+        TabOrder = 11
       end
       object retieneIIBB: TGroupBox
         Left = 114
@@ -542,7 +553,7 @@ object Entidades: TEntidades
         Width = 97
         Height = 77
         Caption = 'Retiene IIBB'
-        TabOrder = 5
+        TabOrder = 6
         object Label46: TLabel
           Left = 32
           Top = 21
@@ -578,7 +589,7 @@ object Entidades: TEntidades
         Width = 133
         Height = 77
         Caption = 'Ag. Retenci'#243'n AFIP'
-        TabOrder = 6
+        TabOrder = 7
         object Label48: TLabel
           Left = 63
           Top = 40
@@ -614,7 +625,7 @@ object Entidades: TEntidades
         Width = 135
         Height = 77
         Caption = 'Conv. Multilateral'
-        TabOrder = 7
+        TabOrder = 8
         object Label50: TLabel
           Left = 63
           Top = 40
@@ -650,7 +661,7 @@ object Entidades: TEntidades
         Width = 131
         Height = 77
         Caption = 'Exportador'
-        TabOrder = 8
+        TabOrder = 9
         object Label52: TLabel
           Left = 63
           Top = 40
@@ -686,7 +697,7 @@ object Entidades: TEntidades
         Width = 134
         Height = 90
         Caption = 'Insc. Reg. Productores'
-        TabOrder = 15
+        TabOrder = 16
         object Label54: TLabel
           Left = 55
           Top = 48
@@ -722,7 +733,7 @@ object Entidades: TEntidades
         Width = 271
         Height = 90
         Caption = 'Datos de Carnet de Manejo'
-        TabOrder = 14
+        TabOrder = 15
         object Label36: TLabel
           Left = 5
           Top = 26
@@ -752,6 +763,7 @@ object Entidades: TEntidades
           Top = 20
           Width = 104
           Height = 21
+          CharCase = ecUpperCase
           TabOrder = 0
         end
         object entidad_vencecarnet: TDateTimePicker
@@ -768,6 +780,7 @@ object Entidades: TEntidades
           Top = 60
           Width = 260
           Height = 21
+          CharCase = ecUpperCase
           TabOrder = 2
         end
       end
@@ -776,6 +789,7 @@ object Entidades: TEntidades
         Top = 16
         Width = 132
         Height = 21
+        CharCase = ecUpperCase
         TabOrder = 1
       end
       object entidad_tipodocumento: TComboBox
@@ -787,12 +801,25 @@ object Entidades: TEntidades
         ItemIndex = 0
         TabOrder = 0
         Text = 'DNI'
+        OnChange = entidad_tipodocumentoChange
+        OnSelect = entidad_tipodocumentoChange
         Items.Strings = (
           'DNI'
           'CI'
           'LE'
           'CUIT'
           'CUIL')
+      end
+      object entidad_nrodocumento_cuit: TMaskEdit
+        Left = 324
+        Top = 16
+        Width = 90
+        Height = 21
+        EditMask = '00\-00000000\-0;1;_'
+        MaxLength = 13
+        TabOrder = 2
+        Text = '  -        - '
+        Visible = False
       end
     end
     object TabSheet3: TTabSheet
