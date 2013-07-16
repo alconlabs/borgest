@@ -136,7 +136,6 @@ object listafacturascompra: Tlistafacturascompra
         Align = alTop
         Caption = 'Crear Nuevo'
         TabOrder = 0
-        OnClick = Button4Click
       end
       object btnanular: TButton
         Left = 0

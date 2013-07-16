@@ -58,7 +58,13 @@ uses
   UnitlistaNotasDebitoVentas in 'Formularios\UnitlistaNotasDebitoVentas.pas' {ListaNotasDebitoVenta},
   UnitlistaFacturasVentas in 'Formularios\UnitlistaFacturasVentas.pas' {ListaFacturasVenta},
   UnitFacturaVenta in 'Formularios\UnitFacturaVenta.pas' {FacturaVenta},
-  UnitDocumentosDineroPendientes in 'Formularios\UnitDocumentosDineroPendientes.pas' {DocumentosDineroPendientes};
+  UnitDocumentosDineroPendientes in 'Formularios\UnitDocumentosDineroPendientes.pas' {DocumentosDineroPendientes},
+  UnitlistaFacturasCompras in 'Formularios\UnitlistaFacturasCompras.pas' {ListaFacturasCompra},
+  UnitFacturaCompra in 'Formularios\UnitFacturaCompra.pas' {FacturaCompra},
+  UnitlistaNotasCreditoCompras in 'Formularios\UnitlistaNotasCreditoCompras.pas' {ListaNotasCreditoCompra},
+  UnitlistaNotasDebitoCompras in 'Formularios\UnitlistaNotasDebitoCompras.pas' {ListaNotasDebitoCompra},
+  UnitNotaDebitoCompra in 'Formularios\UnitNotaDebitoCompra.pas' {NotaDebitoCompra},
+  UnitNotaCreditoCompra in 'Formularios\UnitNotaCreditoCompra.pas' {NotaCreditoCompra};
 
 {$R *.res}
 
@@ -66,7 +72,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TPrinc, Princ);
-  Application.CreateForm(TFacturaVenta, FacturaVenta);
-  Application.CreateForm(TDocumentosDineroPendientes, DocumentosDineroPendientes);
+  Application.CreateForm(TNotaCreditoCompra, NotaCreditoCompra);
   Application.Run;
 end.

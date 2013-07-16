@@ -106,6 +106,7 @@ type
     documento_dgrret: TMoneyEdit;
     documento_dgrperc: TMoneyEdit;
     ZQDocumentosdocumento_nogravado: TFloatField;
+    ZQDocumentosdocumento_puntoventa: TIntegerField;
 
     procedure btnguardarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

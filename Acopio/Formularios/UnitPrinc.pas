@@ -76,9 +76,9 @@ type
     AdvPage2: TAdvPage;
     AdvPage3: TAdvPage;
     AdvToolBar3: TAdvToolBar;
-    AdvGlowButton10: TAdvGlowButton;
-    AdvGlowButton11: TAdvGlowButton;
-    AdvGlowButton12: TAdvGlowButton;
+    btnfacturascompras: TAdvGlowButton;
+    btnnotacreditocompra: TAdvGlowButton;
+    btnnotadebitocompra: TAdvGlowButton;
     AdvToolBar4: TAdvToolBar;
     AdvGlowButton13: TAdvGlowButton;
     AdvGlowButton14: TAdvGlowButton;
@@ -142,6 +142,9 @@ type
     procedure btnperfilesClick(Sender: TObject);
     procedure btnnotasdecreditoClick(Sender: TObject);
     procedure BtnNotasdeDebitoClick(Sender: TObject);
+    procedure btnfacturascomprasClick(Sender: TObject);
+    procedure btnnotacreditocompraClick(Sender: TObject);
+    procedure btnnotadebitocompraClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -278,6 +281,10 @@ const
   TIPODOCU_NOTADEBITOVENTA='Nota de Debito de Venta';
   TIPODOCU_REMITOVENTA='Remito de Venta';
 
+  TIPODOCU_FACTURACOMPRA='Factura de Compra';
+  TIPODOCU_NOTACREDITOCOMPRA='Nota de Credito de Compra';
+  TIPODOCU_NOTADEBITOCOMPRA='Nota de Debito de Compra';
+
   ABM_AGREGAR=1;
   ABM_MODIFICAR=2;
   ABM_ELIMINAR=3;
@@ -308,7 +315,9 @@ uses Unitlocalidades, UnitConfiguracion, UnitABMbase, UnitListaSucursales,
   UnitListaContratosVentas, Unitlistarecibos, UnitRecibo, UnitCargarPagos,
   UnitlistaNotasCreditoVentas, UnitNotaCreditoVenta, UnitlistaFacturasVentas,
   UnitFacturaVenta, UnitNotaDebitoVenta, UnitlistaNotasDebitoVentas,
-  UnitDocumentosDineroPendientes;
+  UnitDocumentosDineroPendientes, UnitFacturaCompra, UnitlistaFacturasCompras,
+  UnitNotaCreditoCompra, UnitlistaNotasCreditoCompras, UnitNotaDebitoCompra,
+  UnitlistaNotasDebitoCompras;
 
 {$R *.dfm}
 
@@ -646,7 +655,42 @@ begin
           end;
       end;
 
+    if tipodocu_nombre=TIPODOCU_FACTURACOMPRA then
+      begin
+          try
+            facturacompra:=Tfacturacompra.Create(self);
+          finally
+            facturacompra.abm:=abm;
+            facturacompra.id:=id;
+            facturacompra.tipodocu_nombre:=tipodocu_nombre;
+            facturacompra.Show;
+          end;
+      end;
 
+
+    if tipodocu_nombre=TIPODOCU_NOTACREDITOCOMPRA then
+      begin
+          try
+            NotaCreditoCompra:=TNotaCreditoCompra.Create(self);
+          finally
+            NotaCreditoCompra.abm:=abm;
+            NotaCreditoCompra.id:=id;
+            NotaCreditoCompra.tipodocu_nombre:=tipodocu_nombre;
+            NotaCreditoCompra.Show;
+          end;
+      end;
+
+    if tipodocu_nombre=TIPODOCU_NOTADEBITOCOMPRA then
+      begin
+          try
+            NotaDebitoCompra:=TNotaDebitoCompra.Create(self);
+          finally
+            NotaDebitoCompra.abm:=abm;
+            NotaDebitoCompra.id:=id;
+            NotaDebitoCompra.tipodocu_nombre:=tipodocu_nombre;
+            NotaDebitoCompra.Show;
+          end;
+      end;
 end;
 
 procedure TPrinc.AbrirDocumentoVenta(id: string; tipodocu_nombre: string; abm: Integer);
@@ -2706,12 +2750,43 @@ begin
     self.AdvPopupMenu1.Popup(mouse.CursorPos.X,mouse.CursorPos.Y);
 end;
 
+procedure TPrinc.btnfacturascomprasClick(Sender: TObject);
+begin
+    try
+      ListaFacturasCompra:=TListaFacturasCompra.Create(self);
+    finally
+      ListaFacturasCompra.campo_id:='documento_id';
+      ListaFacturasCompra.Show;
+    end;
+end;
+
 procedure TPrinc.btnfacturasventasClick(Sender: TObject);
 begin
     try
       ListaFacturasVenta:=TListaFacturasVenta.Create(self);
     finally
+      ListaFacturasVenta.campo_id:='documento_id';
       ListaFacturasVenta.Show;
+    end;
+end;
+
+procedure TPrinc.btnnotacreditocompraClick(Sender: TObject);
+begin
+    try
+      ListaNotasCreditoCompra:=TListaNotasCreditoCompra.Create(self);
+    finally
+      ListaNotasCreditoCompra.campo_id:='documento_id';
+      ListaNotasCreditoCompra.Show;
+    end;
+end;
+
+procedure TPrinc.btnnotadebitocompraClick(Sender: TObject);
+begin
+    try
+      ListaNotasDebitoCompra:=TListaNotasDebitoCompra.Create(self);
+    finally
+      ListaNotasDebitoCompra.campo_id:='documento_id';
+      ListaNotasDebitoCompra.Show;
     end;
 end;
 

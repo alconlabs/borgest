@@ -2866,7 +2866,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1271
     Height = 135
-    ActivePage = AdvPage4
+    ActivePage = AdvPage1
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -3484,12 +3484,13 @@ object Princ: TPrinc
         ToolBarStyler = AdvToolBarFantasyStyler1
         ParentOptionPicture = True
         OnOptionClick = AdvToolBarGeneralOptionClick
-        object AdvGlowButton10: TAdvGlowButton
+        object btnfacturascompras: TAdvGlowButton
           Left = 76
           Top = 2
           Width = 74
           Height = 81
           Cursor = crHandPoint
+          Caption = 'Facturas de Compras'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -9
@@ -3498,6 +3499,7 @@ object Princ: TPrinc
           FocusType = ftHot
           ParentFont = False
           TabOrder = 0
+          OnClick = btnfacturascomprasClick
           Appearance.ColorChecked = 16111818
           Appearance.ColorCheckedTo = 16367008
           Appearance.ColorDisabled = 15921906
@@ -3515,12 +3517,13 @@ object Princ: TPrinc
           Appearance.ColorMirrorDisabled = 11974326
           Appearance.ColorMirrorDisabledTo = 15921906
         end
-        object AdvGlowButton11: TAdvGlowButton
+        object btnnotacreditocompra: TAdvGlowButton
           Left = 150
           Top = 2
           Width = 73
           Height = 81
           Cursor = crHandPoint
+          Caption = 'Notas de Credito de Compras'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -9
@@ -3529,6 +3532,7 @@ object Princ: TPrinc
           FocusType = ftHot
           ParentFont = False
           TabOrder = 1
+          OnClick = btnnotacreditocompraClick
           Appearance.ColorChecked = 16111818
           Appearance.ColorCheckedTo = 16367008
           Appearance.ColorDisabled = 15921906
@@ -3546,12 +3550,13 @@ object Princ: TPrinc
           Appearance.ColorMirrorDisabled = 11974326
           Appearance.ColorMirrorDisabledTo = 15921906
         end
-        object AdvGlowButton12: TAdvGlowButton
+        object btnnotadebitocompra: TAdvGlowButton
           Left = 223
           Top = 2
           Width = 74
           Height = 81
           Cursor = crHandPoint
+          Caption = 'Notas de Debito de Compras'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -9
@@ -3560,6 +3565,7 @@ object Princ: TPrinc
           FocusType = ftHot
           ParentFont = False
           TabOrder = 2
+          OnClick = btnnotadebitocompraClick
           Appearance.ColorChecked = 16111818
           Appearance.ColorCheckedTo = 16367008
           Appearance.ColorDisabled = 15921906
@@ -3984,7 +3990,7 @@ object Princ: TPrinc
           Appearance.ColorMirrorDisabledTo = 15921906
         end
         object btnrecibos: TAdvGlowButton
-          Left = 150
+          Left = 296
           Top = 2
           Width = 73
           Height = 81
@@ -4062,7 +4068,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object btnnotasdecredito: TAdvGlowButton
-          Left = 223
+          Left = 150
           Top = 2
           Width = 73
           Height = 81
@@ -4107,7 +4113,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object BtnNotasdeDebito: TAdvGlowButton
-          Left = 296
+          Left = 223
           Top = 2
           Width = 73
           Height = 81

@@ -51,3 +51,5 @@ INSERT INTO `tipospago` VALUES (4,'DEPOSITO',0);
 ALTER TABLE `documentos` ADD COLUMN `documento_nogravado` FLOAT(20,4) NULL DEFAULT NULL  AFTER `documento_cartaportetarifaflete`;
 12;
 Replace config set config_valor='0', config_nombre='LOGDB';
+13;
+ALTER TABLE `documentos` ADD COLUMN `documento_puntoventa` INT(4) NULL DEFAULT 0  AFTER `documento_nogravado`;

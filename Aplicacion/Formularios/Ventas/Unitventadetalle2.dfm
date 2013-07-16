@@ -3,7 +3,7 @@ object ventadetalle2: Tventadetalle2
   Top = 0
   Caption = 'Cargar Detalle'
   ClientHeight = 208
-  ClientWidth = 660
+  ClientWidth = 708
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,12 +15,13 @@ object ventadetalle2: Tventadetalle2
   Position = poOwnerFormCenter
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 660
+    Width = 708
     Height = 208
     Align = alClient
     BevelOuter = bvNone
@@ -127,7 +128,7 @@ object ventadetalle2: Tventadetalle2
       Caption = 'Stock Inic: '
     end
     object Button1: TButton
-      Left = 560
+      Left = 624
       Top = 114
       Width = 75
       Height = 25
@@ -137,7 +138,7 @@ object ventadetalle2: Tventadetalle2
       TabOrder = 6
     end
     object btnaceptar: TButton
-      Left = 479
+      Left = 543
       Top = 114
       Width = 75
       Height = 25
@@ -217,6 +218,9 @@ object ventadetalle2: Tventadetalle2
       ConfSqlConnection = Princ.ZBase
       ConfSql.Strings = (
         'select * from productos'
+        
+          'left join politicasdeprecios on productos.politicaprecio_id=poli' +
+          'ticasdeprecios.politicaprecio_id'
         'where producto_tipo="PRODUCTO"'
         'order by producto_nombre')
       ConfTexto = producto_nombre
@@ -236,7 +240,7 @@ object ventadetalle2: Tventadetalle2
       TabOrder = 2
     end
     object btnherramientas: TAdvGlowButton
-      Left = 602
+      Left = 658
       Top = 4
       Width = 44
       Height = 29
@@ -285,7 +289,7 @@ object ventadetalle2: Tventadetalle2
     object GroupBoxPrecios: TGroupBox
       Left = 0
       Top = 143
-      Width = 660
+      Width = 708
       Height = 47
       Align = alBottom
       Caption = 'Precios'
@@ -293,7 +297,7 @@ object ventadetalle2: Tventadetalle2
       TabOrder = 8
       TabStop = True
       object producto_precioventa1: TMoneyEdit
-        Left = 88
+        Left = 104
         Top = 14
         Width = 70
         Height = 21
@@ -314,7 +318,7 @@ object ventadetalle2: Tventadetalle2
         Version = '1.1.0.1'
       end
       object producto_precioventa2: TMoneyEdit
-        Left = 248
+        Left = 280
         Top = 14
         Width = 70
         Height = 21
@@ -335,7 +339,7 @@ object ventadetalle2: Tventadetalle2
         Version = '1.1.0.1'
       end
       object producto_precioventa3: TMoneyEdit
-        Left = 408
+        Left = 456
         Top = 14
         Width = 70
         Height = 21
@@ -355,7 +359,7 @@ object ventadetalle2: Tventadetalle2
         Version = '1.1.0.1'
       end
       object producto_precioventa4: TMoneyEdit
-        Left = 568
+        Left = 632
         Top = 14
         Width = 70
         Height = 21
@@ -375,9 +379,9 @@ object ventadetalle2: Tventadetalle2
         Version = '1.1.0.1'
       end
       object btnprecio1: TButton
-        Left = 16
+        Left = 4
         Top = 12
-        Width = 70
+        Width = 98
         Height = 25
         Caption = 'Precio1'
         TabOrder = 4
@@ -385,9 +389,9 @@ object ventadetalle2: Tventadetalle2
         OnClick = btnprecio1Click
       end
       object btnprecio2: TButton
-        Left = 176
+        Left = 180
         Top = 12
-        Width = 70
+        Width = 98
         Height = 25
         Caption = 'Precio2'
         TabOrder = 5
@@ -395,9 +399,9 @@ object ventadetalle2: Tventadetalle2
         OnClick = btnprecio2Click
       end
       object btnprecio4: TButton
-        Left = 496
+        Left = 532
         Top = 12
-        Width = 70
+        Width = 98
         Height = 25
         Caption = 'Precio4'
         TabOrder = 6
@@ -405,9 +409,9 @@ object ventadetalle2: Tventadetalle2
         OnClick = btnprecio4Click
       end
       object btnprecio3: TButton
-        Left = 336
+        Left = 356
         Top = 12
-        Width = 70
+        Width = 98
         Height = 25
         Caption = 'Precio3'
         TabOrder = 7

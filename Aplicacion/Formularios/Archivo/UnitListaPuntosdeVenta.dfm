@@ -143,7 +143,7 @@ inherited listapuntosdeventa: Tlistapuntosdeventa
       Width = 203
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 3
       Confbase = Princ.ZBase
       Confsql.Strings = (

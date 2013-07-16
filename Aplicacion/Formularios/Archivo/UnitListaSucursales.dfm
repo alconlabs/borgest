@@ -5,23 +5,20 @@ inherited listasucursales: Tlistasucursales
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Height = 281
-    ExplicitHeight = 338
+    Height = 262
+    ExplicitHeight = 262
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
-      Height = 260
-      ExplicitHeight = 317
+      Height = 241
+      ExplicitHeight = 241
       FullHeight = 0
-      inherited btnnuevo: TButton
-        ExplicitLeft = 6
-        ExplicitTop = -6
-      end
       inherited btnanular: TButton
         Visible = False
+        ExplicitTop = 164
       end
     end
     inherited DBGrid1: TDBGrid
-      Height = 260
+      Height = 241
       Columns = <
         item
           Expanded = False
@@ -52,8 +49,8 @@ inherited listasucursales: Tlistasucursales
         end>
     end
     inherited panelfiltros: TAdvPanel
-      Top = 260
-      ExplicitTop = 317
+      Top = 241
+      ExplicitTop = 241
       FullHeight = 0
       object fil_sucursal_nombre: TGTBEdit
         Left = 85
@@ -160,10 +157,18 @@ inherited listasucursales: Tlistasucursales
       Alignment = taRightJustify
       Caption = 'Cliente'
     end
+    object Label7: TLabel [8]
+      Left = 462
+      Top = 105
+      Width = 124
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Tipo Documento a liquidar'
+    end
     inherited btnguardar: TButton
       Left = 819
       Top = 30
-      TabOrder = 7
+      TabOrder = 8
       OnClick = btnguardarClick
       ExplicitLeft = 819
       ExplicitTop = 30
@@ -171,7 +176,7 @@ inherited listasucursales: Tlistasucursales
     inherited btncancelar: TButton
       Left = 819
       Top = 61
-      TabOrder = 8
+      TabOrder = 9
       ExplicitLeft = 819
       ExplicitTop = 61
     end
@@ -255,7 +260,7 @@ inherited listasucursales: Tlistasucursales
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
-      TabOrder = 9
+      TabOrder = 10
       Confbase = Princ.ZBase
       Confsql.Strings = (
         'select * from clientes'
@@ -264,6 +269,24 @@ inherited listasucursales: Tlistasucursales
       Confcampo_nomb = 'cliente_nombre'
       Tag2 = 0
     end
+    object sucursal_tipodocumentoliquidar: TComboBox
+      Left = 592
+      Top = 102
+      Width = 201
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      ItemIndex = 0
+      TabOrder = 7
+      Text = 'Facturas de Venta'
+      Items.Strings = (
+        'Facturas de Venta'
+        'Recibos')
+    end
+  end
+  inherited StatusBar1: TStatusBar
+    Top = 262
+    ExplicitTop = 262
   end
   inherited ZQGrilla: TZQuery
     SQL.Strings = (

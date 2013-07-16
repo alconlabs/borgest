@@ -2,7 +2,7 @@ object configuracion: Tconfiguracion
   Left = 0
   Top = 0
   Caption = 'Configuraciones'
-  ClientHeight = 492
+  ClientHeight = 521
   ClientWidth = 589
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,7 +22,7 @@ object configuracion: Tconfiguracion
     Left = 0
     Top = 0
     Width = 589
-    Height = 492
+    Height = 521
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -66,7 +66,7 @@ object configuracion: Tconfiguracion
     FullHeight = 0
     object btnactualizar: TButton
       Left = 405
-      Top = 439
+      Top = 471
       Width = 75
       Height = 25
       Caption = 'Guardar'
@@ -75,7 +75,7 @@ object configuracion: Tconfiguracion
     end
     object btnimprimir: TButton
       Left = 486
-      Top = 439
+      Top = 471
       Width = 75
       Height = 25
       Caption = 'Cancelar'
@@ -87,8 +87,8 @@ object configuracion: Tconfiguracion
       Left = 0
       Top = 0
       Width = 589
-      Height = 425
-      ActivePage = TabSheet1
+      Height = 465
+      ActivePage = TabSheet3
       Align = alTop
       TabOrder = 2
       object TabSheet1: TTabSheet
@@ -257,6 +257,8 @@ object configuracion: Tconfiguracion
       object TabSheet3: TTabSheet
         Caption = 'Ventas'
         ImageIndex = 2
+        ExplicitLeft = 8
+        ExplicitTop = 28
         object Label1: TLabel
           Left = 49
           Top = 44
@@ -280,6 +282,14 @@ object configuracion: Tconfiguracion
           Height = 13
           Alignment = taRightJustify
           Caption = 'Modificar Descripcion'
+        end
+        object Label20: TLabel
+          Left = 11
+          Top = 397
+          Width = 131
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Ventana Detalle Venta Tipo'
         end
         object FISCALMODELO: TComboBox
           Left = 88
@@ -371,13 +381,13 @@ object configuracion: Tconfiguracion
         object GroupBox1: TGroupBox
           Left = 9
           Top = 72
-          Width = 467
-          Height = 161
+          Width = 286
+          Height = 137
           Caption = 'Ventas Rapidas'
           TabOrder = 5
           object Label15: TLabel
             Left = 10
-            Top = 58
+            Top = 50
             Width = 44
             Height = 13
             Alignment = taRightJustify
@@ -385,7 +395,7 @@ object configuracion: Tconfiguracion
           end
           object Label2: TLabel
             Left = 22
-            Top = 85
+            Top = 77
             Width = 32
             Height = 13
             Alignment = taRightJustify
@@ -393,7 +403,7 @@ object configuracion: Tconfiguracion
           end
           object Label4: TLabel
             Left = 8
-            Top = 113
+            Top = 105
             Width = 46
             Height = 13
             Alignment = taRightJustify
@@ -401,7 +411,7 @@ object configuracion: Tconfiguracion
           end
           object Label5: TLabel
             Left = 13
-            Top = 32
+            Top = 24
             Width = 41
             Height = 13
             Alignment = taRightJustify
@@ -409,7 +419,7 @@ object configuracion: Tconfiguracion
           end
           object VENTARAPIDAPUNTOVENTAID: TSqlComboBox
             Left = 60
-            Top = 55
+            Top = 47
             Width = 52
             Height = 21
             Style = csDropDownList
@@ -425,7 +435,7 @@ object configuracion: Tconfiguracion
           end
           object VENTARAPIDATIPODOCUID: TSqlComboBox
             Left = 118
-            Top = 55
+            Top = 47
             Width = 52
             Height = 21
             Style = csDropDownList
@@ -441,8 +451,8 @@ object configuracion: Tconfiguracion
           end
           object VENTARAPIDACLIENTEID: TSqlComboBox
             Left = 60
-            Top = 82
-            Width = 317
+            Top = 74
+            Width = 220
             Height = 21
             Style = csDropDownList
             ItemHeight = 13
@@ -458,7 +468,7 @@ object configuracion: Tconfiguracion
           end
           object VENTARAPIDAPERSONALID: TSqlComboBox
             Left = 60
-            Top = 110
+            Top = 102
             Width = 220
             Height = 21
             Style = csDropDownList
@@ -473,8 +483,8 @@ object configuracion: Tconfiguracion
           end
           object VENTARAPIDASUCURSALID: TSqlComboBox
             Left = 60
-            Top = 29
-            Width = 317
+            Top = 21
+            Width = 220
             Height = 21
             Style = csDropDownList
             ItemHeight = 13
@@ -503,7 +513,7 @@ object configuracion: Tconfiguracion
           Lookup.Separator = ';'
           Color = clWindow
           Enabled = True
-          TabOrder = 6
+          TabOrder = 7
           Visible = True
           Version = '1.3.0.1'
           ButtonStyle = bsButton
@@ -529,7 +539,7 @@ object configuracion: Tconfiguracion
           Height = 21
           TabStop = False
           ReadOnly = True
-          TabOrder = 7
+          TabOrder = 8
         end
         object GroupBox2: TGroupBox
           Left = 9
@@ -537,7 +547,7 @@ object configuracion: Tconfiguracion
           Width = 258
           Height = 113
           Caption = 'Busqueda de Productos'
-          TabOrder = 8
+          TabOrder = 6
           object Label12: TLabel
             Left = 12
             Top = 56
@@ -648,6 +658,145 @@ object configuracion: Tconfiguracion
           Height = 17
           Caption = 'Al cambiar vendedor en clientes actualizar documentos'
           TabOrder = 11
+        end
+        object VENTANADETALLEVENTATIPO: TGTBComboBox
+          Left = 148
+          Top = 394
+          Width = 141
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          ItemIndex = 0
+          TabOrder = 12
+          Text = '1. Cantidad - Codigo...'
+          Items.Strings = (
+            '1. Cantidad - Codigo...'
+            '2. Codigo - Cantidad...')
+          Tag2 = 0
+          valores.Strings = (
+            '0'
+            '1')
+        end
+        object GroupBox6: TGroupBox
+          Left = 295
+          Top = 74
+          Width = 286
+          Height = 135
+          Caption = 'Factura Venta'
+          TabOrder = 13
+          object Label22: TLabel
+            Left = 10
+            Top = 48
+            Width = 44
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Tipo Doc'
+          end
+          object Label23: TLabel
+            Left = 22
+            Top = 75
+            Width = 32
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Cliente'
+          end
+          object Label24: TLabel
+            Left = 8
+            Top = 103
+            Width = 46
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Vendedor'
+          end
+          object Label25: TLabel
+            Left = 13
+            Top = 22
+            Width = 41
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Sucursal'
+          end
+          object FACTURAVENTAPUNTOVENTAID: TSqlComboBox
+            Left = 60
+            Top = 45
+            Width = 52
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 1
+            OnSelect = FACTURAVENTAPUNTOVENTAIDSelect
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              'select * from puntodeventa')
+            Confcampo_codigo = 'puntoventa_id'
+            Confcampo_nomb = 'puntoventa_numero'
+            Tag2 = 0
+          end
+          object FACTURAVENTATIPODOCUID: TSqlComboBox
+            Left = 118
+            Top = 45
+            Width = 52
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 2
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              'select * from tiposdocumento'
+              'where tipodocu_nombre="Factura de Venta"')
+            Confcampo_codigo = 'tipodocu_id'
+            Confcampo_nomb = 'tipodocu_letra'
+            Tag2 = 0
+          end
+          object FACTURAVENTACLIENTEID: TSqlComboBox
+            Left = 60
+            Top = 72
+            Width = 220
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 3
+            OnSelect = FACTURAVENTACLIENTEIDSelect
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              'select * from clientes'
+              'order by cliente_nombre')
+            Confcampo_codigo = 'cliente_id'
+            Confcampo_nomb = 'cliente_nombre'
+            Tag2 = 0
+          end
+          object FACTURAVENTAPERSONALID: TSqlComboBox
+            Left = 60
+            Top = 100
+            Width = 220
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 4
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              'select * from personal')
+            Confcampo_codigo = 'personal_id'
+            Confcampo_nomb = 'personal_nombre'
+            Tag2 = 0
+          end
+          object FACTURAVENTASUCURSALID: TSqlComboBox
+            Left = 60
+            Top = 19
+            Width = 220
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 0
+            OnSelect = FACTURAVENTASUCURSALIDSelect
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              'select * from sucursales'
+              'order by sucursal_nombre')
+            Confcampo_codigo = 'sucursal_id'
+            Confcampo_nomb = 'sucursal_nombre'
+            Tag2 = 0
+          end
         end
       end
       object TabSheet5: TTabSheet

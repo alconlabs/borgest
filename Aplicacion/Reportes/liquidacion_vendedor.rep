@@ -110,9 +110,6 @@ object TRpReport
       end
       item
         Section = TRpSection7
-      end
-      item
-        Section = TRpSection13
       end>
     Alias = 'ALIAS_COMISIONES'
   end
@@ -828,7 +825,6 @@ object TRpReport
     ExternalField = 'REPORT'
     ExternalSearchField = 'REPORT_NAME'
     StreamFormat = rpStreamText
-    FooterAtReportEnd = True
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1232,9 +1228,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 
-      'ALIAS_COMISIONES.documentoventadetalle_neto21+ALIAS_COMISIONES.d' +
-      'ocumentoventadetalle_neto105'
+    Expression = 'ALIAS_COMISIONES.documentoventadetalle_total/1.21'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -1325,9 +1319,6 @@ object TRpReport
       end
       item
         Section = TRpSection18
-      end
-      item
-        Section = TRpSection14
       end>
     Alias = 'ALIAS_COMISIONESDEBITO'
     ParentSubReport = TRpSubReport0
@@ -1356,33 +1347,6 @@ object TRpReport
     ExternalField = 'REPORT'
     ExternalSearchField = 'REPORT_NAME'
     StreamFormat = rpStreamText
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    ChangeExpression = ''
-    BeginPageExpression = ''
-    ChangeExpression = ''
-    SkipExpreV = ''
-    SkipExpreH = ''
-    SkipToPageExpre = ''
-    BackExpression = ''
-    Stream = {0000000000000000}
-  end
-  object TRpSection14: TRpSection
-    Width = 10772
-    Height = 0
-    SubReport = TRpSubReport2
-    ChangeBool = False
-    PageRepeat = False
-    SkipPage = False
-    AlignBottom = False
-    SectionType = rpsecpfooter
-    Components = <>
-    ExternalTable = 'REPMAN_REPORTS'
-    ExternalField = 'REPORT'
-    ExternalSearchField = 'REPORT_NAME'
-    StreamFormat = rpStreamText
-    FooterAtReportEnd = True
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1785,7 +1749,6 @@ object TRpReport
     ExternalField = 'REPORT'
     ExternalSearchField = 'REPORT_NAME'
     StreamFormat = rpStreamText
-    FooterAtReportEnd = True
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1980,32 +1943,6 @@ object TRpReport
     AgIniValue = '0'
     ExportExpression = ''
   end
-  object TRpSection13: TRpSection
-    Width = 10772
-    Height = 645
-    SubReport = TRpSubReport0
-    ChangeBool = False
-    PageRepeat = False
-    SkipPage = False
-    AlignBottom = False
-    SectionType = rpsecpfooter
-    Components = <>
-    ExternalTable = 'REPMAN_REPORTS'
-    ExternalField = 'REPORT'
-    ExternalSearchField = 'REPORT_NAME'
-    StreamFormat = rpStreamText
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    ChangeExpression = ''
-    BeginPageExpression = ''
-    ChangeExpression = ''
-    SkipExpreV = ''
-    SkipExpreH = ''
-    SkipToPageExpre = ''
-    BackExpression = ''
-    Stream = {0000000000000000}
-  end
   object TRpSection15: TRpSection
     Width = 10772
     Height = 0
@@ -2024,9 +1961,9 @@ object TRpReport
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
-    ChangeExpression = 'ALIAS_COMISIONES.liquidacionvendedor_id'
+    ChangeExpression = ''
     BeginPageExpression = ''
-    ChangeExpression = 'ALIAS_COMISIONES.liquidacionvendedor_id'
+    ChangeExpression = ''
     SkipExpreV = ''
     SkipExpreH = ''
     SkipToPageExpre = ''
@@ -2057,13 +1994,12 @@ object TRpReport
     ExternalField = 'REPORT'
     ExternalSearchField = 'REPORT_NAME'
     StreamFormat = rpStreamText
-    Global = True
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
-    ChangeExpression = 'ALIAS_COMISIONES.liquidacionvendedor_id'
+    ChangeExpression = ''
     BeginPageExpression = ''
-    ChangeExpression = 'ALIAS_COMISIONES.liquidacionvendedor_id'
+    ChangeExpression = ''
     SkipExpreV = ''
     SkipExpreH = ''
     SkipToPageExpre = ''

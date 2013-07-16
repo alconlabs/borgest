@@ -10,9 +10,11 @@ uses
 
 type
   TFacturaCompra = class(TDocumentoBase)
+    documento_puntoventa: TEdit;
     procedure btnguardarClick(Sender: TObject);
     procedure documento_neto21Exit(Sender: TObject);
-
+    procedure GuardarEnDataset;
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     documento_saldo:real;
@@ -30,6 +32,16 @@ Uses Unitprinc;
 
 {$R *.dfm}
 
+
+procedure TFacturaCompra.GuardarEnDataset;
+begin
+    inherited;
+
+    ZQDocumentos.Edit;
+    ZQDocumentos.FieldByName('documento_puntoventa').AsString:=documento_puntoventa.Text;
+    ZQDocumentos.Post;
+
+end;
 
 procedure TFacturaCompra.calculartotal(posicion:integer);
 begin
@@ -63,8 +75,15 @@ begin
     calculartotal((Sender as twincontrol).TabOrder);
 end;
 
+procedure TFacturaCompra.FormCreate(Sender: TObject);
+begin
+  inherited;
+    documento_puntoventa.Text:='0';
+end;
+
 procedure TFacturaCompra.btnguardarClick(Sender: TObject);
 begin
+
     calculartotales;
     self.GuardarEnDataset;
 

@@ -674,6 +674,7 @@ end;
 
 procedure Tfacturasventa.FormShow(Sender: TObject);
 begin
+
     btnherramientas.Visible:=abm=1;
     btnimprimirventa.Visible:=abm<>1;
 
@@ -821,10 +822,22 @@ procedure Tfacturasventa.ZQuery2AfterOpen(DataSet: TDataSet);
 begin
     if abm=1 then
       begin
+          sucursal_id.Buscar(Princ.buscar('select sucursal_id from puntodeventa where puntoventa_id="'+princ.GetConfiguracion('FACTURAVENTAPUNTOVENTAID')+'"','sucursal_id'));
+          sucursal_id.OnSelect(self);
+
+          puntoventa_id.Buscar(princ.GetConfiguracion('FACTURAVENTAPUNTOVENTAID'));
+          puntoventa_id.OnSelect(self);
+
+          cliente_id.Buscar(princ.GetConfiguracion('FACTURAVENTACLIENTEID'));
+          cliente_id.OnSelect(self);
+
+          tipodocu_id.Buscar(princ.GetConfiguracion('FACTURAVENTATIPODOCUID'));
+          tipodocu_id.OnSelect(self);
+
+          personal_id.Buscar(princ.GetConfiguracion('FACTURAVENTAPERSONALID'));
+
           documentoventa_fecha.Date:=date;
 
-          cliente_id.ItemIndex:=-1;
-          personal_id.ItemIndex:=0;
           documentoventa_fechavenc.Date:=date+15;
           documentoventa_neto21.Text:='0';
           documentoventa_iva21.Text:='0';

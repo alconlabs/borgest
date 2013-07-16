@@ -133,15 +133,15 @@ type
     btnprovincias: TAdvGlowButton;
     btnconceptosdebcred: TAdvGlowButton;
     btnRecibosPendientes: TAdvGlowButton;
+    AdvGlowButton1: TAdvGlowButton;
+    AdvGlowButton4: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnclientesClick(Sender: TObject);
     procedure btnrecibodeventaClick(Sender: TObject);
-    procedure AdvGlowButton3Click(Sender: TObject);
     procedure btnproductosClick(Sender: TObject);
-    procedure btnnuevasolicitudClick(Sender: TObject);
     procedure btncalculopreciosClick(Sender: TObject);
     procedure ZBaseBeforeConnect(Sender: TObject);
     procedure btnpoliticaprecioClick(Sender: TObject);
@@ -153,11 +153,9 @@ type
     procedure ADOConnection1BeforeConnect(Sender: TObject);
     procedure btnproveedoresClick(Sender: TObject);
     procedure btnlocalidadesClick(Sender: TObject);
-    procedure btnserviciosClick(Sender: TObject);
     procedure btnventasrapidasClick(Sender: TObject);
     procedure btnestadocajaClick(Sender: TObject);
     procedure ZQProductosBeforeOpen(DataSet: TDataSet);
-    procedure btncontratacionClick(Sender: TObject);
     procedure btncajaClick(Sender: TObject);
     procedure btnnotapedidoClick(Sender: TObject);
     procedure btnconsultaequiposClick(Sender: TObject);
@@ -341,7 +339,7 @@ const
 
   CLAVE_ENCRIPTADO='1234567890';
 
-  VENCIMIENTO_LICENCIA='2013-07-15';
+  VENCIMIENTO_LICENCIA='2013-08-15';
 
   CONDICIONVENTA_CONTADO='0';
   CONDICIONVENTA_CTACTE='1';
@@ -353,6 +351,8 @@ const
   TIPODOCU_NOTADEBITOVENTA='Nota de Debito de Venta';
   TIPODOCU_REMITOVENTA='Remito de Venta';
   TIPODOCU_NOTAPEDIDO='Nota de Pedido';
+
+  TIPODOCU_FACTURACOMPRA='Factura de Compra';
 
   ABM_AGREGAR=1;
   ABM_MODIFICAR=2;
@@ -374,23 +374,19 @@ const
 
 implementation
 
-uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
-  Unitlistaclientes, Unitvendedores, Unitcobros, Unitemisionrecibos,
-  Unitlocalidades, Unitconsultarvencidos, Unitgeneranuevasolicitud,
-  Unitcobradores, Unitlistaproductos, Unitlistafacturasventa,
-  Unitlistacalculoprecios, Unitlistapoliticasprecios, UnitCargarPagos,
-  Unitlistarecibosventa, UnitDocumentosVentasPendientes, Unitdetallectas,
+uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
+  UnitDocumentosVentasPendientes, Unitdetallectas,
   UnitImpresoraFiscal, UnitConfiguracion, UnitImpresoraFiscalcola,
   Unitlistanotacreditoventa, UnitActualizarProductos, Unitlistaproveedores,
-  UnitProductos, Unitlistaservicios, UnitServicios, Unitfacturaventarapida,
+  UnitProductos, UnitServicios, Unitfacturaventarapida,
   Unitcalculoprecio, UnitProveedores, UnitClientes, UnitEstadoCaja,
-  Unitlistacontrataciones, UnitCajaAsiento, UnitCajaAsientoIngreso,
+  UnitCajaAsiento, UnitCajaAsientoIngreso,
   UnitcajaAsientoEgreso, UnitDocumentoVentaExcel, UnitMostrarExcel, UnitABMbase,
   UnitNotaPedido, UnitListaNotasPedido, UnitConsultaEquipos, Unitfacturasventa,
   Unitrecibosventa, Unitnotacreditoventa, UnitListaSucursales,
   UnitListaPuntosdeVenta, UnitListaTiposDocumentos, UnitTipoDocumento,
   UnitPersonal, UnitPerfil, UnitListaPerfiles, Unitsaldoclientes,
-  Unitlistafacturascompra, Unitfacturascompra, UnitListaServices,
+  Unitfacturascompra, UnitListaServices,
   UnitOrdenServicio, UnitListaOrdenesServicios, UnitImprimirListaPrecios,
   UnitPresupuesto, UnitListaPresupuestos, UnitDetallePagos, UnitLibroIvaVentas,
   UnitCajaBar, UnitLibroIvaCompras, UnitLogin, UnitComisionesVendedores,
@@ -399,7 +395,11 @@ uses Unitlistasolicitudes, Unitestadodectas, Unitinformesventas,
   UnitListaRemitoVenta, Unitlistacomisionesvendedores,
   UnitlistaComisionesSucursales, Unitprovincias, UnitNotadeCredito2,
   UnitListaDebCred, UnitNotadeDebito2, UnitEmpresa,
-  UnitAplicarRecibosPendientes, UnitListaNotasPedidoComisiones;
+  UnitAplicarRecibosPendientes, UnitListaNotasPedidoComisiones,
+  UnitListaClientes1, UnitListaProductos1, UnitListaCalculosPrecios1,
+  UnitListaPoliticasdePrecios, UnitListaProveedores1, Unitlistalocalidades,
+  UnitListaProvincias, UnitListaFacturasDeVenta, UnitListaRecibosdeVenta,
+  UnitListaFacturasdeCompras;
 
 {$R *.dfm}
 
@@ -2904,9 +2904,10 @@ end;
 procedure TPrinc.btnclientesClick(Sender: TObject);
 begin
     try
-      listaclientes:=Tlistaclientes.Create(self);
+      listaclientes1:=Tlistaclientes1.Create(self);
     finally
-      listaclientes.Show;
+      listaclientes1.campo_id:='cliente_id';
+      listaclientes1.Show;
     end;
 end;
 
@@ -2955,15 +2956,6 @@ begin
       ConsultaEquipos:=TConsultaEquipos.Create(self);
     finally
       ConsultaEquipos.Show;
-    end;
-end;
-
-procedure TPrinc.btncontratacionClick(Sender: TObject);
-begin
-    try
-      listacontrataciones:=Tlistacontrataciones.Create(self);
-    finally
-      listacontrataciones.Show;
     end;
 end;
 
@@ -3017,9 +3009,10 @@ end;
 procedure TPrinc.btncalculopreciosClick(Sender: TObject);
 begin
     try
-      listacalculoprecios:=Tlistacalculoprecios.Create(self);
+      ListaCalculosPrecios1:=TListaCalculosPrecios1.Create(self);
     finally
-      listacalculoprecios.Show;
+      ListaCalculosPrecios1.campo_id:='calculoprecio_id';
+      ListaCalculosPrecios1.Show;
     end;
 end;
 
@@ -3114,9 +3107,10 @@ end;
 procedure TPrinc.btnlocalidadesClick(Sender: TObject);
 begin
     try
-      localidades:=Tlocalidades.Create(self);
+      ListaLocalidades:=TListaLocalidades.Create(self);
     finally
-      localidades.Show;
+      ListaLocalidades.campo_id:='localidad_id';
+      ListaLocalidades.Show;
     end;
 end;
 
@@ -3165,15 +3159,6 @@ begin
     end;
 end;
 
-procedure TPrinc.btnnuevasolicitudClick(Sender: TObject);
-begin
-    try
-      generanuevasolicitud:=Tgeneranuevasolicitud.Create(self);
-    finally
-      generanuevasolicitud.Show;
-    end;
-end;
-
 procedure TPrinc.btnordenservicioClick(Sender: TObject);
 begin
     try
@@ -3208,18 +3193,20 @@ end;
 procedure TPrinc.btnfacturascomprasClick(Sender: TObject);
 begin
     try
-      listafacturascompra:=Tlistafacturascompra.Create(self);
+      LIstaFacturasDeCompras:=TLIstaFacturasDeCompras.Create(self);
     finally
-      listafacturascompra.Show;
+      LIstaFacturasDeCompras.campo_id:='documentocompra_id';
+      LIstaFacturasDeCompras.Show;
     end;
 end;
 
 procedure TPrinc.btnfacturasventasClick(Sender: TObject);
 begin
     try
-      listafacturasventa:=Tlistafacturasventa.Create(self);
+      ListaFacturasDeVenta:=TListaFacturasDeVenta.Create(self);
     finally
-      listafacturasventa.Show;
+      ListaFacturasDeVenta.campo_id:='documentoventa_id';
+      ListaFacturasDeVenta.Show;
     end;
 end;
 
@@ -3246,9 +3233,10 @@ end;
 procedure TPrinc.btnrecibodeventaClick(Sender: TObject);
 begin
     try
-      listarecibosventa:=Tlistarecibosventa.Create(self);
+      ListaRecibosdeVenta:=TListaRecibosdeVenta.Create(self);
     finally
-      listarecibosventa.Show;
+      ListaRecibosdeVenta.campo_id:='documentoventa_id';
+      ListaRecibosdeVenta.Show;
     end;
 end;
 
@@ -3270,15 +3258,6 @@ begin
       listaremitosventa.campo_id:='documentoventa_id';
       listaremitosventa.Show;
     end;
-end;
-
-procedure TPrinc.AdvGlowButton3Click(Sender: TObject);
-begin
-    try
-      emisionrecibos:=Temisionrecibos.Create(self);
-    finally
-      emisionrecibos.Show;
-    end;               
 end;
 
 procedure TPrinc.btnvendedoresdebcredClick(Sender: TObject);
@@ -3325,9 +3304,10 @@ end;
 procedure TPrinc.btnpoliticaprecioClick(Sender: TObject);
 begin
     try
-      listapoliticasprecios:=Tlistapoliticasprecios.Create(self);
+      ListaPoliticasdePrecios:=TListaPoliticasdePrecios.Create(self);
     finally
-      listapoliticasprecios.Show;
+      ListaPoliticasdePrecios.campo_id:='politicaprecio_id';
+      ListaPoliticasdePrecios.Show;
     end;
 end;
 
@@ -3345,27 +3325,30 @@ end;
 procedure TPrinc.btnproductosClick(Sender: TObject);
 begin
     try
-      listaproductos:=Tlistaproductos.Create(self);
+      ListaProductos1:=TListaProductos1.Create(self);
     finally
-      listaproductos.Show;
+      ListaProductos1.campo_id:='producto_id';
+      ListaProductos1.Show;
     end;
 end;
 
 procedure TPrinc.btnproveedoresClick(Sender: TObject);
 begin
     try
-      listaproveedores:=Tlistaproveedores.Create(self);
+      ListaProveedores1:=TListaProveedores1.Create(self);
     finally
-      listaproveedores.Show;
+      ListaProveedores1.campo_id:='proveedor_id';
+      ListaProveedores1.Show;
     end;
 end;
 
 procedure TPrinc.btnprovinciasClick(Sender: TObject);
 begin
     try
-      provincias:=Tprovincias.Create(self);
+      ListaProvincias:=TListaProvincias.Create(self);
     finally
-      provincias.Show;
+      ListaProvincias.campo_id:='provincia_id';
+      ListaProvincias.Show;
     end;
 end;
 
@@ -3394,15 +3377,6 @@ begin
       listaservices:=Tlistaservices.Create(self);
     finally
       listaservices.Show;
-    end;
-end;
-
-procedure TPrinc.btnserviciosClick(Sender: TObject);
-begin
-    try
-      listaservicios:=Tlistaservicios.Create(self);
-    finally
-      listaservicios.Show;
     end;
 end;
 

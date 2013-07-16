@@ -127,11 +127,12 @@ inherited tipodocumento: Ttipodocumento
       TabOrder = 0
     end
     object tipodocu_nombre: TEdit
-      Left = 258
+      Left = 274
       Top = 33
       Width = 145
       Height = 21
       TabOrder = 2
+      Visible = False
     end
     object puntoventa_id: TSqlComboBox
       Left = 106
@@ -374,11 +375,13 @@ inherited tipodocumento: Ttipodocumento
     object Combo_tipodocu_nombre: TGTBComboBox
       Left = 106
       Top = 33
-      Width = 145
+      Width = 162
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
+      ItemIndex = 0
       TabOrder = 1
+      Text = 'Factura de Venta'
       OnChange = Combo_tipodocu_nombreChange
       Items.Strings = (
         'Factura de Venta'
@@ -394,6 +397,8 @@ inherited tipodocumento: Ttipodocumento
         'Contrato de Venta'
         'Orden de Carga'
         'Orden de Pago'
+        'Nota de Credito de Compra'
+        'Nota de Debito de Compra'
         'Otro')
       Tag2 = 0
       valores.Strings = (
@@ -410,6 +415,8 @@ inherited tipodocumento: Ttipodocumento
         'Contrato de Venta'
         'Orden de Carga'
         'Orden de Pago'
+        'Nota de Credito de Compra'
+        'Nota de Debito de Compra'
         'Otro')
     end
     object tipodocu_manual: TCheckBox

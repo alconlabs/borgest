@@ -238,6 +238,7 @@ type
     btnAplicarPolitica: TButton;
     btnquitarAactualizar: TButton;
     nuevo_politicaprecio_id: TSqlComboBox;
+    btnrecalculartodo: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnexaminarClick(Sender: TObject);
     procedure btnabrirarchivoClick(Sender: TObject);
@@ -257,6 +258,7 @@ type
     procedure btnAplicarPVentaClick(Sender: TObject);
     procedure btnAplicarCalculoClick(Sender: TObject);
     procedure btnAplicarPoliticaClick(Sender: TObject);
+    procedure btnrecalculartodoClick(Sender: TObject);
   private
     { Private declarations }
     destino:string;
@@ -526,6 +528,22 @@ begin
             MQNuevos.Delete;
           except
           end;
+      end;
+end;
+
+procedure TActualizarProductos.btnrecalculartodoClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea actualizar los precios de todos los productos?'+#13+#10+'Se pedira una segunda confirmacion.', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          if (MessageDlg('Esta por modificar los precios de todos los productos.'+#13+#10+'Se recomienda realizar una copia de respaldo de la base de datos.'+#13+#10+'Desea continuar?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+            begin
+
+                Princ.CalcularPreciosProducto(ZQProductosAactualizar,true);
+
+            end;
+
+
+
       end;
 end;
 

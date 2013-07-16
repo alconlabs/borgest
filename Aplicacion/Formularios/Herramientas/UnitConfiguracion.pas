@@ -89,6 +89,18 @@ type
     VENTASNCNDCONCEPTOS: TCheckBox;
     VENTASEMITIRREMITOCTACTE: TCheckBox;
     VENTASVENDEDORCLIENTEADOCUMENTOS: TCheckBox;
+    Label20: TLabel;
+    VENTANADETALLEVENTATIPO: TGTBComboBox;
+    GroupBox6: TGroupBox;
+    Label22: TLabel;
+    Label23: TLabel;
+    Label24: TLabel;
+    Label25: TLabel;
+    FACTURAVENTAPUNTOVENTAID: TSqlComboBox;
+    FACTURAVENTATIPODOCUID: TSqlComboBox;
+    FACTURAVENTACLIENTEID: TSqlComboBox;
+    FACTURAVENTAPERSONALID: TSqlComboBox;
+    FACTURAVENTASUCURSALID: TSqlComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -102,6 +114,9 @@ type
     procedure btnconfigurarmenuClick(Sender: TObject);
     procedure BARPUNTOVENTAIDSelect(Sender: TObject);
     procedure BARFACTURAPUNTOVENTAIDSelect(Sender: TObject);
+    procedure FACTURAVENTASUCURSALIDSelect(Sender: TObject);
+    procedure FACTURAVENTAPUNTOVENTAIDSelect(Sender: TObject);
+    procedure FACTURAVENTACLIENTEIDSelect(Sender: TObject);
   private
     { Private declarations }
   public
@@ -337,6 +352,28 @@ begin
     ZQuery1.parambyname('config_valor').AsString:=booltostr(VENTASVENDEDORCLIENTEADOCUMENTOS.Checked);
     ZQuery1.ExecSQL;
 
+    ZQuery1.parambyname('config_nombre').AsString:='VENTANADETALLEVENTATIPO';
+    ZQuery1.parambyname('config_valor').AsString:=VENTANADETALLEVENTATIPO.codigo;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='FACTURAVENTAPUNTOVENTAID';
+    ZQuery1.parambyname('config_valor').AsString:=FACTURAVENTAPUNTOVENTAID.codigo;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='FACTURAVENTATIPODOCUID';
+    ZQuery1.parambyname('config_valor').AsString:=FACTURAVENTATIPODOCUID.codigo;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='FACTURAVENTACLIENTEID';
+    ZQuery1.parambyname('config_valor').AsString:=FACTURAVENTACLIENTEID.codigo;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='FACTURAVENTAPERSONALID';
+    ZQuery1.parambyname('config_valor').AsString:=FACTURAVENTAPERSONALID.codigo;
+    ZQuery1.ExecSQL;
+
+
+
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK], 0);
 
     Self.Close;
@@ -383,6 +420,42 @@ begin
     finally
       MenuConfig.Show;
     end;
+end;
+
+procedure Tconfiguracion.FACTURAVENTACLIENTEIDSelect(Sender: TObject);
+begin
+    if Princ.buscar('select condicioniva_id from clientes where cliente_id="'+FACTURAVENTACLIENTEID.codigo+'"','condicioniva_id')='2' then
+      FACTURAVENTATIPODOCUID.Buscar('A',true)
+    else
+      FACTURAVENTATIPODOCUID.Buscar('B',true);
+end;
+
+procedure Tconfiguracion.FACTURAVENTAPUNTOVENTAIDSelect(Sender: TObject);
+begin
+    FACTURAVENTATIPODOCUID.Confsql.Text:='select * from tiposdocumento '+
+                              'where tiposdocumento.puntoventa_id="'+FACTURAVENTAPUNTOVENTAID.Codigo+'" and tipodocu_nombre="Factura de Venta" '+
+                              'order by tipodocu_letra';
+
+    FACTURAVENTATIPODOCUID.llenarcombo;
+
+    try
+      FACTURAVENTATIPODOCUID.ItemIndex:=0;
+    except
+      FACTURAVENTATIPODOCUID.ItemIndex:=-1;
+    end;
+end;
+
+procedure Tconfiguracion.FACTURAVENTASUCURSALIDSelect(Sender: TObject);
+begin
+    FACTURAVENTAPUNTOVENTAID.Confsql.Text:='select * from puntodeventa where sucursal_id="'+FACTURAVENTASUCURSALID.codigo+'" '+Princ.empresa_where+' order by puntoventa_numero';
+    FACTURAVENTAPUNTOVENTAID.llenarcombo;
+    try
+       FACTURAVENTAPUNTOVENTAID.ItemIndex:=0;
+     except
+       FACTURAVENTAPUNTOVENTAID.ItemIndex:=-1;
+     end;
+
+    FACTURAVENTAPUNTOVENTAID.OnSelect(self);
 end;
 
 procedure Tconfiguracion.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -439,6 +512,35 @@ begin
 
     CAJASALDOINICIALCONCEPTOID.llenarcombo;
     CAJASALDOINICIALCONCEPTOID.ItemIndex:=0;
+
+
+    FACTURAVENTASUCURSALID.llenarcombo;
+    FACTURAVENTASUCURSALID.Buscar(Princ.sucursal_actual);
+
+    FACTURAVENTAPUNTOVENTAID.Confsql.Text:='select * from puntodeventa where sucursal_id="'+FACTURAVENTASUCURSALID.codigo+'" order by puntoventa_numero';
+
+    FACTURAVENTAPUNTOVENTAID.llenarcombo;
+    FACTURAVENTAPUNTOVENTAID.ItemIndex:=0;
+
+    FACTURAVENTATIPODOCUID.Confsql.Text:='select * from tiposdocumento '+
+                              'where tiposdocumento.puntoventa_id="'+FACTURAVENTAPUNTOVENTAID.Codigo+'" and tipodocu_nombre="Factura de Venta"'+
+                              'order by tipodocu_letra';
+
+    FACTURAVENTATIPODOCUID.llenarcombo;
+    try
+      FACTURAVENTATIPODOCUID.ItemIndex:=0;
+    except
+      FACTURAVENTATIPODOCUID.ItemIndex:=-1;
+    end;
+
+    FACTURAVENTACLIENTEID.llenarcombo;
+    FACTURAVENTACLIENTEID.ItemIndex:=-1;
+
+    FACTURAVENTAPERSONALID.llenarcombo;
+    FACTURAVENTAPERSONALID.ItemIndex:=-1;
+
+
+
 end;
 
 procedure Tconfiguracion.FormShow(Sender: TObject);
@@ -557,6 +659,26 @@ begin
 
     if ZQConfig.Locate('config_nombre','VENTASVENDEDORCLIENTEADOCUMENTOS',[]) then
       VENTASVENDEDORCLIENTEADOCUMENTOS.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','VENTANADETALLEVENTATIPO',[]) then
+      VENTANADETALLEVENTATIPO.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','FACTURAVENTASUCURSALID',[]) then
+      FACTURAVENTASUCURSALID.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+    FACTURAVENTASUCURSALID.OnSelect(self);
+
+    if ZQConfig.Locate('config_nombre','FACTURAVENTAPUNTOVENTAID',[]) then
+      FACTURAVENTAPUNTOVENTAID.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+    FACTURAVENTAPUNTOVENTAID.OnSelect(self);
+
+    if ZQConfig.Locate('config_nombre','FACTURAVENTATIPODOCUID',[]) then
+      FACTURAVENTATIPODOCUID.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','FACTURAVENTACLIENTEID',[]) then
+      FACTURAVENTACLIENTEID.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','FACTURAVENTAPERSONALID',[]) then
+      FACTURAVENTAPERSONALID.Buscar(ZQConfig.FieldByName('config_valor').AsString);
 
 end;
 

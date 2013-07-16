@@ -631,6 +631,15 @@ object ActualizarProductos: TActualizarProductos
           TabOrder = 15
           OnClick = btnquitarAactualizarClick
         end
+        object btnrecalculartodo: TButton
+          Left = 0
+          Top = 399
+          Width = 238
+          Height = 25
+          Caption = 'Recalcular precios de TODOS los productos'
+          TabOrder = 16
+          OnClick = btnrecalculartodoClick
+        end
       end
       object TabSheet1: TTabSheet
         Caption = 'Actualizar desde Excel'
@@ -1347,10 +1356,6 @@ object ActualizarProductos: TActualizarProductos
             object TabSheet5: TTabSheet
               Caption = 'A Disminuir'
               ImageIndex = 3
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
               object lblcantidadisminuir: TLabel
                 Left = 7
                 Top = 245

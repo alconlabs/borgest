@@ -57,6 +57,7 @@ type
     procedure btnprecio3Click(Sender: TObject);
     procedure btnprecio4Click(Sender: TObject);
     procedure ventadetalle_totalExit(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     PRODUCTOMODIFICARDESCR:string;
@@ -123,6 +124,10 @@ end;
 
 procedure Tventadetalle2.mostrarprecios;
 begin
+    btnprecio1.Caption:=Princ.NOMBREPRECIO1+' '+producto_id.valor('politicaprecio_politica1')+'%';
+    btnprecio2.Caption:=Princ.NOMBREPRECIO2+' '+producto_id.valor('politicaprecio_politica2')+'%';
+    btnprecio3.Caption:=Princ.NOMBREPRECIO3+' '+producto_id.valor('politicaprecio_politica3')+'%';
+    btnprecio4.Caption:=Princ.NOMBREPRECIO4+' '+producto_id.valor('politicaprecio_politica4')+'%';
     producto_precioventa1.Text:=producto_id.valor('producto_precioventa1');
     producto_precioventa2.Text:=producto_id.valor('producto_precioventa2');
     producto_precioventa3.Text:=producto_id.valor('producto_precioventa3');
@@ -368,7 +373,7 @@ begin
     btnprecio3.Caption:=Princ.NOMBREPRECIO3;
     btnprecio4.Caption:=Princ.NOMBREPRECIO4;
 
-    producto_id.ConfSql.Text:='select * from productos where producto_estado="DISPONIBLE" and producto_tipo="PRODUCTO" order by producto_nombre';
+    producto_id.ConfSql.Text:='select * from productos left join politicasdeprecios on productos.politicaprecio_id=politicasdeprecios.politicaprecio_id where producto_estado="DISPONIBLE" and producto_tipo="PRODUCTO" order by producto_nombre';
     producto_id.ConfCampoBusqueda1:=Princ.CODIGOPRODUCTOBUSQUEDA1;
     producto_id.ConfCampoBusqueda2:=Princ.CODIGOPRODUCTOBUSQUEDA2;
     producto_id.ConfCampoBusqueda3:=Princ.CODIGOPRODUCTOBUSQUEDA3;
@@ -384,6 +389,27 @@ begin
         VK_F9:btnaceptar.Click;
         VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);
     end;
+end;
+
+procedure Tventadetalle2.FormShow(Sender: TObject);
+begin
+    if princ.GetConfiguracion('VENTANADETALLEVENTATIPO')='1' then
+      begin
+          producto_id.Top:=7;
+          producto_id.TabOrder:=0;
+          producto_nombre.Top:= producto_id.Top;
+          producto_nombre.TabOrder:=1;
+          Label3.Top:=10;
+
+
+          Label6.Top:=39;
+          ventadeta_cantidad.Top:=36;
+          ventadeta_cantidad.TabOrder:=2;
+
+
+
+      end;
+
 end;
 
 procedure Tventadetalle2.ventadetalle_preciounitarioExit(Sender: TObject);

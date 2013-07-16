@@ -1,5 +1,5 @@
 inherited FacturaCompra: TFacturaCompra
-  Caption = 'Factura de Venta'
+  Caption = 'Factura de Compra'
   ClientHeight = 385
   ClientWidth = 885
   ExplicitWidth = 901
@@ -26,23 +26,38 @@ inherited FacturaCompra: TFacturaCompra
     end
     inherited btncancelar: TButton
       Top = 350
+      TabOrder = 11
       ExplicitTop = 350
     end
     inherited btnguardar: TButton
       Top = 350
+      TabOrder = 10
       ExplicitTop = 350
+    end
+    inherited documento_numero: TEdit
+      Left = 264
+      Width = 145
+      TabOrder = 4
+      ExplicitLeft = 264
+      ExplicitWidth = 145
     end
     inherited documento_fecha: TDateTimePicker
       Left = 725
+      TabOrder = 6
       ExplicitLeft = 725
+    end
+    inherited entidad_id: TSqlComboBox
+      TabOrder = 5
     end
     inherited documento_fechavenc: TDateTimePicker
       Left = 725
+      TabOrder = 7
       ExplicitLeft = 725
     end
     inherited documento_observaciones: TGTBMemo
       Top = 251
       Height = 126
+      TabOrder = 9
       ExplicitTop = 251
       ExplicitHeight = 126
     end
@@ -88,14 +103,21 @@ inherited FacturaCompra: TFacturaCompra
         OnExit = documento_neto21Exit
       end
     end
+    object documento_puntoventa: TEdit
+      Left = 208
+      Top = 34
+      Width = 50
+      Height = 21
+      TabOrder = 3
+    end
   end
   inherited ZQSelect: TZQuery
-    Left = 336
-    Top = 32
+    Left = 496
+    Top = 88
   end
   inherited ZQDocumentos: TZQuery
     Left = 160
-    Top = 360
+    Top = 344
   end
   inherited ZQDocumentosdocuImputacion: TZQuery
     Left = 264
@@ -106,7 +128,7 @@ inherited FacturaCompra: TFacturaCompra
     Top = 352
   end
   inherited ZQDocumentopagos: TZQuery
-    Left = 48
-    Top = 368
+    Left = 56
+    Top = 256
   end
 end

@@ -1,23 +1,26 @@
 inherited personal: Tpersonal
   Caption = 'Vendedores'
-  ExplicitWidth = 950
-  ExplicitHeight = 494
+  ClientHeight = 493
+  ExplicitHeight = 531
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Height = 303
-    ExplicitHeight = 303
+    Height = 321
+    ExplicitHeight = 321
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
-      Height = 282
-      ExplicitHeight = 282
+      Height = 300
+      ExplicitLeft = 831
+      ExplicitTop = 0
+      ExplicitHeight = 300
       FullHeight = 0
       inherited btnanular: TButton
         Visible = False
+        ExplicitTop = 164
       end
     end
     inherited DBGrid1: TDBGrid
-      Height = 282
+      Height = 300
       Columns = <
         item
           Expanded = False
@@ -47,8 +50,8 @@ inherited personal: Tpersonal
         end>
     end
     inherited panelfiltros: TAdvPanel
-      Top = 282
-      ExplicitTop = 282
+      Top = 300
+      ExplicitTop = 300
       FullHeight = 0
       inherited btnfiltrar: TButton
         TabOrder = 4
@@ -83,9 +86,9 @@ inherited personal: Tpersonal
     end
   end
   inherited panelabm: TAdvPanel
-    Top = 303
+    Top = 340
     Height = 153
-    ExplicitTop = 303
+    ExplicitTop = 340
     ExplicitHeight = 153
     FullHeight = 0
     object Label1: TLabel [0]
@@ -240,6 +243,10 @@ inherited personal: Tpersonal
       PasswordChar = '*'
       TabOrder = 8
     end
+  end
+  inherited StatusBar1: TStatusBar
+    Top = 321
+    ExplicitTop = 321
   end
   inherited ZQGrilla: TZQuery
     SQL.Strings = (

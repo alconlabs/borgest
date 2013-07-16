@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Unitlistabase, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
-  StdCtrls, Grids, DBGrids, ExtCtrls, AdvPanel, GBTEdit, UnitSqlComboBox;
+  StdCtrls, Grids, DBGrids, ExtCtrls, AdvPanel, GBTEdit, UnitSqlComboBox,
+  ComCtrls;
 
 type
   Tlistapuntosdeventa = class(Tlistabase)

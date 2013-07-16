@@ -108,6 +108,23 @@ type
     ZQDocumentoventa: TZQuery;
     ZQDocumentoventadetalles: TZQuery;
     btnverfactura: TButton;
+    TabSheet4: TTabSheet;
+    DSCLiquisucudetaRecibos: TDataSource;
+    MQLiquisucudetaRecibos: TMQuery;
+    MQLiquisucudetaRecibosliquisucudetarecibo_id: TIntegerField;
+    MQLiquisucudetaRecibosdocumentoventa_id: TStringField;
+    MQLiquisucudetaReciboscomisionsucursal_valor: TFloatField;
+    MQLiquisucudetaRecibosliquidacionsucursal_id: TIntegerField;
+    MQLiquisucudetaRecibosliquisucudetarecibo_importe: TFloatField;
+    MQLiquisucudetaRecibosdocumentoventa_total: TFloatField;
+    MQLiquisucudetaRecibospuntoventa_numero: TStringField;
+    MQLiquisucudetaRecibosdocumentoventa_fecha: TDateField;
+    MQLiquisucudetaRecibosdocumentoventa_numero: TIntegerField;
+    MQLiquisucudetaReciboscliente_nombre: TStringField;
+    DBGrid2: TDBGrid;
+    ZQDocumentosVentas: TZQuery;
+    Label18: TLabel;
+    comisionsucursal_valor: TDBAdvEdit;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -133,6 +150,7 @@ type
     porcentajeliquid:real;
     porcentajeliquid_max:real;
     sucursaltipliqsuc_tipo:string;
+    sucursal_tipodocumentoliquidar:integer;
     documentoventa_id:string;
     function control:boolean;
     procedure agregar;
@@ -142,7 +160,8 @@ type
     function ControlDetalle(documentoventadetalle_id: string; producto_id: string):boolean;
     procedure PasarAMQuery(Qorig:TDataset;QDest:TDataset; detalle_tipo:string);
     procedure PasarAMQuery2(QDest:TDataset);
-    procedure CargarDetalle;
+    procedure CargarDetalleDetalleVentas;
+    procedure CargarDetalleRecibos;
     procedure CalcularTotal(detalle:Tdataset; subtotal:TDBAdvEdit);
     procedure TraerDetalles;
     procedure TraerDebitosCreditos;
@@ -211,14 +230,30 @@ begin
     Qorig:= TZQuery.Create(self);
     Qorig.Connection:=Princ.ZBase;
     Qorig.Active:=false;
-    Qorig.SQL.Text:='select * from liquisucudeta '+
-                    'inner join documentoventadetalles on liquisucudeta.documentoventadetalle_id=documentoventadetalles.documentoventadetalle_id '+
-                    'inner join productos on documentoventadetalles.producto_id=productos.producto_id '+
-                    'inner join documentosventas on documentoventadetalles.documentoventa_id=documentosventas.documentoventa_id '+
-                    'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
-                    'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
-                    'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
-                    'where liquidacionsucursal_id="'+id+'"';
+    if sucursal_tipodocumentoliquidar=0 then
+      begin
+          Qorig.SQL.Text:='select * from liquisucudeta '+
+                          'inner join documentoventadetalles on liquisucudeta.documentoventadetalle_id=documentoventadetalles.documentoventadetalle_id '+
+                          'inner join productos on documentoventadetalles.producto_id=productos.producto_id '+
+                          'inner join documentosventas on documentoventadetalles.documentoventa_id=documentosventas.documentoventa_id '+
+                          'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                          'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                          'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                          'where liquidacionsucursal_id="'+id+'"';
+      end;
+
+
+    if sucursal_tipodocumentoliquidar=1 then
+      begin
+          Qorig.SQL.Text:='select * from liquisucudetarecibos '+
+                          'inner join documentosventas on liquisucudetarecibos.documentoventa_id=documentosventas.documentoventa_id '+
+                          'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                          'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                          'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                          'where liquidacionsucursal_id="'+id+'"';
+      end;
+
+
     Qorig.Active:=true;
 
     QDest.Active:=false;
@@ -280,6 +315,7 @@ begin
 
     cliente_id.Buscar(princ.buscar('select cliente_id from sucursales where sucursal_id="'+sucursal_id.codigo+'"','cliente_id'));
 
+    sucursal_tipodocumentoliquidar:=strtoint(Princ.buscar('select sucursal_tipodocumentoliquidar from sucursales where sucursal_id="'+sucursal_id.codigo+'"','sucursal_tipodocumentoliquidar'));
 end;
 
 procedure Tliquidacionessucu.tipodocu_idSelect(Sender: TObject);
@@ -291,7 +327,11 @@ end;
 
 procedure Tliquidacionessucu.TraerDetalles;
 begin
-    PasarAMQuery2(MQliquisucudeta);
+    if sucursal_tipodocumentoliquidar=0 then
+      PasarAMQuery2(MQliquisucudeta);
+
+    if sucursal_tipodocumentoliquidar=1 then
+      PasarAMQuery2(MQLiquisucudetaRecibos);
 
     TraerDebitosCreditos;
 
@@ -306,24 +346,33 @@ begin
     detalle.First;
     while not detalle.Eof do
         begin
-            if detalle.FieldByName('comisionsucursal_tipo').AsString='Porcentaje' then
+            if sucursal_tipodocumentoliquidar=0 then
               begin
-                  detalle.Edit;
-                  detalle.FieldByName('liquisucudeta_importe').AsFloat:=roundto((detalle.FieldByName('documentoventadetalle_precio').AsFloat*detalle.FieldByName('liquisucudeta_porcentajeliquid').AsFloat/100)*detalle.FieldByName('comisionsucursal_valor').AsFloat/100,-2);
-                  detalle.Post;
+                  if detalle.FieldByName('comisionsucursal_tipo').AsString='Porcentaje' then
+                    begin
+                        detalle.Edit;
+                        detalle.FieldByName('liquisucudeta_importe').AsFloat:=roundto((detalle.FieldByName('documentoventadetalle_precio').AsFloat*detalle.FieldByName('liquisucudeta_porcentajeliquid').AsFloat/100)*detalle.FieldByName('comisionsucursal_valor').AsFloat/100,-2);
+                        detalle.Post;
+                    end;
 
+                  if detalle.FieldByName('comisionsucursal_tipo').AsString='Cantidad' then
+                    begin
+                        detalle.Edit;
+                        detalle.FieldByName('liquisucudeta_importe').AsFloat:=roundto(detalle.FieldByName('documentoventadetalle_cantidad').AsFloat*detalle.FieldByName('comisionsucursal_valor').AsFloat*detalle.FieldByName('liquisucudeta_porcentajeliquid').AsFloat/100,-2);
+                        detalle.Post;
+                    end;
+                  subtotal.FloatValue:=subtotal.FloatValue+detalle.FieldByName('liquisucudeta_importe').AsFloat;
 
               end;
 
-            if detalle.FieldByName('comisionsucursal_tipo').AsString='Cantidad' then
+            if sucursal_tipodocumentoliquidar=1 then
               begin
                   detalle.Edit;
-                  detalle.FieldByName('liquisucudeta_importe').AsFloat:=roundto(detalle.FieldByName('documentoventadetalle_cantidad').AsFloat*detalle.FieldByName('comisionsucursal_valor').AsFloat*detalle.FieldByName('liquisucudeta_porcentajeliquid').AsFloat/100,-2);
+                  detalle.FieldByName('liquisucudetarecibo_importe').AsFloat:=roundto((detalle.FieldByName('documentoventa_total').AsFloat)*detalle.FieldByName('comisionsucursal_valor').AsFloat/100,-2);
                   detalle.Post;
+                  subtotal.FloatValue:=subtotal.FloatValue+detalle.FieldByName('liquisucudetarecibo_importe').AsFloat;
 
               end;
-
-            subtotal.FloatValue:=subtotal.FloatValue+detalle.FieldByName('liquisucudeta_importe').AsFloat;
 
             detalle.Next;
         end;
@@ -334,7 +383,7 @@ end;
 
 
 
-procedure Tliquidacionessucu.CargarDetalle;
+procedure Tliquidacionessucu.CargarDetalleDetalleVentas;
 var
   where:string;
 begin
@@ -361,6 +410,41 @@ begin
 
 
           PasarAMQuery(ZQfacturasventa,MQliquisucudeta, 'Por Defecto');
+
+
+      end;
+
+
+
+
+
+end;
+
+
+procedure Tliquidacionessucu.CargarDetalleRecibos;
+var
+  where:string;
+begin
+    MQLiquisucudetaRecibos.Active:=false;
+    MQLiquisucudetaRecibos.Active:=true;
+//    if suc_codi.codigo=Princ.buscar('select config_valor from config where config_nombre="defecto_ven_codi"','config_valor') then
+      begin
+          where := 'where documentoventa_estado<>"ANULADA" and documentoventa_condicionventa='+CONDICIONVENTA_CTACTE+' and '+
+                   '(documentoventa_fecha between "'+formatdatetime('yyyy-mm-dd',liquidacionsucursal_desdefecha.Date)+'" and '+
+                   '"'+formatdatetime('yyyy-mm-dd',liquidacionsucursal_hastafecha.Date)+'") and '+
+                   'puntodeventa.sucursal_id="'+sucursal_id.codigo+'" and tipodocu_nombre="'+TIPODOCU_RECIBOVENTA+'"';
+
+          ZQDocumentosVentas.Active:=false;
+          ZQDocumentosVentas.SQL.Text:='select * '+
+                                    'from documentosventas '+
+                                    'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                    'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                    'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                    where;
+          ZQDocumentosVentas.Active:=true;
+
+
+          PasarAMQuery(ZQDocumentosVentas,MQLiquisucudetaRecibos, 'Por Defecto');
 
 
       end;
@@ -403,45 +487,73 @@ end;
 
 procedure Tliquidacionessucu.PasarAMQuery(Qorig: TDataSet; QDest: TDataSet; detalle_tipo:string);
 begin
-    Qorig.First;
-    while not Qorig.Eof do
-        begin
-            if ControlDetalle(Qorig.FieldByName('documentoventadetalle_id').AsString, Qorig.FieldByName('producto_id').AsString) then
+    if sucursal_tipodocumentoliquidar=0 then
+      begin
+          Qorig.First;
+          while not Qorig.Eof do
               begin
-                  ZQcomisionessucursales.Active:=false;
-                  ZQcomisionessucursales.SQL.Text:='select * from comisionessucursal '+
-                                         'where sucursal_id="'+sucursal_id.codigo+'" and '+
-                                         'producto_id="'+Qorig.FieldByName('producto_id').AsString+'"';
-                  ZQcomisionessucursales.Active:=true;
-                  ZQcomisionessucursales.First;
+                  if ControlDetalle(Qorig.FieldByName('documentoventadetalle_id').AsString, Qorig.FieldByName('producto_id').AsString) then
+                    begin
+                        ZQcomisionessucursales.Active:=false;
+                        ZQcomisionessucursales.SQL.Text:='select * from comisionessucursal '+
+                                               'where sucursal_id="'+sucursal_id.codigo+'" and '+
+                                               'producto_id="'+Qorig.FieldByName('producto_id').AsString+'"';
+                        ZQcomisionessucursales.Active:=true;
+                        ZQcomisionessucursales.First;
 
+                        QDest.Insert;
+                        QDest.FieldByName('liquisucudeta_id').AsString:='0';
+                        QDest.FieldByName('documentoventadetalle_id').AsString:=Qorig.FieldByName('documentoventadetalle_id').AsString;
+                        QDest.FieldByName('producto_id').AsString:=Qorig.FieldByName('producto_id').AsString;
+                        QDest.FieldByName('comisionsucursal_tipo').AsString:=ZQcomisionessucursales.FieldByName('comisionsucursal_tipo').AsString;
+                        QDest.FieldByName('comisionsucursal_valor').AsString:=ZQcomisionessucursales.FieldByName('comisionsucursal_valor').AsString;
+                        QDest.FieldByName('liquidacionsucursal_id').AsString:='0';
+                        QDest.FieldByName('documentoventa_fecha').AsDateTime:=Qorig.FieldByName('documentoventa_fecha').AsDateTime;
+                        QDest.FieldByName('documentoventa_numero').AsString:=Qorig.FieldByName('documentoventa_numero').AsString;
+                        QDest.FieldByName('cliente_nombre').AsString:=Qorig.FieldByName('cliente_nombre').AsString;
+                        QDest.FieldByName('documentoventadetalle_descripcion').AsString:=Qorig.FieldByName('documentoventadetalle_descripcion').AsString;
+                        QDest.FieldByName('documentoventadetalle_cantidad').AsString:=Qorig.FieldByName('documentoventadetalle_cantidad').AsString;
+                        QDest.FieldByName('documentoventadetalle_precio').AsString:=Qorig.FieldByName('documentoventadetalle_total').AsString;
+                        if sucursaltipliqsuc_tipo='Neto' then
+                          QDest.FieldByName('facvendet_prec').AsFloat:=Qorig.FieldByName('documentoventadetalle_neto21').AsFloat;
+
+                        QDest.FieldByName('liquisucudeta_importe').AsString:='0';
+                        QDest.FieldByName('liquisucudeta_porcentajeliquid').AsFloat:=Qorig.FieldByName('liquisucudeta_porcentajeliquid').AsFloat-porcentajeliquid;
+                        QDest.FieldByName('documentoventa_pagado').AsString:=Qorig.FieldByName('documentoventa_pagado').AsString;
+                        QDest.FieldByName('documentoventa_saldo').AsString:=Qorig.FieldByName('documentoventa_saldo').AsString;
+                        QDest.FieldByName('puntoventa_numero').AsString:=Qorig.FieldByName('puntoventa_numero').AsString;
+
+                        QDest.Post;
+
+                    end;
+                  Qorig.Next;
+              end;
+      end;
+
+    if sucursal_tipodocumentoliquidar=1 then
+      begin
+          Qorig.First;
+          while not Qorig.Eof do
+              begin
                   QDest.Insert;
-                  QDest.FieldByName('liquisucudeta_id').AsString:='0';
-                  QDest.FieldByName('documentoventadetalle_id').AsString:=Qorig.FieldByName('documentoventadetalle_id').AsString;
-                  QDest.FieldByName('producto_id').AsString:=Qorig.FieldByName('producto_id').AsString;
-                  QDest.FieldByName('comisionsucursal_tipo').AsString:=ZQcomisionessucursales.FieldByName('comisionsucursal_tipo').AsString;
-                  QDest.FieldByName('comisionsucursal_valor').AsString:=ZQcomisionessucursales.FieldByName('comisionsucursal_valor').AsString;
+
+                  QDest.FieldByName('liquisucudetarecibo_id').AsString:='0';
+                  QDest.FieldByName('documentoventa_id').AsString:=Qorig.FieldByName('documentoventa_id').AsString;
+                  QDest.FieldByName('comisionsucursal_valor').AsFloat:=comisionsucursal_valor.FloatValue;
                   QDest.FieldByName('liquidacionsucursal_id').AsString:='0';
-                  QDest.FieldByName('documentoventa_fecha').AsDateTime:=Qorig.FieldByName('documentoventa_fecha').AsDateTime;
+                  QDest.FieldByName('liquisucudetarecibo_importe').AsString:='0';
+                  QDest.FieldByName('documentoventa_total').AsString:=Qorig.FieldByName('documentoventa_total').AsString;
+                  QDest.FieldByName('puntoventa_numero').AsString:=Qorig.FieldByName('puntoventa_numero').AsString;
+                  QDest.FieldByName('documentoventa_fecha').AsString:=Qorig.FieldByName('documentoventa_fecha').AsString;
                   QDest.FieldByName('documentoventa_numero').AsString:=Qorig.FieldByName('documentoventa_numero').AsString;
                   QDest.FieldByName('cliente_nombre').AsString:=Qorig.FieldByName('cliente_nombre').AsString;
-                  QDest.FieldByName('documentoventadetalle_descripcion').AsString:=Qorig.FieldByName('documentoventadetalle_descripcion').AsString;
-                  QDest.FieldByName('documentoventadetalle_cantidad').AsString:=Qorig.FieldByName('documentoventadetalle_cantidad').AsString;
-                  QDest.FieldByName('documentoventadetalle_precio').AsString:=Qorig.FieldByName('documentoventadetalle_total').AsString;
-                  if sucursaltipliqsuc_tipo='Neto' then
-                    QDest.FieldByName('facvendet_prec').AsFloat:=Qorig.FieldByName('documentoventadetalle_neto21').AsFloat;
-
-                  QDest.FieldByName('liquisucudeta_importe').AsString:='0';
-                  QDest.FieldByName('liquisucudeta_porcentajeliquid').AsFloat:=Qorig.FieldByName('liquisucudeta_porcentajeliquid').AsFloat-porcentajeliquid;
-                  QDest.FieldByName('documentoventa_pagado').AsString:=Qorig.FieldByName('documentoventa_pagado').AsString;
-                  QDest.FieldByName('documentoventa_saldo').AsString:=Qorig.FieldByName('documentoventa_saldo').AsString;
-                  QDest.FieldByName('puntoventa_numero').AsString:=Qorig.FieldByName('puntoventa_numero').AsString;
 
                   QDest.Post;
 
+                  Qorig.Next;
               end;
-            Qorig.Next;
-        end;
+      end;
+
 end;
 
 procedure Tliquidacionessucu.imprimir;
@@ -462,6 +574,12 @@ begin
     ZQuery2.ExecSQL;
 
     ZQuery2.Sql.Clear;
+    ZQuery2.Sql.Add('delete from liquisucudetarecibos ');
+    ZQuery2.Sql.Add('where liquidacionsucursal_id=:liquidacionsucursal_id ');
+    ZQuery2.ParamByName('liquidacionsucursal_id').AsString:=id;
+    ZQuery2.ExecSql;
+
+    ZQuery2.Sql.Clear;
     ZQuery2.Sql.Add('update sucursalesdebcred set ');
     ZQuery2.Sql.Add('liquidacionsucursal_id=:liquidacionsucursal_id, ');
     ZQuery2.Sql.Add('sucursaldebcred_estado=:sucursaldebcred_estado ');
@@ -476,6 +594,8 @@ begin
     ZQuery2.sql.add(' where liquidacionsucursal_id=:liquidacionsucursal_id');
     ZQuery2.parambyname('liquidacionsucursal_id').asstring:=id;
     ZQuery2.ExecSQL;
+
+
 
 
     ZQuery2.SQL.Clear;
@@ -578,32 +698,65 @@ begin
     ZQuery2.parambyname('liquidacionsucursal_id').asstring:=id;
     ZQuery2.ExecSQL;
 
+    if sucursal_tipodocumentoliquidar=0 then
+      begin
+          ZQuery2.Sql.Clear;
+          ZQuery2.Sql.Add('insert into liquisucudeta set ');
+          ZQuery2.Sql.Add('documentoventadetalle_id=:documentoventadetalle_id, ');
+          ZQuery2.Sql.Add('liquidacionsucursal_id=:liquidacionsucursal_id, ');
+          ZQuery2.Sql.Add('liquisucudeta_porcentajeliquid=:liquisucudeta_porcentajeliquid, ');
+          ZQuery2.Sql.Add('liquisucudeta_importe=:liquisucudeta_importe, ');
+          ZQuery2.Sql.Add('comisionsucursal_valor=:comisionsucursal_valor, ');
+          ZQuery2.Sql.Add('comisionsucursal_tipo=:comisionsucursal_tipo, ');
+          ZQuery2.Sql.Add('liquisucudeta_id=:liquisucudeta_id ');
+
+          MQliquisucudeta.First;
+          while not MQliquisucudeta.Eof do
+              begin
+                  ZQuery2.ParamByName('documentoventadetalle_id').AsString:=MQliquisucudeta.FieldByName('documentoventadetalle_id').AsString;
+                  ZQuery2.ParamByName('liquidacionsucursal_id').AsString:=id;
+                  ZQuery2.ParamByName('liquisucudeta_porcentajeliquid').AsString:=MQliquisucudeta.FieldByName('liquisucudeta_porcentajeliquid').AsString;
+                  ZQuery2.ParamByName('liquisucudeta_importe').AsString:=MQliquisucudeta.FieldByName('liquisucudeta_importe').AsString;
+                  ZQuery2.ParamByName('comisionsucursal_valor').AsString:=MQliquisucudeta.FieldByName('comisionsucursal_valor').AsString;
+                  ZQuery2.ParamByName('comisionsucursal_tipo').AsString:=MQliquisucudeta.FieldByName('comisionsucursal_tipo').AsString;
+                  ZQuery2.ParamByName('liquisucudeta_id').AsString:=Princ.codigo('liquisucudeta','liquisucudeta_id');
+                  ZQuery2.ExecSql;
+
+                  MQliquisucudeta.Next;
+              end;
+
+      end;
+
+
     ZQuery2.Sql.Clear;
-    ZQuery2.Sql.Add('insert into liquisucudeta set ');
-    ZQuery2.Sql.Add('documentoventadetalle_id=:documentoventadetalle_id, ');
-    ZQuery2.Sql.Add('liquidacionsucursal_id=:liquidacionsucursal_id, ');
-    ZQuery2.Sql.Add('liquisucudeta_porcentajeliquid=:liquisucudeta_porcentajeliquid, ');
-    ZQuery2.Sql.Add('liquisucudeta_importe=:liquisucudeta_importe, ');
-    ZQuery2.Sql.Add('comisionsucursal_valor=:comisionsucursal_valor, ');
-    ZQuery2.Sql.Add('comisionsucursal_tipo=:comisionsucursal_tipo, ');
-    ZQuery2.Sql.Add('liquisucudeta_id=:liquisucudeta_id ');
+    ZQuery2.Sql.Add('delete from liquisucudetarecibos ');
+    ZQuery2.Sql.Add('where liquidacionsucursal_id=:liquidacionsucursal_id ');
+    ZQuery2.ParamByName('liquidacionsucursal_id').AsString:=id;
+    ZQuery2.ExecSql;
 
-    MQliquisucudeta.First;
-    while not MQliquisucudeta.Eof do
-        begin
-            ZQuery2.ParamByName('documentoventadetalle_id').AsString:=MQliquisucudeta.FieldByName('documentoventadetalle_id').AsString;
-            ZQuery2.ParamByName('liquidacionsucursal_id').AsString:=id;
-            ZQuery2.ParamByName('liquisucudeta_porcentajeliquid').AsString:=MQliquisucudeta.FieldByName('liquisucudeta_porcentajeliquid').AsString;
-            ZQuery2.ParamByName('liquisucudeta_importe').AsString:=MQliquisucudeta.FieldByName('liquisucudeta_importe').AsString;
-            ZQuery2.ParamByName('comisionsucursal_valor').AsString:=MQliquisucudeta.FieldByName('comisionsucursal_valor').AsString;
-            ZQuery2.ParamByName('comisionsucursal_tipo').AsString:=MQliquisucudeta.FieldByName('comisionsucursal_tipo').AsString;
-            ZQuery2.ParamByName('liquisucudeta_id').AsString:=Princ.codigo('liquisucudeta','liquisucudeta_id');
-            ZQuery2.ExecSql;
+    if sucursal_tipodocumentoliquidar=1 then
+      begin
+          ZQuery2.Sql.Clear;
+          ZQuery2.Sql.Add('insert into liquisucudetarecibos set ');
+          ZQuery2.Sql.Add('documentoventa_id=:documentoventa_id, ');
+          ZQuery2.Sql.Add('liquidacionsucursal_id=:liquidacionsucursal_id, ');
+          ZQuery2.Sql.Add('liquisucudetarecibo_importe=:liquisucudetarecibo_importe, ');
+          ZQuery2.Sql.Add('comisionsucursal_valor=:comisionsucursal_valor, ');
+          ZQuery2.Sql.Add('liquisucudetarecibo_id=:liquisucudetarecibo_id ');
+          MQLiquisucudetaRecibos.First;
+          while not MQLiquisucudetaRecibos.Eof do
+              begin
+                  ZQuery2.ParamByName('documentoventa_id').AsString:=MQLiquisucudetaRecibos.FieldByName('documentoventa_id').AsString;
+                  ZQuery2.ParamByName('liquidacionsucursal_id').AsString:=id;
+                  ZQuery2.ParamByName('liquisucudetarecibo_importe').AsString:=MQLiquisucudetaRecibos.FieldByName('liquisucudetarecibo_importe').AsString;
+                  ZQuery2.ParamByName('comisionsucursal_valor').AsString:=MQLiquisucudetaRecibos.FieldByName('comisionsucursal_valor').AsString;
+                  ZQuery2.ParamByName('liquisucudetarecibo_id').AsString:=Princ.codigo('liquisucudetarecibos','liquisucudetarecibo_id');
+                  ZQuery2.ExecSql;
 
-            MQliquisucudeta.Next;
-        end;
+                  MQLiquisucudetaRecibos.Next;
+              end;
 
-
+      end;
 
 
     ZQuery2.Sql.Clear;
@@ -698,6 +851,7 @@ begin
           liquidacionsucursal_desdefecha.Date:=ZQliquidacionessucursales.FieldByName('liquidacionsucursal_desdefecha').AsDateTime;
           liquidacionsucursal_hastafecha.Date:=ZQliquidacionessucursales.FieldByName('liquidacionsucursal_hastafecha').AsDateTime;
           sucursal_id.Buscar(ZQliquidacionessucursales.FieldByName('sucursal_id').AsString);
+          sucursal_id.OnSelect(self);
           sucursaltipliqsuc_tipo:=ZQliquidacionessucursales.FieldByName('sucursaltipliqsuc_tipo').AsString;
 
           documentoventa_id:=ZQliquidacionessucursales.FieldByName('documentoventa_id').AsString;
@@ -750,33 +904,60 @@ begin
     ZQuery2.ExecSql;
 
 
+    if sucursal_tipodocumentoliquidar=0 then
+      begin
+          ZQuery2.Sql.Clear;
+          ZQuery2.Sql.Add('insert into liquisucudeta set ');
+          ZQuery2.Sql.Add('documentoventadetalle_id=:documentoventadetalle_id, ');
+          ZQuery2.Sql.Add('liquidacionsucursal_id=:liquidacionsucursal_id, ');
+          ZQuery2.Sql.Add('liquisucudeta_porcentajeliquid=:liquisucudeta_porcentajeliquid, ');
+          ZQuery2.Sql.Add('liquisucudeta_importe=:liquisucudeta_importe, ');
+          ZQuery2.Sql.Add('comisionsucursal_valor=:comisionsucursal_valor, ');
+          ZQuery2.Sql.Add('comisionsucursal_tipo=:comisionsucursal_tipo, ');
+          ZQuery2.Sql.Add('liquisucudeta_id=:liquisucudeta_id ');
 
-    ZQuery2.Sql.Clear;
-    ZQuery2.Sql.Add('insert into liquisucudeta set ');
-    ZQuery2.Sql.Add('documentoventadetalle_id=:documentoventadetalle_id, ');
-    ZQuery2.Sql.Add('liquidacionsucursal_id=:liquidacionsucursal_id, ');
-    ZQuery2.Sql.Add('liquisucudeta_porcentajeliquid=:liquisucudeta_porcentajeliquid, ');
-    ZQuery2.Sql.Add('liquisucudeta_importe=:liquisucudeta_importe, ');
-    ZQuery2.Sql.Add('comisionsucursal_valor=:comisionsucursal_valor, ');
-    ZQuery2.Sql.Add('comisionsucursal_tipo=:comisionsucursal_tipo, ');
-    ZQuery2.Sql.Add('liquisucudeta_id=:liquisucudeta_id ');
+          MQliquisucudeta.First;
+          while not MQliquisucudeta.Eof do
+              begin
+                  ZQuery2.ParamByName('documentoventadetalle_id').AsString:=MQliquisucudeta.FieldByName('documentoventadetalle_id').AsString;
+                  ZQuery2.ParamByName('liquidacionsucursal_id').AsString:=id;
+                  ZQuery2.ParamByName('liquisucudeta_porcentajeliquid').AsString:=MQliquisucudeta.FieldByName('liquisucudeta_porcentajeliquid').AsString;
+                  ZQuery2.ParamByName('liquisucudeta_importe').AsString:=MQliquisucudeta.FieldByName('liquisucudeta_importe').AsString;
+                  ZQuery2.ParamByName('comisionsucursal_valor').AsString:=MQliquisucudeta.FieldByName('comisionsucursal_valor').AsString;
+                  ZQuery2.ParamByName('comisionsucursal_tipo').AsString:=MQliquisucudeta.FieldByName('comisionsucursal_tipo').AsString;
+                  ZQuery2.ParamByName('liquisucudeta_id').AsString:=Princ.codigo('liquisucudeta','liquisucudeta_id');
+                  ZQuery2.ExecSql;
+
+                  MQliquisucudeta.Next;
+              end;
+
+      end;
 
 
+    if sucursal_tipodocumentoliquidar=1 then
+      begin
+          ZQuery2.Sql.Clear;
+          ZQuery2.Sql.Add('insert into liquisucudetarecibos set ');
+          ZQuery2.Sql.Add('documentoventa_id=:documentoventa_id, ');
+          ZQuery2.Sql.Add('liquidacionsucursal_id=:liquidacionsucursal_id, ');
+          ZQuery2.Sql.Add('liquisucudetarecibo_importe=:liquisucudetarecibo_importe, ');
+          ZQuery2.Sql.Add('comisionsucursal_valor=:comisionsucursal_valor, ');
+          ZQuery2.Sql.Add('liquisucudetarecibo_id=:liquisucudetarecibo_id ');
+          MQLiquisucudetaRecibos.First;
+          while not MQLiquisucudetaRecibos.Eof do
+              begin
+                  ZQuery2.ParamByName('documentoventa_id').AsString:=MQLiquisucudetaRecibos.FieldByName('documentoventa_id').AsString;
+                  ZQuery2.ParamByName('liquidacionsucursal_id').AsString:=id;
+                  ZQuery2.ParamByName('liquisucudetarecibo_importe').AsString:=MQLiquisucudetaRecibos.FieldByName('liquisucudetarecibo_importe').AsString;
+                  ZQuery2.ParamByName('comisionsucursal_valor').AsString:=MQLiquisucudetaRecibos.FieldByName('comisionsucursal_valor').AsString;
+                  ZQuery2.ParamByName('liquisucudetarecibo_id').AsString:=Princ.codigo('liquisucudetarecibos','liquisucudetarecibo_id');
+                  ZQuery2.ExecSql;
 
-    MQliquisucudeta.First;
-    while not MQliquisucudeta.Eof do
-        begin
-            ZQuery2.ParamByName('documentoventadetalle_id').AsString:=MQliquisucudeta.FieldByName('documentoventadetalle_id').AsString;
-            ZQuery2.ParamByName('liquidacionsucursal_id').AsString:=id;
-            ZQuery2.ParamByName('liquisucudeta_porcentajeliquid').AsString:=MQliquisucudeta.FieldByName('liquisucudeta_porcentajeliquid').AsString;
-            ZQuery2.ParamByName('liquisucudeta_importe').AsString:=MQliquisucudeta.FieldByName('liquisucudeta_importe').AsString;
-            ZQuery2.ParamByName('comisionsucursal_valor').AsString:=MQliquisucudeta.FieldByName('comisionsucursal_valor').AsString;
-            ZQuery2.ParamByName('comisionsucursal_tipo').AsString:=MQliquisucudeta.FieldByName('comisionsucursal_tipo').AsString;
-            ZQuery2.ParamByName('liquisucudeta_id').AsString:=Princ.codigo('liquisucudeta','liquisucudeta_id');
-            ZQuery2.ExecSql;
+                  MQLiquisucudetaRecibos.Next;
+              end;
 
-            MQliquisucudeta.Next;
-        end;
+      end;
+
 
     ZQsucursalesdebcred.First;
     while not ZQsucursalesdebcred.Eof do
@@ -818,13 +999,23 @@ end;
 
 procedure Tliquidacionessucu.btnactualizarClick(Sender: TObject);
 begin
-    CargarDetalle;
+    if sucursal_tipodocumentoliquidar=0 then
+      CargarDetalleDetalleVentas;
+
+    if sucursal_tipodocumentoliquidar=1 then
+      CargarDetalleRecibos;
+
     CargarsucursalesDebCred;
 end;
 
 procedure Tliquidacionessucu.btncalcularClick(Sender: TObject);
 begin
-    CalcularTotal(MQliquisucudeta,liquidacionsucursal_subtotal1);
+    if sucursal_tipodocumentoliquidar=0 then
+      CalcularTotal(MQliquisucudeta,liquidacionsucursal_subtotal1);
+
+    if sucursal_tipodocumentoliquidar=1 then
+      CalcularTotal(MQLiquisucudetaRecibos,liquidacionsucursal_subtotal1);
+
     CalcularTotalDebCred;
     liquidacionsucursal_total.FloatValue:=liquidacionsucursal_subtotal1.FloatValue+liquidacionsucursal_subtotal2.FloatValue;
 end;
@@ -945,18 +1136,37 @@ end;
 
 procedure Tliquidacionessucu.btnimprimirClick(Sender: TObject);
 begin
-    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\liquidacion_sucursal.rep';
-    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from liquidacionessucursales '+
-                                                   'inner join liquisucudeta on liquidacionessucursales.liquidacionsucursal_id=liquisucudeta.liquidacionsucursal_id '+
-                                                   'inner join documentoventadetalles on liquisucudeta.documentoventadetalle_id=documentoventadetalles.documentoventadetalle_id '+
-                                                   'inner join productos on documentoventadetalles.producto_id=productos.producto_id '+
-                                                   'inner join documentosventas on documentoventadetalles.documentoventa_id=documentosventas.documentoventa_id '+
-                                                   'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
-                                                   'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
-                                                   'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
-                                                   'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
-                                                   'where liquidacionessucursales.liquidacionsucursal_id="'+id+'" '+
-                                                   'order by documentoventa_fecha,documentoventa_numero, documentoventadetalle_descripcion';
+    if sucursal_tipodocumentoliquidar=0 then
+      begin
+          Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\liquidacion_sucursal.rep';
+          Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from liquidacionessucursales '+
+                                                         'inner join liquisucudeta on liquidacionessucursales.liquidacionsucursal_id=liquisucudeta.liquidacionsucursal_id '+
+                                                         'inner join documentoventadetalles on liquisucudeta.documentoventadetalle_id=documentoventadetalles.documentoventadetalle_id '+
+                                                         'inner join productos on documentoventadetalles.producto_id=productos.producto_id '+
+                                                         'inner join documentosventas on documentoventadetalles.documentoventa_id=documentosventas.documentoventa_id '+
+                                                         'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                                         'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                                         'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                                         'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
+                                                         'where liquidacionessucursales.liquidacionsucursal_id="'+id+'" '+
+                                                         'order by documentoventa_fecha,documentoventa_numero, documentoventadetalle_descripcion';
+      end;
+
+
+    if sucursal_tipodocumentoliquidar=1 then
+      begin
+          Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\liquidacion_sucursal_recibos.rep';
+          Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from liquidacionessucursales '+
+                                                         'inner join liquisucudetarecibos on liquidacionessucursales.liquidacionsucursal_id=liquisucudetarecibos.liquidacionsucursal_id '+
+                                                         'inner join documentosventas on liquisucudetarecibos.documentoventa_id=documentosventas.documentoventa_id '+
+                                                         'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                                         'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                                         'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                                         'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
+                                                         'where liquidacionessucursales.liquidacionsucursal_id="'+id+'" '+
+                                                         'order by documentoventa_fecha,documentoventa_numero';
+      end;
+
 
     Princ.VCLReport1.Report.Datainfo.Items[1].sql:='select * from sucursalesdebcred '+
                                              'where sucursaldebcred_tipo="Credito" and liquidacionsucursal_id="'+id+'" ';

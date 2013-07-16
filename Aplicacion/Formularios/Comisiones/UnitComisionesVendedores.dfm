@@ -7,20 +7,20 @@ inherited ComisionesVendedores: TComisionesVendedores
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Width = 1029
-    Height = 225
+    Height = 206
     ExplicitWidth = 1029
-    ExplicitHeight = 225
+    ExplicitHeight = 206
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
       Left = 926
-      Height = 204
+      Height = 185
       ExplicitLeft = 926
-      ExplicitHeight = 204
+      ExplicitHeight = 185
       FullHeight = 0
     end
     inherited DBGrid1: TDBGrid
       Width = 926
-      Height = 204
+      Height = 185
       Columns = <
         item
           Expanded = False
@@ -59,9 +59,9 @@ inherited ComisionesVendedores: TComisionesVendedores
         end>
     end
     inherited panelfiltros: TAdvPanel
-      Top = 204
+      Top = 185
       Width = 1029
-      ExplicitTop = 204
+      ExplicitTop = 185
       ExplicitWidth = 1029
       FullHeight = 0
       inherited btnfiltrar: TButton
@@ -336,6 +336,10 @@ inherited ComisionesVendedores: TComisionesVendedores
         112
         106)
     end
+  end
+  inherited StatusBar1: TStatusBar
+    Top = 206
+    Width = 1029
   end
   inherited ZQGrilla: TZQuery
     SQL.Strings = (

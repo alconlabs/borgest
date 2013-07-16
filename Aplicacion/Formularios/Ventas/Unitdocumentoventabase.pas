@@ -327,6 +327,8 @@ begin
                                              'inner join provincias on localidades.provincia_id=provincias.provincia_id '+
                                              'inner join paises on provincias.pais_id=paises.pais_id '+
                                              'inner join condicioniva on clientes.condicioniva_id=condicioniva.condicioniva_id '+
+                                             'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                             'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
                                              'where documentosventas.documentoventa_id="'+id+'"';
 
 

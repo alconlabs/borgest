@@ -826,3 +826,34 @@ Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enab
 INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,74,perfil_id from perfiles;
 201;
 Replace config set config_valor='0', config_nombre='VENTASVENDEDORCLIENTEADOCUMENTOS';
+202;
+UPDATE `empresas` SET `empresa_razonsocial`='CgAAANk7Ou14izMXC84G5wej9iw=\r\n' WHERE `empresa_id`=1;
+203;
+ALTER TABLE `proveedores` CHANGE COLUMN `proveedor_mail` `proveedor_mail` VARCHAR(150) NULL DEFAULT NULL  ;
+204;
+Replace config set config_valor='0', config_nombre='VENTANADETALLEVENTATIPO';
+205;
+ALTER TABLE `sucursales` ADD COLUMN `sucursal_tipodocumentoliquidar` INT(3) NULL DEFAULT 0  AFTER `cliente_id` ;
+206;
+CREATE  TABLE IF NOT EXISTS `liquisucudetarecibos` (
+  `liquisucudetarecibo_id` INT(11) NOT NULL ,
+  `comisionsucursal_valor` FLOAT(10,4) NULL DEFAULT NULL ,
+  `liquisucudetarecibo_importe` FLOAT(20,4) NULL DEFAULT NULL ,
+  `liquidacionsucursal_id` INT(11) NOT NULL ,
+  `documentoventa_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`liquisucudetarecibo_id`) ,
+  INDEX `fk_liquisucudetarecibos_liquidacionessucursales1` (`liquidacionsucursal_id` ASC) ,
+  INDEX `fk_liquisucudetarecibos_documentosventas1` (`documentoventa_id` ASC) ,
+  CONSTRAINT `fk_liquisucudetarecibos_liquidacionessucursales1`
+    FOREIGN KEY (`liquidacionsucursal_id` )
+    REFERENCES `liquidacionessucursales` (`liquidacionsucursal_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_liquisucudetarecibos_documentosventas1`
+    FOREIGN KEY (`documentoventa_id` )
+    REFERENCES `documentosventas` (`documentoventa_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;

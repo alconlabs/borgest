@@ -133,6 +133,9 @@ inherited Listaservices: TListaservices
     ExplicitWidth = 1035
     FullHeight = 0
   end
+  inherited StatusBar1: TStatusBar
+    Width = 1035
+  end
   inherited ZQGrilla: TZQuery
     SQL.Strings = (
       'select * from documentosventas'

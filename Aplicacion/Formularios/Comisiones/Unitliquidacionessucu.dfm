@@ -379,13 +379,109 @@ object liquidacionessucu: Tliquidacionessucu
           Version = '2.7.0.5'
         end
       end
+      object TabSheet4: TTabSheet
+        Caption = 'Recibos'
+        ImageIndex = 3
+        object Label18: TLabel
+          Left = 37
+          Top = 18
+          Width = 53
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Comision %'
+        end
+        object DBGrid2: TDBGrid
+          Left = 0
+          Top = 48
+          Width = 1003
+          Height = 272
+          Align = alBottom
+          DataSource = DSCLiquisucudetaRecibos
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'MS Sans Serif'
+          TitleFont.Style = []
+          Columns = <
+            item
+              Expanded = False
+              FieldName = 'documentoventa_fecha'
+              ReadOnly = True
+              Title.Caption = 'Fecha'
+              Visible = True
+            end
+            item
+              Alignment = taRightJustify
+              Expanded = False
+              FieldName = 'puntoventa_numero'
+              ReadOnly = True
+              Title.Caption = 'Pto. Vta.'
+              Width = 50
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'documentoventa_numero'
+              ReadOnly = True
+              Title.Caption = 'Numero'
+              Width = 60
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'cliente_nombre'
+              ReadOnly = True
+              Title.Caption = 'Cliente'
+              Width = 377
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'comisionsucursal_valor'
+              Title.Caption = 'Valor'
+              Width = 59
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'documentoventa_total'
+              Title.Caption = 'Importe'
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'liquisucudetarecibo_importe'
+              ReadOnly = True
+              Title.Caption = 'Total'
+              Width = 109
+              Visible = True
+            end>
+        end
+        object comisionsucursal_valor: TDBAdvEdit
+          Left = 104
+          Top = 15
+          Width = 121
+          Height = 21
+          EditType = etFloat
+          Precision = 2
+          LabelFont.Charset = DEFAULT_CHARSET
+          LabelFont.Color = clWindowText
+          LabelFont.Height = -11
+          LabelFont.Name = 'Tahoma'
+          LabelFont.Style = []
+          Lookup.Separator = ';'
+          Color = clWindow
+          Enabled = True
+          TabOrder = 1
+          Text = '0,00'
+          Visible = True
+          Version = '2.7.0.5'
+        end
+      end
       object TabSheet2: TTabSheet
         Caption = 'Debitos y Creditos'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label7: TLabel
           Left = 814
           Top = 287
@@ -476,10 +572,6 @@ object liquidacionessucu: Tliquidacionessucu
       object TabSheet3: TTabSheet
         Caption = 'Facturar Liquidacion'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label6: TLabel
           Left = 489
           Top = 7
@@ -605,7 +697,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 317
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 4
           OnSelect = cliente_idSelect
           Confbase = Princ.ZBase
@@ -622,7 +714,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 220
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 7
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -637,7 +729,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 219
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 8
           Text = 'Contado'
@@ -651,7 +743,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 52
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 1
           OnSelect = puntoventa_idSelect
           Confbase = Princ.ZBase
@@ -667,7 +759,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 52
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 2
           OnSelect = tipodocu_idSelect
           Confbase = Princ.ZBase
@@ -684,7 +776,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 219
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 9
           Text = 'Precio 1'
@@ -701,7 +793,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 317
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 0
           OnSelect = sucursalfactura_idSelect
           Confbase = Princ.ZBase
@@ -806,8 +898,8 @@ object liquidacionessucu: Tliquidacionessucu
   end
   object DSCliquisucudeta: TDataSource
     DataSet = MQliquisucudeta
-    Left = 64
-    Top = 416
+    Left = 120
+    Top = 176
   end
   object MQliquisucudeta: TMQuery
     Connection = Princ.ZBase
@@ -847,8 +939,8 @@ object liquidacionessucu: Tliquidacionessucu
       'liquisucudeta_porcentajeliquid,d'
       'documentoventa_pagado,d'
       'documentoventa_saldo,d')
-    Left = 192
-    Top = 424
+    Left = 128
+    Top = 240
     object MQliquisucudetaliquisucudeta_id: TIntegerField
       FieldName = 'liquisucudeta_id'
     end
@@ -933,8 +1025,8 @@ object liquidacionessucu: Tliquidacionessucu
         Name = 'liquidacionsucursal_id'
         ParamType = ptUnknown
       end>
-    Left = 440
-    Top = 416
+    Left = 304
+    Top = 408
     ParamData = <
       item
         DataType = ftUnknown
@@ -950,7 +1042,7 @@ object liquidacionessucu: Tliquidacionessucu
         'inner join facturasventadeta on facturasventa.facven_id=facturas' +
         'ventadeta.facven_id')
     Params = <>
-    Left = 296
+    Left = 200
     Top = 424
   end
   object ZQcomisionessucursales: TZQuery
@@ -961,8 +1053,8 @@ object liquidacionessucu: Tliquidacionessucu
         'inner join facturasventadeta on facturasventa.facven_id=facturas' +
         'ventadeta.facven_id')
     Params = <>
-    Left = 648
-    Top = 400
+    Left = 552
+    Top = 424
   end
   object ZQControlDetalle: TZQuery
     Connection = Princ.ZBase
@@ -972,8 +1064,8 @@ object liquidacionessucu: Tliquidacionessucu
         'inner join facturasventadeta on facturasventa.facven_id=facturas' +
         'ventadeta.facven_id')
     Params = <>
-    Left = 552
-    Top = 416
+    Left = 440
+    Top = 432
   end
   object ZQliquivendedeta: TZQuery
     Connection = Princ.ZBase
@@ -1016,8 +1108,8 @@ object liquidacionessucu: Tliquidacionessucu
         Name = 'liquidacionsucursal_id'
         ParamType = ptUnknown
       end>
-    Left = 968
-    Top = 408
+    Left = 888
+    Top = 288
     ParamData = <
       item
         DataType = ftUnknown
@@ -1060,8 +1152,8 @@ object liquidacionessucu: Tliquidacionessucu
   end
   object DSCsucursalesdebcred: TDataSource
     DataSet = ZQsucursalesdebcred
-    Left = 880
-    Top = 416
+    Left = 592
+    Top = 328
   end
   object ZQDocumentoventa: TZQuery
     Connection = Princ.ZBase
@@ -1104,5 +1196,87 @@ object liquidacionessucu: Tliquidacionessucu
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
+  end
+  object DSCLiquisucudetaRecibos: TDataSource
+    DataSet = MQLiquisucudetaRecibos
+    Left = 304
+    Top = 168
+  end
+  object MQLiquisucudetaRecibos: TMQuery
+    Connection = Princ.ZBase
+    SortedFields = 'documentoventa_fecha,documentoventa_numero'
+    CachedUpdates = True
+    SQL.Strings = (
+      
+        'select i as liquisucudetarecibo_id,t as documentoventa_id,d as c' +
+        'omisionsucursal_valor,i as liquidacionsucursal_id,d as liquisucu' +
+        'detarecibo_importe,d as documentoventa_total,t as puntoventa_num' +
+        'ero,f as documentoventa_fecha,i as documentoventa_numero,t as cl' +
+        'iente_nombre from temp ')
+    Params = <>
+    IndexFieldNames = 'documentoventa_fecha Asc,documentoventa_numero Asc'
+    ConfCampos.Strings = (
+      'liquisucudetarecibo_id,i'
+      'documentoventa_id,t'
+      'comisionsucursal_valor,d'
+      'liquidacionsucursal_id,i'
+      'liquisucudetarecibo_importe,d'
+      'documentoventa_total,d'
+      'puntoventa_numero,t'
+      'documentoventa_fecha,f'
+      'documentoventa_numero,i'
+      'cliente_nombre,t')
+    Left = 304
+    Top = 240
+    object MQLiquisucudetaRecibosliquisucudetarecibo_id: TIntegerField
+      FieldName = 'liquisucudetarecibo_id'
+    end
+    object MQLiquisucudetaRecibosdocumentoventa_id: TStringField
+      FieldName = 'documentoventa_id'
+      Size = 255
+    end
+    object MQLiquisucudetaReciboscomisionsucursal_valor: TFloatField
+      FieldName = 'comisionsucursal_valor'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
+    end
+    object MQLiquisucudetaRecibosliquidacionsucursal_id: TIntegerField
+      FieldName = 'liquidacionsucursal_id'
+    end
+    object MQLiquisucudetaRecibosliquisucudetarecibo_importe: TFloatField
+      FieldName = 'liquisucudetarecibo_importe'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
+    end
+    object MQLiquisucudetaRecibosdocumentoventa_total: TFloatField
+      FieldName = 'documentoventa_total'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
+    end
+    object MQLiquisucudetaRecibospuntoventa_numero: TStringField
+      FieldName = 'puntoventa_numero'
+      Size = 255
+    end
+    object MQLiquisucudetaRecibosdocumentoventa_fecha: TDateField
+      FieldName = 'documentoventa_fecha'
+    end
+    object MQLiquisucudetaRecibosdocumentoventa_numero: TIntegerField
+      FieldName = 'documentoventa_numero'
+    end
+    object MQLiquisucudetaReciboscliente_nombre: TStringField
+      FieldName = 'cliente_nombre'
+      Size = 255
+    end
+  end
+  object ZQDocumentosVentas: TZQuery
+    Connection = Princ.ZBase
+    SQL.Strings = (
+      'select * from facturasventa'
+      
+        'inner join facturasventadeta on facturasventa.facven_id=facturas' +
+        'ventadeta.facven_id')
+    Params = <>
+    Left = 312
+    Top = 312
   end
 end

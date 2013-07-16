@@ -1,296 +1,148 @@
-object listalocalidades: Tlistalocalidades
-  Left = 0
-  Top = 0
-  BorderIcons = [biSystemMenu, biMinimize]
+inherited ListaLocalidades: TListaLocalidades
   Caption = 'Localidades'
-  ClientHeight = 450
-  ClientWidth = 1035
-  Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
-  Font.Style = []
-  KeyPreview = True
-  OldCreateOrder = False
-  Position = poMainFormCenter
-  OnCreate = FormCreate
+  ExplicitWidth = 950
+  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
-  object panelgrilla: TAdvPanel
-    Left = 0
-    Top = 0
-    Width = 1035
-    Height = 450
-    Align = alClient
-    BevelOuter = bvNone
-    Color = 15524577
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 0
-    UseDockManager = True
-    Version = '1.7.5.1'
-    AutoHideChildren = False
-    BorderColor = clGray
-    Caption.Color = 15722471
-    Caption.ColorTo = 11176072
-    Caption.Font.Charset = DEFAULT_CHARSET
-    Caption.Font.Color = clBlack
-    Caption.Font.Height = -11
-    Caption.Font.Name = 'MS Sans Serif'
-    Caption.Font.Style = []
-    Caption.GradientDirection = gdVertical
-    Caption.Indent = 2
-    Caption.ShadeLight = 255
-    CollapsColor = clHighlight
-    CollapsDelay = 0
-    ColorTo = 11769496
-    ShadowColor = clBlack
-    ShadowOffset = 0
-    StatusBar.BorderColor = clNone
-    StatusBar.BorderStyle = bsSingle
-    StatusBar.Font.Charset = DEFAULT_CHARSET
-    StatusBar.Font.Color = clBlack
-    StatusBar.Font.Height = -11
-    StatusBar.Font.Name = 'Tahoma'
-    StatusBar.Font.Style = []
-    StatusBar.Color = 12560553
-    StatusBar.ColorTo = 14602191
-    StatusBar.Visible = True
-    Styler = Princ.AdvPanelStyler1
+  inherited panelgrilla: TAdvPanel
     FullHeight = 0
-    object panelbotonera: TAdvPanel
-      Left = 932
-      Top = 0
-      Width = 103
-      Height = 411
-      Align = alRight
-      BevelOuter = bvNone
-      Color = 15524577
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 1
-      UseDockManager = True
-      Version = '1.7.5.1'
-      AutoHideChildren = False
-      BorderColor = clGray
-      Caption.Color = 15722471
-      Caption.ColorTo = 11176072
-      Caption.Font.Charset = DEFAULT_CHARSET
-      Caption.Font.Color = clBlack
-      Caption.Font.Height = -11
-      Caption.Font.Name = 'MS Sans Serif'
-      Caption.Font.Style = []
-      Caption.GradientDirection = gdVertical
-      Caption.Indent = 2
-      Caption.ShadeLight = 255
-      CollapsColor = clHighlight
-      CollapsDelay = 0
-      ColorTo = 11769496
-      ShadowColor = clBlack
-      ShadowOffset = 0
-      StatusBar.BorderColor = clNone
-      StatusBar.BorderStyle = bsSingle
-      StatusBar.Font.Charset = DEFAULT_CHARSET
-      StatusBar.Font.Color = clBlack
-      StatusBar.Font.Height = -11
-      StatusBar.Font.Name = 'Tahoma'
-      StatusBar.Font.Style = []
-      StatusBar.Color = 12560553
-      StatusBar.ColorTo = 14602191
-      Styler = Princ.AdvPanelStyler1
+    inherited panelbotonera: TAdvPanel
       FullHeight = 0
-      object Button2: TButton
-        Left = 0
-        Top = 82
-        Width = 103
-        Height = 41
-        Align = alTop
-        Caption = 'Eliminar'
-        TabOrder = 2
-        OnClick = Button2Click
-      end
-      object Button3: TButton
-        Left = 0
-        Top = 41
-        Width = 103
-        Height = 41
-        Align = alTop
-        Caption = 'Modificar'
-        TabOrder = 1
-        OnClick = Button3Click
-      end
-      object Button4: TButton
-        Left = 0
-        Top = 0
-        Width = 103
-        Height = 41
-        Align = alTop
-        Caption = 'Crear Nuevo'
-        TabOrder = 0
-        OnClick = Button4Click
-      end
     end
-    object DBGrid1: TDBGrid
-      Left = 0
-      Top = 0
-      Width = 932
-      Height = 411
-      Align = alClient
-      DataSource = DSC
-      TabOrder = 0
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = clWindowText
-      TitleFont.Height = -11
-      TitleFont.Name = 'MS Sans Serif'
-      TitleFont.Style = []
+    inherited DBGrid1: TDBGrid
       Columns = <
         item
           Expanded = False
           FieldName = 'localidad_id'
           Title.Caption = 'Codigo'
-          Width = 69
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'localidad_nombre'
-          Title.Caption = 'Nombre'
-          Width = 500
+          Title.Caption = 'Localidad'
+          Width = 390
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'provincia_nombre'
           Title.Caption = 'Provincia'
-          Width = 300
+          Width = 325
           Visible = True
         end>
     end
-    object panelfiltros: TAdvPanel
-      Left = 0
-      Top = 411
-      Width = 1035
-      Height = 21
-      Align = alBottom
-      BevelOuter = bvNone
-      Color = 15524577
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 2
-      UseDockManager = True
-      Version = '1.7.5.1'
-      AutoHideChildren = False
-      BorderColor = clGray
-      Caption.Color = 15722471
-      Caption.ColorTo = 11176072
-      Caption.Font.Charset = DEFAULT_CHARSET
-      Caption.Font.Color = clBlack
-      Caption.Font.Height = -11
-      Caption.Font.Name = 'MS Sans Serif'
-      Caption.Font.Style = []
-      Caption.GradientDirection = gdVertical
-      Caption.Indent = 2
-      Caption.ShadeLight = 255
-      CollapsColor = clHighlight
-      CollapsDelay = 0
-      ColorTo = 11769496
-      ShadowColor = clBlack
-      ShadowOffset = 0
-      StatusBar.BorderColor = clNone
-      StatusBar.BorderStyle = bsSingle
-      StatusBar.Font.Charset = DEFAULT_CHARSET
-      StatusBar.Font.Color = clBlack
-      StatusBar.Font.Height = -11
-      StatusBar.Font.Name = 'Tahoma'
-      StatusBar.Font.Style = []
-      StatusBar.Color = 12560553
-      StatusBar.ColorTo = 14602191
-      Styler = Princ.AdvPanelStyler1
+    inherited panelfiltros: TAdvPanel
       FullHeight = 0
-      object Button5: TButton
-        Left = 932
-        Top = 0
-        Width = 103
-        Height = 21
-        Align = alRight
-        Caption = 'Filtrar'
-        TabOrder = 2
-        OnClick = Button5Click
-      end
-      object fil_localidad_id: TEdit
-        Left = 0
-        Top = 0
-        Width = 88
-        Height = 21
-        Align = alLeft
-        TabOrder = 0
-      end
       object fil_localidad_nombre: TEdit
-        Left = 88
+        Left = 85
         Top = 0
-        Width = 500
+        Width = 390
         Height = 21
         Align = alLeft
-        TabOrder = 1
+        TabOrder = 2
       end
       object fil_provincia_nombre: TEdit
-        Left = 588
+        Left = 475
         Top = 0
-        Width = 300
+        Width = 325
         Height = 21
         Align = alLeft
         TabOrder = 3
-        ExplicitLeft = 856
       end
     end
   end
-  object ZQGrilla: TZQuery
-    Connection = Princ.ZBase
+  inherited panelabm: TAdvPanel
+    FullHeight = 0
+    object Label1: TLabel [0]
+      Left = 47
+      Top = 9
+      Width = 33
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Codigo'
+    end
+    object Label5: TLabel [1]
+      Left = 34
+      Top = 33
+      Width = 46
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Localidad'
+    end
+    object Label11: TLabel [2]
+      Left = 36
+      Top = 81
+      Width = 44
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Provincia'
+    end
+    object Label2: TLabel [3]
+      Left = 15
+      Top = 57
+      Width = 65
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Codigo Postal'
+    end
+    inherited btnguardar: TButton
+      TabOrder = 3
+      OnClick = btnguardarClick
+    end
+    inherited btncancelar: TButton
+      TabOrder = 4
+    end
+    object localidad_id: TEdit
+      Left = 86
+      Top = 6
+      Width = 121
+      Height = 21
+      TabStop = False
+      ReadOnly = True
+      TabOrder = 5
+    end
+    object localidad_nombre: TEdit
+      Left = 86
+      Top = 30
+      Width = 634
+      Height = 21
+      TabOrder = 0
+    end
+    object provincia_id: TSqlComboBox
+      Left = 86
+      Top = 78
+      Width = 203
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      TabOrder = 2
+      Confbase = Princ.ZBase
+      Confsql.Strings = (
+        'select * from provincias'
+        'order by provincia_nombre')
+      ConfTabla = 'provincias'
+      Confcampo_codigo = 'provincia_id'
+      Confcampo_nomb = 'provincia_nombre'
+      Tag2 = 0
+    end
+    object localidad_codigopostal: TEdit
+      Left = 86
+      Top = 54
+      Width = 203
+      Height = 21
+      TabOrder = 1
+    end
+  end
+  inherited StatusBar1: TStatusBar
+    ExplicitTop = 317
+  end
+  inherited ZQGrilla: TZQuery
     SQL.Strings = (
       'select * from localidades'
       
         'inner join provincias on localidades.provincia_id=provincias.pro' +
         'vincia_id'
       'order by localidad_nombre')
-    Params = <>
-    Left = 216
-    Top = 112
-  end
-  object DSC: TDataSource
-    DataSet = ZQGrilla
-    Left = 336
-    Top = 128
-  end
-  object ZQuery2: TZQuery
-    Connection = Princ.ZBase
-    Params = <>
-    Left = 160
-    Top = 112
-  end
-  object CustomizeGrid1: TCustomizeGrid
-    Active = True
-    Grid = DBGrid1
-    AlternateRows.Active = True
-    AlternateRows.Color1 = clCream
-    AlternateRows.Color2 = clWhite
-    AlternateRows.Style = asStandard
-    DataStyles.TextMemos = False
-    DataStyles.CheckBox = False
-    SortOptions.ChangeCursorOnTitle = False
-    Left = 496
-    Top = 176
   end
 end

@@ -41,7 +41,6 @@ inherited listaconceptosdebcred: Tlistaconceptosdebcred
     end
   end
   inherited panelabm: TAdvPanel
-    ExplicitTop = 342
     FullHeight = 0
   end
   inherited ZQGrilla: TZQuery

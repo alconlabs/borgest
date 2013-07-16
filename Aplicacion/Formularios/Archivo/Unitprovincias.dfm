@@ -300,6 +300,7 @@ object provincias: Tprovincias
     StatusBar.Color = 12560553
     StatusBar.ColorTo = 14602191
     Styler = Princ.AdvPanelStyler1
+    ExplicitTop = 342
     FullHeight = 0
     object Label1: TLabel
       Left = 47

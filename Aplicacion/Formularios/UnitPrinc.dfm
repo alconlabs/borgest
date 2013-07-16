@@ -1,7 +1,7 @@
 object Princ: TPrinc
   Left = 0
   Top = 0
-  Caption = 'Borgest - Sistema de Facturacion'
+  Caption = 'Borgest - Sistema de Gestion Comercial'
   ClientHeight = 591
   ClientWidth = 1362
   Color = clBtnFace
@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageVentas
+    ActivePage = AdvPageComisiones
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -262,7 +262,6 @@ object Princ: TPrinc
           Caption = 'Servicios'
           TabOrder = 5
           Visible = False
-          OnClick = btnserviciosClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -1236,7 +1235,6 @@ object Princ: TPrinc
           Caption = 'Contratacion'
           TabOrder = 5
           Visible = False
-          OnClick = btncontratacionClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -2527,6 +2525,97 @@ object Princ: TPrinc
       end
     end
   end
+  object AdvGlowButton1: TAdvGlowButton
+    Left = 344
+    Top = 176
+    Width = 110
+    Height = 49
+    Caption = 'Borgest'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 1
+    Visible = False
+    Appearance.BorderColor = 9598070
+    Appearance.BorderColorHot = 10079963
+    Appearance.BorderColorDown = 4548219
+    Appearance.BorderColorChecked = 4548219
+    Appearance.Color = 15586496
+    Appearance.ColorTo = 15128792
+    Appearance.ColorChecked = 11918331
+    Appearance.ColorCheckedTo = 7915518
+    Appearance.ColorDisabled = 15921906
+    Appearance.ColorDisabledTo = 15921906
+    Appearance.ColorDown = 7778289
+    Appearance.ColorDownTo = 4296947
+    Appearance.ColorHot = 15465983
+    Appearance.ColorHotTo = 11332863
+    Appearance.ColorMirror = 15586496
+    Appearance.ColorMirrorTo = 13152947
+    Appearance.ColorMirrorHot = 5888767
+    Appearance.ColorMirrorHotTo = 10807807
+    Appearance.ColorMirrorDown = 946929
+    Appearance.ColorMirrorDownTo = 5021693
+    Appearance.ColorMirrorChecked = 10480637
+    Appearance.ColorMirrorCheckedTo = 5682430
+    Appearance.ColorMirrorDisabled = 11974326
+    Appearance.ColorMirrorDisabledTo = 15921906
+    Appearance.GradientHot = ggVertical
+    Appearance.GradientMirrorHot = ggVertical
+    Appearance.GradientDown = ggVertical
+    Appearance.GradientMirrorDown = ggVertical
+    Appearance.GradientChecked = ggVertical
+    Enabled = False
+  end
+  object AdvGlowButton4: TAdvGlowButton
+    Left = 344
+    Top = 247
+    Width = 41
+    Height = 50
+    Caption = 'B'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -48
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 4
+    Visible = False
+    Appearance.BorderColor = 9598070
+    Appearance.BorderColorHot = 10079963
+    Appearance.BorderColorDown = 4548219
+    Appearance.BorderColorChecked = 4548219
+    Appearance.Color = 15586496
+    Appearance.ColorTo = 15128792
+    Appearance.ColorChecked = 11918331
+    Appearance.ColorCheckedTo = 7915518
+    Appearance.ColorDisabled = 15921906
+    Appearance.ColorDisabledTo = 15921906
+    Appearance.ColorDown = 7778289
+    Appearance.ColorDownTo = 4296947
+    Appearance.ColorHot = 15465983
+    Appearance.ColorHotTo = 11332863
+    Appearance.ColorMirror = 15586496
+    Appearance.ColorMirrorTo = 13152947
+    Appearance.ColorMirrorHot = 5888767
+    Appearance.ColorMirrorHotTo = 10807807
+    Appearance.ColorMirrorDown = 946929
+    Appearance.ColorMirrorDownTo = 5021693
+    Appearance.ColorMirrorChecked = 10480637
+    Appearance.ColorMirrorCheckedTo = 5682430
+    Appearance.ColorMirrorDisabled = 11974326
+    Appearance.ColorMirrorDisabledTo = 15921906
+    Appearance.GradientHot = ggVertical
+    Appearance.GradientMirrorHot = ggVertical
+    Appearance.GradientDown = ggVertical
+    Appearance.GradientMirrorDown = ggVertical
+    Appearance.GradientChecked = ggVertical
+    Enabled = False
+    Layout = blGlyphBottom
+  end
   object AdvToolBarOfficeStyler1: TAdvToolBarOfficeStyler
     Style = bsOffice2003Silver
     BorderColor = 14668485
@@ -2948,8 +3037,8 @@ object Princ: TPrinc
   end
   object ini1: Tini
     IniFilename = 'c:\program files\codegear\rad studio\5.0\bin\config.ini'
-    Left = 368
-    Top = 288
+    Left = 520
+    Top = 432
   end
   object ZQCalculopreciodeta: TZQuery
     Connection = ZBase
@@ -3293,8 +3382,8 @@ object Princ: TPrinc
     AsyncExecution = False
     OnBeforePrint = VCLReport1BeforePrint
     Title = 'Untitled'
-    Left = 288
-    Top = 136
+    Left = 256
+    Top = 192
   end
   object ZQExcecSQL: TZQuery
     Connection = ZBase
@@ -3356,8 +3445,8 @@ object Princ: TPrinc
   object BackupDB1: TBackupDB
     KVersionMySql = 0
     Kbase = ZBase
-    Left = 440
-    Top = 248
+    Left = 496
+    Top = 272
   end
   object ZQDocumentoventadocus: TZQuery
     Connection = ZBase
@@ -3474,8 +3563,8 @@ object Princ: TPrinc
   object AdvPopupMenu1: TAdvPopupMenu
     MenuStyler = AdvMenuStyler1
     Version = '2.0.0.0'
-    Left = 320
-    Top = 200
+    Left = 264
+    Top = 272
     object aver1: TMenuItem
       Caption = 'a ver'
     end
@@ -3495,7 +3584,7 @@ object Princ: TPrinc
     Top = 200
   end
   object GTBUtilidades1: TGTBUtilidades
-    Left = 456
-    Top = 320
+    Left = 512
+    Top = 368
   end
 end

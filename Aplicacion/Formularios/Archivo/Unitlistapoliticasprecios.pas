@@ -175,7 +175,6 @@ procedure Tlistapoliticasprecios.btnmodiClick(Sender: TObject);
 begin
      if ZQGrilla.active then
       begin
-
           if ZQGrilla.RecordCount>0 then
             begin
                 try

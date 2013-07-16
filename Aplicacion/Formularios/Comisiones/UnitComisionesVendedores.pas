@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Unitlistabase, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
   StdCtrls, GBTEdit, Grids, DBGrids, ExtCtrls, AdvPanel, BaseGrid, AdvGrid,
-  DBAdvGrid, MQuery;
+  DBAdvGrid, MQuery, ComCtrls;
 
 type
   TComisionesVendedores = class(Tlistabase)

@@ -103,14 +103,14 @@ inherited DocumentoBase: TDocumentoBase
     inherited btncancelar: TButton
       Left = 776
       Top = 394
-      TabOrder = 9
+      TabOrder = 10
       ExplicitLeft = 776
       ExplicitTop = 394
     end
     inherited btnguardar: TButton
       Left = 695
       Top = 394
-      TabOrder = 8
+      TabOrder = 9
       OnClick = btnguardarClick
       ExplicitLeft = 695
       ExplicitTop = 394
@@ -222,7 +222,7 @@ inherited DocumentoBase: TDocumentoBase
       Height = 105
       Caption = 'Totales'
       ParentBackground = False
-      TabOrder = 10
+      TabOrder = 8
       object Label4: TLabel
         Left = 8
         Top = 17
@@ -783,6 +783,9 @@ inherited DocumentoBase: TDocumentoBase
     end
     object ZQDocumentosdocumento_nogravado: TFloatField
       FieldName = 'documento_nogravado'
+    end
+    object ZQDocumentosdocumento_puntoventa: TIntegerField
+      FieldName = 'documento_puntoventa'
     end
   end
   object ZQDocumentosdocuImputacion: TZQuery

@@ -3,29 +3,13 @@ program Borgest;
 uses
   Forms,
   UnitPrinc in 'Formularios\UnitPrinc.pas' {Princ},
-  Unitvendedores in 'Formularios\Archivo\Unitvendedores.pas' {vendedores},
-  Unitlistasolicitudes in 'Formularios\Ventas\Unitlistasolicitudes.pas' {listasolicitudes},
-  Unitlistaclientes in 'Formularios\Ventas\Unitlistaclientes.pas' {listaclientes},
-  Unitsolicitudes in 'Formularios\Ventas\Unitsolicitudes.pas' {solicitudes},
   Unitestadodectas in 'Formularios\Ventas\Unitestadodectas.pas' {estadoctas},
   Unitventadetalle in 'Formularios\Ventas\Unitventadetalle.pas' {ventadetalle},
   UnitClientes in 'Formularios\Ventas\UnitClientes.pas' {clientes},
-  Unitcobros in 'Formularios\Ventas\Unitcobros.pas' {Cobros},
-  Unitemisionrecibos in 'Formularios\Ventas\Unitemisionrecibos.pas' {emisionrecibos},
-  Unitlocalidades in 'Formularios\Archivo\Unitlocalidades.pas' {localidades},
-  Unitconsultarvencidos in 'Formularios\Ventas\Unitconsultarvencidos.pas' {consultarvencidos},
-  Unitsolicitudesmodificar in 'Formularios\Ventas\Unitsolicitudesmodificar.pas' {solicitudesmodificar},
-  Unitgeneranuevasolicitud in 'Formularios\Ventas\Unitgeneranuevasolicitud.pas' {generanuevasolicitud},
-  Unitcobradores in 'Formularios\Archivo\Unitcobradores.pas' {cobradores},
-  Unitlistaproductos in 'Formularios\Archivo\Unitlistaproductos.pas' {listaproductos},
   UnitProductos in 'Formularios\Archivo\UnitProductos.pas' {productos},
-  Unitlistafacturasventa in 'Formularios\Ventas\Unitlistafacturasventa.pas' {listafacturasventa},
-  Unitfacturascompra in 'Formularios\Compras\Unitfacturascompra.pas' {facturacompra},
   Unitcalculoprecio in 'Formularios\Archivo\Unitcalculoprecio.pas' {calculoprecio},
-  Unitlistapoliticasprecios in 'Formularios\Archivo\Unitlistapoliticasprecios.pas' {listapoliticasprecios},
   UnitPoliticasPrecios in 'Formularios\Archivo\UnitPoliticasPrecios.pas' {politicasprecios},
   UnitCargarPagos in 'Formularios\Ventas\UnitCargarPagos.pas' {CargarPagos},
-  Unitlistarecibosventa in 'Formularios\Ventas\Unitlistarecibosventa.pas' {listarecibosventa},
   Unitrecibosventa in 'Formularios\Ventas\Unitrecibosventa.pas' {recibosventa},
   UnitDocumentosVentasPendientes in 'Formularios\Ventas\UnitDocumentosVentasPendientes.pas' {DocumentosVentasPendientes},
   Unitdetallectas in 'Formularios\Ventas\Unitdetallectas.pas' {detallectas},
@@ -36,17 +20,14 @@ uses
   UnitActualizarProductos in 'Formularios\Archivo\UnitActualizarProductos.pas' {ActualizarProductos},
   Unitlistaproveedores in 'Formularios\Compras\Unitlistaproveedores.pas' {listaproveedores},
   UnitProveedores in 'Formularios\Compras\UnitProveedores.pas' {proveedores},
-  Unitlistacalculoprecios in 'Formularios\Archivo\Unitlistacalculoprecios.pas' {listacalculoprecios},
   Unitventadetalle2 in 'Formularios\Ventas\Unitventadetalle2.pas' {ventadetalle2},
   Unitbusquedaproductos in 'Formularios\Archivo\Unitbusquedaproductos.pas' {busquedaproductos},
-  Unitlistaservicios in 'Formularios\Archivo\Unitlistaservicios.pas' {listaservicios},
   UnitServicios in 'Formularios\Archivo\UnitServicios.pas' {servicios},
   Unitfacturaventarapida in 'Formularios\Ventas\Unitfacturaventarapida.pas' {facturasventarapida},
   Unitlistabase in 'Formularios\Unitlistabase.pas' {listabase},
   UnitABMbase in 'Formularios\UnitABMbase.pas' {ABMbase},
   UnitListaTiposDocumentos in 'Formularios\Archivo\UnitListaTiposDocumentos.pas' {listatiposdocumentos},
   UnitEstadoCaja in 'Formularios\Caja\UnitEstadoCaja.pas' {EstadoCaja},
-  Unitlistacontrataciones in 'Formularios\Ventas\Unitlistacontrataciones.pas' {listacontrataciones},
   UnitCajaAsiento in 'Formularios\Caja\UnitCajaAsiento.pas' {CajaAsiento},
   UnitCajaAsientoIngreso in 'Formularios\Caja\UnitCajaAsientoIngreso.pas' {CajaAsientoIngreso},
   UnitcajaAsientoEgreso in 'Formularios\Caja\UnitcajaAsientoEgreso.pas' {CajaAsientoEgreso},
@@ -114,13 +95,25 @@ uses
   UnitBusquedaConceptosDebCred in 'Formularios\Archivo\UnitBusquedaConceptosDebCred.pas' {BusquedaConceptosDebCred},
   UnitAplicarRecibosPendientes in 'Formularios\Ventas\UnitAplicarRecibosPendientes.pas' {AplicarRecibosPendientes},
   UnitNotaPedidoComisiones in 'Formularios\Comisiones\UnitNotaPedidoComisiones.pas' {NotaPedidoComisiones},
-  UnitListaNotasPedidoComisiones in 'Formularios\Comisiones\UnitListaNotasPedidoComisiones.pas' {ListaNotasPedidoComisiones};
+  UnitListaNotasPedidoComisiones in 'Formularios\Comisiones\UnitListaNotasPedidoComisiones.pas' {ListaNotasPedidoComisiones},
+  UnitListaClientes1 in 'Formularios\Archivo\UnitListaClientes1.pas' {ListaClientes1},
+  UnitListaProductos1 in 'Formularios\Archivo\UnitListaProductos1.pas' {ListaProductos1},
+  UnitListaCalculosPrecios1 in 'Formularios\Archivo\UnitListaCalculosPrecios1.pas' {ListaCalculosPrecios1},
+  UnitListaPoliticasdePrecios in 'Formularios\Archivo\UnitListaPoliticasdePrecios.pas' {ListaPoliticasdePrecios},
+  UnitListaProveedores1 in 'Formularios\Archivo\UnitListaProveedores1.pas' {ListaProveedores1},
+  Unitlistalocalidades in 'Formularios\Archivo\Unitlistalocalidades.pas' {ListaLocalidades},
+  UnitListaProvincias in 'Formularios\Archivo\UnitListaProvincias.pas' {ListaProvincias},
+  UnitListaFacturasDeVenta in 'Formularios\Ventas\UnitListaFacturasDeVenta.pas' {ListaFacturasDeVenta},
+  UnitListaRecibosdeVenta in 'Formularios\Ventas\UnitListaRecibosdeVenta.pas' {ListaRecibosdeVenta},
+  UnitListaFacturasdeCompras in 'Formularios\Compras\UnitListaFacturasdeCompras.pas' {LIstaFacturasDeCompras},
+  Unitfacturascompra in 'Formularios\Compras\Unitfacturascompra.pas' {facturacompra};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  Application.Title := 'Borgest - Sistema de Gestion Comercial';
   Application.CreateForm(TPrinc, Princ);
   Application.Run;
 end.

@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Unitlistabase, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
-  StdCtrls, Grids, DBGrids, ExtCtrls, AdvPanel, GBTEdit;
+  StdCtrls, Grids, DBGrids, ExtCtrls, AdvPanel, GBTEdit, ComCtrls;
 
 type
   TListaOrdenesServicios = class(Tlistabase)

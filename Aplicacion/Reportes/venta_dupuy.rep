@@ -539,7 +539,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    WideText = '$ Unit.'
+    WideText = 'Descripcion'
   end
   object TRpLabel1: TRpLabel
     Width = 570

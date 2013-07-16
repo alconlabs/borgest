@@ -14,6 +14,7 @@ object listabase: Tlistabase
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -21,7 +22,7 @@ object listabase: Tlistabase
     Left = 0
     Top = 0
     Width = 934
-    Height = 336
+    Height = 317
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -66,7 +67,7 @@ object listabase: Tlistabase
       Left = 831
       Top = 0
       Width = 103
-      Height = 315
+      Height = 296
       Align = alRight
       BevelOuter = bvNone
       Color = 15524577
@@ -147,12 +148,22 @@ object listabase: Tlistabase
         TabOrder = 3
         OnClick = btnanularClick
       end
+      object btnver: TButton
+        Left = 0
+        Top = 164
+        Width = 103
+        Height = 41
+        Align = alTop
+        Caption = 'Ver'
+        TabOrder = 4
+        OnClick = btnanularClick
+      end
     end
     object DBGrid1: TDBGrid
       Left = 0
       Top = 0
       Width = 831
-      Height = 315
+      Height = 296
       Align = alClient
       DataSource = DSCgrilla
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
@@ -165,7 +176,7 @@ object listabase: Tlistabase
     end
     object panelfiltros: TAdvPanel
       Left = 0
-      Top = 315
+      Top = 296
       Width = 934
       Height = 21
       Align = alBottom
@@ -294,8 +305,24 @@ object listabase: Tlistabase
       OnClick = btncancelarClick
     end
   end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 317
+    Width = 934
+    Height = 19
+    Panels = <
+      item
+        Text = '0 Registros'
+        Width = 110
+      end
+      item
+        Text = 'tipo de busqueda'
+        Width = 50
+      end>
+  end
   object ZQGrilla: TZQuery
     Connection = Princ.ZBase
+    AfterOpen = ZQGrillaAfterOpen
     Params = <>
     Left = 160
     Top = 120

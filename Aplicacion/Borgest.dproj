@@ -22,6 +22,10 @@
     <DCC_DcuOutput>C:\Users\pablo\Documents\proyectos\Borgest\Aplicacion\DCU</DCC_DcuOutput>
     <DCC_ObjOutput>C:\Users\pablo\Documents\proyectos\Borgest\Aplicacion\DCU</DCC_ObjOutput>
     <DCC_HppOutput>C:\Users\pablo\Documents\proyectos\Borgest\Aplicacion\DCU</DCC_HppOutput>
+    <DCC_UnitSearchPath>;$(BDS)\Source\DUnit\src</DCC_UnitSearchPath>
+    <DCC_ResourcePath>;$(BDS)\Source\DUnit\src</DCC_ResourcePath>
+    <DCC_ObjPath>;$(BDS)\Source\DUnit\src</DCC_ObjPath>
+    <DCC_IncludePath>;$(BDS)\Source\DUnit\src</DCC_IncludePath>
   </PropertyGroup>
   <ProjectExtensions>
     <Borland.Personality>Delphi.Personality</Borland.Personality>
@@ -49,41 +53,44 @@
     <DCCReference Include="Formularios\Archivo\Unitcalculoprecioproducto.pas">
       <Form>calculoprecioproductos</Form>
     </DCCReference>
-    <DCCReference Include="Formularios\Archivo\Unitcobradores.pas">
-      <Form>cobradores</Form>
-    </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitConceptoDebCred.pas">
       <Form>ConceptoDebCred</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitEmpresa.pas">
       <Form>empresa</Form>
     </DCCReference>
-    <DCCReference Include="Formularios\Archivo\Unitlistacalculoprecios.pas">
-      <Form>listacalculoprecios</Form>
+    <DCCReference Include="Formularios\Archivo\UnitListaCalculosPrecios1.pas">
+      <Form>ListaCalculosPrecios1</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitListaClientes1.pas">
+      <Form>ListaClientes1</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\Unitlistalocalidades.pas">
+      <Form>ListaLocalidades</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitListaPerfiles.pas">
       <Form>ListaPerfiles</Form>
     </DCCReference>
-    <DCCReference Include="Formularios\Archivo\Unitlistapoliticasprecios.pas">
-      <Form>listapoliticasprecios</Form>
+    <DCCReference Include="Formularios\Archivo\UnitListaPoliticasdePrecios.pas">
+      <Form>ListaPoliticasdePrecios</Form>
     </DCCReference>
-    <DCCReference Include="Formularios\Archivo\Unitlistaproductos.pas">
-      <Form>listaproductos</Form>
+    <DCCReference Include="Formularios\Archivo\UnitListaProductos1.pas">
+      <Form>ListaProductos1</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitListaProveedores1.pas">
+      <Form>ListaProveedores1</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitListaProvincias.pas">
+      <Form>ListaProvincias</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitListaPuntosdeVenta.pas">
       <Form>listapuntosdeventa</Form>
-    </DCCReference>
-    <DCCReference Include="Formularios\Archivo\Unitlistaservicios.pas">
-      <Form>listaservicios</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitListaSucursales.pas">
       <Form>listasucursales</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitListaTiposDocumentos.pas">
       <Form>listatiposdocumentos</Form>
-    </DCCReference>
-    <DCCReference Include="Formularios\Archivo\Unitlocalidades.pas">
-      <Form>localidades</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitMostrarExcel.pas">
       <Form>MostrarExcel</Form>
@@ -108,9 +115,6 @@
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitTipoDocumento.pas">
       <Form>tipodocumento</Form>
-    </DCCReference>
-    <DCCReference Include="Formularios\Archivo\Unitvendedores.pas">
-      <Form>vendedores</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Caja\UnitCajaApertura.pas">
       <Form>CajaApertura</Form>
@@ -169,6 +173,9 @@
     <DCCReference Include="Formularios\Compras\Unitlistafacturascompra.pas">
       <Form>listafacturascompra</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitListaFacturasdeCompras.pas">
+      <Form>LIstaFacturasDeCompras</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Compras\Unitlistaproveedores.pas">
       <Form>listaproveedores</Form>
     </DCCReference>
@@ -223,14 +230,8 @@
     <DCCReference Include="Formularios\Ventas\UnitClientes.pas">
       <Form>clientes</Form>
     </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitcobros.pas">
-      <Form>Cobros</Form>
-    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitConsultaEquipos.pas">
       <Form>ConsultaEquipos</Form>
-    </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitconsultarvencidos.pas">
-      <Form>consultarvencidos</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitdetallectas.pas">
       <Form>detallectas</Form>
@@ -247,9 +248,6 @@
     <DCCReference Include="Formularios\Ventas\UnitDocumentoVentaExcel.pas">
       <Form>DocumentoVentaExcel</Form>
     </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitemisionrecibos.pas">
-      <Form>emisionrecibos</Form>
-    </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitestadodectas.pas">
       <Form>estadoctas</Form>
     </DCCReference>
@@ -265,9 +263,6 @@
     <DCCReference Include="Formularios\Ventas\Unitfacturaventasuperrapida.pas">
       <Form>facturaventasuperrapida</Form>
     </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitgeneranuevasolicitud.pas">
-      <Form>generanuevasolicitud</Form>
-    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitImpresoraFiscal.pas">
       <Form>impresorafiscal</Form>
     </DCCReference>
@@ -280,17 +275,11 @@
     <DCCReference Include="Formularios\Ventas\UnitLibroIvaVentas.pas">
       <Form>LibroIvaVentas</Form>
     </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitlistaclientes.pas">
-      <Form>listaclientes</Form>
-    </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitlistacontrataciones.pas">
-      <Form>listacontrataciones</Form>
-    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitListaDebCred.pas">
       <Form>listaconceptosdebcred</Form>
     </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitlistafacturasventa.pas">
-      <Form>listafacturasventa</Form>
+    <DCCReference Include="Formularios\Ventas\UnitListaFacturasDeVenta.pas">
+      <Form>ListaFacturasDeVenta</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitlistanotacreditoventa.pas">
       <Form>listanotacreditoventa</Form>
@@ -307,17 +296,14 @@
     <DCCReference Include="Formularios\Ventas\UnitListaPresupuestos.pas">
       <Form>ListaPresupuestos</Form>
     </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitlistarecibosventa.pas">
-      <Form>listarecibosventa</Form>
+    <DCCReference Include="Formularios\Ventas\UnitListaRecibosdeVenta.pas">
+      <Form>ListaRecibosdeVenta</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitListaRemitoVenta.pas">
       <Form>listaremitosventa</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitListaServices.pas">
       <Form>Listaservices</Form>
-    </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitlistasolicitudes.pas">
-      <Form>listasolicitudes</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitnotacreditoventa.pas">
       <Form>notacreditoventa</Form>
@@ -354,12 +340,6 @@
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitsaldoclientes.pas">
       <Form>saldoclientes</Form>
-    </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitsolicitudes.pas">
-      <Form>solicitudes</Form>
-    </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitsolicitudesmodificar.pas">
-      <Form>solicitudesmodificar</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitventadetalle.pas">
       <Form>ventadetalle</Form>

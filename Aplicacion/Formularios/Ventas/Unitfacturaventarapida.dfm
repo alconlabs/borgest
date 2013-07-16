@@ -1,7 +1,6 @@
 inherited facturasventarapida: Tfacturasventarapida
   Caption = 'Venta Rapida'
   ClientHeight = 247
-  ExplicitWidth = 867
   ExplicitHeight = 285
   PixelsPerInch = 96
   TextHeight = 13

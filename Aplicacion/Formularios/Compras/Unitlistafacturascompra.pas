@@ -27,7 +27,6 @@ type
     fil_documentocompra_total: TEdit;
     CustomizeGrid1: TCustomizeGrid;
     btnanular: TButton;
-    procedure Button4Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure btnfiltrarClick(Sender: TObject);
@@ -169,11 +168,6 @@ begin
       begin
           Princ.AbrirDocumentoCompra(ZQGrilla.FieldByName('documentocompra_id').AsString,'Factura de Compra',2);
       end;
-end;
-
-procedure Tlistafacturascompra.Button4Click(Sender: TObject);
-begin
-    Princ.AbrirDocumentoCompra('','Factura de Compra',1);
 end;
 
 procedure Tlistafacturascompra.btnfiltrarClick(Sender: TObject);

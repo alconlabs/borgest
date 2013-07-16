@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Unitlistabase, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
-  StdCtrls, GBTEdit, Grids, DBGrids, ExtCtrls, AdvPanel;
+  StdCtrls, GBTEdit, Grids, DBGrids, ExtCtrls, AdvPanel, ComCtrls;
 
 type
   Tpersonal = class(Tlistabase)
