@@ -68,6 +68,7 @@ type
     { Public declarations }
     producto_precioventa:string;
     documentoventadetalle_listaprecio:integer;
+    documentoventadetalle_id:string;
     procedure CargarQuery;
     procedure calculartotal;
   end;
@@ -145,7 +146,7 @@ begin
           ZQDocumentoventadetalles.Active:=true;
 
           ZQDocumentoventadetalles.Append;
-          ZQDocumentoventadetalles.FieldByName('documentoventadetalle_id').AsString:='0';
+          ZQDocumentoventadetalles.FieldByName('documentoventadetalle_id').AsString:=documentoventadetalle_id;
           ZQDocumentoventadetalles.FieldByName('documentoventadetalle_descripcion').AsString:=producto_nombre.Text;
           ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsString:=ventadeta_cantidad.Text;
           ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsString:=ventadetalle_preciounitario.Text;
@@ -379,7 +380,7 @@ begin
     producto_id.ConfCampoBusqueda3:=Princ.CODIGOPRODUCTOBUSQUEDA3;
 
     producdepo_stockinicial.Visible:=Princ.PRODUCTOSTOCKINICIAL;
-
+    documentoventadetalle_id:='0';
 end;
 
 procedure Tventadetalle2.FormKeyDown(Sender: TObject; var Key: Word;

@@ -857,3 +857,26 @@ CREATE  TABLE IF NOT EXISTS `liquisucudetarecibos` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1
 COLLATE = latin1_swedish_ci;
+207;
+CREATE  TABLE IF NOT EXISTS `docuvendetcomisionesvendedores` (
+  `docuvendetcomisionvendedor_id` INT(11) NOT NULL ,
+  `docuvendetcomisionvendedor_importeunit` FLOAT(20,4) NULL DEFAULT NULL ,
+  `docuvendetcomisionvendedor_total` FLOAT(20,4) NULL DEFAULT NULL ,
+  `documentoventadetalle_id` INT(11) NOT NULL ,
+  `personal_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`docuvendetcomisionvendedor_id`) ,
+  INDEX `fk_docuvendetcomisionesvendedores_documentoventadetalles1` (`documentoventadetalle_id` ASC) ,
+  INDEX `fk_docuvendetcomisionesvendedores_personal1` (`personal_id` ASC) ,
+  CONSTRAINT `fk_docuvendetcomisionesvendedores_documentoventadetalles1`
+    FOREIGN KEY (`documentoventadetalle_id` )
+    REFERENCES `documentoventadetalles` (`documentoventadetalle_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_docuvendetcomisionesvendedores_personal1`
+    FOREIGN KEY (`personal_id` )
+    REFERENCES `personal` (`personal_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;

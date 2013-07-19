@@ -733,6 +733,7 @@ begin
 
             ZQExecSql.ExecSQL;
 
+
             ZQDocumentoventadetalles.Edit;
             ZQDocumentoventadetalles.FieldByName('documentoventadetalle_id').AsString:=documentoventadetalle_id;
             ZQDocumentoventadetalles.Post;

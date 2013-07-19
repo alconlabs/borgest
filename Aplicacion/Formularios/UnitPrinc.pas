@@ -399,7 +399,7 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitListaClientes1, UnitListaProductos1, UnitListaCalculosPrecios1,
   UnitListaPoliticasdePrecios, UnitListaProveedores1, Unitlistalocalidades,
   UnitListaProvincias, UnitListaFacturasDeVenta, UnitListaRecibosdeVenta,
-  UnitListaFacturasdeCompras;
+  UnitListaFacturasdeCompras, UnitNotaPedidoComisiones;
 
 {$R *.dfm}
 
@@ -791,6 +791,22 @@ begin
             Presupuesto.Show;
           end;
       end;
+
+    if tipodocu_nombre='Nota de Pedidos - Comisiones' then
+      begin
+          try
+            NotaPedidoComisiones:=TNotaPedidoComisiones.Create(self);
+          finally
+//            Presupuesto.limpiar_al_guardar:=false;
+            NotaPedidoComisiones.abm:=abm;
+            NotaPedidoComisiones.id:=id;
+            NotaPedidoComisiones.tipodocu_nombre:=tipodocu_nombre;
+            NotaPedidoComisiones.Show;
+          end;
+      end;
+
+
+
 
 end;
 

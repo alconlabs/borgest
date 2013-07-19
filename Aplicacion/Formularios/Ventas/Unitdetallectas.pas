@@ -243,10 +243,29 @@ begin
     condicion_saldoanterior:='1=2';
     if cbdesdefecha.Checked then
       begin
-          grupo:=' if(documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",0,documentosventas.documentoventa_id) ';
+          grupo:=' if(documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",concat("0-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
           condicion_saldoanterior:='documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'"';
       end;
 
+    if cbdesdefechavenc.Checked and cbdesdefecha.Checked then
+      begin
+          if desde_fecha_venc.Date<desde_fecha.Date then
+            begin
+                grupo:=' if(documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat("0-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
+                condicion_saldoanterior:='documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
+
+            end;
+
+
+      end
+    else
+      begin
+          if cbdesdefechavenc.Checked then
+            begin
+                grupo:=' if(documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat("0-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
+                condicion_saldoanterior:='documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
+            end;
+      end;
 
     ZQPendientes.SQL.Text:='select *, '+
                            'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas.documentoventa_total,0)) as debito, '+
@@ -312,10 +331,29 @@ begin
     condicion_saldoanterior:='1=2';
     if cbdesdefecha.Checked then
       begin
-          grupo:=' if(documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",0,documentosventas.documentoventa_id) ';
+          grupo:=' if(documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",concat("0-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
           condicion_saldoanterior:='documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'"';
+
       end;
 
+    if cbdesdefechavenc.Checked and cbdesdefecha.Checked then
+      begin
+          if desde_fecha_venc.Date<desde_fecha.Date then
+            begin
+                grupo:=' if(documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat("0-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
+                condicion_saldoanterior:='documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
+
+            end;
+
+      end
+    else
+      begin
+          if cbdesdefechavenc.Checked then
+            begin
+                grupo:=' if(documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat("0-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
+                condicion_saldoanterior:='documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
+            end;
+      end;
 
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, '+
                            'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas.documentoventa_total,0)) as debito, '+
