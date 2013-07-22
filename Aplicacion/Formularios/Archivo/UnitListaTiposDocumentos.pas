@@ -38,19 +38,19 @@ begin
                        'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id ' +
                        'where 1=1 '+Princ.empresa_where;
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and tipodocu_id like "%'+fil_id.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and tipodocu_id like "'+primercaracter+fil_id.Text+'%"';
 
     if fil_tipodocu_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and tipodocu_nombre like "%'+fil_tipodocu_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and tipodocu_nombre like "'+primercaracter+fil_tipodocu_nombre.Text+'%"';
 
     if fil_tipodocu_letra.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and tipodocu_letra like "%'+fil_tipodocu_letra.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and tipodocu_letra like "'+primercaracter+fil_tipodocu_letra.Text+'%"';
 
     if fil_tipodocu_tipo.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and tipodocu_tipo like "%'+fil_tipodocu_tipo.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and tipodocu_tipo like "'+primercaracter+fil_tipodocu_tipo.Text+'%"';
 
     if fil_puntoventa_numero.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and puntoventa_numero like "%'+fil_puntoventa_numero.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and puntoventa_numero like "'+primercaracter+fil_puntoventa_numero.Text+'%"';
 
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by tipodocu_nombre, tipodocu_letra, tipodocu_debcred';

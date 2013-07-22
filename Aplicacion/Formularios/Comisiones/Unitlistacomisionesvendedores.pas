@@ -62,16 +62,16 @@ begin
                        'inner join personal on liquidacionesvendedores.personal_id=personal.personal_id '+
                        'where 1=1';
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and liquidacionvendedor_id like "%'+fil_id.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and liquidacionvendedor_id like "'+primercaracter+fil_id.Text+'%"';
 
     if fil_liquidacionvendedor_fecha.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and liquidacionvendedor_fecha like "%'+fil_liquidacionvendedor_fecha.Text+'"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and liquidacionvendedor_fecha like "'+primercaracter+fil_liquidacionvendedor_fecha.Text+'"';
 
     if fil_personal_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and personal_nombre like "%'+fil_personal_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and personal_nombre like "'+primercaracter+fil_personal_nombre.Text+'%"';
 
     if fil_liquidacionvendedor_total.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and liquidacionvendedor_total like "%'+fil_liquidacionvendedor_total.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and liquidacionvendedor_total like "'+primercaracter+fil_liquidacionvendedor_total.Text+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by liquidacionvendedor_fecha';
 

@@ -132,16 +132,16 @@ begin
                        'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id ' +
                        'where 1=1 '+princ.empresa_where;
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and puntoventa_id like "%'+fil_id.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and puntoventa_id like "'+primercaracter+fil_id.Text+'%"';
 
     if fil_puntoventa_numero.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and puntoventa_numero like "%'+fil_puntoventa_numero.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and puntoventa_numero like "'+primercaracter+fil_puntoventa_numero.Text+'%"';
 
     if fil_puntoventa_descripcion.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and puntoventa_descripcion like "%'+fil_puntoventa_descripcion.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and puntoventa_descripcion like "'+primercaracter+fil_puntoventa_descripcion.Text+'%"';
 
     if fil_sucursal_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and sucursal_nombre like "%'+fil_sucursal_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and sucursal_nombre like "'+primercaracter+fil_sucursal_nombre.Text+'%"';
 
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by puntoventa_numero';  

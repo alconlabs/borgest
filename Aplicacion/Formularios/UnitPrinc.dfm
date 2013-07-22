@@ -2572,7 +2572,7 @@ object Princ: TPrinc
   end
   object AdvGlowButton4: TAdvGlowButton
     Left = 344
-    Top = 247
+    Top = 231
     Width = 41
     Height = 50
     Caption = 'B'

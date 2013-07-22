@@ -200,19 +200,19 @@ inherited NotaPedidoComisiones: TNotaPedidoComisiones
       ExplicitLeft = 679
     end
     inherited documentoventa_observacion: TGTBMemo
-      Left = 580
+      Left = 375
       Top = 323
-      Width = 76
+      Width = 281
       Height = 142
-      ExplicitLeft = 580
+      ExplicitLeft = 375
       ExplicitTop = 323
-      ExplicitWidth = 76
+      ExplicitWidth = 281
       ExplicitHeight = 142
     end
     object DBGrid2: TDBGrid
       Left = 4
       Top = 323
-      Width = 493
+      Width = 357
       Height = 142
       TabStop = False
       DataSource = DTSDocuVenDetComisionesVendedores
@@ -245,13 +245,16 @@ inherited NotaPedidoComisiones: TNotaPedidoComisiones
           Title.Caption = 'Total'
           Width = 70
           Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'documentoventadetalle_id'
-          Width = 114
-          Visible = True
         end>
+    end
+    object btnimprimir: TButton
+      Left = 4
+      Top = 473
+      Width = 75
+      Height = 25
+      Caption = 'Imprimir'
+      TabOrder = 18
+      OnClick = btnimprimirClick
     end
   end
   inherited ZQDocumentoventadetalles: TZQuery

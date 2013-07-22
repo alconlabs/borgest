@@ -56,22 +56,22 @@ begin
 
 
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentoventa_fecha like "%'+fil_id.Text+'"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentoventa_fecha like "'+primercaracter+fil_id.Text+'"';
 
     if fil_puntoventa_numero.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and puntoventa_numero like "%'+fil_puntoventa_numero.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and puntoventa_numero like "'+primercaracter+fil_puntoventa_numero.Text+'%"';
 
     if fil_documentoventa_numero.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentoventa_numero like "%'+fil_documentoventa_numero.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentoventa_numero like "'+primercaracter+fil_documentoventa_numero.Text+'%"';
 
     if fil_cliente_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and clientes.cliente_nombre like "%'+fil_cliente_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and clientes.cliente_nombre like "'+primercaracter+fil_cliente_nombre.Text+'%"';
 
     if fil_documentoventa_total.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentoventa_total like "%'+fil_documentoventa_total.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentoventa_total like "'+primercaracter+fil_documentoventa_total.Text+'%"';
 
     if fil_documentoventa_equipo1.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentoventa_equipo1 like "%'+fil_documentoventa_equipo1.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentoventa_equipo1 like "'+primercaracter+fil_documentoventa_equipo1.Text+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'order by documentoventa_numero desc';
 

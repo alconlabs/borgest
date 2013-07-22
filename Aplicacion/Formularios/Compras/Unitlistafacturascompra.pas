@@ -182,19 +182,19 @@ begin
 
 
     if fil_documentocompra_fecha.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentocompra_fecha like "%'+fil_documentocompra_fecha.Text+'"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentocompra_fecha like "'+fil_documentocompra_fecha.Text+'"';
 
     if fil_documentocompra_numero.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentocompra_numero like "%'+fil_documentocompra_numero.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentocompra_numero like "'+fil_documentocompra_numero.Text+'%"';
 
     if fil_proveedor_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedores.proveedor_nombre like "%'+fil_proveedor_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedores.proveedor_nombre like "'+fil_proveedor_nombre.Text+'%"';
 
     if fil_documentocompra_total.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentocompra_total like "%'+fil_documentocompra_total.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentocompra_total like "'+fil_documentocompra_total.Text+'%"';
 
     if fil_documentocompra_estado.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentocompra_estado like "%'+fil_documentocompra_estado.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentocompra_estado like "'+fil_documentocompra_estado.Text+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'order by documentocompra_fecha, documentocompra_numero';
 

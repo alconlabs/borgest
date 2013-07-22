@@ -62,16 +62,16 @@ begin
                        'inner join sucursales on liquidacionessucursales.sucursal_id=sucursales.sucursal_id '+
                        'where 1=1';
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and liquidacionsucursal_id like "%'+fil_id.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and liquidacionsucursal_id like "'+primercaracter+fil_id.Text+'%"';
 
     if fil_liquidacionsucursal_fecha.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and liquidacionsucursal_fecha like "%'+fil_liquidacionsucursal_fecha.Text+'"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and liquidacionsucursal_fecha like "'+primercaracter+fil_liquidacionsucursal_fecha.Text+'"';
 
     if fil_sucursal_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and sucursal_nombre like "%'+fil_sucursal_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and sucursal_nombre like "'+primercaracter+fil_sucursal_nombre.Text+'%"';
 
     if fil_liquidacionsucursal_total.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and liquidacionsucursal_total like "%'+fil_liquidacionsucursal_total.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and liquidacionsucursal_total like "'+primercaracter+fil_liquidacionsucursal_total.Text+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by liquidacionsucursal_fecha';
 

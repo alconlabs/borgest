@@ -149,13 +149,13 @@ begin
     ZQGrilla.Active:=false;
     ZQGrilla.SQL.Text:='select * from provincias inner join paises on provincias.pais_id=paises.pais_id where 1=1';
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and provincia_id like "%'+fil_id.Text+'"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and provincia_id like "'+primercaracter+fil_id.Text+'"';
 
     if fil_provincia_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and provincia_nombre like "%'+fil_provincia_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and provincia_nombre like "'+primercaracter+fil_provincia_nombre.Text+'%"';
 
     if fil_pais_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and pais_nombre like "%'+fil_pais_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and pais_nombre like "'+primercaracter+fil_pais_nombre.Text+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by provincia_nombre';
 

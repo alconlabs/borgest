@@ -1,7 +1,5 @@
 inherited ListaProvincias: TListaProvincias
   Caption = 'Provincias'
-  ExplicitWidth = 950
-  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -119,9 +117,6 @@ inherited ListaProvincias: TListaProvincias
       Tag2 = 0
       ConfNuevo = True
     end
-  end
-  inherited StatusBar1: TStatusBar
-    ExplicitTop = 317
   end
   inherited ZQGrilla: TZQuery
     SQL.Strings = (

@@ -58,22 +58,22 @@ begin
     ZQGrilla.Active:=false;
     ZQGrilla.SQL.Text:='select * from politicasdeprecios where 1=1';
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and politicaprecio_id like "%'+fil_id.Text+'"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and politicaprecio_id like "'+primercaracter+fil_id.Text+'"';
 
     if fil_politicaprecio_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and politicaprecio_nombre like "%'+fil_politicaprecio_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and politicaprecio_nombre like "'+primercaracter+fil_politicaprecio_nombre.Text+'%"';
 
     if fil_politicaprecio_politica1.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and politicaprecio_politica1 like "%'+fil_politicaprecio_politica1.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and politicaprecio_politica1 like "'+primercaracter+fil_politicaprecio_politica1.Text+'%"';
 
     if fil_politicaprecio_politica2.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and politicaprecio_politica2 like "%'+fil_politicaprecio_politica2.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and politicaprecio_politica2 like "'+primercaracter+fil_politicaprecio_politica2.Text+'%"';
 
     if fil_politicaprecio_politica3.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and politicaprecio_politica3 like "%'+fil_politicaprecio_politica3.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and politicaprecio_politica3 like "'+primercaracter+fil_politicaprecio_politica3.Text+'%"';
 
     if fil_politicaprecio_politica4.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and politicaprecio_politica4 like "%'+fil_politicaprecio_politica4.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and politicaprecio_politica4 like "'+primercaracter+fil_politicaprecio_politica4.Text+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by politicaprecio_nombre';
 

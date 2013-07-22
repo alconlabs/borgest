@@ -2,7 +2,6 @@ inherited Listaservices: TListaservices
   Caption = 'Servicios'
   ClientWidth = 1035
   ExplicitWidth = 1051
-  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -16,9 +15,12 @@ inherited Listaservices: TListaservices
       inherited btnanular: TButton
         Visible = False
       end
+      inherited btnver: TButton
+        TabOrder = 5
+      end
       object Button1: TButton
         Left = 0
-        Top = 164
+        Top = 205
         Width = 103
         Height = 41
         Align = alTop
@@ -135,6 +137,7 @@ inherited Listaservices: TListaservices
   end
   inherited StatusBar1: TStatusBar
     Width = 1035
+    ExplicitWidth = 1035
   end
   inherited ZQGrilla: TZQuery
     SQL.Strings = (

@@ -61,22 +61,22 @@ begin
     ZQGrilla.Active:=false;
     ZQGrilla.SQL.Text:='select * from proveedores where 1=1';
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_id like "%'+fil_id.Text+'"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_id like "'+primercaracter+fil_id.Text+'"';
 
     if fil_proveedor_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_nombre like "%'+fil_proveedor_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_nombre like "'+primercaracter+fil_proveedor_nombre.Text+'%"';
 
     if fil_proveedor_documentonro.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_documentonro like "%'+fil_proveedor_documentonro.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_documentonro like "'+primercaracter+fil_proveedor_documentonro.Text+'%"';
 
     if fil_proveedor_domicilio.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_domicilio like "%'+fil_proveedor_domicilio.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_domicilio like "'+primercaracter+fil_proveedor_domicilio.Text+'%"';
 
     if fil_proveedor_telefono.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_telefono like "%'+fil_proveedor_telefono.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_telefono like "'+primercaracter+fil_proveedor_telefono.Text+'%"';
 
     if fil_proveedor_mail.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_mail like "%'+fil_proveedor_mail.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_mail like "'+primercaracter+fil_proveedor_mail.Text+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by proveedor_nombre';
 

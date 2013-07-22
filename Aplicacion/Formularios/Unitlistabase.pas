@@ -51,6 +51,7 @@ type
     campo_id:string;
     abm:integer;
     id:string;
+    primercaracter:string;
   end;
 
 var
@@ -187,6 +188,17 @@ end;
 
 procedure Tlistabase.btnfiltrarClick(Sender: TObject);
 begin
+    primercaracter:='%';
+    case tipo_busqueda of
+              1:begin
+                    primercaracter:='%';
+              end;
+
+              2:begin
+                    primercaracter:='';
+              end;
+    end;
+    
     ZQGrilla.Active:=false;
 
 end;

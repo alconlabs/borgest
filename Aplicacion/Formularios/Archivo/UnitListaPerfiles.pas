@@ -36,10 +36,10 @@ begin
                        ' where 1=1';
 
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and perfil_id like "%'+fil_id.Text+'"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and perfil_id like "'+primercaracter+fil_id.Text+'"';
 
     if fil_perfil_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and perfil_nombre like "%'+fil_perfil_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and perfil_nombre like "'+primercaracter+fil_perfil_nombre.Text+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'order by perfil_nombre';
 

@@ -19,6 +19,7 @@ type
     procedure btnnuevoClick(Sender: TObject);
     procedure btnmodificarClick(Sender: TObject);
     procedure btneliminarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     producto_tipo:string;
@@ -59,20 +60,8 @@ begin
 end;
 
 procedure TListaProductos1.btnfiltrarClick(Sender: TObject);
-var
-  primercaracter:string;
 begin
   inherited;
-    primercaracter:='%';
-    case tipo_busqueda of
-              1:begin
-                    primercaracter:='%';
-              end;
-
-              2:begin
-                    primercaracter:='';
-              end;
-    end;
 
     ZQGrilla.Active:=false;
     ZQGrilla.SQL.Text:='select * from productos inner join rubros on productos.rubro_id=rubros.rubro_id inner join proveedores on productos.proveedor_id=proveedores.proveedor_id where 1=1 and producto_tipo="PRODUCTO"';
@@ -128,6 +117,12 @@ begin
       productos.btnguardar.Caption:='Guardar';
       productos.Show;
     end;
+end;
+
+procedure TListaProductos1.FormCreate(Sender: TObject);
+begin
+  inherited;
+    DBGrid1.Columns.Items[0].FieldName:=Princ.CAMPO_ID_PRODUCTO;
 end;
 
 procedure TListaProductos1.FormShow(Sender: TObject);

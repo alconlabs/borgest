@@ -23,6 +23,7 @@ type
     ZQDocuVenDetComisionesVendedoresdocumentoventa_id: TIntegerField;
     ZQDocumentoventadetallesdiferencia: TFloatField;
     lblsaldocomisiones: TLabel;
+    btnimprimir: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnagregarClick(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -33,6 +34,7 @@ type
     procedure btnguardarClick(Sender: TObject);
     procedure DTSDocumentoventadetalleDataChange(Sender: TObject;
       Field: TField);
+    procedure btnimprimirClick(Sender: TObject);
   private
     { Private declarations }
     detalle_id:integer;
@@ -510,6 +512,35 @@ begin
 
             ZQDocuVenDetComisionesVendedores.Next;
         end;
+end;
+
+procedure TNotaPedidoComisiones.btnimprimirClick(Sender: TObject);
+var
+  tipodocu_archivoimpresion:string;
+begin
+  inherited;
+    tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'','tipodocu_archivoimpresion');
+
+    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\'+tipodocu_archivoimpresion;
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
+                                             'inner join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
+                                             'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                             'inner join localidades on clientes.localidad_id=localidades.localidad_id '+
+                                             'inner join provincias on localidades.provincia_id=provincias.provincia_id '+
+                                             'inner join paises on provincias.pais_id=paises.pais_id '+
+                                             'inner join condicioniva on clientes.condicioniva_id=condicioniva.condicioniva_id '+
+                                             'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                             'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                             'where documentosventas.documentoventa_id="'+id+'"';
+
+    Princ.VCLReport1.Report.Datainfo.Items[1].sql:='select * from docuvendetcomisionesvendedores '+
+                                                   'inner join personal on docuvendetcomisionesvendedores.personal_id=personal.personal_id '+
+                                                   'inner join documentoventadetalles on docuvendetcomisionesvendedores.documentoventadetalle_id=documentoventadetalles.documentoventadetalle_id '+
+                                                   'where documentoventadetalles.documentoventa_id="'+id+'" and docuvendetcomisionvendedor_importeunit<>0 '+
+                                                   'order by personal_nombre, documentoventadetalle_descripcion';
+
+
+    Princ.VCLReport1.Execute;
 end;
 
 procedure TNotaPedidoComisiones.btnmodificarClick(Sender: TObject);

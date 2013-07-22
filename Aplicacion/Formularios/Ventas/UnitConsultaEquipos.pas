@@ -192,7 +192,8 @@ begin
                                                    'inner join provincias on localidades.provincia_id=provincias.provincia_id '+
                                                    'inner join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
                                                    'where tipodocu_nombre="Nota de Pedido" and '+
-                                                   equipo_tipo.codigo+'="'+documentoventa_equipo.Text+'"';
+                                                   equipo_tipo.codigo+'="'+documentoventa_equipo.Text+'" '+
+                                                   'order by clientes.cliente_nombre, documentosventas.documentoventa_id, documentoventadetalles.documentoventadetalle_descripcion ';
 
     Princ.VCLReport1.Report.Datainfo.Items[1].sql:='select * from equipos '+
                                                    'inner join sucursales on equipos.sucursal_id=sucursales.sucursal_id '+

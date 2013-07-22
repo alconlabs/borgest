@@ -2,7 +2,6 @@ inherited listaremitosventa: Tlistaremitosventa
   Caption = 'Remitos de Venta'
   ClientWidth = 1057
   ExplicitWidth = 1073
-  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -117,6 +116,7 @@ inherited listaremitosventa: Tlistaremitosventa
   end
   inherited StatusBar1: TStatusBar
     Width = 1057
+    ExplicitWidth = 1057
   end
   inherited ZQGrilla: TZQuery
     SQL.Strings = (

@@ -2,7 +2,6 @@ inherited ListaClientes1: TListaClientes1
   Caption = 'Clientes'
   ClientWidth = 1010
   ExplicitWidth = 1026
-  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -120,7 +119,6 @@ inherited ListaClientes1: TListaClientes1
   end
   inherited StatusBar1: TStatusBar
     Width = 1010
-    ExplicitTop = 317
     ExplicitWidth = 1010
   end
   inherited ZQGrilla: TZQuery

@@ -1,8 +1,5 @@
 inherited listapuntosdeventa: Tlistapuntosdeventa
   Caption = 'Sucursales'
-  ExplicitTop = -170
-  ExplicitWidth = 950
-  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -143,7 +140,7 @@ inherited listapuntosdeventa: Tlistapuntosdeventa
       Width = 203
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 3
       Confbase = Princ.ZBase
       Confsql.Strings = (

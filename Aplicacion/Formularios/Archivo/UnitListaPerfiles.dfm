@@ -1,7 +1,5 @@
 inherited ListaPerfiles: TListaPerfiles
   Caption = 'Perfiles de Seguridad'
-  ExplicitWidth = 950
-  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel

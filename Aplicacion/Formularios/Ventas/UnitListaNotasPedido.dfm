@@ -2,7 +2,6 @@ inherited ListaNotasPedido: TListaNotasPedido
   Caption = 'Notas de Pedido'
   ClientWidth = 1035
   ExplicitWidth = 1051
-  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -125,6 +124,7 @@ inherited ListaNotasPedido: TListaNotasPedido
   end
   inherited StatusBar1: TStatusBar
     Width = 1035
+    ExplicitWidth = 1035
   end
   inherited ZQGrilla: TZQuery
     SQL.Strings = (

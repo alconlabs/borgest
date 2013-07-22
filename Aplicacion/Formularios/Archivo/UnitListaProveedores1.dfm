@@ -2,7 +2,6 @@ inherited ListaProveedores1: TListaProveedores1
   Caption = 'Proveedores'
   ClientWidth = 1003
   ExplicitWidth = 1019
-  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -13,10 +12,6 @@ inherited ListaProveedores1: TListaProveedores1
       Left = 900
       ExplicitLeft = 900
       FullHeight = 0
-      inherited btneliminar: TButton
-        ExplicitLeft = 6
-        ExplicitTop = 76
-      end
     end
     inherited DBGrid1: TDBGrid
       Width = 900
@@ -121,7 +116,6 @@ inherited ListaProveedores1: TListaProveedores1
   end
   inherited StatusBar1: TStatusBar
     Width = 1003
-    ExplicitTop = 317
     ExplicitWidth = 1003
   end
   inherited ZQGrilla: TZQuery

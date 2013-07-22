@@ -159,16 +159,16 @@ begin
   inherited;
     ZQGrilla.SQL.Text:='select * from sucursales where 1=1';
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and sucursal_id like "%'+fil_id.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and sucursal_id like "'+primercaracter+fil_id.Text+'%"';
 
     if fil_sucursal_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and sucursal_nombre like "%'+fil_sucursal_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and sucursal_nombre like "'+primercaracter+fil_sucursal_nombre.Text+'%"';
 
     if fil_sucursal_domicilio.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and sucursal_domicilio like "%'+fil_sucursal_domicilio.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and sucursal_domicilio like "'+primercaracter+fil_sucursal_domicilio.Text+'%"';
 
     if fil_sucursal_telefono.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and sucursal_telefono like "%'+fil_sucursal_telefono.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and sucursal_telefono like "'+primercaracter+fil_sucursal_telefono.Text+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by sucursal_nombre';
     ZQGrilla.Active:=true;

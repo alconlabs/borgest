@@ -56,10 +56,10 @@ begin
                        ' where 1=1';
 
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and calculoprecio_id like "%'+fil_id.Text+'"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and calculoprecio_id like "'+primercaracter+fil_id.Text+'"';
 
     if fil_calculoprecio_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and calculoprecio_nombre like "%'+fil_calculoprecio_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and calculoprecio_nombre like "'+primercaracter+fil_calculoprecio_nombre.Text+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'order by calculoprecio_nombre';
 

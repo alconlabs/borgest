@@ -105,12 +105,6 @@ object TRpReport
         Component = TRpExpression14
       end
       item
-        Component = TRpExpression9
-      end
-      item
-        Component = TRpExpression10
-      end
-      item
         Component = TRpShape12
       end
       item
@@ -171,7 +165,7 @@ object TRpReport
   end
   object TRpSection2: TRpSection
     Width = 15874
-    Height = 1628
+    Height = 1630
     SubReport = TRpSubReport0
     ChangeBool = False
     PageRepeat = False
@@ -695,55 +689,6 @@ object TRpReport
     AgIniValue = '0'
     ExportExpression = ''
   end
-  object TRpExpression9: TRpExpression
-    Width = 1370
-    Height = 175
-    PosX = 14365
-    PosY = 54
-    Type1Font = poHelvetica
-    FontSize = 7
-    WordWrap = True
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.documentoventa_observacion'
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
-  object TRpExpression10: TRpExpression
-    Width = 1490
-    Height = 175
-    PosX = 12770
-    PosY = 54
-    Type1Font = poHelvetica
-    FontSize = 7
-    WordWrap = True
-    AutoExpand = False
-    AutoContract = False
-    PrintOnlyOne = True
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.documentoventa_formapago'
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
   object TRpShape2: TRpShape
     Width = 225
     Height = 229
@@ -878,7 +823,7 @@ object TRpReport
   end
   object TRpSection3: TRpSection
     Width = 15874
-    Height = 266
+    Height = 0
     SubReport = TRpSubReport0
     GroupName = 'GRUPO01'
     ChangeBool = False
@@ -887,21 +832,6 @@ object TRpReport
     AlignBottom = False
     SectionType = rpsecgheader
     Components = <
-      item
-        Component = TRpExpression18
-      end
-      item
-        Component = TRpExpression2
-      end
-      item
-        Component = TRpExpression0
-      end
-      item
-        Component = TRpExpression1
-      end
-      item
-        Component = TRpExpression3
-      end
       item
         Component = TRpShape27
       end
@@ -940,6 +870,27 @@ object TRpReport
       end
       item
         Component = TRpShape40
+      end
+      item
+        Component = TRpExpression16
+      end
+      item
+        Component = TRpExpression9
+      end
+      item
+        Component = TRpExpression0
+      end
+      item
+        Component = TRpExpression1
+      end
+      item
+        Component = TRpExpression2
+      end
+      item
+        Component = TRpExpression3
+      end
+      item
+        Component = TRpExpression10
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -1087,123 +1038,6 @@ object TRpReport
     DoBeforePrint = ''
     DoAfterPrint = ''
   end
-  object TRpExpression18: TRpExpression
-    Width = 1940
-    Height = 175
-    PosX = 55
-    PosY = 55
-    Type1Font = poHelvetica
-    FontSize = 7
-    WordWrap = True
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.cliente_nombre'
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
-  object TRpExpression2: TRpExpression
-    Width = 1540
-    Height = 170
-    PosX = 2110
-    PosY = 55
-    Type1Font = poHelvetica
-    FontSize = 7
-    WordWrap = True
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.cliente_domicilio'
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
-  object TRpExpression0: TRpExpression
-    Width = 1425
-    Height = 170
-    PosX = 3760
-    PosY = 55
-    Type1Font = poHelvetica
-    FontSize = 7
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.localidad_nombre'
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
-  object TRpExpression1: TRpExpression
-    Width = 1250
-    Height = 170
-    PosX = 5300
-    PosY = 55
-    Type1Font = poHelvetica
-    FontSize = 7
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.provincia_nombre'
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
-  object TRpExpression3: TRpExpression
-    Width = 911
-    Height = 172
-    PosX = 6671
-    PosY = 56
-    Type1Font = poHelvetica
-    FontSize = 7
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.cliente_documentonro'
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
   object TRpShape24: TRpShape
     Width = 229
     Height = 283
@@ -1219,7 +1053,7 @@ object TRpReport
   object TRpShape27: TRpShape
     Width = 229
     Height = 283
-    PosX = -1
+    PosX = 0
     PosY = 0
     Align = rpaltopbottom
     Shape = rpsVertLine
@@ -1655,6 +1489,186 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 'ALIAS_EQUIPOS.equipo_observaciones'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpExpression9: TRpExpression
+    Width = 1490
+    Height = 175
+    PosX = 12770
+    PosY = 54
+    Type1Font = poHelvetica
+    FontSize = 7
+    WordWrap = True
+    AutoExpand = False
+    AutoContract = False
+    PrintOnlyOne = True
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.documentoventa_formapago'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpExpression16: TRpExpression
+    Width = 1370
+    Height = 175
+    PosX = 14365
+    PosY = 54
+    Type1Font = poHelvetica
+    FontSize = 7
+    WordWrap = True
+    AgType = rpagStdDev
+    AutoExpand = False
+    AutoContract = False
+    PrintOnlyOne = True
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.documentoventa_observacion'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpExpression0: TRpExpression
+    Width = 1540
+    Height = 175
+    PosX = 455
+    PosY = 55
+    Type1Font = poHelvetica
+    FontSize = 7
+    WordWrap = True
+    GroupName = 'GRUPO01'
+    AutoExpand = False
+    AutoContract = False
+    PrintOnlyOne = True
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.cliente_nombre'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpExpression1: TRpExpression
+    Width = 1540
+    Height = 170
+    PosX = 2110
+    PosY = 55
+    Type1Font = poHelvetica
+    FontSize = 7
+    WordWrap = True
+    GroupName = 'GRUPO01'
+    AutoExpand = False
+    AutoContract = False
+    PrintOnlyOne = True
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.cliente_domicilio'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpExpression2: TRpExpression
+    Width = 1425
+    Height = 170
+    PosX = 3760
+    PosY = 55
+    Type1Font = poHelvetica
+    FontSize = 7
+    CutText = True
+    SingleLine = True
+    GroupName = 'GRUPO01'
+    AutoExpand = False
+    AutoContract = False
+    PrintOnlyOne = True
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.localidad_nombre'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpExpression3: TRpExpression
+    Width = 1250
+    Height = 170
+    PosX = 5300
+    PosY = 55
+    Type1Font = poHelvetica
+    FontSize = 7
+    GroupName = 'GRUPO01'
+    AutoExpand = False
+    AutoContract = False
+    PrintOnlyOne = True
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.provincia_nombre'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpExpression10: TRpExpression
+    Width = 911
+    Height = 172
+    PosX = 6671
+    PosY = 56
+    Type1Font = poHelvetica
+    FontSize = 7
+    GroupName = 'GRUPO01'
+    AutoExpand = False
+    AutoContract = False
+    PrintOnlyOne = True
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.cliente_documentonro'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'

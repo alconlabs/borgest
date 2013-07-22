@@ -55,10 +55,10 @@ begin
     ZQGrilla.Active:=false;
     ZQGrilla.SQL.Text:='select * from productos where 1=1 and producto_tipo="CONCEPTO"';
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_id like "%'+Princ.GTBUtilidades1.Reemplazar(fil_id.Text,' ','%')+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_id like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_id.Text,' ','%')+'%"';
 
     if fil_producto_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_nombre.Text,' ','%')+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_nombre like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_producto_nombre.Text,' ','%')+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by producto_nombre';
 

@@ -2,7 +2,6 @@ inherited ConsultaEquipos: TConsultaEquipos
   Caption = 'Consulta de Equipos'
   ClientHeight = 515
   ClientWidth = 841
-  OnCreate = FormCreate
   ExplicitWidth = 857
   ExplicitHeight = 553
   PixelsPerInch = 96
@@ -88,10 +87,6 @@ inherited ConsultaEquipos: TConsultaEquipos
       TabOrder = 2
       object TabSheet1: TTabSheet
         Caption = 'Notas de Pedido'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label1: TLabel
           Left = 3
           Top = 189
@@ -206,10 +201,6 @@ inherited ConsultaEquipos: TConsultaEquipos
       object TabSheet2: TTabSheet
         Caption = 'Productos'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGrid3: TDBGrid
           Left = 0
           Top = 0
@@ -285,7 +276,7 @@ inherited ConsultaEquipos: TConsultaEquipos
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 8
       Confbase = Princ.ZBase
       Confsql.Strings = (

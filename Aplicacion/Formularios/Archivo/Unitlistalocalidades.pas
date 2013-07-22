@@ -155,13 +155,13 @@ begin
     ZQGrilla.Active:=false;
     ZQGrilla.SQL.Text:='select * from localidades inner join provincias on localidades.provincia_id=provincias.provincia_id where 1=1';
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and localidad_id like "%'+fil_id.Text+'"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and localidad_id like "'+primercaracter+fil_id.Text+'"';
 
     if fil_localidad_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and localidad_nombre like "%'+fil_localidad_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and localidad_nombre like "'+primercaracter+fil_localidad_nombre.Text+'%"';
 
     if fil_provincia_nombre.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and provincia_nombre like "%'+fil_provincia_nombre.Text+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and provincia_nombre like "'+primercaracter+fil_provincia_nombre.Text+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by localidad_nombre';
 

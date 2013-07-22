@@ -1,7 +1,5 @@
 inherited ListaLocalidades: TListaLocalidades
   Caption = 'Localidades'
-  ExplicitWidth = 950
-  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -133,9 +131,6 @@ inherited ListaLocalidades: TListaLocalidades
       Height = 21
       TabOrder = 1
     end
-  end
-  inherited StatusBar1: TStatusBar
-    ExplicitTop = 317
   end
   inherited ZQGrilla: TZQuery
     SQL.Strings = (

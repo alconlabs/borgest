@@ -2,7 +2,6 @@ inherited ListaPoliticasdePrecios: TListaPoliticasdePrecios
   Caption = 'Politicas de Precios'
   ClientWidth = 1003
   ExplicitWidth = 1019
-  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -120,7 +119,6 @@ inherited ListaPoliticasdePrecios: TListaPoliticasdePrecios
   end
   inherited StatusBar1: TStatusBar
     Width = 1003
-    ExplicitTop = 317
     ExplicitWidth = 1003
   end
   inherited ZQGrilla: TZQuery
