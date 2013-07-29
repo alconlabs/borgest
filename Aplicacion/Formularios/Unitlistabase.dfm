@@ -146,6 +146,7 @@ object listabase: Tlistabase
         Align = alTop
         Caption = 'Anular'
         TabOrder = 3
+        Visible = False
         OnClick = btnanularClick
       end
       object btnver: TButton
@@ -156,7 +157,7 @@ object listabase: Tlistabase
         Align = alTop
         Caption = 'Ver'
         TabOrder = 4
-        OnClick = btnanularClick
+        Visible = False
       end
     end
     object DBGrid1: TDBGrid

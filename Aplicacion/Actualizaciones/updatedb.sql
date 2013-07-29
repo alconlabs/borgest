@@ -880,3 +880,82 @@ CREATE  TABLE IF NOT EXISTS `docuvendetcomisionesvendedores` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1
 COLLATE = latin1_swedish_ci;
+208;
+CREATE  TABLE IF NOT EXISTS `permisosespecialesperfil` (
+  `permisoespecialperfil_nombre` VARCHAR(100) NOT NULL ,
+  `permisoespecialperfil_valor` VARCHAR(50) NULL DEFAULT NULL ,
+  `perfil_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`permisoespecialperfil_nombre`) ,
+  INDEX `fk_permisosespecialesperfil_perfiles1` (`perfil_id` ASC) ,
+  CONSTRAINT `fk_permisosespecialesperfil_perfiles1`
+    FOREIGN KEY (`perfil_id` )
+    REFERENCES `perfiles` (`perfil_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+209;
+UPDATE `menuperfil` SET `menuperfil_clonar`=0;
+210;
+update menu set menu_lista='ListaCalculosPrecios1' where menu_nomb='btncalculoprecios';
+211;
+update menu set menu_lista='listaclientes1' where menu_nomb='btnclientes';
+212;
+update menu set menu_lista='ComisionesSucursales' where menu_nomb='btncomisionessucursales';
+213;
+update menu set menu_lista='ComisionesVendedores' where menu_nomb='btncomisionesvendedores';
+214;
+update menu set menu_lista='listaconceptosdebcred' where menu_nomb='btnconceptosdebcred';
+215;
+update menu set menu_lista='sucursalesdebcred' where menu_nomb='btndebcredsucursales';
+216;
+update menu set menu_lista='LIstaFacturasDeCompras' where menu_nomb='btnfacturascompras';
+217;
+update menu set menu_lista='ListaFacturasDeVenta' where menu_nomb='btnfacturasventas';
+218;
+update menu set menu_lista='listacomisionessucursales' where menu_nomb='btnliquidacionessucu';
+218;
+update menu set menu_lista='listacomisionesvendedores' where menu_nomb='btnliquidacionesvendedores';
+219;
+update menu set menu_lista='ListaNotasPedidoComisiones' where menu_nomb='btnlistanotasdepedido';
+220;
+update menu set menu_lista='ListaLocalidades' where menu_nomb='btnlocalidades';
+221;
+update menu set menu_lista='ListaNotasPedido' where menu_nomb='btnnotapedido';
+222;
+update menu set menu_lista='listanotacreditoventa' where menu_nomb='btnnotasdecredito';
+223;
+update menu set menu_lista='listanotadebitoventa' where menu_nomb='btnnotasdedebito';
+224;
+update menu set menu_lista='ListaOrdenesServicios' where menu_nomb='btnordenservicio';
+225;
+update menu set menu_lista='listaperfiles' where menu_nomb='btnperfiles';
+226;
+update menu set menu_lista='personal' where menu_nomb='btnpersonal';
+227;
+update menu set menu_lista='ListaPoliticasdePrecios' where menu_nomb='btnpoliticaprecio';
+228;
+update menu set menu_lista='ListaPresupuestos' where menu_nomb='btnpresupuestos';
+229;
+update menu set menu_lista='ListaProductos1' where menu_nomb='btnproductos';
+230;
+update menu set menu_lista='ListaProveedores1' where menu_nomb='btnproveedores';
+231;
+update menu set menu_lista='ListaProvincias' where menu_nomb='btnprovincias';
+232;
+update menu set menu_lista='listapuntosdeventa' where menu_nomb='btnpuntosdeventa';
+233;
+update menu set menu_lista='ListaRecibosdeVenta' where menu_nomb='btnrecibodeventa';
+234;
+update menu set menu_lista='listaremitosventa' where menu_nomb='btnremitos';
+235;
+update menu set menu_lista='listaservices' where menu_nomb='btnservice';
+236;
+update menu set menu_lista='listasucursales' where menu_nomb='btnsucursales';
+237;
+update menu set menu_lista='listatiposdocumentos' where menu_nomb='btntiposdocumentos';
+238;
+update menu set menu_lista='vendedoresdebcred' where menu_nomb='btnvendedoresdebcred';
+239;
+update menu set menu_lista='vendedoresdebcred' where menu_nomb='btnvendedoresdebcred';

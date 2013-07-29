@@ -107,6 +107,8 @@ type
     documento_dgrperc: TMoneyEdit;
     ZQDocumentosdocumento_nogravado: TFloatField;
     ZQDocumentosdocumento_puntoventa: TIntegerField;
+    Label99: TLabel;
+    Label19: TLabel;
 
     procedure btnguardarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -346,10 +348,14 @@ begin
 
           documento_total.Text:='0';
           documento_observaciones.Text:='';
+          documento_fecha.Date:=princ.fechaservidor;
+          documento_fechavenc.Date:=documento_fecha.Date+15;
+
       end
     else
       begin
           documento_fecha.Date:=ZQSelect.FieldByName('documento_fecha').AsDateTime;
+          documento_fechavenc.Date:=ZQSelect.FieldByName('documento_fechavenc').AsDateTime;
           sucursal_id.Buscar(ZQSelect.FieldByName('sucursal_id').AsString);
           sucursal_id.OnSelect(self);
           puntoventa_id.Buscar(ZQSelect.FieldByName('puntoventa_id').AsString);

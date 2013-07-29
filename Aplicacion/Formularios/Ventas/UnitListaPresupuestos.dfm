@@ -1,11 +1,16 @@
 inherited ListaPresupuestos: TListaPresupuestos
   Caption = 'Presupuestos'
+  ExplicitWidth = 950
+  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
       FullHeight = 0
+      inherited btnanular: TButton
+        Visible = True
+      end
     end
     inherited DBGrid1: TDBGrid
       Columns = <

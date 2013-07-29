@@ -2,6 +2,7 @@ inherited LIstaFacturasDeCompras: TLIstaFacturasDeCompras
   Caption = 'LIstaFacturasDeCompras'
   ClientWidth = 1035
   ExplicitWidth = 1051
+  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -12,6 +13,9 @@ inherited LIstaFacturasDeCompras: TLIstaFacturasDeCompras
       Left = 932
       ExplicitLeft = 932
       FullHeight = 0
+      inherited btnanular: TButton
+        Visible = True
+      end
     end
     inherited DBGrid1: TDBGrid
       Width = 932

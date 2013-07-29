@@ -11,6 +11,7 @@ uses
 type
   TFacturaCompra = class(TDocumentoBase)
     documento_puntoventa: TEdit;
+    Label24: TLabel;
     procedure btnguardarClick(Sender: TObject);
     procedure documento_neto21Exit(Sender: TObject);
     procedure GuardarEnDataset;

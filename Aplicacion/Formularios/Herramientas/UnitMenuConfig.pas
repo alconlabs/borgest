@@ -187,7 +187,7 @@ begin
 
 
                 ZQExecSQL.SQL.Clear;
-                ZQExecSQL.SQL.Add('INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,'+menu_id+',perfil_id from perfiles');
+                ZQExecSQL.SQL.Add('INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,'+menu_id+',perfil_id,-1 from perfiles');
                 ZQExecSQL.ExecSQL;
 
                 MessageDlg('Nuevo item de menu agregado correctamente', mtInformation, [mbOK], 0);

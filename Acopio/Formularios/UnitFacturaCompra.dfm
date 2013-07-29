@@ -24,6 +24,14 @@ inherited FacturaCompra: TFacturaCompra
       Top = 251
       ExplicitTop = 251
     end
+    object Label24: TLabel [13]
+      Left = 147
+      Top = 85
+      Width = 3
+      Height = 13
+      Alignment = taRightJustify
+      Caption = '-'
+    end
     inherited btncancelar: TButton
       Top = 350
       TabOrder = 11
@@ -35,10 +43,10 @@ inherited FacturaCompra: TFacturaCompra
       ExplicitTop = 350
     end
     inherited documento_numero: TEdit
-      Left = 264
+      Left = 156
       Width = 145
       TabOrder = 4
-      ExplicitLeft = 264
+      ExplicitLeft = 156
       ExplicitWidth = 145
     end
     inherited documento_fecha: TDateTimePicker
@@ -104,8 +112,8 @@ inherited FacturaCompra: TFacturaCompra
       end
     end
     object documento_puntoventa: TEdit
-      Left = 208
-      Top = 34
+      Left = 92
+      Top = 82
       Width = 50
       Height = 21
       TabOrder = 3

@@ -81,7 +81,7 @@ object configuracion: Tconfiguracion
       Top = 1
       Width = 587
       Height = 305
-      ActivePage = TabSheet1
+      ActivePage = TabSheet4
       Align = alTop
       TabOrder = 2
       object TabSheet1: TTabSheet

@@ -121,6 +121,15 @@ begin
       end;
 
     ArmarLeyendaBarraEstado;
+
+    Princ.Permisos1.ConsultarPermisosLista(self.Name);
+    btnnuevo.Enabled:=Princ.Permisos1.Permiso_agregar;
+    btnmodificar.Enabled:=Princ.Permisos1.Permiso_modificar;
+    btneliminar.Enabled:=Princ.Permisos1.Permiso_eliminar;
+    btnanular.Enabled:=Princ.Permisos1.Permiso_anular;
+    btnver.Enabled:=Princ.Permisos1.Permiso_ver;
+    btnfiltrar.Enabled:=Princ.Permisos1.Permiso_habilitado;
+
 //    MessageDlg('end show', mtWarning, [mbOK], 0);
 end;
 

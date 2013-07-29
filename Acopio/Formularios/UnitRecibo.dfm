@@ -1,14 +1,14 @@
 inherited Recibo: TRecibo
   Caption = 'Recibo'
-  ClientHeight = 556
+  ClientHeight = 603
   ClientWidth = 864
   ExplicitWidth = 880
-  ExplicitHeight = 594
+  ExplicitHeight = 641
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Width = 864
-    Height = 556
+    Height = 603
     ExplicitWidth = 864
     ExplicitHeight = 556
     FullHeight = 0
@@ -22,25 +22,25 @@ inherited Recibo: TRecibo
     end
     inherited Label18: TLabel
       Left = 31
-      Top = 315
+      Top = 363
       ExplicitLeft = 31
-      ExplicitTop = 315
+      ExplicitTop = 363
     end
     object Label13: TLabel [11]
       Left = 683
-      Top = 289
+      Top = 337
       Width = 71
       Height = 13
       Alignment = taRightJustify
       Caption = 'Total Imputado'
     end
     inherited btncancelar: TButton
-      Top = 518
-      ExplicitTop = 518
+      Top = 566
+      ExplicitTop = 566
     end
     inherited btnguardar: TButton
-      Top = 518
-      ExplicitTop = 518
+      Top = 566
+      ExplicitTop = 566
     end
     inherited documento_fecha: TDateTimePicker
       Left = 725
@@ -52,19 +52,19 @@ inherited Recibo: TRecibo
     end
     inherited documento_observaciones: TGTBMemo
       Left = 108
-      Top = 315
+      Top = 363
       Height = 126
       ExplicitLeft = 108
-      ExplicitTop = 315
+      ExplicitTop = 363
       ExplicitHeight = 126
     end
     inherited GroupBox1: TGroupBox
       Left = 478
-      Top = 475
+      Top = 523
       Width = 211
       Height = 68
       ExplicitLeft = 478
-      ExplicitTop = 475
+      ExplicitTop = 523
       ExplicitWidth = 211
       ExplicitHeight = 68
       inherited Label4: TLabel
@@ -154,7 +154,7 @@ inherited Recibo: TRecibo
     end
     object DBGrid1: TDBGrid
       Left = 444
-      Top = 315
+      Top = 363
       Width = 403
       Height = 126
       DataSource = DTSDocumentopagos
@@ -183,7 +183,7 @@ inherited Recibo: TRecibo
     end
     object btnmodificarpago: TButton
       Left = 520
-      Top = 446
+      Top = 494
       Width = 75
       Height = 25
       Caption = 'Modificar'
@@ -191,7 +191,7 @@ inherited Recibo: TRecibo
     end
     object btnagregarpago: TButton
       Left = 445
-      Top = 446
+      Top = 494
       Width = 75
       Height = 25
       Caption = 'Agregar'
@@ -200,7 +200,7 @@ inherited Recibo: TRecibo
     end
     object btneliminarpago: TButton
       Left = 595
-      Top = 446
+      Top = 494
       Width = 75
       Height = 25
       Caption = 'Eliminar'
@@ -209,7 +209,7 @@ inherited Recibo: TRecibo
     end
     object DBGrid2: TDBGrid
       Left = 16
-      Top = 128
+      Top = 176
       Width = 838
       Height = 150
       DataSource = DTSDocumentodocusImputacion
@@ -279,7 +279,7 @@ inherited Recibo: TRecibo
     end
     object btnagregar: TButton
       Left = 16
-      Top = 279
+      Top = 327
       Width = 75
       Height = 25
       Caption = 'Agregar'
@@ -288,7 +288,7 @@ inherited Recibo: TRecibo
     end
     object btnquitar: TButton
       Left = 89
-      Top = 279
+      Top = 327
       Width = 75
       Height = 25
       Caption = 'Quitar'
@@ -297,7 +297,7 @@ inherited Recibo: TRecibo
     end
     object btntomardocumentosAuto: TButton
       Left = 170
-      Top = 279
+      Top = 327
       Width = 129
       Height = 25
       Caption = 'Cargar'
@@ -306,7 +306,7 @@ inherited Recibo: TRecibo
     end
     object documento_totalimputado: TMoneyEdit
       Left = 760
-      Top = 286
+      Top = 334
       Width = 95
       Height = 21
       TabStop = False

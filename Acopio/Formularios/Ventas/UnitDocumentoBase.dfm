@@ -24,7 +24,7 @@ inherited DocumentoBase: TDocumentoBase
     end
     object Label15: TLabel [1]
       Left = 49
-      Top = 37
+      Top = 85
       Width = 37
       Height = 13
       Alignment = taRightJustify
@@ -40,7 +40,7 @@ inherited DocumentoBase: TDocumentoBase
     end
     object Label3: TLabel [3]
       Left = 50
-      Top = 61
+      Top = 109
       Width = 36
       Height = 13
       Alignment = taRightJustify
@@ -48,7 +48,7 @@ inherited DocumentoBase: TDocumentoBase
     end
     object Label1: TLabel [4]
       Left = 44
-      Top = 88
+      Top = 136
       Width = 42
       Height = 13
       Alignment = taRightJustify
@@ -56,14 +56,14 @@ inherited DocumentoBase: TDocumentoBase
     end
     object cliente_domicilio: TLabel [5]
       Left = 92
-      Top = 88
+      Top = 136
       Width = 42
       Height = 13
       Caption = 'Domicilio'
     end
     object Label11: TLabel [6]
       Left = 37
-      Top = 112
+      Top = 160
       Width = 49
       Height = 13
       Alignment = taRightJustify
@@ -71,7 +71,7 @@ inherited DocumentoBase: TDocumentoBase
     end
     object cliente_documentonro: TLabel [7]
       Left = 92
-      Top = 112
+      Top = 160
       Width = 49
       Height = 13
       Caption = 'CUIT/DNI'
@@ -100,6 +100,22 @@ inherited DocumentoBase: TDocumentoBase
       Height = 13
       Caption = 'Observaciones'
     end
+    object Label99: TLabel [11]
+      Left = 65
+      Top = 61
+      Width = 21
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Tipo'
+    end
+    object Label19: TLabel [12]
+      Left = 12
+      Top = 37
+      Width = 74
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Punto de Venta'
+    end
     inherited btncancelar: TButton
       Left = 776
       Top = 394
@@ -116,8 +132,8 @@ inherited DocumentoBase: TDocumentoBase
       ExplicitTop = 394
     end
     object documento_numero: TEdit
-      Left = 204
-      Top = 34
+      Left = 92
+      Top = 82
       Width = 205
       Height = 21
       TabOrder = 3
@@ -148,8 +164,8 @@ inherited DocumentoBase: TDocumentoBase
       Tag2 = 0
     end
     object tipodocu_id: TSqlComboBox
-      Left = 148
-      Top = 34
+      Left = 92
+      Top = 58
       Width = 54
       Height = 21
       Style = csDropDownList
@@ -183,7 +199,7 @@ inherited DocumentoBase: TDocumentoBase
     end
     object entidad_id: TSqlComboBox
       Left = 92
-      Top = 58
+      Top = 106
       Width = 317
       Height = 21
       Style = csDropDownList

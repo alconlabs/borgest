@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageVentas
+    ActivePage = AdvPageArchivo
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -3586,5 +3586,12 @@ object Princ: TPrinc
   object GTBUtilidades1: TGTBUtilidades
     Left = 512
     Top = 368
+  end
+  object Permisos1: TPermisos
+    abm = 0
+    ConfSqlConnection = ZBase
+    ConfIni = ini1
+    Left = 400
+    Top = 472
   end
 end

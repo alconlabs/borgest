@@ -9,7 +9,7 @@ uses
   Grids, BaseGrid, AdvGrid, DBAdvGrid, StdCtrls, ADODB, rpcompobase, rpvclreport,
   UnitProgresoBase, ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
   rpalias, GTBComboBox, ComCtrls, rpexpredlgvcl, DBClient,
-  rpclientdataset, Menus, Encriptador, Utilidades;
+  rpclientdataset, Menus, Encriptador, Utilidades, Permisos;
 
 
 
@@ -135,6 +135,7 @@ type
     btnRecibosPendientes: TAdvGlowButton;
     AdvGlowButton1: TAdvGlowButton;
     AdvGlowButton4: TAdvGlowButton;
+    Permisos1: TPermisos;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -2746,6 +2747,10 @@ begin
 //      login.liberar_al_cerrar:=false;
 //      login.ShowModal;
 //    end;
+
+
+    Permisos1.ConfPerfil_id:='1';
+    Permisos1.ConfPersonal_id:='1';
 
     MenuConfiguracion;
 end;

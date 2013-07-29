@@ -96,7 +96,7 @@ inherited Perfil: TPerfil
           Left = 406
           Top = 80
           Width = 93
-          Height = 97
+          Height = 113
           TabStop = False
           ItemHeight = 13
           Items.Strings = (
@@ -106,7 +106,8 @@ inherited Perfil: TPerfil
             'Eliminar'
             'Anular'
             'Imprimir'
-            'Ver')
+            'Ver'
+            'Clonar')
           TabOrder = 3
           OnClick = permisosClick
         end

@@ -35,10 +35,10 @@ inherited NotaDebitoCompra: TNotaDebitoCompra
       ExplicitTop = 350
     end
     inherited documento_numero: TEdit
-      Left = 264
+      Left = 148
       Width = 145
       TabOrder = 4
-      ExplicitLeft = 264
+      ExplicitLeft = 148
       ExplicitWidth = 145
     end
     inherited documento_fecha: TDateTimePicker
@@ -104,8 +104,8 @@ inherited NotaDebitoCompra: TNotaDebitoCompra
       end
     end
     object documento_puntoventa: TEdit
-      Left = 208
-      Top = 34
+      Left = 92
+      Top = 82
       Width = 50
       Height = 21
       TabOrder = 3

@@ -70,11 +70,11 @@ begin
     ZQExecSQL.SQL.Clear;
     ZQExecSQL.SQL.Add('insert into menuperfil (menuperfil_id, menuperfil_habilitado, ');
     ZQExecSQL.SQL.Add('menuperfil_agregar, menuperfil_eliminar, menuperfil_modificar, ');
-    ZQExecSQL.SQL.Add('menuperfil_anular, menuperfil_imprimir, menuperfil_ver, ');
+    ZQExecSQL.SQL.Add('menuperfil_anular, menuperfil_imprimir, menuperfil_ver, menuperfil_clonar, ');
     ZQExecSQL.SQL.Add('menu_id, perfil_id) ');
     ZQExecSQL.SQL.Add('values (:menuperfil_id, :menuperfil_habilitado, ');
     ZQExecSQL.SQL.Add(':menuperfil_agregar, :menuperfil_eliminar, :menuperfil_modificar, ');
-    ZQExecSQL.SQL.Add(':menuperfil_anular, :menuperfil_imprimir, :menuperfil_ver, ');
+    ZQExecSQL.SQL.Add(':menuperfil_anular, :menuperfil_imprimir, :menuperfil_ver, :menuperfil_clonar, ');
     ZQExecSQL.SQL.Add(':menu_id, :perfil_id) ');
 
     ZQSelect.First;
@@ -88,6 +88,7 @@ begin
             ZQExecSQL.ParamByName('menuperfil_anular').AsString:=ZQSelect.FieldByName('menuperfil_anular').AsString;
             ZQExecSQL.ParamByName('menuperfil_imprimir').AsString:=ZQSelect.FieldByName('menuperfil_imprimir').AsString;
             ZQExecSQL.ParamByName('menuperfil_ver').AsString:=ZQSelect.FieldByName('menuperfil_ver').AsString;
+            ZQExecSQL.ParamByName('menuperfil_clonar').AsString:=ZQSelect.FieldByName('menuperfil_clonar').AsString;
             ZQExecSQL.ParamByName('menu_id').AsString:=ZQSelect.FieldByName('menu_id').AsString;
             ZQExecSQL.ParamByName('perfil_id').AsString:=id;
             ZQExecSQL.ExecSQL;
@@ -153,6 +154,7 @@ begin
     ZQExecSQL.SQL.Add('menuperfil_anular=:menuperfil_anular, ');
     ZQExecSQL.SQL.Add('menuperfil_imprimir=:menuperfil_imprimir, ');
     ZQExecSQL.SQL.Add('menuperfil_ver=:menuperfil_ver, ');
+    ZQExecSQL.SQL.Add('menuperfil_clonar=:menuperfil_clonar, ');
     ZQExecSQL.SQL.Add('menu_id=:menu_id, ');
     ZQExecSQL.SQL.Add('perfil_id=:perfil_id ');
     ZQExecSQL.SQL.Add('where menuperfil_id=:menuperfil_id ');
@@ -168,6 +170,7 @@ begin
             ZQExecSQL.ParamByName('menuperfil_anular').AsString:=ZQSelect.FieldByName('menuperfil_anular').AsString;
             ZQExecSQL.ParamByName('menuperfil_imprimir').AsString:=ZQSelect.FieldByName('menuperfil_imprimir').AsString;
             ZQExecSQL.ParamByName('menuperfil_ver').AsString:=ZQSelect.FieldByName('menuperfil_ver').AsString;
+            ZQExecSQL.ParamByName('menuperfil_clonar').AsString:=ZQSelect.FieldByName('menuperfil_clonar').AsString;
             ZQExecSQL.ParamByName('menu_id').AsString:=ZQSelect.FieldByName('menu_id').AsString;
             ZQExecSQL.ParamByName('perfil_id').AsString:=id;
             ZQExecSQL.ExecSQL;
@@ -234,12 +237,14 @@ begin
           try
             path:=obtenerpath(menu.Items[i]);
             if not ZQSelect.Locate('menu_path',path,[]) then
-              menu.Items[i].Delete;
+              menu.Items[i].Delete
+            else
+              i:=i+1;
           finally
             menu.Update;
             itemscount:=menu.Items.Count;
           end;
-          i:=i+1;
+
       end;
     menu.FullCollapse;
 end;
@@ -289,6 +294,7 @@ begin
                 permisos.Checked[4]:=strtobool(ZQSelect.FieldByName('menuperfil_anular').AsString);
                 permisos.Checked[5]:=strtobool(ZQSelect.FieldByName('menuperfil_imprimir').AsString);
                 permisos.Checked[6]:=strtobool(ZQSelect.FieldByName('menuperfil_ver').AsString);
+                permisos.Checked[7]:=strtobool(ZQSelect.FieldByName('menuperfil_clonar').AsString);
 
             end
           else
@@ -361,6 +367,7 @@ begin
           ZQSelect.FieldByName('menuperfil_anular').AsString:=booltostr(estado);
           ZQSelect.FieldByName('menuperfil_imprimir').AsString:=booltostr(estado);
           ZQSelect.FieldByName('menuperfil_ver').AsString:=booltostr(estado);
+          ZQSelect.FieldByName('menuperfil_clonar').AsString:=booltostr(estado);
           ZQSelect.Post;
       end;
 
@@ -430,6 +437,7 @@ begin
                 ZQSelect.FieldByName('menuperfil_anular').AsString:=booltostr(permisos.Checked[4]);
                 ZQSelect.FieldByName('menuperfil_imprimir').AsString:=booltostr(permisos.Checked[5]);
                 ZQSelect.FieldByName('menuperfil_ver').AsString:=booltostr(permisos.Checked[6]);
+                ZQSelect.FieldByName('menuperfil_clonar').AsString:=booltostr(permisos.Checked[7]);
                 ZQSelect.Post;
 
             end;

@@ -2,7 +2,6 @@ inherited MenuConfig: TMenuConfig
   Caption = 'Configurar Menu Principal'
   ClientHeight = 375
   ClientWidth = 446
-  OnCreate = FormCreate
   ExplicitWidth = 462
   ExplicitHeight = 413
   PixelsPerInch = 96

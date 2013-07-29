@@ -9,7 +9,6 @@ inherited NotaCreditoCompra: TNotaCreditoCompra
   inherited panelgrilla: TAdvPanel
     Width = 885
     Height = 385
-    ExplicitLeft = 8
     ExplicitWidth = 885
     ExplicitHeight = 385
     FullHeight = 0
@@ -36,10 +35,10 @@ inherited NotaCreditoCompra: TNotaCreditoCompra
       ExplicitTop = 350
     end
     inherited documento_numero: TEdit
-      Left = 264
+      Left = 148
       Width = 145
       TabOrder = 4
-      ExplicitLeft = 264
+      ExplicitLeft = 148
       ExplicitWidth = 145
     end
     inherited documento_fecha: TDateTimePicker
@@ -105,8 +104,8 @@ inherited NotaCreditoCompra: TNotaCreditoCompra
       end
     end
     object documento_puntoventa: TEdit
-      Left = 208
-      Top = 34
+      Left = 92
+      Top = 82
       Width = 50
       Height = 21
       TabOrder = 3

@@ -910,7 +910,7 @@ object TRpReport
   end
   object TRpSection4: TRpSection
     Width = 15874
-    Height = 6
+    Height = 0
     SubReport = TRpSubReport0
     GroupName = 'GRUPO01'
     ChangeBool = False
@@ -1546,12 +1546,13 @@ object TRpReport
     ExportExpression = ''
   end
   object TRpExpression0: TRpExpression
-    Width = 1540
-    Height = 175
-    PosX = 455
-    PosY = 55
+    Width = 1940
+    Height = 180
+    PosX = 60
+    PosY = 60
     Type1Font = poHelvetica
     FontSize = 7
+    Alignment = 1
     WordWrap = True
     GroupName = 'GRUPO01'
     AutoExpand = False
