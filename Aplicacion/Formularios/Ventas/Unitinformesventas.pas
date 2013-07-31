@@ -30,6 +30,7 @@ type
     procedure InformeCostosporVentas;
     procedure InformeVentasPrecios;
     procedure InformedeVentas;
+    procedure InformedeVentasProductos;
     procedure InformedeCobros;
     procedure RankingProductos;
     procedure InformedeVentasCEquipos;
@@ -142,6 +143,40 @@ begin
       Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.cliente_id="'+cliente_id.codigo+'" ';
 
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero';
+
+
+    Princ.VCLReport1.Execute;
+
+end;
+
+procedure TInformesVentas.InformedeVentasProductos;
+begin
+    puntoventa_id.GenerarWhere;
+    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\informe_ventas_productos.rep';
+    Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
+    Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
+    Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
+    Princ.VCLReport1.Report.Params.ParamByName('CLIENTE_NOMBRE').AsString:=cliente_id.Text;
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, productos.'+Princ.CAMPO_ID_PRODUCTO+' as productocodigo from documentosventas '+
+                                             'inner join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
+                                             'inner join productos on documentoventadetalles.producto_id=productos.producto_id '+
+                                             'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                             'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                             'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                             'where documentosventas.documentoventa_estado<>"ANULADA" and '+
+                                             'tiposdocumento.tipodocu_nombre="'+TIPODOCU_FACTURAVENTA+'" and '+
+                                             'documentosventas.documentoventa_fecha >="'+FormatDateTime('yyyy-mm-dd',desde_fecha.Date)+'" and '+
+                                             'documentosventas.documentoventa_fecha <="'+FormatDateTime('yyyy-mm-dd',hasta_fecha.Date)+'" '+Princ.empresa_where+
+                                             ' and '+puntoventa_id.where;
+
+    if personal_id.Text<>'Todos' then
+      Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.personal_id="'+personal_id.codigo+'" ';
+
+    if cliente_id.Text<>'Todos' then
+      Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.cliente_id="'+cliente_id.codigo+'" ';
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by clientes.cliente_nombre, documentoventadetalles.documentoventadetalle_descripcion';
 
 
     Princ.VCLReport1.Execute;
@@ -298,18 +333,22 @@ begin
 
           end;
         3:begin
-              InformedeCobros;
+              InformedeVentasProductos;
 
           end;
         4:begin
-              RankingProductos;
+              InformedeCobros;
 
           end;
         5:begin
-              InformedeVentasCEquipos;
+              RankingProductos;
 
           end;
         6:begin
+              InformedeVentasCEquipos;
+
+          end;
+        7:begin
               InformedeEquipos;
 
           end;

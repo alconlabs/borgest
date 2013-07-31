@@ -2,6 +2,7 @@ inherited ListaProductos1: TListaProductos1
   Caption = 'Productos'
   ClientWidth = 1043
   ExplicitWidth = 1059
+  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -12,9 +13,6 @@ inherited ListaProductos1: TListaProductos1
       Left = 940
       ExplicitLeft = 940
       FullHeight = 0
-      inherited btnanular: TButton
-        Visible = False
-      end
     end
     inherited DBGrid1: TDBGrid
       Width = 940

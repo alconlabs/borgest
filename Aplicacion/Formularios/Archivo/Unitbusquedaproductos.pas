@@ -77,6 +77,7 @@ type
     ZQGrillaproducdepo_puntorepos: TFloatField;
     fil_producdepo_stockactual: TEdit;
     fil_proveedor_nombre: TEdit;
+    fil_producto_precioventa2: TEdit;
     procedure Button5Click(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure buscarKeyPress(Sender: TObject; var Key: Char);
@@ -176,6 +177,9 @@ begin
 
     if fil_producto_precioventa1.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_precioventa1 like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_precioventa1.Text,' ','%',false,0)+'%"';
+
+    if fil_producto_precioventa2.Text<>'' then
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_precioventa2 like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_precioventa2.Text,' ','%',false,0)+'%"';
 
     if fil_rubro_nombre.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and rubro_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_rubro_nombre.Text,' ','%',false,0)+'%"';

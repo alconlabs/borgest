@@ -103,6 +103,7 @@ inherited InformesVentas: TInformesVentas
         'Costos por Ventas'
         'Informe de Precios de Ventas'
         'Informe de ventas'
+        'Informe de ventas - Productos'
         'Informe de Cobros'
         'Ranking de Ventas de Productos'
         'Informe de ventas C/Equipos'
@@ -115,7 +116,8 @@ inherited InformesVentas: TInformesVentas
         '3'
         '4'
         '5'
-        '6')
+        '6'
+        '7')
     end
     object personal_id: TSqlComboBox
       Left = 84
