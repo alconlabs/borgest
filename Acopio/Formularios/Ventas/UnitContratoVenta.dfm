@@ -12,7 +12,7 @@ inherited contratoventa: Tcontratoventa
     Width = 753
     Height = 510
     ExplicitWidth = 753
-    ExplicitHeight = 430
+    ExplicitHeight = 510
     FullHeight = 0
     object Label2: TLabel [0]
       Left = 597
@@ -186,7 +186,6 @@ inherited contratoventa: Tcontratoventa
       Height = 13
       Alignment = taRightJustify
       Caption = 'Calidad'
-      Enabled = False
     end
     object Label20: TLabel [22]
       Left = 58
@@ -195,19 +194,18 @@ inherited contratoventa: Tcontratoventa
       Height = 13
       Alignment = taRightJustify
       Caption = 'Procedencia'
-      Enabled = False
     end
     inherited btncancelar: TButton
       Left = 676
       Top = 478
-      TabOrder = 18
+      TabOrder = 20
       ExplicitLeft = 676
       ExplicitTop = 478
     end
     inherited btnguardar: TButton
       Left = 595
       Top = 478
-      TabOrder = 17
+      TabOrder = 19
       OnClick = btnguardarClick
       ExplicitLeft = 595
       ExplicitTop = 478
@@ -344,7 +342,7 @@ inherited contratoventa: Tcontratoventa
       Top = 405
       Width = 316
       Height = 98
-      TabOrder = 16
+      TabOrder = 18
       Tag2 = 0
     end
     object especie_id: TSqlComboBox
@@ -412,7 +410,7 @@ inherited contratoventa: Tcontratoventa
       Top = 378
       Width = 316
       Height = 21
-      TabOrder = 15
+      TabOrder = 17
       Text = 'documento_lugarentrega'
       Tag2 = 0
     end
@@ -446,21 +444,19 @@ inherited contratoventa: Tcontratoventa
         'Condicional'
         'Conforme')
     end
-    object Edit1: TEdit
+    object documentos_calidadobservacion: TEdit
       Left = 124
       Top = 295
-      Width = 121
+      Width = 316
       Height = 21
-      Enabled = False
-      TabOrder = 19
+      TabOrder = 15
     end
-    object Edit2: TEdit
+    object documento_procedencia: TEdit
       Left = 124
       Top = 319
       Width = 316
       Height = 21
-      Enabled = False
-      TabOrder = 20
+      TabOrder = 16
     end
   end
   inherited ZQSelect: TZQuery

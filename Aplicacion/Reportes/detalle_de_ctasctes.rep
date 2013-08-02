@@ -354,8 +354,8 @@ object TRpReport
     ExportExpression = ''
   end
   object TRpExpression2: TRpExpression
-    Width = 1196
-    Height = 221
+    Width = 570
+    Height = 215
     PosX = 2280
     PosY = 0
     Type1Font = poHelvetica
@@ -378,9 +378,9 @@ object TRpReport
     ExportExpression = ''
   end
   object TRpExpression3: TRpExpression
-    Width = 851
-    Height = 221
-    PosX = 4675
+    Width = 1480
+    Height = 220
+    PosX = 4045
     PosY = 0
     Type1Font = poHelvetica
     Alignment = 4
@@ -405,7 +405,7 @@ object TRpReport
   object TRpShape0: TRpShape
     Width = 56
     Height = 214
-    PosX = 3532
+    PosX = 2905
     PosY = 0
     Align = rpaltopbottom
     BrushStyle = 1
@@ -770,7 +770,7 @@ object TRpReport
   object TRpShape1: TRpShape
     Width = 56
     Height = 214
-    PosX = 4618
+    PosX = 3990
     PosY = 0
     Align = rpaltopbottom
     BrushStyle = 1
@@ -835,7 +835,7 @@ object TRpReport
   object TRpExpression4: TRpExpression
     Width = 968
     Height = 221
-    PosX = 3591
+    PosX = 2965
     PosY = 0
     Type1Font = poHelvetica
     Alignment = 2
@@ -921,22 +921,22 @@ object TRpReport
     WideText = 'Fec. Venc.'
   end
   object TRpLabel3: TRpLabel
-    Width = 1196
-    Height = 229
+    Width = 570
+    Height = 230
     PosX = 2280
-    PosY = 226
+    PosY = 225
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    WideText = 'Documento'
+    WideText = 'Doc.'
   end
   object TRpLabel4: TRpLabel
-    Width = 855
-    Height = 229
-    PosX = 4675
+    Width = 1485
+    Height = 225
+    PosX = 4045
     PosY = 230
     Type1Font = poHelvetica
     PrintCondition = ''
@@ -962,8 +962,8 @@ object TRpReport
   object TRpShape8: TRpShape
     Width = 56
     Height = 255
-    PosX = 4618
-    PosY = 226
+    PosX = 3990
+    PosY = 230
     Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
@@ -975,8 +975,8 @@ object TRpReport
   object TRpShape9: TRpShape
     Width = 56
     Height = 255
-    PosX = 3532
-    PosY = 226
+    PosX = 2905
+    PosY = 230
     Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
@@ -1091,8 +1091,8 @@ object TRpReport
   object TRpLabel11: TRpLabel
     Width = 965
     Height = 225
-    PosX = 3591
-    PosY = 226
+    PosX = 2965
+    PosY = 230
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''

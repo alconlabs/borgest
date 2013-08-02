@@ -53,3 +53,15 @@ ALTER TABLE `documentos` ADD COLUMN `documento_nogravado` FLOAT(20,4) NULL DEFAU
 Replace config set config_valor='0', config_nombre='LOGDB';
 13;
 ALTER TABLE `documentos` ADD COLUMN `documento_puntoventa` INT(4) NULL DEFAULT 0  AFTER `documento_nogravado`;
+14;
+ALTER TABLE `documentos` 
+ADD COLUMN `documento_kgbrutosdestino` FLOAT(20,4) NULL DEFAULT 0  AFTER `documento_puntoventa` , 
+ADD COLUMN `documento_netodescargado` FLOAT(20,4) NULL DEFAULT 0  AFTER `documento_kgbrutosdestino`;
+15;
+ALTER TABLE `documentos` 
+ADD COLUMN `documento_fechacarga` DATE NULL DEFAULT NULL  AFTER `documento_netodescargado` , 
+ADD COLUMN `documento_fechaentrega` DATE NULL DEFAULT NULL  AFTER `documento_fechacarga`;
+16;
+ALTER TABLE `documentos` 
+ADD COLUMN `documento_procedencia` VARCHAR(200) NULL DEFAULT NULL  AFTER `documento_fechaentrega` , 
+ADD COLUMN `documentos_calidadobservacion` VARCHAR(200) NULL DEFAULT NULL  AFTER `documento_procedencia`;

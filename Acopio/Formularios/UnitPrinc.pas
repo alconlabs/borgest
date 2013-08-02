@@ -421,6 +421,11 @@ function TPrinc.CargarDocumentoDocu(entidad_id: string; QDocumentoDocus:TDataset
 begin
     DocumentosPendientes:=TDocumentosPendientes.Create(self);
     DocumentosPendientes.entidad_id:=entidad_id;
+    if tipodocu_nombre='Contrato de Compra' then
+      DocumentosPendientes.Caption:='Contratos de Compra de '+Princ.buscar('select entidad_razonsocial from entidades where entidad_id="'+entidad_id+'"','entidad_razonsocial');
+
+    if tipodocu_nombre='Contrato de Venta' then
+      DocumentosPendientes.Caption:='Contratos de Venta';
     DocumentosPendientes.especie_id:=especie_id;
     DocumentosPendientes.tipodocu_nombre:=tipodocu_nombre;
     DocumentosPendientes.ActivarConsulta;

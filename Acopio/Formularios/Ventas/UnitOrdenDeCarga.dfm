@@ -187,6 +187,7 @@ inherited OrdendeCarga: TOrdendeCarga
       Height = 21
       Date = 40384.000000000000000000
       Time = 40384.000000000000000000
+      Enabled = False
       TabOrder = 5
     end
     object puntoventa_id: TSqlComboBox
@@ -706,6 +707,7 @@ inherited OrdendeCarga: TOrdendeCarga
       object TabSheet2: TTabSheet
         Caption = 'Origen'
         ImageIndex = 1
+        ExplicitLeft = 12
         object Label23: TLabel
           Left = 2
           Top = 0
@@ -713,6 +715,14 @@ inherited OrdendeCarga: TOrdendeCarga
           Height = 13
           Alignment = taRightJustify
           Caption = 'Contratos de Compra'
+        end
+        object Label36: TLabel
+          Left = 12
+          Top = 167
+          Width = 81
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Fecha de Carga'
         end
         object DBGrid1: TDBGrid
           Left = 2
@@ -792,6 +802,99 @@ inherited OrdendeCarga: TOrdendeCarga
           TabOrder = 0
           OnClick = BtnAsignarContratosComprasClick
         end
+        object documento_fechacarga: TDateTimePicker
+          Left = 98
+          Top = 164
+          Width = 106
+          Height = 21
+          Date = 40384.000000000000000000
+          Time = 40384.000000000000000000
+          TabOrder = 2
+        end
+      end
+      object TabSheet5: TTabSheet
+        Caption = 'Descarga'
+        ImageIndex = 3
+        object Label33: TLabel
+          Left = 12
+          Top = 16
+          Width = 49
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Kg. Brutos'
+        end
+        object Label34: TLabel
+          Left = 39
+          Top = 40
+          Width = 22
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Tara'
+        end
+        object Label35: TLabel
+          Left = 38
+          Top = 64
+          Width = 23
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Neto'
+        end
+        object documento_kgbrutosdestino: TMoneyEdit
+          Left = 74
+          Top = 13
+          Width = 122
+          Height = 21
+          CalculatorLook.ButtonWidth = 24
+          CalculatorLook.ButtonHeight = 24
+          CalculatorLook.ButtonColor = clSilver
+          CalculatorLook.Color = clWhite
+          CalculatorLook.Flat = False
+          CalculatorLook.Font.Charset = DEFAULT_CHARSET
+          CalculatorLook.Font.Color = clWindowText
+          CalculatorLook.Font.Height = -11
+          CalculatorLook.Font.Name = 'Tahoma'
+          CalculatorLook.Font.Style = []
+          TabOrder = 0
+          Version = '1.1.0.1'
+          OnExit = documento_kgbrutosdestinoExit
+        end
+        object documento_tara2: TMoneyEdit
+          Left = 74
+          Top = 37
+          Width = 122
+          Height = 21
+          CalculatorLook.ButtonWidth = 24
+          CalculatorLook.ButtonHeight = 24
+          CalculatorLook.ButtonColor = clSilver
+          CalculatorLook.Color = clWhite
+          CalculatorLook.Flat = False
+          CalculatorLook.Font.Charset = DEFAULT_CHARSET
+          CalculatorLook.Font.Color = clWindowText
+          CalculatorLook.Font.Height = -11
+          CalculatorLook.Font.Name = 'Tahoma'
+          CalculatorLook.Font.Style = []
+          ReadOnly = True
+          TabOrder = 1
+          Version = '1.1.0.1'
+        end
+        object documento_netodescargado: TMoneyEdit
+          Left = 74
+          Top = 61
+          Width = 122
+          Height = 21
+          CalculatorLook.ButtonWidth = 24
+          CalculatorLook.ButtonHeight = 24
+          CalculatorLook.ButtonColor = clSilver
+          CalculatorLook.Color = clWhite
+          CalculatorLook.Flat = False
+          CalculatorLook.Font.Charset = DEFAULT_CHARSET
+          CalculatorLook.Font.Color = clWindowText
+          CalculatorLook.Font.Height = -11
+          CalculatorLook.Font.Name = 'Tahoma'
+          CalculatorLook.Font.Style = []
+          TabOrder = 2
+          Version = '1.1.0.1'
+        end
       end
       object TabSheet3: TTabSheet
         Caption = 'Destino'
@@ -803,6 +906,14 @@ inherited OrdendeCarga: TOrdendeCarga
           Height = 13
           Alignment = taRightJustify
           Caption = 'Contratos de Venta'
+        end
+        object Label37: TLabel
+          Left = 8
+          Top = 167
+          Width = 85
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Fecha de Entrega'
         end
         object DBGrid2: TDBGrid
           Left = 2
@@ -882,6 +993,15 @@ inherited OrdendeCarga: TOrdendeCarga
           TabOrder = 0
           OnClick = BtnAsignarContratosVentasClick
         end
+        object documento_fechaentrega: TDateTimePicker
+          Left = 98
+          Top = 164
+          Width = 106
+          Height = 21
+          Date = 40384.000000000000000000
+          Time = 40384.000000000000000000
+          TabOrder = 2
+        end
       end
     end
   end
@@ -902,7 +1022,7 @@ inherited OrdendeCarga: TOrdendeCarga
         Name = 'documento_id'
         ParamType = ptUnknown
       end>
-    Left = 456
+    Left = 392
     Top = 64
     ParamData = <
       item

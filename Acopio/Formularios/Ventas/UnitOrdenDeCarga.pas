@@ -304,6 +304,17 @@ type
     documento_transptarifaflete: TMoneyEdit;
     Label32: TLabel;
     documento_chofercuit: TEdit;
+    TabSheet5: TTabSheet;
+    Label33: TLabel;
+    documento_kgbrutosdestino: TMoneyEdit;
+    Label34: TLabel;
+    documento_tara2: TMoneyEdit;
+    Label35: TLabel;
+    documento_netodescargado: TMoneyEdit;
+    Label36: TLabel;
+    documento_fechacarga: TDateTimePicker;
+    Label37: TLabel;
+    documento_fechaentrega: TDateTimePicker;
     procedure btnguardarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -314,6 +325,7 @@ type
     procedure documento_kgbrutosExit(Sender: TObject);
     procedure BtnAsignarContratosComprasClick(Sender: TObject);
     procedure BtnAsignarContratosVentasClick(Sender: TObject);
+    procedure documento_kgbrutosdestinoExit(Sender: TObject);
   private
     { Private declarations }
     function control:boolean;
@@ -369,6 +381,8 @@ begin
     ZQExecSQL.Sql.Add('documento_tipodestino=:documento_tipodestino, ');
     ZQExecSQL.Sql.Add('documento_numerocartaporte=:documento_numerocartaporte, ');
     ZQExecSQL.Sql.Add('documento_kgbrutos=:documento_kgbrutos, ');
+    ZQExecSQL.Sql.Add('documento_kgbrutosdestino=:documento_kgbrutosdestino, ');
+    ZQExecSQL.Sql.Add('documento_netodescargado=:documento_netodescargado, ');
     ZQExecSQL.Sql.Add('documento_tara=:documento_tara, ');
     ZQExecSQL.Sql.Add('especie_id=:especie_id, ');
     ZQExecSQL.Sql.Add('documento_tipooperacion=:documento_tipooperacion, ');
@@ -380,6 +394,8 @@ begin
     ZQExecSQL.Sql.Add('documento_transptarifaflete=:documento_transptarifaflete, ');
     ZQExecSQL.Sql.Add('documento_transpanticipo=:documento_transpanticipo, ');
     ZQExecSQL.Sql.Add('documento_cartaportetarifaflete=:documento_cartaportetarifaflete, ');
+    ZQExecSQL.Sql.Add('documento_fechacarga=:documento_fechacarga, ');
+    ZQExecSQL.Sql.Add('documento_fechaentrega=:documento_fechaentrega, ');
     ZQExecSQL.Sql.Add('documento_id=:documento_id ');
     ZQExecSQL.ParamByName('entidadtransportista_id').AsString:=entidadtransportista_id.codigo;
     ZQExecSQL.ParamByName('entidad_id').AsString:=entidad_id.codigo;
@@ -415,6 +431,10 @@ begin
     ZQExecSQL.ParamByName('documento_cartaportetarifaflete').AsString:=documento_cartaportetarifaflete.Text;
     ZQExecSQL.ParamByName('documento_tipooperacion').AsString:=documento_tipooperacion.Text;
     ZQExecSQL.ParamByName('documento_id').AsString:=id;
+    ZQExecSQL.ParamByName('documento_kgbrutosdestino').AsString:=documento_kgbrutosdestino.Text;
+    ZQExecSQL.ParamByName('documento_netodescargado').AsString:=documento_netodescargado.Text;
+    ZQExecSQL.ParamByName('documento_fechacarga').AsString:=formatdatetime('yyyy-mm-dd',documento_fechacarga.Date);
+    ZQExecSQL.ParamByName('documento_fechaentrega').AsString:=formatdatetime('yyyy-mm-dd',documento_fechaentrega.Date);
     ZQExecSQL.ExecSql;
 
 
@@ -509,6 +529,8 @@ begin
     ZQExecSQL.Sql.Add('documento_tipodestino=:documento_tipodestino, ');
     ZQExecSQL.Sql.Add('documento_numerocartaporte=:documento_numerocartaporte, ');
     ZQExecSQL.Sql.Add('documento_kgbrutos=:documento_kgbrutos, ');
+    ZQExecSQL.Sql.Add('documento_kgbrutosdestino=:documento_kgbrutosdestino, ');
+    ZQExecSQL.Sql.Add('documento_netodescargado=:documento_netodescargado, ');
     ZQExecSQL.Sql.Add('documento_tara=:documento_tara, ');
     ZQExecSQL.Sql.Add('especie_id=:especie_id, ');
     ZQExecSQL.Sql.Add('documento_tipooperacion=:documento_tipooperacion, ');
@@ -525,6 +547,8 @@ begin
     ZQExecSQL.Sql.Add('documento_transptarifaflete=:documento_transptarifaflete, ');
     ZQExecSQL.Sql.Add('documento_transpanticipo=:documento_transpanticipo, ');
     ZQExecSQL.Sql.Add('documento_cartaportetarifaflete=:documento_cartaportetarifaflete, ');
+    ZQExecSQL.Sql.Add('documento_fechacarga=:documento_fechacarga, ');
+    ZQExecSQL.Sql.Add('documento_fechaentrega=:documento_fechaentrega, ');
     ZQExecSQL.Sql.Add('documento_fechacumplimiento=:documento_fechacumplimiento ');
     ZQExecSQL.Sql.Add('where documento_id=:documento_id ');
     ZQExecSQL.ParamByName('entidad_id').AsString:=entidad_id.codigo;
@@ -561,6 +585,10 @@ begin
     ZQExecSQL.ParamByName('documento_transpanticipo').AsString:=documento_transpanticipo.Text;
     ZQExecSQL.ParamByName('documento_cartaportetarifaflete').AsString:=documento_cartaportetarifaflete.Text;
     ZQExecSQL.ParamByName('documento_id').AsString:=id;
+    ZQExecSQL.ParamByName('documento_kgbrutosdestino').AsString:=documento_kgbrutosdestino.Text;
+    ZQExecSQL.ParamByName('documento_netodescargado').AsString:=documento_netodescargado.Text;
+    ZQExecSQL.ParamByName('documento_fechacarga').AsString:=formatdatetime('yyyy-mm-dd',documento_fechacarga.Date);
+    ZQExecSQL.ParamByName('documento_fechaentrega').AsString:=formatdatetime('yyyy-mm-dd',documento_fechaentrega.Date);
     ZQExecSQL.ExecSql;
 
 
@@ -723,9 +751,18 @@ begin
 
 
     documento_fecha.Date:=date;
+    documento_fechacarga.Date:=Date;
+    documento_fechaentrega.Date:=Date;
 
     if abm=1 then
       begin
+          entidad_id.Confsql.Text:='select * from entidades '+
+                                   'inner join documentos on entidades.entidad_id=documentos.entidad_id '+
+                                   'inner join tiposdocumento on documentos.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                   'where tipodocu_nombre="Contrato de Compra" and documento_estado="PENDIENTE" '+
+                                   'order by entidad_razonsocial';
+          entidad_id.llenarcombo;
+          entidad_id.ItemIndex:=-1;
           documento_fecha.Date:=date;
           documento_fechavenc.Date:=Date+30;
           documento_fechacumplimiento.date:=Date+30;
@@ -778,6 +815,10 @@ begin
           documento_tara.Text:=ZQSelect.FieldByName('documento_tara').AsString;
           entidadtransportista_id.Buscar(ZQSelect.FieldByName('entidadtransportista_id').AsString);
 
+          documento_kgbrutosdestino.Text:=ZQSelect.FieldByName('documento_kgbrutosdestino').AsString;
+          documento_tara2.Text:=ZQSelect.FieldByName('documento_tara').AsString;
+          documento_netodescargado.Text:=ZQSelect.FieldByName('documento_netodescargado').AsString;
+
           entidaddadorcarga_id.Buscar(ZQSelect.FieldByName('entidaddadorcarga_id').AsString);
           documento_chofer.Text:=ZQSelect.FieldByName('documento_chofer').AsString;
           documento_chofercuit.Text:=ZQSelect.FieldByName('documento_chofercuit').AsString;
@@ -786,6 +827,9 @@ begin
           documento_transptarifaflete.Text:=ZQSelect.FieldByName('documento_transptarifaflete').AsString;
           documento_transpanticipo.Text:=ZQSelect.FieldByName('documento_transpanticipo').AsString;
           documento_cartaportetarifaflete.Text:=ZQSelect.FieldByName('documento_cartaportetarifaflete').AsString;
+
+          documento_fechacarga.Date:=ZQSelect.FieldByName('documento_fechacarga').AsDateTime;
+          documento_fechaentrega.Date:=ZQSelect.FieldByName('documento_fechaentrega').AsDateTime;
 
       end;
 
@@ -879,6 +923,8 @@ begin
         4:btnguardar.Caption:='Imprimir';
         5:btnguardar.Caption:='Anular';
     end;
+
+    PageControl1.ActivePage:=TabSheet1;
 end;
 
 procedure TOrdendeCarga.anular;
@@ -908,10 +954,17 @@ end;
 
 
 
+procedure TOrdendeCarga.documento_kgbrutosdestinoExit(Sender: TObject);
+begin
+  inherited;
+    documento_netodescargado.Value:=documento_kgbrutosdestino.Value-documento_tara.Value;
+end;
+
 procedure TOrdendeCarga.documento_kgbrutosExit(Sender: TObject);
 begin
   inherited;
     documento_total.Value:=documento_kgbrutos.Value-documento_tara.Value;
+    documento_tara2.Text:=documento_tara.Text;
 end;
 
 procedure TOrdendeCarga.btnguardarClick(Sender: TObject);

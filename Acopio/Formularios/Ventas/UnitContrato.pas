@@ -49,9 +49,9 @@ type
     documento_condicioncalidad: TGTBComboBox;
     Label17: TLabel;
     Label19: TLabel;
-    Edit1: TEdit;
+    documentos_calidadobservacion: TEdit;
     Label20: TLabel;
-    Edit2: TEdit;
+    documento_procedencia: TEdit;
     procedure btnguardarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -113,6 +113,8 @@ begin
     ZQExecSQL.Sql.Add('documento_tara=:documento_tara, ');
     ZQExecSQL.Sql.Add('especie_id=:especie_id, ');
     ZQExecSQL.Sql.Add('documento_tipooperacion=:documento_tipooperacion, ');
+    ZQExecSQL.Sql.Add('documentos_calidadobservacion=:documentos_calidadobservacion, ');
+    ZQExecSQL.Sql.Add('documento_procedencia=:documento_procedencia, ');
     ZQExecSQL.Sql.Add('documento_id=:documento_id ');
     ZQExecSQL.ParamByName('entidadtransportista_id').AsString:='0';
     ZQExecSQL.ParamByName('entidad_id').AsString:=entidad_id.codigo;
@@ -139,6 +141,8 @@ begin
     ZQExecSQL.ParamByName('documento_tara').AsString:='0';
     ZQExecSQL.ParamByName('especie_id').AsString:=especie_id.codigo;
     ZQExecSQL.ParamByName('documento_tipooperacion').AsString:=documento_tipooperacion.Text;
+    ZQExecSQL.ParamByName('documentos_calidadobservacion').AsString:=documentos_calidadobservacion.Text;
+    ZQExecSQL.ParamByName('documento_procedencia').AsString:=documento_procedencia.Text;
     ZQExecSQL.ParamByName('documento_id').AsString:=id;
     ZQExecSQL.ExecSql;
 
@@ -178,6 +182,8 @@ begin
     ZQExecSQL.Sql.Add('documento_preciounitario=:documento_preciounitario, ');
     ZQExecSQL.Sql.Add('documento_moneda=:documento_moneda, ');
     ZQExecSQL.Sql.Add('documento_lugarentrega=:documento_lugarentrega, ');
+    ZQExecSQL.Sql.Add('documentos_calidadobservacion=:documentos_calidadobservacion, ');
+    ZQExecSQL.Sql.Add('documento_procedencia=:documento_procedencia, ');
     ZQExecSQL.Sql.Add('documento_fechacumplimiento=:documento_fechacumplimiento ');
     ZQExecSQL.Sql.Add('where documento_id=:documento_id ');
     ZQExecSQL.ParamByName('entidad_id').AsString:=entidad_id.codigo;
@@ -204,6 +210,8 @@ begin
     ZQExecSQL.ParamByName('documento_tara').AsString:='0';
     ZQExecSQL.ParamByName('especie_id').AsString:=especie_id.codigo;
     ZQExecSQL.ParamByName('documento_tipooperacion').AsString:=documento_tipooperacion.Text;
+    ZQExecSQL.ParamByName('documentos_calidadobservacion').AsString:=documentos_calidadobservacion.Text;
+    ZQExecSQL.ParamByName('documento_procedencia').AsString:=documento_procedencia.Text;
     ZQExecSQL.ParamByName('documento_id').AsString:=id;
     ZQExecSQL.ExecSql;
 
@@ -307,6 +315,8 @@ begin
           documento_moneda.ItemIndex:=-1;
           documento_lugarentrega.Text:='PUERTO DE ROSARIO';
           documento_observaciones.Text:='';
+          documentos_calidadobservacion.Text:='';
+          documento_procedencia.Text:='';
       end
     else
       begin
@@ -334,7 +344,8 @@ begin
 
           documento_tipooperacion.Text:=ZQSelect.FieldByName('documento_tipooperacion').AsString;
           documento_condicioncalidad.Text:=ZQSelect.FieldByName('documento_condicioncalidad').AsString;
-
+          documentos_calidadobservacion.Text:=ZQSelect.FieldByName('documentos_calidadobservacion').AsString;
+          documento_procedencia.Text:=ZQSelect.FieldByName('documento_procedencia').AsString;
 
       end;
 end;
