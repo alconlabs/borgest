@@ -400,7 +400,8 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitListaClientes1, UnitListaProductos1, UnitListaCalculosPrecios1,
   UnitListaPoliticasdePrecios, UnitListaProveedores1, Unitlistalocalidades,
   UnitListaProvincias, UnitListaFacturasDeVenta, UnitListaRecibosdeVenta,
-  UnitListaFacturasdeCompras, UnitNotaPedidoComisiones;
+  UnitListaFacturasdeCompras, UnitNotaPedidoComisiones,
+  UnitListaNotasCreditodeVentas;
 
 {$R *.dfm}
 
@@ -3163,9 +3164,11 @@ end;
 procedure TPrinc.btnnotasdecreditoClick(Sender: TObject);
 begin
     try
-      listanotacreditoventa:=Tlistanotacreditoventa.Create(self);
+      ListaNotasCreditodeVentas:=TListaNotasCreditodeVentas.Create(self);
     finally
-      listanotacreditoventa.Show;
+      ListaNotasCreditodeVentas.tipodocu_nombre:=TIPODOCU_NOTACREDITOVENTA;
+      ListaNotasCreditodeVentas.campo_id:='documentoventa_id';
+      ListaNotasCreditodeVentas.Show;
     end;
 end;
 

@@ -73,6 +73,8 @@ object ActualizarProductos: TActualizarProductos
       object TabSheet2: TTabSheet
         Caption = 'Actualizar Productos'
         ImageIndex = 1
+        ExplicitLeft = 8
+        ExplicitTop = 28
         object Label3: TLabel
           Left = 53
           Top = 12
@@ -347,8 +349,8 @@ object ActualizarProductos: TActualizarProductos
           OnClick = btnfiltrarClick
         end
         object GroupBox1: TGroupBox
-          Left = 275
-          Top = 354
+          Left = 3
+          Top = 378
           Width = 182
           Height = 119
           Caption = 'Precio Compra'
@@ -431,8 +433,8 @@ object ActualizarProductos: TActualizarProductos
           end
         end
         object GroupBox2: TGroupBox
-          Left = 463
-          Top = 354
+          Left = 191
+          Top = 378
           Width = 182
           Height = 119
           Caption = 'Precio Venta'
@@ -502,8 +504,8 @@ object ActualizarProductos: TActualizarProductos
           end
         end
         object GroupBox3: TGroupBox
-          Left = 652
-          Top = 354
+          Left = 380
+          Top = 378
           Width = 182
           Height = 119
           Caption = 'Calculo de precio'
@@ -562,8 +564,8 @@ object ActualizarProductos: TActualizarProductos
           end
         end
         object GroupBox4: TGroupBox
-          Left = 840
-          Top = 354
+          Left = 568
+          Top = 378
           Width = 182
           Height = 119
           Caption = 'Politica de Precio'
@@ -600,7 +602,6 @@ object ActualizarProductos: TActualizarProductos
             Width = 91
             Height = 25
             Caption = 'Aplicar'
-            Enabled = False
             TabOrder = 0
             OnClick = btnAplicarPoliticaClick
           end
@@ -632,13 +633,70 @@ object ActualizarProductos: TActualizarProductos
           OnClick = btnquitarAactualizarClick
         end
         object btnrecalculartodo: TButton
-          Left = 0
-          Top = 399
+          Left = 3
+          Top = 514
           Width = 238
           Height = 25
           Caption = 'Recalcular precios de TODOS los productos'
           TabOrder = 16
           OnClick = btnrecalculartodoClick
+        end
+        object bnteliminarproductos: TButton
+          Left = 247
+          Top = 514
+          Width = 110
+          Height = 25
+          Caption = 'Eliminar Productos'
+          TabOrder = 17
+          OnClick = bnteliminarproductosClick
+        end
+        object GroupBox5: TGroupBox
+          Left = 756
+          Top = 378
+          Width = 182
+          Height = 119
+          Caption = 'Rubro'
+          TabOrder = 18
+          object Label37: TLabel
+            Left = 0
+            Top = 50
+            Width = 126
+            Height = 13
+            Caption = 'Asignar nuevo Rubro'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold, fsItalic]
+            ParentFont = False
+          end
+          object BtnAplicarRubro: TButton
+            Left = 3
+            Top = 83
+            Width = 91
+            Height = 25
+            Caption = 'Aplicar'
+            Enabled = False
+            TabOrder = 0
+            OnClick = btnAplicarPoliticaClick
+          end
+          object nuevo_rubro_id: TSqlComboBox
+            Left = 7
+            Top = 17
+            Width = 151
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 1
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              'select * from rubros'
+              'order by rubro_nombre')
+            ConfTabla = 'rubros'
+            Confcampo_codigo = 'rubro_id'
+            Confcampo_nomb = 'rubro_nombre'
+            Tag2 = 0
+          end
         end
       end
       object TabSheet1: TTabSheet

@@ -85,7 +85,7 @@ object estadoctas: Testadoctas
       Width = 608
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -322,7 +322,7 @@ object estadoctas: Testadoctas
       Width = 209
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 4
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -433,6 +433,15 @@ object estadoctas: Testadoctas
       ConfIni = Princ.ini1
       Tag2 = 0
       ConfTodosCheckeados = True
+    end
+    object BtnDetalleImputacion: TButton
+      Left = 533
+      Top = 423
+      Width = 124
+      Height = 25
+      Caption = 'Detalle de Imputacion'
+      TabOrder = 8
+      OnClick = BtnDetalleImputacionClick
     end
   end
   object ZQuery2: TZQuery
@@ -659,5 +668,53 @@ object estadoctas: Testadoctas
       'order by puntoventa_numero')
     Left = 448
     Top = 176
+  end
+  object ZQDebitos: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select *, '
+      
+        'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas' +
+        '.documentoventa_saldo,documentosventas.documentoventa_saldo*-1))' +
+        ' as saldo'
+      'from documentosventas'
+      
+        'inner join clientes on documentosventas.cliente_id=clientes.clie' +
+        'nte_id'
+      
+        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
+        'ocumento.tipodocu_id'
+      'where documentoventa_estadO='#39'PENDIENTE'#39
+      'and tiposdocumento.tipodocu_debcred<>"N/A"'
+      'and 1=2'
+      'group by clientes.cliente_id')
+    Params = <>
+    Left = 432
+    Top = 352
+  end
+  object ZQCreditos: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select *, '
+      
+        'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas' +
+        '.documentoventa_saldo,documentosventas.documentoventa_saldo*-1))' +
+        ' as saldo'
+      'from documentosventas'
+      
+        'inner join clientes on documentosventas.cliente_id=clientes.clie' +
+        'nte_id'
+      
+        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
+        'ocumento.tipodocu_id'
+      'where documentoventa_estadO='#39'PENDIENTE'#39
+      'and tiposdocumento.tipodocu_debcred<>"N/A"'
+      'and 1=2'
+      'group by clientes.cliente_id')
+    Params = <>
+    Left = 528
+    Top = 352
   end
 end

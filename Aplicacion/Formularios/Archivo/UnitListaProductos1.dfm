@@ -28,7 +28,7 @@ inherited ListaProductos1: TListaProductos1
           Expanded = False
           FieldName = 'producto_nombre'
           Title.Caption = 'Nombre'
-          Width = 380
+          Width = 360
           Visible = True
         end
         item
@@ -47,16 +47,23 @@ inherited ListaProductos1: TListaProductos1
         end
         item
           Expanded = False
+          FieldName = 'producto_precioventa2'
+          Title.Caption = 'P.Venta2'
+          Width = 78
+          Visible = True
+        end
+        item
+          Expanded = False
           FieldName = 'rubro_nombre'
           Title.Caption = 'Rubro'
-          Width = 110
+          Width = 100
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'proveedor_nombre'
           Title.Caption = 'Proveedor'
-          Width = 160
+          Width = 140
           Visible = True
         end>
     end
@@ -71,21 +78,22 @@ inherited ListaProductos1: TListaProductos1
       object fil_producto_nombre: TEdit
         Left = 85
         Top = 0
-        Width = 380
+        Width = 360
         Height = 21
         Align = alLeft
         TabOrder = 2
       end
       object fil_producto_preciocosto: TEdit
-        Left = 465
+        Left = 445
         Top = 0
         Width = 78
         Height = 21
         Align = alLeft
         TabOrder = 3
+        ExplicitLeft = 465
       end
       object fil_producto_precioventa1: TEdit
-        Left = 543
+        Left = 523
         Top = 0
         Width = 78
         Height = 21
@@ -93,20 +101,32 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 4
       end
       object fil_rubro_nombre: TEdit
-        Left = 621
+        Left = 679
         Top = 0
-        Width = 110
+        Width = 100
         Height = 21
         Align = alLeft
         TabOrder = 5
+        ExplicitLeft = 601
       end
       object fil_proveedor_nombre: TEdit
-        Left = 731
+        Left = 779
         Top = 0
-        Width = 160
+        Width = 140
         Height = 21
         Align = alLeft
         TabOrder = 6
+        ExplicitLeft = 711
+      end
+      object fil_producto_precioventa2: TEdit
+        Left = 601
+        Top = 0
+        Width = 78
+        Height = 21
+        Align = alLeft
+        TabOrder = 7
+        ExplicitLeft = 627
+        ExplicitTop = -6
       end
     end
   end

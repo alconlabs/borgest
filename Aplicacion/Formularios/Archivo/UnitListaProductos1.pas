@@ -14,6 +14,7 @@ type
     fil_producto_precioventa1: TEdit;
     fil_rubro_nombre: TEdit;
     fil_proveedor_nombre: TEdit;
+    fil_producto_precioventa2: TEdit;
     procedure btnfiltrarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnnuevoClick(Sender: TObject);
@@ -76,6 +77,9 @@ begin
 
     if fil_producto_precioventa1.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_precioventa1 like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_producto_precioventa1.Text,' ','%',false,0)+'%"';
+
+    if fil_producto_precioventa2.Text<>'' then
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_precioventa2 like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_producto_precioventa2.Text,' ','%',false,0)+'%"';
 
     if fil_rubro_nombre.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and rubro_nombre like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_rubro_nombre.Text,' ','%',false,0)+'%"';

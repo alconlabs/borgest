@@ -106,7 +106,8 @@ uses
   UnitListaFacturasDeVenta in 'Formularios\Ventas\UnitListaFacturasDeVenta.pas' {ListaFacturasDeVenta},
   UnitListaRecibosdeVenta in 'Formularios\Ventas\UnitListaRecibosdeVenta.pas' {ListaRecibosdeVenta},
   UnitListaFacturasdeCompras in 'Formularios\Compras\UnitListaFacturasdeCompras.pas' {LIstaFacturasDeCompras},
-  Unitfacturascompra in 'Formularios\Compras\Unitfacturascompra.pas' {facturacompra};
+  Unitfacturascompra in 'Formularios\Compras\Unitfacturascompra.pas' {facturacompra},
+  UnitListaNotasCreditodeVentas in 'Formularios\Ventas\UnitListaNotasCreditodeVentas.pas' {ListaNotasCreditodeVentas};
 
 {$R *.res}
 

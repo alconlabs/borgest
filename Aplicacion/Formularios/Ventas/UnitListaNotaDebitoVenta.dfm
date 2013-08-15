@@ -13,6 +13,9 @@ inherited listanotadebitoventa: Tlistanotadebitoventa
       Left = 954
       ExplicitLeft = 954
       FullHeight = 0
+      inherited btnanular: TButton
+        Visible = True
+      end
     end
     inherited DBGrid1: TDBGrid
       Width = 954
@@ -117,6 +120,7 @@ inherited listanotadebitoventa: Tlistanotadebitoventa
   end
   inherited StatusBar1: TStatusBar
     Width = 1057
+    ExplicitWidth = 1057
   end
   inherited ZQGrilla: TZQuery
     SQL.Strings = (

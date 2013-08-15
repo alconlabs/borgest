@@ -13,6 +13,7 @@ object saldoclientes: Tsaldoclientes
   OldCreateOrder = False
   Position = poMainFormCenter
   OnClose = FormClose
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -187,13 +188,14 @@ object saldoclientes: Tsaldoclientes
       State = cbChecked
       TabOrder = 7
     end
-    object Button1: TButton
+    object BtnDetalleImputacion: TButton
       Left = 165
       Top = 439
       Width = 124
       Height = 25
       Caption = 'Detalle de Imputacion'
       TabOrder = 8
+      OnClick = BtnDetalleImputacionClick
     end
   end
   object ZQuery2: TZQuery
@@ -593,5 +595,53 @@ object saldoclientes: Tsaldoclientes
     OnPaintRow = CustomizeGrid1PaintRow
     Left = 344
     Top = 168
+  end
+  object ZQDebitos: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select *, '
+      
+        'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas' +
+        '.documentoventa_saldo,documentosventas.documentoventa_saldo*-1))' +
+        ' as saldo'
+      'from documentosventas'
+      
+        'inner join clientes on documentosventas.cliente_id=clientes.clie' +
+        'nte_id'
+      
+        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
+        'ocumento.tipodocu_id'
+      'where documentoventa_estadO='#39'PENDIENTE'#39
+      'and tiposdocumento.tipodocu_debcred<>"N/A"'
+      'and 1=2'
+      'group by clientes.cliente_id')
+    Params = <>
+    Left = 432
+    Top = 352
+  end
+  object ZQCreditos: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select *, '
+      
+        'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas' +
+        '.documentoventa_saldo,documentosventas.documentoventa_saldo*-1))' +
+        ' as saldo'
+      'from documentosventas'
+      
+        'inner join clientes on documentosventas.cliente_id=clientes.clie' +
+        'nte_id'
+      
+        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
+        'ocumento.tipodocu_id'
+      'where documentoventa_estadO='#39'PENDIENTE'#39
+      'and tiposdocumento.tipodocu_debcred<>"N/A"'
+      'and 1=2'
+      'group by clientes.cliente_id')
+    Params = <>
+    Left = 528
+    Top = 352
   end
 end

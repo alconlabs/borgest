@@ -965,3 +965,99 @@ update menu set menu_lista='vendedoresdebcred' where menu_nomb='btnvendedoresdeb
 update menu set menu_lista='vendedoresdebcred' where menu_nomb='btnvendedoresdebcred';
 243;
 UPDATE `empresas` SET `empresa_razonsocial`='CgAAAGurwDjo8ZGINFvEy3IsllQ=\r\n' WHERE `empresa_id`=1;
+244;
+UPDATE `menu` SET `menu_lista`='ListaNotasCreditodeVentas' WHERE `menu_lista` = 'listanotacreditoventa';
+245;
+update menu set menu_lista='TListaCalculosPrecios1' where menu_nomb='btncalculoprecios';
+246;
+update menu set menu_lista='Tlistaclientes1' where menu_nomb='btnclientes';
+247;
+update menu set menu_lista='TComisionesSucursales' where menu_nomb='btncomisionessucursales';
+248;
+update menu set menu_lista='TComisionesVendedores' where menu_nomb='btncomisionesvendedores';
+249;
+update menu set menu_lista='Tlistaconceptosdebcred' where menu_nomb='btnconceptosdebcred';
+250;
+update menu set menu_lista='Tsucursalesdebcred' where menu_nomb='btndebcredsucursales';
+251;
+update menu set menu_lista='TLIstaFacturasDeCompras' where menu_nomb='btnfacturascompras';
+252;
+update menu set menu_lista='TListaFacturasDeVenta' where menu_nomb='btnfacturasventas';
+253;
+update menu set menu_lista='Tlistacomisionessucursales' where menu_nomb='btnliquidacionessucu';
+254;
+update menu set menu_lista='Tlistacomisionesvendedores' where menu_nomb='btnliquidacionesvendedores';
+255;
+update menu set menu_lista='TListaNotasPedidoComisiones' where menu_nomb='btnlistanotasdepedido';
+256;
+update menu set menu_lista='TListaLocalidades' where menu_nomb='btnlocalidades';
+257;
+update menu set menu_lista='TListaNotasPedido' where menu_nomb='btnnotapedido';
+258;
+update menu set menu_lista='Tlistanotacreditoventa' where menu_nomb='btnnotasdecredito';
+259;
+update menu set menu_lista='Tlistanotadebitoventa' where menu_nomb='btnnotasdedebito';
+260;
+update menu set menu_lista='TListaOrdenesServicios' where menu_nomb='btnordenservicio';
+261;
+update menu set menu_lista='Tlistaperfiles' where menu_nomb='btnperfiles';
+262;
+update menu set menu_lista='Tpersonal' where menu_nomb='btnpersonal';
+263;
+update menu set menu_lista='TListaPoliticasdePrecios' where menu_nomb='btnpoliticaprecio';
+264;
+update menu set menu_lista='TListaPresupuestos' where menu_nomb='btnpresupuestos';
+265;
+update menu set menu_lista='TListaProductos1' where menu_nomb='btnproductos';
+266;
+update menu set menu_lista='TListaProveedores1' where menu_nomb='btnproveedores';
+267;
+update menu set menu_lista='TListaProvincias' where menu_nomb='btnprovincias';
+268;
+update menu set menu_lista='Tlistapuntosdeventa' where menu_nomb='btnpuntosdeventa';
+269;
+update menu set menu_lista='TListaRecibosdeVenta' where menu_nomb='btnrecibodeventa';
+270;
+update menu set menu_lista='Tlistaremitosventa' where menu_nomb='btnremitos';
+271;
+update menu set menu_lista='Tlistaservices' where menu_nomb='btnservice';
+272;
+update menu set menu_lista='Tlistasucursales' where menu_nomb='btnsucursales';
+273;
+update menu set menu_lista='Tlistatiposdocumentos' where menu_nomb='btntiposdocumentos';
+274;
+update menu set menu_lista='Tvendedoresdebcred' where menu_nomb='btnvendedoresdebcred';
+275;
+update menu set menu_lista='Tvendedoresdebcred' where menu_nomb='btnvendedoresdebcred';
+276;
+UPDATE `empresas` SET `empresa_razonsocial`='CgAAAGurwDjo8ZGINFvEy3IsllQ=\r\n' WHERE `empresa_id`=1;
+277;
+UPDATE `menu` SET `menu_lista`='TListaNotasCreditodeVentas' WHERE `menu_lista` = 'ListaNotasCreditodeVentas';
+278;
+UPDATE `menu` SET `menu_lista`='TListaNotasCreditodeVentas' WHERE `menu_nomb` = 'btnnotasdecredito';
+279;
+CREATE  TABLE IF NOT EXISTS `temporales` (
+  `temporal_id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `temporal_idproceso` INT(11) NULL DEFAULT NULL ,
+  `temporal_string1` VARCHAR(150) NULL DEFAULT NULL ,
+  `temporal_string2` VARCHAR(150) NULL DEFAULT NULL ,
+  `temporal_string3` VARCHAR(150) NULL DEFAULT NULL ,
+  `temporal_string4` VARCHAR(150) NULL DEFAULT NULL ,
+  `temporal_string5` VARCHAR(150) NULL DEFAULT NULL ,
+  `temporal_float1` FLOAT(20,4) NULL DEFAULT NULL ,
+  `temporal_float2` FLOAT(20,4) NULL DEFAULT NULL ,
+  `temporal_float3` FLOAT(20,4) NULL DEFAULT NULL ,
+  `temporal_float4` FLOAT(20,4) NULL DEFAULT NULL ,
+  `temporal_float5` FLOAT(20,4) NULL DEFAULT NULL ,
+  `temporal_int1` INT(11) NULL DEFAULT NULL ,
+  `temporal_int2` INT(11) NULL DEFAULT NULL ,
+  `temporal_int3` INT(11) NULL DEFAULT NULL ,
+  `temporal_int4` INT(11) NULL DEFAULT NULL ,
+  `temporal_int5` INT(11) NULL DEFAULT NULL ,
+  `temporal_fecha1` DATE NULL DEFAULT NULL ,
+  `temporal_fecha2` DATE NULL DEFAULT NULL ,
+  `temporal_fecha3` DATE NULL DEFAULT NULL ,
+  PRIMARY KEY (`temporal_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;

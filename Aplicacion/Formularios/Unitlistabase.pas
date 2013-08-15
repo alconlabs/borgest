@@ -122,7 +122,7 @@ begin
 
     ArmarLeyendaBarraEstado;
 
-    Princ.Permisos1.ConsultarPermisosLista(self.Name);
+    Princ.Permisos1.ConsultarPermisosLista(self.ClassName);
     btnnuevo.Enabled:=Princ.Permisos1.Permiso_agregar;
     btnmodificar.Enabled:=Princ.Permisos1.Permiso_modificar;
     btneliminar.Enabled:=Princ.Permisos1.Permiso_eliminar;

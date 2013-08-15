@@ -287,6 +287,9 @@
     <DCCReference Include="Formularios\Ventas\UnitListaNotaDebitoVenta.pas">
       <Form>listanotadebitoventa</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitListaNotasCreditodeVentas.pas">
+      <Form>ListaNotasCreditodeVentas</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitListaNotasPedido.pas">
       <Form>ListaNotasPedido</Form>
     </DCCReference>

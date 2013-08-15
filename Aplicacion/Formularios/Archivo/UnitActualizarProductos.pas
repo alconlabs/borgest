@@ -239,6 +239,11 @@ type
     btnquitarAactualizar: TButton;
     nuevo_politicaprecio_id: TSqlComboBox;
     btnrecalculartodo: TButton;
+    bnteliminarproductos: TButton;
+    GroupBox5: TGroupBox;
+    Label37: TLabel;
+    BtnAplicarRubro: TButton;
+    nuevo_rubro_id: TSqlComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btnexaminarClick(Sender: TObject);
     procedure btnabrirarchivoClick(Sender: TObject);
@@ -259,6 +264,7 @@ type
     procedure btnAplicarCalculoClick(Sender: TObject);
     procedure btnAplicarPoliticaClick(Sender: TObject);
     procedure btnrecalculartodoClick(Sender: TObject);
+    procedure bnteliminarproductosClick(Sender: TObject);
   private
     { Private declarations }
     destino:string;
@@ -571,6 +577,60 @@ begin
       end;
 end;
 
+procedure TActualizarProductos.bnteliminarproductosClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea eliminar estos productos?'+#13+#10+'Se pedira una segunda confirmacion.', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          if (MessageDlg('Esta por ELIMIAR estos productos.'+#13+#10+'Se recomienda realizar una copia de respaldo de la base de datos.'+#13+#10+'Desea continuar?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+            begin
+                ZQProductosAactualizar.First;
+                while not ZQProductosAactualizar.Eof do
+                    begin
+                        Princ.ZQExcecSQL.Sql.Clear;
+                        Princ.ZQExcecSQL.Sql.Add('BEGIN ');
+                        Princ.ZQExcecSQL.ExecSql;
+
+                        Princ.ZQExcecSQL.Sql.Clear;
+                        Princ.ZQExcecSQL.Sql.Add('delete from productodeposito ');
+                        Princ.ZQExcecSQL.Sql.Add('where producto_id=:producto_id ');
+                        Princ.ZQExcecSQL.ParamByName('producto_id').AsString:=ZQProductosAactualizar.FieldByName('producto_id').AsString;
+                        Princ.ZQExcecSQL.ExecSql;
+
+                        Princ.ZQExcecSQL.Sql.Clear;
+                        Princ.ZQExcecSQL.Sql.Add('delete from documentoventadetalles ');
+                        Princ.ZQExcecSQL.Sql.Add('where producto_id=:producto_id ');
+                        Princ.ZQExcecSQL.ParamByName('producto_id').AsString:=ZQProductosAactualizar.FieldByName('producto_id').AsString;
+                        Princ.ZQExcecSQL.ExecSql;
+
+                        Princ.ZQExcecSQL.Sql.Clear;
+                        Princ.ZQExcecSQL.Sql.Add('delete from documentocompradetalles ');
+                        Princ.ZQExcecSQL.Sql.Add('where producto_id=:producto_id ');
+                        Princ.ZQExcecSQL.ParamByName('producto_id').AsString:=ZQProductosAactualizar.FieldByName('producto_id').AsString;
+                        Princ.ZQExcecSQL.ExecSql;
+
+                        Princ.ZQExcecSQL.Sql.Clear;
+                        Princ.ZQExcecSQL.Sql.Add('delete from productos ');
+                        Princ.ZQExcecSQL.Sql.Add('where producto_id=:producto_id ');
+                        Princ.ZQExcecSQL.ParamByName('producto_id').AsString:=ZQProductosAactualizar.FieldByName('producto_id').AsString;
+                        Princ.ZQExcecSQL.ExecSql;
+
+                        Princ.ZQExcecSQL.Sql.Clear;
+                        Princ.ZQExcecSQL.Sql.Add('COMMIT ');
+                        Princ.ZQExcecSQL.ExecSql;
+
+
+                        ZQProductosAactualizar.Next;
+                    end;
+
+                MessageDlg('Productos eliminados.', mtInformation, [mbOK], 0);  
+
+            end;
+
+
+
+      end;
+end;
+
 procedure TActualizarProductos.btnabrirarchivoClick(Sender: TObject);
 var
   producto_codigobuscado:string;
@@ -776,6 +836,7 @@ begin
 
     nuevo_calculoprecio_id.llenarcombo;
     nuevo_politicaprecio_id.llenarcombo;
+    nuevo_rubro_id.llenarcombo;
 end;
 
 procedure TActualizarProductos.tipo_codigoSelect(Sender: TObject);
