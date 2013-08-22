@@ -70,17 +70,20 @@ begin
 
     personal_id_usuario_existente:=Princ.buscar('select personal_id from personal where personal_usuario="'+personal_usuario.Text+'"','personal_id');
 
-    if abm=1 then
-      begin
-          if personal_id_usuario_existente<>'' then
-            error:=3;
-      end
-    else
-      begin
-          if personal_id_usuario_existente<>personal_id.Text then
-            error:=3;
-      end;
 
+    if personal_id_usuario_existente<>'' then
+      begin
+          if abm=ABM_AGREGAR then
+            begin
+                if personal_id_usuario_existente<>'' then
+                  error:=3;
+            end;
+          if abm=ABM_MODIFICAR then
+            begin
+                if personal_id_usuario_existente<>personal_id.Text then
+                  error:=3;
+            end;
+      end;
 
 
     if personal_usuario.Text='' then

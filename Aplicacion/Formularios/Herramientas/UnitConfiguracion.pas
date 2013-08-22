@@ -101,6 +101,8 @@ type
     FACTURAVENTACLIENTEID: TSqlComboBox;
     FACTURAVENTAPERSONALID: TSqlComboBox;
     FACTURAVENTASUCURSALID: TSqlComboBox;
+    Label26: TLabel;
+    USUARIOPORDEFECTO: TSqlComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -372,6 +374,10 @@ begin
     ZQuery1.parambyname('config_valor').AsString:=FACTURAVENTAPERSONALID.codigo;
     ZQuery1.ExecSQL;
 
+    ZQuery1.parambyname('config_nombre').AsString:='USUARIOPORDEFECTO';
+    ZQuery1.parambyname('config_valor').AsString:=USUARIOPORDEFECTO.codigo;
+    ZQuery1.ExecSQL;
+
 
 
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK], 0);
@@ -539,7 +545,8 @@ begin
     FACTURAVENTAPERSONALID.llenarcombo;
     FACTURAVENTAPERSONALID.ItemIndex:=-1;
 
-
+    USUARIOPORDEFECTO.llenarcombo;
+    USUARIOPORDEFECTO.ItemIndex:=-1;
 
 end;
 
@@ -679,6 +686,10 @@ begin
 
     if ZQConfig.Locate('config_nombre','FACTURAVENTAPERSONALID',[]) then
       FACTURAVENTAPERSONALID.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','USUARIOPORDEFECTO',[]) then
+      USUARIOPORDEFECTO.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
 
 end;
 

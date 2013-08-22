@@ -265,6 +265,7 @@ type
     procedure btnAplicarPoliticaClick(Sender: TObject);
     procedure btnrecalculartodoClick(Sender: TObject);
     procedure bnteliminarproductosClick(Sender: TObject);
+    procedure BtnAplicarRubroClick(Sender: TObject);
   private
     { Private declarations }
     destino:string;
@@ -387,6 +388,29 @@ begin
     Princ.ActualizarPrecios(ZQProductosAactualizar);
 end;
 
+procedure TActualizarProductos.BtnAplicarRubroClick(Sender: TObject);
+begin
+    if nuevo_rubro_id.codigo<>'-1' then
+      begin
+          if (MessageDlg('Seguro desea aplicar este rubro?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+            begin
+                BtnAplicarRubro.Enabled:=false;
+                ZQProductosAactualizar.First;
+                while not ZQProductosAactualizar.Eof do
+                    begin
+                        ZQProductosAactualizar.Edit;
+                        ZQProductosAactualizar.FieldByName('rubro_id').AsString:=nuevo_rubro_id.codigo;
+                        ZQProductosAactualizar.Post;
+
+                        ZQProductosAactualizar.Next;
+                    end;
+                Princ.ModificarProducto(ZQProductosAactualizar);
+
+            end;
+
+      end;
+end;
+
 procedure TActualizarProductos.btndisminuirpreciosClick(Sender: TObject);
 begin
     if (MessageDlg('Seguro desea actualizar estos precios?', mtConfirmation, [mbOK, mbCancel], 0) in [mrOk, mrNone]) then
@@ -478,6 +502,7 @@ begin
     btnAplicarPVenta.Enabled:=true;
     btnAplicarCalculo.Enabled:=true;
     btnAplicarPolitica.Enabled:=true;
+    BtnAplicarRubro.Enabled:=true;
 
     ZQProductosAactualizar.Active:=true;
 

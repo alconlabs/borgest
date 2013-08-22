@@ -93,6 +93,8 @@ object configuracion: Tconfiguracion
       TabOrder = 2
       object TabSheet1: TTabSheet
         Caption = 'General'
+        ExplicitLeft = 0
+        ExplicitTop = 28
         object Label14: TLabel
           Left = 44
           Top = 10
@@ -108,6 +110,14 @@ object configuracion: Tconfiguracion
           Height = 13
           Alignment = taRightJustify
           Caption = 'Codigo Producto por defecto'
+        end
+        object Label26: TLabel
+          Left = 49
+          Top = 250
+          Width = 93
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Usuario por defecto'
         end
         object SUCURSALDEFECTO: TSqlComboBox
           Left = 148
@@ -248,6 +258,21 @@ object configuracion: Tconfiguracion
           Alignment = taLeftJustify
           Caption = 'Habilitar Stock inicial'
           TabOrder = 6
+        end
+        object USUARIOPORDEFECTO: TSqlComboBox
+          Left = 148
+          Top = 247
+          Width = 145
+          Height = 21
+          ItemHeight = 13
+          TabOrder = 7
+          Confbase = Princ.ZBase
+          Confsql.Strings = (
+            'select * from personal'
+            'order by personal_usuario')
+          Confcampo_codigo = 'personal_id'
+          Confcampo_nomb = 'personal_usuario'
+          Tag2 = 0
         end
       end
       object TabSheet2: TTabSheet

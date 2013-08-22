@@ -73,8 +73,6 @@ object ActualizarProductos: TActualizarProductos
       object TabSheet2: TTabSheet
         Caption = 'Actualizar Productos'
         ImageIndex = 1
-        ExplicitLeft = 8
-        ExplicitTop = 28
         object Label3: TLabel
           Left = 53
           Top = 12
@@ -676,9 +674,8 @@ object ActualizarProductos: TActualizarProductos
             Width = 91
             Height = 25
             Caption = 'Aplicar'
-            Enabled = False
             TabOrder = 0
-            OnClick = btnAplicarPoliticaClick
+            OnClick = BtnAplicarRubroClick
           end
           object nuevo_rubro_id: TSqlComboBox
             Left = 7

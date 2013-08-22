@@ -219,9 +219,6 @@ object TRpReport
         Component = TRpLabel11
       end
       item
-        Component = TRpLabel12
-      end
-      item
         Component = TRpLabel13
       end
       item
@@ -268,6 +265,9 @@ object TRpReport
       end
       item
         Component = TRpExpression17
+      end
+      item
+        Component = TRpExpression18
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -617,21 +617,6 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     WideText = 'Pedido'
-  end
-  object TRpLabel12: TRpLabel
-    Width = 799
-    Height = 229
-    PosX = 10260
-    PosY = 1425
-    Type1Font = poHelvetica
-    FontSize = 8
-    Alignment = 4
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'Precio'
   end
   object TRpLabel13: TRpLabel
     Width = 510
@@ -1670,6 +1655,30 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 'ALIAS_DBBORGEST.cliente_documentonro'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpExpression18: TRpExpression
+    Width = 800
+    Height = 230
+    PosX = 10260
+    PosY = 1425
+    Type1Font = poHelvetica
+    FontSize = 8
+    Alignment = 4
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'IIF(ALIAS_EQUIPOS.sucursal_id=2,'#39'Precio U$D'#39','#39'Precio'#39')'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'

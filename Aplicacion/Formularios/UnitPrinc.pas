@@ -279,6 +279,7 @@ type
     procedure CerrarCaja(caja_id:string;caja_saldofinal:real);
     function GetConfiguracionMenu(menu_nomb:string; campo:string):string;
     procedure AbrirModificarProducto(id:string);
+    Procedure ModificarProducto(QProductos: TDataSet);
   end;
 
 type
@@ -336,7 +337,7 @@ const
   CONNECTION_STRING1='Provider=Microsoft.Jet.OLEDB.4.0;Data Source=';
   CONNECTION_STRING3=';Extended Properties=Excel 8.0';
 
-  VERSIONEXE='53';
+  VERSIONEXE='54';
 
   CLAVE_ENCRIPTADO='1234567890';
 
@@ -1774,6 +1775,35 @@ begin
 end;
 
 
+Procedure TPrinc.ModificarProducto(QProductos: TDataSet);
+var
+  politicaprecio_politica1, politicaprecio_politica2, politicaprecio_politica3, politicaprecio_politica4:real;
+  tipoiva_valor:real;
+  subtotal1, subtotal2, subtotal3, subtotal4:real;
+begin
+    QProductos.First;
+    while not QProductos.Eof do
+        begin
+            ZQExcecSQL.Sql.Clear;
+            ZQExcecSQL.Sql.Add('update productos set ');
+            ZQExcecSQL.Sql.Add('producto_codigoreferencia=:producto_codigoreferencia, ');
+            ZQExcecSQL.Sql.Add('proveedor_id=:proveedor_id, ');
+            ZQExcecSQL.Sql.Add('rubro_id=:rubro_id, ');
+            ZQExcecSQL.Sql.Add('producto_estado=:producto_estado ');
+            ZQExcecSQL.Sql.Add('where producto_id=:producto_id ');
+            ZQExcecSQL.parambyname('producto_codigoreferencia').asstring:=QProductos.FieldByName('producto_codigoreferencia').AsString;
+            ZQExcecSQL.parambyname('proveedor_id').asstring:=QProductos.FieldByName('proveedor_id').AsString;
+            ZQExcecSQL.parambyname('rubro_id').asstring:=QProductos.FieldByName('rubro_id').AsString;
+            ZQExcecSQL.parambyname('producto_estado').asstring:=QProductos.FieldByName('producto_estado').AsString;
+            ZQExcecSQL.parambyname('producto_id').asstring:=QProductos.FieldByName('producto_id').AsString;
+            ZQExcecSQL.ExecSQL;
+
+            QProductos.Next;
+        end;
+      MessageDlg('Se actualizaron '+inttostr(QProductos.RecordCount)+' productos.', mtInformation, [mbOK], 0);
+end;
+
+
 Function TPrinc.AgregarDocumentoVenta(Cabecera: TDataSet; Detalle: TDataSet; Documentoventadocu: TDataSet; Pagos: TDataSet):string;
 var
   id:string;
@@ -2215,9 +2245,15 @@ begin
           impresorafiscal.tipodocu_leyenda:=ZQDocumentosventas.FieldByName('documentoventa_observacion').AsString;
           impresorafiscal.Nombre_cliente:=QuitarCaracteresEspeciales(ZQDocumentosventas.FieldByName('cliente_nombre').AsString);
           impresorafiscal.Direccion_cliente:=QuitarCaracteresEspeciales(ZQDocumentosventas.FieldByName('cliente_domicilio').AsString);
+
           if impresorafiscal.Direccion_cliente='' then
             impresorafiscal.Direccion_cliente:='0';
+
           impresorafiscal.NroDocumento_cliente:=Princ.QuitarEspecialesNros(ZQDocumentosventas.FieldByName('cliente_documentonro').AsString);
+
+          if impresorafiscal.NroDocumento_cliente='' then
+            impresorafiscal.NroDocumento_cliente:='0';
+
           if (ZQDocumentosventas.FieldByName('tipodocu_nombre').AsString='Nota de Credito de Venta') or
              (ZQDocumentosventas.FieldByName('tipodocu_nombre').AsString='Nota de Debito de Venta') then
             impresorafiscal.embarknumber:=princ.buscar('select documentoventa_numero from documentosventas '+
@@ -2740,7 +2776,6 @@ begin
 
 
     empresa_where:='and puntodeventa.puntoventa_id not in ('+Princ.buscar('select empresa_where from empresas','empresa_where')+') ';
-
 
 //    try
 //      login:=Tlogin.Create(self);

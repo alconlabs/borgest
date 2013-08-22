@@ -580,7 +580,6 @@ begin
           MResult:=mrCancel;
       end;
 
-
     self.ModalResult:=MResult;
 
 end;

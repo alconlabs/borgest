@@ -246,16 +246,23 @@ end;
 
 procedure Tventadetalle2.Codigodereferencia1Click(Sender: TObject);
 begin
-    busquedaproductos:=Tbusquedaproductos.Create(self);
-    busquedaproductos.producto_codigoreferencia:='="'+producto_id.valor('producto_codigoreferencia')+'"';
-    busquedaproductos.btnbuscar.Click;
-    if busquedaproductos.ShowModal=mrOk then
+
+    if producto_id.valor('producto_codigoreferencia')<>'' then
       begin
-          producto_id.Search(busquedaproductos.producto_id);
+          busquedaproductos:=Tbusquedaproductos.Create(self);
+          busquedaproductos.producto_codigoreferencia:='="'+producto_id.valor('producto_codigoreferencia')+'"';
+          busquedaproductos.btnbuscar.Click;
+          if busquedaproductos.ShowModal=mrOk then
+            begin
+                producto_id.Search(busquedaproductos.producto_id);
 
-      end;
+            end;
 
-    busquedaproductos.Free;
+          busquedaproductos.Free;
+      end
+    else
+      MessageDlg('El producto no tiene Codigo de Referencia.', mtError, [mbOK], 0);
+
 end;
 
 procedure Tventadetalle2.producto_idAfterSearch(Sender: TObject);

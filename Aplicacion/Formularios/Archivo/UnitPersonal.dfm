@@ -10,14 +10,8 @@ inherited personal: Tpersonal
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
       Height = 300
-      ExplicitLeft = 831
-      ExplicitTop = 0
       ExplicitHeight = 300
       FullHeight = 0
-      inherited btnanular: TButton
-        Visible = False
-        ExplicitTop = 164
-      end
     end
     inherited DBGrid1: TDBGrid
       Height = 300

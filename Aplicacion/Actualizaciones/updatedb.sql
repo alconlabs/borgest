@@ -1061,3 +1061,5 @@ CREATE  TABLE IF NOT EXISTS `temporales` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1
 COLLATE = latin1_swedish_ci;
+280;
+update personal set personal_usuario=concat('usuario',personal_id), personal_pass='AwAAAGixz0QkQCbR+0Wz6OOgjuw=\r\n\0';
