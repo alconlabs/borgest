@@ -1,17 +1,17 @@
 inherited EstadoCaja: TEstadoCaja
   Caption = 'Estado de Caja'
   ClientHeight = 483
-  ClientWidth = 1027
+  ClientWidth = 1059
   OnShow = FormShow
-  ExplicitWidth = 1043
+  ExplicitWidth = 1075
   ExplicitHeight = 521
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Width = 1027
+    Width = 1059
     Height = 483
     StatusBar.BevelInner = True
-    ExplicitWidth = 1027
+    ExplicitWidth = 1059
     ExplicitHeight = 483
     FullHeight = 0
     object Label1: TLabel [0]
@@ -83,6 +83,12 @@ inherited EstadoCaja: TEstadoCaja
         Columns = <
           item
             Expanded = False
+            FieldName = 'puntoventa_numero'
+            Title.Caption = 'P.Vta'
+            Visible = True
+          end
+          item
+            Expanded = False
             FieldName = 'documentoventa_numero'
             Title.Caption = 'Nro.'
             Width = 36
@@ -92,20 +98,21 @@ inherited EstadoCaja: TEstadoCaja
             Expanded = False
             FieldName = 'documentoventa_fecha'
             Title.Caption = 'Fecha'
+            Width = 69
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'cliente_nombre'
-            Title.Caption = 'Cliente'
-            Width = 294
+            FieldName = 'documentopago_nombre'
+            Title.Caption = 'Medio de Pago'
+            Width = 191
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'documentopago_importe'
             Title.Caption = 'Importe'
-            Width = 49
+            Width = 75
             Visible = True
           end>
       end
@@ -447,8 +454,8 @@ inherited EstadoCaja: TEstadoCaja
       TabOrder = 10
     end
     object btnvercaja: TButton
-      Left = 172
-      Top = 4
+      Left = 169
+      Top = 1
       Width = 75
       Height = 25
       Caption = 'Ver Caja'
@@ -569,15 +576,14 @@ inherited EstadoCaja: TEstadoCaja
         'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
         'ocumento.tipodocu_id'
       
-        'inner join documentoventadocus on documentosventas.documentovent' +
-        'a_id=documentoventadocus.documentoventa_idpago'
+        'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodev' +
+        'enta.puntoventa_id'
       
-        'inner join documentosventas docu2 on docu2.documentoventa_id=doc' +
-        'umentoventadocus.documentoventa_id'
+        'inner join documentopagos on documentosventas.documentoventa_id=' +
+        'documentopagos.documentoventa_id'
       
-        'inner join documentopagos on documentoventadocus.documentoventa_' +
-        'id=documentopagos.documentoventa_id'
-      'where docu2.documentoventa_fecha=:documentoventa_fecha')
+        'where documentosventas.documentoventa_fecha=:documentoventa_fech' +
+        'a')
     Params = <
       item
         DataType = ftUnknown

@@ -81,7 +81,7 @@ object login: Tlogin
       Caption = 'Usuario'
     end
     object btncancelar: TButton
-      Left = 108
+      Left = 198
       Top = 86
       Width = 75
       Height = 25
@@ -90,7 +90,7 @@ object login: Tlogin
       OnClick = btncancelarClick
     end
     object btnguardar: TButton
-      Left = 195
+      Left = 117
       Top = 86
       Width = 75
       Height = 25

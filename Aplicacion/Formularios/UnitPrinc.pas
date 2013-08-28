@@ -2296,7 +2296,10 @@ begin
           while not ZQdocumentoventadetalles.Eof do
               begin
                   impresorafiscal.MQDetalle.Insert;
-                  impresorafiscal.MQDetalle.FieldByName('descripcion').AsString:=QuitarCaracteresEspeciales(ZQdocumentoventadetalles.FieldByName('documentoventadetalle_descripcion').AsString);
+                  if princ.GetConfiguracion('VENTAIMPRIMIRCODIGOPROD')='-1' then
+                    impresorafiscal.MQDetalle.FieldByName('descripcion').AsString:=QuitarCaracteresEspeciales(ZQdocumentoventadetalles.FieldByName('producto_id').AsString);
+
+                  impresorafiscal.MQDetalle.FieldByName('descripcion').AsString:=impresorafiscal.MQDetalle.FieldByName('descripcion').AsString+QuitarCaracteresEspeciales(ZQdocumentoventadetalles.FieldByName('documentoventadetalle_descripcion').AsString);
                   impresorafiscal.MQDetalle.FieldByName('cantidad').AsString:=ZQdocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsString;
                   impresorafiscal.MQDetalle.FieldByName('monto').AsString:=ZQdocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsString;
                   impresorafiscal.MQDetalle.FieldByName('IVA').AsString:=ZQdocumentoventadetalles.FieldByName('tipoiva_valor').AsString;
@@ -2752,6 +2755,10 @@ end;
 
 
 procedure TPrinc.FormCreate(Sender: TObject);
+var
+  USUARIOPORDEFECTO:string;
+  personal_usuario:string;
+  personal_pass:string;
 begin
     DecimalSeparator:='.';
     ThousandSeparator:=',';
@@ -2777,12 +2784,34 @@ begin
 
     empresa_where:='and puntodeventa.puntoventa_id not in ('+Princ.buscar('select empresa_where from empresas','empresa_where')+') ';
 
-//    try
-//      login:=Tlogin.Create(self);
-//    finally
-//      login.liberar_al_cerrar:=false;
-//      login.ShowModal;
-//    end;
+    personal_usuario:='';
+    personal_pass:='';
+    USUARIOPORDEFECTO:=Princ.GetConfiguracion('USUARIOPORDEFECTO');
+    if USUARIOPORDEFECTO<>'' then
+      begin
+          ZQuery1.Active:=false;
+          ZQuery1.SQL.Text:='select * from personal where personal_id="'+USUARIOPORDEFECTO+'"';
+          ZQuery1.Active:=true;
+          ZQuery1.First;
+          if not ZQuery1.Eof then
+            begin
+                personal_usuario:=ZQuery1.FieldByName('personal_usuario').AsString;
+                Princ.Encriptador1.ADesencriptar:=ZQuery1.FieldByName('personal_pass').AsString;
+                Princ.Encriptador1.Desencriptar;
+                personal_pass:=Princ.Encriptador1.Desencriptado;
+            end;
+
+      end;
+
+
+    try
+      login:=Tlogin.Create(self);
+    finally
+      login.liberar_al_cerrar:=false;
+      login.personal_usuario.Text:=personal_usuario;
+      login.personal_pass.Text:=personal_pass;
+      login.ShowModal;
+    end;
 
 
     Permisos1.ConfPerfil_id:='1';

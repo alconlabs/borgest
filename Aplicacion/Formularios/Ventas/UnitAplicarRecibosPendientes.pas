@@ -269,17 +269,24 @@ var
   bm:TBookmark;
 begin
     ZQdocumentoventadocus.First;
-    pagado:=ZQSelect.FieldByName('documentoventa_pagado').AsFloat;
-    saldo:=ZQSelect.FieldByName('documentoventa_saldo').AsFloat;
+    if ZQSelect.Active then
+      begin
+          pagado:=ZQSelect.FieldByName('documentoventa_pagado').AsFloat;
+          saldo:=ZQSelect.FieldByName('documentoventa_saldo').AsFloat;
 
-    while not ZQdocumentoventadocus.Eof do
-        begin
-            pagado:=roundto(pagado+ZQdocumentoventadocus.FieldByName('documentoventadoc_importe').AsFloat,-2);
-            saldo:=roundto(saldo-ZQdocumentoventadocus.FieldByName('documentoventadoc_importe').AsFloat,-2);
+          while not ZQdocumentoventadocus.Eof do
+              begin
+                  pagado:=roundto(pagado+ZQdocumentoventadocus.FieldByName('documentoventadoc_importe').AsFloat,-2);
+                  saldo:=roundto(saldo-ZQdocumentoventadocus.FieldByName('documentoventadoc_importe').AsFloat,-2);
 
-            ZQdocumentoventadocus.Next;
-        end;
-    documentoventa_totalimputado.Value:=pagado;
+                  ZQdocumentoventadocus.Next;
+              end;
+          documentoventa_totalimputado.Value:=pagado;
+
+
+      end;
+
+
 end;
 
 
@@ -307,6 +314,7 @@ begin
                                     'cliente_id="'+cliente_id.codigo+'" '+
                                     'order by documentoventa_numero ';
     documentoventa_id.llenarcombo;
+    documentoventa_id.OnSelect(self);
 end;
 
 
@@ -316,6 +324,21 @@ begin
     ZQSelect.Active:=false;
     ZQSelect.ParamByName('documentoventa_id').AsString:=documentoventa_id.codigo;
     ZQSelect.Active:=true;
+
+    btnagregar.Enabled:=false;
+    btnquitar.Enabled:=false;
+    btntomardocumentosAuto.Enabled:=false;
+
+    if documentoventa_id.codigo<>'' then
+      begin
+          btnagregar.Enabled:=true;
+          btnquitar.Enabled:=true;
+          btntomardocumentosAuto.Enabled:=true;
+
+
+      end;
+
+
 end;
 
 procedure TAplicarRecibosPendientes.FormShow(Sender: TObject);

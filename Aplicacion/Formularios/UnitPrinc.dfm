@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageArchivo
+    ActivePage = AdvPageVentas
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -3260,14 +3260,8 @@ object Princ: TPrinc
   object ZQDocumentopagos: TZQuery
     Connection = ZBase
     SQL.Strings = (
-      'select * from documentosventas'
-      
-        'inner join documentoventadocus on documentosventas.documentovent' +
-        'a_id=documentoventadocus.documentoventa_idpago'
-      
-        'inner join documentopagos on documentoventadocus.documentoventa_' +
-        'id=documentopagos.documentoventa_id'
-      'where documentosventas.documentoventa_id=:documentoventa_id')
+      'select * from documentopagos'
+      'where documentoventa_id=:documentoventa_id')
     Params = <
       item
         DataType = ftUnknown

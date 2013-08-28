@@ -39,6 +39,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ZQGrillaAfterOpen(DataSet: TDataSet);
+    procedure DBGrid1TitleClick(Column: TColumn);
   private
     { Private declarations }
     leyenda_barra_estado:string;
@@ -186,6 +187,11 @@ begin
     abm:=1;
     id:='';
 
+end;
+
+procedure Tlistabase.DBGrid1TitleClick(Column: TColumn);
+begin
+    ZQGrilla.IndexFieldNames:=Column.FieldName;
 end;
 
 procedure Tlistabase.fil_idKeyPress(Sender: TObject; var Key: Char);

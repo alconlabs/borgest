@@ -216,4 +216,52 @@ inherited NotaPedido: TNotaPedido
     Left = 480
     Top = 200
   end
+  object ZQDebitos: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select *, '
+      
+        'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas' +
+        '.documentoventa_saldo,documentosventas.documentoventa_saldo*-1))' +
+        ' as saldo'
+      'from documentosventas'
+      
+        'inner join clientes on documentosventas.cliente_id=clientes.clie' +
+        'nte_id'
+      
+        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
+        'ocumento.tipodocu_id'
+      'where documentoventa_estadO='#39'PENDIENTE'#39
+      'and tiposdocumento.tipodocu_debcred<>"N/A"'
+      'and 1=2'
+      'group by clientes.cliente_id')
+    Params = <>
+    Left = 664
+    Top = 320
+  end
+  object ZQCreditos: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select *, '
+      
+        'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas' +
+        '.documentoventa_saldo,documentosventas.documentoventa_saldo*-1))' +
+        ' as saldo'
+      'from documentosventas'
+      
+        'inner join clientes on documentosventas.cliente_id=clientes.clie' +
+        'nte_id'
+      
+        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
+        'ocumento.tipodocu_id'
+      'where documentoventa_estadO='#39'PENDIENTE'#39
+      'and tiposdocumento.tipodocu_debcred<>"N/A"'
+      'and 1=2'
+      'group by clientes.cliente_id')
+    Params = <>
+    Left = 760
+    Top = 320
+  end
 end

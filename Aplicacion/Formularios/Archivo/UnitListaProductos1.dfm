@@ -90,7 +90,6 @@ inherited ListaProductos1: TListaProductos1
         Height = 21
         Align = alLeft
         TabOrder = 3
-        ExplicitLeft = 465
       end
       object fil_producto_precioventa1: TEdit
         Left = 523
@@ -107,7 +106,6 @@ inherited ListaProductos1: TListaProductos1
         Height = 21
         Align = alLeft
         TabOrder = 5
-        ExplicitLeft = 601
       end
       object fil_proveedor_nombre: TEdit
         Left = 779
@@ -116,7 +114,6 @@ inherited ListaProductos1: TListaProductos1
         Height = 21
         Align = alLeft
         TabOrder = 6
-        ExplicitLeft = 711
       end
       object fil_producto_precioventa2: TEdit
         Left = 601
@@ -125,8 +122,6 @@ inherited ListaProductos1: TListaProductos1
         Height = 21
         Align = alLeft
         TabOrder = 7
-        ExplicitLeft = 627
-        ExplicitTop = -6
       end
     end
   end

@@ -60,6 +60,7 @@ procedure TABMbase.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
     case key of
+        VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);
         VK_F9:btnguardar.Click;
     end;
 end;

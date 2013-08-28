@@ -145,10 +145,8 @@ begin
                                  'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
                                  'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
                                  'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
-                                 'inner join documentoventadocus on documentosventas.documentoventa_id=documentoventadocus.documentoventa_idpago '+
-                                 'inner join documentosventas docu2 on docu2.documentoventa_id=documentoventadocus.documentoventa_id '+
-                                 'inner join documentopagos on documentoventadocus.documentoventa_id=documentopagos.documentoventa_id '+
-                                 'where docu2.documentoventa_fecha=:documentoventa_fecha '+Princ.empresa_where;
+                                 'inner join documentopagos on documentosventas.documentoventa_id=documentopagos.documentoventa_id '+
+                                 'where documentosventas.documentoventa_fecha=:documentoventa_fecha '+Princ.empresa_where;
     ZQDocumentosventas.ParamByName('documentoventa_fecha').AsString:=formatdatetime('yyyy-mm-dd',caja_fecha.Date);
     ZQDocumentosventas.Active:=true;
 
@@ -159,7 +157,7 @@ end;
 procedure TEstadoCaja.Button2Click(Sender: TObject);
 begin
   inherited;
-//    Princ.AbrirNuevoCajaAsientoIngreso;
+    Princ.AbrirNuevoCajaAsientoIngreso('0');
     btnvercaja.Click;
 end;
 
@@ -180,7 +178,7 @@ end;
 procedure TEstadoCaja.Button5Click(Sender: TObject);
 begin
   inherited;
-//    Princ.AbrirNuevoCajaAsientoEgreso;
+    Princ.AbrirNuevoCajaAsientoEgreso('0');
     btnvercaja.Click;
 end;
 

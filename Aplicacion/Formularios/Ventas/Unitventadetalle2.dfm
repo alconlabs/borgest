@@ -127,7 +127,7 @@ object ventadetalle2: Tventadetalle2
       Height = 13
       Caption = 'Stock Inic: '
     end
-    object Button1: TButton
+    object btncancelar: TButton
       Left = 624
       Top = 114
       Width = 75

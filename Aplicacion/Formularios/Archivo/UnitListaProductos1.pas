@@ -87,6 +87,9 @@ begin
     if fil_proveedor_nombre.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_nombre like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_proveedor_nombre.Text,' ','%',false,0)+'%"';
 
+    if Princ.GetConfiguracion('MOSTRARPRODUCTOSOCULTOS')<>'-1' then
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'and producto_estado="DISPONIBLE" ';
+
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by producto_nombre';
 
     ZQGrilla.Active:=true;

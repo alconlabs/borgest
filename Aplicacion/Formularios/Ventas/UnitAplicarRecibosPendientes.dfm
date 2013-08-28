@@ -224,6 +224,7 @@ inherited AplicarRecibosPendientes: TAplicarRecibosPendientes
       Width = 75
       Height = 25
       Caption = 'Agregar'
+      Enabled = False
       TabOrder = 4
       OnClick = btnagregarClick
     end
@@ -233,6 +234,7 @@ inherited AplicarRecibosPendientes: TAplicarRecibosPendientes
       Width = 75
       Height = 25
       Caption = 'Quitar'
+      Enabled = False
       TabOrder = 5
       OnClick = btnquitarClick
     end
@@ -242,6 +244,7 @@ inherited AplicarRecibosPendientes: TAplicarRecibosPendientes
       Width = 129
       Height = 25
       Caption = 'Cargar'
+      Enabled = False
       TabOrder = 6
       OnClick = btntomardocumentosAutoClick
     end

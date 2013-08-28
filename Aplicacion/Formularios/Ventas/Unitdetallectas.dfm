@@ -473,32 +473,437 @@ object detallectas: Tdetallectas
       
         'sum(if(tiposdocumento.tipodocu_debcred="CREDITO",documentosventa' +
         's.documentoventa_total,0)) as credito, '
-      '0.00 as acumulado, (documentoventa_id) as grupo,'
+      '0.00 as acumulado, '
+      '(documentosventas.documentoventa_id) as grupo, '
       
-        ' if(documentoventa_fecha<"2012-11-19","Saldo anterior",tiposdocu' +
-        'mento.tipodocu_nombre) as documento_nombre, '
+        'if(1=2,"Saldo anterior",CONCAT(tiposdocumento.tipodocu_nombreabr' +
+        'ev," ",tiposdocumento.tipodocu_letra)) as documento_nombre, '
       
-        ' if(documentoventa_fecha<"2012-11-19","2012-11-19",documentovent' +
-        'a_fecha) as documentoventafecha, '
+        'if(1=2,"2013-07-29",DATE_FORMAT(documentosventas.documentoventa_' +
+        'fecha,"%d/%m/%Y")) as documentoventafecha, '
       
-        ' if(documentoventa_fecha<"2012-11-19","0",puntoventa_numero) as ' +
-        'puntoventanumero, '
+        'if(1=2,"0",puntoventa_numero) as puntoventanumero, if(1=2,"0",do' +
+        'cumentosventas.documentoventa_numero) as documentoventanumero '
+      'from documentosventas '
       
-        ' if(documentoventa_fecha<"2012-11-19","0",documentoventa_numero)' +
-        ' as documentoventanumero '
-      ' from documentosventas '
+        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
+        'ocumento.tipodocu_id '
       
-        ' inner join tiposdocumento on documentosventas.tipodocu_id=tipos' +
-        'documento.tipodocu_id '
+        'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodev' +
+        'enta.puntoventa_id '
       
-        ' inner join puntodeventa on tiposdocumento.puntoventa_id=puntode' +
-        'venta.puntoventa_id '
+        'inner join clientes on documentosventas.cliente_id=clientes.clie' +
+        'nte_id '
       
-        ' inner join clientes on documentosventas.cliente_id=clientes.cli' +
-        'ente_id ')
+        'inner join personal on documentosventas.personal_id=personal.per' +
+        'sonal_id '
+      
+        'inner join personal as pesronalcliente on clientes.personal_id=p' +
+        'esronalcliente.personal_id '
+      
+        'inner join sucursales on puntodeventa.sucursal_id=sucursales.suc' +
+        'ursal_id '
+      'group by grupo '
+      
+        'order by clientes.cliente_nombre, documentosventas.documentovent' +
+        'a_fecha, documentosventas.documentoventa_numero')
     Params = <>
     Left = 224
     Top = 208
+    object ZQPendientesdocumentoventa_id: TIntegerField
+      FieldName = 'documentoventa_id'
+      Required = True
+    end
+    object ZQPendientesdocumentoventa_numero: TIntegerField
+      FieldName = 'documentoventa_numero'
+    end
+    object ZQPendientesdocumentoventa_fecha: TDateField
+      FieldName = 'documentoventa_fecha'
+    end
+    object ZQPendientesdocumentoventa_hora: TTimeField
+      FieldName = 'documentoventa_hora'
+    end
+    object ZQPendientesdocumentoventa_neto21: TFloatField
+      FieldName = 'documentoventa_neto21'
+    end
+    object ZQPendientesdocumentoventa_iva21: TFloatField
+      FieldName = 'documentoventa_iva21'
+    end
+    object ZQPendientesdocumentoventa_neto105: TFloatField
+      FieldName = 'documentoventa_neto105'
+    end
+    object ZQPendientesdocumentoventa_iva105: TFloatField
+      FieldName = 'documentoventa_iva105'
+    end
+    object ZQPendientesdocumentoventa_netonogravado: TFloatField
+      FieldName = 'documentoventa_netonogravado'
+    end
+    object ZQPendientesdocumentoventa_total: TFloatField
+      FieldName = 'documentoventa_total'
+    end
+    object ZQPendientesdocumentoventa_estado: TStringField
+      FieldName = 'documentoventa_estado'
+      Size = 45
+    end
+    object ZQPendientesdocumentoventa_pagado: TFloatField
+      FieldName = 'documentoventa_pagado'
+    end
+    object ZQPendientesdocumentoventa_saldo: TFloatField
+      FieldName = 'documentoventa_saldo'
+    end
+    object ZQPendientesdocumentoventa_observacion: TStringField
+      FieldName = 'documentoventa_observacion'
+      Size = 255
+    end
+    object ZQPendientescliente_id: TIntegerField
+      FieldName = 'cliente_id'
+      Required = True
+    end
+    object ZQPendientespersonal_id: TIntegerField
+      FieldName = 'personal_id'
+      Required = True
+    end
+    object ZQPendientestipodocu_id: TIntegerField
+      FieldName = 'tipodocu_id'
+      Required = True
+    end
+    object ZQPendientesdocumentoventa_condicionventa: TIntegerField
+      FieldName = 'documentoventa_condicionventa'
+    end
+    object ZQPendientesdocumentoventa_fechavenc: TDateField
+      FieldName = 'documentoventa_fechavenc'
+    end
+    object ZQPendientesdocumentoventa_listaprecio: TIntegerField
+      FieldName = 'documentoventa_listaprecio'
+    end
+    object ZQPendientesdocumentoventa_equipo1: TStringField
+      FieldName = 'documentoventa_equipo1'
+      Size = 45
+    end
+    object ZQPendientesdocumentoventa_equipo2: TStringField
+      FieldName = 'documentoventa_equipo2'
+      Size = 45
+    end
+    object ZQPendientesdocumentoventa_formapago: TStringField
+      FieldName = 'documentoventa_formapago'
+      Size = 255
+    end
+    object ZQPendientesdocumentoventa_nrodetallepago: TStringField
+      FieldName = 'documentoventa_nrodetallepago'
+      Size = 45
+    end
+    object ZQPendientesdocumentoventa_solicitudcliente: TStringField
+      FieldName = 'documentoventa_solicitudcliente'
+      Size = 255
+    end
+    object ZQPendientesdocumentoventa_trabajorealizado: TStringField
+      FieldName = 'documentoventa_trabajorealizado'
+      Size = 255
+    end
+    object ZQPendientescaja_id: TIntegerField
+      FieldName = 'caja_id'
+    end
+    object ZQPendientestipodocu_id_1: TIntegerField
+      FieldName = 'tipodocu_id_1'
+      Required = True
+    end
+    object ZQPendientestipodocu_nombre: TStringField
+      FieldName = 'tipodocu_nombre'
+      Size = 45
+    end
+    object ZQPendientestipodocu_tipo: TStringField
+      FieldName = 'tipodocu_tipo'
+      Size = 45
+    end
+    object ZQPendientestipodocu_caja: TIntegerField
+      FieldName = 'tipodocu_caja'
+    end
+    object ZQPendientestipodocu_stock: TIntegerField
+      FieldName = 'tipodocu_stock'
+    end
+    object ZQPendientestipodocu_iva: TIntegerField
+      FieldName = 'tipodocu_iva'
+    end
+    object ZQPendientestipodocu_fiscal: TIntegerField
+      FieldName = 'tipodocu_fiscal'
+    end
+    object ZQPendientestipodocu_ultimonumero: TIntegerField
+      FieldName = 'tipodocu_ultimonumero'
+    end
+    object ZQPendientespuntoventa_id: TIntegerField
+      FieldName = 'puntoventa_id'
+      Required = True
+    end
+    object ZQPendientestipodocu_letra: TStringField
+      FieldName = 'tipodocu_letra'
+      Size = 45
+    end
+    object ZQPendientestipodocu_debcred: TStringField
+      FieldName = 'tipodocu_debcred'
+      Size = 45
+    end
+    object ZQPendientestipodocufiscal_id: TIntegerField
+      FieldName = 'tipodocufiscal_id'
+      Required = True
+    end
+    object ZQPendientestipodocu_preimpresos: TIntegerField
+      FieldName = 'tipodocu_preimpresos'
+    end
+    object ZQPendientestipodocu_impresora: TStringField
+      FieldName = 'tipodocu_impresora'
+      Size = 200
+    end
+    object ZQPendientestipodocu_copias: TIntegerField
+      FieldName = 'tipodocu_copias'
+    end
+    object ZQPendientestipodocu_preview: TIntegerField
+      FieldName = 'tipodocu_preview'
+    end
+    object ZQPendientestipodocu_prompt: TIntegerField
+      FieldName = 'tipodocu_prompt'
+    end
+    object ZQPendientestipodocu_ctacte: TIntegerField
+      FieldName = 'tipodocu_ctacte'
+    end
+    object ZQPendientestipodocu_archivoimpresion: TStringField
+      FieldName = 'tipodocu_archivoimpresion'
+      Size = 100
+    end
+    object ZQPendientestipodocu_leyenda: TStringField
+      FieldName = 'tipodocu_leyenda'
+      Size = 200
+    end
+    object ZQPendientestipodocu_nombreabrev: TStringField
+      FieldName = 'tipodocu_nombreabrev'
+      Size = 5
+    end
+    object ZQPendientestipodocu_manual: TIntegerField
+      FieldName = 'tipodocu_manual'
+    end
+    object ZQPendientespuntoventa_id_1: TIntegerField
+      FieldName = 'puntoventa_id_1'
+      Required = True
+    end
+    object ZQPendientespuntoventa_numero: TIntegerField
+      FieldName = 'puntoventa_numero'
+    end
+    object ZQPendientespuntoventa_descripcion: TStringField
+      FieldName = 'puntoventa_descripcion'
+      Size = 45
+    end
+    object ZQPendientessucursal_id: TIntegerField
+      FieldName = 'sucursal_id'
+      Required = True
+    end
+    object ZQPendientespuntoventa_controladorfiscalmodelo: TIntegerField
+      FieldName = 'puntoventa_controladorfiscalmodelo'
+    end
+    object ZQPendientespuntoventa_controladorfiscalpuerto: TIntegerField
+      FieldName = 'puntoventa_controladorfiscalpuerto'
+    end
+    object ZQPendientescliente_id_1: TIntegerField
+      FieldName = 'cliente_id_1'
+      Required = True
+    end
+    object ZQPendientescliente_nombre: TStringField
+      FieldName = 'cliente_nombre'
+      Size = 100
+    end
+    object ZQPendientescliente_domicilio: TStringField
+      FieldName = 'cliente_domicilio'
+      Size = 150
+    end
+    object ZQPendientescliente_documentonro: TStringField
+      FieldName = 'cliente_documentonro'
+      Size = 45
+    end
+    object ZQPendientescliente_documentotipo: TStringField
+      FieldName = 'cliente_documentotipo'
+      Size = 45
+    end
+    object ZQPendientescliente_telefono: TStringField
+      FieldName = 'cliente_telefono'
+      Size = 45
+    end
+    object ZQPendientescliente_celular: TStringField
+      FieldName = 'cliente_celular'
+      Size = 45
+    end
+    object ZQPendientescliente_mail: TStringField
+      FieldName = 'cliente_mail'
+      Size = 45
+    end
+    object ZQPendientescondicioniva_id: TIntegerField
+      FieldName = 'condicioniva_id'
+      Required = True
+    end
+    object ZQPendientescliente_listaprecio: TIntegerField
+      FieldName = 'cliente_listaprecio'
+    end
+    object ZQPendientescliente_condicionventa: TStringField
+      FieldName = 'cliente_condicionventa'
+      Size = 45
+    end
+    object ZQPendienteslocalidad_id: TIntegerField
+      FieldName = 'localidad_id'
+      Required = True
+    end
+    object ZQPendientescliente_observaciones: TStringField
+      FieldName = 'cliente_observaciones'
+      Size = 255
+    end
+    object ZQPendientespersonal_id_1: TIntegerField
+      FieldName = 'personal_id_1'
+      Required = True
+    end
+    object ZQPendientescliente_diasvenc: TIntegerField
+      FieldName = 'cliente_diasvenc'
+    end
+    object ZQPendientespersonal_id_2: TIntegerField
+      FieldName = 'personal_id_2'
+      Required = True
+    end
+    object ZQPendientespersonal_nombre: TStringField
+      FieldName = 'personal_nombre'
+      Size = 100
+    end
+    object ZQPendientespersonal_domicilio: TStringField
+      FieldName = 'personal_domicilio'
+      Size = 150
+    end
+    object ZQPendientespersonal_telefono: TStringField
+      FieldName = 'personal_telefono'
+      Size = 45
+    end
+    object ZQPendientespersonal_celular: TStringField
+      FieldName = 'personal_celular'
+      Size = 45
+    end
+    object ZQPendientespersonal_mail: TStringField
+      FieldName = 'personal_mail'
+      Size = 45
+    end
+    object ZQPendientespersonal_usuario: TStringField
+      FieldName = 'personal_usuario'
+      Size = 45
+    end
+    object ZQPendientespersonal_pass: TStringField
+      FieldName = 'personal_pass'
+      Size = 45
+    end
+    object ZQPendientesperfil_id: TIntegerField
+      FieldName = 'perfil_id'
+      Required = True
+    end
+    object ZQPendientespersonal_id_3: TIntegerField
+      FieldName = 'personal_id_3'
+      Required = True
+    end
+    object ZQPendientespersonal_nombre_1: TStringField
+      FieldName = 'personal_nombre_1'
+      Size = 100
+    end
+    object ZQPendientespersonal_domicilio_1: TStringField
+      FieldName = 'personal_domicilio_1'
+      Size = 150
+    end
+    object ZQPendientespersonal_telefono_1: TStringField
+      FieldName = 'personal_telefono_1'
+      Size = 45
+    end
+    object ZQPendientespersonal_celular_1: TStringField
+      FieldName = 'personal_celular_1'
+      Size = 45
+    end
+    object ZQPendientespersonal_mail_1: TStringField
+      FieldName = 'personal_mail_1'
+      Size = 45
+    end
+    object ZQPendientespersonal_usuario_1: TStringField
+      FieldName = 'personal_usuario_1'
+      Size = 45
+    end
+    object ZQPendientespersonal_pass_1: TStringField
+      FieldName = 'personal_pass_1'
+      Size = 45
+    end
+    object ZQPendientesperfil_id_1: TIntegerField
+      FieldName = 'perfil_id_1'
+      Required = True
+    end
+    object ZQPendientessucursal_id_1: TIntegerField
+      FieldName = 'sucursal_id_1'
+      Required = True
+    end
+    object ZQPendientessucursal_nombre: TStringField
+      FieldName = 'sucursal_nombre'
+      Size = 100
+    end
+    object ZQPendientessucursal_domicilio: TStringField
+      FieldName = 'sucursal_domicilio'
+      Size = 150
+    end
+    object ZQPendientessucursal_telefono: TStringField
+      FieldName = 'sucursal_telefono'
+      Size = 45
+    end
+    object ZQPendientesempresa_id: TIntegerField
+      FieldName = 'empresa_id'
+      Required = True
+    end
+    object ZQPendientessucursal_tipoliquidvendedor: TStringField
+      FieldName = 'sucursal_tipoliquidvendedor'
+      Size = 45
+    end
+    object ZQPendientessucursal_tipoliquidsucursal: TStringField
+      FieldName = 'sucursal_tipoliquidsucursal'
+      Size = 45
+    end
+    object ZQPendientescliente_id_2: TIntegerField
+      FieldName = 'cliente_id_2'
+    end
+    object ZQPendientessucursal_tipodocumentoliquidar: TIntegerField
+      FieldName = 'sucursal_tipodocumentoliquidar'
+    end
+    object ZQPendientesdebito: TFloatField
+      FieldName = 'debito'
+      ReadOnly = True
+      DisplayFormat = '0.00'
+    end
+    object ZQPendientescredito: TFloatField
+      FieldName = 'credito'
+      ReadOnly = True
+      DisplayFormat = '0.00'
+    end
+    object ZQPendientesacumulado: TFloatField
+      FieldName = 'acumulado'
+      ReadOnly = True
+      DisplayFormat = '0.00'
+    end
+    object ZQPendientesgrupo: TIntegerField
+      FieldName = 'grupo'
+      ReadOnly = True
+    end
+    object ZQPendientesdocumento_nombre: TStringField
+      FieldName = 'documento_nombre'
+      ReadOnly = True
+      Size = 51
+    end
+    object ZQPendientesdocumentoventafecha: TStringField
+      FieldName = 'documentoventafecha'
+      ReadOnly = True
+      Size = 10
+    end
+    object ZQPendientespuntoventanumero: TStringField
+      FieldName = 'puntoventanumero'
+      ReadOnly = True
+      Size = 11
+    end
+    object ZQPendientesdocumentoventanumero: TStringField
+      FieldName = 'documentoventanumero'
+      ReadOnly = True
+      Size = 11
+    end
   end
   object MQdetalle: TMQuery
     Connection = Princ.ZBase

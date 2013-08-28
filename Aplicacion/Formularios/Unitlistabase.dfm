@@ -174,6 +174,7 @@ object listabase: Tlistabase
       TitleFont.Height = -11
       TitleFont.Name = 'MS Sans Serif'
       TitleFont.Style = []
+      OnTitleClick = DBGrid1TitleClick
     end
     object panelfiltros: TAdvPanel
       Left = 0

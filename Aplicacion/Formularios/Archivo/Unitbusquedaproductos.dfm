@@ -64,7 +64,6 @@ object busquedaproductos: Tbusquedaproductos
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitWidth = 1003
     FullHeight = 0
     object DBGrid1: TDBGrid
       Left = 0
@@ -81,6 +80,7 @@ object busquedaproductos: Tbusquedaproductos
       TitleFont.Name = 'MS Sans Serif'
       TitleFont.Style = []
       OnKeyPress = DBGrid1KeyPress
+      OnTitleClick = DBGrid1TitleClick
       Columns = <
         item
           Expanded = False
@@ -190,7 +190,6 @@ object busquedaproductos: Tbusquedaproductos
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
-      ExplicitWidth = 1003
       FullHeight = 0
       object Button5: TButton
         Left = 936
@@ -201,7 +200,6 @@ object busquedaproductos: Tbusquedaproductos
         Caption = 'Filtrar'
         TabOrder = 8
         OnClick = Button5Click
-        ExplicitLeft = 900
       end
       object fil_producto_precioventa1: TEdit
         Left = 482
@@ -238,7 +236,6 @@ object busquedaproductos: Tbusquedaproductos
         Height = 22
         Align = alLeft
         TabOrder = 6
-        ExplicitLeft = 602
         ExplicitHeight = 21
       end
       object fil_producto_preciocosto: TEdit
@@ -266,7 +263,6 @@ object busquedaproductos: Tbusquedaproductos
         Height = 22
         Align = alLeft
         TabOrder = 5
-        ExplicitLeft = 552
         ExplicitHeight = 21
       end
       object fil_proveedor_nombre: TEdit
@@ -276,7 +272,6 @@ object busquedaproductos: Tbusquedaproductos
         Height = 22
         Align = alLeft
         TabOrder = 7
-        ExplicitLeft = 702
         ExplicitHeight = 21
       end
       object fil_producto_precioventa2: TEdit
@@ -286,8 +281,7 @@ object busquedaproductos: Tbusquedaproductos
         Height = 22
         Align = alLeft
         TabOrder = 9
-        ExplicitLeft = 562
-        ExplicitTop = 6
+        ExplicitHeight = 21
       end
     end
     object panelbusqueda: TAdvPanel
@@ -334,7 +328,6 @@ object busquedaproductos: Tbusquedaproductos
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
-      ExplicitWidth = 1003
       FullHeight = 0
       object btnbuscar: TButton
         Left = 443
@@ -374,10 +367,10 @@ object busquedaproductos: Tbusquedaproductos
         Width = 105
         Height = 21
         ItemHeight = 13
-        ItemIndex = 0
+        ItemIndex = 1
         TabOrder = 2
         TabStop = False
-        Text = 'Comience con'
+        Text = 'Contenga a'
         Items.Strings = (
           'Comience con'
           'Contenga a')
@@ -427,7 +420,6 @@ object busquedaproductos: Tbusquedaproductos
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
-      ExplicitWidth = 1003
       FullHeight = 0
       object btnaceptar: TButton
         Left = 832

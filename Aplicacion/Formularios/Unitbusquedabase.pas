@@ -25,6 +25,7 @@ type
     procedure btnaceptarClick(Sender: TObject);
     procedure fil_idKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
+    procedure DBGrid1TitleClick(Column: TColumn);
   private
     { Private declarations }
     abm:integer;
@@ -59,6 +60,11 @@ end;
 procedure Tbusquedabase.btnfiltrarClick(Sender: TObject);
 begin
     ZQGrilla.Active:=false;
+end;
+
+procedure Tbusquedabase.DBGrid1TitleClick(Column: TColumn);
+begin
+    ZQGrilla.IndexFieldNames:=Column.FieldName;
 end;
 
 procedure Tbusquedabase.fil_idKeyPress(Sender: TObject; var Key: Char);

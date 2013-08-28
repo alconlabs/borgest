@@ -1063,3 +1063,7 @@ DEFAULT CHARACTER SET = latin1
 COLLATE = latin1_swedish_ci;
 280;
 update personal set personal_usuario=concat('usuario',personal_id), personal_pass='AwAAAGixz0QkQCbR+0Wz6OOgjuw=\r\n\0';
+281;
+INSERT INTO `config` SET `config_nombre`='MOSTRARPRODUCTOSOCULTOS',`config_valor`='-1';
+282;
+INSERT INTO `config` SET `config_nombre`='VENTAIMPRIMIRCODIGOPROD',`config_valor`='0';

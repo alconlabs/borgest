@@ -86,6 +86,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure fil_producto_idKeyPress(Sender: TObject; var Key: Char);
+    procedure DBGrid1TitleClick(Column: TColumn);
   private
     { Private declarations }
     abm:integer;
@@ -206,6 +207,11 @@ begin
 
 
       end;
+end;
+
+procedure Tbusquedaproductos.DBGrid1TitleClick(Column: TColumn);
+begin
+    ZQGrilla.IndexFieldNames:=Column.FieldName;
 end;
 
 procedure Tbusquedaproductos.fil_producto_idKeyPress(Sender: TObject;

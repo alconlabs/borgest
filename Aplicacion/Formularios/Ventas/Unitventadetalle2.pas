@@ -13,7 +13,7 @@ type
     panelgrilla: TAdvPanel;
     Label3: TLabel;
     Label6: TLabel;
-    Button1: TButton;
+    btncancelar: TButton;
     btnaceptar: TButton;
     Label1: TLabel;
     ventadetalle_preciounitario: TDBAdvEdit;
@@ -268,8 +268,21 @@ end;
 procedure Tventadetalle2.producto_idAfterSearch(Sender: TObject);
 begin
     ventadetalle_preciounitario.Text:=producto_id.valor('producto_precioventa'+producto_precioventa);
-    producto_nombre.ReadOnly:=not (PRODUCTOMODIFICARDESCR=producto_id.Text);
-    producto_nombre.TabStop:=not producto_nombre.ReadOnly;
+    if PRODUCTOMODIFICARDESCR='' then
+      begin
+          producto_nombre.ReadOnly:=false;
+          producto_nombre.TabStop:=true;
+      end
+    else
+      begin
+          producto_nombre.ReadOnly:=not (PRODUCTOMODIFICARDESCR=producto_id.Text);
+          producto_nombre.TabStop:=not producto_nombre.ReadOnly;
+
+
+      end;
+
+
+
 
     producto_fechaactualizacionprecio.Caption:=producto_id.valor('producto_fechaactualizacionprecio');
 
@@ -394,6 +407,7 @@ procedure Tventadetalle2.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
     case key of
+        VK_ESCAPE:btncancelar.Click;
         VK_F9:btnaceptar.Click;
         VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);
     end;

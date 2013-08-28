@@ -209,6 +209,7 @@ type
     ZQDocumentoventadetallesproducto_tipo: TStringField;
     ZQDocumentoventadetallesConceptosproducto_tipo: TStringField;
     btnimprimir: TButton;
+    ZQdocumentoventadocusdocumentoventadoc_tiporelacion: TStringField;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);

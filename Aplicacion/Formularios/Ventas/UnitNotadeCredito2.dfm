@@ -487,7 +487,7 @@ object NotadeCredito2: TNotadeCredito2
       Top = 135
       Width = 836
       Height = 185
-      ActivePage = TabSheet2
+      ActivePage = TabSheet3
       TabOrder = 13
       object TabSheet1: TTabSheet
         Caption = 'Productos'
@@ -1148,6 +1148,10 @@ object NotadeCredito2: TNotadeCredito2
     end
     object ZQdocumentoventadocuspuntoventa_controladorfiscalpuerto: TIntegerField
       FieldName = 'puntoventa_controladorfiscalpuerto'
+    end
+    object ZQdocumentoventadocusdocumentoventadoc_tiporelacion: TStringField
+      FieldName = 'documentoventadoc_tiporelacion'
+      Size = 45
     end
   end
   object ZQNotacredito: TZQuery
