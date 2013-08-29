@@ -518,9 +518,6 @@ object TRpReport
       end
       item
         Component = TRpExpression8
-      end
-      item
-        Component = TRpLabel10
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -1174,9 +1171,6 @@ object TRpReport
       end
       item
         Component = TRpExpression16
-      end
-      item
-        Component = TRpLabel15
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -1196,7 +1190,7 @@ object TRpReport
   end
   object TRpSection6: TRpSection
     Width = 10772
-    Height = 230
+    Height = 360
     SubReport = TRpSubReport0
     GroupName = 'SUCURSALES'
     ChangeBool = False
@@ -1246,9 +1240,6 @@ object TRpReport
       end
       item
         Component = TRpExpression15
-      end
-      item
-        Component = TRpLabel12
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -1318,7 +1309,7 @@ object TRpReport
   object TRpExpression15: TRpExpression
     Width = 4200
     Height = 230
-    PosX = 1710
+    PosX = 114
     PosY = 0
     Type1Font = poHelvetica
     FontStyle = 1
@@ -1338,20 +1329,6 @@ object TRpReport
     AgIniValue = '0'
     ExportExpression = ''
   end
-  object TRpLabel12: TRpLabel
-    Width = 1025
-    Height = 230
-    PosX = 455
-    PosY = -2
-    Type1Font = poHelvetica
-    FontStyle = 1
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'Vendedor'
-  end
   object TRpShape20: TRpShape
     Width = 975
     Height = 225
@@ -1368,7 +1345,7 @@ object TRpReport
   object TRpExpression16: TRpExpression
     Width = 4331
     Height = 229
-    PosX = 1710
+    PosX = 114
     PosY = -1
     Type1Font = poHelvetica
     Alignment = 1
@@ -1389,20 +1366,6 @@ object TRpReport
     AgIniValue = '0'
     ExportExpression = ''
   end
-  object TRpLabel15: TRpLabel
-    Width = 619
-    Height = 229
-    PosX = 458
-    PosY = -1
-    Type1Font = poHelvetica
-    Alignment = 1
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'Sucursal'
-  end
   object TRpShape21: TRpShape
     Width = 570
     Height = 225
@@ -1419,7 +1382,7 @@ object TRpReport
   object TRpExpression8: TRpExpression
     Width = 4331
     Height = 229
-    PosX = 1710
+    PosX = 114
     PosY = -1
     Type1Font = poHelvetica
     Alignment = 1
@@ -1439,20 +1402,6 @@ object TRpReport
     ExportDisplayFormat = ''
     AgIniValue = '0'
     ExportExpression = ''
-  end
-  object TRpLabel10: TRpLabel
-    Width = 619
-    Height = 229
-    PosX = 458
-    PosY = -1
-    Type1Font = poHelvetica
-    Alignment = 1
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'Cliente'
   end
   object TRpShape22: TRpShape
     Width = 345
