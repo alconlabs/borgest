@@ -66,6 +66,8 @@ type
     MResult:integer;
     modelo:integer;
     puerto:integer;
+    devoluciones:real;
+    recargo:real;
   end;
 
 var
@@ -518,6 +520,16 @@ begin
 
             MQDetalle.Next;
         end;
+
+
+    if recargo>0 then
+      HASAR1.ImprimirItem('Recargo',1, recargo, 21, 0);
+
+
+    if devoluciones>0 then
+      begin
+          HASAR1.DescuentoGeneral('Devoluciones',devoluciones,false);
+      end;
 
 
     Memo1.Lines.Add('Imprimiendo pagos.');

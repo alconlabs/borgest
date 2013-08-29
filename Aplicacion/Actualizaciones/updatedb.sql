@@ -1067,3 +1067,5 @@ update personal set personal_usuario=concat('usuario',personal_id), personal_pas
 INSERT INTO `config` SET `config_nombre`='MOSTRARPRODUCTOSOCULTOS',`config_valor`='-1';
 282;
 INSERT INTO `config` SET `config_nombre`='VENTAIMPRIMIRCODIGOPROD',`config_valor`='0';
+283;
+ALTER TABLE `documentosventas` ADD COLUMN `documentoventa_recargo` FLOAT(20,4) NULL DEFAULT 0  AFTER `caja_id` ;

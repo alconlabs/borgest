@@ -3,7 +3,7 @@ object facturasventa: Tfacturasventa
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Factura Venta'
-  ClientHeight = 504
+  ClientHeight = 540
   ClientWidth = 851
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -24,7 +24,7 @@ object facturasventa: Tfacturasventa
     Left = 0
     Top = 0
     Width = 851
-    Height = 504
+    Height = 540
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -70,6 +70,7 @@ object facturasventa: Tfacturasventa
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitHeight = 504
     FullHeight = 0
     object Label2: TLabel
       Left = 585
@@ -229,7 +230,7 @@ object facturasventa: Tfacturasventa
     end
     object btncancelar: TButton
       Left = 763
-      Top = 457
+      Top = 489
       Width = 75
       Height = 25
       Caption = 'Cancelar'
@@ -238,7 +239,7 @@ object facturasventa: Tfacturasventa
     end
     object btnguardar: TButton
       Left = 682
-      Top = 457
+      Top = 489
       Width = 75
       Height = 25
       Caption = 'Guardar'
@@ -262,7 +263,7 @@ object facturasventa: Tfacturasventa
     end
     object DBGrid1: TDBGrid
       Left = 4
-      Top = 124
+      Top = 122
       Width = 836
       Height = 153
       TabStop = False
@@ -342,13 +343,13 @@ object facturasventa: Tfacturasventa
       Left = 4
       Top = 308
       Width = 316
-      Height = 118
+      Height = 145
       Caption = 'Totales'
       ParentBackground = False
       TabOrder = 8
       object Label5: TLabel
         Left = 8
-        Top = 17
+        Top = 41
         Width = 46
         Height = 13
         Alignment = taRightJustify
@@ -356,7 +357,7 @@ object facturasventa: Tfacturasventa
       end
       object Label6: TLabel
         Left = 14
-        Top = 41
+        Top = 65
         Width = 40
         Height = 13
         Alignment = taRightJustify
@@ -364,7 +365,7 @@ object facturasventa: Tfacturasventa
       end
       object Label7: TLabel
         Left = 159
-        Top = 17
+        Top = 41
         Width = 55
         Height = 13
         Alignment = taRightJustify
@@ -372,7 +373,7 @@ object facturasventa: Tfacturasventa
       end
       object Label9: TLabel
         Left = 165
-        Top = 41
+        Top = 65
         Width = 49
         Height = 13
         Alignment = taRightJustify
@@ -380,7 +381,7 @@ object facturasventa: Tfacturasventa
       end
       object Label10: TLabel
         Left = 111
-        Top = 81
+        Top = 105
         Width = 47
         Height = 24
         Alignment = taRightJustify
@@ -392,28 +393,15 @@ object facturasventa: Tfacturasventa
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object documentoventa_neto21: TMoneyEdit
-        Left = 68
-        Top = 14
-        Width = 70
-        Height = 21
-        TabStop = False
-        CalculatorLook.ButtonWidth = 24
-        CalculatorLook.ButtonHeight = 24
-        CalculatorLook.ButtonColor = clSilver
-        CalculatorLook.Color = clWhite
-        CalculatorLook.Flat = False
-        CalculatorLook.Font.Charset = DEFAULT_CHARSET
-        CalculatorLook.Font.Color = clWindowText
-        CalculatorLook.Font.Height = -11
-        CalculatorLook.Font.Name = 'Tahoma'
-        CalculatorLook.Font.Style = []
-        EditorEnabled = False
-        ReadOnly = True
-        TabOrder = 0
-        Version = '1.1.0.1'
+      object Label99: TLabel
+        Left = 13
+        Top = 17
+        Width = 41
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Recargo'
       end
-      object documentoventa_iva21: TMoneyEdit
+      object documentoventa_neto21: TMoneyEdit
         Left = 68
         Top = 38
         Width = 70
@@ -434,9 +422,9 @@ object facturasventa: Tfacturasventa
         TabOrder = 1
         Version = '1.1.0.1'
       end
-      object documentoventa_neto105: TMoneyEdit
-        Left = 228
-        Top = 14
+      object documentoventa_iva21: TMoneyEdit
+        Left = 68
+        Top = 62
         Width = 70
         Height = 21
         TabStop = False
@@ -450,11 +438,12 @@ object facturasventa: Tfacturasventa
         CalculatorLook.Font.Height = -11
         CalculatorLook.Font.Name = 'Tahoma'
         CalculatorLook.Font.Style = []
+        EditorEnabled = False
         ReadOnly = True
         TabOrder = 2
         Version = '1.1.0.1'
       end
-      object documentoventa_iva105: TMoneyEdit
+      object documentoventa_neto105: TMoneyEdit
         Left = 228
         Top = 38
         Width = 70
@@ -474,9 +463,29 @@ object facturasventa: Tfacturasventa
         TabOrder = 3
         Version = '1.1.0.1'
       end
+      object documentoventa_iva105: TMoneyEdit
+        Left = 228
+        Top = 62
+        Width = 70
+        Height = 21
+        TabStop = False
+        CalculatorLook.ButtonWidth = 24
+        CalculatorLook.ButtonHeight = 24
+        CalculatorLook.ButtonColor = clSilver
+        CalculatorLook.Color = clWhite
+        CalculatorLook.Flat = False
+        CalculatorLook.Font.Charset = DEFAULT_CHARSET
+        CalculatorLook.Font.Color = clWindowText
+        CalculatorLook.Font.Height = -11
+        CalculatorLook.Font.Name = 'Tahoma'
+        CalculatorLook.Font.Style = []
+        ReadOnly = True
+        TabOrder = 4
+        Version = '1.1.0.1'
+      end
       object documentoventa_total: TMoneyEdit
         Left = 164
-        Top = 78
+        Top = 102
         Width = 134
         Height = 32
         TabStop = False
@@ -497,8 +506,27 @@ object facturasventa: Tfacturasventa
         Font.Style = [fsBold]
         ParentFont = False
         ReadOnly = True
-        TabOrder = 4
+        TabOrder = 5
         Version = '1.1.0.1'
+      end
+      object documentoventa_recargo: TMoneyEdit
+        Left = 68
+        Top = 14
+        Width = 70
+        Height = 21
+        CalculatorLook.ButtonWidth = 24
+        CalculatorLook.ButtonHeight = 24
+        CalculatorLook.ButtonColor = clSilver
+        CalculatorLook.Color = clWhite
+        CalculatorLook.Flat = False
+        CalculatorLook.Font.Charset = DEFAULT_CHARSET
+        CalculatorLook.Font.Color = clWindowText
+        CalculatorLook.Font.Height = -11
+        CalculatorLook.Font.Name = 'Tahoma'
+        CalculatorLook.Font.Style = []
+        TabOrder = 0
+        Version = '1.1.0.1'
+        OnExit = documentoventa_recargoExit
       end
     end
     object puntoventa_id: TSqlComboBox
@@ -554,7 +582,7 @@ object facturasventa: Tfacturasventa
       Left = 331
       Top = 306
       Width = 509
-      Height = 120
+      Height = 147
       TabStop = False
       DataSource = DTSPagos
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
@@ -582,7 +610,7 @@ object facturasventa: Tfacturasventa
     end
     object btnagregarpago: TButton
       Left = 331
-      Top = 427
+      Top = 459
       Width = 75
       Height = 25
       Caption = 'Agregar'
@@ -591,7 +619,7 @@ object facturasventa: Tfacturasventa
     end
     object btnquitarpago: TButton
       Left = 405
-      Top = 427
+      Top = 459
       Width = 75
       Height = 25
       Caption = 'Quitar'
@@ -663,7 +691,7 @@ object facturasventa: Tfacturasventa
     end
     object btnimprimirventa: TButton
       Left = 4
-      Top = 457
+      Top = 489
       Width = 75
       Height = 25
       Caption = 'Imprimir'
@@ -691,7 +719,7 @@ object facturasventa: Tfacturasventa
     end
     object btnobservaciones: TButton
       Left = 4
-      Top = 427
+      Top = 459
       Width = 83
       Height = 25
       Caption = 'Observaciones'
@@ -700,7 +728,7 @@ object facturasventa: Tfacturasventa
     end
     object VENTASEMITIRREMITOCTACTE: TCheckBox
       Left = 554
-      Top = 461
+      Top = 493
       Width = 86
       Height = 17
       TabStop = False

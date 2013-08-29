@@ -1996,6 +1996,7 @@ begin
     ZQDocumentosventasABM.Sql.Add('documentoventa_neto21=:documentoventa_neto21, ');
     ZQDocumentosventasABM.Sql.Add('documentoventa_hora=:documentoventa_hora, ');
     ZQDocumentosventasABM.Sql.Add('documentoventa_fecha=:documentoventa_fecha, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_recargo=:documentoventa_recargo, ');
     ZQDocumentosventasABM.Sql.Add('documentoventa_numero=:documentoventa_numero ');
     ZQDocumentosventasABM.Sql.Add('where documentoventa_id=:documentoventa_id ');
     ZQDocumentosventasABM.parambyname('cliente_id').asstring:=Cabecera.FieldByName('cliente_id').AsString;
@@ -2018,6 +2019,7 @@ begin
     ZQDocumentosventasABM.parambyname('documentoventa_total').asstring:=Cabecera.FieldByName('documentoventa_total').AsString;
     ZQDocumentosventasABM.parambyname('personal_id').asstring:=Cabecera.FieldByName('personal_id').AsString;
     ZQDocumentosventasABM.parambyname('tipodocu_id').asstring:=Cabecera.FieldByName('tipodocu_id').AsString;
+    ZQDocumentosventasABM.ParamByName('documentoventa_recargo').AsString:=Cabecera.FieldByName('documentoventa_recargo').AsString;
     ZQDocumentosventasABM.ExecSQL;
 
     if Detalle<>nil then
@@ -2074,11 +2076,11 @@ begin
                   Detalle.Next;
               end;
 
-          documentoventa_neto21:=princ.buscar('select sum(documentoventadetalle_neto21) as neto21 from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','neto21');
+          documentoventa_neto21:=floattostr(roundto(Cabecera.FieldByName('documentoventa_recargo').AsFloat/1.21,-2)+strtofloat(princ.buscar('select sum(documentoventadetalle_neto21) as neto21 from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','neto21')));
           documentoventa_neto105:=princ.buscar('select sum(documentoventadetalle_neto105) as neto105 from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','neto105');
-          documentoventa_iva21:=princ.buscar('select sum(documentoventadetalle_iva21) as iva21 from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','iva21');
+          documentoventa_iva21:=floattostr(roundto(Cabecera.FieldByName('documentoventa_recargo').AsFloat*21/100,-2)+strtofloat(princ.buscar('select sum(documentoventadetalle_iva21) as iva21 from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','iva21')));
           documentoventa_iva105:=princ.buscar('select sum(documentoventadetalle_iva105) as iva105 from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','iva105');
-          documentoventa_total:=princ.buscar('select sum(documentoventadetalle_total) as total from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','total');
+          documentoventa_total:=floattostr((Cabecera.FieldByName('documentoventa_recargo').AsFloat)+strtofloat(princ.buscar('select sum(documentoventadetalle_total) as total from documentoventadetalles where documentoventa_id="'+Cabecera.FieldByName('documentoventa_id').AsString+'"','total')));
 
           ZQDocumentosventasABM.Sql.Clear;
           ZQDocumentosventasABM.Sql.Add('update documentosventas set ');
@@ -2293,15 +2295,28 @@ begin
           ZQdocumentoventadetalles.ParamByName('documentoventa_id').AsString:=id;
           ZQdocumentoventadetalles.Active:=true;
 
+
+          impresorafiscal.devoluciones:=0;
           while not ZQdocumentoventadetalles.Eof do
               begin
                   impresorafiscal.MQDetalle.Insert;
+                  if ZQdocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat>0 then
+                    begin
+                        impresorafiscal.MQDetalle.FieldByName('monto').AsString:=ZQdocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsString;
+                    end
+                  else
+                    begin
+                        impresorafiscal.MQDetalle.FieldByName('monto').AsFloat:=0.01;
+
+                        impresorafiscal.devoluciones:=impresorafiscal.devoluciones+ZQdocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat;
+                    end;
+
                   if princ.GetConfiguracion('VENTAIMPRIMIRCODIGOPROD')='-1' then
-                    impresorafiscal.MQDetalle.FieldByName('descripcion').AsString:=QuitarCaracteresEspeciales(ZQdocumentoventadetalles.FieldByName('producto_id').AsString);
+                    impresorafiscal.MQDetalle.FieldByName('descripcion').AsString:=QuitarCaracteresEspeciales(ZQdocumentoventadetalles.FieldByName('producto_id').AsString)+' - ';
 
                   impresorafiscal.MQDetalle.FieldByName('descripcion').AsString:=impresorafiscal.MQDetalle.FieldByName('descripcion').AsString+QuitarCaracteresEspeciales(ZQdocumentoventadetalles.FieldByName('documentoventadetalle_descripcion').AsString);
                   impresorafiscal.MQDetalle.FieldByName('cantidad').AsString:=ZQdocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsString;
-                  impresorafiscal.MQDetalle.FieldByName('monto').AsString:=ZQdocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsString;
+
                   impresorafiscal.MQDetalle.FieldByName('IVA').AsString:=ZQdocumentoventadetalles.FieldByName('tipoiva_valor').AsString;
                   impresorafiscal.MQDetalle.FieldByName('impuestosinternos').AsString:='0';
 
@@ -2325,12 +2340,35 @@ begin
 
                   ZQDocumentopagos.Next;
               end;
+
+          if (impresorafiscal.Showmodal=mrOk) and (id<>'-1') then
+            begin
+                //MessageDlg('nro desde la impr'+inttostr(impresorafiscal.documentoventa_numero), mtInformation, [mbOK], 0);
+                Princ.ActualizarNumeroDocumento(id,inttostr(impresorafiscal.documentoventa_numero));
+
+                ZQuery1.sql.clear;
+                ZQuery1.sql.add('Update documentosventas set ');
+                ZQuery1.sql.add('documentoventa_fecha=:documentoventa_fecha, ');
+                ZQuery1.sql.add('documentoventa_hora=:documentoventa_hora,');
+                ZQuery1.sql.add('documentoventa_numero=:documentoventa_numero');
+                ZQuery1.sql.add(' where documentoventa_id=:documentoventa_id');
+                ZQuery1.parambyname('documentoventa_fecha').asstring:=formatdatetime('yyyy-mm-dd',impresorafiscal.documentoventa_fecha);
+                ZQuery1.parambyname('documentoventa_hora').asstring:=formatdatetime('hh:nn:ss',impresorafiscal.documentoventa_fecha);
+                ZQuery1.parambyname('documentoventa_numero').AsInteger:=impresorafiscal.documentoventa_numero;
+                ZQuery1.parambyname('documentoventa_id').asstring:=id;
+                ZQuery1.ExecSQL;
+            end
+          else
+            MessageDlg('No se pudo imprimir el comprobante.'+#13+#10+'Verifique los datos.', mtError, [mbOK], 0);
+
+
       end;
     if id='-1' then
       begin
           impresorafiscal.tipodocu_nombre:='Reporte Z';
           impresorafiscal.modelo:=strtoint(Princ.buscar('select puntoventa_controladorfiscalmodelo from puntodeventa where puntoventa_id="'+puntoventa_id+'"','puntoventa_controladorfiscalmodelo'));
           impresorafiscal.puerto:=strtoint(Princ.buscar('select puntoventa_controladorfiscalpuerto from puntodeventa where puntoventa_id="'+puntoventa_id+'"','puntoventa_controladorfiscalpuerto'));
+          impresorafiscal.Showmodal;
       end;
 
     if id='-2' then
@@ -2338,27 +2376,8 @@ begin
           impresorafiscal.tipodocu_nombre:='Reporte X';
           impresorafiscal.modelo:=strtoint(Princ.buscar('select puntoventa_controladorfiscalmodelo from puntodeventa where puntoventa_id="'+puntoventa_id+'"','puntoventa_controladorfiscalmodelo'));
           impresorafiscal.puerto:=strtoint(Princ.buscar('select puntoventa_controladorfiscalpuerto from puntodeventa where puntoventa_id="'+puntoventa_id+'"','puntoventa_controladorfiscalpuerto'));
+          impresorafiscal.Showmodal;
       end;
-
-    if impresorafiscal.Showmodal=mrOk then
-      begin
-          //MessageDlg('nro desde la impr'+inttostr(impresorafiscal.documentoventa_numero), mtInformation, [mbOK], 0);
-          Princ.ActualizarNumeroDocumento(id,inttostr(impresorafiscal.documentoventa_numero));
-
-          ZQuery1.sql.clear;
-          ZQuery1.sql.add('Update documentosventas set ');
-          ZQuery1.sql.add('documentoventa_fecha=:documentoventa_fecha, ');
-          ZQuery1.sql.add('documentoventa_hora=:documentoventa_hora,');
-          ZQuery1.sql.add('documentoventa_numero=:documentoventa_numero');
-          ZQuery1.sql.add(' where documentoventa_id=:documentoventa_id');
-          ZQuery1.parambyname('documentoventa_fecha').asstring:=formatdatetime('yyyy-mm-dd',impresorafiscal.documentoventa_fecha);
-          ZQuery1.parambyname('documentoventa_hora').asstring:=formatdatetime('hh:nn:ss',impresorafiscal.documentoventa_fecha);
-          ZQuery1.parambyname('documentoventa_numero').AsInteger:=impresorafiscal.documentoventa_numero;
-          ZQuery1.parambyname('documentoventa_id').asstring:=id;
-          ZQuery1.ExecSQL;
-      end
-    else
-      MessageDlg('No se pudo imprimir el comprobante.'+#13+#10+'Verifique los datos.', mtError, [mbOK], 0);
 
     impresorafiscal.Free;
 
