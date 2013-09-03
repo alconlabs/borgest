@@ -528,7 +528,7 @@ begin
 
     if devoluciones>0 then
       begin
-          HASAR1.DescuentoGeneral('Devoluciones',devoluciones,false);
+          HASAR1.DescuentoGeneral('Devoluciones',devoluciones,true);
       end;
 
 

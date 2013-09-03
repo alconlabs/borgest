@@ -145,12 +145,16 @@ object TRpReport
       end
       item
         Component = TRpShape26
+      end
+      item
+        Component = TRpExpression19
       end>
     AutoExpand = True
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
     ExternalSearchField = 'REPORT_NAME'
     StreamFormat = rpStreamText
+    DrawStyle = rpDrawStretch
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1679,6 +1683,30 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 'IIF(ALIAS_EQUIPOS.sucursal_id=2,'#39'Precio U$D'#39','#39'Precio'#39')'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpExpression19: TRpExpression
+    Width = 1480
+    Height = 175
+    PosX = 12770
+    PosY = 55
+    Type1Font = poHelvetica
+    FontSize = 7
+    WordWrap = True
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.documentoventa_formapago'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'

@@ -158,6 +158,9 @@ procedure TMenuConfig.menuKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var
   menu_id:string;
+  menu_nomb:string;
+  menu_form:string;
+  menu_lista:string;
 begin
     if (Shift=[ssShift,ssCtrl]) and (key=VK_F5) then     //INSERTA REGISTRO EN LA TABLA MENUPERFIL, PERO DEBE YA DEBE ESTAR EL REGISTRO EN LA TABLA MENU
       begin
@@ -168,18 +171,24 @@ begin
                 if menu_id='' then
                   begin
                       menu_id:=Princ.Codigo('menu','menu_id');
+
+                      menu_nomb:=InputBox('menu_nomb',menu_nomb, menu_nomb);
+                      menu_form:=InputBox('menu_form',menu_form, menu_form);
+                      menu_form:=InputBox('menu_lista',menu_lista, menu_lista);
+
                       ZQExecSQL.sql.clear;
                       ZQExecSQL.sql.add('Insert into menu (menu_id, menu_path, ');
                       ZQExecSQL.sql.add('menu_tipo, menu_nomb, menu_form, ');
-                      ZQExecSQL.sql.add('menu_enabled, menu_visible) ');
+                      ZQExecSQL.sql.add('menu_enabled, menu_visible, menu_lista) ');
                       ZQExecSQL.sql.add('values (:menu_id, :menu_path, ');
                       ZQExecSQL.sql.add(':menu_tipo, :menu_nomb, :menu_form, ');
                       ZQExecSQL.sql.add(':menu_enabled, :menu_visible) ');
                       ZQExecSQL.parambyname('menu_id').asstring:=menu_id;
                       ZQExecSQL.parambyname('menu_path').asstring:=path;
                       ZQExecSQL.parambyname('menu_tipo').asstring:='0';
-                      ZQExecSQL.parambyname('menu_nomb').asstring:='';
-                      ZQExecSQL.parambyname('menu_form').asstring:='';
+                      ZQExecSQL.parambyname('menu_nomb').asstring:=menu_nomb;
+                      ZQExecSQL.parambyname('menu_form').asstring:=menu_form;
+                      ZQExecSQL.parambyname('menu_lista').asstring:=menu_lista;
                       ZQExecSQL.parambyname('menu_enabled').asstring:='0';
                       ZQExecSQL.parambyname('menu_visible').asstring:='0';
                       ZQExecSQL.ExecSQL;

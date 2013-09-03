@@ -1,16 +1,16 @@
 inherited InformesVentas: TInformesVentas
   Caption = 'Informes de Ventas'
-  ClientHeight = 232
-  ClientWidth = 475
-  ExplicitWidth = 491
-  ExplicitHeight = 270
+  ClientHeight = 238
+  ClientWidth = 495
+  ExplicitWidth = 511
+  ExplicitHeight = 276
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Width = 475
-    Height = 232
-    ExplicitWidth = 475
-    ExplicitHeight = 232
+    Width = 495
+    Height = 238
+    ExplicitWidth = 495
+    ExplicitHeight = 238
     FullHeight = 0
     object Label1: TLabel [0]
       Left = 44
@@ -59,6 +59,14 @@ inherited InformesVentas: TInformesVentas
       Alignment = taRightJustify
       Caption = 'Cliente'
     end
+    object Label7: TLabel [6]
+      Left = 34
+      Top = 152
+      Width = 44
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Provincia'
+    end
     inherited btncancelar: TButton
       Left = 293
       Top = 176
@@ -104,6 +112,7 @@ inherited InformesVentas: TInformesVentas
         'Informe de Precios de Ventas'
         'Informe de ventas'
         'Informe de ventas - Productos'
+        'Informe de ventas - Productos - Cantidades'
         'Informe de Cobros'
         'Ranking de Ventas de Productos'
         'Informe de ventas C/Equipos'
@@ -117,7 +126,8 @@ inherited InformesVentas: TInformesVentas
         '4'
         '5'
         '6'
-        '7')
+        '7'
+        '8')
     end
     object personal_id: TSqlComboBox
       Left = 84
@@ -129,7 +139,8 @@ inherited InformesVentas: TInformesVentas
       TabOrder = 5
       Confbase = Princ.ZBase
       Confsql.Strings = (
-        'select * from personal')
+        'select * from personal'
+        'order by personal_nombre')
       Confcampo_codigo = 'personal_id'
       Confcampo_nomb = 'personal_nombre'
       Tag2 = 0
@@ -247,9 +258,27 @@ inherited InformesVentas: TInformesVentas
       TabOrder = 7
       Confbase = Princ.ZBase
       Confsql.Strings = (
-        'select * from clientes')
+        'select * from clientes'
+        'order by cliente_nombre')
       Confcampo_codigo = 'cliente_id'
       Confcampo_nomb = 'cliente_nombre'
+      Tag2 = 0
+      ConfTodos = True
+    end
+    object provincia_id: TSqlComboBox
+      Left = 84
+      Top = 149
+      Width = 263
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      TabOrder = 8
+      Confbase = Princ.ZBase
+      Confsql.Strings = (
+        'select * from provincias'
+        'order by provincia_nombre')
+      Confcampo_codigo = 'provincia_id'
+      Confcampo_nomb = 'provincia_nombre'
       Tag2 = 0
       ConfTodos = True
     end

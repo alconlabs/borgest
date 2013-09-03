@@ -1069,3 +1069,28 @@ INSERT INTO `config` SET `config_nombre`='MOSTRARPRODUCTOSOCULTOS',`config_valor
 INSERT INTO `config` SET `config_nombre`='VENTAIMPRIMIRCODIGOPROD',`config_valor`='0';
 283;
 ALTER TABLE `documentosventas` ADD COLUMN `documentoventa_recargo` FLOAT(20,4) NULL DEFAULT 0  AFTER `caja_id` ;
+284;
+ALTER TABLE `tarjetas` 
+ADD COLUMN `tarjeta_observaciones` VARCHAR(255) NULL DEFAULT NULL  AFTER `tarjeta_nombre` , 
+CHANGE COLUMN `tarjeta_nombre` `tarjeta_nombre` VARCHAR(50) NULL DEFAULT NULL  ;
+285;
+CREATE  TABLE IF NOT EXISTS `tarjetacuotas` (
+  `tarjetacuota_id` INT(11) NOT NULL ,
+  `tarjetacuota_desde` INT(11) NULL DEFAULT NULL ,
+  `tarjetacuota_hasta` INT(11) NULL DEFAULT NULL ,
+  `tarjetacuota_recargo` FLOAT(5,2) NULL DEFAULT NULL ,
+  `tarjeta_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`tarjetacuota_id`) ,
+  INDEX `fk_tarjetacuotas_tarjetas1` (`tarjeta_id` ASC) ,
+  CONSTRAINT `fk_tarjetacuotas_tarjetas1`
+    FOREIGN KEY (`tarjeta_id` )
+    REFERENCES `tarjetas` (`tarjeta_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+286;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('75', '>Archivo>General>Tarjetas de Credito', '0', 'btntarjetas', '', '0', '0', 'TListaTarjetasdeCredito');
+287;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,75,perfil_id,-1 from perfiles;

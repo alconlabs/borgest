@@ -473,17 +473,25 @@ object detallectas: Tdetallectas
       
         'sum(if(tiposdocumento.tipodocu_debcred="CREDITO",documentosventa' +
         's.documentoventa_total,0)) as credito, '
-      '0.00 as acumulado, '
-      '(documentosventas.documentoventa_id) as grupo, '
+      '0.00 as acumulado,  '
+      'if(documentosventas.documentoventa_fecha<"2012-08-03",'
       
-        'if(1=2,"Saldo anterior",CONCAT(tiposdocumento.tipodocu_nombreabr' +
-        'ev," ",tiposdocumento.tipodocu_letra)) as documento_nombre, '
+        'concat("0-",documentosventas.cliente_id),documentosventas.docume' +
+        'ntoventa_id)  as grupo, '
       
-        'if(1=2,"2013-07-29",DATE_FORMAT(documentosventas.documentoventa_' +
-        'fecha,"%d/%m/%Y")) as documentoventafecha, '
+        'if(documentosventas.documentoventa_fecha<"2012-08-03","Saldo ant' +
+        'erior",CONCAT(tiposdocumento.tipodocu_nombreabrev," ",tiposdocum' +
+        'ento.tipodocu_letra)) as documento_nombre, '
       
-        'if(1=2,"0",puntoventa_numero) as puntoventanumero, if(1=2,"0",do' +
-        'cumentosventas.documentoventa_numero) as documentoventanumero '
+        'if(documentosventas.documentoventa_fecha<"2012-08-03","2012-08-0' +
+        '3",DATE_FORMAT(documentosventas.documentoventa_fecha,"%d/%m/%Y")' +
+        ') as documentoventafecha, '
+      
+        'if(documentosventas.documentoventa_fecha<"2012-08-03","0",puntov' +
+        'enta_numero) as puntoventanumero, '
+      
+        'if(documentosventas.documentoventa_fecha<"2012-08-03","0",docume' +
+        'ntosventas.documentoventa_numero) as documentoventanumero '
       'from documentosventas '
       
         'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
@@ -503,13 +511,21 @@ object detallectas: Tdetallectas
       
         'inner join sucursales on puntodeventa.sucursal_id=sucursales.suc' +
         'ursal_id '
-      'group by grupo '
+      'where ( 1=1 and puntodeventa.puntoventa_id not in (2) and '
+      'documentosventas.documentoventa_estado<>"ANULADA" and '
+      
+        'tiposdocumento.tipodocu_debcred<>"N/A" and documentosventas.docu' +
+        'mentoventa_condicionventa=1 and '
+      
+        '(puntodeventa.puntoventa_id="1")and documentosventas.documentove' +
+        'nta_fecha<="2013-09-02" ) '
+      'group by  grupo '
       
         'order by clientes.cliente_nombre, documentosventas.documentovent' +
         'a_fecha, documentosventas.documentoventa_numero')
     Params = <>
-    Left = 224
-    Top = 208
+    Left = 208
+    Top = 280
     object ZQPendientesdocumentoventa_id: TIntegerField
       FieldName = 'documentoventa_id'
       Required = True
@@ -880,10 +896,6 @@ object detallectas: Tdetallectas
       ReadOnly = True
       DisplayFormat = '0.00'
     end
-    object ZQPendientesgrupo: TIntegerField
-      FieldName = 'grupo'
-      ReadOnly = True
-    end
     object ZQPendientesdocumento_nombre: TStringField
       FieldName = 'documento_nombre'
       ReadOnly = True
@@ -903,6 +915,14 @@ object detallectas: Tdetallectas
       FieldName = 'documentoventanumero'
       ReadOnly = True
       Size = 11
+    end
+    object ZQPendientesdocumentoventa_recargo: TFloatField
+      FieldName = 'documentoventa_recargo'
+    end
+    object ZQPendientesgrupo: TStringField
+      FieldName = 'grupo'
+      ReadOnly = True
+      Size = 13
     end
   end
   object MQdetalle: TMQuery

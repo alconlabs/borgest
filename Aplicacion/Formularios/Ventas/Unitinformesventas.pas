@@ -23,6 +23,8 @@ type
     Label5: TLabel;
     Label6: TLabel;
     cliente_id: TSqlComboBox;
+    Label7: TLabel;
+    provincia_id: TSqlComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
   private
@@ -31,6 +33,7 @@ type
     procedure InformeVentasPrecios;
     procedure InformedeVentas;
     procedure InformedeVentasProductos;
+    procedure InformedeVentasProductosCantidad;
     procedure InformedeCobros;
     procedure RankingProductos;
     procedure InformedeVentasCEquipos;
@@ -182,6 +185,50 @@ begin
     Princ.VCLReport1.Execute;
 
 end;
+
+procedure TInformesVentas.InformedeVentasProductosCantidad;
+begin
+    puntoventa_id.GenerarWhere;
+    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\informe_ventas_productos_cantidades.rep';
+    Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
+    Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
+    Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
+    Princ.VCLReport1.Report.Params.ParamByName('CLIENTE_NOMBRE').AsString:=cliente_id.Text;
+    Princ.VCLReport1.Report.Params.ParamByName('PROVINCIA_NOMBRE').AsString:=provincia_id.Text;
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, productos.'+Princ.CAMPO_ID_PRODUCTO+' as productocodigo, sum(documentoventadetalle_cantidad) as cantidad from documentosventas '+
+                                             'inner join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
+                                             'inner join productos on documentoventadetalles.producto_id=productos.producto_id '+
+                                             'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                             'inner join localidades on clientes.localidad_id=localidades.localidad_id '+
+                                             'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                             'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                             'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
+                                             'where documentosventas.documentoventa_estado<>"ANULADA" and '+
+                                             'tiposdocumento.tipodocu_nombre="'+TIPODOCU_FACTURAVENTA+'" and '+
+                                             'documentosventas.documentoventa_fecha >="'+FormatDateTime('yyyy-mm-dd',desde_fecha.Date)+'" and '+
+                                             'documentosventas.documentoventa_fecha <="'+FormatDateTime('yyyy-mm-dd',hasta_fecha.Date)+'" '+Princ.empresa_where+
+                                             ' and '+puntoventa_id.where;
+
+    if personal_id.Text<>'Todos' then
+      Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.personal_id="'+personal_id.codigo+'" ';
+
+    if cliente_id.Text<>'Todos' then
+      Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.cliente_id="'+cliente_id.codigo+'" ';
+
+    if provincia_id.Text<>'Todos' then
+      Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and localidades.provincia_id="'+provincia_id.codigo+'" ';
+
+
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' group by documentoventadetalles.producto_id ';
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by sucursales.sucursal_id, documentoventadetalle_descripcion';
+
+
+    Princ.VCLReport1.Execute;
+
+end;
+
 
 procedure TInformesVentas.InformedeVentasCEquipos;
 begin
@@ -337,23 +384,28 @@ begin
 
           end;
         4:begin
-              InformedeCobros;
+              InformedeVentasProductosCantidad;
 
           end;
         5:begin
-              RankingProductos;
+              InformedeCobros;
 
           end;
         6:begin
-              InformedeVentasCEquipos;
+              RankingProductos;
 
           end;
         7:begin
+              InformedeVentasCEquipos;
+
+          end;
+        8:begin
               InformedeEquipos;
 
           end;
 
     end;
+
 end;
 
 procedure TInformesVentas.FormCreate(Sender: TObject);
@@ -367,6 +419,9 @@ begin
 
     cliente_id.llenarcombo;
     cliente_id.ItemIndex:=0;
+
+    provincia_id.llenarcombo;
+    provincia_id.ItemIndex:=0;
 
     Titles1.Memo.Text:='select * from puntodeventa where 1=1 '+Princ.empresa_where;
     puntoventa_id.Fill;

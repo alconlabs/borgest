@@ -43,7 +43,7 @@ object Princ: TPrinc
       object AdvToolBarGeneral: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 306
+        Width = 406
         Height = 63
         AllowFloating = True
         Caption = 'General'
@@ -330,9 +330,47 @@ object Princ: TPrinc
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
         end
+        object btntarjetas: TAdvGlowButton
+          Left = 302
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Tarjetas de Credito'
+          TabOrder = 7
+          OnClick = btntarjetasClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
       end
       object AdvToolBarProveedores: TAdvToolBar
-        Left = 312
+        Left = 412
         Top = 3
         Width = 106
         Height = 63
@@ -392,7 +430,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarLocalidades: TAdvToolBar
-        Left = 421
+        Left = 521
         Top = 3
         Width = 206
         Height = 63
@@ -490,7 +528,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarEmpresa: TAdvToolBar
-        Left = 630
+        Left = 730
         Top = 3
         Width = 406
         Height = 63
@@ -664,7 +702,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarListados: TAdvToolBar
-        Left = 1039
+        Left = 1139
         Top = 3
         Width = 106
         Height = 63
@@ -3587,5 +3625,55 @@ object Princ: TPrinc
     ConfIni = ini1
     Left = 400
     Top = 472
+  end
+  object ZQRecargoTarjetas: TZQuery
+    Connection = ZBase
+    SQL.Strings = (
+      'select *, '
+      '(:importe*tarjetacuotas.tarjetacuota_recargo/100) as importe, '
+      
+        '(:importe*tarjetacuotas.tarjetacuota_recargo/100)/:cuotas as cuo' +
+        'ta_importe'
+      'from tarjetas'
+      
+        'inner join tarjetacuotas on tarjetas.tarjeta_id=tarjetacuotas.ta' +
+        'rjeta_id'
+      'where tarjetas.tarjeta_id=:tarjeta_id and'
+      'tarjetacuotas.tarjetacuota_desde>=:cuotas and'
+      'tarjetacuotas.tarjetacuota_hasta<=:cuotas')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'importe'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'cuotas'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'tarjeta_id'
+        ParamType = ptUnknown
+      end>
+    Left = 1088
+    Top = 496
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'importe'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'cuotas'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'tarjeta_id'
+        ParamType = ptUnknown
+      end>
   end
 end

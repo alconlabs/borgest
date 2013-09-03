@@ -85,7 +85,7 @@ object estadoctas: Testadoctas
       Width = 608
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -322,7 +322,7 @@ object estadoctas: Testadoctas
       Width = 209
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 4
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -477,7 +477,7 @@ object estadoctas: Testadoctas
         'sum(if(tiposdocumento.tipodocu_debcred="CREDITO",documentosventa' +
         's.documentoventa_saldo,0)) as credito, '
       '0.00 as acumulado, '
-      '(documentosventas.documentoventa_id) as grupo, '
+      'concat("0-",documentosventas.cliente_id) as grupo,'
       
         'if(1=2,"Saldo anterior",CONCAT(tiposdocumento.tipodocu_nombreabr' +
         'ev," ",tiposdocumento.tipodocu_letra)) as documento_nombre, '
@@ -905,10 +905,6 @@ object estadoctas: Testadoctas
       ReadOnly = True
       DisplayFormat = '0.00'
     end
-    object ZQPendientesgrupo: TIntegerField
-      FieldName = 'grupo'
-      ReadOnly = True
-    end
     object ZQPendientesdocumento_nombre: TStringField
       FieldName = 'documento_nombre'
       ReadOnly = True
@@ -928,6 +924,14 @@ object estadoctas: Testadoctas
       FieldName = 'documentoventanumero'
       ReadOnly = True
       Size = 11
+    end
+    object ZQPendientesdocumentoventa_recargo: TFloatField
+      FieldName = 'documentoventa_recargo'
+    end
+    object ZQPendientesgrupo: TStringField
+      FieldName = 'grupo'
+      ReadOnly = True
+      Size = 13
     end
   end
   object MQdetalle: TMQuery

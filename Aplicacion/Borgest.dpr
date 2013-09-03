@@ -107,7 +107,9 @@ uses
   UnitListaRecibosdeVenta in 'Formularios\Ventas\UnitListaRecibosdeVenta.pas' {ListaRecibosdeVenta},
   UnitListaFacturasdeCompras in 'Formularios\Compras\UnitListaFacturasdeCompras.pas' {LIstaFacturasDeCompras},
   Unitfacturascompra in 'Formularios\Compras\Unitfacturascompra.pas' {facturacompra},
-  UnitListaNotasCreditodeVentas in 'Formularios\Ventas\UnitListaNotasCreditodeVentas.pas' {ListaNotasCreditodeVentas};
+  UnitListaNotasCreditodeVentas in 'Formularios\Ventas\UnitListaNotasCreditodeVentas.pas' {ListaNotasCreditodeVentas},
+  UnitListaTarjetasdeCredito in 'Formularios\Archivo\UnitListaTarjetasdeCredito.pas' {ListaTarjetasdeCredito},
+  UnitTarjetaCredito in 'Formularios\Archivo\UnitTarjetaCredito.pas' {TarjetaCredito};
 
 {$R *.res}
 

@@ -89,6 +89,9 @@
     <DCCReference Include="Formularios\Archivo\UnitListaSucursales.pas">
       <Form>listasucursales</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitListaTarjetasdeCredito.pas">
+      <Form>ListaTarjetasdeCredito</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitListaTiposDocumentos.pas">
       <Form>listatiposdocumentos</Form>
     </DCCReference>
@@ -112,6 +115,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitServicios.pas">
       <Form>servicios</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitTarjetaCredito.pas">
+      <Form>TarjetaCredito</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitTipoDocumento.pas">
       <Form>tipodocumento</Form>

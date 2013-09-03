@@ -152,11 +152,12 @@ type
     ZQPendientesdebito: TFloatField;
     ZQPendientescredito: TFloatField;
     ZQPendientesacumulado: TFloatField;
-    ZQPendientesgrupo: TIntegerField;
     ZQPendientesdocumento_nombre: TStringField;
     ZQPendientesdocumentoventafecha: TStringField;
     ZQPendientespuntoventanumero: TStringField;
     ZQPendientesdocumentoventanumero: TStringField;
+    ZQPendientesdocumentoventa_recargo: TFloatField;
+    ZQPendientesgrupo: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnimprimirClick(Sender: TObject);
@@ -215,7 +216,7 @@ begin
       where:=where+'and documentosventas.documentoventa_fecha<="'+formatdatetime('yyyy-mm-dd',hasta_fecha.Date)+'" ';
 
     if cbdesdefechavenc.Checked then
-      where:=ZQPendientes.SQL.Text+'and documentosventas.documentoventa_fechavenc>="'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'" ';
+      where:=where+'and documentosventas.documentoventa_fechavenc>="'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'" ';
 
     if cbhastafechavenc.Checked then
       where:=where+'and documentosventas.documentoventa_fechavenc<="'+formatdatetime('yyyy-mm-dd',hasta_fecha_venc.Date)+'" ';
@@ -349,11 +350,11 @@ var
   grupo, condicion_saldoanterior:string;
 begin
     ZQPendientes.Active:=false;
-    grupo:='(documentosventas.documentoventa_id)';
+    grupo:='concat("0-",documentosventas.documentoventa_id)';
     condicion_saldoanterior:='1=2';
     if cbdesdefecha.Checked then
       begin
-          grupo:=' if(documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",concat("0-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
+          grupo:=' if(documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",concat("0-",documentosventas.cliente_id),concat("0-",documentosventas.documentoventa_id)) ';
           condicion_saldoanterior:='documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'"';
       end;
 
@@ -361,7 +362,7 @@ begin
       begin
           if desde_fecha_venc.Date<desde_fecha.Date then
             begin
-                grupo:=' if(documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat("0-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
+                grupo:=' if(documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat("0-",documentosventas.cliente_id),concat("0-",documentosventas.documentoventa_id)) ';
                 condicion_saldoanterior:='documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
 
             end;
@@ -372,7 +373,7 @@ begin
       begin
           if cbdesdefechavenc.Checked then
             begin
-                grupo:=' if(documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat("0-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
+                grupo:=' if(documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat("0-",documentosventas.cliente_id),concat("0-",documentosventas.documentoventa_id)) ';
                 condicion_saldoanterior:='documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
             end;
       end;

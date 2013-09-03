@@ -136,6 +136,8 @@ type
     AdvGlowButton1: TAdvGlowButton;
     AdvGlowButton4: TAdvGlowButton;
     Permisos1: TPermisos;
+    btntarjetas: TAdvGlowButton;
+    ZQRecargoTarjetas: TZQuery;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -193,6 +195,7 @@ type
     procedure VCLReport1BeforePrint(Sender: TObject);
     procedure btnRecibosPendientesClick(Sender: TObject);
     procedure btnlistanotasdepedidoClick(Sender: TObject);
+    procedure btntarjetasClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -280,6 +283,10 @@ type
     function GetConfiguracionMenu(menu_nomb:string; campo:string):string;
     procedure AbrirModificarProducto(id:string);
     Procedure ModificarProducto(QProductos: TDataSet);
+    procedure AbrirNuevoTarjeta;
+    procedure AbrirModificarTarjeta(id:string);
+    procedure CalcularRecargoTarjeta(tarjeta_id:string; cuotas:integer; importe:real);
+
   end;
 
 type
@@ -402,9 +409,54 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitListaPoliticasdePrecios, UnitListaProveedores1, Unitlistalocalidades,
   UnitListaProvincias, UnitListaFacturasDeVenta, UnitListaRecibosdeVenta,
   UnitListaFacturasdeCompras, UnitNotaPedidoComisiones,
-  UnitListaNotasCreditodeVentas;
+  UnitListaNotasCreditodeVentas, UnitListaTarjetasdeCredito, UnitTarjetaCredito;
 
 {$R *.dfm}
+
+
+
+procedure TPrinc.CalcularRecargoTarjeta(tarjeta_id: string; cuotas: Integer; importe: Real);
+begin
+    ZQRecargoTarjetas.Active:=false;
+    ZQRecargoTarjetas.ParamByName('tarjeta_id').AsString:=tarjeta_id;
+    ZQRecargoTarjetas.ParamByName('cuotas').AsInteger:=cuotas;
+    ZQRecargoTarjetas.ParamByName('importe').AsFloat:=importe;
+    ZQRecargoTarjetas.Active:=true;
+
+
+
+end;
+
+
+procedure TPrinc.AbrirModificarTarjeta(id:string);
+begin
+    if id<>'' then
+      begin
+          try
+            TarjetaCredito:=TTarjetaCredito.Create(self);
+          finally
+            TarjetaCredito.abm:=2;
+            TarjetaCredito.id:=id;
+            TarjetaCredito.btnguardar.Caption:='Modificar';
+            TarjetaCredito.Show;
+          end;
+
+      end;
+
+end;
+
+procedure TPrinc.AbrirNuevoTarjeta;
+begin
+    try
+      TarjetaCredito:=TTarjetaCredito.Create(self);
+    finally
+      TarjetaCredito.abm:=1;
+      TarjetaCredito.btnguardar.Caption:='Guardar';
+      TarjetaCredito.Show;
+    end;
+
+
+end;
 
 procedure Tprinc.CerrarCaja(caja_id:string;caja_saldofinal:real);
 begin
@@ -1065,12 +1117,12 @@ begin
 //    ZQExcecSQL.SQL.Text:=ZSQLProcessor1.Statements[i+1];
 //    ZQExcecSQL.ExecSQL;
 
+    versiondb:=Princ.GetConfiguracion('VERSIONDB');
+    if versiondb='' then
+      versiondb:='0';
+
     while continuar do
         begin
-            versiondb:=Princ.GetConfiguracion('VERSIONDB');
-            if versiondb='' then
-              versiondb:='0';
-            
             if strtoint(versiondb)<strtoint(ZSQLProcessor1.Statements[i]) then
               begin
                   ZQExcecSQL.Active:=false;
@@ -1081,6 +1133,8 @@ begin
                     ZQExcecSQL.SQL.Clear;
                     ZQExcecSQL.SQL.Add('Replace config set config_nombre="VERSIONDB", config_valor="'+ZSQLProcessor1.Statements[i]+'"');
                     ZQExcecSQL.ExecSQL;
+
+                    versiondb:=ZSQLProcessor1.Statements[i];
 
                   except
                     continuar:=false;
@@ -2302,10 +2356,12 @@ begin
                   impresorafiscal.MQDetalle.Insert;
                   if ZQdocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat>0 then
                     begin
+                        impresorafiscal.MQDetalle.FieldByName('cantidad').AsString:=ZQdocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsString;
                         impresorafiscal.MQDetalle.FieldByName('monto').AsString:=ZQdocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsString;
                     end
                   else
                     begin
+                        impresorafiscal.MQDetalle.FieldByName('cantidad').AsFloat:=ZQdocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat*-1;
                         impresorafiscal.MQDetalle.FieldByName('monto').AsFloat:=0.01;
 
                         impresorafiscal.devoluciones:=impresorafiscal.devoluciones+ZQdocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat;
@@ -2315,7 +2371,7 @@ begin
                     impresorafiscal.MQDetalle.FieldByName('descripcion').AsString:=QuitarCaracteresEspeciales(ZQdocumentoventadetalles.FieldByName('producto_id').AsString)+' - ';
 
                   impresorafiscal.MQDetalle.FieldByName('descripcion').AsString:=impresorafiscal.MQDetalle.FieldByName('descripcion').AsString+QuitarCaracteresEspeciales(ZQdocumentoventadetalles.FieldByName('documentoventadetalle_descripcion').AsString);
-                  impresorafiscal.MQDetalle.FieldByName('cantidad').AsString:=ZQdocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsString;
+
 
                   impresorafiscal.MQDetalle.FieldByName('IVA').AsString:=ZQdocumentoventadetalles.FieldByName('tipoiva_valor').AsString;
                   impresorafiscal.MQDetalle.FieldByName('impuestosinternos').AsString:='0';
@@ -2323,6 +2379,8 @@ begin
                   impresorafiscal.MQDetalle.Post;
                   ZQdocumentoventadetalles.Next;
               end;
+
+          impresorafiscal.recargo:=ZQDocumentosventas.FieldByName('documentoventa_recargo').AsFloat;
 
           impresorafiscal.MQpagos.Active:=false;
           impresorafiscal.MQpagos.Active:=true;
@@ -3494,6 +3552,16 @@ begin
     finally
       listasucursales.campo_id:='sucursal_id';
       listasucursales.Show;
+    end;
+end;
+
+procedure TPrinc.btntarjetasClick(Sender: TObject);
+begin
+    try
+      ListaTarjetasdeCredito:=TListaTarjetasdeCredito.Create(self);
+    finally
+      ListaTarjetasdeCredito.campo_id:='tarjeta_id';
+      ListaTarjetasdeCredito.Show;
     end;
 end;
 

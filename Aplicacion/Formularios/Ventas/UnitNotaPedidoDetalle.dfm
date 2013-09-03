@@ -105,7 +105,7 @@ inherited NotapedidoDetalle: TNotapedidoDetalle
       Alignment = taRightJustify
       Caption = 'Subtotal'
     end
-    inherited Button1: TButton
+    inherited btncancelar: TButton
       Left = 592
       Top = 158
       TabOrder = 12
