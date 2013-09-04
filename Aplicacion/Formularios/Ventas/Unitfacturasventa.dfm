@@ -70,7 +70,6 @@ object facturasventa: Tfacturasventa
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitHeight = 504
     FullHeight = 0
     object Label2: TLabel
       Left = 585
@@ -596,8 +595,15 @@ object facturasventa: Tfacturasventa
         item
           Expanded = False
           FieldName = 'tipopago_nombre'
+          Title.Caption = 'Tipo'
+          Width = 112
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'documentopago_nombre'
           Title.Caption = 'Descripcion'
-          Width = 332
+          Width = 242
           Visible = True
         end
         item
@@ -845,14 +851,25 @@ object facturasventa: Tfacturasventa
     Connection = Princ.ZBase
     CachedUpdates = True
     SQL.Strings = (
-      'select * from pagotarjeta'
+      'select pagotarjeta.* from pagotarjeta'
       
-        'inner join tarjetas on pagotarjeta.tarjeta_id=tarjetas.tarjeta_i' +
-        'd'
-      'where documentopago_id=-1')
-    Params = <>
+        'inner join documentopagos on pagotarjeta.documentopago_id=docume' +
+        'ntopagos.documentopago_id'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
     Left = 576
     Top = 368
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
   end
   object ZQNotacredito: TZQuery
     Connection = Princ.ZBase

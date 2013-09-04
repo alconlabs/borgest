@@ -452,8 +452,17 @@ procedure Tfacturasventa.calculartotales;
 var
   bm:TBookmark;
 begin
+    documentoventa_recargo.Value:=0;
+    ZQpagotarjeta.First;
+    while not ZQpagotarjeta.Eof do
+        begin
+            documentoventa_recargo.Value:=documentoventa_recargo.Value+ZQpagotarjeta.FieldByName('pagotarjeta_recargo').AsFloat;
+            ZQpagotarjeta.Next;
+        end;
+
     bm:=ZQDocumentoventadetalles.GetBookmark;
     ZQDocumentoventadetalles.First;
+
     documentoventa_neto21.Value:=roundto(documentoventa_recargo.Value/1.21,-2);
     documentoventa_iva21.Value:=roundto(documentoventa_neto21.Value*21/100,-2);
     documentoventa_neto105.Text:='0';
@@ -468,8 +477,6 @@ begin
             documentoventa_neto105.Text:=floattostr(roundto(documentoventa_neto105.Value+ZQDocumentoventadetalles.FieldByName('documentoventadetalle_neto105').AsFloat,-2));
             documentoventa_iva105.Text:=floattostr(roundto(documentoventa_iva105.Value+ZQDocumentoventadetalles.FieldByName('documentoventadetalle_iva105').AsFloat,-2));
             documentoventa_total.Text:=floattostr(roundto(documentoventa_total.Value+ZQDocumentoventadetalles.FieldByName('documentoventadetalle_total').AsFloat,-2));
-
-
 
             ZQDocumentoventadetalles.Next;
         end;
@@ -876,6 +883,10 @@ begin
 
     ZQDocumentopagos.Active:=true;
 
+    ZQpagotarjeta.Active:=false;
+    ZQpagotarjeta.ParamByName('documentoventa_id').AsString:=id;
+    ZQpagotarjeta.Active:=true;
+
     calculartotales;
     calculartotalpagos;
 
@@ -890,6 +901,7 @@ procedure Tfacturasventa.agregar;
 var
   recibo_numero:string;
   tipodocu_id_recibo:string;
+  documentopago_id:string;
 begin
 
     ZQExecSql.SQL.Clear;
@@ -988,10 +1000,6 @@ begin
           MarcarComoFacturado(id_facturado);
       end;
 
-    ZQExecSql.SQL.Clear;
-    ZQExecSql.SQL.Add('commit');
-    ZQExecSql.ExecSQL;
-
     if (ZQDocumentopagos.RecordCount<1) and (documentoventa_condicionventa.Text='Contado') then
       begin
           ZQDocumentopagos.Insert;
@@ -1011,6 +1019,7 @@ begin
     ZQDocumentopagos.First;
     while not ZQDocumentopagos.Eof do
         begin
+            documentopago_id:=princ.codigo('documentopagos','documentopago_id');;
             ZQExecSql.Sql.Clear;
             ZQExecSql.Sql.Add('insert into documentopagos set ');
             ZQExecSql.Sql.Add('documentoventa_id=:documentoventa_id, ');
@@ -1022,7 +1031,7 @@ begin
             ZQExecSql.ParamByName('tipopago_id').AsString:=ZQDocumentopagos.FieldByName('tipopago_id').AsString;
             ZQExecSql.ParamByName('documentopago_importe').AsString:=ZQDocumentopagos.FieldByName('documentopago_importe').AsString;
             ZQExecSql.ParamByName('documentopago_nombre').AsString:=ZQDocumentopagos.FieldByName('documentopago_nombre').AsString;
-            ZQExecSql.ParamByName('documentopago_id').AsString:=princ.codigo('documentopagos','documentopago_id');
+            ZQExecSql.ParamByName('documentopago_id').AsString:=documentopago_id;
             ZQExecSql.ExecSql;
 
             ZQDocumentopagos.Next;
@@ -1030,53 +1039,43 @@ begin
 
 
 
-//    if (ZQDocumentopagos.RecordCount>0) then
-//      begin
-//          ZQRecibo.Active:=false;
-//          ZQRecibo.Active:=true;
-//          tipodocu_id_recibo:=princ.buscar('select tipodocu_id from tiposdocumento where puntoventa_id="'+puntoventa_id.codigo+'" and tipodocu_nombre="Recibo de Venta"','tipodocu_id');
-//          recibo_numero:=Princ.NumeroDocumento(tipodocu_id_recibo,'');
-//          ZQRecibo.Insert;
-//          ZQRecibo.FieldByName('documentoventa_condicionventa').AsInteger:=documentoventa_condicionventa.ItemIndex;
-//          ZQRecibo.FieldByName('documentoventa_estado').AsString:='PAGADA';
-//          ZQRecibo.FieldByName('documentoventa_fecha').AsDateTime:=date;
-//          ZQRecibo.FieldByName('documentoventa_fechavenc').AsDateTime:=documentoventa_fecha.Date;
-//          ZQRecibo.FieldByName('documentoventa_hora').AsDateTime:=Now;
-//          ZQRecibo.FieldByName('documentoventa_id').asstring:=id;
-//          ZQRecibo.FieldByName('documentoventa_iva105').AsString:='0';
-//          ZQRecibo.FieldByName('documentoventa_iva21').AsString:='0';
-//          ZQRecibo.FieldByName('documentoventa_listaprecio').AsInteger:=documentoventa_listaprecio.ItemIndex;
-//          ZQRecibo.FieldByName('documentoventa_neto105').AsString:='0';
-//          ZQRecibo.FieldByName('documentoventa_neto21').AsString:='0';
-//          ZQRecibo.FieldByName('documentoventa_netonogravado').AsString:='0';
-//          ZQRecibo.FieldByName('documentoventa_numero').AsString:=recibo_numero;
-//          ZQRecibo.FieldByName('documentoventa_observacion').AsString:='';
-//          ZQRecibo.FieldByName('documentoventa_pagado').AsFloat:=documentoventa_pagado;
-//          ZQRecibo.FieldByName('documentoventa_saldo').AsString:='0';
-//          ZQRecibo.FieldByName('documentoventa_total').AsFloat:=documentoventa_pagado;
-//          ZQRecibo.FieldByName('personal_id').AsString:=personal_id.codigo;
-//          ZQRecibo.FieldByName('tipodocu_id').AsString:=tipodocu_id_recibo;
-//          ZQRecibo.FieldByName('cliente_id').AsString:=cliente_id.codigo;
-//          ZQRecibo.Post;
-//
-//          ZQdocumentoventadocus.Active:=false;
-//          ZQdocumentoventadocus.Active:=true;
-//          ZQdocumentoventadocus.Insert;
-//          ZQdocumentoventadocus.FieldByName('documentoventa_estado').asstring:='PAGADA';
-//          ZQdocumentoventadocus.FieldByName('documentoventa_id').asstring:='0';
-//          ZQdocumentoventadocus.FieldByName('documentoventa_idpago').asstring:=id;
-//          ZQdocumentoventadocus.FieldByName('documentoventa_pagado').AsFloat:=documentoventa_pagado;
-//          ZQdocumentoventadocus.FieldByName('documentoventa_saldo').AsFloat:=documentoventa_saldo;
-//          ZQdocumentoventadocus.FieldByName('documentoventadoc_id').asstring:='0';
-//          ZQdocumentoventadocus.FieldByName('documentoventadoc_importe').AsFloat:=documentoventa_pagado;
-//          ZQdocumentoventadocus.Post;
-//
-//          Princ.AgregarRecibo(ZQRecibo,ZQdocumentoventadocus,ZQDocumentopagos);
-//
-//
-//
-//      end;
+    ZQpagotarjeta.First;
+    while not ZQpagotarjeta.Eof do
+        begin
+            ZQExecSql.Sql.Clear;
+            ZQExecSql.Sql.Add('insert into pagotarjeta set ');
+            ZQExecSql.Sql.Add('pagotarjeta_recargo=:pagotarjeta_recargo, ');
+            ZQExecSql.Sql.Add('pagotarjeta_telefono=:pagotarjeta_telefono, ');
+            ZQExecSql.Sql.Add('pagotarjeta_dni=:pagotarjeta_dni, ');
+            ZQExecSql.Sql.Add('pagotarjeta_titular=:pagotarjeta_titular, ');
+            ZQExecSql.Sql.Add('tarjeta_id=:tarjeta_id, ');
+            ZQExecSql.Sql.Add('documentopago_id=:documentopago_id, ');
+            ZQExecSql.Sql.Add('pagotarjeta_autoriz=:pagotarjeta_autoriz, ');
+            ZQExecSql.Sql.Add('pagotarjeta_cupon=:pagotarjeta_cupon, ');
+            ZQExecSql.Sql.Add('pagotarjeta_cuotas=:pagotarjeta_cuotas, ');
+            ZQExecSql.Sql.Add('pagotarjeta_importe=:pagotarjeta_importe, ');
+            ZQExecSql.Sql.Add('pagotarjeta_id=:pagotarjeta_id ');
+            ZQExecSql.ParamByName('pagotarjeta_recargo').AsString:=ZQpagotarjeta.FieldByName('pagotarjeta_recargo').AsString;
+            ZQExecSql.ParamByName('pagotarjeta_telefono').AsString:=ZQpagotarjeta.FieldByName('pagotarjeta_telefono').AsString;
+            ZQExecSql.ParamByName('pagotarjeta_dni').AsString:=ZQpagotarjeta.FieldByName('pagotarjeta_dni').AsString;
+            ZQExecSql.ParamByName('pagotarjeta_titular').AsString:=ZQpagotarjeta.FieldByName('pagotarjeta_titular').AsString;
+            ZQExecSql.ParamByName('tarjeta_id').AsString:=ZQpagotarjeta.FieldByName('tarjeta_id').AsString;
+            ZQExecSql.ParamByName('documentopago_id').AsString:=documentopago_id;
+            ZQExecSql.ParamByName('pagotarjeta_autoriz').AsString:=ZQpagotarjeta.FieldByName('pagotarjeta_autoriz').AsString;
+            ZQExecSql.ParamByName('pagotarjeta_cupon').AsString:=ZQpagotarjeta.FieldByName('pagotarjeta_cupon').AsString;
+            ZQExecSql.ParamByName('pagotarjeta_cuotas').AsString:=ZQpagotarjeta.FieldByName('pagotarjeta_cuotas').AsString;
+            ZQExecSql.ParamByName('pagotarjeta_importe').AsString:=ZQpagotarjeta.FieldByName('pagotarjeta_importe').AsString;
+            ZQExecSql.ParamByName('pagotarjeta_id').AsString:=princ.codigo('pagotarjeta','pagotarjeta_id');;
+            ZQExecSql.ExecSql;
 
+
+            ZQpagotarjeta.Next;
+        end;
+
+
+    ZQExecSql.SQL.Clear;
+    ZQExecSql.SQL.Add('commit');
+    ZQExecSql.ExecSQL;
 
 
 
@@ -1141,9 +1140,13 @@ end;
 
 procedure Tfacturasventa.btnagregarpagoClick(Sender: TObject);
 begin
+    calculartotales;
     calculartotalpagos;
-    if Princ.CargarPago(documentoventa_saldo,ZQDocumentopagos) then
-      calculartotalpagos;
+    if Princ.CargarPago(documentoventa_saldo,ZQDocumentopagos, ZQpagotarjeta) then
+      begin
+          calculartotales;
+          calculartotalpagos;
+      end;
 end;
 
 procedure Tfacturasventa.btncancelarClick(Sender: TObject);
@@ -1259,9 +1262,22 @@ procedure Tfacturasventa.btnquitarpagoClick(Sender: TObject);
 begin
     if (MessageDlg('Seguro desea quitar este pago?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
       begin
+          case ZQDocumentopagos.FieldByName('tipopago_id').AsInteger of
+
+              2:begin
+                    if ZQpagotarjeta.Locate('documentopago_id',ZQDocumentopagos.FieldByName('documentopago_id').AsString,[]) then
+                      try
+                        ZQpagotarjeta.Delete;
+                      finally
+                      end;
+                end;
+
+          end;
+
           try
             ZQDocumentopagos.Delete;
           finally
+            calculartotales;
             calculartotalpagos;
           end;
 

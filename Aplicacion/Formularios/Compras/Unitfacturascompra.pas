@@ -873,7 +873,7 @@ end;
 procedure Tfacturacompra.btnagregarpagoClick(Sender: TObject);
 begin
     calculartotalpagos;
-    if Princ.CargarPago(documentocompra_saldo,ZQDocumentopagos) then
+    if Princ.CargarPago(documentocompra_saldo,ZQDocumentopagos, ZQpagotarjeta) then
       calculartotalpagos;
 end;
 

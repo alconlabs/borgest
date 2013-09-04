@@ -1094,3 +1094,10 @@ COLLATE = latin1_swedish_ci;
 Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('75', '>Archivo>General>Tarjetas de Credito', '0', 'btntarjetas', '', '0', '0', 'TListaTarjetasdeCredito');
 287;
 INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,75,perfil_id,-1 from perfiles;
+288;
+ALTER TABLE `pagotarjeta` 
+ADD COLUMN `pagotarjeta_titular` VARCHAR(50) NULL DEFAULT NULL  AFTER `tarjeta_id` , 
+ADD COLUMN `pagotarjeta_dni` VARCHAR(20) NULL DEFAULT NULL  AFTER `pagotarjeta_titular` , 
+ADD COLUMN `pagotarjeta_telefono` VARCHAR(20) NULL DEFAULT NULL  AFTER `pagotarjeta_dni` ;
+289;
+ALTER TABLE `pagotarjeta` ADD COLUMN `pagotarjeta_recargo` FLOAT(20,4) NULL DEFAULT NULL  AFTER `pagotarjeta_telefono` ;

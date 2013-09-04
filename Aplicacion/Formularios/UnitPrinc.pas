@@ -233,7 +233,7 @@ type
     function AgregarDocumentoVenta(Cabecera:TDataset; Detalle:TDataset; Documentoventadocu:TDataset; Pagos:TDataset):string;
     procedure ModificarDocumentoVenta(Cabecera:TDataset; Detalle:TDataset; Documentoventadocu:TDataset; Pagos:TDataset);
     procedure AgregarRecibo(ZQCabecera:TDataset; ZQDetalle:TDataset; ZQPagos:TDataset);
-    function CargarPago(importe:real; QDocumentopagos:TDataset): boolean;
+    function CargarPago(importe:real; QDocumentopagos:TDataset; QPagoTarjeta:TDataset): boolean;
     procedure ActualizarNumeroDocumento(tipodocu_id: string; tipodocu_ultimonumero:string);
     function CargarDocumentoVentaDocu(cliente_id: string; QDocumentoVentaDocus:TDataset;documentoventa_apagar:real;AgregarAutomatico:boolean;where_tipodocu:string=' and 1=1 '):boolean;
     function ImprimirFiscal(id:string; puntoventa_id:string=''):boolean;
@@ -409,7 +409,8 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitListaPoliticasdePrecios, UnitListaProveedores1, Unitlistalocalidades,
   UnitListaProvincias, UnitListaFacturasDeVenta, UnitListaRecibosdeVenta,
   UnitListaFacturasdeCompras, UnitNotaPedidoComisiones,
-  UnitListaNotasCreditodeVentas, UnitListaTarjetasdeCredito, UnitTarjetaCredito;
+  UnitListaNotasCreditodeVentas, UnitListaTarjetasdeCredito, UnitTarjetaCredito,
+  UnitCargaDetallePagos;
 
 {$R *.dfm}
 
@@ -1532,8 +1533,8 @@ begin
     if abm=1 then
       begin
           QDocumentoventadetalles.Last;
-          QDocumentoventadetalles.Next;
-          QDocumentoventadetalles.Insert;
+//          QDocumentoventadetalles.Next;
+          QDocumentoventadetalles.Append;;
 
       end;
     if abm=2 then
@@ -2561,26 +2562,59 @@ begin
 end;
 
 
-function TPrinc.CargarPago(importe:real; QDocumentopagos: TDataSet):boolean;
+function TPrinc.CargarPago(importe:real; QDocumentopagos: TDataSet; QPagoTarjeta:TDataset):boolean;
 begin
-    CargarPagos:=TCargarPagos.Create(self);
-    CargarPagos.documentopago_importe.Value:=importe;
-    if CargarPagos.ShowModal=mrOK then
+    CargaDetallePagos:=TCargaDetallePagos.Create(self);
+    CargaDetallePagos.documentopago_importe:=importe;
+    CargaDetallePagos.liberar_al_cerrar:=false;
+    CargaDetallePagos.PageControl1.ActivePage:=CargaDetallePagos.TabSheet1;
+    if CargaDetallePagos.ShowModal=mrOK then
       begin
-          QDocumentopagos.Insert;
-          QDocumentopagos.FieldByName('documentopago_id').AsString:='0';
-          QDocumentopagos.FieldByName('documentopago_nombre').AsString:=CargarPagos.documentopago_nombre.Text;
-          QDocumentopagos.FieldByName('documentopago_importe').AsString:=CargarPagos.documentopago_importe.Text;
-          QDocumentopagos.FieldByName('tipopago_id').AsString:=CargarPagos.tipopago_id.codigo;
-          QDocumentopagos.FieldByName('tipopago_nombre').AsString:=CargarPagos.tipopago_id.Text;
+          QDocumentopagos.Last;
+          QDocumentopagos.Append;
+          QDocumentopagos.FieldByName('documentopago_id').AsInteger:=QDocumentopagos.RecordCount;
+          QDocumentopagos.FieldByName('documentopago_nombre').AsString:=CargaDetallePagos.documentopago_nombre;
+          QDocumentopagos.FieldByName('documentopago_importe').AsFloat:=CargaDetallePagos.documentopago_importe;
+          QDocumentopagos.FieldByName('tipopago_id').AsString:=CargaDetallePagos.tipopago_id;
+          QDocumentopagos.FieldByName('tipopago_nombre').AsString:=CargaDetallePagos.tipopago_nombre;
           QDocumentopagos.FieldByName('documentoventa_id').AsString:='0';
           QDocumentopagos.Post;
+
+
+          case strtoint(CargaDetallePagos.tipopago_id) of
+              1:begin
+
+                end;
+              2:begin
+                    QPagoTarjeta.Last;
+                    QPagoTarjeta.Append;
+                    QPagoTarjeta.FieldByName('pagotarjeta_id').AsFloat:=QPagoTarjeta.RecordCount;
+                    QPagoTarjeta.FieldByName('pagotarjeta_importe').AsFloat:=CargaDetallePagos.documentopago_importe;
+                    QPagoTarjeta.FieldByName('pagotarjeta_cuotas').AsString:=CargaDetallePagos.tarjeta_cuotas.Text;
+                    QPagoTarjeta.FieldByName('pagotarjeta_cupon').AsString:=CargaDetallePagos.tarjeta_cupon.Text;
+                    QPagoTarjeta.FieldByName('pagotarjeta_autoriz').AsString:=CargaDetallePagos.tarjeta_autorizacion.Text;
+                    QPagoTarjeta.FieldByName('documentopago_id').AsString:=QDocumentopagos.FieldByName('documentopago_id').AsString;
+                    QPagoTarjeta.FieldByName('tarjeta_id').AsString:=CargaDetallePagos.tarjeta_id.codigo;
+                    QPagoTarjeta.FieldByName('pagotarjeta_titular').AsString:=CargaDetallePagos.tarjeta_titular.Text;
+                    QPagoTarjeta.FieldByName('pagotarjeta_dni').AsString:=CargaDetallePagos.tarjeta_dni.Text;
+                    QPagoTarjeta.FieldByName('pagotarjeta_telefono').AsString:=CargaDetallePagos.tarjeta_telefono.Text;
+                    QPagoTarjeta.FieldByName('pagotarjeta_recargo').AsString:=CargaDetallePagos.tarjeta_importeinteres.Text;
+                    QPagoTarjeta.Post;
+                end;
+              3:begin
+
+                end;
+              4:begin
+
+                end;
+          end;
+
 
           Result:=true;
 
       end;
 
-    CargarPagos.Free;
+    CargaDetallePagos.Free;
 
 
 end;

@@ -581,7 +581,7 @@ end;
 procedure Trecibosventa.btnagregarpagoClick(Sender: TObject);
 begin
     calculartotales;
-    if Princ.CargarPago(documentoventa_pagado,ZQDocumentopagos) then
+    if Princ.CargarPago(documentoventa_pagado,ZQDocumentopagos, ZQpagotarjeta) then
       calculartotalpagos;
 end;
 

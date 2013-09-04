@@ -109,7 +109,8 @@ uses
   Unitfacturascompra in 'Formularios\Compras\Unitfacturascompra.pas' {facturacompra},
   UnitListaNotasCreditodeVentas in 'Formularios\Ventas\UnitListaNotasCreditodeVentas.pas' {ListaNotasCreditodeVentas},
   UnitListaTarjetasdeCredito in 'Formularios\Archivo\UnitListaTarjetasdeCredito.pas' {ListaTarjetasdeCredito},
-  UnitTarjetaCredito in 'Formularios\Archivo\UnitTarjetaCredito.pas' {TarjetaCredito};
+  UnitTarjetaCredito in 'Formularios\Archivo\UnitTarjetaCredito.pas' {TarjetaCredito},
+  UnitCargaDetallePagos in 'Formularios\Ventas\UnitCargaDetallePagos.pas' {CargaDetallePagos};
 
 {$R *.res}
 

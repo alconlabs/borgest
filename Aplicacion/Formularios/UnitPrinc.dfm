@@ -3632,15 +3632,15 @@ object Princ: TPrinc
       'select *, '
       '(:importe*tarjetacuotas.tarjetacuota_recargo/100) as importe, '
       
-        '(:importe*tarjetacuotas.tarjetacuota_recargo/100)/:cuotas as cuo' +
-        'ta_importe'
+        '(:importe+(:importe*tarjetacuotas.tarjetacuota_recargo/100))/:cu' +
+        'otas as cuota_importe'
       'from tarjetas'
       
         'inner join tarjetacuotas on tarjetas.tarjeta_id=tarjetacuotas.ta' +
         'rjeta_id'
       'where tarjetas.tarjeta_id=:tarjeta_id and'
-      'tarjetacuotas.tarjetacuota_desde>=:cuotas and'
-      'tarjetacuotas.tarjetacuota_hasta<=:cuotas')
+      'tarjetacuotas.tarjetacuota_desde<=:cuotas and'
+      'tarjetacuotas.tarjetacuota_hasta>=:cuotas')
     Params = <
       item
         DataType = ftUnknown

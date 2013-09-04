@@ -230,6 +230,9 @@
     <DCCReference Include="Formularios\Ventas\UnitCajaBar.pas">
       <Form>CajaBar</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitCargaDetallePagos.pas">
+      <Form>CargaDetallePagos</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitCargarPagos.pas">
       <Form>CargarPagos</Form>
     </DCCReference>
