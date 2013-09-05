@@ -85,7 +85,7 @@ object estadoctas: Testadoctas
       Width = 608
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -322,7 +322,7 @@ object estadoctas: Testadoctas
       Width = 209
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 4
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -1097,8 +1097,8 @@ object estadoctas: Testadoctas
     Memo.Strings = (
       'select * from puntodeventa'
       'order by puntoventa_numero')
-    Left = 448
-    Top = 176
+    Left = 456
+    Top = 184
   end
   object ZQDebitos: TZQuery
     Connection = Princ.ZBase
