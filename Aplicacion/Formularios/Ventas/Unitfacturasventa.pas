@@ -721,7 +721,7 @@ begin
     ZQuery2.FieldByName('documentoventa_condicionventa').AsInteger:=documentoventa_condicionventa.ItemIndex;
     ZQuery2.Post;
 
-    Princ.ModificarDocumentoVenta(ZQuery2,ZQDocumentoventadetalles,nil,nil);
+    Princ.ModificarDocumentoVenta(ZQuery2,ZQDocumentoventadetalles,nil,ZQDocumentopagos,ZQpagotarjeta);   { TODO : modificar pagos al modificar la factura }
 
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK, mbCancel], 0);
     Self.Close;
@@ -1034,10 +1034,15 @@ begin
             ZQExecSql.ParamByName('documentopago_id').AsString:=documentopago_id;
             ZQExecSql.ExecSql;
 
+            if ZQpagotarjeta.Locate('documentopago_id',ZQDocumentopagos.FieldByName('documentopago_id').AsString,[]) then
+              begin
+                  ZQpagotarjeta.Edit;
+                  ZQpagotarjeta.FieldByName('documentopago_id').AsString:=documentopago_id;
+                  ZQpagotarjeta.Post;
+              end;
+
             ZQDocumentopagos.Next;
         end;
-
-
 
     ZQpagotarjeta.First;
     while not ZQpagotarjeta.Eof do
@@ -1060,7 +1065,7 @@ begin
             ZQExecSql.ParamByName('pagotarjeta_dni').AsString:=ZQpagotarjeta.FieldByName('pagotarjeta_dni').AsString;
             ZQExecSql.ParamByName('pagotarjeta_titular').AsString:=ZQpagotarjeta.FieldByName('pagotarjeta_titular').AsString;
             ZQExecSql.ParamByName('tarjeta_id').AsString:=ZQpagotarjeta.FieldByName('tarjeta_id').AsString;
-            ZQExecSql.ParamByName('documentopago_id').AsString:=documentopago_id;
+            ZQExecSql.ParamByName('documentopago_id').AsString:=ZQpagotarjeta.FieldByName('documentopago_id').AsString;
             ZQExecSql.ParamByName('pagotarjeta_autoriz').AsString:=ZQpagotarjeta.FieldByName('pagotarjeta_autoriz').AsString;
             ZQExecSql.ParamByName('pagotarjeta_cupon').AsString:=ZQpagotarjeta.FieldByName('pagotarjeta_cupon').AsString;
             ZQExecSql.ParamByName('pagotarjeta_cuotas').AsString:=ZQpagotarjeta.FieldByName('pagotarjeta_cuotas').AsString;

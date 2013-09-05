@@ -489,6 +489,12 @@ begin
     ZQdocumentoventadocus.ParamByName('documentoventa_id').AsString:=id;
 
     ZQdocumentoventadocus.Active:=true;
+
+    ZQpagotarjeta.Active:=false;
+    ZQpagotarjeta.ParamByName('documentoventa_id').AsString:=id;
+    ZQpagotarjeta.Active:=true;
+
+
 end;
 
 procedure Trecibosventa.agregar;

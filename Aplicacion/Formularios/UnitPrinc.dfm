@@ -3676,4 +3676,28 @@ object Princ: TPrinc
         ParamType = ptUnknown
       end>
   end
+  object ZQpagotarjeta: TZQuery
+    Connection = ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select pagotarjeta.* from pagotarjeta'
+      
+        'inner join documentopagos on pagotarjeta.documentopago_id=docume' +
+        'ntopagos.documentopago_id'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 720
+    Top = 520
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+  end
 end

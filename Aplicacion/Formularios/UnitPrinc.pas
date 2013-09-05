@@ -138,6 +138,7 @@ type
     Permisos1: TPermisos;
     btntarjetas: TAdvGlowButton;
     ZQRecargoTarjetas: TZQuery;
+    ZQpagotarjeta: TZQuery;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -231,7 +232,7 @@ type
     function GetPrecioVentaBaseprod(producto_precioventabase:real;producto_id:string):real;
     procedure ActualizarSaldoDocumentoVenta(id:string; importe:real; inversa:boolean=false);
     function AgregarDocumentoVenta(Cabecera:TDataset; Detalle:TDataset; Documentoventadocu:TDataset; Pagos:TDataset):string;
-    procedure ModificarDocumentoVenta(Cabecera:TDataset; Detalle:TDataset; Documentoventadocu:TDataset; Pagos:TDataset);
+    Procedure ModificarDocumentoVenta(Cabecera: TDataSet; Detalle: TDataSet; Documentoventadocu: TDataSet; Pagos: TDataSet; pagostarjeta: TDataSet);
     procedure AgregarRecibo(ZQCabecera:TDataset; ZQDetalle:TDataset; ZQPagos:TDataset);
     function CargarPago(importe:real; QDocumentopagos:TDataset; QPagoTarjeta:TDataset): boolean;
     procedure ActualizarNumeroDocumento(tipodocu_id: string; tipodocu_ultimonumero:string);
@@ -2017,9 +2018,10 @@ begin
 end;
 
 
-Procedure TPrinc.ModificarDocumentoVenta(Cabecera: TDataSet; Detalle: TDataSet; Documentoventadocu: TDataSet; Pagos: TDataSet);
+Procedure TPrinc.ModificarDocumentoVenta(Cabecera: TDataSet; Detalle: TDataSet; Documentoventadocu: TDataSet; Pagos: TDataSet; pagostarjeta: TDataSet);
 var
   documentoventa_neto21, documentoventa_iva21, documentoventa_neto105, documentoventa_iva105, documentoventa_total, documentoventa_pagado, documentoventa_saldo, documentoventa_estado:string;
+  documentopago_id:string;
 begin
     ZQDocumentosventasABM.SQL.Clear;
     ZQDocumentosventasABM.SQL.Add('begin');
@@ -2223,8 +2225,28 @@ begin
             end;
       end;
 
+
     if Pagos<>nil then
       begin
+          if pagostarjeta<>nil then
+            begin
+                ZQDocumentopagos.Active:=false;
+                ZQDocumentopagos.ParamByName('documentoventa_id').AsString:=Cabecera.FieldByName('documentoventa_id').AsString;
+                ZQDocumentopagos.Active:=true;
+
+                while not ZQDocumentopagos.Eof do
+                    begin
+                        ZQDocumentosventasABM.Sql.Clear;
+                        ZQDocumentosventasABM.Sql.Add('delete from pagotarjeta ');
+                        ZQDocumentosventasABM.Sql.Add('where documentopago_id=:documentopago_id ');
+                        ZQDocumentosventasABM.ParamByName('documentopago_id').AsString:=ZQDocumentopagos.FieldByName('documentopago_id').AsString;
+                        ZQDocumentosventasABM.ExecSql;
+
+                        ZQDocumentopagos.Next;
+                    end;
+
+            end;
+
           ZQDocumentosventasABM.Sql.Clear;
           ZQDocumentosventasABM.Sql.Add('delete from documentopagos ');
           ZQDocumentosventasABM.Sql.Add('where documentoventa_id=:documentoventa_id ');
@@ -2234,6 +2256,7 @@ begin
           Pagos.First;
           while not Pagos.Eof do
               begin
+                  documentopago_id:=Princ.codigo('documentopagos','documentopago_id');
                   ZQDocumentosventasABM.Sql.Clear;
                   ZQDocumentosventasABM.Sql.Add('insert into documentopagos set ');
                   ZQDocumentosventasABM.Sql.Add('documentoventa_id=:documentoventa_id, ');
@@ -2245,10 +2268,50 @@ begin
                   ZQDocumentosventasABM.ParamByName('tipopago_id').AsString:=Pagos.FieldByName('tipopago_id').AsString;
                   ZQDocumentosventasABM.ParamByName('documentopago_importe').AsString:=Pagos.FieldByName('documentopago_importe').AsString;
                   ZQDocumentosventasABM.ParamByName('documentopago_nombre').AsString:=Pagos.FieldByName('documentopago_nombre').AsString;
-                  ZQDocumentosventasABM.ParamByName('documentopago_id').AsString:=Princ.codigo('documentopagos','documentopago_id');
+                  ZQDocumentosventasABM.ParamByName('documentopago_id').AsString:=documentopago_id;
                   ZQDocumentosventasABM.ExecSql;
 
+
+                  if pagostarjeta.Locate('documentopago_id',Pagos.FieldByName('documentopago_id').AsString,[]) then
+                    begin
+                        pagostarjeta.Edit;
+                        pagostarjeta.FieldByName('documentopago_id').AsString:=documentopago_id;
+                        pagostarjeta.Post;
+                    end;
+
+
                   Pagos.Next;
+              end;
+
+          pagostarjeta.First;
+          while not pagostarjeta.Eof do
+              begin
+                  ZQDocumentosventasABM.Sql.Clear;
+                  ZQDocumentosventasABM.Sql.Add('insert into pagotarjeta set ');
+                  ZQDocumentosventasABM.Sql.Add('pagotarjeta_recargo=:pagotarjeta_recargo, ');
+                  ZQDocumentosventasABM.Sql.Add('pagotarjeta_telefono=:pagotarjeta_telefono, ');
+                  ZQDocumentosventasABM.Sql.Add('pagotarjeta_dni=:pagotarjeta_dni, ');
+                  ZQDocumentosventasABM.Sql.Add('pagotarjeta_titular=:pagotarjeta_titular, ');
+                  ZQDocumentosventasABM.Sql.Add('tarjeta_id=:tarjeta_id, ');
+                  ZQDocumentosventasABM.Sql.Add('documentopago_id=:documentopago_id, ');
+                  ZQDocumentosventasABM.Sql.Add('pagotarjeta_autoriz=:pagotarjeta_autoriz, ');
+                  ZQDocumentosventasABM.Sql.Add('pagotarjeta_cupon=:pagotarjeta_cupon, ');
+                  ZQDocumentosventasABM.Sql.Add('pagotarjeta_cuotas=:pagotarjeta_cuotas, ');
+                  ZQDocumentosventasABM.Sql.Add('pagotarjeta_importe=:pagotarjeta_importe, ');
+                  ZQDocumentosventasABM.Sql.Add('pagotarjeta_id=:pagotarjeta_id ');
+                  ZQDocumentosventasABM.ParamByName('pagotarjeta_recargo').AsString:=pagostarjeta.FieldByName('pagotarjeta_recargo').AsString;
+                  ZQDocumentosventasABM.ParamByName('pagotarjeta_telefono').AsString:=pagostarjeta.FieldByName('pagotarjeta_telefono').AsString;
+                  ZQDocumentosventasABM.ParamByName('pagotarjeta_dni').AsString:=pagostarjeta.FieldByName('pagotarjeta_dni').AsString;
+                  ZQDocumentosventasABM.ParamByName('pagotarjeta_titular').AsString:=pagostarjeta.FieldByName('pagotarjeta_titular').AsString;
+                  ZQDocumentosventasABM.ParamByName('tarjeta_id').AsString:=pagostarjeta.FieldByName('tarjeta_id').AsString;
+                  ZQDocumentosventasABM.ParamByName('documentopago_id').AsString:=pagostarjeta.FieldByName('documentopago_id').AsString;
+                  ZQDocumentosventasABM.ParamByName('pagotarjeta_autoriz').AsString:=pagostarjeta.FieldByName('pagotarjeta_autoriz').AsString;
+                  ZQDocumentosventasABM.ParamByName('pagotarjeta_cupon').AsString:=pagostarjeta.FieldByName('pagotarjeta_cupon').AsString;
+                  ZQDocumentosventasABM.ParamByName('pagotarjeta_cuotas').AsString:=pagostarjeta.FieldByName('pagotarjeta_cuotas').AsString;
+                  ZQDocumentosventasABM.ParamByName('pagotarjeta_importe').AsString:=pagostarjeta.FieldByName('pagotarjeta_importe').AsString;
+                  ZQDocumentosventasABM.ParamByName('pagotarjeta_id').AsString:=princ.codigo('pagotarjeta','pagotarjeta_id');;
+                  ZQDocumentosventasABM.ExecSql;
+                  pagostarjeta.Next;
               end;
       end;
 
@@ -2721,13 +2784,10 @@ begin
                   ZQRecibos.parambyname('tipopago_id').asstring:=ZQPagos.FieldByName('tipopago_id').AsString;
                   ZQRecibos.ExecSQL;
 
-
                   ZQPagos.Next;
               end;
 
-
       end;
-
 
     ZQRecibos.SQL.Clear;
     ZQRecibos.SQL.Add('commit');

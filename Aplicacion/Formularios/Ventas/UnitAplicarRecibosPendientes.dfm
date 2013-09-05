@@ -136,7 +136,7 @@ inherited AplicarRecibosPendientes: TAplicarRecibosPendientes
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 0
       OnSelect = cliente_idSelect
       Confbase = Princ.ZBase
@@ -254,7 +254,7 @@ inherited AplicarRecibosPendientes: TAplicarRecibosPendientes
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 1
       OnSelect = documentoventa_idSelect
       Confbase = Princ.ZBase

@@ -148,7 +148,7 @@ begin
                 ZQDocumentoventa.FieldByName('documentoventa_numero').AsString:=Princ.NumeroDocumento(BARFACTURATIPODOCUID,'');
                 ZQDocumentoventa.Post;
 
-                Princ.ModificarDocumentoVenta(ZQDocumentoventa,nil,nil,nil);
+                Princ.ModificarDocumentoVenta(ZQDocumentoventa,nil,nil,nil, nil);
 
             end;
       end;
@@ -295,7 +295,7 @@ begin
                 ZQDocumentoventa.Active:=false;
                 ZQDocumentoventa.ParamByName('documentoventa_id').AsString:=ZQDocumentosventas.FieldByName('documentoventa_id').AsString;
                 ZQDocumentoventa.Active:=true;
-                Princ.ModificarDocumentoVenta(ZQDocumentoventa,ZQDocumentoventadetalles,nil,nil);
+                Princ.ModificarDocumentoVenta(ZQDocumentoventa,ZQDocumentoventadetalles,nil,nil, nil);
 
                 btnactualizar.Click;
 
@@ -347,7 +347,7 @@ begin
                 ZQDocumentoventa.FieldByName('documentoventa_pagado').AsString:=ZQDocumentosventas.FieldByName('documentoventa_total').AsString;
                 ZQDocumentoventa.Post;
 
-                Princ.ModificarDocumentoVenta(ZQDocumentoventa,nil,nil,ZQDocumentopagos);
+                Princ.ModificarDocumentoVenta(ZQDocumentoventa,nil,nil,ZQDocumentopagos, nil);
 
                 if (MessageDlg('Desea imprimir?', mtConfirmation, [mbOK, mbCancel], 0)= mrOk ) then
                   Princ.ImprimirDocumentoVenta(ZQDocumentosventas.FieldByName('documentoventa_id').AsString);
@@ -378,7 +378,7 @@ begin
                       ZQDocumentoventa.FieldByName('documentoventa_estado').AsString:='FACTURADA';
                       ZQDocumentoventa.Post;
 
-                      Princ.ModificarDocumentoVenta(ZQDocumentoventa,nil,nil,nil);
+                      Princ.ModificarDocumentoVenta(ZQDocumentoventa,nil,nil,nil, nil);
 
       //                if (MessageDlg('Desea imprimir?', mtConfirmation, [mbOK, mbCancel], 0) in [mrOk, mrCancel]) then
                         Princ.ImprimirDocumentoVenta(ZQDocumentosventas.FieldByName('documentoventa_id').AsString);
@@ -431,7 +431,7 @@ begin
                             ZQDocumentoventa.ParamByName('documentoventa_id').AsString:=documentoventa_id_destino;
                             ZQDocumentoventa.Active:=true;
 
-                            Princ.ModificarDocumentoVenta(ZQDocumentoventa,ZQDocumentoventadetalles,nil,nil);
+                            Princ.ModificarDocumentoVenta(ZQDocumentoventa,ZQDocumentoventadetalles,nil,nil, nil);
 
                             ZQDocumentoventadetalles.SQL.Text:='select * from documentoventadetalles '+
                                                                'where documentoventa_id=:documentoventa_id';
@@ -446,7 +446,7 @@ begin
                             ZQDocumentoventa.FieldByName('documentoventa_observacion').AsString:='TRASPASO DE MESA';
                             ZQDocumentoventa.Post;
 
-                            Princ.ModificarDocumentoVenta(ZQDocumentoventa,nil,nil,nil);
+                            Princ.ModificarDocumentoVenta(ZQDocumentoventa,nil,nil,nil,nil);
 
                             btnactualizar.Click;
 

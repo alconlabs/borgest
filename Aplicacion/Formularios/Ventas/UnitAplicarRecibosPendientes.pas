@@ -219,7 +219,7 @@ begin
                               ZQdocumentoventadocus.Next;
                           end;
 
-                      Princ.ModificarDocumentoVenta(ZQSelect,nil,ZQdocumentoventadocusABM, nil);
+                      Princ.ModificarDocumentoVenta(ZQSelect,nil,ZQdocumentoventadocusABM, nil,nil);
                       MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
                       cliente_id.OnSelect(self);
                       ZQdocumentoventadocus.Active:=false;

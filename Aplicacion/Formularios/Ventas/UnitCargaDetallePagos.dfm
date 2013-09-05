@@ -332,6 +332,7 @@ inherited CargaDetallePagos: TCargaDetallePagos
           Top = 94
           Width = 109
           Height = 21
+          TabStop = False
           CalculatorLook.ButtonWidth = 24
           CalculatorLook.ButtonHeight = 24
           CalculatorLook.ButtonColor = clSilver
@@ -350,6 +351,7 @@ inherited CargaDetallePagos: TCargaDetallePagos
           Top = 118
           Width = 109
           Height = 21
+          TabStop = False
           CalculatorLook.ButtonWidth = 24
           CalculatorLook.ButtonHeight = 24
           CalculatorLook.ButtonColor = clSilver
@@ -360,6 +362,7 @@ inherited CargaDetallePagos: TCargaDetallePagos
           CalculatorLook.Font.Height = -11
           CalculatorLook.Font.Name = 'Tahoma'
           CalculatorLook.Font.Style = []
+          ReadOnly = True
           TabOrder = 4
           Version = '1.1.0.1'
         end

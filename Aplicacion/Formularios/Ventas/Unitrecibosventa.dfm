@@ -1036,14 +1036,25 @@ object recibosventa: Trecibosventa
     Connection = Princ.ZBase
     CachedUpdates = True
     SQL.Strings = (
-      'select * from pagotarjeta'
+      'select pagotarjeta.* from pagotarjeta'
       
-        'inner join tarjetas on pagotarjeta.tarjeta_id=tarjetas.tarjeta_i' +
-        'd'
-      'where documentopago_id=-1')
-    Params = <>
+        'inner join documentopagos on pagotarjeta.documentopago_id=docume' +
+        'ntopagos.documentopago_id'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
     Left = 576
     Top = 368
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
   end
   object ZQDocumentoventadetalles: TZQuery
     Connection = Princ.ZBase

@@ -1088,7 +1088,7 @@ begin
           ZQDocumentoventa.FieldByName('documentoventa_id').AsString:=documentoventa_id;
           ZQDocumentoventa.Post;
 
-          Princ.ModificarDocumentoVenta(ZQDocumentoventa,ZQDocumentoventadetalles,nil,nil);
+          Princ.ModificarDocumentoVenta(ZQDocumentoventa,ZQDocumentoventadetalles,nil,nil,nil);
 
           ZQuery2.Sql.Clear;
           ZQuery2.Sql.Add('update liquidacionessucursales set ');
