@@ -2512,14 +2512,14 @@ begin
     DocumentosVentasPendientes.cliente_id:=cliente_id;
     DocumentosVentasPendientes.where_tipodocu:=where_tipodocu;
     DocumentosVentasPendientes.ActivarConsulta;
-    DocumentosVentasPendientes.documentoventa_apagar:=documentoventa_apagar;
+    DocumentosVentasPendientes.documentoventa_apagar:=roundto(documentoventa_apagar,-2);
     QDocumentoVentaDocus.First;
     while not QDocumentoVentaDocus.Eof do
         begin
             if DocumentosVentasPendientes.ZQDocumentosVentasPendientes.Locate('documentoventa_id',QDocumentoVentaDocus.FieldByName('documentoventa_idpago').AsString,[]) then
               begin
                   DocumentosVentasPendientes.ZQDocumentosVentasPendientes.Edit;
-                  DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsString:=QDocumentoVentaDocus.FieldByName('documentoventadoc_importe').AsString;
+                  DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=roundto(QDocumentoVentaDocus.FieldByName('documentoventadoc_importe').AsFloat,-2);
 
                   DocumentosVentasPendientes.ZQDocumentosVentasPendientes.Post;
 
@@ -2550,42 +2550,27 @@ begin
                           QDocumentoVentaDocus.Edit
                         else
                           QDocumentoVentaDocus.Insert;
-                          
+
                         QDocumentoVentaDocus.FieldByName('documentoventa_id').AsString:='0';
                         QDocumentoVentaDocus.FieldByName('documentoventa_numero').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_numero').AsString;
                         QDocumentoVentaDocus.FieldByName('documentoventa_fecha').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_fecha').AsString;
                         QDocumentoVentaDocus.FieldByName('documentoventa_hora').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_hora').AsString;
-              //          QDocumentoVentaDocus.FieldByName('documentoventa_neto21').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_neto21').AsString;
-              //          QDocumentoVentaDocus.FieldByName('documentoventa_iva21').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_iva21').AsString;
-              //          QDocumentoVentaDocus.FieldByName('documentoventa_neto105').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_neto105').AsString;
-              //          QDocumentoVentaDocus.FieldByName('documentoventa_iva105').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_iva105').AsString;
-              //          QDocumentoVentaDocus.FieldByName('documentoventa_netonogravado').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_netonogravado').AsString;
-                        QDocumentoVentaDocus.FieldByName('documentoventa_total').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_total').AsString;
+                        QDocumentoVentaDocus.FieldByName('documentoventa_total').AsFloat:=roundto(DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_total').AsFloat,-2);
                         QDocumentoVentaDocus.FieldByName('documentoventa_estado').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_estado').AsString;
-                        QDocumentoVentaDocus.FieldByName('documentoventa_pagado').AsFloat:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_pagado').AsFloat+abs(DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat);
-                        QDocumentoVentaDocus.FieldByName('documentoventa_saldo').AsFloat:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_saldo').AsFloat-abs(DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat);
-              //          QDocumentoVentaDocus.FieldByName('documentoventa_observacion').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_observacion').AsString;
+                        QDocumentoVentaDocus.FieldByName('documentoventa_pagado').AsFloat:=roundto(DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_pagado').AsFloat+abs(DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat),-2);
+                        QDocumentoVentaDocus.FieldByName('documentoventa_saldo').AsFloat:=roundto(DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_saldo').AsFloat-abs(DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat),-2);
                         QDocumentoVentaDocus.FieldByName('cliente_id').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('cliente_id').AsString;
                         QDocumentoVentaDocus.FieldByName('personal_id').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('personal_id').AsString;
                         QDocumentoVentaDocus.FieldByName('tipodocu_id').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('tipodocu_id').AsString;
-              //          QDocumentoVentaDocus.FieldByName('documentoventa_condicionventa').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_condicionventa').AsString;
-              //          QDocumentoVentaDocus.FieldByName('documentoventa_fechavenc').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_fechavenc').AsString;
-              //          QDocumentoVentaDocus.FieldByName('documentoventa_listaprecio').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_listaprecio').AsString;
                         QDocumentoVentaDocus.FieldByName('tipodocu_id_1').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('tipodocu_id').AsString;
                         QDocumentoVentaDocus.FieldByName('tipodocu_nombre').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('tipodocu_nombre').AsString;
                         QDocumentoVentaDocus.FieldByName('tipodocu_tipo').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('tipodocu_tipo').AsString;
-              //          QDocumentoVentaDocus.FieldByName('tipodocu_caja').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('tipodocu_caja').AsString;
-              //		      QDocumentoVentaDocus.FieldByName('tipodocu_stock').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('tipodocu_stock').AsString;
-              //          QDocumentoVentaDocus.FieldByName('tipodocu_iva').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('tipodocu_iva').AsString;
-              //          QDocumentoVentaDocus.FieldByName('tipodocu_fiscal').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('tipodocu_fiscal').AsString;
-              //    		  QDocumentoVentaDocus.FieldByName('tipodocu_ultimonumero').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('tipodocu_ultimonumero').AsString;
                         QDocumentoVentaDocus.FieldByName('puntoventa_id').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('puntoventa_id').AsString;
                         QDocumentoVentaDocus.FieldByName('tipodocu_letra').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('tipodocu_letra').AsString;
                         QDocumentoVentaDocus.FieldByName('puntoventa_id_1').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('puntoventa_id').AsString;
                         QDocumentoVentaDocus.FieldByName('puntoventa_numero').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('puntoventa_numero').AsString;
-              //          QDocumentoVentaDocus.FieldByName('puntoventa_descripcion').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('puntoventa_descripcion').AsString;
                         QDocumentoVentaDocus.FieldByName('sucursal_id').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('sucursal_id').AsString;
-                        QDocumentoVentaDocus.FieldByName('documentoventadoc_importe').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsString;
+                        QDocumentoVentaDocus.FieldByName('documentoventadoc_importe').AsFloat:=roundto(DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat,-2);
                         QDocumentoVentaDocus.FieldByName('documentoventadoc_id').AsString:='0';
                         QDocumentoVentaDocus.FieldByName('documentoventa_idpago').AsString:=DocumentosVentasPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_id').AsString;
                         QDocumentoVentaDocus.FieldByName('documentoventa_id_1').AsString:='0';

@@ -214,7 +214,7 @@ begin
         end;
 
     documentoventa_estado:='PENDIENTE';
-    documentoventa_saldo:=documentoventa_total.Value-documentoventa_pagado;
+    documentoventa_saldo:=roundto(documentoventa_total.Value-documentoventa_pagado,-2);
     if documentoventa_saldo=0 then
       documentoventa_estado:='PAGADA';
 

@@ -884,12 +884,6 @@ object estadoctas: Testadoctas
       FieldName = 'sucursal_tipoliquidsucursal'
       Size = 45
     end
-    object ZQPendientescliente_id_2: TIntegerField
-      FieldName = 'cliente_id_2'
-    end
-    object ZQPendientessucursal_tipodocumentoliquidar: TIntegerField
-      FieldName = 'sucursal_tipodocumentoliquidar'
-    end
     object ZQPendientesdebito: TFloatField
       FieldName = 'debito'
       ReadOnly = True
@@ -932,6 +926,12 @@ object estadoctas: Testadoctas
       FieldName = 'grupo'
       ReadOnly = True
       Size = 13
+    end
+    object ZQPendientescliente_id_2: TIntegerField
+      FieldName = 'cliente_id_2'
+    end
+    object ZQPendientessucursal_tipodocumentoliquidar: TIntegerField
+      FieldName = 'sucursal_tipodocumentoliquidar'
     end
   end
   object MQdetalle: TMQuery

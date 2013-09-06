@@ -147,8 +147,6 @@ type
     ZQPendientesempresa_id: TIntegerField;
     ZQPendientessucursal_tipoliquidvendedor: TStringField;
     ZQPendientessucursal_tipoliquidsucursal: TStringField;
-    ZQPendientescliente_id_2: TIntegerField;
-    ZQPendientessucursal_tipodocumentoliquidar: TIntegerField;
     ZQPendientesdebito: TFloatField;
     ZQPendientescredito: TFloatField;
     ZQPendientesacumulado: TFloatField;
@@ -158,6 +156,8 @@ type
     ZQPendientesdocumentoventanumero: TStringField;
     ZQPendientesdocumentoventa_recargo: TFloatField;
     ZQPendientesgrupo: TStringField;
+    ZQPendientescliente_id_2: TIntegerField;
+    ZQPendientessucursal_tipodocumentoliquidar: TIntegerField;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnimprimirClick(Sender: TObject);

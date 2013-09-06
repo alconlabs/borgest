@@ -209,8 +209,15 @@ begin
     princ.CalcularRecargoTarjeta(tarjeta_id.codigo,round(tarjeta_cuotas.Value),tarjeta_acobrar.Value);
     tarjeta_porcinteres.Caption:=Princ.ZQRecargoTarjetas.FieldByName('tarjetacuota_recargo').AsString+'% interes';
     tarjeta_importeinteres.Text:=Princ.ZQRecargoTarjetas.FieldByName('importe').AsString;
-    tarjeta_cobrado.Value:=tarjeta_acobrar.Value+tarjeta_importeinteres.Value;
     tarjeta_importecuota.Text:=Princ.ZQRecargoTarjetas.FieldByName('cuota_importe').AsString;
+    if Princ.ZQRecargoTarjetas.FieldByName('tarjetacuota_recargo').AsString='' then
+      begin
+          tarjeta_porcinteres.Caption:='0% interes';
+          tarjeta_importeinteres.Text:='0';
+          tarjeta_importecuota.Text:=Princ.ZQRecargoTarjetas.FieldByName('cuota_importe').AsString;
+      end;
+
+    tarjeta_cobrado.Value:=tarjeta_acobrar.Value+tarjeta_importeinteres.Value;
 end;
 
 end.

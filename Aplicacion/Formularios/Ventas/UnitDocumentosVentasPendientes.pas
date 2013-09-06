@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, MoneyEdit, StdCtrls, Grids, DBGrids, UnitSqlComboBox, ComCtrls,
-  ExtCtrls, AdvPanel, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset;
+  ExtCtrls, AdvPanel, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, Math;
 
 type
   TDocumentosVentasPendientes = class(TForm)
@@ -136,7 +136,7 @@ begin
                   if documentoventa_apagar<ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat then
                     begin
                         ZQDocumentosVentasPendientes.Edit;
-                        ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=documentoventa_apagar;
+                        ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=roundto(documentoventa_apagar,-2);
                         ZQDocumentosVentasPendientes.Post;
                     end
                   else
@@ -145,7 +145,7 @@ begin
                     end;
 
 
-                  documentoventa_apagar:=documentoventa_apagar-ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat;
+                  documentoventa_apagar:=roundto(documentoventa_apagar-ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat,-2);
 
                   ZQDocumentosVentasPendientes.Next;
               end;
@@ -176,10 +176,10 @@ begin
           if documentoventa_apagar-documentoventa_pagado<ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat then
             ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=documentoventa_apagar-documentoventa_pagado
           else
-            ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat;
+            ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=roundto(ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat,-2);
       end
     else
-      ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat;
+      ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=roundto(ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat,-2);
 
 
     ZQDocumentosVentasPendientes.Post;
@@ -216,14 +216,14 @@ end;
 procedure TDocumentosVentasPendientes.ZQDocumentosVentasPendientesAfterPost(
   DataSet: TDataSet);
 begin
-    documentoventa_pagado:=documentoventa_pagado+ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat;
+    documentoventa_pagado:=roundto(documentoventa_pagado+ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat,-2);
 end;
 
 procedure TDocumentosVentasPendientes.ZQDocumentosVentasPendientesBeforePost(
   DataSet: TDataSet);
 begin
     if (ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat<0) and (ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat>0) then
-      ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat*-1;
+      ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat:=roundto(ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat*-1,-2);
 
     if abs(ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').AsFloat)>abs(ZQDocumentosVentasPendientes.FieldByName('documentoventasaldo').AsFloat) then
       begin
@@ -232,7 +232,7 @@ begin
       end
     else
       begin
-          documentoventa_pagado:=documentoventa_pagado-ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').CurValue;
+          documentoventa_pagado:=roundto(documentoventa_pagado-ZQDocumentosVentasPendientes.FieldByName('documentoventadoc_importe').CurValue,-2);
 
       end;
     
