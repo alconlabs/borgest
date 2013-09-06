@@ -194,6 +194,9 @@ begin
   inherited;
     tipopago_id:='3';
     tipopago_nombre:='CHEQUE';
+
+    cheque_importe.Value:=documentopago_importe;
+    cheque_nombre.SetFocus;
 end;
 
 procedure TCargaDetallePagos.TabSheet4Show(Sender: TObject);
@@ -201,6 +204,9 @@ begin
   inherited;
     tipopago_id:='4';
     tipopago_nombre:='DEPOSITO';
+
+    deposito_importe.Value:=documentopago_importe;
+    deposito_nombre.SetFocus;
 end;
 
 procedure TCargaDetallePagos.tarjeta_idSelect(Sender: TObject);

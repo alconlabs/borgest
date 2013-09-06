@@ -296,6 +296,8 @@ end;
 procedure Tfacturasventa.documentoventa_condicionventaSelect(Sender: TObject);
 begin
     VENTASEMITIRREMITOCTACTE.Checked:=(abm=1) and (documentoventa_condicionventa.ItemIndex=strtoint(CONDICIONVENTA_CTACTE)) and strtobool(Princ.GetConfiguracion('VENTASEMITIRREMITOCTACTE'));
+    btnagregarpago.Enabled:=documentoventa_condicionventa.ItemIndex=strtoint(CONDICIONVENTA_CONTADO);
+    btnquitarpago.Enabled:=documentoventa_condicionventa.ItemIndex=strtoint(CONDICIONVENTA_CONTADO);
 end;
 
 procedure Tfacturasventa.documentoventa_recargoExit(Sender: TObject);
@@ -872,6 +874,8 @@ begin
       end;
 
 
+    documentoventa_condicionventa.OnSelect(self);
+
     ZQDocumentoventadetalles.Active:=false;
     ZQDocumentoventadetalles.SQL.Text:='select * from documentoventadetalles where documentoventa_id="'+id+'"';
     ZQDocumentoventadetalles.Active:=true;
@@ -934,16 +938,13 @@ begin
     ZQExecSql.ParamByName('documentoventa_iva105').AsString:=documentoventa_iva105.Text;
     ZQExecSql.ParamByName('documentoventa_netonogravado').AsString:='0';
     ZQExecSql.ParamByName('documentoventa_total').AsString:=documentoventa_total.Text;
+    ZQExecSql.ParamByName('documentoventa_pagado').AsFloat:=roundto(documentoventa_pagado,-2);
+    ZQExecSql.ParamByName('documentoventa_saldo').AsFloat:=roundto(documentoventa_saldo,-2);
     ZQExecSql.ParamByName('documentoventa_estado').AsString:='PENDIENTE';
-    ZQExecSql.ParamByName('documentoventa_pagado').AsString:='0';
-    ZQExecSql.ParamByName('documentoventa_saldo').AsString:=documentoventa_total.Text;
-    if documentoventa_condicionventa.Text='Contado' then
+    if documentoventa_saldo=0 then
       begin
           ZQExecSql.ParamByName('documentoventa_estado').AsString:='PAGADA';
-          ZQExecSql.ParamByName('documentoventa_pagado').AsString:=documentoventa_total.Text;
-          ZQExecSql.ParamByName('documentoventa_saldo').AsString:='0';
       end;
-
     ZQExecSql.ParamByName('documentoventa_observacion').AsString:=documentoventa_observacion.Text;
     ZQExecSql.ParamByName('cliente_id').AsString:=cliente_id.codigo;
     ZQExecSql.ParamByName('personal_id').AsString:=personal_id.codigo;
