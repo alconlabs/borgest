@@ -470,7 +470,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    WideText = 'Precio Fact.'
+    WideText = 'Precio Vta.'
   end
   object TRpLabel5: TRpLabel
     Width = 1255
@@ -483,7 +483,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    WideText = 'Flete'
+    WideText = 'Precio Fact.'
   end
   object TRpLabel6: TRpLabel
     Width = 1140
@@ -496,7 +496,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    WideText = 'Precio Pleno'
+    WideText = 'Dif.'
   end
   object TRpLabel7: TRpLabel
     Width = 1425
@@ -509,7 +509,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    WideText = 'Importe Factura'
+    WideText = 'Total Vta.'
   end
   object TRpLabel8: TRpLabel
     Width = 1255
@@ -522,7 +522,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    WideText = 'Importe Flete'
+    WideText = 'Total Fact.'
   end
   object TRpLabel9: TRpLabel
     Width = 1310
@@ -535,7 +535,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    WideText = 'Importe Total'
+    WideText = 'Dif.'
   end
   object TRpExpression9: TRpExpression
     Width = 1140
@@ -556,7 +556,9 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.documentoventadetalle_importe4'
+    Expression = 
+      'ALIAS_DBBORGEST.documentoventadetalle_precio-ALIAS_DBBORGEST.doc' +
+      'umentoventadetalle_importe1'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -581,7 +583,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.documentoventadetalle_importe3'
+    Expression = 'ALIAS_DBBORGEST.documentoventadetalle_importe1'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -693,7 +695,9 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.documentoventadetalle_total'
+    Expression = 
+      'ALIAS_DBBORGEST.documentoventadetalle_precio*ALIAS_DBBORGEST.doc' +
+      'umentoventadetalle_cantidad'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -719,7 +723,9 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.documentoventadetalle_total'
+    Expression = 
+      'ALIAS_DBBORGEST.documentoventadetalle_precio*ALIAS_DBBORGEST.doc' +
+      'umentoventadetalle_cantidad'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -745,7 +751,7 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 
-      'ALIAS_DBBORGEST.documentoventadetalle_importe3*ALIAS_DBBORGEST.d' +
+      'ALIAS_DBBORGEST.documentoventadetalle_importe1*ALIAS_DBBORGEST.d' +
       'ocumentoventadetalle_cantidad'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
@@ -773,7 +779,7 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 
-      'ALIAS_DBBORGEST.documentoventadetalle_importe3*ALIAS_DBBORGEST.d' +
+      'ALIAS_DBBORGEST.documentoventadetalle_importe1*ALIAS_DBBORGEST.d' +
       'ocumentoventadetalle_cantidad'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
@@ -800,9 +806,9 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 
-      'ALIAS_DBBORGEST.documentoventadetalle_total+(ALIAS_DBBORGEST.doc' +
-      'umentoventadetalle_importe3*ALIAS_DBBORGEST.documentoventadetall' +
-      'e_cantidad)'
+      '(ALIAS_DBBORGEST.documentoventadetalle_precio-ALIAS_DBBORGEST.do' +
+      'cumentoventadetalle_importe1)*ALIAS_DBBORGEST.documentoventadeta' +
+      'lle_cantidad'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -829,9 +835,9 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 
-      'ALIAS_DBBORGEST.documentoventadetalle_total+(ALIAS_DBBORGEST.doc' +
-      'umentoventadetalle_importe3*ALIAS_DBBORGEST.documentoventadetall' +
-      'e_cantidad)'
+      '(ALIAS_DBBORGEST.documentoventadetalle_precio-ALIAS_DBBORGEST.do' +
+      'cumentoventadetalle_importe1)*ALIAS_DBBORGEST.documentoventadeta' +
+      'lle_cantidad'
     DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -938,9 +944,9 @@ object TRpReport
   end
   object TRpShape7: TRpShape
     Width = 14820
-    Height = 230
+    Height = 210
     PosX = 170
-    PosY = 855
+    PosY = 860
     BrushStyle = 1
     PenWidth = 0
     PrintCondition = ''

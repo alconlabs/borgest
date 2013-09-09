@@ -24,6 +24,8 @@ type
     ZQDocumentoventadetallesdiferencia: TFloatField;
     lblsaldocomisiones: TLabel;
     btnimprimir: TButton;
+    ZQDocumentoventadetallesdocumentoventadetalle_totalfact: TFloatField;
+    ZQDocumentoventadetallesdiferencia_total: TFloatField;
     procedure FormCreate(Sender: TObject);
     procedure btnagregarClick(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -55,7 +57,7 @@ var
 
 implementation
 
-uses Unitprinc, UnitNotaPedidoDetalle;
+uses Unitprinc, UnitNotaPedidoComisionesDetalle;
 
 {$R *.dfm}
 
@@ -407,17 +409,17 @@ end;
 procedure TNotaPedidoComisiones.btnagregarClick(Sender: TObject);
 begin
     try
-      NotapedidoDetalle:= TNotapedidoDetalle.Create(self);
+      NotapedidoComisionesDetalle:= TNotapedidoComisionesDetalle.Create(self);
     finally
-      NotapedidoDetalle.producto_precioventa:=inttostr(documentoventa_listaprecio.ItemIndex+1);
-      if NotapedidoDetalle.ShowModal=mrOk then
+      NotapedidoComisionesDetalle.producto_precioventa:=inttostr(documentoventa_listaprecio.ItemIndex+1);
+      if NotapedidoComisionesDetalle.ShowModal=mrOk then
         begin
 
-            princ.CargarDocumentoVentaDetalle(ZQDocumentoventadetalles, NotapedidoDetalle.ZQDocumentoventadetalles);
+            princ.CargarDocumentoVentaDetalle(ZQDocumentoventadetalles, NotapedidoComisionesDetalle.ZQDocumentoventadetalles);
 
         end;
 
-      NotapedidoDetalle.Free;
+      NotapedidoComisionesDetalle.Free;
       calculartotales;
     end;
 
@@ -546,31 +548,31 @@ end;
 procedure TNotaPedidoComisiones.btnmodificarClick(Sender: TObject);
 begin
     try
-      NotapedidoDetalle:= TNotapedidoDetalle.Create(self);
+      NotapedidoComisionesDetalle:= TNotapedidoComisionesDetalle.Create(self);
     finally
-      NotapedidoDetalle.producto_precioventa:=inttostr(documentoventa_listaprecio.ItemIndex+1);
-      NotapedidoDetalle.producto_id.Search(ZQDocumentoventadetalles.FieldByName('producto_id').AsString);
-      NotapedidoDetalle.ventadeta_cantidad.Value:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat;
-      NotapedidoDetalle.ventadetalle_preciounitario.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat;
-      NotapedidoDetalle.documentoventadetalle_importe1.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe1').AsFloat;
-      NotapedidoDetalle.documentoventadetalle_importe2.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe2').AsFloat;
-      NotapedidoDetalle.documentoventadetalle_importe3.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe3').AsFloat;
-      NotapedidoDetalle.documentoventadetalle_importe4.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe4').AsFloat;
-      NotapedidoDetalle.documentoventadetalle_importe5.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe5').AsFloat;
-      NotapedidoDetalle.documentoventadetalle_importe6.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe6').AsFloat;
-      NotapedidoDetalle.documentoventadetalle_id:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_id').AsString;
-      NotapedidoDetalle.calculartotal;
-      NotapedidoDetalle.calculartotal1;
-//      NotapedidoDetalle.ventadetalle_total.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat;
+      NotapedidoComisionesDetalle.producto_precioventa:=inttostr(documentoventa_listaprecio.ItemIndex+1);
+      NotapedidoComisionesDetalle.producto_id.Search(ZQDocumentoventadetalles.FieldByName('producto_id').AsString);
+      NotapedidoComisionesDetalle.ventadeta_cantidad.Value:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat;
+      NotapedidoComisionesDetalle.ventadetalle_preciounitario.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat;
+      NotapedidoComisionesDetalle.documentoventadetalle_importe1.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe1').AsFloat;
+      NotapedidoComisionesDetalle.documentoventadetalle_importe2.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe2').AsFloat;
+      NotapedidoComisionesDetalle.documentoventadetalle_importe3.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe3').AsFloat;
+      NotapedidoComisionesDetalle.documentoventadetalle_importe4.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe4').AsFloat;
+      NotapedidoComisionesDetalle.documentoventadetalle_importe5.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe5').AsFloat;
+      NotapedidoComisionesDetalle.documentoventadetalle_importe6.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe6').AsFloat;
+      NotapedidoComisionesDetalle.documentoventadetalle_id:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_id').AsString;
+      NotapedidoComisionesDetalle.calculartotal;
+      NotapedidoComisionesDetalle.calculartotal1;
+//      NotapedidoComisionesDetalle.ventadetalle_total.FloatValue:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat;
 
-      if NotapedidoDetalle.ShowModal=mrOk then
+      if NotapedidoComisionesDetalle.ShowModal=mrOk then
         begin
 
-            princ.CargarDocumentoVentaDetalle(ZQDocumentoventadetalles, NotapedidoDetalle.ZQDocumentoventadetalles,2,ZQDocumentoventadetalles.GetBookmark);
+            princ.CargarDocumentoVentaDetalle(ZQDocumentoventadetalles, NotapedidoComisionesDetalle.ZQDocumentoventadetalles,2,ZQDocumentoventadetalles.GetBookmark);
 
         end;
 
-      NotapedidoDetalle.Free;
+      NotapedidoComisionesDetalle.Free;
       calculartotales;
     end;
 
@@ -587,6 +589,8 @@ procedure TNotaPedidoComisiones.ZQDocumentoventadetallesCalcFields(
 begin
   inherited;
     DataSet.FieldByName('diferencia').AsFloat:=roundto(DataSet.FieldByName('documentoventadetalle_precio').AsFloat-DataSet.FieldByName('documentoventadetalle_importe1').AsFloat,-2);
+    DataSet.FieldByName('documentoventadetalle_totalfact').AsFloat:=roundto(DataSet.FieldByName('documentoventadetalle_importe1').AsFloat*DataSet.FieldByName('documentoventadetalle_cantidad').AsFloat,-2);
+    DataSet.FieldByName('diferencia_total').AsFloat:=roundto(DataSet.FieldByName('documentoventadetalle_total').AsFloat-DataSet.FieldByName('documentoventadetalle_totalfact').AsFloat,-2);
 end;
 
 procedure TNotaPedidoComisiones.ZQDocuVenDetComisionesVendedoresAfterPost(

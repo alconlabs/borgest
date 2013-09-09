@@ -110,7 +110,8 @@ uses
   UnitListaNotasCreditodeVentas in 'Formularios\Ventas\UnitListaNotasCreditodeVentas.pas' {ListaNotasCreditodeVentas},
   UnitListaTarjetasdeCredito in 'Formularios\Archivo\UnitListaTarjetasdeCredito.pas' {ListaTarjetasdeCredito},
   UnitTarjetaCredito in 'Formularios\Archivo\UnitTarjetaCredito.pas' {TarjetaCredito},
-  UnitCargaDetallePagos in 'Formularios\Ventas\UnitCargaDetallePagos.pas' {CargaDetallePagos};
+  UnitCargaDetallePagos in 'Formularios\Ventas\UnitCargaDetallePagos.pas' {CargaDetallePagos},
+  UnitNotaPedidoComisionesDetalle in 'Formularios\Ventas\UnitNotaPedidoComisionesDetalle.pas' {NotapedidoComisionesDetalle};
 
 {$R *.res}
 
@@ -119,5 +120,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Borgest - Sistema de Gestion Comercial';
   Application.CreateForm(TPrinc, Princ);
+  Application.CreateForm(TNotapedidoComisionesDetalle, NotapedidoComisionesDetalle);
   Application.Run;
 end.

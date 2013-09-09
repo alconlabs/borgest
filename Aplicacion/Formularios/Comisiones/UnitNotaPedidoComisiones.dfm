@@ -86,40 +86,54 @@ inherited NotaPedidoComisiones: TNotaPedidoComisiones
           Expanded = False
           FieldName = 'producto_id'
           Title.Caption = 'Codigo'
-          Width = 77
+          Width = 50
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'documentoventadetalle_descripcion'
           Title.Caption = 'Producto'
-          Width = 427
+          Width = 349
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'documentoventadetalle_precio'
-          Title.Caption = 'Precio'
+          Title.Caption = 'Precio Vta.'
           Width = 80
           Visible = True
         end
         item
           Expanded = False
-          FieldName = 'documentoventadetalle_total'
-          Title.Caption = 'Total'
-          Width = 66
-          Visible = True
-        end
-        item
-          Expanded = False
           FieldName = 'documentoventadetalle_importe1'
-          Title.Caption = 'Precio Esp.'
+          Title.Caption = 'Precio Fact.'
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'diferencia'
           Title.Caption = 'Diferencia'
+          Width = 56
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'documentoventadetalle_total'
+          Title.Caption = 'Total Vta.'
+          Width = 66
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'documentoventadetalle_totalfact'
+          Title.Caption = 'Total Fact.'
+          Width = 70
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'diferencia_total'
+          Title.Caption = 'Total Dif.'
           Visible = True
         end>
     end
@@ -259,14 +273,31 @@ inherited NotaPedidoComisiones: TNotaPedidoComisiones
   end
   inherited ZQDocumentoventadetalles: TZQuery
     OnCalcFields = ZQDocumentoventadetallesCalcFields
+    inherited ZQDocumentoventadetallesdocumentoventadetalle_importe1: TFloatField
+      DisplayFormat = '0.00'
+    end
     object ZQDocumentoventadetallesdiferencia: TFloatField
       FieldKind = fkCalculated
       FieldName = 'diferencia'
+      DisplayFormat = '0.00'
+      Calculated = True
+    end
+    object ZQDocumentoventadetallesdocumentoventadetalle_totalfact: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'documentoventadetalle_totalfact'
+      Calculated = True
+    end
+    object ZQDocumentoventadetallesdiferencia_total: TFloatField
+      FieldKind = fkCalculated
+      FieldName = 'diferencia_total'
       Calculated = True
     end
   end
   inherited DTSDocumentoventadetalle: TDataSource
     OnDataChange = DTSDocumentoventadetalleDataChange
+  end
+  inherited ZQdocumentoventadocus: TZQuery
+    Top = 64
   end
   object ZQPersonal: TZQuery
     Connection = Princ.ZBase

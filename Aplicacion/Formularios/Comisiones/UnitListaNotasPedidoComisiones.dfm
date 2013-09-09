@@ -2,6 +2,7 @@ inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
   Caption = 'Notas de Pedido - Comisiones'
   ClientWidth = 1035
   ExplicitWidth = 1051
+  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -12,9 +13,6 @@ inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
       Left = 932
       ExplicitLeft = 932
       FullHeight = 0
-      inherited btnanular: TButton
-        Visible = False
-      end
     end
     inherited DBGrid1: TDBGrid
       Width = 932
