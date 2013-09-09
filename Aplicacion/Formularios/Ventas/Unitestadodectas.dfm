@@ -31,7 +31,6 @@ object estadoctas: Testadoctas
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    UseDockManager = True
     Version = '1.7.5.1'
     AutoHideChildren = False
     BorderColor = clGray
@@ -48,6 +47,7 @@ object estadoctas: Testadoctas
     CollapsColor = clHighlight
     CollapsDelay = 0
     ColorTo = 11769496
+    FreeOnClose = True
     ShadowColor = clBlack
     ShadowOffset = 0
     StatusBar.BevelInner = True
@@ -85,7 +85,7 @@ object estadoctas: Testadoctas
       Width = 608
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -322,7 +322,7 @@ object estadoctas: Testadoctas
       Width = 209
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 4
       Confbase = Princ.ZBase
       Confsql.Strings = (

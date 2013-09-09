@@ -1075,7 +1075,7 @@ end;
 
 procedure Tliquidaciones.btnimprimirClick(Sender: TObject);
 begin
-    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\liquidacion_vendedor.rep';
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'liquidacion_vendedor.rep';
     Princ.VCLReport1.Report.Datainfo.Items[0].SQL:='select * from liquidacionesvendedores '+
                                                    'inner join liquivendedeta on liquidacionesvendedores.liquidacionvendedor_id=liquivendedeta.liquidacionvendedor_id '+
                                                    'inner join documentoventadetalles on liquivendedeta.documentoventadetalle_id=documentoventadetalles.documentoventadetalle_id '+

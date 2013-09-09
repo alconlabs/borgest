@@ -1138,7 +1138,7 @@ procedure Tliquidacionessucu.btnimprimirClick(Sender: TObject);
 begin
     if sucursal_tipodocumentoliquidar=0 then
       begin
-          Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\liquidacion_sucursal.rep';
+          Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'liquidacion_sucursal.rep';
           Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from liquidacionessucursales '+
                                                          'inner join liquisucudeta on liquidacionessucursales.liquidacionsucursal_id=liquisucudeta.liquidacionsucursal_id '+
                                                          'inner join documentoventadetalles on liquisucudeta.documentoventadetalle_id=documentoventadetalles.documentoventadetalle_id '+
@@ -1155,7 +1155,7 @@ begin
 
     if sucursal_tipodocumentoliquidar=1 then
       begin
-          Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\liquidacion_sucursal_recibos.rep';
+          Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'liquidacion_sucursal_recibos.rep';
           Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from liquidacionessucursales '+
                                                          'inner join liquisucudetarecibos on liquidacionessucursales.liquidacionsucursal_id=liquisucudetarecibos.liquidacionsucursal_id '+
                                                          'inner join documentosventas on liquisucudetarecibos.documentoventa_id=documentosventas.documentoventa_id '+

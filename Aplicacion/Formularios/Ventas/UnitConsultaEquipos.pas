@@ -278,7 +278,7 @@ begin
 
 
 
-    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\equipo.rep';
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'equipo.rep';
     Princ.VCLReport1.Report.Datainfo.Items[1].sql:='select * from temporales '+
                                                    'where temporal_idproceso='+temporal_idproceso+
                                                    ' order by temporal_int3, temporal_string6 ';

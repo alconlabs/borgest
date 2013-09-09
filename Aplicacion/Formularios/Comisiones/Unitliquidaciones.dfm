@@ -141,7 +141,7 @@ object liquidaciones: Tliquidaciones
       Top = 57
       Width = 354
       Height = 21
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 3
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -327,6 +327,10 @@ object liquidaciones: Tliquidaciones
       TabOrder = 7
       object TabSheet1: TTabSheet
         Caption = 'Vendedor por defecto'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label15: TLabel
           Left = 814
           Top = 286
@@ -468,6 +472,10 @@ object liquidaciones: Tliquidaciones
       object TabSheet2: TTabSheet
         Caption = 'En Facturas'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label5: TLabel
           Left = 814
           Top = 286
@@ -609,6 +617,10 @@ object liquidaciones: Tliquidaciones
       object TabSheet3: TTabSheet
         Caption = 'En Otros'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label6: TLabel
           Left = 814
           Top = 286
@@ -750,6 +762,10 @@ object liquidaciones: Tliquidaciones
       object TabSheet4: TTabSheet
         Caption = 'Debitos y Creditos'
         ImageIndex = 3
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label7: TLabel
           Left = 814
           Top = 286

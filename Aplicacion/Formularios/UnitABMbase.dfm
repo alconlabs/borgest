@@ -33,6 +33,7 @@ object ABMbase: TABMbase
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    UseDockManager = True
     Version = '1.7.5.1'
     AutoHideChildren = False
     BorderColor = clGray

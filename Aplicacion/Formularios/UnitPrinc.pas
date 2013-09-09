@@ -223,6 +223,7 @@ type
     PRODUCTOSTOCKINICIAL:boolean;
     VENTASNCNDCONCEPTOS:string;
     empresa_where:string;
+    ruta_carpeta_reportes:string;
     function codigo(tabla:string;campo:string):string;
     function buscar(sql:string;campo:string):string;
     function fechaservidor():TDateTime;
@@ -590,7 +591,7 @@ begin
       begin
           tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'','tipodocu_archivoimpresion');
 
-          Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\'+tipodocu_archivoimpresion;
+          Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+tipodocu_archivoimpresion;
           Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
                                                    'inner join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
                                                    'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
@@ -2992,6 +2993,12 @@ begin
     Permisos1.ConfPersonal_id:='1';
 
     MenuConfiguracion;
+
+    ruta_carpeta_reportes:=Princ.GetConfiguracion('CARPETAREPORTES');
+    if ruta_carpeta_reportes='' then
+      ruta_carpeta_reportes:='Reportes';
+
+    ruta_carpeta_reportes:=ExtractFilePath(Application.ExeName)+ruta_carpeta_reportes+'\';
 end;
 
 procedure TPrinc.FormKeyDown(Sender: TObject; var Key: Word;

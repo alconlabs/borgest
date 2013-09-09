@@ -2,7 +2,6 @@ inherited ordenservicio: Tordenservicio
   Caption = 'Orden de Servicio'
   ClientHeight = 532
   ExplicitTop = -32
-  ExplicitWidth = 320
   ExplicitHeight = 570
   PixelsPerInch = 96
   TextHeight = 13

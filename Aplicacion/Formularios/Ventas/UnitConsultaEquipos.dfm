@@ -284,7 +284,7 @@ inherited ConsultaEquipos: TConsultaEquipos
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 8
       Confbase = Princ.ZBase
       Confsql.Strings = (

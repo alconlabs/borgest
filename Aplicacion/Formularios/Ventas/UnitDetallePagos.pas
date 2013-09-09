@@ -57,7 +57,7 @@ end;
 procedure TDetallePagos.btnguardarClick(Sender: TObject);
 begin
   inherited;
-    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\consulta_detalle_pagos.rep';
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'consulta_detalle_pagos.rep';
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
                                              'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
                                              'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+

@@ -133,7 +133,7 @@ end;
 procedure TEstadoCaja.btnimprimirClick(Sender: TObject);
 begin
   inherited;
-    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\informe_caja.rep';
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_caja.rep';
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select documentopagos.*, tipospago.*,  sum(documentopago_importe) as importe from documentopagos '+
                                                    'inner join tipospago on documentopagos.tipopago_id=tipospago.tipopago_id '+
                                                    'inner join documentosventas on documentopagos.documentoventa_id=documentosventas.documentoventa_id '+

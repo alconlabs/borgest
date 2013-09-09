@@ -91,7 +91,7 @@ begin
 
     if producto_precioventa.ItemIndex<4 then
       begin
-          Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\lista_precios_productos.rep';
+          Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'lista_precios_productos.rep';
           Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, '+producto_precioventa.codigo+' as precio from productos '+
                                                          'inner join rubros on productos.rubro_id=rubros.rubro_id '+
                                                          'where 1=1 and '+productos.where+' order by producto_nombre';
@@ -99,7 +99,7 @@ begin
       end
     else
       begin
-          Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\listado_productos.rep';
+          Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'reportes\listado_productos.rep';
           Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from productos '+
                                                          'inner join rubros on productos.rubro_id=rubros.rubro_id '+
                                                          'where 1=1 and '+productos.where+' order by producto_nombre';

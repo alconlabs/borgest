@@ -103,6 +103,8 @@ type
     FACTURAVENTASUCURSALID: TSqlComboBox;
     Label26: TLabel;
     USUARIOPORDEFECTO: TSqlComboBox;
+    Label27: TLabel;
+    CARPETAREPORTES: TEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -378,6 +380,10 @@ begin
     ZQuery1.parambyname('config_valor').AsString:=USUARIOPORDEFECTO.codigo;
     ZQuery1.ExecSQL;
 
+    ZQuery1.parambyname('config_nombre').AsString:='CARPETAREPORTES';
+    ZQuery1.parambyname('config_valor').AsString:=CARPETAREPORTES.Text;
+    ZQuery1.ExecSQL;
+
 
 
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK], 0);
@@ -467,6 +473,7 @@ end;
 procedure Tconfiguracion.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
     Self.Free;
+    Application.BringToFront;
 end;
 
 
@@ -689,6 +696,9 @@ begin
 
     if ZQConfig.Locate('config_nombre','USUARIOPORDEFECTO',[]) then
       USUARIOPORDEFECTO.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','CARPETAREPORTES',[]) then
+      CARPETAREPORTES.Text:=ZQConfig.FieldByName('config_valor').AsString;
 
 
 end;

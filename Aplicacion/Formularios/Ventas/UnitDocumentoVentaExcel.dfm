@@ -96,15 +96,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object Label16: TLabel [11]
-      Left = 760
-      Top = 419
-      Width = 35
-      Height = 13
-      Alignment = taRightJustify
-      Caption = 'Importe'
-    end
-    object Label14: TLabel [12]
+    object Label14: TLabel [11]
       Left = 443
       Top = 419
       Width = 38
@@ -112,11 +104,13 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Alignment = taRightJustify
       Caption = 'Servicio'
     end
-    inherited Label3: TLabel [13]
+    inherited Label3: TLabel [12]
       Left = 20
       Top = 419
       ExplicitLeft = 20
       ExplicitTop = 419
+    end
+    inherited Label16: TLabel [13]
     end
     inherited Label4: TLabel [14]
       Left = 287
@@ -148,14 +142,6 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       ExplicitLeft = 280
       ExplicitTop = 223
       ExplicitWidth = 63
-    end
-    inherited documentoventa_fecha: TDateTimePicker
-      Left = 49
-      Top = 7
-      TabOrder = 26
-      OnExit = documentoventa_fechaExit
-      ExplicitLeft = 49
-      ExplicitTop = 7
     end
     inherited btncancelar: TButton [19]
       Left = 499
@@ -302,7 +288,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Left = 60
       Top = 223
       Width = 52
-      TabOrder = 31
+      TabOrder = 30
       Visible = False
       ExplicitLeft = 60
       ExplicitTop = 223
@@ -317,7 +303,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Color = 15524577
       ParentBackground = False
       ParentColor = False
-      TabOrder = 28
+      TabOrder = 27
       object Label17: TLabel
         Left = 296
         Top = 171
@@ -435,7 +421,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Color = 15524577
       ParentBackground = False
       ParentColor = False
-      TabOrder = 29
+      TabOrder = 28
       object Label18: TLabel
         Left = 304
         Top = 170
@@ -565,7 +551,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 25
+      TabOrder = 24
       Text = '0,00'
       Visible = True
       Version = '1.1.0.2'
@@ -586,7 +572,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Width = 75
       Height = 25
       Caption = 'Ver Caja'
-      TabOrder = 27
+      TabOrder = 26
       OnClick = btnvercajaClick
     end
     object DBGrid3: TDBGrid [38]
@@ -596,7 +582,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Height = 178
       DataSource = DTSDocumentosventas
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
-      TabOrder = 30
+      TabOrder = 29
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
@@ -632,7 +618,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Width = 75
       Height = 25
       Caption = 'Guardar'
-      TabOrder = 23
+      TabOrder = 38
       OnClick = btnguardarlineaClick
     end
     object ventadetalle_preciounitario: TDBAdvEdit [40]
@@ -650,7 +636,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Lookup.Separator = ';'
       Color = clWindow
       Enabled = True
-      TabOrder = 35
+      TabOrder = 34
       Text = '0,00'
       Visible = True
       OnExit = ventadetalle_preciounitarioExit
@@ -671,7 +657,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Lookup.Separator = ';'
       Color = clWindow
       Enabled = True
-      TabOrder = 19
+      TabOrder = 39
       Visible = True
       Version = '1.3.0.1'
       ButtonStyle = bsButton
@@ -717,13 +703,30 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       ExplicitTop = 433
       ExplicitWidth = 150
     end
+    inherited documentoventa_fecha: TDateTimePicker [45]
+      Left = 49
+      Top = 7
+      TabOrder = 25
+      OnExit = documentoventa_fechaExit
+      ExplicitLeft = 49
+      ExplicitTop = 7
+    end
     inherited btnherramientas: TAdvGlowButton
-      TabOrder = 33
+      TabOrder = 32
       Visible = False
     end
     inherited btnimprimirventa: TButton
       TabOrder = 36
       Visible = False
+    end
+    inherited btnagregarcliente: TButton
+      TabOrder = 35
+    end
+    inherited btnobservaciones: TButton
+      TabOrder = 22
+    end
+    inherited VENTASEMITIRREMITOCTACTE: TCheckBox
+      TabOrder = 37
     end
     object SubTotal_ventas: TAdvMoneyEdit
       Left = 911
@@ -740,7 +743,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Lookup.Separator = ';'
       Color = clWindow
       Enabled = True
-      TabOrder = 24
+      TabOrder = 23
       Text = '0,00'
       Visible = True
       Version = '1.1.0.2'
@@ -761,7 +764,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Width = 75
       Height = 25
       Caption = 'Borrar  Venta'
-      TabOrder = 32
+      TabOrder = 31
       OnClick = btnborrarventaClick
     end
     object btnbuscarclientes: TButton
@@ -798,7 +801,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Lookup.Separator = ';'
       Color = clWindow
       Enabled = True
-      TabOrder = 22
+      TabOrder = 21
       Text = '0,00'
       Visible = True
       Version = '2.7.0.5'
@@ -809,7 +812,7 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Width = 75
       Height = 25
       Caption = 'Imprimir'
-      TabOrder = 34
+      TabOrder = 33
       OnClick = btnimprimirClick
     end
   end

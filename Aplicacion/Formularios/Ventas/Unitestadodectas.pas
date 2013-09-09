@@ -248,6 +248,7 @@ begin
       end;
       
     Self.Free;
+    Application.BringToFront;
 end;
 
 procedure Testadoctas.FormCreate(Sender: TObject);
@@ -554,7 +555,7 @@ begin
     Princ.ZQExcecSQL.Sql.Add('commit');
     Princ.ZQExcecSQL.ExecSql;
 
-    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\detalle_imputacion.rep';
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'detalle_imputacion.rep';
     if cbdesdefecha.Checked then
       Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     if cbhastafecha.Checked then
@@ -612,7 +613,7 @@ begin
             end;
       end;
 
-    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\estado_de_ctasctes.rep';
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'estado_de_ctasctes.rep';
     if cbdesdefecha.Checked then
       Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     if cbhastafecha.Checked then

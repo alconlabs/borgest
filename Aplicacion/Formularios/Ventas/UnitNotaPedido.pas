@@ -51,7 +51,7 @@ var
 begin
     tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'','tipodocu_archivoimpresion');
 
-    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\'+tipodocu_archivoimpresion;
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+tipodocu_archivoimpresion;
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
                                              'inner join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
                                              'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+

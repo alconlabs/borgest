@@ -50,6 +50,7 @@ object configuracion: Tconfiguracion
     CollapsColor = clHighlight
     CollapsDelay = 0
     ColorTo = 11769496
+    FreeOnClose = True
     ShadowColor = clBlack
     ShadowOffset = 0
     StatusBar.BorderColor = clNone
@@ -88,11 +89,13 @@ object configuracion: Tconfiguracion
       Top = 0
       Width = 589
       Height = 465
-      ActivePage = TabSheet4
+      ActivePage = TabSheet1
       Align = alTop
       TabOrder = 2
       object TabSheet1: TTabSheet
         Caption = 'General'
+        ExplicitLeft = 0
+        ExplicitTop = 28
         object Label14: TLabel
           Left = 44
           Top = 10
@@ -116,6 +119,14 @@ object configuracion: Tconfiguracion
           Height = 13
           Alignment = taRightJustify
           Caption = 'Usuario por defecto'
+        end
+        object Label27: TLabel
+          Left = 59
+          Top = 274
+          Width = 83
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Carpeta Reportes'
         end
         object SUCURSALDEFECTO: TSqlComboBox
           Left = 148
@@ -271,6 +282,13 @@ object configuracion: Tconfiguracion
           Confcampo_codigo = 'personal_id'
           Confcampo_nomb = 'personal_usuario'
           Tag2 = 0
+        end
+        object CARPETAREPORTES: TEdit
+          Left = 148
+          Top = 271
+          Width = 145
+          Height = 21
+          TabOrder = 8
         end
       end
       object TabSheet2: TTabSheet

@@ -158,7 +158,7 @@ inherited DetallePagos: TDetallePagos
       Width = 202
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 2
       Confbase = Princ.ZBase
       Confsql.Strings = (

@@ -239,7 +239,17 @@ end;
 
 procedure Tdetallectas.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+    if temporal_idproceso<>'' then
+      begin
+          Princ.ZQExcecSQL.Sql.Clear;
+          Princ.ZQExcecSQL.Sql.Add('delete from temporales ');
+          Princ.ZQExcecSQL.Sql.Add('where temporal_idproceso=:temporal_idproceso ');
+          Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+          Princ.ZQExcecSQL.ExecSql;
+      end;
+
     Self.Free;
+    Application.BringToFront;
 end;
 
 procedure Tdetallectas.FormCreate(Sender: TObject);
@@ -550,7 +560,7 @@ begin
     Princ.ZQExcecSQL.Sql.Add('commit');
     Princ.ZQExcecSQL.ExecSql;
 
-    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\detalle_imputacion.rep';
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'detalle_imputacion.rep';
     if cbdesdefecha.Checked then
       Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     if cbhastafecha.Checked then
@@ -580,7 +590,7 @@ procedure Tdetallectas.btnimprimirClick(Sender: TObject);
 var
   grupo, condicion_saldoanterior:string;
 begin
-    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\detalle_de_ctasctes.rep';
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'detalle_de_ctasctes.rep';
     if cbdesdefecha.Checked then
       Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     if cbhastafecha.Checked then

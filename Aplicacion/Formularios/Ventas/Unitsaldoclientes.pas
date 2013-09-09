@@ -137,6 +137,7 @@ begin
       end;
 
     Self.Free;
+    Application.BringToFront;
 end;
 
 procedure Tsaldoclientes.FormCreate(Sender: TObject);
@@ -280,7 +281,7 @@ begin
 ////    if tipo_resumen.ItemIndex=0 then  //DETALLE DE CTA
 //    begin
 //
-//        VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\ventas\detallecuenta.rep';
+//        VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'ventas\detallecuenta.rep';
 //        VCLReport1.Report.Datainfo.Items[0].sql:='select * from tempestacuenta '+
 //                                                 'order by fecha';
 //
@@ -291,7 +292,7 @@ begin
 ////    else
 //    begin
 //
-//        VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\ventas\saldocuenta.rep';
+//        VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'ventas\saldocuenta.rep';
 //        VCLReport1.Report.Datainfo.Items[0].sql:='select * from tempestacuenta '+
 //                                                 'order by fecha';
 //
@@ -414,7 +415,7 @@ begin
     Princ.ZQExcecSQL.Sql.Add('commit');
     Princ.ZQExcecSQL.ExecSql;
 
-    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\detalle_imputacion.rep';
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'detalle_imputacion.rep';
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from temporales '+
                                                    'where temporal_idproceso="'+temporal_idproceso+'" '+
                                                    'order by temporal_string2, temporal_id, temporal_int4 ';
