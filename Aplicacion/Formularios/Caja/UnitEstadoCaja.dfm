@@ -410,12 +410,12 @@ inherited EstadoCaja: TEstadoCaja
     end
     object btnimprimir: TButton
       Left = 16
-      Top = 436
+      Top = 430
       Width = 75
       Height = 25
       Caption = 'Imprimir'
-      Enabled = False
       TabOrder = 6
+      OnClick = btnimprimirClick
     end
     object Button11: TButton
       Left = 512

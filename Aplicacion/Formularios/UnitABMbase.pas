@@ -49,6 +49,8 @@ procedure TABMbase.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
     if liberar_al_cerrar then
       Self.Free;
+
+    Application.BringToFront;
 end;
 
 procedure TABMbase.FormCreate(Sender: TObject);

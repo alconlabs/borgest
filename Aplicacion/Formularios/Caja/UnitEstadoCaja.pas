@@ -53,6 +53,7 @@ type
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure DBGrid3DblClick(Sender: TObject);
+    procedure btnimprimirClick(Sender: TObject);
   private
     { Private declarations }
     procedure CalcularTotalIngresos;
@@ -127,6 +128,46 @@ begin
 
 
 
+end;
+
+procedure TEstadoCaja.btnimprimirClick(Sender: TObject);
+begin
+  inherited;
+    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\informe_caja.rep';
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select documentopagos.*, tipospago.*,  sum(documentopago_importe) as importe from documentopagos '+
+                                                   'inner join tipospago on documentopagos.tipopago_id=tipospago.tipopago_id '+
+                                                   'inner join documentosventas on documentopagos.documentoventa_id=documentosventas.documentoventa_id '+
+                                                   'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                                   'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                                   'where tipopago_caja=-1 and '+
+                                                   'documentosventas.documentoventa_fecha="'+formatdatetime('yyyy-mm-dd',caja_fecha.Date)+'" and '+
+                                                   'documentosventas.documentoventa_estado<>"ANULADA"'+Princ.empresa_where+
+                                                   ' group by documentopagos.tipopago_id '+
+                                                   'order by documentopagos.tipopago_id ';
+
+
+    Princ.VCLReport1.Report.Datainfo.Items[2].sql:='select documentopagos.*, tipospago.*,  sum(documentopago_importe) as importe,  '+
+                                                   'count(documentopagos.documentopago_nombre) as cantidad '+
+                                                   'from documentopagos '+
+                                                   'inner join tipospago on documentopagos.tipopago_id=tipospago.tipopago_id '+
+                                                   'inner join documentosventas on documentopagos.documentoventa_id=documentosventas.documentoventa_id '+
+                                                   'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                                   'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                                   'where tipopago_caja=-1 and tipospago.tipopago_id=2 and '+
+                                                   'documentosventas.documentoventa_fecha="'+formatdatetime('yyyy-mm-dd',caja_fecha.Date)+'" and '+
+                                                   'documentosventas.documentoventa_estado<>"ANULADA"'+Princ.empresa_where+
+                                                   ' group by documentopagos.documentopago_nombre '+
+                                                   'order by documentopagos.documentopago_nombre ';
+
+
+
+
+
+
+
+
+
+    Princ.VCLReport1.Execute;
 end;
 
 procedure TEstadoCaja.btnvercajaClick(Sender: TObject);
