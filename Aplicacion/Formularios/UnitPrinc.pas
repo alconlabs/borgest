@@ -972,6 +972,24 @@ begin
     ZQExcecSQL.SQL.Text:='begin';
     ZQExcecSQL.ExecSQL;
 
+    ZQpagotarjeta.Active:=false;
+    ZQpagotarjeta.ParamByName('documentoventa_id').AsString:=documentoventa_id;
+    ZQpagotarjeta.Active:=true;
+    ZQpagotarjeta.First;
+    while not ZQpagotarjeta.Eof do
+        begin
+            ZQExcecSQL.SQL.Text:='delete from pagotarjeta where pagotarjeta_id="'+ZQpagotarjeta.FieldByName('pagotarjeta_id').AsString+'"';
+            try
+              ZQExcecSQL.ExecSQL;
+            except
+              error:=1;
+            end;
+
+
+            ZQpagotarjeta.Next;
+        end;
+
+
     ZQExcecSQL.SQL.Text:='delete from documentopagos where documentoventa_id="'+documentoventa_id+'"';
     try
       ZQExcecSQL.ExecSQL;

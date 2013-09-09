@@ -87,6 +87,10 @@ inherited ConsultaEquipos: TConsultaEquipos
       TabOrder = 2
       object TabSheet1: TTabSheet
         Caption = 'Notas de Pedido'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label1: TLabel
           Left = 3
           Top = 189
@@ -201,6 +205,10 @@ inherited ConsultaEquipos: TConsultaEquipos
       object TabSheet2: TTabSheet
         Caption = 'Productos'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object DBGrid3: TDBGrid
           Left = 0
           Top = 0
@@ -516,5 +524,23 @@ inherited ConsultaEquipos: TConsultaEquipos
     object FloatField15: TFloatField
       FieldName = 'documentoventadetalle_importe6'
     end
+  end
+  object ZQTemporal: TZQuery
+    Connection = Princ.ZBase
+    SQL.Strings = (
+      'select * from documentosventas'
+      
+        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
+        'ocumento.tipodocu_id'
+      
+        'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodev' +
+        'enta.puntoventa_id'
+      
+        'inner join clientes on documentosventas.cliente_id=clientes.clie' +
+        'nte_id'
+      'order by documentoventa_fecha, documentoventa_id')
+    Params = <>
+    Left = 200
+    Top = 312
   end
 end

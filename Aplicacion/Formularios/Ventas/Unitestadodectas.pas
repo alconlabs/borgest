@@ -158,6 +158,7 @@ type
     ZQPendientesgrupo: TStringField;
     ZQPendientescliente_id_2: TIntegerField;
     ZQPendientessucursal_tipodocumentoliquidar: TIntegerField;
+    ZQuery3: TZQuery;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnimprimirClick(Sender: TObject);

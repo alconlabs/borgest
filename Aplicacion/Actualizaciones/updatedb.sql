@@ -1101,3 +1101,11 @@ ADD COLUMN `pagotarjeta_dni` VARCHAR(20) NULL DEFAULT NULL  AFTER `pagotarjeta_t
 ADD COLUMN `pagotarjeta_telefono` VARCHAR(20) NULL DEFAULT NULL  AFTER `pagotarjeta_dni` ;
 289;
 ALTER TABLE `pagotarjeta` ADD COLUMN `pagotarjeta_recargo` FLOAT(20,4) NULL DEFAULT NULL  AFTER `pagotarjeta_telefono` ;
+290;
+ALTER TABLE `temporales` 
+ADD COLUMN `temporal_string6` VARCHAR(150) NULL DEFAULT NULL  AFTER `temporal_fecha3` , 
+ADD COLUMN `temporal_string7` VARCHAR(150) NULL DEFAULT NULL  AFTER `temporal_string6` , 
+ADD COLUMN `temporal_string8` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string7` , 
+ADD COLUMN `temporal_string9` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string8` , 
+ADD COLUMN `temporal_string10` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string9` ;
+

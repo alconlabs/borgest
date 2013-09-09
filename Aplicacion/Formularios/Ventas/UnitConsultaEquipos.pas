@@ -75,14 +75,17 @@ type
     btnimprimir: TButton;
     sucursal_id: TSqlComboBox;
     labelsucursal: TLabel;
+    ZQTemporal: TZQuery;
     procedure btnactualizarClick(Sender: TObject);
     procedure DSCDocumentosventasDataChange(Sender: TObject; Field: TField);
     procedure FormCreate(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
     procedure btnimprimirClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
+    temporal_idproceso:string;
     procedure agregar;
     procedure modificar;
   public
@@ -143,8 +146,11 @@ begin
                        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
                        'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
                        'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                       'inner join localidades on clientes.localidad_id=localidades.localidad_id '+
+                       'inner join provincias on localidades.provincia_id=provincias.provincia_id '+
                        ' where tipodocu_nombre="Nota de Pedido" and '+
-                       equipo_tipo.codigo+'="'+documentoventa_equipo.Text+'" '+Princ.empresa_where;
+                       equipo_tipo.codigo+'="'+documentoventa_equipo.Text+'" '+Princ.empresa_where+
+                       'order by clientes.cliente_nombre, documentosventas.documentoventa_fecha';
 
     ZQDocumentosventas.Active:=true;
 
@@ -181,27 +187,122 @@ begin
 end;
 
 procedure TConsultaEquipos.btnimprimirClick(Sender: TObject);
+var
+  orden:integer;
 begin
   inherited;
-    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\equipo.rep';
-    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, CURDATE() as fecha from documentosventas '+
-                                                   'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
-                                                   'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
-                                                   'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
-                                                   'inner join localidades on clientes.localidad_id=localidades.localidad_id '+
-                                                   'inner join provincias on localidades.provincia_id=provincias.provincia_id '+
-                                                   'inner join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
-                                                   'where tipodocu_nombre="Nota de Pedido" and '+
-                                                   equipo_tipo.codigo+'="'+documentoventa_equipo.Text+'" '+
-                                                   'order by clientes.cliente_nombre, documentosventas.documentoventa_id, documentoventadetalles.documentoventadetalle_descripcion ';
+    if temporal_idproceso<>'' then
+      begin
+          Princ.ZQExcecSQL.Sql.Clear;
+          Princ.ZQExcecSQL.Sql.Add('delete from temporales ');
+          Princ.ZQExcecSQL.Sql.Add('where temporal_idproceso=:temporal_idproceso ');
+          Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+          Princ.ZQExcecSQL.ExecSql;
+      end;
 
-    Princ.VCLReport1.Report.Datainfo.Items[1].sql:='select * from equipos '+
+    temporal_idproceso:=Princ.codigo('temporales','temporal_idproceso');
+
+    orden:=0;
+    ZQDocumentosventas.First;
+    while not ZQDocumentosventas.Eof do
+        begin
+            ZQDocumentoventadetalles.First;
+            Princ.ZQExcecSQL.Sql.Clear;
+            Princ.ZQExcecSQL.Sql.Add('insert into temporales set ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string9=:temporal_string9, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string8=:temporal_string8, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string6=:temporal_string6, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_int1=:temporal_int1, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_int2=:temporal_int2, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_int3=:temporal_int3, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_float3=:temporal_float3, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_float2=:temporal_float2, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_float1=:temporal_float1, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string5=:temporal_string5, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string4=:temporal_string4, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string3=:temporal_string3, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string2=:temporal_string2, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string1=:temporal_string1, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_idproceso=:temporal_idproceso ');
+            Princ.ZQExcecSQL.ParamByName('temporal_string9').AsString:=ZQDocumentosventas.FieldByName('documentoventa_observacion').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_string8').AsString:=ZQDocumentosventas.FieldByName('documentoventa_formapago').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_string6').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_descripcion').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_int1').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_int2').AsInteger:=orden;
+            orden:=orden+1;
+            Princ.ZQExcecSQL.ParamByName('temporal_int3').AsString:=ZQDocumentosventas.FieldByName('documentoventa_id').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_float3').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe4').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_float2').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe3').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_float1').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_string5').AsString:=ZQDocumentosventas.FieldByName('cliente_documentonro').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_string4').AsString:=ZQDocumentosventas.FieldByName('provincia_nombre').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_string3').AsString:=ZQDocumentosventas.FieldByName('localidad_nombre').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_string2').AsString:=ZQDocumentosventas.FieldByName('cliente_domicilio').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_string1').AsString:=ZQDocumentosventas.FieldByName('cliente_nombre').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+            Princ.ZQExcecSQL.ExecSql;
+            orden:=orden+1;
+
+
+
+            ZQDocumentoventadetalles.Next;
+            while not ZQDocumentoventadetalles.Eof do
+                begin
+                    Princ.ZQExcecSQL.ParamByName('temporal_string9').AsString:='';
+                    Princ.ZQExcecSQL.ParamByName('temporal_string8').AsString:='';
+                    Princ.ZQExcecSQL.ParamByName('temporal_string6').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_descripcion').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_int1').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_int2').AsInteger:=orden;
+                    orden:=orden+1;
+                    Princ.ZQExcecSQL.ParamByName('temporal_int3').AsString:=ZQDocumentosventas.FieldByName('documentoventa_id').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_float3').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe4').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_float2').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe3').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_float1').AsString:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_string5').AsString:='';
+                    Princ.ZQExcecSQL.ParamByName('temporal_string4').AsString:='';
+                    Princ.ZQExcecSQL.ParamByName('temporal_string3').AsString:='';
+                    Princ.ZQExcecSQL.ParamByName('temporal_string2').AsString:='';
+                    Princ.ZQExcecSQL.ParamByName('temporal_string1').AsString:='';
+                    Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+                    Princ.ZQExcecSQL.ExecSql;
+                    orden:=orden+1;
+                    ZQDocumentoventadetalles.Next;
+                end;
+
+            ZQDocumentosventas.Next;
+        end;
+
+
+
+
+
+
+
+    Princ.VCLReport1.Filename:=ExtractFilePath(Application.ExeName)+'\reportes\equipo.rep';
+    Princ.VCLReport1.Report.Datainfo.Items[1].sql:='select * from temporales '+
+                                                   'where temporal_idproceso='+temporal_idproceso+
+                                                   ' order by temporal_int3, temporal_string6 ';
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from equipos '+
                                                    'inner join sucursales on equipos.sucursal_id=sucursales.sucursal_id '+
                                                    'inner join empresas on sucursales.empresa_id=empresas.empresa_id '+
                                                    'where equipo_id='+id;
 
 
     Princ.VCLReport1.Execute;
+
+    if temporal_idproceso<>'' then
+      begin
+          Princ.ZQExcecSQL.Sql.Clear;
+          Princ.ZQExcecSQL.Sql.Add('delete from temporales ');
+          Princ.ZQExcecSQL.Sql.Add('where temporal_idproceso=:temporal_idproceso ');
+          Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+          Princ.ZQExcecSQL.ExecSql;
+      end;
+
+
+
+
 end;
 
 procedure TConsultaEquipos.DBGrid1DblClick(Sender: TObject);
@@ -219,8 +320,21 @@ procedure TConsultaEquipos.DSCDocumentosventasDataChange(Sender: TObject;
 begin
   inherited;
     ZQDocumentoventadetalles.Active:=false;
-    ZQDocumentoventadetalles.SQL.Text:='select * from documentoventadetalles where documentoventa_id="'+ZQDocumentosventas.FieldByName('documentoventa_id').AsString+'"';
+    ZQDocumentoventadetalles.SQL.Text:='select * from documentoventadetalles where documentoventa_id="'+ZQDocumentosventas.FieldByName('documentoventa_id').AsString+'" order by documentoventadetalle_descripcion';
     ZQDocumentoventadetalles.Active:=true;
+end;
+
+procedure TConsultaEquipos.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+    if temporal_idproceso<>'' then
+      begin
+          Princ.ZQExcecSQL.Sql.Clear;
+          Princ.ZQExcecSQL.Sql.Add('delete from temporales ');
+          Princ.ZQExcecSQL.Sql.Add('where temporal_idproceso=:temporal_idproceso ');
+          Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+          Princ.ZQExcecSQL.ExecSql;
+      end;
 end;
 
 procedure TConsultaEquipos.FormCreate(Sender: TObject);

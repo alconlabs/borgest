@@ -458,7 +458,7 @@ begin
     ZQpagotarjeta.First;
     while not ZQpagotarjeta.Eof do
         begin
-            documentoventa_recargo.Value:=documentoventa_recargo.Value+ZQpagotarjeta.FieldByName('pagotarjeta_recargo').AsFloat;
+            documentoventa_recargo.Value:=roundto(documentoventa_recargo.Value+ZQpagotarjeta.FieldByName('pagotarjeta_recargo').AsFloat,-2);
             ZQpagotarjeta.Next;
         end;
 
@@ -907,12 +907,28 @@ var
   tipodocu_id_recibo:string;
   documentopago_id:string;
 begin
-
     ZQExecSql.SQL.Clear;
     ZQExecSql.SQL.Add('begin');
     ZQExecSql.ExecSQL;
 
     id:=Princ.codigo('documentosventas','documentoventa_id');
+
+    if (ZQDocumentopagos.RecordCount<1) and (documentoventa_condicionventa.Text='Contado') then
+      begin
+          ZQDocumentopagos.Insert;
+          ZQDocumentopagos.FieldByName('documentopago_id').AsInteger:=ZQDocumentopagos.RecordCount;
+          ZQDocumentopagos.FieldByName('documentopago_nombre').AsString:='EFECTIVO';
+          ZQDocumentopagos.FieldByName('documentopago_importe').AsString:=documentoventa_total.Text;
+          ZQDocumentopagos.FieldByName('tipopago_id').AsString:='1';
+          ZQDocumentopagos.FieldByName('tipopago_nombre').AsString:='EFECTIVO';
+          ZQDocumentopagos.FieldByName('documentoventa_id').AsString:=id;
+          ZQDocumentopagos.Post;
+
+      end;
+
+
+    calculartotales;
+    calculartotalpagos;
 
     documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,documentoventa_numero.Text);
     if strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+tipodocu_id.codigo+'"','tipodocu_fiscal')) then
@@ -1000,22 +1016,6 @@ begin
       begin
           MarcarComoFacturado(id_facturado);
       end;
-
-    if (ZQDocumentopagos.RecordCount<1) and (documentoventa_condicionventa.Text='Contado') then
-      begin
-          ZQDocumentopagos.Insert;
-          ZQDocumentopagos.FieldByName('documentopago_id').AsString:='0';
-          ZQDocumentopagos.FieldByName('documentopago_nombre').AsString:='EFECTIVO';
-          ZQDocumentopagos.FieldByName('documentopago_importe').AsString:=documentoventa_total.Text;
-          ZQDocumentopagos.FieldByName('tipopago_id').AsString:='1';
-          ZQDocumentopagos.FieldByName('tipopago_nombre').AsString:='EFECTIVO';
-          ZQDocumentopagos.FieldByName('documentoventa_id').AsString:=id;
-          ZQDocumentopagos.Post;
-
-      end;
-
-    calculartotalpagos;
-
 
     ZQDocumentopagos.First;
     while not ZQDocumentopagos.Eof do
@@ -1163,6 +1163,7 @@ end;
 
 procedure Tfacturasventa.btnguardarClick(Sender: TObject);
 begin
+    calculartotales;
     calculartotalpagos;
     case abm of
         1:begin
