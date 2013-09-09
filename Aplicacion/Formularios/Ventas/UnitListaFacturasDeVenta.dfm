@@ -16,6 +16,10 @@ inherited ListaFacturasDeVenta: TListaFacturasDeVenta
       inherited btnanular: TButton
         Visible = True
       end
+      inherited btnver: TButton
+        Visible = True
+        OnClick = btnverClick
+      end
     end
     inherited DBGrid1: TDBGrid
       Width = 932

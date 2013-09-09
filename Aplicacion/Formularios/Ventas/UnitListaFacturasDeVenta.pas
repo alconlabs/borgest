@@ -19,6 +19,7 @@ type
     procedure btnmodificarClick(Sender: TObject);
     procedure btneliminarClick(Sender: TObject);
     procedure btnanularClick(Sender: TObject);
+    procedure btnverClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -83,7 +84,7 @@ begin
     if fil_documentoventa_estado.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentoventa_estado like "'+primercaracter+fil_documentoventa_estado.Text+'%"';
 
-    ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'order by documentoventa_fecha, documentoventa_id';
+    ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'order by documentoventa_fecha desc, documentoventa_id desc';
 
     ZQGrilla.Active:=true;
 end;
@@ -102,6 +103,16 @@ procedure TListaFacturasDeVenta.btnnuevoClick(Sender: TObject);
 begin
   inherited;
     Princ.AbrirDocumentoVenta('','Factura de Venta',ABM_AGREGAR);
+end;
+
+procedure TListaFacturasDeVenta.btnverClick(Sender: TObject);
+begin
+  inherited;
+    if ZQGrilla.Active then
+      begin
+          if ZQGrilla.RecordCount>0 then
+            Princ.AbrirDocumentoVenta(ZQGrilla.FieldByName('documentoventa_id').AsString,'Factura de Venta',ABM_VER);
+      end;
 end;
 
 end.

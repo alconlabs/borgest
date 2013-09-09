@@ -792,6 +792,17 @@ begin
 
       end;
 
+    case abm of
+        1:btnguardar.Caption:='Guardar';
+        2:btnguardar.Caption:='Guardar';
+        3:btnguardar.Caption:='Eliminar';
+        6:begin
+              btnguardar.Enabled:=false;
+              btncalculopreciodetaprod.Enabled:=false;
+          end;
+
+    end;
+
 
 end;
 

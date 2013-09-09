@@ -62,8 +62,9 @@ procedure TABMbase.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
     case key of
+        VK_ESCAPE:btncancelar.Click;
         VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);
-        VK_F9:btnguardar.Click;
+        VK_F9:if btnguardar.Enabled then btnguardar.Click;
     end;
 end;
 

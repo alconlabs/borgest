@@ -13,6 +13,10 @@ inherited ListaProductos1: TListaProductos1
       Left = 940
       ExplicitLeft = 940
       FullHeight = 0
+      inherited btnver: TButton
+        Visible = True
+        OnClick = btnverClick
+      end
     end
     inherited DBGrid1: TDBGrid
       Width = 940

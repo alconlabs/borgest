@@ -657,12 +657,13 @@ procedure Tfacturasventa.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
     case key of
+        VK_ESCAPE:btncancelar.Click;
         VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);
-        VK_F4:btnagregar.Click;
-        VK_F6:btnquitar.Click;
-        VK_F7:btnagregarpago.Click;
-        VK_F8:btnquitarpago.Click;
-        VK_F9:btnguardar.Click;
+        VK_F4:if btnagregar.Enabled then btnagregar.Click;
+        VK_F6:if btnquitar.Enabled then btnquitar.Click;
+        VK_F7:if btnagregarpago.Enabled then btnagregarpago.Click;
+        VK_F8:if btnquitarpago.Enabled then btnquitarpago.Click;
+        VK_F9:if btnguardar.Enabled then btnguardar.Click;
     end;
 end;
 
@@ -684,6 +685,20 @@ begin
         3:btnguardar.Caption:='Eliminar';
         4:btnguardar.Caption:='Imprimir';
         5:btnguardar.Caption:='Anular';
+        6:begin
+              btnguardar.Enabled:=false;
+              btnagregar.Enabled:=false;
+              btnquitar.Enabled:=false;
+              btnmodificar.Enabled:=false;
+              btnagregarpago.Enabled:=false;
+              btnquitarpago.Enabled:=false;
+              btnherramientas.Enabled:=false;
+              btnagregarcliente.Enabled:=false;
+              btnobservaciones.Enabled:=false;
+
+
+          end;
+
     end;
 
     VENTASEMITIRREMITOCTACTE.Visible:=abm=1

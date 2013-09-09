@@ -11,6 +11,10 @@ inherited ListaPresupuestos: TListaPresupuestos
       inherited btnanular: TButton
         Visible = True
       end
+      inherited btnver: TButton
+        Visible = True
+        OnClick = btnverClick
+      end
     end
     inherited DBGrid1: TDBGrid
       Columns = <

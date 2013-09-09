@@ -359,6 +359,16 @@ begin
         3:btnguardar.Caption:='Eliminar';
         4:btnguardar.Caption:='Imprimir';
         5:btnguardar.Caption:='Anular';
+        6:begin
+              btnguardar.Enabled:=false;
+              btnagregar.Enabled:=false;
+              btnquitar.Enabled:=false;
+              btnagregarpago.Enabled:=false;
+              btnquitarpago.Enabled:=false;
+              btntomardocumentosAuto.Enabled:=false;
+
+          end;
+
     end;
 end;
 

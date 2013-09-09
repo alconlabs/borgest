@@ -11,6 +11,7 @@ uses
 type
   Tpresupuesto = class(Tdocumentoventabase)
     procedure btnguardarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -72,6 +73,27 @@ begin
           Self.Close;
       end;
 
+end;
+
+procedure Tpresupuesto.FormShow(Sender: TObject);
+begin
+  inherited;
+    case abm of
+        1:btnguardar.Caption:='Guardar';
+        2:btnguardar.Caption:='Guardar';
+        3:btnguardar.Caption:='Eliminar';
+        4:btnguardar.Caption:='Imprimir';
+        5:btnguardar.Caption:='Anular';
+        6:begin
+              btnguardar.Enabled:=false;
+              btnagregar.Enabled:=false;
+              btnquitar.Enabled:=false;
+              btnmodificar.Enabled:=false;
+
+
+          end;
+
+    end;
 end;
 
 end.

@@ -19,6 +19,7 @@ type
     procedure btnmodificarClick(Sender: TObject);
     procedure btneliminarClick(Sender: TObject);
     procedure btnanularClick(Sender: TObject);
+    procedure btnverClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -108,6 +109,18 @@ procedure TListaRecibosdeVenta.btnnuevoClick(Sender: TObject);
 begin
   inherited;
     Princ.AbrirDocumentoVenta('',TIPODOCU_RECIBOVENTA,ABM_AGREGAR);
+end;
+
+procedure TListaRecibosdeVenta.btnverClick(Sender: TObject);
+begin
+  inherited;
+    if ZQGrilla.Active then
+      begin
+          if ZQGrilla.RecordCount>0 then
+            begin
+                Princ.AbrirDocumentoVenta(ZQGrilla.FieldByName('documentoventa_id').AsString,TIPODOCU_RECIBOVENTA,ABM_VER);
+            end;
+      end;
 end;
 
 end.

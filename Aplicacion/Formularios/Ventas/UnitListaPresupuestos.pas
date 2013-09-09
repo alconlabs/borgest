@@ -17,6 +17,7 @@ type
     procedure btnnuevoClick(Sender: TObject);
     procedure btnmodificarClick(Sender: TObject);
     procedure btneliminarClick(Sender: TObject);
+    procedure btnverClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -80,7 +81,7 @@ begin
     if ZQGrilla.Active then
       begin
           if ZQGrilla.RecordCount>0 then
-            Princ.AbrirDocumentoVenta(ZQGrilla.FieldByName('documentoventa_id').AsString,tipodocu_nombre,2);
+            Princ.AbrirDocumentoVenta(ZQGrilla.FieldByName('documentoventa_id').AsString,tipodocu_nombre,ABM_MODIFICAR);
       end;
 end;
 
@@ -88,6 +89,16 @@ procedure TListaPresupuestos.btnnuevoClick(Sender: TObject);
 begin
   inherited;
     Princ.AbrirDocumentoVenta('',tipodocu_nombre,1);
+end;
+
+procedure TListaPresupuestos.btnverClick(Sender: TObject);
+begin
+  inherited;
+    if ZQGrilla.Active then
+      begin
+          if ZQGrilla.RecordCount>0 then
+            Princ.AbrirDocumentoVenta(ZQGrilla.FieldByName('documentoventa_id').AsString,tipodocu_nombre,ABM_VER);
+      end;
 end;
 
 end.

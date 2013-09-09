@@ -21,6 +21,7 @@ type
     procedure btnmodificarClick(Sender: TObject);
     procedure btneliminarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure btnverClick(Sender: TObject);
   private
     { Private declarations }
     producto_tipo:string;
@@ -124,6 +125,25 @@ begin
       productos.btnguardar.Caption:='Guardar';
       productos.Show;
     end;
+end;
+
+procedure TListaProductos1.btnverClick(Sender: TObject);
+begin
+  inherited;
+    if ZQGrilla.active then
+      begin
+          if ZQGrilla.RecordCount>0 then
+            begin
+                try
+                  productos:=Tproductos.Create(self);
+                finally
+                  productos.abm:=ABM_VER;
+                  productos.id:=ZQGrilla.FieldByName('producto_id').AsString;
+                  productos.btnguardar.Caption:='Modificar';
+                  productos.Show;
+                end;
+            end;
+      end;
 end;
 
 procedure TListaProductos1.FormCreate(Sender: TObject);
