@@ -9,12 +9,15 @@ uses
 
 type
   TListaProductos1 = class(Tlistabase)
-    fil_producto_nombre: TEdit;
-    fil_producto_preciocosto: TEdit;
-    fil_producto_precioventa1: TEdit;
-    fil_rubro_nombre: TEdit;
-    fil_proveedor_nombre: TEdit;
-    fil_producto_precioventa2: TEdit;
+    fil_producto_nombre: TGTBEdit;
+    fil_producto_preciocosto: TGTBEdit;
+    fil_producto_precioventa1: TGTBEdit;
+    fil_rubro_nombre: TGTBEdit;
+    fil_proveedor_nombre: TGTBEdit;
+    fil_producto_precioventa2: TGTBEdit;
+    fil_producto_precioventa3: TGTBEdit;
+    fil_producto_precioventa4: TGTBEdit;
+    fil_producdepo_stockactual: TGTBEdit;
     procedure btnfiltrarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnnuevoClick(Sender: TObject);
@@ -66,7 +69,11 @@ begin
   inherited;
 
     ZQGrilla.Active:=false;
-    ZQGrilla.SQL.Text:='select * from productos inner join rubros on productos.rubro_id=rubros.rubro_id inner join proveedores on productos.proveedor_id=proveedores.proveedor_id where 1=1 and producto_tipo="PRODUCTO"';
+    ZQGrilla.SQL.Text:='select * from productos '+
+                       'inner join rubros on productos.rubro_id=rubros.rubro_id '+
+                       'inner join proveedores on productos.proveedor_id=proveedores.proveedor_id '+
+                       'inner join productodeposito on productos.producto_id=productodeposito.producto_id '+
+                       'where 1=1 and producto_tipo="PRODUCTO" and productodeposito.deposito_id="'+Princ.dep_id+'" ';
     if fil_id.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and '+Princ.CAMPO_ID_PRODUCTO+' like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_id.Text,' ','%',false,0)+'%"';
 
@@ -150,6 +157,7 @@ procedure TListaProductos1.FormCreate(Sender: TObject);
 begin
   inherited;
     DBGrid1.Columns.Items[0].FieldName:=Princ.CAMPO_ID_PRODUCTO;
+
 end;
 
 procedure TListaProductos1.FormShow(Sender: TObject);

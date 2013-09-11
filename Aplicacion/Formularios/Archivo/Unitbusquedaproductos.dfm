@@ -80,7 +80,6 @@ object busquedaproductos: Tbusquedaproductos
       TitleFont.Name = 'MS Sans Serif'
       TitleFont.Style = []
       OnKeyPress = DBGrid1KeyPress
-      OnTitleClick = DBGrid1TitleClick
       Columns = <
         item
           Expanded = False

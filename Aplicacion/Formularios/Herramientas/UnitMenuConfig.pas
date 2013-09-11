@@ -174,7 +174,7 @@ begin
 
                       menu_nomb:=InputBox('menu_nomb',menu_nomb, menu_nomb);
                       menu_form:=InputBox('menu_form',menu_form, menu_form);
-                      menu_form:=InputBox('menu_lista',menu_lista, menu_lista);
+                      menu_lista:=InputBox('menu_lista',menu_lista, menu_lista);
 
                       ZQExecSQL.sql.clear;
                       ZQExecSQL.sql.add('Insert into menu (menu_id, menu_path, ');
@@ -182,7 +182,7 @@ begin
                       ZQExecSQL.sql.add('menu_enabled, menu_visible, menu_lista) ');
                       ZQExecSQL.sql.add('values (:menu_id, :menu_path, ');
                       ZQExecSQL.sql.add(':menu_tipo, :menu_nomb, :menu_form, ');
-                      ZQExecSQL.sql.add(':menu_enabled, :menu_visible) ');
+                      ZQExecSQL.sql.add(':menu_enabled, :menu_visible, :menu_lista) ');
                       ZQExecSQL.parambyname('menu_id').asstring:=menu_id;
                       ZQExecSQL.parambyname('menu_path').asstring:=path;
                       ZQExecSQL.parambyname('menu_tipo').asstring:='0';

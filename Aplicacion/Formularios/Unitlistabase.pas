@@ -112,13 +112,33 @@ end;
 procedure Tlistabase.FormShow(Sender: TObject);
 var
   i:integer;
+  grid_col:integer;
 begin
 //    MessageDlg('begin show', mtWarning, [mbOK], 0);
+//here we should call the procedure to enable or don't the columns of the grid 
+    Princ.ConfigurarColumnas(self.DBGrid1);
+
     for i:=0 to panelfiltros.ControlCount-1 do
       begin
           if panelfiltros.Controls[i] is TEdit then
-            (panelfiltros.Controls[i] as TEdit).OnKeyPress:=fil_idKeyPress;
+            begin
+                (panelfiltros.Controls[i] as TEdit).OnKeyPress:=fil_idKeyPress;
 
+            end;
+
+          if panelfiltros.Controls[i] is TGTBEdit then
+            begin
+                if (panelfiltros.Controls[i] as TGTBEdit).FieldName<>'' then
+                  begin
+                      for grid_col := 0 to DBGrid1.Columns.Count-1 do
+                        begin
+                            if DBGrid1.Columns.Items[grid_col].FieldName=(panelfiltros.Controls[i] as TGTBEdit).FieldName then
+                              (panelfiltros.Controls[i] as TGTBEdit).Visible:=DBGrid1.Columns.Items[grid_col].Visible;
+
+                        end;
+
+                  end;
+            end;
       end;
 
     ArmarLeyendaBarraEstado;
@@ -130,6 +150,9 @@ begin
     btnanular.Enabled:=Princ.Permisos1.Permiso_anular;
     btnver.Enabled:=Princ.Permisos1.Permiso_ver;
     btnfiltrar.Enabled:=Princ.Permisos1.Permiso_habilitado;
+
+
+
 
 //    MessageDlg('end show', mtWarning, [mbOK], 0);
 end;

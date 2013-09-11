@@ -13,6 +13,9 @@ object TRpReport
     end
     item
       SubReport = TRpSubReport1
+    end
+    item
+      SubReport = TRpSubReport2
     end>
   DataInfo = <
     item
@@ -43,6 +46,21 @@ object TRpReport
         'oventa_id'#13#10'where tipopago_caja=-1 and tipospago.tipopago_id=2'#13#10'g' +
         'roup by documentopagos.documentopago_nombre'#13#10'order by documentop' +
         'agos.tipopago_id'
+    end
+    item
+      Alias = 'ALIAS_INGRESOS'
+      DatabaseAlias = 'CONEXION_DBBORGEST'
+      SQL = 
+        'select * from cajaasientos'#13#10'inner join conceptos on cajaasientos' +
+        '.concepto_id=conceptos.concepto_id'
+    end
+    item
+      Alias = 'ALIAS_EGRESOS'
+      DatabaseAlias = 'CONEXION_DBBORGEST'
+      SQL = 
+        'select *, (cajaasiento_importe*-1) as importe from cajaasientos'#13 +
+        #10'inner join conceptos on cajaasientos.concepto_id=conceptos.conc' +
+        'epto_id'
     end>
   DatabaseInfo = <
     item
@@ -1068,5 +1086,97 @@ object TRpReport
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
+  end
+  object TRpSubReport2: TRpSubReport
+    Sections = <
+      item
+        Section = TRpSection9
+      end
+      item
+        Section = TRpSection8
+      end
+      item
+        Section = TRpSection10
+      end>
+  end
+  object TRpSection8: TRpSection
+    Width = 10772
+    Height = 1701
+    SubReport = TRpSubReport2
+    ChangeBool = False
+    PageRepeat = False
+    SkipPage = False
+    AlignBottom = False
+    SectionType = rpsecdetail
+    Components = <>
+    ExternalTable = 'REPMAN_REPORTS'
+    ExternalField = 'REPORT'
+    ExternalSearchField = 'REPORT_NAME'
+    StreamFormat = rpStreamText
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    ChangeExpression = ''
+    BeginPageExpression = ''
+    ChangeExpression = ''
+    SkipExpreV = ''
+    SkipExpreH = ''
+    SkipToPageExpre = ''
+    BackExpression = ''
+    Stream = {0000000000000000}
+  end
+  object TRpSection9: TRpSection
+    Width = 10772
+    Height = 1701
+    SubReport = TRpSubReport2
+    GroupName = 'INGRESOS'
+    ChangeBool = False
+    PageRepeat = False
+    SkipPage = False
+    AlignBottom = False
+    SectionType = rpsecgheader
+    Components = <>
+    ExternalTable = 'REPMAN_REPORTS'
+    ExternalField = 'REPORT'
+    ExternalSearchField = 'REPORT_NAME'
+    StreamFormat = rpStreamText
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    ChangeExpression = ''
+    BeginPageExpression = ''
+    ChangeExpression = ''
+    SkipExpreV = ''
+    SkipExpreH = ''
+    SkipToPageExpre = ''
+    BackExpression = ''
+    Stream = {0000000000000000}
+  end
+  object TRpSection10: TRpSection
+    Width = 10772
+    Height = 1701
+    SubReport = TRpSubReport2
+    GroupName = 'INGRESOS'
+    ChangeBool = False
+    PageRepeat = False
+    SkipPage = False
+    AlignBottom = False
+    SectionType = rpsecgfooter
+    Components = <>
+    ExternalTable = 'REPMAN_REPORTS'
+    ExternalField = 'REPORT'
+    ExternalSearchField = 'REPORT_NAME'
+    StreamFormat = rpStreamText
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    ChangeExpression = ''
+    BeginPageExpression = ''
+    ChangeExpression = ''
+    SkipExpreV = ''
+    SkipExpreH = ''
+    SkipToPageExpre = ''
+    BackExpression = ''
+    Stream = {0000000000000000}
   end
 end

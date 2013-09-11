@@ -9,7 +9,7 @@ uses
   Grids, BaseGrid, AdvGrid, DBAdvGrid, StdCtrls, ADODB, rpcompobase, rpvclreport,
   UnitProgresoBase, ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
   rpalias, GTBComboBox, ComCtrls, rpexpredlgvcl, DBClient,
-  rpclientdataset, Menus, Encriptador, Utilidades, Permisos;
+  rpclientdataset, Menus, Encriptador, Utilidades, Permisos, DBGrids;
 
 
 
@@ -139,6 +139,8 @@ type
     btntarjetas: TAdvGlowButton;
     ZQRecargoTarjetas: TZQuery;
     ZQpagotarjeta: TZQuery;
+    BtnConfigurarListas: TAdvGlowButton;
+    ZQConfigcolumnas: TZQuery;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -197,6 +199,7 @@ type
     procedure btnRecibosPendientesClick(Sender: TObject);
     procedure btnlistanotasdepedidoClick(Sender: TObject);
     procedure btntarjetasClick(Sender: TObject);
+    procedure BtnConfigurarListasClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -288,6 +291,7 @@ type
     procedure AbrirNuevoTarjeta;
     procedure AbrirModificarTarjeta(id:string);
     procedure CalcularRecargoTarjeta(tarjeta_id:string; cuotas:integer; importe:real);
+    procedure ConfigurarColumnas(grilla: TDBGrid);
 
   end;
 
@@ -412,10 +416,40 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitListaProvincias, UnitListaFacturasDeVenta, UnitListaRecibosdeVenta,
   UnitListaFacturasdeCompras, UnitNotaPedidoComisiones,
   UnitListaNotasCreditodeVentas, UnitListaTarjetasdeCredito, UnitTarjetaCredito,
-  UnitCargaDetallePagos;
+  UnitCargaDetallePagos, UnitListaConfigListas;
 
 {$R *.dfm}
 
+procedure TPrinc.ConfigurarColumnas(grilla: TDBGrid);
+var
+  padre:TWinControl;
+  i:integer;
+begin
+    padre:=grilla.Parent;
+    while not (padre is TForm) do
+    begin
+        padre:=padre.Parent;
+    end;
+
+    ZQConfigcolumnas.Active:=false;
+    ZQConfigcolumnas.ParamByName('configcolumna_grilla').AsString:=padre.ClassName+'.'+grilla.Name;
+    ZQConfigcolumnas.Active:=true;
+    ZQConfigcolumnas.First;
+
+    for i := 0 to grilla.Columns.Count-1 do
+      begin
+          if ZQConfigcolumnas.Locate('configcolumnadeta_campo',grilla.Columns.Items[i].FieldName,[]) then
+            begin
+                grilla.Columns.Items[i].Visible:=ZQConfigcolumnas.FieldByName('configcolumnadeta_visible').AsInteger=-1;
+
+            end;
+
+      end;
+
+    if ZQConfigcolumnas.FieldByName('configcolumna_anchoventana').AsInteger<>0 then
+      padre.Width:=ZQConfigcolumnas.FieldByName('configcolumna_anchoventana').AsInteger;
+
+end;
 
 
 procedure TPrinc.CalcularRecargoTarjeta(tarjeta_id: string; cuotas: Integer; importe: Real);
@@ -1477,7 +1511,6 @@ begin
       proveedores.btnguardar.Caption:='Guardar';
       proveedores.Show;
     end;
-
 end;
 
 
@@ -3214,6 +3247,16 @@ begin
       configuracion:=Tconfiguracion.Create(self);
     finally
       configuracion.Show;
+    end;
+end;
+
+procedure TPrinc.BtnConfigurarListasClick(Sender: TObject);
+begin
+    try
+      ListaConfigListas:=TListaConfigListas.Create(self);
+    finally
+      ListaConfigListas.campo_id:='configcolumna_id';
+      ListaConfigListas.Show;
     end;
 end;
 

@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageVentas
+    ActivePage = AdvPageHerramientas
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -2407,9 +2407,10 @@ object Princ: TPrinc
       object AdvToolBarHerramientas: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 206
+        Width = 306
         Height = 63
         AllowFloating = True
+        Caption = 'Herramientas'
         CaptionFont.Charset = DEFAULT_CHARSET
         CaptionFont.Color = clWindowText
         CaptionFont.Height = -11
@@ -2500,9 +2501,47 @@ object Princ: TPrinc
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
         end
+        object BtnConfigurarListas: TAdvGlowButton
+          Left = 202
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Configurar Listas'
+          TabOrder = 2
+          OnClick = BtnConfigurarListasClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
       end
       object AdvToolBarSeguridad: TAdvToolBar
-        Left = 212
+        Left = 312
         Top = 3
         Width = 106
         Height = 63
@@ -3697,6 +3736,29 @@ object Princ: TPrinc
       item
         DataType = ftUnknown
         Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+  end
+  object ZQConfigcolumnas: TZQuery
+    Connection = ZBase
+    SQL.Strings = (
+      'select * from configcolumnas'
+      
+        'inner join configcolumnadetalles on configcolumnas.configcolumna' +
+        '_id=configcolumnadetalles.configcolumna_id'
+      'where configcolumnas.configcolumna_grilla=:configcolumna_grilla')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'configcolumna_grilla'
+        ParamType = ptUnknown
+      end>
+    Left = 1096
+    Top = 224
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'configcolumna_grilla'
         ParamType = ptUnknown
       end>
   end

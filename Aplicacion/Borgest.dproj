@@ -191,8 +191,14 @@
     <DCCReference Include="Formularios\Herramientas\UnitActualizarSistema.pas">
       <Form>ABMbase1</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Herramientas\UnitConfigListas.pas">
+      <Form>ConfigListas</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Herramientas\UnitConfiguracion.pas">
       <Form>configuracion</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Herramientas\UnitListaConfigListas.pas">
+      <Form>ListaConfigListas</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Herramientas\UnitMenuConfig.pas">
       <Form>MenuConfig</Form>

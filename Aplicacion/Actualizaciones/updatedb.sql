@@ -1108,4 +1108,50 @@ ADD COLUMN `temporal_string7` VARCHAR(150) NULL DEFAULT NULL  AFTER `temporal_st
 ADD COLUMN `temporal_string8` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string7` , 
 ADD COLUMN `temporal_string9` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string8` , 
 ADD COLUMN `temporal_string10` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string9` ;
-
+291;
+CREATE  TABLE IF NOT EXISTS `configcolumnas` (
+  `configcolumna_id` INT(11) NOT NULL ,
+  `configcolumna_grilla` VARCHAR(150) NULL DEFAULT NULL ,
+  `configcolumna_nombre` VARCHAR(50) NULL DEFAULT NULL ,
+  `configcolumna_observaciones` VARCHAR(255) NULL DEFAULT NULL ,
+  PRIMARY KEY (`configcolumna_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+292;
+CREATE  TABLE IF NOT EXISTS `configcolumnadetalles` (
+  `configcolumnadeta_id` INT(11) NOT NULL ,
+  `configcolumnadeta_campo` VARCHAR(100) NULL DEFAULT NULL ,
+  `configcolumnadeta_visible` INT(3) NULL DEFAULT NULL ,
+  `configcolumnadeta_titulo` VARCHAR(45) NULL DEFAULT NULL ,
+  `configcolumna_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`configcolumnadeta_id`) ,
+  INDEX `fk_configcolumnadetalles_configcolumnas1` (`configcolumna_id` ASC) ,
+  CONSTRAINT `fk_configcolumnadetalles_configcolumnas1`
+    FOREIGN KEY (`configcolumna_id` )
+    REFERENCES `configcolumnas` (`configcolumna_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+293;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('76', '>Herramientas>Herramientas>Configurar Listas', '0', 'BtnConfigurarListas', '', '0', '0', 'TListaConfigListas');
+294;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,76,perfil_id,-1 from perfiles;
+295;
+INSERT INTO `configcolumnas` SET `configcolumna_id`=1,`configcolumna_grilla`='TListaProductos1.DBGrid1',`configcolumna_nombre`='Lista de Productos';
+296;
+INSERT INTO `configcolumnadetalles` SET `configcolumnadeta_id`=1,`configcolumnadeta_campo`='producto_id',`configcolumnadeta_visible`=-1,`configcolumnadeta_titulo`='Codigo',`configcolumna_id`=1;
+297;
+INSERT INTO `configcolumnadetalles` SET `configcolumnadeta_id`=2,`configcolumnadeta_campo`='producto_nombre',`configcolumnadeta_visible`=-1,`configcolumnadeta_titulo`='Nombre',`configcolumna_id`=1;
+298;
+INSERT INTO `configcolumnadetalles` SET `configcolumnadeta_id`=3,`configcolumnadeta_campo`='producto_preciocosto',`configcolumnadeta_visible`=-1,`configcolumnadeta_titulo`='P. Compra',`configcolumna_id`=1;
+299;
+INSERT INTO `configcolumnadetalles` SET `configcolumnadeta_id`=4,`configcolumnadeta_campo`='producto_precioventa1',`configcolumnadeta_visible`=-1,`configcolumnadeta_titulo`='P. Venta',`configcolumna_id`=1;
+300;
+INSERT INTO `configcolumnadetalles` SET `configcolumnadeta_id`=5,`configcolumnadeta_campo`='producto_precioventa2',`configcolumnadeta_visible`=-1,`configcolumnadeta_titulo`='P. Venta2',`configcolumna_id`=1;
+301;
+ALTER TABLE `configcolumnas` ADD COLUMN `configcolumna_anchoventana` INT(11) NULL DEFAULT 0  AFTER `configcolumna_observaciones` ;
+302;
+UPDATE `configcolumnas` SET `configcolumna_anchoventana`=1050 WHERE `configcolumna_id`=1;

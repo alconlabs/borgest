@@ -70,5 +70,6 @@ Herramientas
 	Herramientas
 		Configuracion
 		Actualizar Productos
+		Configurar Listas
 	Seguridad
 		Perfiles de Seguridad
