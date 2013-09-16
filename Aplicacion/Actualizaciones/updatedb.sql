@@ -1155,3 +1155,13 @@ INSERT INTO `configcolumnadetalles` SET `configcolumnadeta_id`=5,`configcolumnad
 ALTER TABLE `configcolumnas` ADD COLUMN `configcolumna_anchoventana` INT(11) NULL DEFAULT 0  AFTER `configcolumna_observaciones` ;
 302;
 UPDATE `configcolumnas` SET `configcolumna_anchoventana`=1050 WHERE `configcolumna_id`=1;
+303;
+INSERT INTO `configcolumnadetalles` VALUES (6,'rubro_nombre',-1,'Rubro',1);
+304;
+INSERT INTO `configcolumnadetalles` VALUES (7,'proveedor_nombre',-1,'Proveedor',1);
+305;
+INSERT INTO `configcolumnadetalles` VALUES (8,'producto_precioventa3',0,'P. Venta3',1);
+306;
+INSERT INTO `configcolumnadetalles` VALUES (9,'producto_precioventa4',0,'P. Venta4',1);
+307;
+INSERT INTO `configcolumnadetalles` VALUES (10,'producdepo_stockactual',-1,'Stock',1);

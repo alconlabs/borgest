@@ -24,7 +24,7 @@ inherited CargaDetallePagos: TCargaDetallePagos
       Top = 0
       Width = 541
       Height = 294
-      ActivePage = TabSheet4
+      ActivePage = TabSheet2
       Align = alClient
       TabOrder = 2
       object TabSheet1: TTabSheet
@@ -420,6 +420,16 @@ inherited CargaDetallePagos: TCargaDetallePagos
           ReadOnly = True
           TabOrder = 5
           Version = '1.1.0.1'
+        end
+        object btnabmtarjetas: TButton
+          Left = 429
+          Top = 12
+          Width = 21
+          Height = 21
+          Caption = '...'
+          TabOrder = 13
+          TabStop = False
+          OnClick = btnabmtarjetasClick
         end
       end
       object TabSheet3: TTabSheet

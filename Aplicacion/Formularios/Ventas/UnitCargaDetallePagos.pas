@@ -60,6 +60,7 @@ type
     Label18: TLabel;
     Label19: TLabel;
     tarjeta_importecuota: TMoneyEdit;
+    btnabmtarjetas: TButton;
     procedure efectivo_importeExit(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure TabSheet1Show(Sender: TObject);
@@ -71,6 +72,7 @@ type
     procedure btnchequeClick(Sender: TObject);
     procedure btndepositoClick(Sender: TObject);
     procedure tarjeta_idSelect(Sender: TObject);
+    procedure btnabmtarjetasClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -91,6 +93,12 @@ implementation
 uses Unitprinc;
 
 {$R *.dfm}
+
+procedure TCargaDetallePagos.btnabmtarjetasClick(Sender: TObject);
+begin
+  inherited;
+    princ.btntarjetas.Click;
+end;
 
 procedure TCargaDetallePagos.btnchequeClick(Sender: TObject);
 begin
