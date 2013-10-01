@@ -162,6 +162,18 @@
     <DCCReference Include="Formularios\Compras\Unitcompradetalle.pas">
       <Form>compradetalle</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Compras\Unitdetallectasproveedores.pas">
+      <Form>detallectasproveedores</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\Unitdocumentocomprabase.pas">
+      <Form>documentocomprabase</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitDocumentosComprasPendientes.pas">
+      <Form>DocumentosComprasPendientes</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\Unitestadodectasproveedores.pas">
+      <Form>estadoctasproveedores</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Compras\Unitfacturascompra.pas">
       <Form>facturacompra</Form>
     </DCCReference>
@@ -174,11 +186,32 @@
     <DCCReference Include="Formularios\Compras\UnitListaFacturasdeCompras.pas">
       <Form>LIstaFacturasDeCompras</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitListaNotasDeCreditodeCompras.pas">
+      <Form>LIstaNotasDeCreditoDeCompras</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitListaNotasDeDebitodeCompras.pas">
+      <Form>LIstaNotasDeDebitoDeCompras</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitListaOrdenesdePago.pas">
+      <Form>ListaOrdenesdePago</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Compras\Unitlistaproveedores.pas">
       <Form>listaproveedores</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitNotaCreditoCompra.pas">
+      <Form>NotadeCreditoCompra</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitNotaDebitoCompra.pas">
+      <Form>NotadeDebitoCompra</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitOrdendePago.pas">
+      <Form>OrdendePago</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Compras\UnitProveedores.pas">
       <Form>proveedores</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\Unitsaldoproveedores.pas">
+      <Form>saldoproveedores</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Herramientas\UnitActualizarSistema.pas">
       <Form>ABMbase1</Form>
@@ -215,9 +248,6 @@
     </DCCReference>
     <DCCReference Include="Formularios\UnitPrinc.pas">
       <Form>Princ</Form>
-    </DCCReference>
-    <DCCReference Include="Formularios\UnitProgresoBase.pas">
-      <Form>ProgresoBase</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitAplicarRecibosPendientes.pas">
       <Form>AplicarRecibosPendientes</Form>

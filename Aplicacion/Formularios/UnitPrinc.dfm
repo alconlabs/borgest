@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageArchivo
+    ActivePage = AdvPageComisiones
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -771,7 +771,7 @@ object Princ: TPrinc
       object AdvToolBarDocCompras: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 306
+        Width = 406
         Height = 63
         AllowFloating = True
         Caption = 'Documentos'
@@ -789,51 +789,13 @@ object Princ: TPrinc
         TextOptionMenu = 'Options'
         ToolBarStyler = AdvToolBarOfficeStyler1
         ParentOptionPicture = True
-        object EstadoCtasCompras: TAdvGlowButton
-          Left = 202
-          Top = 2
-          Width = 100
-          Height = 41
-          Caption = 'Estado de Ctas.'
-          TabOrder = 0
-          Appearance.BorderColor = 9598070
-          Appearance.BorderColorHot = 10079963
-          Appearance.BorderColorDown = 4548219
-          Appearance.BorderColorChecked = 4548219
-          Appearance.Color = 15586496
-          Appearance.ColorTo = 15128792
-          Appearance.ColorChecked = 11918331
-          Appearance.ColorCheckedTo = 7915518
-          Appearance.ColorDisabled = 15921906
-          Appearance.ColorDisabledTo = 15921906
-          Appearance.ColorDown = 7778289
-          Appearance.ColorDownTo = 4296947
-          Appearance.ColorHot = 15465983
-          Appearance.ColorHotTo = 11332863
-          Appearance.ColorMirror = 15586496
-          Appearance.ColorMirrorTo = 13152947
-          Appearance.ColorMirrorHot = 5888767
-          Appearance.ColorMirrorHotTo = 10807807
-          Appearance.ColorMirrorDown = 946929
-          Appearance.ColorMirrorDownTo = 5021693
-          Appearance.ColorMirrorChecked = 10480637
-          Appearance.ColorMirrorCheckedTo = 5682430
-          Appearance.ColorMirrorDisabled = 11974326
-          Appearance.ColorMirrorDisabledTo = 15921906
-          Appearance.GradientHot = ggVertical
-          Appearance.GradientMirrorHot = ggVertical
-          Appearance.GradientDown = ggVertical
-          Appearance.GradientMirrorDown = ggVertical
-          Appearance.GradientChecked = ggVertical
-          Enabled = False
-        end
         object btnfacturascompras: TAdvGlowButton
           Left = 2
           Top = 2
           Width = 100
           Height = 41
           Caption = 'Facturas de Compra'
-          TabOrder = 1
+          TabOrder = 0
           OnClick = btnfacturascomprasClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -864,15 +826,15 @@ object Princ: TPrinc
           Appearance.GradientDown = ggVertical
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
-          Enabled = False
         end
         object btnordenespago: TAdvGlowButton
-          Left = 102
+          Left = 302
           Top = 2
           Width = 100
           Height = 41
           Caption = 'Ordenes de pago'
-          TabOrder = 2
+          TabOrder = 1
+          OnClick = btnordenespagoClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -902,11 +864,222 @@ object Princ: TPrinc
           Appearance.GradientDown = ggVertical
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
-          Enabled = False
+        end
+        object btnnotasdecreditocompra: TAdvGlowButton
+          Left = 102
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Notas de Credito'
+          TabOrder = 2
+          OnClick = btnnotasdecreditocompraClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
+        object btnnotasdedebitocompra: TAdvGlowButton
+          Left = 202
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Notas de Debito'
+          TabOrder = 3
+          OnClick = btnnotasdedebitocompraClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
+      end
+      object AdvToolBarCtasCtesCompras: TAdvToolBar
+        Left = 412
+        Top = 3
+        Width = 306
+        Height = 63
+        AllowFloating = True
+        Caption = 'Cuenta Corriente'
+        CaptionFont.Charset = DEFAULT_CHARSET
+        CaptionFont.Color = clWindowText
+        CaptionFont.Height = -11
+        CaptionFont.Name = 'Tahoma'
+        CaptionFont.Style = []
+        CaptionPosition = cpBottom
+        CaptionAlignment = taCenter
+        CompactImageIndex = -1
+        ShowCaption = True
+        ShowRightHandle = False
+        TextAutoOptionMenu = 'Add or Remove Buttons'
+        TextOptionMenu = 'Options'
+        ToolBarStyler = AdvToolBarOfficeStyler1
+        ParentOptionPicture = True
+        object BtnDetalleCompras: TAdvGlowButton
+          Left = 202
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Detalle de Ctas.'
+          TabOrder = 0
+          OnClick = BtnDetalleComprasClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
+        object BtnEstadoCompras: TAdvGlowButton
+          Left = 102
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Estado de Ctas.'
+          TabOrder = 1
+          OnClick = BtnEstadoComprasClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
+        object BtnSaldosCompras: TAdvGlowButton
+          Left = 2
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Saldos'
+          TabOrder = 2
+          OnClick = BtnSaldosComprasClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
         end
       end
       object AdvToolBarInformesCompras: TAdvToolBar
-        Left = 312
+        Left = 721
         Top = 3
         Width = 206
         Height = 63
@@ -926,7 +1099,7 @@ object Princ: TPrinc
         TextOptionMenu = 'Options'
         ToolBarStyler = AdvToolBarOfficeStyler1
         ParentOptionPicture = True
-        object AdvGlowButton3: TAdvGlowButton
+        object AdvGlowButton8: TAdvGlowButton
           Left = 2
           Top = 65
           Width = 100
@@ -972,7 +1145,7 @@ object Princ: TPrinc
           Height = 41
           Caption = 'Libro IVA Compras'
           TabOrder = 1
-          OnClick = btnlibroivacomprasClick
+          OnClick = btnlibroivacompras02Click
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -2603,8 +2776,8 @@ object Princ: TPrinc
     end
   end
   object AdvGlowButton1: TAdvGlowButton
-    Left = 344
-    Top = 176
+    Left = 256
+    Top = 160
     Width = 110
     Height = 49
     Caption = 'Borgest'
@@ -3602,24 +3775,24 @@ object Princ: TPrinc
   object ZQdocumentocompradetalles: TZQuery
     Connection = ZBase
     SQL.Strings = (
-      'select * from documentoventadetalles'
+      'select * from documentocompradetalles'
       
-        'inner join productos on documentoventadetalles.producto_id=produ' +
-        'ctos.producto_id'
+        'inner join productos on documentocompradetalles.producto_id=prod' +
+        'uctos.producto_id'
       'inner join tipoiva on productos.tipoiva_id=tipoiva.tipoiva_id'
-      'where documentoventa_id=:documentoventa_id')
+      'where documentocompra_id=:documentocompra_id')
     Params = <
       item
         DataType = ftUnknown
-        Name = 'documentoventa_id'
+        Name = 'documentocompra_id'
         ParamType = ptUnknown
       end>
     Left = 1096
-    Top = 376
+    Top = 312
     ParamData = <
       item
         DataType = ftUnknown
-        Name = 'documentoventa_id'
+        Name = 'documentocompra_id'
         ParamType = ptUnknown
       end>
   end
@@ -3753,12 +3926,54 @@ object Princ: TPrinc
         Name = 'configcolumna_grilla'
         ParamType = ptUnknown
       end>
-    Left = 1096
-    Top = 224
+    Left = 1192
+    Top = 504
     ParamData = <
       item
         DataType = ftUnknown
         Name = 'configcolumna_grilla'
+        ParamType = ptUnknown
+      end>
+  end
+  object ZQProcedimientosAlmacenados: TZQuery
+    Connection = ZBase
+    Params = <>
+    Left = 248
+    Top = 472
+  end
+  object ZQOrdendePago: TZQuery
+    Connection = ZBase
+    Params = <>
+    Left = 1096
+    Top = 136
+  end
+  object ZQActualizarSaldoDocumentoCompra: TZQuery
+    Connection = ZBase
+    Params = <>
+    Left = 1096
+    Top = 221
+  end
+  object ZQDocumentocompradocus: TZQuery
+    Connection = ZBase
+    SQL.Strings = (
+      'select * from documentoventadetalles'
+      
+        'inner join productos on documentoventadetalles.producto_id=produ' +
+        'ctos.producto_id'
+      'inner join tipoiva on productos.tipoiva_id=tipoiva.tipoiva_id'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 1096
+    Top = 392
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
   end

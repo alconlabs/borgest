@@ -7,7 +7,7 @@ uses
   Dialogs, AdvToolBar, AdvToolBarStylers, AdvGlowButton, AdvMenus, AdvPanel,
   ZConnection, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset, midaslib, ini,
   Grids, BaseGrid, AdvGrid, DBAdvGrid, StdCtrls, ADODB, rpcompobase, rpvclreport,
-  UnitProgresoBase, ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
+  ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
   rpalias, GTBComboBox, ComCtrls, rpexpredlgvcl, DBClient,
   rpclientdataset, Menus, Encriptador, Utilidades, Permisos, DBGrids;
 
@@ -42,7 +42,6 @@ type
     ZQDocumentosVentasPendientes: TZQuery;
     AdvPageCompras: TAdvPage;
     AdvToolBarDocCompras: TAdvToolBar;
-    EstadoCtasCompras: TAdvGlowButton;
     btnfacturascompras: TAdvGlowButton;
     btnordenespago: TAdvGlowButton;
     AdvPageHerramientas: TAdvPage;
@@ -105,10 +104,6 @@ type
     btndetallepagos: TAdvGlowButton;
     btnlibroivaventas: TAdvGlowButton;
     btncajabar: TAdvGlowButton;
-    AdvToolBarInformesCompras: TAdvToolBar;
-    AdvGlowButton3: TAdvGlowButton;
-    btnlibroivacompras: TAdvGlowButton;
-    btninformescompras: TAdvGlowButton;
     RpClientDataset1: TRpClientDataset;
     AdvPageComisiones: TAdvPage;
     AdvToolBarComisionesVendedores: TAdvToolBar;
@@ -141,6 +136,20 @@ type
     ZQpagotarjeta: TZQuery;
     BtnConfigurarListas: TAdvGlowButton;
     ZQConfigcolumnas: TZQuery;
+    ZQProcedimientosAlmacenados: TZQuery;
+    ZQOrdendePago: TZQuery;
+    ZQActualizarSaldoDocumentoCompra: TZQuery;
+    ZQDocumentocompradocus: TZQuery;
+    AdvToolBarCtasCtesCompras: TAdvToolBar;
+    BtnDetalleCompras: TAdvGlowButton;
+    BtnEstadoCompras: TAdvGlowButton;
+    BtnSaldosCompras: TAdvGlowButton;
+    AdvToolBarInformesCompras: TAdvToolBar;
+    AdvGlowButton8: TAdvGlowButton;
+    btnlibroivacompras: TAdvGlowButton;
+    btninformescompras: TAdvGlowButton;
+    btnnotasdecreditocompra: TAdvGlowButton;
+    btnnotasdedebitocompra: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -183,7 +192,7 @@ type
     procedure btndetallepagosClick(Sender: TObject);
     procedure btnlibroivaventasClick(Sender: TObject);
     procedure btncajabarClick(Sender: TObject);
-    procedure btnlibroivacomprasClick(Sender: TObject);
+    procedure btnlibroivacompras02Click(Sender: TObject);
     procedure btncomisionesvendedoresClick(Sender: TObject);
     procedure btncomisionessucursalesClick(Sender: TObject);
     procedure btnvendedoresdebcredClick(Sender: TObject);
@@ -200,6 +209,12 @@ type
     procedure btnlistanotasdepedidoClick(Sender: TObject);
     procedure btntarjetasClick(Sender: TObject);
     procedure BtnConfigurarListasClick(Sender: TObject);
+    procedure btnordenespagoClick(Sender: TObject);
+    procedure BtnSaldosComprasClick(Sender: TObject);
+    procedure BtnEstadoComprasClick(Sender: TObject);
+    procedure btnnotasdecreditocompraClick(Sender: TObject);
+    procedure BtnDetalleComprasClick(Sender: TObject);
+    procedure btnnotasdedebitocompraClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -266,8 +281,6 @@ type
     procedure AbrirModificarCajaAsientoIngreso(id:string);
     procedure AbrirNuevoCajaAsientoEgreso(caja_id:string);
     procedure AbrirModificarCajaAsientoEgreso(id:string);
-    procedure IniciarProgreso(Q:TDataset);
-    procedure MostrarProgreso;
     function EsCUITValido(Num:String):boolean;
     function DescargarArchivo( sURL, sArchivoLocal: String ): boolean;
     function EjecutarScriptDB(archivo_sql:string):boolean;
@@ -292,15 +305,10 @@ type
     procedure AbrirModificarTarjeta(id:string);
     procedure CalcularRecargoTarjeta(tarjeta_id:string; cuotas:integer; importe:real);
     procedure ConfigurarColumnas(grilla: TDBGrid);
-
-  end;
-
-type
-  TBarraProgreso = class(TThread)
-  PGB:TProgresoBase;
-  Q:TDataSet;
-    constructor Create; reintroduce; overload;
-    procedure Execute; override;
+    function CargarDocumentoCompraDocu(proveedor_id: string; QDocumentoCompraDocus:TDataset;documentocompra_apagar:real;AgregarAutomatico:boolean;where_tipodocu:string=' and 1=1 '):boolean;
+    function CargarCompraPago(importe:real; QDocumentocomprapagos: TDataSet; QPagoTarjeta:TDataset):boolean;
+    procedure AgregarOrdendePago(ZQCabecera: TDataset; ZQDetalle: TDataset; ZQPagos: TDataset);
+    procedure ActualizarSaldoDocumentoCompra(id: string; importe: Real; inversa:boolean=false);
   end;
 
 
@@ -368,6 +376,9 @@ const
   TIPODOCU_NOTAPEDIDO='Nota de Pedido';
 
   TIPODOCU_FACTURACOMPRA='Factura de Compra';
+  TIPODOCU_NOTACREDITOCOMPRA='Nota de Credito de Compra';
+  TIPODOCU_NOTADEBITOCOMPRA='Nota de Debito de Compra';
+  TIPODOCU_ORDENDEPAGO='Orden de Pago';
 
   ABM_AGREGAR=1;
   ABM_MODIFICAR=2;
@@ -416,7 +427,11 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitListaProvincias, UnitListaFacturasDeVenta, UnitListaRecibosdeVenta,
   UnitListaFacturasdeCompras, UnitNotaPedidoComisiones,
   UnitListaNotasCreditodeVentas, UnitListaTarjetasdeCredito, UnitTarjetaCredito,
-  UnitCargaDetallePagos, UnitListaConfigListas;
+  UnitCargaDetallePagos, UnitListaConfigListas, UnitListaOrdenesdePago,
+  UnitDocumentosComprasPendientes, UnitOrdendePago, Unitsaldoproveedores,
+  Unitestadodectasproveedores, UnitNotaCreditoCompra,
+  UnitListaNotasDeCreditodeCompras, UnitNotaDebitoCompra,
+  Unitdetallectasproveedores, UnitListaNotasDeDebitodeCompras;
 
 {$R *.dfm}
 
@@ -904,7 +919,7 @@ end;
 
 procedure TPrinc.AbrirDocumentoCompra(id: string; tipodocu_nombre: string; abm: Integer);
 begin
-    if tipodocu_nombre='Factura de Compra' then
+    if tipodocu_nombre=TIPODOCU_FACTURACOMPRA then
       begin
           try
             facturacompra:=Tfacturacompra.Create(self);
@@ -912,6 +927,41 @@ begin
             facturacompra.abm:=abm;
             facturacompra.id:=id;
             facturacompra.Show;
+          end;
+      end;
+
+    if tipodocu_nombre=TIPODOCU_ORDENDEPAGO then
+      begin
+          try
+            OrdendePago:=TOrdendePago.Create(self);
+          finally
+            OrdendePago.abm:=abm;
+            OrdendePago.id:=id;
+            OrdendePago.Show;
+          end;
+      end;
+
+    if tipodocu_nombre=TIPODOCU_NOTACREDITOCOMPRA then
+      begin
+          try
+            NotadeCreditoCompra:=TNotadeCreditoCompra.Create(self);
+          finally
+            NotadeCreditoCompra.abm:=abm;
+            NotadeCreditoCompra.id:=id;
+            NotadeCreditoCompra.tipodocu_nombre:=tipodocu_nombre;
+            NotadeCreditoCompra.Show;
+          end;
+      end;
+
+    if tipodocu_nombre=TIPODOCU_NOTADEBITOCOMPRA then
+      begin
+          try
+            NotadeDebitoCompra:=TNotadeDebitoCompra.Create(self);
+          finally
+            NotadeDebitoCompra.abm:=abm;
+            NotadeDebitoCompra.id:=id;
+            NotadeDebitoCompra.tipodocu_nombre:=tipodocu_nombre;
+            NotadeDebitoCompra.Show;
           end;
       end;
 
@@ -1085,6 +1135,7 @@ begin
 end;
 
 
+
 function TPrinc.BorrarDocumentoCompra(documentocompra_id: string):boolean;
 var
   error:integer;
@@ -1094,12 +1145,12 @@ begin
     ZQExcecSQL.SQL.Text:='begin';
     ZQExcecSQL.ExecSQL;
 
-//    ZQExcecSQL.SQL.Text:='delete from documentopagos where documentoventa_id="'+documentoventa_id+'"';
-//    try
-//      ZQExcecSQL.ExecSQL;
-//    except
-//      error:=1;
-//    end;
+    ZQExcecSQL.SQL.Text:='delete from documentocomprapagos where documentocompra_id="'+documentocompra_id+'"';
+    try
+      ZQExcecSQL.ExecSQL;
+    except
+      error:=1;
+    end;
 
     ZQdocumentocompradetalles.Active:=false;
     ZQdocumentocompradetalles.SQL.Text:='select * from documentocompradetalles where documentocompra_id="'+documentocompra_id+'"';
@@ -1110,7 +1161,7 @@ begin
         begin
             Self.actualizarstock(ZQdocumentocompradetalles.FieldByName('producto_id').AsString, ZQdocumentocompradetalles.FieldByName('documentocompradetalle_cantidad').AsFloat, tipodocu_id,true);
 
-            ZQdocumentocompradetalles.Next;
+            ZQdocumentoventadetalles.Next;
         end;
 
     ZQdocumentocompradetalles.Active:=false;
@@ -1121,23 +1172,23 @@ begin
       error:=1;
     end;
 
-//    ZQDocumentoventadocus.Active:=false;
-//    ZQDocumentoventadocus.SQL.Text:='select * from documentoventadocus where documentoventa_id="'+documentoventa_id+'"';
-//    ZQDocumentoventadocus.Active:=true;
-//    ZQDocumentoventadocus.First;
-//    while not ZQDocumentoventadocus.Eof do
-//        begin
-//            ActualizarSaldoDocumentoVenta(ZQDocumentoventadocus.FieldByName('documentoventa_idpago').AsString,ZQDocumentoventadocus.FieldByName('documentoventadoc_importe').AsFloat, true);
-//            ZQDocumentoventadocus.Next;
-//        end;
-//    ZQDocumentoventadocus.Active:=false;
-//
-//    ZQExcecSQL.SQL.Text:='delete from documentoventadocus where documentoventa_id="'+documentoventa_id+'"';
-//    try
-//      ZQExcecSQL.ExecSQL;
-//    except
-//      error:=2;
-//    end;
+    ZQDocumentocompradocus.Active:=false;
+    ZQDocumentocompradocus.SQL.Text:='select * from documentocompradocus where documentocompra_id="'+documentocompra_id+'"';
+    ZQDocumentocompradocus.Active:=true;
+    ZQDocumentocompradocus.First;
+    while not ZQDocumentocompradocus.Eof do
+        begin
+            ActualizarSaldoDocumentoCompra(ZQDocumentocompradocus.FieldByName('documentocompra_idpago').AsString,abs(ZQDocumentocompradocus.FieldByName('documentocompradoc_importe').AsFloat), true);
+            ZQDocumentocompradocus.Next;
+        end;
+    ZQDocumentocompradocus.Active:=false;
+
+    ZQExcecSQL.SQL.Text:='delete from documentocompradocus where documentocompra_id="'+documentocompra_id+'"';
+    try
+      ZQExcecSQL.ExecSQL;
+    except
+      error:=2;
+    end;
 
     ZQExcecSQL.SQL.Text:='delete from documentoscompras where documentocompra_id="'+documentocompra_id+'"';
     try
@@ -1150,7 +1201,9 @@ begin
     ZQExcecSQL.ExecSQL;
 
     Result := error=0;
+
 end;
+
 
 
 function TPrinc.EjecutarScriptDB(archivo_sql: string):boolean;
@@ -1203,6 +1256,20 @@ begin
             else
               continuar:=false;
         end;
+
+
+    ZQProcedimientosAlmacenados.SQL.Text:='CREATE PROCEDURE `actualizarsaldocompra` (id int, pago float) '+
+                                          'BEGIN '+
+                                          '    update documentoscompras set documentocompra_saldo=documentocompra_saldo-(pago),  '+
+                                          '    documentocompra_pagado=documentocompra_pagado+(pago), '+
+                                          '    documentocompra_estado=if(documentocompra_saldo=0,"PAGADA","PENDIENTE") '+
+                                          '    where documentocompra_id=id; '+
+                                          'END; ';
+
+    try
+      ZQProcedimientosAlmacenados.ExecSQL;
+    except
+    end;
 
     if error=0 then
       result:=true
@@ -1292,46 +1359,6 @@ end;
 
 
 
-constructor TBarraProgreso.Create;
-begin
-  inherited Create(True); // llamamos al constructor del padre (TThread)
-end;
-
-
-procedure TBarraProgreso.Execute;
-begin
-  inherited;
-    PGB:=TProgresoBase.Create(princ);
-    PGB.XiProgressBar1.Max:=Princ.ProgressMax;
-    PGB.Show;
-    while not Q.Eof do
-      begin
-          PGB.XiProgressBar1.Position:=Q.RecNo;
-          PGB.Repaint;
-
-
-      end;
-
-end;
-
-
-procedure TPrinc.IniciarProgreso(Q:TDataset);
-var
-  BarraProgreso:TBarraProgreso;
-begin
-    BarraProgreso := TBarraProgreso.Create(True);
-    BarraProgreso.Q:=Q;
-
-    BarraProgreso.FreeOnTerminate := True;
-    BarraProgreso.Resume;
-
-
-
-
-end;
-
-
-
 procedure TPrinc.AbrirModificarProducto(id:string);
 begin
     try
@@ -1365,14 +1392,6 @@ begin
 
 
 end;
-
-procedure TPrinc.MostrarProgreso;
-begin
-    
-
-end;
-
-
 
 procedure TPrinc.AbrirNuevoCajaAsientoEgreso(caja_id:string);
 begin
@@ -1805,11 +1824,8 @@ var
   subtotal1, subtotal2, subtotal3, subtotal4:real;
 begin
     QProductos.First;
-//    ProgressMax:=QProductos.RecordCount;
-//    IniciarProgreso(QProductos);
     while not QProductos.Eof do
         begin
-//            ProgressPos:=QProductos.RecNo;
             QProductos.Edit;
             QProductos.FieldByName('producto_precioventabase').AsFloat:=Princ.GetPrecioVentaBase(QProductos.FieldByName('producto_preciocosto').AsFloat,QProductos.FieldByName('calculoprecio_id').AsString);
 
@@ -2649,6 +2665,99 @@ begin
 
 end;
 
+
+function TPrinc.CargarDocumentoCompraDocu(proveedor_id: string; QDocumentoCompraDocus:TDataset;documentocompra_apagar:real;AgregarAutomatico:boolean;where_tipodocu:string=' and 1=1 '):boolean;
+begin
+    DocumentosComprasPendientes:=TDocumentosComprasPendientes.Create(self);
+    DocumentosComprasPendientes.proveedor_id:=proveedor_id;
+    DocumentosComprasPendientes.where_tipodocu:=where_tipodocu;
+    DocumentosComprasPendientes.ActivarConsulta;
+    DocumentosComprasPendientes.documentocompra_apagar:=roundto(documentocompra_apagar,-2);
+    QDocumentoCompraDocus.First;
+    while not QDocumentoCompraDocus.Eof do
+        begin
+            if DocumentosComprasPendientes.ZQDocumentosComprasPendientes.Locate('documentocompra_id',QDocumentoCompraDocus.FieldByName('documentocompra_idpago').AsString,[]) then
+              begin
+                  DocumentosComprasPendientes.ZQDocumentosComprasPendientes.Edit;
+                  DocumentosComprasPendientes.ZQDocumentosComprasPendientes.FieldByName('documentocompradoc_importe').AsFloat:=roundto(QDocumentoCompraDocus.FieldByName('documentocompradoc_importe').AsFloat,-2);
+
+                  DocumentosComprasPendientes.ZQDocumentosComprasPendientes.Post;
+
+              end;
+
+            QDocumentoCompraDocus.Next;
+        end;
+    if AgregarAutomatico then
+      begin
+          DocumentosComprasPendientes.btnimputardocumentos.Click;
+      end
+    else
+      begin
+          DocumentosComprasPendientes.Showmodal;
+      end;
+
+
+
+
+    if DocumentosComprasPendientes.ModalResult=mrOk then
+      begin
+          DocumentosComprasPendientes.ZQDocumentosComprasPendientes.First;
+          while not DocumentosComprasPendientes.ZQDocumentosComprasPendientes.Eof do
+              begin
+                  if DocumentosComprasPendientes.ZQDocumentosComprasPendientes.FieldByName('documentocompradoc_importe').AsFloat<>0 then
+                    begin
+                        if QDocumentoCompraDocus.Locate('documentocompra_idpago',DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('documentocompra_id').AsString,[]) then
+                          QDocumentocompraDocus.Edit
+                        else
+                          QDocumentocompraDocus.Insert;
+
+                        QDocumentocompraDocus.FieldByName('documentocompra_id').AsString:='0';
+                        QDocumentocompraDocus.FieldByName('documentocompra_numero').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('documentocompra_numero').AsString;
+                        QDocumentocompraDocus.FieldByName('documentocompra_fecha').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('documentocompra_fecha').AsString;
+                        QDocumentocompraDocus.FieldByName('documentocompra_hora').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('documentocompra_hora').AsString;
+                        QDocumentocompraDocus.FieldByName('documentocompra_total').AsFloat:=roundto(DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('documentocompra_total').AsFloat,-2);
+                        QDocumentocompraDocus.FieldByName('documentocompra_estado').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('documentocompra_estado').AsString;
+                        QDocumentocompraDocus.FieldByName('documentocompra_pagado').AsFloat:=roundto(DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('documentocompra_pagado').AsFloat+abs(DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('documentocompradoc_importe').AsFloat),-2);
+                        QDocumentocompraDocus.FieldByName('documentocompra_saldo').AsFloat:=roundto(DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('documentocompra_saldo').AsFloat-abs(DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('documentocompradoc_importe').AsFloat),-2);
+                        QDocumentocompraDocus.FieldByName('proveedor_id').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('proveedor_id').AsString;
+                        QDocumentocompraDocus.FieldByName('personal_id').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('personal_id').AsString;
+                        QDocumentocompraDocus.FieldByName('tipodocu_id').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('tipodocu_id').AsString;
+                        QDocumentocompraDocus.FieldByName('tipodocu_id_1').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('tipodocu_id').AsString;
+                        QDocumentocompraDocus.FieldByName('tipodocu_nombre').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('tipodocu_nombre').AsString;
+                        QDocumentocompraDocus.FieldByName('tipodocu_tipo').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('tipodocu_tipo').AsString;
+                        QDocumentocompraDocus.FieldByName('puntoventa_id').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('puntoventa_id').AsString;
+                        QDocumentocompraDocus.FieldByName('tipodocu_letra').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('tipodocu_letra').AsString;
+                        QDocumentocompraDocus.FieldByName('puntoventa_id_1').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('puntoventa_id').AsString;
+                        QDocumentocompraDocus.FieldByName('puntoventa_numero').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('puntoventa_numero').AsString;
+                        QDocumentocompraDocus.FieldByName('sucursal_id').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('sucursal_id').AsString;
+                        QDocumentocompraDocus.FieldByName('documentocompradoc_importe').AsFloat:=roundto(DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('documentocompradoc_importe').AsFloat,-2);
+                        QDocumentocompraDocus.FieldByName('documentocompradoc_id').AsString:='0';
+                        QDocumentocompraDocus.FieldByName('documentocompra_idpago').AsString:=DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.FieldByName('documentocompra_id').AsString;
+                        QDocumentocompraDocus.FieldByName('documentocompra_id_1').AsString:='0';
+                        QDocumentocompraDocus.FieldByName('documentocompradoc_tiporelacion').AsString:='IMPUTACION';
+                        QDocumentocompraDocus.Post;
+
+
+                    end;
+
+
+                  DocumentoscomprasPendientes.ZQDocumentoscomprasPendientes.Next;
+              end;
+
+          result:=true;
+      end
+    else
+      result:=false;
+
+    DocumentoscomprasPendientes.Free;
+
+
+
+
+
+end;
+
+
 procedure TPrinc.ActualizarNumeroDocumento(tipodocu_id: string; tipodocu_ultimonumero:string);
 var
   tipodocu_numero:string;
@@ -2715,6 +2824,32 @@ begin
       end;
 
     CargaDetallePagos.Free;
+
+
+end;
+
+
+function TPrinc.CargarCompraPago(importe:real; QDocumentocomprapagos: TDataSet; QPagoTarjeta:TDataset):boolean;
+begin
+    CargarPagos:=TCargarPagos.Create(self);
+    CargarPagos.documentopago_importe.Value:=importe;
+    if CargarPagos.ShowModal=mrOK then
+      begin
+          QDocumentocomprapagos.Last;
+          QDocumentocomprapagos.Append;
+          QDocumentocomprapagos.FieldByName('documentocomprapago_id').AsInteger:=QDocumentocomprapagos.RecordCount;
+          QDocumentocomprapagos.FieldByName('documentocomprapago_nombre').AsString:=CargarPagos.documentopago_nombre.Text;
+          QDocumentocomprapagos.FieldByName('documentocomprapago_importe').AsFloat:=CargarPagos.documentopago_importe.Value;
+          QDocumentocomprapagos.FieldByName('tipopago_id').AsString:=CargarPagos.tipopago_id.codigo;
+          QDocumentocomprapagos.FieldByName('tipopago_nombre').AsString:=CargarPagos.tipopago_id.Text;
+          QDocumentocomprapagos.FieldByName('documentocompra_id').AsString:='0';
+          QDocumentocomprapagos.Post;
+
+          Result:=true;
+
+      end;
+
+    CargarPagos.Free;
 
 
 end;
@@ -2832,6 +2967,145 @@ begin
 
 end;
 
+
+procedure TPrinc.AgregarOrdendePago(ZQCabecera: TDataset; ZQDetalle: TDataset; ZQPagos: TDataset);
+var
+  id:string;
+begin
+    ZQRecibos.SQL.Clear;
+    ZQRecibos.SQL.Add('begin');
+    ZQRecibos.ExecSQL;
+
+    id:=codigo('documentoscompras', 'documentocompra_id');
+
+    ZQOrdendePago.Sql.Clear;
+    ZQOrdendePago.Sql.Add('insert into documentoscompras set ');
+    ZQOrdendePago.Sql.Add('documentocompra_dgrperc=:documentocompra_dgrperc, ');
+    ZQOrdendePago.Sql.Add('documentocompra_dgrret=:documentocompra_dgrret, ');
+    ZQOrdendePago.Sql.Add('documentocompra_ivaperc=:documentocompra_ivaperc, ');
+    ZQOrdendePago.Sql.Add('documentocompra_ivaret=:documentocompra_ivaret, ');
+    ZQOrdendePago.Sql.Add('documentocompra_tishhperc=:documentocompra_tishhperc, ');
+    ZQOrdendePago.Sql.Add('documentocompra_nogravado=:documentocompra_nogravado, ');
+    ZQOrdendePago.Sql.Add('documentocompra_iva27=:documentocompra_iva27, ');
+    ZQOrdendePago.Sql.Add('documentocompra_neto27=:documentocompra_neto27, ');
+    ZQOrdendePago.Sql.Add('documentocompra_puntoventa=:documentocompra_puntoventa, ');
+    ZQOrdendePago.Sql.Add('documentocompra_otrosimpuestos=:documentocompra_otrosimpuestos, ');
+    ZQOrdendePago.Sql.Add('documentocompra_iva105=:documentocompra_iva105, ');
+    ZQOrdendePago.Sql.Add('documentocompra_neto105=:documentocompra_neto105, ');
+    ZQOrdendePago.Sql.Add('documentocompra_iva21=:documentocompra_iva21, ');
+    ZQOrdendePago.Sql.Add('documentocompra_neto21=:documentocompra_neto21, ');
+    ZQOrdendePago.Sql.Add('tipodocu_id=:tipodocu_id, ');
+    ZQOrdendePago.Sql.Add('proveedor_id=:proveedor_id, ');
+    ZQOrdendePago.Sql.Add('personal_id=:personal_id, ');
+    ZQOrdendePago.Sql.Add('documentocompra_fechavenc=:documentocompra_fechavenc, ');
+    ZQOrdendePago.Sql.Add('documentocompra_condicionventa=:documentocompra_condicionventa, ');
+    ZQOrdendePago.Sql.Add('documentocompra_observacion=:documentocompra_observacion, ');
+    ZQOrdendePago.Sql.Add('documentocompra_saldo=:documentocompra_saldo, ');
+    ZQOrdendePago.Sql.Add('documentocompra_pagado=:documentocompra_pagado, ');
+    ZQOrdendePago.Sql.Add('documentocompra_estado=:documentocompra_estado, ');
+    ZQOrdendePago.Sql.Add('documentocompra_total=:documentocompra_total, ');
+    ZQOrdendePago.Sql.Add('documentocompra_hora=:documentocompra_hora, ');
+    ZQOrdendePago.Sql.Add('documentocompra_fecha=:documentocompra_fecha, ');
+    ZQOrdendePago.Sql.Add('documentocompra_numero=:documentocompra_numero, ');
+    ZQOrdendePago.Sql.Add('documentocompra_id=:documentocompra_id ');
+
+    ZQOrdendePago.ParamByName('documentocompra_dgrperc').AsString:='0';
+    ZQOrdendePago.ParamByName('documentocompra_dgrret').AsString:='0';
+    ZQOrdendePago.ParamByName('documentocompra_ivaperc').AsString:='0';
+    ZQOrdendePago.ParamByName('documentocompra_ivaret').AsString:='0';
+    ZQOrdendePago.ParamByName('documentocompra_tishhperc').AsString:='0';
+    ZQOrdendePago.ParamByName('documentocompra_nogravado').AsString:='0';
+    ZQOrdendePago.ParamByName('documentocompra_iva27').AsString:='0';
+    ZQOrdendePago.ParamByName('documentocompra_neto27').AsString:='0';
+    ZQOrdendePago.ParamByName('documentocompra_puntoventa').AsString:='0';
+    ZQOrdendePago.ParamByName('documentocompra_otrosimpuestos').AsString:='0';
+    ZQOrdendePago.ParamByName('documentocompra_iva105').AsString:='0';
+    ZQOrdendePago.ParamByName('documentocompra_neto105').AsString:='0';
+    ZQOrdendePago.ParamByName('documentocompra_iva21').AsString:='0';
+    ZQOrdendePago.ParamByName('documentocompra_neto21').AsString:='0';
+    ZQOrdendePago.ParamByName('tipodocu_id').AsString:=ZQCabecera.FieldByName('tipodocu_id').AsString;
+    ZQOrdendePago.ParamByName('proveedor_id').AsString:=ZQCabecera.FieldByName('proveedor_id').AsString;
+    ZQOrdendePago.ParamByName('personal_id').AsString:=ZQCabecera.FieldByName('personal_id').AsString;
+    ZQOrdendePago.ParamByName('documentocompra_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',ZQCabecera.FieldByName('documentocompra_fechavenc').AsDateTime);
+    ZQOrdendePago.ParamByName('documentocompra_condicionventa').AsString:=ZQCabecera.FieldByName('documentocompra_condicionventa').AsString;
+    ZQOrdendePago.ParamByName('documentocompra_observacion').AsString:=ZQCabecera.FieldByName('documentocompra_observacion').AsString;
+    ZQOrdendePago.ParamByName('documentocompra_saldo').AsString:=ZQCabecera.FieldByName('documentocompra_saldo').AsString;
+    ZQOrdendePago.ParamByName('documentocompra_pagado').AsString:=ZQCabecera.FieldByName('documentocompra_pagado').AsString;
+    ZQOrdendePago.ParamByName('documentocompra_estado').AsString:=ZQCabecera.FieldByName('documentocompra_estado').AsString;
+    ZQOrdendePago.ParamByName('documentocompra_total').AsString:=ZQCabecera.FieldByName('documentocompra_total').AsString;
+    ZQOrdendePago.ParamByName('documentocompra_hora').AsString:=ZQCabecera.FieldByName('documentocompra_hora').AsString;
+    ZQOrdendePago.ParamByName('documentocompra_fecha').AsString:=formatdatetime('yyyy-mm-dd',ZQCabecera.FieldByName('documentocompra_fecha').AsDateTime);
+    ZQOrdendePago.ParamByName('documentocompra_numero').AsString:=ZQCabecera.FieldByName('documentocompra_numero').AsString;
+    ZQOrdendePago.ParamByName('documentocompra_id').AsString:=id;
+    ZQOrdendePago.ExecSql;
+
+
+    ActualizarNumeroDocumento(ZQCabecera.FieldByName('tipodocu_id').AsString,ZQCabecera.FieldByName('documentocompra_numero').AsString);
+
+    if ZQDetalle<>nil then
+      begin
+          ZQDetalle.First;
+          while not ZQDetalle.Eof do
+              begin
+                  ZQOrdendePago.sql.clear;
+                  ZQOrdendePago.sql.add('Insert into documentocompradocus (documentocompra_estado, ');
+                  ZQOrdendePago.sql.add('documentocompra_id, documentocompra_idpago, ');
+                  ZQOrdendePago.sql.add('documentocompra_pagado, documentocompra_saldo, ');
+                  ZQOrdendePago.sql.add('documentocompradoc_id, documentocompradoc_importe) ');
+                  ZQOrdendePago.sql.add('values (:documentocompra_estado, :documentocompra_id, ');
+                  ZQOrdendePago.sql.add(':documentocompra_idpago, :documentocompra_pagado, ');
+                  ZQOrdendePago.sql.add(':documentocompra_saldo, :documentocompradoc_id, ');
+                  ZQOrdendePago.sql.add(':documentocompradoc_importe)');
+                  ZQOrdendePago.parambyname('documentocompra_estado').asstring:=ZQDetalle.FieldByName('documentocompra_estado').AsString;
+                  ZQOrdendePago.parambyname('documentocompra_id').asstring:=id;
+                  ZQOrdendePago.parambyname('documentocompra_idpago').asstring:=ZQDetalle.FieldByName('documentocompra_idpago').AsString;
+                  ZQOrdendePago.parambyname('documentocompra_pagado').asstring:=ZQDetalle.FieldByName('documentocompra_pagado').AsString;
+                  ZQOrdendePago.parambyname('documentocompra_saldo').asstring:=ZQDetalle.FieldByName('documentocompra_saldo').AsString;
+                  ZQOrdendePago.parambyname('documentocompradoc_id').asstring:=codigo('documentocompradocus', 'documentocompradoc_id');
+                  ZQOrdendePago.parambyname('documentocompradoc_importe').asstring:=ZQDetalle.FieldByName('documentocompradoc_importe').AsString;
+                  ZQOrdendePago.ExecSQL;
+
+                  ActualizarSaldoDocumentoCompra(ZQDetalle.FieldByName('documentocompra_idpago').AsString,abs(ZQDetalle.FieldByName('documentocompradoc_importe').AsFloat));
+
+                  ZQDetalle.Next;
+              end;
+
+
+
+
+      end;
+
+    if ZQPagos<>nil then
+      begin
+          ZQPagos.First;
+          while not ZQPagos.Eof do
+              begin
+                  ZQOrdendePago.sql.clear;
+                  ZQOrdendePago.sql.add('Insert into documentocomprapagos (documentocomprapago_id, ');
+                  ZQOrdendePago.sql.add('documentocomprapago_importe, documentocomprapago_nombre, ');
+                  ZQOrdendePago.sql.add('documentocompra_id, tipopago_id) ');
+                  ZQOrdendePago.sql.add('values (:documentocomprapago_id, :documentocomprapago_importe, ');
+                  ZQOrdendePago.sql.add(':documentocomprapago_nombre, :documentocompra_id, ');
+                  ZQOrdendePago.sql.add(':tipopago_id)');
+                  ZQOrdendePago.parambyname('documentocomprapago_id').asstring:=codigo('documentocomprapagos', 'documentocomprapago_id');
+                  ZQOrdendePago.parambyname('documentocomprapago_importe').asstring:=ZQPagos.FieldByName('documentocomprapago_importe').AsString;
+                  ZQOrdendePago.parambyname('documentocomprapago_nombre').asstring:=ZQPagos.FieldByName('documentocomprapago_nombre').AsString;
+                  ZQOrdendePago.parambyname('documentocompra_id').asstring:=id;
+                  ZQOrdendePago.parambyname('tipopago_id').asstring:=ZQPagos.FieldByName('tipopago_id').AsString;
+                  ZQOrdendePago.ExecSQL;
+
+                  ZQPagos.Next;
+              end;
+
+      end;
+
+    ZQRecibos.SQL.Clear;
+    ZQRecibos.SQL.Add('commit');
+    ZQRecibos.ExecSQL;
+
+end;
+
+
 procedure TPrinc.ActualizarSaldoDocumentoVenta(id: string; importe: Real; inversa:boolean=false);
 var
   importe_real:real;
@@ -2844,6 +3118,23 @@ begin
     ZQActualizarSaldoDocumentoVenta.SQL.Text:='call actualizarsaldoventa("'+id+'","'+floattostr(importe_real)+'")';
 
     ZQActualizarSaldoDocumentoVenta.ExecSQL;
+
+
+
+end;
+
+procedure TPrinc.ActualizarSaldoDocumentoCompra(id: string; importe: Real; inversa:boolean=false);
+var
+  importe_real:real;
+begin
+    importe_real:=importe;
+    if inversa then
+      importe_real:=importe*-1;
+
+    ZQActualizarSaldoDocumentoCompra.Active:=false;
+    ZQActualizarSaldoDocumentoCompra.SQL.Text:='call actualizarsaldocompra("'+id+'","'+floattostr(importe_real)+'")';
+
+    ZQActualizarSaldoDocumentoCompra.ExecSQL;
 
 
 
@@ -2968,6 +3259,8 @@ var
   personal_usuario:string;
   personal_pass:string;
 begin
+//MessageDlg('creando principal', mtWarning, [mbOK], 0);
+
     DecimalSeparator:='.';
     ThousandSeparator:=',';
     Application.UpdateFormatSettings:= False;
@@ -3047,6 +3340,8 @@ end;
 
 procedure TPrinc.FormShow(Sender: TObject);
 begin
+//    MessageDlg('mostrando principal', mtWarning, [mbOK], 0);
+
     //ZQExcecSQL.SQL.Clear;
 //    ZQExcecSQL.SQL.Add('Replace config set config_nombre="VERSIONEXE", config_valor="'+VERSIONEXE+'"');
 //    ZQExcecSQL.ExecSQL;
@@ -3199,6 +3494,7 @@ begin
 
     result:=inttostr(codi);
 
+//    result:='2';
 end;
 
 procedure TPrinc.btnclientesClick(Sender: TObject);
@@ -3279,6 +3575,15 @@ begin
     end;
 end;
 
+procedure TPrinc.BtnDetalleComprasClick(Sender: TObject);
+begin
+//    try
+//      detallectasproveedores:=Tdetallectasproveedores.Create(self);
+//    finally
+//      detallectasproveedores.Show;
+//    end;
+end;
+
 procedure TPrinc.btndetallectasventasClick(Sender: TObject);
 begin
     try
@@ -3346,6 +3651,15 @@ begin
     end;
 end;
 
+procedure TPrinc.BtnEstadoComprasClick(Sender: TObject);
+begin
+    try
+      estadoctasproveedores:=Testadoctasproveedores.Create(self);
+    finally
+      estadoctasproveedores.Show;
+    end;
+end;
+
 procedure TPrinc.btnimpresorafiscalClick(Sender: TObject);
 begin
     try
@@ -3355,7 +3669,7 @@ begin
     end;
 end;
 
-procedure TPrinc.btnlibroivacomprasClick(Sender: TObject);
+procedure TPrinc.btnlibroivacompras02Click(Sender: TObject);
 begin
    try
       LibroIvaCompras:=TLibroIvaCompras.Create(self);
@@ -3471,6 +3785,26 @@ begin
     end;
 end;
 
+procedure TPrinc.btnnotasdedebitocompraClick(Sender: TObject);
+begin
+    try
+      LIstaNotasDeDebitoDeCompras:=TLIstaNotasDeDebitoDeCompras.Create(self);
+    finally
+      LIstaNotasDeDebitoDeCompras.campo_id:='documentocompra_id';
+      LIstaNotasDeDebitoDeCompras.Show;
+    end;
+end;
+
+procedure TPrinc.btnordenespagoClick(Sender: TObject);
+begin
+    try
+      ListaOrdenesdePago:=TListaOrdenesdePago.Create(self);
+    finally
+      ListaOrdenesdePago.campo_id:='documentocompra_id';
+      ListaOrdenesdePago.Show;
+    end;
+end;
+
 procedure TPrinc.btnordenservicioClick(Sender: TObject);
 begin
     try
@@ -3500,6 +3834,16 @@ end;
 procedure TPrinc.ADOConnection1BeforeConnect(Sender: TObject);
 begin
     ADOConnection1.ConnectionString:=CONNECTION_STRING1+EXCEL_FILE+CONNECTION_STRING3;
+end;
+
+procedure TPrinc.btnnotasdecreditocompraClick(Sender: TObject);
+begin
+    try
+      LIstaNotasDeCreditoDeCompras:=TLIstaNotasDeCreditoDeCompras.Create(self);
+    finally
+      LIstaNotasDeCreditoDeCompras.campo_id:='documentocompra_id';
+      LIstaNotasDeCreditoDeCompras.Show;
+    end;
 end;
 
 procedure TPrinc.btnfacturascomprasClick(Sender: TObject);
@@ -3680,6 +4024,15 @@ begin
       saldoclientes:=Tsaldoclientes.Create(self);
     finally
       saldoclientes.Show;
+    end;
+end;
+
+procedure TPrinc.BtnSaldosComprasClick(Sender: TObject);
+begin
+    try
+      saldoproveedores:=Tsaldoproveedores.Create(self);
+    finally
+      saldoproveedores.Show;
     end;
 end;
 

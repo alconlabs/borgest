@@ -415,6 +415,9 @@ inherited tipodocumento: Ttipodocumento
         'Nota de Pedido'
         'Orden de Servicio'
         'Factura de Compra'
+        'Nota de Credito de Compra'
+        'Nota de Debito de Compra'
+        'Orden de Pago'
         'Otro')
       Tag2 = 0
       valores.Strings = (
@@ -427,6 +430,9 @@ inherited tipodocumento: Ttipodocumento
         'Nota de Pedido'
         'Orden de Servicio'
         'Factura de Compra'
+        'Nota de Credito de Compra'
+        'Nota de Debito de Compra'
+        'Orden de Pago'
         'Otro')
     end
     object tipodocu_manual: TCheckBox

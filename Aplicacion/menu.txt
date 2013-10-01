@@ -23,8 +23,13 @@ Archivo
 Compras
 	Documentos
 		Facturas de Compra
+		Notas de Credito
+		Notas de Debito
 		Ordenes de Pago
+	Cuenta Corriente
+		Saldos
 		Estado de Ctas.
+		Detalle de Ctas.
 	Informes
 		Informes
 		Libro IVA Compras

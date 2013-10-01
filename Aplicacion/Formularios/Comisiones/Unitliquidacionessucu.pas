@@ -125,6 +125,10 @@ type
     ZQDocumentosVentas: TZQuery;
     Label18: TLabel;
     comisionsucursal_valor: TDBAdvEdit;
+    Label19: TLabel;
+    liquidacionsucursal_neto21: TDBAdvEdit;
+    liquidacionsucursal_iva21: TDBAdvEdit;
+    Label20: TLabel;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -797,7 +801,9 @@ begin
     ZQuery2.Sql.Add('liquidacionsucursal_total=:liquidacionsucursal_total, ');
     ZQuery2.Sql.Add('liquidacionsucursal_hastafecha=:liquidacionsucursal_hastafecha, ');
     ZQuery2.Sql.Add('liquidacionsucursal_desdefecha=:liquidacionsucursal_desdefecha, ');
-    ZQuery2.Sql.Add('liquidacionsucursal_fecha=:liquidacionsucursal_fecha ');
+    ZQuery2.Sql.Add('liquidacionsucursal_fecha=:liquidacionsucursal_fecha, ');
+    ZQuery2.Sql.Add('liquidacionsucursal_neto21=:liquidacionsucursal_neto21, ');
+    ZQuery2.Sql.Add('liquidacionsucursal_iva21=:liquidacionsucursal_iva21 ');
     ZQuery2.Sql.Add('where liquidacionsucursal_id=:liquidacionsucursal_id ');
     ZQuery2.ParamByName('sucursal_id').AsString:=sucursal_id.codigo;
     ZQuery2.ParamByName('liquidacionsucursal_estado').AsString:='PENDIENTE';
@@ -807,6 +813,8 @@ begin
     ZQuery2.ParamByName('liquidacionsucursal_desdefecha').AsString:=formatdatetime('yyyy-mm-dd',liquidacionsucursal_desdefecha.Date);
     ZQuery2.ParamByName('liquidacionsucursal_fecha').AsString:=formatdatetime('yyyy-mm-dd',liquidacionsucursal_fecha.Date);
     ZQuery2.ParamByName('liquidacionsucursal_id').AsString:=id;
+    ZQuery2.ParamByName('liquidacionsucursal_neto21').AsString:=liquidacionsucursal_neto21.Text;
+    ZQuery2.ParamByName('liquidacionsucursal_iva21').AsString:=liquidacionsucursal_iva21.Text;
     ZQuery2.ExecSql;
 
     ZQuery2.SQL.Clear;
@@ -892,7 +900,9 @@ begin
     ZQuery2.Sql.Add('liquidacionsucursal_hastafecha=:liquidacionsucursal_hastafecha, ');
     ZQuery2.Sql.Add('liquidacionsucursal_desdefecha=:liquidacionsucursal_desdefecha, ');
     ZQuery2.Sql.Add('liquidacionsucursal_fecha=:liquidacionsucursal_fecha, ');
-    ZQuery2.Sql.Add('liquidacionsucursal_id=:liquidacionsucursal_id ');
+    ZQuery2.Sql.Add('liquidacionsucursal_id=:liquidacionsucursal_id, ');
+    ZQuery2.Sql.Add('liquidacionsucursal_neto21=:liquidacionsucursal_neto21, ');
+    ZQuery2.Sql.Add('liquidacionsucursal_iva21=:liquidacionsucursal_iva21 ');
     ZQuery2.ParamByName('sucursal_id').AsString:=sucursal_id.codigo;
     ZQuery2.ParamByName('liquidacionsucursal_estado').AsString:='PENDIENTE';
     ZQuery2.ParamByName('sucursaltipliqsuc_tipo').AsString:=sucursaltipliqsuc_tipo;
@@ -901,6 +911,8 @@ begin
     ZQuery2.ParamByName('liquidacionsucursal_desdefecha').AsString:=formatdatetime('yyyy-mm-dd',liquidacionsucursal_desdefecha.Date);
     ZQuery2.ParamByName('liquidacionsucursal_fecha').AsString:=formatdatetime('yyyy-mm-dd',liquidacionsucursal_fecha.Date);
     ZQuery2.ParamByName('liquidacionsucursal_id').AsString:=id;
+    ZQuery2.ParamByName('liquidacionsucursal_neto21').AsString:=liquidacionsucursal_neto21.Text;
+    ZQuery2.ParamByName('liquidacionsucursal_iva21').AsString:=liquidacionsucursal_iva21.Text;
     ZQuery2.ExecSql;
 
 
@@ -1017,7 +1029,9 @@ begin
       CalcularTotal(MQLiquisucudetaRecibos,liquidacionsucursal_subtotal1);
 
     CalcularTotalDebCred;
-    liquidacionsucursal_total.FloatValue:=liquidacionsucursal_subtotal1.FloatValue+liquidacionsucursal_subtotal2.FloatValue;
+    liquidacionsucursal_neto21.FloatValue:=roundto(liquidacionsucursal_subtotal1.FloatValue+liquidacionsucursal_subtotal2.FloatValue,-2);
+    liquidacionsucursal_iva21.FloatValue:=roundto(liquidacionsucursal_neto21.FloatValue*21/100,-2);
+    liquidacionsucursal_total.FloatValue:=liquidacionsucursal_neto21.FloatValue+liquidacionsucursal_iva21.FloatValue;
 end;
 
 procedure Tliquidacionessucu.btncancelarClick(Sender: TObject);

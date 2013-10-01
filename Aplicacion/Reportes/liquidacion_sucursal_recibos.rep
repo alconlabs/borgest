@@ -585,7 +585,7 @@ object TRpReport
   end
   object TRpSection7: TRpSection
     Width = 11438
-    Height = 840
+    Height = 1605
     SubReport = TRpSubReport0
     GroupName = 'LIQUIDACION'
     ChangeBool = False
@@ -595,10 +595,22 @@ object TRpReport
     SectionType = rpsecgfooter
     Components = <
       item
-        Component = TRpLabel12
+        Component = TRpExpression6
+      end
+      item
+        Component = TRpExpression9
+      end
+      item
+        Component = TRpLabel3
       end
       item
         Component = TRpExpression14
+      end
+      item
+        Component = TRpLabel4
+      end
+      item
+        Component = TRpLabel12
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -1582,50 +1594,6 @@ object TRpReport
     DoBeforePrint = ''
     DoAfterPrint = ''
   end
-  object TRpExpression14: TRpExpression
-    Width = 1252
-    Height = 218
-    PosX = 9435
-    PosY = 108
-    Type1Font = poHelvetica
-    FontSize = 9
-    FontStyle = 1
-    Alignment = 2
-    DataType = rpParamCurrency
-    DisplayFormat = '0.00'
-    GroupName = 'VENTAS'
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_COMISIONES.liquidacionsucursal_total'
-    DisplayFormat = '0.00'
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
-  object TRpLabel12: TRpLabel
-    Width = 1500
-    Height = 270
-    PosX = 7905
-    PosY = 90
-    Type1Font = poHelvetica
-    FontSize = 9
-    FontStyle = 1
-    Alignment = 2
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'TOTAL LIQUIDACION'
-  end
   object TRpLabel28: TRpLabel
     Width = 1500
     Height = 270
@@ -1754,5 +1722,137 @@ object TRpReport
     SkipToPageExpre = ''
     BackExpression = ''
     Stream = {0000000000000000}
+  end
+  object TRpExpression6: TRpExpression
+    Width = 1252
+    Height = 218
+    PosX = 9435
+    PosY = 108
+    Type1Font = poHelvetica
+    FontSize = 9
+    FontStyle = 1
+    Alignment = 2
+    DataType = rpParamCurrency
+    DisplayFormat = '0.00'
+    GroupName = 'VENTAS'
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_COMISIONES.liquidacionsucursal_neto21'
+    DisplayFormat = '0.00'
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpExpression9: TRpExpression
+    Width = 1252
+    Height = 218
+    PosX = 9435
+    PosY = 404
+    Type1Font = poHelvetica
+    FontSize = 9
+    FontStyle = 1
+    Alignment = 2
+    DataType = rpParamCurrency
+    DisplayFormat = '0.00'
+    GroupName = 'VENTAS'
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_COMISIONES.liquidacionsucursal_iva21'
+    DisplayFormat = '0.00'
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpLabel3: TRpLabel
+    Width = 2160
+    Height = 270
+    PosX = 6975
+    PosY = 386
+    Type1Font = poHelvetica
+    FontSize = 9
+    FontStyle = 1
+    Alignment = 2
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    WideText = 'IVA'
+  end
+  object TRpExpression14: TRpExpression
+    Width = 1252
+    Height = 218
+    PosX = 9435
+    PosY = 700
+    Type1Font = poHelvetica
+    FontSize = 9
+    FontStyle = 1
+    Alignment = 2
+    DataType = rpParamCurrency
+    DisplayFormat = '0.00'
+    GroupName = 'VENTAS'
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_COMISIONES.liquidacionsucursal_total'
+    DisplayFormat = '0.00'
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpLabel4: TRpLabel
+    Width = 2160
+    Height = 270
+    PosX = 6975
+    PosY = 682
+    Type1Font = poHelvetica
+    FontSize = 9
+    FontStyle = 1
+    Alignment = 2
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    WideText = 'TOTAL LIQUIDACION'
+  end
+  object TRpLabel12: TRpLabel
+    Width = 2160
+    Height = 270
+    PosX = 6975
+    PosY = 90
+    Type1Font = poHelvetica
+    FontSize = 9
+    FontStyle = 1
+    Alignment = 2
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    WideText = 'SubTotal'
   end
 end

@@ -44,6 +44,7 @@ type
     SubTotal_ingresos: TAdvMoneyEdit;
     SubTotal_egresos: TAdvMoneyEdit;
     SubTotal_ventas: TAdvMoneyEdit;
+    BtnImprimirResumenTarjetas: TButton;
     procedure Button2Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure btnvercajaClick(Sender: TObject);
@@ -54,6 +55,7 @@ type
     procedure Button4Click(Sender: TObject);
     procedure DBGrid3DblClick(Sender: TObject);
     procedure btnimprimirClick(Sender: TObject);
+    procedure BtnImprimirResumenTarjetasClick(Sender: TObject);
   private
     { Private declarations }
     procedure CalcularTotalIngresos;
@@ -147,6 +149,34 @@ begin
 
 
     Princ.VCLReport1.Report.Datainfo.Items[2].sql:='select documentopagos.*, tipospago.*,  sum(documentopago_importe) as importe,  '+
+                                                   'count(documentopagos.documentopago_nombre) as cantidad '+
+                                                   'from documentopagos '+
+                                                   'inner join tipospago on documentopagos.tipopago_id=tipospago.tipopago_id '+
+                                                   'inner join documentosventas on documentopagos.documentoventa_id=documentosventas.documentoventa_id '+
+                                                   'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                                   'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                                   'where tipopago_caja=-1 and tipospago.tipopago_id=2 and '+
+                                                   'documentosventas.documentoventa_fecha="'+formatdatetime('yyyy-mm-dd',caja_fecha.Date)+'" and '+
+                                                   'documentosventas.documentoventa_estado<>"ANULADA"'+Princ.empresa_where+
+                                                   ' group by documentopagos.documentopago_nombre '+
+                                                   'order by documentopagos.documentopago_nombre ';
+
+
+
+
+
+
+
+
+
+    Princ.VCLReport1.Execute;
+end;
+
+procedure TEstadoCaja.BtnImprimirResumenTarjetasClick(Sender: TObject);
+begin
+  inherited;
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_caja_tarjetas.rep';
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select documentopagos.*, tipospago.*,  sum(documentopago_importe) as importe,  '+
                                                    'count(documentopagos.documentopago_nombre) as cantidad '+
                                                    'from documentopagos '+
                                                    'inner join tipospago on documentopagos.tipopago_id=tipospago.tipopago_id '+

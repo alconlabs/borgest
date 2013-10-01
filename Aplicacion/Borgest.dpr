@@ -31,7 +31,6 @@ uses
   UnitCajaAsiento in 'Formularios\Caja\UnitCajaAsiento.pas' {CajaAsiento},
   UnitCajaAsientoIngreso in 'Formularios\Caja\UnitCajaAsientoIngreso.pas' {CajaAsientoIngreso},
   UnitcajaAsientoEgreso in 'Formularios\Caja\UnitcajaAsientoEgreso.pas' {CajaAsientoEgreso},
-  UnitProgresoBase in 'Formularios\UnitProgresoBase.pas' {ProgresoBase},
   UnitActualizarSistema in 'Formularios\Herramientas\UnitActualizarSistema.pas' {ABMbase1},
   Unitcalculoprecioproducto in 'Formularios\Archivo\Unitcalculoprecioproducto.pas' {calculoprecioproductos},
   Unitdocumentoventabase in 'Formularios\Ventas\Unitdocumentoventabase.pas' {documentoventabase},
@@ -53,7 +52,6 @@ uses
   UnitPersonal in 'Formularios\Archivo\UnitPersonal.pas' {personal},
   UnitListaPerfiles in 'Formularios\Archivo\UnitListaPerfiles.pas' {ListaPerfiles},
   UnitPerfil in 'Formularios\Herramientas\UnitPerfil.pas' {Perfil},
-  Unitsaldoclientes in 'Formularios\Ventas\Unitsaldoclientes.pas' {saldoclientes},
   Unitlistafacturascompra in 'Formularios\Compras\Unitlistafacturascompra.pas' {listafacturascompra},
   Unitfacturasventa in 'Formularios\Ventas\Unitfacturasventa.pas' {facturasventa},
   UnitListaServices in 'Formularios\Ventas\UnitListaServices.pas' {Listaservices},
@@ -113,7 +111,19 @@ uses
   UnitCargaDetallePagos in 'Formularios\Ventas\UnitCargaDetallePagos.pas' {CargaDetallePagos},
   UnitNotaPedidoComisionesDetalle in 'Formularios\Ventas\UnitNotaPedidoComisionesDetalle.pas' {NotapedidoComisionesDetalle},
   UnitListaConfigListas in 'Formularios\Herramientas\UnitListaConfigListas.pas' {ListaConfigListas},
-  UnitConfigListas in 'Formularios\Herramientas\UnitConfigListas.pas' {ConfigListas};
+  UnitConfigListas in 'Formularios\Herramientas\UnitConfigListas.pas' {ConfigListas},
+  UnitListaOrdenesdePago in 'Formularios\Compras\UnitListaOrdenesdePago.pas' {ListaOrdenesdePago},
+  UnitOrdendePago in 'Formularios\Compras\UnitOrdendePago.pas' {OrdendePago},
+  UnitDocumentosComprasPendientes in 'Formularios\Compras\UnitDocumentosComprasPendientes.pas' {DocumentosComprasPendientes},
+  Unitsaldoproveedores in 'Formularios\Compras\Unitsaldoproveedores.pas' {saldoproveedores},
+  Unitsaldoclientes in 'Formularios\Ventas\Unitsaldoclientes.pas' {saldoclientes},
+  Unitestadodectasproveedores in 'Formularios\Compras\Unitestadodectasproveedores.pas' {estadoctasproveedores},
+  UnitListaNotasDeCreditodeCompras in 'Formularios\Compras\UnitListaNotasDeCreditodeCompras.pas' {LIstaNotasDeCreditoDeCompras},
+  Unitdocumentocomprabase in 'Formularios\Compras\Unitdocumentocomprabase.pas' {documentocomprabase},
+  UnitNotaCreditoCompra in 'Formularios\Compras\UnitNotaCreditoCompra.pas' {NotadeCreditoCompra},
+  UnitListaNotasDeDebitodeCompras in 'Formularios\Compras\UnitListaNotasDeDebitodeCompras.pas' {LIstaNotasDeDebitoDeCompras},
+  UnitNotaDebitoCompra in 'Formularios\Compras\UnitNotaDebitoCompra.pas' {NotadeDebitoCompra},
+  Unitdetallectasproveedores in 'Formularios\Compras\Unitdetallectasproveedores.pas' {detallectasproveedores};
 
 {$R *.res}
 
@@ -122,6 +132,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Borgest - Sistema de Gestion Comercial';
   Application.CreateForm(TPrinc, Princ);
-  Application.CreateForm(TConfigListas, ConfigListas);
   Application.Run;
 end.

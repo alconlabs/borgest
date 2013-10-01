@@ -465,6 +465,7 @@ begin
         VK_F7:btnagregarpago.Click;
         VK_F8:btnquitarpago.Click;
         VK_F9:btnguardar.Click;
+        VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);
     end;
 end;
 

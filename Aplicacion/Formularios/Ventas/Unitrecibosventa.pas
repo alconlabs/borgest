@@ -504,7 +504,8 @@ begin
     ZQpagotarjeta.ParamByName('documentoventa_id').AsString:=id;
     ZQpagotarjeta.Active:=true;
 
-
+    calculartotales;
+    calculartotalpagos;
 end;
 
 procedure Trecibosventa.agregar;

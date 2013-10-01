@@ -158,6 +158,7 @@ type
     ZQPendientesdocumentoventanumero: TStringField;
     ZQPendientesdocumentoventa_recargo: TFloatField;
     ZQPendientesgrupo: TStringField;
+    ZQPendientesacumulado_cliente: TFloatField;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnimprimirClick(Sender: TObject);
@@ -173,6 +174,7 @@ type
   private
     { Private declarations }
     temporal_idproceso:string;
+    clientes_ids_sin_deuda:string;
     procedure SetNotRequired;
     function GenerarWhere:string;
   public
@@ -358,6 +360,8 @@ procedure Tdetallectas.btnactualizarClick(Sender: TObject);
 var
   acumulado:real;
   grupo, condicion_saldoanterior:string;
+  acumulado_cliente:real;
+  cliente_id_anterior:string;
 begin
     ZQPendientes.Active:=false;
     grupo:='concat("0-",documentosventas.documentoventa_id)';
@@ -395,8 +399,8 @@ begin
                            'if('+condicion_saldoanterior+',"Saldo anterior",CONCAT(tiposdocumento.tipodocu_nombreabrev," ",tiposdocumento.tipodocu_letra)) as documento_nombre, '+
                            'if('+condicion_saldoanterior+',"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",DATE_FORMAT(documentosventas.documentoventa_fecha,"%d/%m/%Y")) as documentoventafecha, '+
                            'if('+condicion_saldoanterior+',"0",puntoventa_numero) as puntoventanumero, '+
-                           'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero '+
-
+                           'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero, '+
+                           '0.00 as acumulado_cliente '+
                            'from documentosventas '+
 //                           'left join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
 //                           'left join documentoventadetalles documentoventadetalles2 on documentoventadetalles.documentoventadetalle_idorig=documentoventadetalles2.documentoventadetalle_id '+
@@ -417,6 +421,9 @@ begin
     SetNotRequired;
     acumulado:=0;
     ZQPendientes.First;
+    acumulado_cliente:=0;
+    cliente_id_anterior:=ZQPendientes.FieldByName('cliente_id').AsString;
+    clientes_ids_sin_deuda:='-1';
 
     ZQPendientes.FieldByName('acumulado').ReadOnly:=false;
     while not ZQPendientes.Eof do
@@ -427,7 +434,26 @@ begin
             ZQPendientes.FieldByName('acumulado').AsFloat:=acumulado;
             ZQPendientes.Post;
 
+            if cliente_id_anterior<>ZQPendientes.FieldByName('cliente_id').AsString then
+              begin
+                  acumulado_cliente:=0;
+              end;
+
+            acumulado_cliente:=acumulado_cliente+ZQPendientes.FieldByName('debito').AsFloat-ZQPendientes.FieldByName('credito').AsFloat;
+
+            ZQPendientes.Edit;
+            ZQPendientes.FieldByName('acumulado_cliente').AsFloat:=acumulado_cliente;
+            ZQPendientes.Post;
+
+            cliente_id_anterior:=ZQPendientes.FieldByName('cliente_id').AsString;
+
             ZQPendientes.Next;
+
+            if (cliente_id_anterior<>ZQPendientes.FieldByName('cliente_id').AsString) and (acumulado_cliente=0) then
+              begin
+                  clientes_ids_sin_deuda:=clientes_ids_sin_deuda+','+cliente_id_anterior;
+
+              end;
         end;
 
 end;
@@ -654,7 +680,8 @@ begin
 
 
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.GTBUtilidades1.AgregarWhere(Princ.VCLReport1.Report.Datainfo.Items[0].sql,GenerarWhere);
-
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.GTBUtilidades1.AgregarWhere(Princ.VCLReport1.Report.Datainfo.Items[0].sql,'clientes.cliente_id not in ('+self.clientes_ids_sin_deuda+')');
+    
     Princ.VCLReport1.Execute;
 
 

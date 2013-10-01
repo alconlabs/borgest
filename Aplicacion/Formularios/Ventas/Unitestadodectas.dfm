@@ -934,6 +934,9 @@ object estadoctas: Testadoctas
     object ZQPendientessucursal_tipodocumentoliquidar: TIntegerField
       FieldName = 'sucursal_tipodocumentoliquidar'
     end
+    object ZQPendientesacumulado_cliente: TFloatField
+      FieldName = 'acumulado_cliente'
+    end
   end
   object MQdetalle: TMQuery
     Connection = Princ.ZBase

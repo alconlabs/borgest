@@ -1165,3 +1165,72 @@ INSERT INTO `configcolumnadetalles` VALUES (8,'producto_precioventa3',0,'P. Vent
 INSERT INTO `configcolumnadetalles` VALUES (9,'producto_precioventa4',0,'P. Venta4',1);
 307;
 INSERT INTO `configcolumnadetalles` VALUES (10,'producdepo_stockactual',-1,'Stock',1);
+308;
+UPDATE `menu` SET `menu_lista`='TListaOrdenesdePago' WHERE `menu_path` = '>Compras>Documentos>Ordenes de Pago';
+309;
+CREATE  TABLE IF NOT EXISTS `documentocompradocus` (
+  `documentocompradoc_id` INT(11) NOT NULL ,
+  `documentocompradoc_importe` FLOAT(20,4) NULL DEFAULT NULL ,
+  `documentocompra_pagado` FLOAT(20,4) NULL DEFAULT NULL ,
+  `documentocompra_saldo` FLOAT(20,4) NULL DEFAULT NULL ,
+  `documentocompra_estado` VARCHAR(45) NULL DEFAULT NULL ,
+  `documentocompra_id` INT(11) NOT NULL ,
+  `documentocompra_idpago` INT(11) NOT NULL ,
+  `documentocompradoc_tiporelacion` VARCHAR(45) NULL DEFAULT 'IMPUTACION' ,
+  PRIMARY KEY (`documentocompradoc_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+310;
+CREATE  TABLE IF NOT EXISTS `documentocomprapagos` (
+  `documentocomprapago_id` INT(11) NOT NULL ,
+  `documentocomprapago_nombre` VARCHAR(45) NULL DEFAULT NULL ,
+  `documentocomprapago_importe` FLOAT(20,4) NULL DEFAULT NULL ,
+  `tipopago_id` INT(11) NOT NULL ,
+  `documentocompra_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`documentocomprapago_id`) ,
+  INDEX `fk_documentopagos_tipospago1` (`tipopago_id` ASC) ,
+  INDEX `fk_documentocomprapagos_documentoscompras1` (`documentocompra_id` ASC) ,
+  CONSTRAINT `fk_documentopagos_tipospago10`
+    FOREIGN KEY (`tipopago_id` )
+    REFERENCES `tipospago` (`tipopago_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_documentocomprapagos_documentoscompras1`
+    FOREIGN KEY (`documentocompra_id` )
+    REFERENCES `documentoscompras` (`documentocompra_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+311;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('77', '>Compras>Documentos>Notas de Credito', '0', 'btnnotasdecreditocompra', '', '0', '0', 'TLIstaNotasDeCreditoDeCompras');
+312;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,77,perfil_id,-1 from perfiles;
+313;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('78', '>Compras>Documentos>Notas de Debito', '0', 'btnnotasdedebitocompra', '', '0', '0', 'TLIstaNotasDeDebitoDeCompras');
+314;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,78,perfil_id,-1 from perfiles;
+315;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('79', '>Compras>Cuenta Corriente', '0', 'AdvToolBarCtasCtesCompras', '', '0', '0', '');
+316;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,79,perfil_id,-1 from perfiles;
+317;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('80', '>Compras>Cuenta Corriente>Saldos', '0', 'BtnSaldosCompras', '', '0', '0', '');
+318;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,80,perfil_id,-1 from perfiles;
+319;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('81', '>Compras>Cuenta Corriente>Estado de Ctas.', '0', 'BtnEstadoCompras', '', '0', '0', '');
+320;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,81,perfil_id,-1 from perfiles;
+321;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('82', '>Compras>Cuenta Corriente>Detalle de Ctas.', '0', 'BtnDetalleCompras', '', '0', '0', '');
+322;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,82,perfil_id,-1 from perfiles;
+323;
+UPDATE `empresas` SET `empresa_razonsocial`='CgAAAMa8LOdG3MnWldmtvJ6DXKY=\r\n' WHERE `empresa_id`=1;
+324;
+ALTER TABLE `liquidacionessucursales` 
+ADD COLUMN `liquidacionsucursal_neto21` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentoventa_id` , 
+ADD COLUMN `liquidacionsucursal_iva21` FLOAT(20,4) NULL DEFAULT 0  AFTER `liquidacionsucursal_neto21`;

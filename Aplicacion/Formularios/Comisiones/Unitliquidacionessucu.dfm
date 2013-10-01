@@ -111,6 +111,22 @@ object liquidacionessucu: Tliquidacionessucu
       Alignment = taRightJustify
       Caption = 'TOTAL'
     end
+    object Label19: TLabel
+      Left = 475
+      Top = 438
+      Width = 46
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Sub Total'
+    end
+    object Label20: TLabel
+      Left = 680
+      Top = 438
+      Width = 17
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'IVA'
+    end
     object liquidacionsucursal_id: TEdit
       Left = 60
       Top = 9
@@ -210,7 +226,7 @@ object liquidacionessucu: Tliquidacionessucu
       Version = '2.7.0.5'
     end
     object btncalcular: TButton
-      Left = 720
+      Left = 368
       Top = 433
       Width = 91
       Height = 25
@@ -482,8 +498,6 @@ object liquidacionessucu: Tliquidacionessucu
       object TabSheet2: TTabSheet
         Caption = 'Debitos y Creditos'
         ImageIndex = 1
-        ExplicitLeft = 8
-        ExplicitTop = 28
         object Label7: TLabel
           Left = 814
           Top = 287
@@ -877,6 +891,46 @@ object liquidacionessucu: Tliquidacionessucu
         end
       end
     end
+    object liquidacionsucursal_neto21: TDBAdvEdit
+      Left = 527
+      Top = 435
+      Width = 121
+      Height = 21
+      EditType = etFloat
+      Precision = 2
+      LabelFont.Charset = DEFAULT_CHARSET
+      LabelFont.Color = clWindowText
+      LabelFont.Height = -11
+      LabelFont.Name = 'Tahoma'
+      LabelFont.Style = []
+      Lookup.Separator = ';'
+      Color = clWindow
+      Enabled = True
+      TabOrder = 12
+      Text = '0,00'
+      Visible = True
+      Version = '2.7.0.5'
+    end
+    object liquidacionsucursal_iva21: TDBAdvEdit
+      Left = 703
+      Top = 435
+      Width = 90
+      Height = 21
+      EditType = etFloat
+      Precision = 2
+      LabelFont.Charset = DEFAULT_CHARSET
+      LabelFont.Color = clWindowText
+      LabelFont.Height = -11
+      LabelFont.Name = 'Tahoma'
+      LabelFont.Style = []
+      Lookup.Separator = ';'
+      Color = clWindow
+      Enabled = True
+      TabOrder = 13
+      Text = '0,00'
+      Visible = True
+      Version = '2.7.0.5'
+    end
   end
   object ZQuery2: TZQuery
     Connection = Princ.ZBase
@@ -1027,8 +1081,8 @@ object liquidacionessucu: Tliquidacionessucu
         Name = 'liquidacionsucursal_id'
         ParamType = ptUnknown
       end>
-    Left = 304
-    Top = 408
+    Left = 504
+    Top = 240
     ParamData = <
       item
         DataType = ftUnknown
@@ -1055,8 +1109,8 @@ object liquidacionessucu: Tliquidacionessucu
         'inner join facturasventadeta on facturasventa.facven_id=facturas' +
         'ventadeta.facven_id')
     Params = <>
-    Left = 552
-    Top = 424
+    Left = 712
+    Top = 296
   end
   object ZQControlDetalle: TZQuery
     Connection = Princ.ZBase
@@ -1067,7 +1121,7 @@ object liquidacionessucu: Tliquidacionessucu
         'ventadeta.facven_id')
     Params = <>
     Left = 440
-    Top = 432
+    Top = 360
   end
   object ZQliquivendedeta: TZQuery
     Connection = Princ.ZBase
@@ -1080,8 +1134,8 @@ object liquidacionessucu: Tliquidacionessucu
         Name = 'liquidacionvendedor_id'
         ParamType = ptUnknown
       end>
-    Left = 640
-    Top = 456
+    Left = 664
+    Top = 248
     ParamData = <
       item
         DataType = ftUnknown

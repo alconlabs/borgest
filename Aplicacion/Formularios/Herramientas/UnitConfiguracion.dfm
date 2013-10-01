@@ -89,13 +89,11 @@ object configuracion: Tconfiguracion
       Top = 0
       Width = 589
       Height = 465
-      ActivePage = TabSheet1
+      ActivePage = TabSheet4
       Align = alTop
       TabOrder = 2
       object TabSheet1: TTabSheet
         Caption = 'General'
-        ExplicitLeft = 0
-        ExplicitTop = 28
         object Label14: TLabel
           Left = 44
           Top = 10

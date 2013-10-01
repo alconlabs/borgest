@@ -682,7 +682,6 @@ begin
 
           ZQproductos.SQL.Text:='select * from productos where '+campo_codigo+'=:id';
 
-//          Princ.MostrarProgreso;
           while (Princ.ADODataSet1.RecNo<=fila_fin.IntValue-1) and (not Princ.ADODataSet1.Eof) do
               begin
                   if Princ.ADODataSet1.Fields[columna_codigo.ItemIndex].AsString<>'' then

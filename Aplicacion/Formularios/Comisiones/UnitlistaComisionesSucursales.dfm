@@ -1,5 +1,7 @@
 inherited listacomisionessucursales: Tlistacomisionessucursales
   Caption = 'Liquidaciones a Sucursales'
+  ExplicitWidth = 950
+  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel

@@ -498,6 +498,15 @@ inherited EstadoCaja: TEstadoCaja
       CalculatorLook.Font.Name = 'Tahoma'
       CalculatorLook.Font.Style = []
     end
+    object BtnImprimirResumenTarjetas: TButton
+      Left = 96
+      Top = 430
+      Width = 148
+      Height = 25
+      Caption = 'Imprimir Resumen Tarjetas'
+      TabOrder = 13
+      OnClick = BtnImprimirResumenTarjetasClick
+    end
   end
   inherited ZQSelect: TZQuery
     Left = 536

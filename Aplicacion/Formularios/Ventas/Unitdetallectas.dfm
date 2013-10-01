@@ -924,6 +924,9 @@ object detallectas: Tdetallectas
       ReadOnly = True
       Size = 13
     end
+    object ZQPendientesacumulado_cliente: TFloatField
+      FieldName = 'acumulado_cliente'
+    end
   end
   object MQdetalle: TMQuery
     Connection = Princ.ZBase

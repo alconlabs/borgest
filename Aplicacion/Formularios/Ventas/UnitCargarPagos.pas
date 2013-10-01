@@ -20,6 +20,7 @@ type
     btnguardar: TButton;
     btncancelar: TButton;
     procedure FormCreate(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -41,6 +42,16 @@ uses UnitPrinc, Unitventadetalle;
 procedure TCargarPagos.FormCreate(Sender: TObject);
 begin
     tipopago_id.llenarcombo;
+end;
+
+procedure TCargarPagos.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    case key of
+        VK_F9:btnguardar.Click;
+        VK_ESCAPE:btncancelar.Click;
+        VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);
+    end;
 end;
 
 end.
