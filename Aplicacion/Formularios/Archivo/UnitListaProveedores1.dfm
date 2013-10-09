@@ -2,6 +2,7 @@ inherited ListaProveedores1: TListaProveedores1
   Caption = 'Proveedores'
   ClientWidth = 1003
   ExplicitWidth = 1019
+  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel

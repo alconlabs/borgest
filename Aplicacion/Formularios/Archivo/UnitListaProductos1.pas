@@ -75,7 +75,7 @@ begin
                        'inner join productodeposito on productos.producto_id=productodeposito.producto_id '+
                        'where 1=1 and producto_tipo="PRODUCTO" and productodeposito.deposito_id="'+Princ.dep_id+'" ';
     if fil_id.Text<>'' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and '+Princ.CAMPO_ID_PRODUCTO+' like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_id.Text,' ','%',false,0)+'%"';
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and productos.'+Princ.CAMPO_ID_PRODUCTO+' like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_id.Text,' ','%',false,0)+'%"';
 
     if fil_producto_nombre.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_nombre like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_producto_nombre.Text,' ','%',false,0)+'%"';

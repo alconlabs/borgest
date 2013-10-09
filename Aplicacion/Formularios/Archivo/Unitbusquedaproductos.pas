@@ -121,6 +121,7 @@ end;
 
 procedure Tbusquedaproductos.btnaceptarClick(Sender: TObject);
 begin
+    princ.ultima_busqueda_productos:=buscar.Text;
     producto_id:=ZQGrilla.FieldByName(ConfCampoBusqueda1).AsString;
     self.ModalResult:=mrOk;
 
@@ -158,7 +159,7 @@ begin
 
     end;
 
-    if tipo_busqueda.ItemIndex=0 then
+    if tipo_busqueda.ItemIndex=1 then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and '+producto_campo+' like "'+Princ.GTBUtilidades1.Reemplazar(buscar.Text,' ','%',false,0)+'%"'
     else
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and '+producto_campo+' like "%'+Princ.GTBUtilidades1.Reemplazar(buscar.Text,' ','%',false,0)+'%"';
@@ -225,6 +226,7 @@ procedure Tbusquedaproductos.FormCreate(Sender: TObject);
 begin
     producto_codigoreferencia:='<>"-1"';
     ConfCampoBusqueda1:='producto_id';
+    buscar.Text:=princ.ultima_busqueda_productos;
 end;
 
 procedure Tbusquedaproductos.FormKeyDown(Sender: TObject; var Key: Word;
@@ -265,6 +267,8 @@ var
   i: Integer;
 
 begin
+    tipo_busqueda.ItemIndex:=strtoint(Princ.GetConfiguracion('TIPOBUSQUEDA'))-1;
+
     DBGrid1.Columns.Items[3].Visible:=false;
     fil_producto_preciocosto.Text:='';
     fil_producto_preciocosto.Visible:=false;

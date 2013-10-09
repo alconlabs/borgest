@@ -242,6 +242,7 @@ type
     VENTASNCNDCONCEPTOS:string;
     empresa_where:string;
     ruta_carpeta_reportes:string;
+    ultima_busqueda_productos:string;
     function codigo(tabla:string;campo:string):string;
     function buscar(sql:string;campo:string):string;
     function fechaservidor():TDateTime;
@@ -309,6 +310,7 @@ type
     function CargarCompraPago(importe:real; QDocumentocomprapagos: TDataSet; QPagoTarjeta:TDataset):boolean;
     procedure AgregarOrdendePago(ZQCabecera: TDataset; ZQDetalle: TDataset; ZQPagos: TDataset);
     procedure ActualizarSaldoDocumentoCompra(id: string; importe: Real; inversa:boolean=false);
+    function ControlDocumentoComprarepetido(tipodocu_id:string; documentocompra_puntoventa:string; documentocompra_numero:string; proveedor_id:string):boolean;
   end;
 
 
@@ -434,6 +436,22 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   Unitdetallectasproveedores, UnitListaNotasDeDebitodeCompras;
 
 {$R *.dfm}
+
+
+function TPrinc.ControlDocumentoComprarepetido(tipodocu_id:string; documentocompra_puntoventa:string; documentocompra_numero:string; proveedor_id:string):boolean;
+var
+  documentocompra_id:string;
+begin
+    documentocompra_id:=buscar('select documentocompra_id from documentoscompras where '+
+                               'tipodocu_id="'+tipodocu_id+'" '+
+                               'and documentocompra_puntoventa="'+documentocompra_puntoventa+'" '+
+                               'and documentocompra_numero="'+documentocompra_numero+'" '+
+                               'and proveedor_id="'+proveedor_id+'" ','documentocompra_id');
+
+    Result:=documentocompra_id<>'';
+
+
+end;
 
 procedure TPrinc.ConfigurarColumnas(grilla: TDBGrid);
 var
@@ -1161,7 +1179,7 @@ begin
         begin
             Self.actualizarstock(ZQdocumentocompradetalles.FieldByName('producto_id').AsString, ZQdocumentocompradetalles.FieldByName('documentocompradetalle_cantidad').AsFloat, tipodocu_id,true);
 
-            ZQdocumentoventadetalles.Next;
+            ZQdocumentocompradetalles.Next;
         end;
 
     ZQdocumentocompradetalles.Active:=false;

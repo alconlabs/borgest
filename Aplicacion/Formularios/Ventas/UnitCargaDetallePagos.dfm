@@ -24,7 +24,7 @@ inherited CargaDetallePagos: TCargaDetallePagos
       Top = 0
       Width = 541
       Height = 294
-      ActivePage = TabSheet2
+      ActivePage = TabSheet1
       Align = alClient
       TabOrder = 2
       object TabSheet1: TTabSheet

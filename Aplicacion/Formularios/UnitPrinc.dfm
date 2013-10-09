@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageComisiones
+    ActivePage = AdvPageCompras
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -3842,10 +3842,12 @@ object Princ: TPrinc
     Connection = ZBase
     SQL.Strings = (
       'select *, '
-      '(:importe*tarjetacuotas.tarjetacuota_recargo/100) as importe, '
       
-        '(:importe+(:importe*tarjetacuotas.tarjetacuota_recargo/100))/:cu' +
-        'otas as cuota_importe'
+        'ROUND((:importe*tarjetacuotas.tarjetacuota_recargo/100),2) as im' +
+        'porte, '
+      
+        'ROUND((:importe+(:importe*tarjetacuotas.tarjetacuota_recargo/100' +
+        '))/:cuotas,2) as cuota_importe'
       'from tarjetas'
       
         'inner join tarjetacuotas on tarjetas.tarjeta_id=tarjetacuotas.ta' +

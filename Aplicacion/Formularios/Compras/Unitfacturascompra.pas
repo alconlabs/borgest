@@ -94,6 +94,7 @@ type
     Label23: TLabel;
     documentocompra_dgrret: TMoneyEdit;
     documentocompra_dgrperc: TMoneyEdit;
+    btnagregarproveedor: TButton;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -111,6 +112,7 @@ type
     procedure FacturarnotapedidoClick(Sender: TObject);
     procedure btnimprimirventaClick(Sender: TObject);
     procedure documentocompra_neto21Exit(Sender: TObject);
+    procedure proveedor_idExit(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -293,6 +295,19 @@ begin
     ZQDocumentocompradetalles.GotoBookmark(bm);
 
 
+end;
+
+procedure Tfacturacompra.proveedor_idExit(Sender: TObject);
+begin
+    if abm=ABM_AGREGAR then
+      begin
+          if Princ.ControlDocumentoComprarepetido(tipodocu_id.codigo,documentocompra_puntoventa.Text, documentocompra_numero.Text, proveedor_id.codigo) then
+            begin
+                if (MessageDlg('Ya existe otro comprobante con los mismos datos.'+#13+#10+'Desea continuar?', mtWarning, [mbOK, mbCancel], 0) = mrCancel) then
+                  (Sender as TWinControl).SetFocus;
+            end;
+
+      end;
 end;
 
 procedure Tfacturacompra.proveedor_idSelect(Sender: TObject);
@@ -825,15 +840,6 @@ begin
     ZQExecSql.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
-
-    if Princ.buscar('select tipodocu_preimpresos from tiposdocumento where tipodocu_id="'+tipodocu_id.codigo+'"','tipodocu_preimpresos')='-1' then
-      begin
-          if (MessageDlg('Desea imprimir el comprobante?', mtConfirmation, [mbYes, mbNo], 0) = mrYes) then
-            begin
-                imprimir;
-            end;
-
-      end;
 
     if limpiar_al_guardar then
       begin

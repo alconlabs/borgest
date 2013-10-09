@@ -40,6 +40,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ZQGrillaAfterOpen(DataSet: TDataSet);
     procedure DBGrid1TitleClick(Column: TColumn);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     leyenda_barra_estado:string;
@@ -86,6 +87,11 @@ begin
 
 end;
 
+procedure Tlistabase.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+    Application.BringToFront;
+end;
+
 procedure Tlistabase.FormCreate(Sender: TObject);
 begin
     tipo_busqueda:=1;
@@ -116,6 +122,7 @@ var
 begin
 //    MessageDlg('begin show', mtWarning, [mbOK], 0);
 //here we should call the procedure to enable or don't the columns of the grid 
+    tipo_busqueda:=strtoint(Princ.GetConfiguracion('TIPOBUSQUEDA'));
     Princ.ConfigurarColumnas(self.DBGrid1);
 
     for i:=0 to panelfiltros.ControlCount-1 do
@@ -150,9 +157,6 @@ begin
     btnanular.Enabled:=Princ.Permisos1.Permiso_anular;
     btnver.Enabled:=Princ.Permisos1.Permiso_ver;
     btnfiltrar.Enabled:=Princ.Permisos1.Permiso_habilitado;
-
-
-
 
 //    MessageDlg('end show', mtWarning, [mbOK], 0);
 end;

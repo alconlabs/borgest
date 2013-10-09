@@ -1234,3 +1234,7 @@ UPDATE `empresas` SET `empresa_razonsocial`='CgAAAMa8LOdG3MnWldmtvJ6DXKY=\r\n' W
 ALTER TABLE `liquidacionessucursales` 
 ADD COLUMN `liquidacionsucursal_neto21` FLOAT(20,4) NULL DEFAULT 0  AFTER `documentoventa_id` , 
 ADD COLUMN `liquidacionsucursal_iva21` FLOAT(20,4) NULL DEFAULT 0  AFTER `liquidacionsucursal_neto21`;
+325;
+Replace config set config_valor='1', config_nombre='TIPOBUSQUEDA';
+326;
+ALTER TABLE `documentoscompras` CHANGE COLUMN `documentocompra_total` `documentocompra_total` FLOAT(20,2) NULL DEFAULT NULL;

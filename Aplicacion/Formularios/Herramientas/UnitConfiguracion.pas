@@ -105,6 +105,8 @@ type
     USUARIOPORDEFECTO: TSqlComboBox;
     Label27: TLabel;
     CARPETAREPORTES: TEdit;
+    Label28: TLabel;
+    TIPOBUSQUEDA: TGTBComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -382,6 +384,10 @@ begin
 
     ZQuery1.parambyname('config_nombre').AsString:='CARPETAREPORTES';
     ZQuery1.parambyname('config_valor').AsString:=CARPETAREPORTES.Text;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='TIPOBUSQUEDA';
+    ZQuery1.parambyname('config_valor').AsString:=TIPOBUSQUEDA.codigo;
     ZQuery1.ExecSQL;
 
 
@@ -699,6 +705,9 @@ begin
 
     if ZQConfig.Locate('config_nombre','CARPETAREPORTES',[]) then
       CARPETAREPORTES.Text:=ZQConfig.FieldByName('config_valor').AsString;
+
+    if ZQConfig.Locate('config_nombre','TIPOBUSQUEDA',[]) then
+      TIPOBUSQUEDA.Buscar(ZQConfig.FieldByName('config_valor').AsString);
 
 
 end;

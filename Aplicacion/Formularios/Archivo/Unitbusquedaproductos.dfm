@@ -342,6 +342,7 @@ object busquedaproductos: Tbusquedaproductos
         Top = 6
         Width = 131
         Height = 21
+        Style = csDropDownList
         ItemHeight = 13
         ItemIndex = 3
         TabOrder = 3
@@ -365,14 +366,15 @@ object busquedaproductos: Tbusquedaproductos
         Top = 6
         Width = 105
         Height = 21
+        Style = csDropDownList
         ItemHeight = 13
-        ItemIndex = 1
+        ItemIndex = 0
         TabOrder = 2
         TabStop = False
         Text = 'Contenga a'
         Items.Strings = (
-          'Comience con'
-          'Contenga a')
+          'Contenga a'
+          'Comience con')
       end
     end
     object AdvPanel1: TAdvPanel

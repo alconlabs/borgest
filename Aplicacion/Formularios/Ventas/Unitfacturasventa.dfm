@@ -705,7 +705,7 @@ object facturasventa: Tfacturasventa
       OnClick = btnimprimirventaClick
     end
     object btnagregarcliente: TButton
-      Left = 389
+      Left = 391
       Top = 52
       Width = 21
       Height = 21

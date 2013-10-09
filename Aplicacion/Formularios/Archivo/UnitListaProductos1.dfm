@@ -100,6 +100,10 @@ inherited ListaProductos1: TListaProductos1
         Left = 931
         ExplicitLeft = 931
       end
+      inherited fil_id: TGTBEdit
+        ExplicitLeft = -6
+        ExplicitTop = -6
+      end
       object fil_producto_nombre: TGTBEdit
         Left = 85
         Top = 0

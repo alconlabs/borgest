@@ -195,6 +195,7 @@ begin
     tarjeta_acobrar.Value:=documentopago_importe;
 
     tarjeta_id.llenarcombo;
+    tarjeta_cuotas.Text:='1';
 end;
 
 procedure TCargaDetallePagos.TabSheet3Show(Sender: TObject);
@@ -228,7 +229,7 @@ begin
       begin
           tarjeta_porcinteres.Caption:='0% interes';
           tarjeta_importeinteres.Text:='0';
-          tarjeta_importecuota.Text:=Princ.ZQRecargoTarjetas.FieldByName('cuota_importe').AsString;
+          tarjeta_importecuota.Value:=roundto(tarjeta_acobrar.Value/round(tarjeta_cuotas.Value),-2);
       end;
 
     tarjeta_cobrado.Value:=tarjeta_acobrar.Value+tarjeta_importeinteres.Value;

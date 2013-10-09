@@ -89,11 +89,13 @@ object configuracion: Tconfiguracion
       Top = 0
       Width = 589
       Height = 465
-      ActivePage = TabSheet4
+      ActivePage = TabSheet1
       Align = alTop
       TabOrder = 2
       object TabSheet1: TTabSheet
         Caption = 'General'
+        ExplicitLeft = 0
+        ExplicitTop = 28
         object Label14: TLabel
           Left = 44
           Top = 10
@@ -125,6 +127,14 @@ object configuracion: Tconfiguracion
           Height = 13
           Alignment = taRightJustify
           Caption = 'Carpeta Reportes'
+        end
+        object Label28: TLabel
+          Left = 55
+          Top = 301
+          Width = 87
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Tipo de Busqueda'
         end
         object SUCURSALDEFECTO: TSqlComboBox
           Left = 148
@@ -287,6 +297,22 @@ object configuracion: Tconfiguracion
           Width = 145
           Height = 21
           TabOrder = 8
+        end
+        object TIPOBUSQUEDA: TGTBComboBox
+          Left = 148
+          Top = 298
+          Width = 145
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          TabOrder = 9
+          Items.Strings = (
+            'Contenga a...'
+            'Comience con...')
+          Tag2 = 0
+          valores.Strings = (
+            '1'
+            '2')
         end
       end
       object TabSheet2: TTabSheet

@@ -171,6 +171,7 @@ object facturacompra: Tfacturacompra
       Width = 121
       Height = 21
       TabOrder = 4
+      OnExit = proveedor_idExit
     end
     object documentocompra_fecha: TDateTimePicker
       Left = 728
@@ -189,6 +190,7 @@ object facturacompra: Tfacturacompra
       Style = csDropDownList
       ItemHeight = 13
       TabOrder = 5
+      OnExit = proveedor_idExit
       OnSelect = proveedor_idSelect
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -734,6 +736,7 @@ object facturacompra: Tfacturacompra
       Style = csDropDownList
       ItemHeight = 13
       TabOrder = 1
+      OnExit = proveedor_idExit
       OnSelect = puntoventa_idSelect
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -750,6 +753,7 @@ object facturacompra: Tfacturacompra
       Style = csDropDownList
       ItemHeight = 13
       TabOrder = 2
+      OnExit = proveedor_idExit
       Confbase = Princ.ZBase
       Confsql.Strings = (
         'select * from tiposdocumento'
@@ -840,6 +844,7 @@ object facturacompra: Tfacturacompra
       Style = csDropDownList
       ItemHeight = 13
       TabOrder = 0
+      OnExit = proveedor_idExit
       OnSelect = sucursal_idSelect
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -912,6 +917,16 @@ object facturacompra: Tfacturacompra
       Width = 57
       Height = 21
       TabOrder = 3
+      OnExit = proveedor_idExit
+    end
+    object btnagregarproveedor: TButton
+      Left = 391
+      Top = 63
+      Width = 21
+      Height = 21
+      Caption = '...'
+      TabOrder = 22
+      TabStop = False
     end
   end
   object ZQuery2: TZQuery

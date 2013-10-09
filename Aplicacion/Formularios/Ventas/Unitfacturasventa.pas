@@ -591,6 +591,7 @@ end;
 procedure Tfacturasventa.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
     Self.Free;
+    Application.BringToFront;
 end;
 
 procedure Tfacturasventa.FormCreate(Sender: TObject);
@@ -669,7 +670,7 @@ end;
 
 procedure Tfacturasventa.FormShow(Sender: TObject);
 begin
-
+    princ.ultima_busqueda_productos:='';
     btnherramientas.Visible:=abm=1;
     btnimprimirventa.Visible:=abm<>1;
 
@@ -1314,6 +1315,16 @@ var
 begin
     error:=0;
 
+    if documentoventa_condicionventa.ItemIndex=strtoint(CONDICIONVENTA_CONTADO) then
+      begin
+          if documentoventa_pagado=documentoventa_total.Value then
+            begin
+                error:=10;
+            end;
+      end;
+
+
+
     if ZQDocumentoventadetalles.RecordCount<1 then
       error:=9;
 
@@ -1370,6 +1381,10 @@ begin
         9:begin
               MessageDlg('Ingrese detalle de venta', mtError, [mbOK], 0);
           end;
+       10:begin
+              MessageDlg('Importes no coinciden. Verifique Pagos', mtError, [mbOK], 0);
+          end;
+
     end;
 
     if error=0 then

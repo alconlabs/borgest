@@ -13,6 +13,7 @@ object listabase: Tlistabase
   KeyPreview = True
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow
