@@ -156,8 +156,15 @@ begin
         begin
             Princ.actualizarstock(ZQDocumentoventadetallesAnterior.FieldByName('producto_id').AsString,ZQDocumentoventadetallesAnterior.FieldByName('documentoventadetalle_cantidad').AsFloat,tipodocu_id.codigo,true);
 
+            ZQExecSql.Sql.Clear;
+            ZQExecSql.Sql.Add('delete from docuvendetcomisionesvendedores ');
+            ZQExecSql.Sql.Add('where documentoventadetalle_id=:documentoventadetalle_id ');
+            ZQExecSql.ParamByName('documentoventadetalle_id').AsString:=ZQDocumentoventadetallesAnterior.FieldByName('documentoventadetalle_id').AsString;
+            ZQExecSql.ExecSql;
+
             ZQDocumentoventadetallesAnterior.Next;
         end;
+
 
     ZQExecSql.SQL.Clear;
     ZQExecSql.SQL.Add('delete from documentoventadetalles ');
@@ -195,13 +202,6 @@ begin
             ZQExecSql.ExecSQL;
 
             Princ.actualizarstock(ZQDocumentoventadetalles.FieldByName('producto_id').AsString,ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat,tipodocu_id.codigo,false);
-
-            ZQExecSql.Sql.Clear;
-            ZQExecSql.Sql.Add('delete from docuvendetcomisionesvendedores ');
-            ZQExecSql.Sql.Add('where documentoventadetalle_id=:documentoventadetalle_id ');
-            ZQExecSql.ParamByName('documentoventadetalle_id').AsString:=documentoventadetalle_id;
-            ZQExecSql.ExecSql;
-
 
             ZQDocuVenDetComisionesVendedores.First;
             while not ZQDocuVenDetComisionesVendedores.Eof do
@@ -260,6 +260,9 @@ begin
     ZQExecSql.SQL.Clear;
     ZQExecSql.SQL.Add('commit');
     ZQExecSql.ExecSQL;
+
+    MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK, mbCancel], 0);
+    Self.Close;
 
 end;
 
@@ -404,6 +407,9 @@ begin
     ZQExecSql.SQL.Add('commit');
     ZQExecSql.ExecSQL;
 
+    MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK, mbCancel], 0);
+    Self.Close;
+
 end;
 
 procedure TNotaPedidoComisiones.btnagregarClick(Sender: TObject);
@@ -489,31 +495,6 @@ begin
 
 
 
-
-
-
-
-    ZQDocuVenDetComisionesVendedores.First;
-    ZQExecSql.Sql.Clear;
-    ZQExecSql.Sql.Add('insert into docuvendetcomisionesvendedores set ');
-    ZQExecSql.Sql.Add('personal_id=:personal_id, ');
-    ZQExecSql.Sql.Add('documentoventadetalle_id=:documentoventadetalle_id, ');
-    ZQExecSql.Sql.Add('docuvendetcomisionvendedor_total=:docuvendetcomisionvendedor_total, ');
-    ZQExecSql.Sql.Add('docuvendetcomisionvendedor_importeunit=:docuvendetcomisionvendedor_importeunit, ');
-    ZQExecSql.Sql.Add('docuvendetcomisionvendedor_id=:docuvendetcomisionvendedor_id ');
-
-    while not ZQDocuVenDetComisionesVendedores.Eof do
-        begin
-            ZQExecSql.ParamByName('personal_id').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('personal_id').AsString;
-            ZQExecSql.ParamByName('documentoventadetalle_id').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('documentoventadetalle_id').AsString;
-            ZQExecSql.ParamByName('docuvendetcomisionvendedor_total').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_total').AsString;
-            ZQExecSql.ParamByName('docuvendetcomisionvendedor_importeunit').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_importeunit').AsString;
-            ZQExecSql.ParamByName('docuvendetcomisionvendedor_id').AsString:=Princ.codigo('docuvendetcomisionesvendedores','docuvendetcomisionvendedor_id');
-            ZQExecSql.ExecSql;
-
-
-            ZQDocuVenDetComisionesVendedores.Next;
-        end;
 end;
 
 procedure TNotaPedidoComisiones.btnimprimirClick(Sender: TObject);

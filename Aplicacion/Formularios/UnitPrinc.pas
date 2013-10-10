@@ -1109,6 +1109,13 @@ begin
         begin
             Self.actualizarstock(ZQdocumentoventadetalles.FieldByName('producto_id').AsString, ZQdocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat, tipodocu_id,true);
 
+
+            ZQExcecSQL.Sql.Clear;
+            ZQExcecSQL.Sql.Add('delete from docuvendetcomisionesvendedores ');
+            ZQExcecSQL.Sql.Add('where documentoventadetalle_id=:documentoventadetalle_id ');
+            ZQExcecSQL.ParamByName('documentoventadetalle_id').AsString:=ZQdocumentoventadetalles.FieldByName('documentoventadetalle_id').AsString;
+            ZQExcecSQL.ExecSql;
+
             ZQdocumentoventadetalles.Next;
         end;
 
@@ -3252,9 +3259,6 @@ begin
 
 
       end;
-
-
-
 
 
 

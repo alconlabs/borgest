@@ -250,9 +250,6 @@ begin
                   ZQDocumentoventadetalles.Next;
               end;
 
-
-
-
           ZQExecSql.sql.clear;
           ZQExecSql.sql.add('Update documentosventas set ');
           ZQExecSql.sql.add('documentoventa_estado=:documentoventa_estado');
@@ -261,7 +258,7 @@ begin
           ZQExecSql.parambyname('documentoventa_id').asstring:=id;
           ZQExecSql.ExecSQL;
 
-          MessageDlg('La Factura fue anulada correctamente.', mtInformation, [mbOK], 0);
+          MessageDlg('La Documento Anulado correctamente.', mtInformation, [mbOK], 0);
 
       end;
 
