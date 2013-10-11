@@ -17,7 +17,10 @@ object TRpReport
       DatabaseAlias = 'CONEXION_DBBORGEST'
       SQL = 
         'select * from productos'#13#10'inner join rubros on productos.rubro_id' +
-        '=rubros.rubro_id'#13#10'order by producto_nombre'
+        '=rubros.rubro_id'#13#10'inner join productodeposito on productos.produ' +
+        'cto_id=productodeposito.producto_id'#13#10'inner join depositos on pro' +
+        'ductodeposito.deposito_id=depositos.deposito_id'#13#10'order by produc' +
+        'to_nombre'
     end>
   DatabaseInfo = <
     item
@@ -212,7 +215,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.producto_codigobarras'
+    Expression = 'ALIAS_DBBORGEST.producto_codigo'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -250,9 +253,9 @@ object TRpReport
     PosY = 0
     Type1Font = poHelvetica
     CutText = True
-    Alignment = 1
+    Alignment = 2
     SingleLine = True
-    DataType = rpParamString
+    DataType = rpParamInteger
     AutoExpand = False
     AutoContract = False
     ExportPosition = 0
@@ -263,7 +266,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.rubro_nombre'
+    Expression = 'ALIAS_DBBORGEST.producdepo_stockactual'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -436,7 +439,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    WideText = 'Rubro'
+    WideText = 'Stock'
   end
   object TRpShape12: TRpShape
     Width = 10320

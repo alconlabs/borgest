@@ -1238,3 +1238,5 @@ ADD COLUMN `liquidacionsucursal_iva21` FLOAT(20,4) NULL DEFAULT 0  AFTER `liquid
 Replace config set config_valor='1', config_nombre='TIPOBUSQUEDA';
 326;
 ALTER TABLE `documentoscompras` CHANGE COLUMN `documentocompra_total` `documentocompra_total` FLOAT(20,2) NULL DEFAULT NULL;
+327;
+ALTER TABLE `documentosventas` ADD COLUMN `documentoventa_descuento` FLOAT(20,2) NULL DEFAULT 0  AFTER `documentoventa_recargo`;

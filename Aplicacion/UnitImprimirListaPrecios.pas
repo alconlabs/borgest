@@ -25,10 +25,15 @@ type
     procedure btncancelarClick(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
     procedure btnimprimirClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    procedure ArmarLeyendaBarraEstado;
   public
     { Public declarations }
+    primercaracter:string;
+    tipo_busqueda:integer;
   end;
 
 var
@@ -42,6 +47,18 @@ Uses UnitPrinc;
 
 procedure TImprimirListaPrecios.btncancelarClick(Sender: TObject);
 begin
+    primercaracter:='%';
+    case tipo_busqueda of
+              1:begin
+                    primercaracter:='%';
+              end;
+
+              2:begin
+                    primercaracter:='';
+              end;
+    end;
+
+
     tiProdcutos.Memo.Text:='select * from productos '+
                       'inner join proveedores on productos.proveedor_id=proveedores.proveedor_id '+
                       'inner join rubros on productos.rubro_id=rubros.rubro_id '+
@@ -54,7 +71,7 @@ begin
       tiProdcutos.Memo.Text:=tiProdcutos.Memo.Text+' and proveedores.proveedor_id="'+proveedor_id.codigo+'"';
 
     if producto_nombre.Text<>'' then
-      tiProdcutos.Memo.Text:=tiProdcutos.Memo.Text+' and productos.producto_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(producto_nombre.Text,' ','%')+'%"';
+      tiProdcutos.Memo.Text:=tiProdcutos.Memo.Text+' and productos.producto_nombre like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(producto_nombre.Text,' ','%')+'%"';
 
     tiProdcutos.Memo.Text:=tiProdcutos.Memo.Text+' order by producto_nombre';
 
@@ -99,10 +116,12 @@ begin
       end
     else
       begin
-          Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'reportes\listado_productos.rep';
+          Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'listado_productos.rep';
           Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from productos '+
                                                          'inner join rubros on productos.rubro_id=rubros.rubro_id '+
-                                                         'where 1=1 and '+productos.where+' order by producto_nombre';
+                                                         'inner join productodeposito on productos.producto_id=productodeposito.producto_id '+
+                                                         'inner join depositos on productodeposito.deposito_id=depositos.deposito_id '+
+                                                         'where 1=1 and depositos.deposito_id="'+Princ.dep_id+'" and '+productos.where+' order by producto_nombre';
       end;
 
 
@@ -140,6 +159,48 @@ begin
     tiProdcutos.Titulos.Add(Princ.NOMBREPRECIO3);
     tiProdcutos.Titulos.Add(Princ.NOMBREPRECIO4);
 
+    tipo_busqueda:=1;
+    ArmarLeyendaBarraEstado;
+
 end;
+
+procedure TImprimirListaPrecios.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+    if Key=VK_F2 then
+      begin
+          if tipo_busqueda=1 then
+            tipo_busqueda:=2
+          else
+            tipo_busqueda:=1;
+      end;
+
+    ArmarLeyendaBarraEstado;
+end;
+
+
+procedure TImprimirListaPrecios.FormShow(Sender: TObject);
+begin
+  inherited;
+    tipo_busqueda:=strtoint(Princ.GetConfiguracion('TIPOBUSQUEDA'));
+    ArmarLeyendaBarraEstado;
+end;
+
+procedure TImprimirListaPrecios.ArmarLeyendaBarraEstado;
+begin
+    case tipo_busqueda of
+        1:begin
+              panelgrilla.StatusBar.Text:='Tipo de busqueda (F2): Contenga a...';
+          end;
+
+        2:begin
+              panelgrilla.StatusBar.Text:='Tipo de busqueda (F2): Comience con.';
+          end;
+    end;
+
+
+end;
+
 
 end.

@@ -683,7 +683,7 @@ begin
                            'inner join personal as pesronalcliente on clientes.personal_id=pesronalcliente.personal_id '+
                            'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
                            'group by grupo '+
-                           'order by sucursal_nombre, personal.personal_nombre, cliente_nombre, clientes.cliente_id, documentoventa_fecha, documentoventa_numero ';
+                           'order by sucursal_nombre, pesronalcliente.personal_nombre, cliente_nombre, clientes.cliente_id, documentoventa_fecha, documentoventa_numero ';
 
 
 

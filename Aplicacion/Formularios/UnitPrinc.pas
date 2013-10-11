@@ -2147,6 +2147,7 @@ begin
     ZQDocumentosventasABM.Sql.Add('documentoventa_hora=:documentoventa_hora, ');
     ZQDocumentosventasABM.Sql.Add('documentoventa_fecha=:documentoventa_fecha, ');
     ZQDocumentosventasABM.Sql.Add('documentoventa_recargo=:documentoventa_recargo, ');
+    ZQDocumentosventasABM.Sql.Add('documentoventa_descuento=:documentoventa_descuento, ');
     ZQDocumentosventasABM.Sql.Add('documentoventa_numero=:documentoventa_numero ');
     ZQDocumentosventasABM.Sql.Add('where documentoventa_id=:documentoventa_id ');
     ZQDocumentosventasABM.parambyname('cliente_id').asstring:=Cabecera.FieldByName('cliente_id').AsString;
@@ -2170,6 +2171,7 @@ begin
     ZQDocumentosventasABM.parambyname('personal_id').asstring:=Cabecera.FieldByName('personal_id').AsString;
     ZQDocumentosventasABM.parambyname('tipodocu_id').asstring:=Cabecera.FieldByName('tipodocu_id').AsString;
     ZQDocumentosventasABM.ParamByName('documentoventa_recargo').AsString:=Cabecera.FieldByName('documentoventa_recargo').AsString;
+    ZQDocumentosventasABM.ParamByName('documentoventa_descuento').AsString:=Cabecera.FieldByName('documentoventa_descuento').AsString;
     ZQDocumentosventasABM.ExecSQL;
 
     if Detalle<>nil then

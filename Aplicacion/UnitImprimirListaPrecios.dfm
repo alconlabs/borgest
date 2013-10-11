@@ -2,6 +2,7 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
   Caption = 'Imprimir Lista de Precios'
   ClientHeight = 519
   ClientWidth = 865
+  OnShow = FormShow
   ExplicitWidth = 881
   ExplicitHeight = 557
   PixelsPerInch = 96
@@ -9,6 +10,7 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
   inherited panelgrilla: TAdvPanel
     Width = 865
     Height = 519
+    StatusBar.BevelInner = True
     ExplicitWidth = 865
     ExplicitHeight = 519
     FullHeight = 0
@@ -37,18 +39,16 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
       Caption = 'Nombre'
     end
     inherited btncancelar: TButton
-      Left = 51
-      Top = 488
-      ExplicitLeft = 51
-      ExplicitTop = 488
+      Top = 464
+      ExplicitTop = 464
     end
     inherited btnguardar: TButton
       Left = 142
-      Top = 488
+      Top = 464
       Visible = False
       OnClick = btnguardarClick
       ExplicitLeft = 142
-      ExplicitTop = 488
+      ExplicitTop = 464
     end
     object rubro_id: TSqlComboBox
       Left = 66
@@ -56,7 +56,7 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
       Width = 206
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 2
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -74,7 +74,7 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
       Width = 393
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 3
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -212,7 +212,7 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
       Width = 145
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 8
       Tag2 = 0
       valores.Strings = (
@@ -234,7 +234,7 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
     Top = 8
   end
   object tiProdcutos: TTitles
-    cam_codi = 'producto_id'
+    cam_codi = 'productos.producto_id'
     cam_text = 'producto_nombre'
     Titulos.Strings = (
       'Codigo'

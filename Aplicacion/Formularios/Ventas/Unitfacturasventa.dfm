@@ -400,6 +400,14 @@ object facturasventa: Tfacturasventa
         Alignment = taRightJustify
         Caption = 'Recargo'
       end
+      object Label14: TLabel
+        Left = 162
+        Top = 17
+        Width = 52
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Descuento'
+      end
       object documentoventa_neto21: TMoneyEdit
         Left = 68
         Top = 38
@@ -418,7 +426,7 @@ object facturasventa: Tfacturasventa
         CalculatorLook.Font.Style = []
         EditorEnabled = False
         ReadOnly = True
-        TabOrder = 1
+        TabOrder = 2
         Version = '1.1.0.1'
       end
       object documentoventa_iva21: TMoneyEdit
@@ -439,7 +447,7 @@ object facturasventa: Tfacturasventa
         CalculatorLook.Font.Style = []
         EditorEnabled = False
         ReadOnly = True
-        TabOrder = 2
+        TabOrder = 3
         Version = '1.1.0.1'
       end
       object documentoventa_neto105: TMoneyEdit
@@ -459,7 +467,7 @@ object facturasventa: Tfacturasventa
         CalculatorLook.Font.Name = 'Tahoma'
         CalculatorLook.Font.Style = []
         ReadOnly = True
-        TabOrder = 3
+        TabOrder = 4
         Version = '1.1.0.1'
       end
       object documentoventa_iva105: TMoneyEdit
@@ -479,7 +487,7 @@ object facturasventa: Tfacturasventa
         CalculatorLook.Font.Name = 'Tahoma'
         CalculatorLook.Font.Style = []
         ReadOnly = True
-        TabOrder = 4
+        TabOrder = 5
         Version = '1.1.0.1'
       end
       object documentoventa_total: TMoneyEdit
@@ -505,7 +513,7 @@ object facturasventa: Tfacturasventa
         Font.Style = [fsBold]
         ParentFont = False
         ReadOnly = True
-        TabOrder = 5
+        TabOrder = 6
         Version = '1.1.0.1'
       end
       object documentoventa_recargo: TMoneyEdit
@@ -524,6 +532,25 @@ object facturasventa: Tfacturasventa
         CalculatorLook.Font.Name = 'Tahoma'
         CalculatorLook.Font.Style = []
         TabOrder = 0
+        Version = '1.1.0.1'
+        OnExit = documentoventa_recargoExit
+      end
+      object documentoventa_descuento: TMoneyEdit
+        Left = 228
+        Top = 14
+        Width = 70
+        Height = 21
+        CalculatorLook.ButtonWidth = 24
+        CalculatorLook.ButtonHeight = 24
+        CalculatorLook.ButtonColor = clSilver
+        CalculatorLook.Color = clWhite
+        CalculatorLook.Flat = False
+        CalculatorLook.Font.Charset = DEFAULT_CHARSET
+        CalculatorLook.Font.Color = clWindowText
+        CalculatorLook.Font.Height = -11
+        CalculatorLook.Font.Name = 'Tahoma'
+        CalculatorLook.Font.Style = []
+        TabOrder = 1
         Version = '1.1.0.1'
         OnExit = documentoventa_recargoExit
       end
