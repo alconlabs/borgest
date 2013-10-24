@@ -53,6 +53,28 @@ class ConexionBD {
 		}		
 	}
 	
+	public function Codigo($tabla,$campo){ // devuelve falso si la cons tiene 0 filas
+		
+		// Realizar consulta Mysql
+		$Sql_consulta = "select max($campo)+1 as id from $tabla";
+		
+		$result = mysql_query($Sql_consulta, $this->conex);
+		if (!$result) { die('Consulta erronea: ' . mysql_error());}
+		else {
+		if (mysql_num_rows($result)>0){
+		// Pasar datos a objetos
+		$x = 0;
+		while ($row = mysql_fetch_object($result)) {
+    		$Resultado[$x] = $row;
+			$x++;}
+
+		return $Resultado[0]->id;	
+		}
+		mysql_free_result($result);
+		
+		}		
+	}
+	
 	public function Consulta_SinRetorno($Sql_consulta){ 
 		
 		// Realizar consulta Mysql

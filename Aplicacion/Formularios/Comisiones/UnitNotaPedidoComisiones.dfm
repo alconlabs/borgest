@@ -1,5 +1,5 @@
 inherited NotaPedidoComisiones: TNotaPedidoComisiones
-  Caption = 'Nota de pedido - Comisiones'
+  Caption = 'Borrador'
   ClientHeight = 539
   ClientWidth = 917
   ExplicitWidth = 933
@@ -48,8 +48,17 @@ inherited NotaPedidoComisiones: TNotaPedidoComisiones
       Font.Style = [fsBold]
       ParentFont = False
     end
+    inherited documentoventa_numero: TEdit
+      Left = 455
+      Enabled = False
+      TabOrder = 16
+      Visible = False
+      OnChange = documentoventa_numeroChange
+      ExplicitLeft = 455
+    end
     inherited documentoventa_fecha: TDateTimePicker
       Left = 793
+      TabOrder = 17
       ExplicitLeft = 793
     end
     inherited personal_id: TSqlComboBox
@@ -230,7 +239,7 @@ inherited NotaPedidoComisiones: TNotaPedidoComisiones
       Height = 142
       TabStop = False
       DataSource = DTSDocuVenDetComisionesVendedores
-      TabOrder = 17
+      TabOrder = 18
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
@@ -267,8 +276,63 @@ inherited NotaPedidoComisiones: TNotaPedidoComisiones
       Width = 75
       Height = 25
       Caption = 'Imprimir'
-      TabOrder = 18
+      TabOrder = 19
       OnClick = btnimprimirClick
+    end
+    object btnherramientas: TAdvGlowButton
+      Left = 790
+      Top = 4
+      Width = 44
+      Height = 29
+      Caption = 'btnherramientas'
+      Picture.Data = {
+        FFD8FFE000104A46494600010100000100010000FFDB00430009060708070609
+        0807080A0A090B0D160F0D0C0C0D1B14151016201D2222201D1F1F2428342C24
+        2631271F1F2D3D2D3135373A3A3A232B3F443F384334393A37FFDB0043010A0A
+        0A0D0C0D1A0F0F1A37251F253737373737373737373737373737373737373737
+        373737373737373737373737373737373737373737373737373737373737FFC0
+        0011080019001903012200021101031101FFC400190000020301000000000000
+        000000000000000601040507FFC4002810000103020602020203000000000000
+        0001020311042100051213314151610614228142A1E1FFC40016010101010000
+        0000000000000000000000020104FFC4001D1100030002020300000000000000
+        00000000010203110431124161FFDA000C03010002110311003F00EB59A56975
+        C72869DC7187814C396095137D1AAFA491DC77FAC465758B0E32D29D71E69E04
+        20BB1B8850049048B1100DFD77368CEA80A8B95685B2105003C8795A5040EE60
+        C7EFD7118566B3759CD58CBD49430EBAA57D75224A9A00112A16E44C71E0E2B7
+        2BB1CE3BB4DCAE87376BD46BDBA5A646E1D50EAA0C2044DCF03D79C5FC51CA76
+        9A63EB251B6EA2EB4CCEA9FE53D83FE62F62004FF95D7572F30143494AF3AF7E
+        3F5D01274A8C4EE13C58D84F0413E234322F8CB59750A8542F773078EB7AA472
+        15D04CF43FBBCF3860C180A355E4CD17C86F12C72B4BDFD335AA7A853CDA5C4E
+        8D954EE03623C27BBF60F1EEC71A58306199CFFFD9}
+      TabOrder = 20
+      Appearance.ColorChecked = 16111818
+      Appearance.ColorCheckedTo = 16367008
+      Appearance.ColorDisabled = 15921906
+      Appearance.ColorDisabledTo = 15921906
+      Appearance.ColorDown = 16111818
+      Appearance.ColorDownTo = 16367008
+      Appearance.ColorHot = 16117985
+      Appearance.ColorHotTo = 16372402
+      Appearance.ColorMirrorHot = 16107693
+      Appearance.ColorMirrorHotTo = 16775412
+      Appearance.ColorMirrorDown = 16102556
+      Appearance.ColorMirrorDownTo = 16768988
+      Appearance.ColorMirrorChecked = 16102556
+      Appearance.ColorMirrorCheckedTo = 16768988
+      Appearance.ColorMirrorDisabled = 11974326
+      Appearance.ColorMirrorDisabledTo = 15921906
+      Layout = blGlyphTop
+      DropDownButton = True
+      DropDownMenu = AdvPopupMenu1
+    end
+    object documentoventa_equipo1: TGTBEdit
+      Left = 184
+      Top = 36
+      Width = 201
+      Height = 21
+      TabOrder = 15
+      Tag2 = 0
+      FieldName = 'documentoventa_equipo1'
     end
   end
   inherited ZQDocumentoventadetalles: TZQuery
@@ -336,7 +400,7 @@ inherited NotaPedidoComisiones: TNotaPedidoComisiones
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 256
+    Left = 248
     Top = 416
     ParamData = <
       item
@@ -367,6 +431,15 @@ inherited NotaPedidoComisiones: TNotaPedidoComisiones
     end
     object ZQDocuVenDetComisionesVendedoresdocumentoventa_id: TIntegerField
       FieldName = 'documentoventa_id'
+    end
+  end
+  object AdvPopupMenu1: TAdvPopupMenu
+    Version = '2.0.0.0'
+    Left = 440
+    Top = 8
+    object NotasdePedido1: TMenuItem
+      Caption = 'Notas de Pedido'
+      OnClick = NotasdePedido1Click
     end
   end
 end

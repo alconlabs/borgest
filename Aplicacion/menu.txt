@@ -33,6 +33,10 @@ Compras
 	Informes
 		Informes
 		Libro IVA Compras
+	Stock
+		Consultas de Stock
+		Ajustes de Stock
+		Movimientos de Stock
 Ventas
 	Documentos
 		Cotratacion

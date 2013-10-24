@@ -67,7 +67,7 @@ $sql=$sql." order by producto_nombre";
           <td width="5"></td>
           <td width="100" align="right" valign="middle"><?php echo $productos[$x]->producto_id; ?></td>
           <td width="5"><input name="producto_nombre" type="hidden" id="producto_nombre" value="<?php echo $productos[$x]->producto_nombre; ?>" /></td>
-          <td width="300"><?php echo $productos[$x]->producto_nombre; ?></td>
+          <td width="300"><?php echo $productos[$x]->producto_nombre;?></td>
           <td width="5"><input name="producto_id" type="hidden" id="producto_id" value="<?php echo $productos[$x]->producto_id; ?>" /></td>
           <td width="50" align="right"><?php echo $productos[$x]->stockactual; ?></td>
           <td width="5"><input name="stockactual" type="hidden" id="stockactual" value="<?php echo $productos[$x]->stockactual; ?>" /></td>

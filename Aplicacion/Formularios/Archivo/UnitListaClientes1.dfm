@@ -2,6 +2,7 @@ inherited ListaClientes1: TListaClientes1
   Caption = 'Clientes'
   ClientWidth = 1010
   ExplicitWidth = 1026
+  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -12,9 +13,6 @@ inherited ListaClientes1: TListaClientes1
       Left = 907
       ExplicitLeft = 907
       FullHeight = 0
-      inherited btnanular: TButton
-        Visible = False
-      end
     end
     inherited DBGrid1: TDBGrid
       Width = 907
@@ -69,6 +67,7 @@ inherited ListaClientes1: TListaClientes1
       inherited btnfiltrar: TButton
         Left = 907
         ExplicitLeft = 907
+        ExplicitTop = 0
       end
       object fil_cliente_nombre: TEdit
         Left = 85

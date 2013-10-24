@@ -159,6 +159,9 @@
     <DCCReference Include="Formularios\Comisiones\Unitvendedoresdebcred.pas">
       <Form>vendedoresdebcred</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitAjusteStock.pas">
+      <Form>AjusteStock</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Compras\Unitcompradetalle.pas">
       <Form>compradetalle</Form>
     </DCCReference>
@@ -180,6 +183,9 @@
     <DCCReference Include="Formularios\Compras\UnitLibroIvaCompras.pas">
       <Form>LibroIvaCompras</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitListaAjustesdeStock.pas">
+      <Form>ListaAjustedeStock</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Compras\Unitlistafacturascompra.pas">
       <Form>listafacturascompra</Form>
     </DCCReference>
@@ -197,6 +203,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Compras\Unitlistaproveedores.pas">
       <Form>listaproveedores</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitMovimientosdeStock.pas">
+      <Form>MovimientosdeStock</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Compras\UnitNotaCreditoCompra.pas">
       <Form>NotadeCreditoCompra</Form>

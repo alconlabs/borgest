@@ -123,7 +123,10 @@ uses
   UnitNotaCreditoCompra in 'Formularios\Compras\UnitNotaCreditoCompra.pas' {NotadeCreditoCompra},
   UnitListaNotasDeDebitodeCompras in 'Formularios\Compras\UnitListaNotasDeDebitodeCompras.pas' {LIstaNotasDeDebitoDeCompras},
   UnitNotaDebitoCompra in 'Formularios\Compras\UnitNotaDebitoCompra.pas' {NotadeDebitoCompra},
-  Unitdetallectasproveedores in 'Formularios\Compras\Unitdetallectasproveedores.pas' {detallectasproveedores};
+  Unitdetallectasproveedores in 'Formularios\Compras\Unitdetallectasproveedores.pas' {detallectasproveedores},
+  UnitMovimientosdeStock in 'Formularios\Compras\UnitMovimientosdeStock.pas' {MovimientosdeStock},
+  UnitListaAjustesdeStock in 'Formularios\Compras\UnitListaAjustesdeStock.pas' {ListaAjustedeStock},
+  UnitAjusteStock in 'Formularios\Compras\UnitAjusteStock.pas' {AjusteStock};
 
 {$R *.res}
 
@@ -132,5 +135,7 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Borgest - Sistema de Gestion Comercial';
   Application.CreateForm(TPrinc, Princ);
+  Application.CreateForm(TListaAjustedeStock, ListaAjustedeStock);
+  Application.CreateForm(TAjusteStock, AjusteStock);
   Application.Run;
 end.

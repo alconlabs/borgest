@@ -6,7 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Unitdocumentoventabase, DB, ZAbstractRODataset, ZAbstractDataset,
   ZDataset, StdCtrls, GTBMemo, MoneyEdit, Grids, DBGrids, UnitSqlComboBox,
-  ComCtrls, ExtCtrls, AdvPanel, MQuery, Math;
+  ComCtrls, ExtCtrls, AdvPanel, MQuery, Math, Menus, AdvGlowButton, AdvMenus,
+  GBTEdit;
 
 type
   TNotaPedidoComisiones = class(Tdocumentoventabase)
@@ -26,6 +27,10 @@ type
     btnimprimir: TButton;
     ZQDocumentoventadetallesdocumentoventadetalle_totalfact: TFloatField;
     ZQDocumentoventadetallesdiferencia_total: TFloatField;
+    AdvPopupMenu1: TAdvPopupMenu;
+    btnherramientas: TAdvGlowButton;
+    NotasdePedido1: TMenuItem;
+    documentoventa_equipo1: TGTBEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnagregarClick(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -37,10 +42,13 @@ type
     procedure DTSDocumentoventadetalleDataChange(Sender: TObject;
       Field: TField);
     procedure btnimprimirClick(Sender: TObject);
+    procedure NotasdePedido1Click(Sender: TObject);
+    procedure documentoventa_numeroChange(Sender: TObject);
   private
     { Private declarations }
     detalle_id:integer;
     total_comisiones:real;
+    procedure CargarDocumento(tipodocunombre:string);
   protected
     { Protected declarations }
     procedure CalcularSaldo;
@@ -57,7 +65,7 @@ var
 
 implementation
 
-uses Unitprinc, UnitNotaPedidoComisionesDetalle;
+uses Unitprinc, UnitNotaPedidoComisionesDetalle, UnitFacturarDocumentos;
 
 {$R *.dfm}
 
@@ -125,6 +133,7 @@ begin
     ZQExecSql.SQL.Add('documentoventa_pagado=:documentoventa_pagado, ');
     ZQExecSql.SQL.Add('documentoventa_observacion=:documentoventa_observacion, ');
     ZQExecSql.SQL.Add('documentoventa_numero=:documentoventa_numero, ');
+    ZQExecSql.SQL.Add('documentoventa_equipo1=:documentoventa_equipo1, ');
     ZQExecSql.SQL.Add('documentoventa_fecha=:documentoventa_fecha ');
     ZQExecSql.SQL.Add('where documentoventa_id=:documentoventa_id');
 
@@ -145,6 +154,7 @@ begin
     ZQExecSql.ParamByName('documentoventa_numero').AsString:=documentoventa_numero.Text;
     ZQExecSql.ParamByName('documentoventa_fecha').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fecha.Date);
     ZQExecSql.ParamByName('documentoventa_id').AsString:=id;
+    ZQExecSql.ParamByName('documentoventa_equipo1').AsString:=documentoventa_equipo1.Text;
     ZQExecSql.ExecSQL;
 
 
@@ -267,6 +277,12 @@ begin
 end;
 
 
+procedure TNotaPedidoComisiones.NotasdePedido1Click(Sender: TObject);
+begin
+  inherited;
+    CargarDocumento('Nota de Pedido');
+end;
+
 procedure TNotaPedidoComisiones.agregar;
 var
   i: Integer;
@@ -288,11 +304,11 @@ begin
     ZQExecSql.sql.add('Insert into documentosventas (documentoventa_id, documentoventa_numero, documentoventa_fecha, documentoventa_hora, ');
     ZQExecSql.sql.add('documentoventa_neto21, documentoventa_iva21, documentoventa_neto105, documentoventa_iva105, documentoventa_netonogravado, ');
     ZQExecSql.sql.add('documentoventa_total, documentoventa_estado, documentoventa_pagado, documentoventa_saldo, ');
-    ZQExecSql.sql.add('cliente_id, personal_id, tipodocu_id, documentoventa_condicionventa, documentoventa_fechavenc, documentoventa_listaprecio, documentoventa_observacion) ');
+    ZQExecSql.sql.add('cliente_id, personal_id, tipodocu_id, documentoventa_condicionventa, documentoventa_fechavenc, documentoventa_listaprecio, documentoventa_observacion, documentoventa_equipo1) ');
     ZQExecSql.sql.add('values (:documentoventa_id, :documentoventa_numero, :documentoventa_fecha, :documentoventa_hora, ');
     ZQExecSql.sql.add(':documentoventa_neto21, :documentoventa_iva21, :documentoventa_neto105, :documentoventa_iva105, :documentoventa_netonogravado, ');
     ZQExecSql.sql.add(':documentoventa_total, :documentoventa_estado, :documentoventa_pagado, :documentoventa_saldo, ');
-    ZQExecSql.sql.add(':cliente_id, :personal_id, :tipodocu_id, :documentoventa_condicionventa, :documentoventa_fechavenc, :documentoventa_listaprecio, :documentoventa_observacion)');
+    ZQExecSql.sql.add(':cliente_id, :personal_id, :tipodocu_id, :documentoventa_condicionventa, :documentoventa_fechavenc, :documentoventa_listaprecio, :documentoventa_observacion, :documentoventa_equipo1)');
     ZQExecSql.ParamByName('documentoventa_id').AsString:=id;
     ZQExecSql.ParamByName('documentoventa_numero').AsString:=documentoventa_numero.Text;
     ZQExecSql.ParamByName('documentoventa_fecha').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fecha.Date);
@@ -313,6 +329,7 @@ begin
     ZQExecSql.ParamByName('documentoventa_fechavenc').AsString:=formatdatetime('yyyy-mm-dd',documentoventa_fecha.Date+15);
     ZQExecSql.ParamByName('documentoventa_listaprecio').AsInteger:=documentoventa_listaprecio.ItemIndex;
     ZQExecSql.ParamByName('documentoventa_observacion').AsString:=documentoventa_observacion.Text;
+    ZQExecSql.ParamByName('documentoventa_equipo1').AsString:=documentoventa_equipo1.Text;
     ZQExecSql.ExecSQL;
 
     Princ.ActualizarNumeroDocumento(tipodocu_id.codigo, documentoventa_numero.Text);
@@ -520,7 +537,7 @@ begin
                                                    'inner join personal on docuvendetcomisionesvendedores.personal_id=personal.personal_id '+
                                                    'inner join documentoventadetalles on docuvendetcomisionesvendedores.documentoventadetalle_id=documentoventadetalles.documentoventadetalle_id '+
                                                    'where documentoventadetalles.documentoventa_id="'+id+'" and docuvendetcomisionvendedor_importeunit<>0 '+
-                                                   'order by personal_nombre, documentoventadetalle_descripcion';
+                                                   'order by personal_auxint1, documentoventadetalle_descripcion';
 
 
     Princ.VCLReport1.Execute;
@@ -594,7 +611,78 @@ begin
     ZQDocuVenDetComisionesVendedores.Active:=false;
     ZQDocuVenDetComisionesVendedores.ParamByName('documentoventa_id').AsString:=id;
     ZQDocuVenDetComisionesVendedores.Active:=true;
+
+    documentoventa_equipo1.Text:=ZQuery2.FieldByName('documentoventa_equipo1').AsString;
+
     CalcularSaldo;
+end;
+
+
+procedure TNotaPedidoComisiones.CargarDocumento(tipodocunombre:string);
+begin
+    try
+      FacturarDocumentos:= TFacturarDocumentos.Create(self);
+    finally
+      FacturarDocumentos.Caption:='Facturar Documentos - '+tipodocunombre;
+      FacturarDocumentos.tipodocu_id:=Princ.buscar('select tipodocu_id from tiposdocumento where puntoventa_id="'+puntoventa_id.codigo+'" and tipodocu_nombre="'+tipodocunombre+'"','tipodocu_id');
+      if FacturarDocumentos.ShowModal=mrOk then
+        begin
+            cliente_id.Buscar(FacturarDocumentos.ZQSelect.FieldByName('cliente_id').AsString);
+            personal_id.Buscar(FacturarDocumentos.ZQSelect.FieldByName('personal_id').AsString);
+            documentoventa_condicionventa.ItemIndex:=FacturarDocumentos.ZQSelect.FieldByName('documentoventa_condicionventa').AsInteger;
+            documentoventa_listaprecio.ItemIndex:=FacturarDocumentos.ZQSelect.FieldByName('documentoventa_listaprecio').AsInteger;
+            FacturarDocumentos.ZQDocumentoventadetalles.First;
+            while not FacturarDocumentos.ZQDocumentoventadetalles.Eof do
+                begin
+                    princ.CargarDocumentoVentaDetalle(ZQDocumentoventadetalles, FacturarDocumentos.ZQDocumentoventadetalles);
+
+                    ZQDocuVenDetComisionesVendedores.Filtered:=false;
+
+                    ZQDocumentoventadetalles.Edit;
+                    ZQDocumentoventadetalles.FieldByName('documentoventadetalle_id').AsInteger:=detalle_id;
+                    ZQDocumentoventadetalles.Post;
+
+                    ZQPersonal.Active:=false;
+                    ZQPersonal.Active:=true;
+                    ZQPersonal.First;
+                    while not ZQPersonal.Eof do
+                        begin
+                            ZQDocuVenDetComisionesVendedores.Insert;
+                            ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_id').AsString:='0';
+                            ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_importeunit').AsString:='0';
+                            ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_total').AsString:='0';
+                            ZQDocuVenDetComisionesVendedores.FieldByName('documentoventadetalle_id').AsInteger:=detalle_id;
+                            ZQDocuVenDetComisionesVendedores.FieldByName('personal_id').AsString:=ZQPersonal.FieldByName('personal_id').AsString;
+                            ZQDocuVenDetComisionesVendedores.FieldByName('personal_nombre').AsString:=ZQPersonal.FieldByName('personal_nombre').AsString;
+                            ZQDocuVenDetComisionesVendedores.FieldByName('documentoventa_id').AsInteger:=0;
+                            ZQDocuVenDetComisionesVendedores.Post;
+
+                            ZQPersonal.Next;
+                        end;
+
+                    detalle_id:=detalle_id+1;
+
+
+                    ZQDocuVenDetComisionesVendedores.Filter:='documentoventadetalle_id='+QuotedStr(ZQDocumentoventadetalles.FieldByName('documentoventadetalle_id').AsString);
+                    ZQDocuVenDetComisionesVendedores.Filtered:=true;
+
+                    FacturarDocumentos.ZQDocumentoventadetalles.Next;
+                end;
+
+            calculartotales;
+
+        end;
+      FacturarDocumentos.Free;
+    end;
+
+end;
+
+
+
+procedure TNotaPedidoComisiones.documentoventa_numeroChange(Sender: TObject);
+begin
+  inherited;
+    documentoventa_equipo1.Text:=documentoventa_numero.Text;
 end;
 
 end.

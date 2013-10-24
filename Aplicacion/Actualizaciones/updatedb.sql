@@ -1240,3 +1240,91 @@ Replace config set config_valor='1', config_nombre='TIPOBUSQUEDA';
 ALTER TABLE `documentoscompras` CHANGE COLUMN `documentocompra_total` `documentocompra_total` FLOAT(20,2) NULL DEFAULT NULL;
 327;
 ALTER TABLE `documentosventas` ADD COLUMN `documentoventa_descuento` FLOAT(20,2) NULL DEFAULT 0  AFTER `documentoventa_recargo`;
+328;
+ALTER TABLE `personal` ADD COLUMN `personal_auxint1` INT(11) NULL DEFAULT 0  AFTER `perfil_id` ;
+329;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('83', '>Compras>Informes>Movimientos de Stock', '0', 'BtnMovimientosdeStock', '', '0', '0', '');
+330;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,83,perfil_id,-1 from perfiles;
+331;
+ALTER TABLE `documentosventas` 
+CHANGE COLUMN `documentoventa_total` `documentoventa_total` FLOAT(20,2) NULL DEFAULT NULL  , 
+CHANGE COLUMN `documentoventa_pagado` `documentoventa_pagado` FLOAT(20,2) NULL DEFAULT NULL  , 
+CHANGE COLUMN `documentoventa_saldo` `documentoventa_saldo` FLOAT(20,2) NULL DEFAULT NULL  , 
+CHANGE COLUMN `documentoventa_recargo` `documentoventa_recargo` FLOAT(20,2) NULL DEFAULT 0  , 
+CHANGE COLUMN `documentoventa_descuento` `documentoventa_descuento` FLOAT(20,2) NULL DEFAULT 0  ;
+332;
+ALTER TABLE `documentoventadocus` 
+CHANGE COLUMN `documentoventadoc_importe` `documentoventadoc_importe` FLOAT(20,2) NULL DEFAULT NULL  , 
+CHANGE COLUMN `documentoventa_pagado` `documentoventa_pagado` FLOAT(20,2) NULL DEFAULT NULL  , 
+CHANGE COLUMN `documentoventa_saldo` `documentoventa_saldo` FLOAT(20,2) NULL DEFAULT NULL  ;
+333;
+ALTER TABLE `documentoscompras` 
+CHANGE COLUMN `documentocompra_pagado` `documentocompra_pagado` FLOAT(20,2) NULL DEFAULT NULL  , 
+CHANGE COLUMN `documentocompra_saldo` `documentocompra_saldo` FLOAT(20,2) NULL DEFAULT NULL  ;
+334;
+CREATE  TABLE IF NOT EXISTS `ajustestock` (
+  `ajustestock_id` INT(11) NOT NULL ,
+  `ajustestock_fecha` DATE NULL DEFAULT NULL ,
+  `ajustestock_hora` TIME NULL DEFAULT NULL ,
+  `ajustestock_estado` VARCHAR(45) NULL DEFAULT NULL ,
+  `deposito_id` INT(11) NOT NULL ,
+  `personal_id` INT(11) NOT NULL ,
+  `ajustestock_observaciones` VARCHAR(255) NULL DEFAULT NULL ,
+  PRIMARY KEY (`ajustestock_id`) ,
+  INDEX `fk_ajustestock_depositos1` (`deposito_id` ASC) ,
+  INDEX `fk_ajustestock_personal1` (`personal_id` ASC) ,
+  CONSTRAINT `fk_ajustestock_depositos1`
+    FOREIGN KEY (`deposito_id` )
+    REFERENCES `depositos` (`deposito_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ajustestock_personal1`
+    FOREIGN KEY (`personal_id` )
+    REFERENCES `personal` (`personal_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+335;
+CREATE  TABLE IF NOT EXISTS `ajustestockdetalles` (
+  `ajustestockdetalle_id` INT(11) NOT NULL ,
+  `ajustestockdetalle_cantidad` FLOAT(5,2) NULL DEFAULT NULL ,
+  `ajustestock_id` INT(11) NOT NULL ,
+  `producto_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`ajustestockdetalle_id`) ,
+  INDEX `fk_ajustestockdetalles_ajustestock1` (`ajustestock_id` ASC) ,
+  INDEX `fk_ajustestockdetalles_productos1` (`producto_id` ASC) ,
+  CONSTRAINT `fk_ajustestockdetalles_ajustestock1`
+    FOREIGN KEY (`ajustestock_id` )
+    REFERENCES `ajustestock` (`ajustestock_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ajustestockdetalles_productos1`
+    FOREIGN KEY (`producto_id` )
+    REFERENCES `productos` (`producto_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+336;
+ALTER TABLE `documentocompradocus` 
+CHANGE COLUMN `documentocompradoc_importe` `documentocompradoc_importe` FLOAT(20,2) NULL DEFAULT NULL  , 
+CHANGE COLUMN `documentocompra_pagado` `documentocompra_pagado` FLOAT(20,2) NULL DEFAULT NULL  , 
+CHANGE COLUMN `documentocompra_saldo` `documentocompra_saldo` FLOAT(20,2) NULL DEFAULT NULL  ;
+337;
+UPDATE `menu` SET `menu_path`='>Compras>Stock>Movimientos de Stock' WHERE `menu_id`=83;
+338;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('84', '>Compras>Stock', '0', 'AdvToolBarStock', '', '0', '0', '');
+339;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,84,perfil_id,-1 from perfiles;
+340;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('85', '>Compras>Stock>Consultas de Stock', '0', 'BtnConsultasStock', '', '0', '0', '');
+341;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,85,perfil_id,-1 from perfiles;
+342;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('86', '>Compras>Stock>Ajustes de Stock', '0', 'BtnAjustesdeStock', '', '0', '0', 'TListaAjustedeStock');
+343;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,86,perfil_id,-1 from perfiles;

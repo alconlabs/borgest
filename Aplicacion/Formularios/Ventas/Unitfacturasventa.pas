@@ -84,7 +84,7 @@ type
     ZQRemitoDetalles: TZQuery;
     Label99: TLabel;
     documentoventa_recargo: TMoneyEdit;
-    Label14: TLabel;
+    Label30: TLabel;
     documentoventa_descuento: TMoneyEdit;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -1322,13 +1322,15 @@ begin
 
     if documentoventa_condicionventa.ItemIndex=strtoint(CONDICIONVENTA_CONTADO) then
       begin
-          if documentoventa_pagado=documentoventa_total.Value then
+          if roundto(documentoventa_pagado,-2)<>0 then
             begin
-                error:=10;
+                if roundto(documentoventa_pagado,-2)<>roundto(documentoventa_total.Value,-2) then
+                  begin
+                      error:=10;
+                  end;
             end;
+
       end;
-
-
 
     if ZQDocumentoventadetalles.RecordCount<1 then
       error:=9;

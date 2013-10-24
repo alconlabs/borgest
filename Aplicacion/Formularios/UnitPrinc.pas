@@ -150,6 +150,11 @@ type
     btninformescompras: TAdvGlowButton;
     btnnotasdecreditocompra: TAdvGlowButton;
     btnnotasdedebitocompra: TAdvGlowButton;
+    AdvToolBarStock: TAdvToolBar;
+    AdvGlowButton3: TAdvGlowButton;
+    BtnAjustesdeStock: TAdvGlowButton;
+    BtnConsultasStock: TAdvGlowButton;
+    BtnMovimientosdeStock: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -215,6 +220,8 @@ type
     procedure btnnotasdecreditocompraClick(Sender: TObject);
     procedure BtnDetalleComprasClick(Sender: TObject);
     procedure btnnotasdedebitocompraClick(Sender: TObject);
+    procedure BtnMovimientosdeStockClick(Sender: TObject);
+    procedure BtnAjustesdeStockClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -433,7 +440,8 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitDocumentosComprasPendientes, UnitOrdendePago, Unitsaldoproveedores,
   Unitestadodectasproveedores, UnitNotaCreditoCompra,
   UnitListaNotasDeCreditodeCompras, UnitNotaDebitoCompra,
-  Unitdetallectasproveedores, UnitListaNotasDeDebitodeCompras;
+  Unitdetallectasproveedores, UnitListaNotasDeDebitodeCompras,
+  UnitMovimientosdeStock, UnitListaAjustesdeStock;
 
 {$R *.dfm}
 
@@ -1160,6 +1168,16 @@ begin
 end;
 
 
+
+procedure TPrinc.BtnAjustesdeStockClick(Sender: TObject);
+begin
+    try
+      ListaAjustedeStock:=TListaAjustedeStock.Create(self);
+    finally
+      ListaAjustedeStock.campo_id:='ajustestock_id';
+      ListaAjustedeStock.Show;
+    end;
+end;
 
 function TPrinc.BorrarDocumentoCompra(documentocompra_id: string):boolean;
 var
@@ -3246,23 +3264,33 @@ procedure TPrinc.actualizarstock(producto_id:string; cantidad:real; tipodocu_id:
 var
   tipodocu_stock:integer;
 begin
-    tipodocu_stock:=strtoint(Princ.buscar('select tipodocu_stock from tiposdocumento where tipodocu_id="'+tipodocu_id+'"','tipodocu_stock'));
-    if tipodocu_stock<>0 then
+    if tipodocu_id<>'' then
       begin
-          if tipodocu_stock=1 then
-            cantidad:= cantidad*-1;
+          tipodocu_stock:=strtoint(Princ.buscar('select tipodocu_stock from tiposdocumento where tipodocu_id="'+tipodocu_id+'"','tipodocu_stock'));
 
+          if tipodocu_stock<>0 then
+            begin
+                if tipodocu_stock=1 then
+                  cantidad:= cantidad*-1;
+
+                if inversa then
+                  cantidad:= cantidad*-1;
+
+                ZQActualizarStock.SQL.Clear;
+                ZQActualizarStock.SQL.Text:='call actualizarstockproductos("'+producto_id+'","'+dep_id+'","'+floattostr(cantidad)+'")';
+                ZQActualizarStock.ExecSQL;
+            end;
+
+      end
+    else
+      begin
           if inversa then
             cantidad:= cantidad*-1;
 
           ZQActualizarStock.SQL.Clear;
           ZQActualizarStock.SQL.Text:='call actualizarstockproductos("'+producto_id+'","'+dep_id+'","'+floattostr(cantidad)+'")';
           ZQActualizarStock.ExecSQL;
-
-
       end;
-
-
 
 end;
 
@@ -3695,7 +3723,7 @@ end;
 
 procedure TPrinc.btnlibroivacompras02Click(Sender: TObject);
 begin
-   try
+    try
       LibroIvaCompras:=TLibroIvaCompras.Create(self);
     finally
       LibroIvaCompras.Show;
@@ -3759,6 +3787,15 @@ begin
     finally
       ListaLocalidades.campo_id:='localidad_id';
       ListaLocalidades.Show;
+    end;
+end;
+
+procedure TPrinc.BtnMovimientosdeStockClick(Sender: TObject);
+begin
+    try
+      MovimientosdeStock:=TMovimientosdeStock.Create(self);
+    finally
+      MovimientosdeStock.Show;
     end;
 end;
 

@@ -400,7 +400,7 @@ object facturasventa: Tfacturasventa
         Alignment = taRightJustify
         Caption = 'Recargo'
       end
-      object Label14: TLabel
+      object Label30: TLabel
         Left = 162
         Top = 17
         Width = 52

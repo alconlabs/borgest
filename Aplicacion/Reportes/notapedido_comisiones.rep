@@ -32,7 +32,7 @@ object TRpReport
         'l on docuvendetcomisionesvendedores.personal_id=personal.persona' +
         'l_id'#13#10'inner join documentoventadetalles on docuvendetcomisionesv' +
         'endedores.documentoventadetalle_id=documentoventadetalles.docume' +
-        'ntoventadetalle_id'
+        'ntoventadetalle_id'#13#10'order by personal.personal_auxint1'
     end>
   DatabaseInfo = <
     item
@@ -370,7 +370,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    WideText = 'Pedido Nro.'
+    WideText = 'Nro.'
   end
   object TRpExpression0: TRpExpression
     Width = 1140
@@ -390,7 +390,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.documentoventa_numero'
+    Expression = 'ALIAS_DBBORGEST.documentoventa_equipo1'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -618,7 +618,7 @@ object TRpReport
   end
   object TRpSection4: TRpSection
     Width = 15874
-    Height = 1965
+    Height = 1260
     SubReport = TRpSubReport0
     GroupName = 'SUBTOTALES'
     ChangeBool = False
@@ -659,6 +659,12 @@ object TRpReport
       end
       item
         Component = TRpShape24
+      end
+      item
+        Component = TRpExpression20
+      end
+      item
+        Component = TRpLabel11
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -1241,6 +1247,7 @@ object TRpReport
     PosX = 6780
     PosY = -6
     Type1Font = poHelvetica
+    DataType = rpParamInteger
     AutoExpand = False
     AutoContract = False
     ExportPosition = 0
@@ -1270,9 +1277,6 @@ object TRpReport
     Components = <
       item
         Component = TRpExpression14
-      end
-      item
-        Component = TRpLabel10
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -1323,8 +1327,8 @@ object TRpReport
   object TRpExpression14: TRpExpression
     Width = 4165
     Height = 230
-    PosX = 1300
-    PosY = 55
+    PosX = 112
+    PosY = 60
     Type1Font = poHelvetica
     AutoExpand = False
     AutoContract = False
@@ -1342,25 +1346,13 @@ object TRpReport
     AgIniValue = '0'
     ExportExpression = ''
   end
-  object TRpLabel10: TRpLabel
-    Width = 850
-    Height = 230
-    PosX = 400
-    PosY = 55
-    Type1Font = poHelvetica
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'Vendedor'
-  end
   object TRpExpression19: TRpExpression
     Width = 1050
     Height = 264
     PosX = 6785
     PosY = 55
     Type1Font = poHelvetica
+    DataType = rpParamInteger
     Aggregate = rpAgGroup
     GroupName = 'VENDEDOR'
     AutoExpand = False
@@ -1378,5 +1370,42 @@ object TRpReport
     ExportDisplayFormat = ''
     AgIniValue = '0'
     ExportExpression = ''
+  end
+  object TRpExpression20: TRpExpression
+    Width = 10260
+    Height = 285
+    PosX = 112
+    PosY = 682
+    Type1Font = poHelvetica
+    WordWrap = True
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.documentoventa_observacion'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpLabel11: TRpLabel
+    Width = 1425
+    Height = 225
+    PosX = 112
+    PosY = 458
+    Type1Font = poHelvetica
+    Alignment = 1
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    WideText = 'Observaciones'#10'Localidad:'#10'Observaciones'
   end
 end

@@ -1,5 +1,5 @@
 inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
-  Caption = 'Notas de Pedido - Comisiones'
+  Caption = 'Borradores'
   ClientWidth = 1035
   ExplicitWidth = 1051
   ExplicitHeight = 494
@@ -34,7 +34,7 @@ inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
         end
         item
           Expanded = False
-          FieldName = 'documentoventa_numero'
+          FieldName = 'documentoventa_equipo1'
           Title.Caption = 'Numero'
           Width = 90
           Visible = True
@@ -61,6 +61,7 @@ inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
       inherited btnfiltrar: TButton
         Left = 932
         ExplicitLeft = 932
+        ExplicitTop = 0
       end
       inherited fil_id: TGTBEdit
         Width = 92
@@ -74,7 +75,7 @@ inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
         Align = alLeft
         TabOrder = 2
       end
-      object fil_documentoventa_numero: TEdit
+      object fil_documentoventa_equipo1: TEdit
         Left = 138
         Top = 0
         Width = 90
@@ -97,14 +98,6 @@ inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
         Height = 21
         Align = alLeft
         TabOrder = 5
-      end
-      object fil_documentoventa_equipo1: TEdit
-        Left = 788
-        Top = 0
-        Width = 90
-        Height = 21
-        Align = alLeft
-        TabOrder = 6
       end
     end
   end
