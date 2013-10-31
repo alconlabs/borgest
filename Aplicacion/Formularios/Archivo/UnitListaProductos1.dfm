@@ -30,6 +30,13 @@ inherited ListaProductos1: TListaProductos1
         end
         item
           Expanded = False
+          FieldName = 'producto_codigo'
+          Title.Caption = 'Codigo2'
+          Width = 88
+          Visible = True
+        end
+        item
+          Expanded = False
           FieldName = 'producto_nombre'
           Title.Caption = 'Nombre'
           Width = 360
@@ -99,13 +106,10 @@ inherited ListaProductos1: TListaProductos1
       inherited btnfiltrar: TButton
         Left = 931
         ExplicitLeft = 931
-      end
-      inherited fil_id: TGTBEdit
-        ExplicitLeft = -6
-        ExplicitTop = -6
+        ExplicitTop = 0
       end
       object fil_producto_nombre: TGTBEdit
-        Left = 85
+        Left = 170
         Top = 0
         Width = 360
         Height = 21
@@ -113,9 +117,10 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 2
         Tag2 = 0
         FieldName = 'producto_nombre'
+        ExplicitLeft = 85
       end
       object fil_producto_preciocosto: TGTBEdit
-        Left = 445
+        Left = 530
         Top = 0
         Width = 78
         Height = 21
@@ -123,9 +128,10 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 3
         Tag2 = 0
         FieldName = 'producto_preciocosto'
+        ExplicitLeft = 445
       end
       object fil_producto_precioventa1: TGTBEdit
-        Left = 523
+        Left = 608
         Top = 0
         Width = 78
         Height = 21
@@ -133,9 +139,10 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 4
         Tag2 = 0
         FieldName = 'producto_precioventa1'
+        ExplicitLeft = 523
       end
       object fil_rubro_nombre: TGTBEdit
-        Left = 877
+        Left = 962
         Top = 0
         Width = 100
         Height = 21
@@ -143,9 +150,10 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 5
         Tag2 = 0
         FieldName = 'rubro_nombre'
+        ExplicitLeft = 877
       end
       object fil_proveedor_nombre: TGTBEdit
-        Left = 977
+        Left = 1062
         Top = 0
         Width = 140
         Height = 21
@@ -153,9 +161,10 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 6
         Tag2 = 0
         FieldName = 'proveedor_nombre'
+        ExplicitLeft = 977
       end
       object fil_producto_precioventa2: TGTBEdit
-        Left = 601
+        Left = 686
         Top = 0
         Width = 78
         Height = 21
@@ -163,9 +172,10 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 7
         Tag2 = 0
         FieldName = 'producto_precioventa2'
+        ExplicitLeft = 601
       end
       object fil_producto_precioventa3: TGTBEdit
-        Left = 679
+        Left = 764
         Top = 0
         Width = 78
         Height = 21
@@ -173,9 +183,10 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 8
         Tag2 = 0
         FieldName = 'producto_precioventa3'
+        ExplicitLeft = 679
       end
       object fil_producto_precioventa4: TGTBEdit
-        Left = 757
+        Left = 842
         Top = 0
         Width = 78
         Height = 21
@@ -183,9 +194,10 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 9
         Tag2 = 0
         FieldName = 'producto_precioventa4'
+        ExplicitLeft = 757
       end
       object fil_producdepo_stockactual: TGTBEdit
-        Left = 835
+        Left = 920
         Top = 0
         Width = 42
         Height = 21
@@ -193,6 +205,20 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 10
         Tag2 = 0
         FieldName = 'producdepo_stockactual'
+        ExplicitLeft = 835
+      end
+      object fil_producto_codigo: TGTBEdit
+        Left = 85
+        Top = 0
+        Width = 85
+        Height = 21
+        Align = alLeft
+        TabOrder = 11
+        OnKeyPress = fil_idKeyPress
+        Tag2 = 0
+        FieldName = 'producto_codigo'
+        ExplicitLeft = 128
+        ExplicitTop = 6
       end
     end
   end
@@ -216,5 +242,7 @@ inherited ListaProductos1: TListaProductos1
         'inner join productodeposito on productos.producto_id=productodep' +
         'osito.producto_id'
       'order by producto_nombre')
+    Left = 256
+    Top = 128
   end
 end

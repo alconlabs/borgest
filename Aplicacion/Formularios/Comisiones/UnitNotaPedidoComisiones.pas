@@ -54,6 +54,7 @@ type
     procedure CalcularSaldo;
     procedure agregar;
     procedure modificar;
+    function control_eliminar_borrar:boolean;
 //    procedure eliminar;
 //    procedure imprimir;
   public
@@ -69,6 +70,34 @@ uses Unitprinc, UnitNotaPedidoComisionesDetalle, UnitFacturarDocumentos;
 
 {$R *.dfm}
 
+
+
+function TNotaPedidoComisiones.control_eliminar_borrar;
+var
+  error:integer;
+  pagado:string;
+begin
+    ZQDocumentoventadetallesAnterior.Active:=false;
+    ZQDocumentoventadetallesAnterior.ParamByName('documentoventa_id').AsString:=id;
+    ZQDocumentoventadetallesAnterior.Active:=true;
+    ZQDocumentoventadetallesAnterior.First;
+    error:=0;
+    while not ZQDocumentoventadetallesAnterior.Eof do
+        begin
+            pagado:=princ.buscar('select sum(docuvendetcomisionvendedor_pagado) as pagado from docuvendetcomisionesvendedores where documentoventadetalle_id="'+ZQDocumentoventadetallesAnterior.FieldByName('documentoventadetalle_id').AsString+'"','pagado');
+            if (pagado<>'0') and (pagado<>'') then
+              error:=error+1;
+
+
+
+            ZQDocumentoventadetallesAnterior.Next;
+        end;
+
+    if error<>0 then
+      MessageDlg('No es posible modificar este borrador.'+#13+#10+'Tiene asociada una liquidacion.', mtError, [mbOK], 0);
+
+    result:=error=0;
+end;
 
 procedure TNotaPedidoComisiones.CalcularSaldo;
 var
@@ -222,11 +251,17 @@ begin
                     ZQExecSql.Sql.Add('documentoventadetalle_id=:documentoventadetalle_id, ');
                     ZQExecSql.Sql.Add('docuvendetcomisionvendedor_total=:docuvendetcomisionvendedor_total, ');
                     ZQExecSql.Sql.Add('docuvendetcomisionvendedor_importeunit=:docuvendetcomisionvendedor_importeunit, ');
+                    ZQExecSql.Sql.Add('docuvendetcomisionvendedor_saldo=:docuvendetcomisionvendedor_saldo, ');
+                    ZQExecSql.Sql.Add('docuvendetcomisionvendedor_pagado=:docuvendetcomisionvendedor_pagado, ');
+                    ZQExecSql.Sql.Add('docuvendetcomisionvendedor_estado=:docuvendetcomisionvendedor_estado, ');
                     ZQExecSql.Sql.Add('docuvendetcomisionvendedor_id=:docuvendetcomisionvendedor_id ');
                     ZQExecSql.ParamByName('personal_id').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('personal_id').AsString;
                     ZQExecSql.ParamByName('documentoventadetalle_id').AsString:=documentoventadetalle_id;
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_total').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_total').AsString;
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_importeunit').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_importeunit').AsString;
+                    ZQExecSql.ParamByName('docuvendetcomisionvendedor_saldo').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_total').AsString;
+                    ZQExecSql.ParamByName('docuvendetcomisionvendedor_pagado').AsString:='0';
+                    ZQExecSql.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PENDIENTE';
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_id').AsString:=Princ.codigo('docuvendetcomisionesvendedores','docuvendetcomisionvendedor_id');
                     ZQExecSql.ExecSql;
 
@@ -272,7 +307,7 @@ begin
     ZQExecSql.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK, mbCancel], 0);
-    Self.Close;
+//    Self.Close;
 
 end;
 
@@ -375,11 +410,17 @@ begin
                     ZQExecSql.Sql.Add('documentoventadetalle_id=:documentoventadetalle_id, ');
                     ZQExecSql.Sql.Add('docuvendetcomisionvendedor_total=:docuvendetcomisionvendedor_total, ');
                     ZQExecSql.Sql.Add('docuvendetcomisionvendedor_importeunit=:docuvendetcomisionvendedor_importeunit, ');
+                    ZQExecSql.Sql.Add('docuvendetcomisionvendedor_saldo=:docuvendetcomisionvendedor_saldo, ');
+                    ZQExecSql.Sql.Add('docuvendetcomisionvendedor_pagado=:docuvendetcomisionvendedor_pagado, ');
+                    ZQExecSql.Sql.Add('docuvendetcomisionvendedor_estado=:docuvendetcomisionvendedor_estado, ');
                     ZQExecSql.Sql.Add('docuvendetcomisionvendedor_id=:docuvendetcomisionvendedor_id ');
                     ZQExecSql.ParamByName('personal_id').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('personal_id').AsString;
                     ZQExecSql.ParamByName('documentoventadetalle_id').AsString:=documentoventadetalle_id;
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_total').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_total').AsString;
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_importeunit').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_importeunit').AsString;
+                    ZQExecSql.ParamByName('docuvendetcomisionvendedor_saldo').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_total').AsString;
+                    ZQExecSql.ParamByName('docuvendetcomisionvendedor_pagado').AsString:='0';
+                    ZQExecSql.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PENDIENTE';
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_id').AsString:=Princ.codigo('docuvendetcomisionesvendedores','docuvendetcomisionvendedor_id');
                     ZQExecSql.ExecSql;
 
@@ -425,7 +466,10 @@ begin
     ZQExecSql.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK, mbCancel], 0);
-    Self.Close;
+    abm:=ABM_MODIFICAR;
+
+
+//    Self.Close;
 
 end;
 
@@ -489,13 +533,18 @@ begin
 
         2:begin
               if control then
-                modificar;
-
+                begin
+                    if control_eliminar_borrar then
+                      modificar;
+                end;
           end;
 
         3:begin
-              if (MessageDlg('Seguro desea eliminar este registro?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
-                eliminar;
+              if control_eliminar_borrar then
+                begin
+                    if (MessageDlg('Seguro desea eliminar este registro?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+                      eliminar;
+                end;
           end;
 
         4:begin
@@ -503,14 +552,13 @@ begin
           end;
 
         5:begin
-              if (MessageDlg('Seguro desea anular esta Factura?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
-                anular;
+              if control_eliminar_borrar then
+                begin
+                    if (MessageDlg('Seguro desea anular esta Factura?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+                      anular;
+                end;
           end;
-
-
     end;
-
-
 
 end;
 
@@ -544,7 +592,11 @@ begin
 end;
 
 procedure TNotaPedidoComisiones.btnmodificarClick(Sender: TObject);
+var
+  bm:TBookmark;
 begin
+    bm:=ZQDocumentoventadetalles.GetBookmark;
+
     try
       NotapedidoComisionesDetalle:= TNotapedidoComisionesDetalle.Create(self);
     finally
@@ -572,6 +624,19 @@ begin
 
       NotapedidoComisionesDetalle.Free;
       calculartotales;
+
+      ZQDocumentoventadetalles.GotoBookmark(bm);
+
+      ZQDocuVenDetComisionesVendedores.First;
+      while not ZQDocuVenDetComisionesVendedores.Eof do
+          begin
+              ZQDocuVenDetComisionesVendedores.Edit;
+              ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_total').AsFloat:=ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_importeunit').AsFloat*ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat;
+              ZQDocuVenDetComisionesVendedores.Post;
+
+
+              ZQDocuVenDetComisionesVendedores.Next;
+          end;
     end;
 
 end;

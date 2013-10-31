@@ -2,8 +2,8 @@ object compradetalle: Tcompradetalle
   Left = 0
   Top = 0
   Caption = 'Cargar Detalle'
-  ClientHeight = 208
-  ClientWidth = 660
+  ClientHeight = 188
+  ClientWidth = 707
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,8 +20,8 @@ object compradetalle: Tcompradetalle
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 660
-    Height = 208
+    Width = 707
+    Height = 188
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -64,10 +64,12 @@ object compradetalle: Tcompradetalle
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitWidth = 660
+    ExplicitHeight = 208
     FullHeight = 0
     object Label3: TLabel
       Left = 47
-      Top = 39
+      Top = 10
       Width = 43
       Height = 13
       Alignment = taRightJustify
@@ -75,7 +77,7 @@ object compradetalle: Tcompradetalle
     end
     object Label6: TLabel
       Left = 48
-      Top = 10
+      Top = 34
       Width = 42
       Height = 13
       Alignment = taRightJustify
@@ -83,7 +85,7 @@ object compradetalle: Tcompradetalle
     end
     object Label1: TLabel
       Left = 21
-      Top = 66
+      Top = 58
       Width = 69
       Height = 13
       Alignment = taRightJustify
@@ -91,7 +93,7 @@ object compradetalle: Tcompradetalle
     end
     object Label2: TLabel
       Left = 66
-      Top = 98
+      Top = 82
       Width = 24
       Height = 13
       Alignment = taRightJustify
@@ -99,14 +101,14 @@ object compradetalle: Tcompradetalle
     end
     object producdepo_stockminimo: TLabel
       Left = 388
-      Top = 66
+      Top = 58
       Width = 54
       Height = 13
       Caption = 'Stock Min: '
     end
     object producdepo_stockactual: TLabel
       Left = 612
-      Top = 66
+      Top = 58
       Width = 34
       Height = 13
       Alignment = taRightJustify
@@ -114,14 +116,14 @@ object compradetalle: Tcompradetalle
     end
     object producto_fechaactualizacionprecio: TLabel
       Left = 229
-      Top = 66
+      Top = 58
       Width = 54
       Height = 13
       Caption = 'Stock Min: '
     end
     object cantidad: TDBAdvEdit
       Left = 104
-      Top = 7
+      Top = 31
       Width = 121
       Height = 21
       EditType = etFloat
@@ -134,7 +136,7 @@ object compradetalle: Tcompradetalle
       Lookup.Separator = ';'
       Color = clWindow
       Enabled = True
-      TabOrder = 0
+      TabOrder = 2
       Text = '1,00'
       Visible = True
       OnExit = cantidadExit
@@ -142,7 +144,7 @@ object compradetalle: Tcompradetalle
     end
     object Button1: TButton
       Left = 560
-      Top = 114
+      Top = 90
       Width = 75
       Height = 25
       Cancel = True
@@ -152,7 +154,7 @@ object compradetalle: Tcompradetalle
     end
     object btnaceptar: TButton
       Left = 479
-      Top = 114
+      Top = 90
       Width = 75
       Height = 25
       Caption = 'Aceptar'
@@ -161,7 +163,7 @@ object compradetalle: Tcompradetalle
     end
     object preciounitario: TDBAdvEdit
       Left = 104
-      Top = 63
+      Top = 55
       Width = 121
       Height = 21
       EditType = etFloat
@@ -182,7 +184,7 @@ object compradetalle: Tcompradetalle
     end
     object total: TDBAdvEdit
       Left = 104
-      Top = 95
+      Top = 79
       Width = 121
       Height = 21
       EditType = etFloat
@@ -202,7 +204,7 @@ object compradetalle: Tcompradetalle
     end
     object producto_id: TEditCodi
       Left = 102
-      Top = 36
+      Top = 7
       Width = 121
       Height = 21
       Flat = False
@@ -214,7 +216,7 @@ object compradetalle: Tcompradetalle
       Lookup.Separator = ';'
       Color = clWindow
       Enabled = True
-      TabOrder = 1
+      TabOrder = 0
       Visible = True
       OnKeyPress = producto_idKeyPress
       Version = '1.3.0.1'
@@ -239,16 +241,16 @@ object compradetalle: Tcompradetalle
     end
     object producto_nombre: TEdit
       Left = 229
-      Top = 36
+      Top = 7
       Width = 417
       Height = 21
       TabStop = False
       ReadOnly = True
-      TabOrder = 2
+      TabOrder = 1
     end
     object btnherramientas: TAdvGlowButton
-      Left = 602
-      Top = 4
+      Left = 652
+      Top = 3
       Width = 44
       Height = 29
       Caption = 'btnherramientas'
@@ -296,14 +298,16 @@ object compradetalle: Tcompradetalle
     end
     object GroupBoxPrecios: TGroupBox
       Left = 0
-      Top = 143
-      Width = 660
+      Top = 123
+      Width = 707
       Height = 47
       Align = alBottom
       Caption = 'Precios'
       ParentBackground = False
       TabOrder = 8
       TabStop = True
+      ExplicitTop = 143
+      ExplicitWidth = 660
       object producto_precioventa1: TMoneyEdit
         Left = 88
         Top = 14

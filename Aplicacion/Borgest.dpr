@@ -126,7 +126,11 @@ uses
   Unitdetallectasproveedores in 'Formularios\Compras\Unitdetallectasproveedores.pas' {detallectasproveedores},
   UnitMovimientosdeStock in 'Formularios\Compras\UnitMovimientosdeStock.pas' {MovimientosdeStock},
   UnitListaAjustesdeStock in 'Formularios\Compras\UnitListaAjustesdeStock.pas' {ListaAjustedeStock},
-  UnitAjusteStock in 'Formularios\Compras\UnitAjusteStock.pas' {AjusteStock};
+  UnitAjusteStock in 'Formularios\Compras\UnitAjusteStock.pas' {AjusteStock},
+  UnitSaldosComisionesBorradores in 'Formularios\Comisiones\UnitSaldosComisionesBorradores.pas' {SaldosComisionesBorradores},
+  UnitListaLiquidacionesBorradores in 'Formularios\Comisiones\UnitListaLiquidacionesBorradores.pas' {ListaLiquidacionesBorradores},
+  UnitLiquidacionBorrador in 'Formularios\Comisiones\UnitLiquidacionBorrador.pas' {LiquidacionBorrador},
+  UnitComisionesBorradorPendientes in 'Formularios\Comisiones\UnitComisionesBorradorPendientes.pas' {ComisionesBorradorPendientes};
 
 {$R *.res}
 
@@ -135,7 +139,8 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Borgest - Sistema de Gestion Comercial';
   Application.CreateForm(TPrinc, Princ);
-  Application.CreateForm(TListaAjustedeStock, ListaAjustedeStock);
-  Application.CreateForm(TAjusteStock, AjusteStock);
+  Application.CreateForm(TListaLiquidacionesBorradores, ListaLiquidacionesBorradores);
+  Application.CreateForm(TLiquidacionBorrador, LiquidacionBorrador);
+  Application.CreateForm(TComisionesBorradorPendientes, ComisionesBorradorPendientes);
   Application.Run;
 end.

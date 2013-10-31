@@ -1328,3 +1328,70 @@ INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,85,perfil_id,-1 from perfi
 Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('86', '>Compras>Stock>Ajustes de Stock', '0', 'BtnAjustesdeStock', '', '0', '0', 'TListaAjustedeStock');
 343;
 INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,86,perfil_id,-1 from perfiles;
+344;
+ALTER TABLE `docuvendetcomisionesvendedores` 
+ADD COLUMN `docuvendetcomisionvendedor_saldo` FLOAT(20,2) NULL DEFAULT 0  AFTER `personal_id` , 
+ADD COLUMN `docuvendetcomisionvendedor_pagado` FLOAT(20,2) NULL DEFAULT 0  AFTER `docuvendetcomisionvendedor_saldo` , 
+ADD COLUMN `docuvendetcomisionvendedor_estado` VARCHAR(45) NULL DEFAULT 'PENDIENTE'  AFTER `docuvendetcomisionvendedor_pagado` , 
+CHANGE COLUMN `docuvendetcomisionvendedor_importeunit` `docuvendetcomisionvendedor_importeunit` FLOAT(20,2) NULL DEFAULT NULL  , 
+CHANGE COLUMN `docuvendetcomisionvendedor_total` `docuvendetcomisionvendedor_total` FLOAT(20,2) NULL DEFAULT NULL  ;
+345;
+UPDATE docuvendetcomisionesvendedores SET docuvendetcomisionvendedor_saldo=docuvendetcomisionvendedor_total;
+346;
+UPDATE `menu` SET `menu_path`='>Comisiones>Borradores' WHERE `menu_id`=67;
+347;
+UPDATE `menu` SET `menu_path`='>Comisiones>Borradores>Borradores' WHERE `menu_id`=68;
+348;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('87', '>Comisiones>Borradores>Liquidaciones Borradores', '0', 'BtnLiquidacionesBorradores', '', '0', '0', '');
+349;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,87,perfil_id,-1 from perfiles;
+350;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('88', '>Comisiones>Borradores>Saldos', '0', 'BtnSaldoBorradores', '', '0', '0', '');
+351;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,88,perfil_id,-1 from perfiles;
+352;
+CREATE  TABLE IF NOT EXISTS `liquidacionesborradores` (
+  `liquidacionborrador_id` INT(11) NOT NULL ,
+  `liquidacionborrador_fecha` DATE NULL DEFAULT NULL ,
+  `liquidacionborrador_total` FLOAT(20,2) NULL DEFAULT NULL ,
+  `liquidacionborrador_observaciones` VARCHAR(255) NULL DEFAULT NULL ,
+  `personal_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`liquidacionborrador_id`) ,
+  INDEX `fk_liquidacionesborradores_personal1` (`personal_id` ASC) ,
+  CONSTRAINT `fk_liquidacionesborradores_personal1`
+    FOREIGN KEY (`personal_id` )
+    REFERENCES `personal` (`personal_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+353;
+CREATE  TABLE IF NOT EXISTS `liquidacionborradordetalles` (
+  `liquidacionborradordetalle_id` INT(11) NOT NULL ,
+  `liquidacionborradordetalle_importe` FLOAT(20,2) NULL DEFAULT NULL ,
+  `liquidacionborradordetalle_pagado` FLOAT(20,2) NULL DEFAULT NULL ,
+  `liquidacionborradordetalle_saldo` FLOAT(20,2) NULL DEFAULT NULL ,
+  `liquidacionborradordetalle_estado` FLOAT(20,2) NULL DEFAULT NULL ,
+  `liquidacionborrador_id` INT(11) NOT NULL ,
+  `docuvendetcomisionvendedor_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`liquidacionborradordetalle_id`) ,
+  INDEX `fk_liquidacionborradordetalles_liquidacionesborradores1` (`liquidacionborrador_id` ASC) ,
+  INDEX `fk_liquidacionborradordetalles_docuvendetcomisionesvendedores1` (`docuvendetcomisionvendedor_id` ASC) ,
+  CONSTRAINT `fk_liquidacionborradordetalles_liquidacionesborradores1`
+    FOREIGN KEY (`liquidacionborrador_id` )
+    REFERENCES `liquidacionesborradores` (`liquidacionborrador_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_liquidacionborradordetalles_docuvendetcomisionesvendedores1`
+    FOREIGN KEY (`docuvendetcomisionvendedor_id` )
+    REFERENCES `docuvendetcomisionesvendedores` (`docuvendetcomisionvendedor_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+354;
+UPDATE `menu` SET `menu_lista`='TListaLiquidacionesBorradores' WHERE `menu_id`=87;
+355;
+INSERT INTO `configcolumnadetalles` SET `configcolumnadeta_id`=11,`configcolumnadeta_campo`='producto_codigo',`configcolumnadeta_visible`=0,`configcolumnadeta_titulo`='Codigo2',`configcolumna_id`=1;

@@ -73,8 +73,10 @@ Comisiones
 		Comisiones de Sucursales
 		Sucursales Deb-Cred
 		Liquidaciones a Sucursales
-	Notas de Pedido
-		Notas de Pedido
+	Borradores
+		Borradores
+		Liquidaciones Borradores
+		Saldos
 Herramientas
 	Herramientas
 		Configuracion

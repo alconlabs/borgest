@@ -129,11 +129,17 @@
     <DCCReference Include="Formularios\Caja\UnitEstadoCaja.pas">
       <Form>EstadoCaja</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Comisiones\UnitComisionesBorradorPendientes.pas">
+      <Form>ComisionesBorradorPendientes</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Comisiones\UnitComisionesSucursales.pas">
       <Form>ComisionesSucursales</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Comisiones\UnitComisionesVendedores.pas">
       <Form>ComisionesVendedores</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Comisiones\UnitLiquidacionBorrador.pas">
+      <Form>LiquidacionBorrador</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Comisiones\Unitliquidaciones.pas">
       <Form>liquidaciones</Form>
@@ -147,11 +153,17 @@
     <DCCReference Include="Formularios\Comisiones\Unitlistacomisionesvendedores.pas">
       <Form>listacomisionesvendedores</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Comisiones\UnitListaLiquidacionesBorradores.pas">
+      <Form>ListaLiquidacionesBorradores</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Comisiones\UnitListaNotasPedidoComisiones.pas">
       <Form>ListaNotasPedidoComisiones</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Comisiones\UnitNotaPedidoComisiones.pas">
       <Form>NotaPedidoComisiones</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Comisiones\UnitSaldosComisionesBorradores.pas">
+      <Form>SaldosComisionesBorradores</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Comisiones\Unitsucursalesdebcred.pas">
       <Form>sucursalesdebcred</Form>

@@ -18,6 +18,7 @@ type
     fil_producto_precioventa3: TGTBEdit;
     fil_producto_precioventa4: TGTBEdit;
     fil_producdepo_stockactual: TGTBEdit;
+    fil_producto_codigo: TGTBEdit;
     procedure btnfiltrarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnnuevoClick(Sender: TObject);

@@ -155,6 +155,8 @@ type
     BtnAjustesdeStock: TAdvGlowButton;
     BtnConsultasStock: TAdvGlowButton;
     BtnMovimientosdeStock: TAdvGlowButton;
+    BtnLiquidacionesBorradores: TAdvGlowButton;
+    BtnSaldoBorradores: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -222,6 +224,8 @@ type
     procedure btnnotasdedebitocompraClick(Sender: TObject);
     procedure BtnMovimientosdeStockClick(Sender: TObject);
     procedure BtnAjustesdeStockClick(Sender: TObject);
+    procedure BtnSaldoBorradoresClick(Sender: TObject);
+    procedure BtnLiquidacionesBorradoresClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -383,6 +387,7 @@ const
   TIPODOCU_NOTADEBITOVENTA='Nota de Debito de Venta';
   TIPODOCU_REMITOVENTA='Remito de Venta';
   TIPODOCU_NOTAPEDIDO='Nota de Pedido';
+  TIPODOCU_NOTAPEDIDOCOMISIONES='Nota de Pedidos - Comisiones';
 
   TIPODOCU_FACTURACOMPRA='Factura de Compra';
   TIPODOCU_NOTACREDITOCOMPRA='Nota de Credito de Compra';
@@ -441,7 +446,8 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   Unitestadodectasproveedores, UnitNotaCreditoCompra,
   UnitListaNotasDeCreditodeCompras, UnitNotaDebitoCompra,
   Unitdetallectasproveedores, UnitListaNotasDeDebitodeCompras,
-  UnitMovimientosdeStock, UnitListaAjustesdeStock;
+  UnitMovimientosdeStock, UnitListaAjustesdeStock,
+  UnitSaldosComisionesBorradores, UnitListaLiquidacionesBorradores;
 
 {$R *.dfm}
 
@@ -3739,6 +3745,16 @@ begin
     end;
 end;
 
+procedure TPrinc.BtnLiquidacionesBorradoresClick(Sender: TObject);
+begin
+    try
+      ListaLiquidacionesBorradores:=TListaLiquidacionesBorradores.Create(self);
+    finally
+      ListaLiquidacionesBorradores.campo_id:='liquidacionborrador_id';
+      ListaLiquidacionesBorradores.Show;
+    end;
+end;
+
 procedure TPrinc.btnliquidacionessucuClick(Sender: TObject);
 begin
     try
@@ -3974,6 +3990,15 @@ begin
       listaremitosventa.tipodocu_nombre:='Remito de Venta';
       listaremitosventa.campo_id:='documentoventa_id';
       listaremitosventa.Show;
+    end;
+end;
+
+procedure TPrinc.BtnSaldoBorradoresClick(Sender: TObject);
+begin
+    try
+      SaldosComisionesBorradores:=TSaldosComisionesBorradores.Create(self);
+    finally
+      SaldosComisionesBorradores.Show;
     end;
 end;
 
