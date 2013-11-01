@@ -271,9 +271,16 @@ object facturacompra: Tfacturacompra
         end
         item
           Expanded = False
+          FieldName = 'producto_codigo'
+          Title.Caption = 'Codigo'
+          Width = 142
+          Visible = True
+        end
+        item
+          Expanded = False
           FieldName = 'documentocompradetalle_descripcion'
           Title.Caption = 'Producto'
-          Width = 493
+          Width = 341
           Visible = True
         end
         item
@@ -961,10 +968,143 @@ object facturacompra: Tfacturacompra
     CachedUpdates = True
     SQL.Strings = (
       'select * from documentocompradetalles'
+      
+        'inner join productos on documentocompradetalles.producto_id=prod' +
+        'uctos.producto_id'
       'where 1=2')
     Params = <>
     Left = 240
     Top = 168
+    object ZQDocumentocompradetallesdocumentocompradetalle_id: TIntegerField
+      FieldName = 'documentocompradetalle_id'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_descripcion: TStringField
+      FieldName = 'documentocompradetalle_descripcion'
+      Size = 150
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_cantidad: TFloatField
+      FieldName = 'documentocompradetalle_cantidad'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_precio: TFloatField
+      FieldName = 'documentocompradetalle_precio'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_total: TFloatField
+      FieldName = 'documentocompradetalle_total'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_estado: TStringField
+      FieldName = 'documentocompradetalle_estado'
+      Size = 45
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_observacion: TStringField
+      FieldName = 'documentocompradetalle_observacion'
+      Size = 255
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_idorig: TIntegerField
+      FieldName = 'documentocompradetalle_idorig'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_cantidadpendiente: TFloatField
+      FieldName = 'documentocompradetalle_cantidadpendiente'
+    end
+    object ZQDocumentocompradetallesproducto_id: TIntegerField
+      FieldName = 'producto_id'
+    end
+    object ZQDocumentocompradetallesdocumentocompra_id: TIntegerField
+      FieldName = 'documentocompra_id'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_neto21: TFloatField
+      FieldName = 'documentocompradetalle_neto21'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_neto105: TFloatField
+      FieldName = 'documentocompradetalle_neto105'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_iva21: TFloatField
+      FieldName = 'documentocompradetalle_iva21'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_iva105: TFloatField
+      FieldName = 'documentocompradetalle_iva105'
+    end
+    object ZQDocumentocompradetallesproducto_id_1: TIntegerField
+      FieldName = 'producto_id_1'
+    end
+    object ZQDocumentocompradetallesproducto_nombre: TStringField
+      FieldName = 'producto_nombre'
+      Size = 150
+    end
+    object ZQDocumentocompradetallesproducto_observaciones: TStringField
+      FieldName = 'producto_observaciones'
+      Size = 255
+    end
+    object ZQDocumentocompradetallesproducto_codigo: TStringField
+      FieldName = 'producto_codigo'
+      Size = 45
+    end
+    object ZQDocumentocompradetallesproducto_codigobarras: TStringField
+      FieldName = 'producto_codigobarras'
+      Size = 45
+    end
+    object ZQDocumentocompradetallesproducto_preciocosto: TFloatField
+      FieldName = 'producto_preciocosto'
+    end
+    object ZQDocumentocompradetallesproducto_precioventabase: TFloatField
+      FieldName = 'producto_precioventabase'
+    end
+    object ZQDocumentocompradetallesproducto_estado: TStringField
+      FieldName = 'producto_estado'
+      Size = 45
+    end
+    object ZQDocumentocompradetallesproducto_precioventa1: TFloatField
+      FieldName = 'producto_precioventa1'
+    end
+    object ZQDocumentocompradetallestipoiva_id: TIntegerField
+      FieldName = 'tipoiva_id'
+    end
+    object ZQDocumentocompradetallesrubro_id: TIntegerField
+      FieldName = 'rubro_id'
+    end
+    object ZQDocumentocompradetallesproducto_precioventa2: TFloatField
+      FieldName = 'producto_precioventa2'
+    end
+    object ZQDocumentocompradetallesproducto_precioventa3: TFloatField
+      FieldName = 'producto_precioventa3'
+    end
+    object ZQDocumentocompradetallesproducto_precioventa4: TFloatField
+      FieldName = 'producto_precioventa4'
+    end
+    object ZQDocumentocompradetallescalculoprecio_id: TIntegerField
+      FieldName = 'calculoprecio_id'
+    end
+    object ZQDocumentocompradetallespoliticaprecio_id: TIntegerField
+      FieldName = 'politicaprecio_id'
+    end
+    object ZQDocumentocompradetallesproducto_neto1: TFloatField
+      FieldName = 'producto_neto1'
+    end
+    object ZQDocumentocompradetallesproducto_neto2: TFloatField
+      FieldName = 'producto_neto2'
+    end
+    object ZQDocumentocompradetallesproducto_neto3: TFloatField
+      FieldName = 'producto_neto3'
+    end
+    object ZQDocumentocompradetallesproducto_neto4: TFloatField
+      FieldName = 'producto_neto4'
+    end
+    object ZQDocumentocompradetallesproveedor_id: TIntegerField
+      FieldName = 'proveedor_id'
+    end
+    object ZQDocumentocompradetallesproducto_fechaactualizacionprecio: TDateField
+      FieldName = 'producto_fechaactualizacionprecio'
+    end
+    object ZQDocumentocompradetallesproducto_codigoreferencia: TStringField
+      FieldName = 'producto_codigoreferencia'
+      Size = 45
+    end
+    object ZQDocumentocompradetallesproducto_imprimir: TIntegerField
+      FieldName = 'producto_imprimir'
+    end
+    object ZQDocumentocompradetallesproducto_tipo: TStringField
+      FieldName = 'producto_tipo'
+      Size = 45
+    end
   end
   object DTSDocumentocompradetalle: TDataSource
     DataSet = ZQDocumentocompradetalles

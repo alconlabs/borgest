@@ -322,6 +322,7 @@ type
     procedure AgregarOrdendePago(ZQCabecera: TDataset; ZQDetalle: TDataset; ZQPagos: TDataset);
     procedure ActualizarSaldoDocumentoCompra(id: string; importe: Real; inversa:boolean=false);
     function ControlDocumentoComprarepetido(tipodocu_id:string; documentocompra_puntoventa:string; documentocompra_numero:string; proveedor_id:string):boolean;
+    procedure CargarDocumentoCompraDetalle(QDocumentoCompraDetalles:TDataset; Detalle:TDataset; abm:integer=1; bm:pointer=nil);
   end;
 
 
@@ -1670,6 +1671,35 @@ begin
           QDocumentoventadetalles.Fields[i].Value:=Detalle.Fields[i].Value;
       end;
     QDocumentoventadetalles.Post;
+end;
+
+
+procedure TPrinc.CargarDocumentoCompraDetalle(QDocumentoCompraDetalles:TDataset; Detalle:TDataset; abm:integer=1; bm:pointer=nil);
+var
+  i:integer;
+begin
+    if abm=1 then
+      begin
+          QDocumentoCompraDetalles.Last;
+//          QDocumentoventadetalles.Next;
+          QDocumentoCompraDetalles.Append;;
+
+      end;
+    if abm=2 then
+      begin
+          QDocumentoCompraDetalles.GotoBookmark(bm);
+
+          QDocumentoCompraDetalles.Edit;
+      end;
+
+    for i := 0 to Detalle.FieldCount-1 do
+      begin
+          try
+          QDocumentoCompraDetalles.Fields[i].Value:=Detalle.FieldByName(QDocumentoCompraDetalles.Fields[i].FieldName).Value;
+          except
+          end;
+      end;
+    QDocumentoCompraDetalles.Post;
 end;
 
 

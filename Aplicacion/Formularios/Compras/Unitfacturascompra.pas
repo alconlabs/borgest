@@ -95,6 +95,46 @@ type
     documentocompra_dgrret: TMoneyEdit;
     documentocompra_dgrperc: TMoneyEdit;
     btnagregarproveedor: TButton;
+    ZQDocumentocompradetallesdocumentocompradetalle_id: TIntegerField;
+    ZQDocumentocompradetallesdocumentocompradetalle_descripcion: TStringField;
+    ZQDocumentocompradetallesdocumentocompradetalle_cantidad: TFloatField;
+    ZQDocumentocompradetallesdocumentocompradetalle_precio: TFloatField;
+    ZQDocumentocompradetallesdocumentocompradetalle_total: TFloatField;
+    ZQDocumentocompradetallesdocumentocompradetalle_estado: TStringField;
+    ZQDocumentocompradetallesdocumentocompradetalle_observacion: TStringField;
+    ZQDocumentocompradetallesdocumentocompradetalle_idorig: TIntegerField;
+    ZQDocumentocompradetallesdocumentocompradetalle_cantidadpendiente: TFloatField;
+    ZQDocumentocompradetallesproducto_id: TIntegerField;
+    ZQDocumentocompradetallesdocumentocompra_id: TIntegerField;
+    ZQDocumentocompradetallesdocumentocompradetalle_neto21: TFloatField;
+    ZQDocumentocompradetallesdocumentocompradetalle_neto105: TFloatField;
+    ZQDocumentocompradetallesdocumentocompradetalle_iva21: TFloatField;
+    ZQDocumentocompradetallesdocumentocompradetalle_iva105: TFloatField;
+    ZQDocumentocompradetallesproducto_id_1: TIntegerField;
+    ZQDocumentocompradetallesproducto_nombre: TStringField;
+    ZQDocumentocompradetallesproducto_observaciones: TStringField;
+    ZQDocumentocompradetallesproducto_codigo: TStringField;
+    ZQDocumentocompradetallesproducto_codigobarras: TStringField;
+    ZQDocumentocompradetallesproducto_preciocosto: TFloatField;
+    ZQDocumentocompradetallesproducto_precioventabase: TFloatField;
+    ZQDocumentocompradetallesproducto_estado: TStringField;
+    ZQDocumentocompradetallesproducto_precioventa1: TFloatField;
+    ZQDocumentocompradetallestipoiva_id: TIntegerField;
+    ZQDocumentocompradetallesrubro_id: TIntegerField;
+    ZQDocumentocompradetallesproducto_precioventa2: TFloatField;
+    ZQDocumentocompradetallesproducto_precioventa3: TFloatField;
+    ZQDocumentocompradetallesproducto_precioventa4: TFloatField;
+    ZQDocumentocompradetallescalculoprecio_id: TIntegerField;
+    ZQDocumentocompradetallespoliticaprecio_id: TIntegerField;
+    ZQDocumentocompradetallesproducto_neto1: TFloatField;
+    ZQDocumentocompradetallesproducto_neto2: TFloatField;
+    ZQDocumentocompradetallesproducto_neto3: TFloatField;
+    ZQDocumentocompradetallesproducto_neto4: TFloatField;
+    ZQDocumentocompradetallesproveedor_id: TIntegerField;
+    ZQDocumentocompradetallesproducto_fechaactualizacionprecio: TDateField;
+    ZQDocumentocompradetallesproducto_codigoreferencia: TStringField;
+    ZQDocumentocompradetallesproducto_imprimir: TIntegerField;
+    ZQDocumentocompradetallesproducto_tipo: TStringField;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -731,7 +771,7 @@ begin
       end;
 
     ZQDocumentocompradetalles.Active:=false;
-    ZQDocumentocompradetalles.SQL.Text:='select * from documentocompradetalles where documentocompra_id="'+id+'"';
+    ZQDocumentocompradetalles.SQL.Text:='select * from documentocompradetalles inner join productos on documentocompradetalles.producto_id=productos.producto_id where documentocompra_id="'+id+'"';
     ZQDocumentocompradetalles.Active:=true;
 
 end;
@@ -867,7 +907,7 @@ begin
       if compradetalle.ShowModal=mrOk then
         begin
 
-            princ.CargarDocumentoVentaDetalle(ZQDocumentocompradetalles, compradetalle.ZQDocumentocompradetalles);
+            princ.CargarDocumentoCompraDetalle(ZQDocumentocompradetalles, compradetalle.ZQDocumentocompradetalles);
 
         end;
 
