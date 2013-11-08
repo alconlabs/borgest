@@ -652,6 +652,7 @@ object productos: Tproductos
             item
               Expanded = False
               FieldName = 'producdepo_stockactual'
+              ReadOnly = True
               Title.Caption = 'Actual'
               Width = 50
               Visible = True
@@ -754,8 +755,8 @@ object productos: Tproductos
       'producdepo_stockminimo,d'
       'producdepo_stockactual,d'
       'producdepo_stockinicial,d')
-    Left = 664
-    Top = 272
+    Left = 680
+    Top = 328
     object MQproductodepositodeposito_id: TIntegerField
       FieldName = 'deposito_id'
     end

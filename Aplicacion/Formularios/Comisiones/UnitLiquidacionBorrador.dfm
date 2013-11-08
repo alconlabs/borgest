@@ -22,7 +22,7 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Caption = 'Numero'
     end
     object Label2: TLabel [1]
-      Left = 272
+      Left = 570
       Top = 12
       Width = 30
       Height = 13
@@ -59,34 +59,45 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Alignment = taRightJustify
       Caption = 'Observaciones'
     end
+    object Label5: TLabel [5]
+      Left = 221
+      Top = 12
+      Width = 33
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Equipo'
+    end
     inherited btncancelar: TButton
       Left = 628
       Top = 270
+      TabOrder = 10
       ExplicitLeft = 628
       ExplicitTop = 270
     end
     inherited btnguardar: TButton
       Left = 547
       Top = 270
+      TabOrder = 9
+      OnClick = btnguardarClick
       ExplicitLeft = 547
       ExplicitTop = 270
     end
-    object liquidacionvendedor_id: TEdit
+    object liquidacionborrador_id: TEdit
       Left = 60
       Top = 9
       Width = 121
       Height = 21
       ReadOnly = True
-      TabOrder = 2
+      TabOrder = 0
     end
-    object liquidacionvendedor_fecha: TDateTimePicker
-      Left = 308
+    object liquidacionborrador_fecha: TDateTimePicker
+      Left = 606
       Top = 9
       Width = 106
       Height = 21
       Date = 40384.167574155090000000
       Time = 40384.167574155090000000
-      TabOrder = 3
+      TabOrder = 2
     end
     object personal_id: TSqlComboBox
       Left = 60
@@ -94,7 +105,7 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Width = 354
       Height = 21
       ItemHeight = 13
-      TabOrder = 4
+      TabOrder = 3
       Confbase = Princ.ZBase
       Confsql.Strings = (
         'select * from personal'
@@ -110,7 +121,7 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Height = 150
       DataSource = DTSliquidacionborradordetalles
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
-      TabOrder = 5
+      TabOrder = 4
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
@@ -171,7 +182,7 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Width = 75
       Height = 25
       Caption = 'Agregar'
-      TabOrder = 6
+      TabOrder = 5
       OnClick = btnagregarClick
     end
     object btnquitar: TButton
@@ -180,7 +191,7 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Width = 75
       Height = 25
       Caption = 'Quitar'
-      TabOrder = 7
+      TabOrder = 6
     end
     object liquidacionborrador_total: TMoneyEdit
       Left = 564
@@ -208,12 +219,19 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       TabOrder = 8
       Version = '1.1.0.1'
     end
-    object Memo1: TMemo
+    object liquidacionborrador_observaciones: TMemo
       Left = 8
       Top = 264
       Width = 385
       Height = 65
-      TabOrder = 9
+      TabOrder = 7
+    end
+    object liquidacionborrador_equipo: TEdit
+      Left = 260
+      Top = 9
+      Width = 153
+      Height = 21
+      TabOrder = 1
     end
   end
   inherited ZQSelect: TZQuery
@@ -278,9 +296,6 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
     end
     object ZQliquidacionborradordetallesliquidacionborradordetalle_saldo: TFloatField
       FieldName = 'liquidacionborradordetalle_saldo'
-    end
-    object ZQliquidacionborradordetallesliquidacionborradordetalle_estado: TFloatField
-      FieldName = 'liquidacionborradordetalle_estado'
     end
     object ZQliquidacionborradordetallesliquidacionborrador_id: TIntegerField
       FieldName = 'liquidacionborrador_id'
@@ -484,10 +499,48 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
     object ZQliquidacionborradordetallesdocumentoventa_descuento: TFloatField
       FieldName = 'documentoventa_descuento'
     end
+    object ZQliquidacionborradordetallesliquidacionborradordetalle_estado: TStringField
+      FieldName = 'liquidacionborradordetalle_estado'
+      Size = 45
+    end
   end
   object DTSliquidacionborradordetalles: TDataSource
     DataSet = ZQliquidacionborradordetalles
     Left = 400
     Top = 152
+  end
+  object ZQliquidacionborradordetallesanterior: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select * from liquidacionborradordetalles'
+      
+        'inner join docuvendetcomisionesvendedores on liquidacionborrador' +
+        'detalles.docuvendetcomisionvendedor_id=docuvendetcomisionesvende' +
+        'dores.docuvendetcomisionvendedor_id'
+      
+        'inner join documentoventadetalles on docuvendetcomisionesvendedo' +
+        'res.documentoventadetalle_id=documentoventadetalles.documentoven' +
+        'tadetalle_id'
+      
+        'inner join documentosventas on documentoventadetalles.documentov' +
+        'enta_id=documentosventas.documentoventa_id'
+      
+        'where liquidacionborradordetalles.liquidacionborrador_id=:liquid' +
+        'acionborrador_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'liquidacionborrador_id'
+        ParamType = ptUnknown
+      end>
+    Left = 72
+    Top = 80
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'liquidacionborrador_id'
+        ParamType = ptUnknown
+      end>
   end
 end

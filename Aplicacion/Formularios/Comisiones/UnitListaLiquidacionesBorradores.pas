@@ -14,6 +14,8 @@ type
     fil_liquidacionborrador_total: TGTBEdit;
     procedure btnfiltrarClick(Sender: TObject);
     procedure btnnuevoClick(Sender: TObject);
+    procedure btnmodificarClick(Sender: TObject);
+    procedure btneliminarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,6 +30,18 @@ implementation
 uses UnitLiquidacionBorrador, Unitprinc;
 
 {$R *.dfm}
+
+procedure TListaLiquidacionesBorradores.btneliminarClick(Sender: TObject);
+begin
+  inherited;
+    try
+      LiquidacionBorrador:=TLiquidacionBorrador.Create(self);
+    finally
+      LiquidacionBorrador.id:=id;
+      LiquidacionBorrador.abm:=ABM_ELIMINAR;
+      LiquidacionBorrador.Show;
+    end;
+end;
 
 procedure TListaLiquidacionesBorradores.btnfiltrarClick(Sender: TObject);
 begin
@@ -51,6 +65,18 @@ begin
 
     ZQGrilla.Active:=true;
 
+end;
+
+procedure TListaLiquidacionesBorradores.btnmodificarClick(Sender: TObject);
+begin
+  inherited;
+    try
+      LiquidacionBorrador:=TLiquidacionBorrador.Create(self);
+    finally
+      LiquidacionBorrador.id:=id;
+      LiquidacionBorrador.abm:=ABM_MODIFICAR;
+      LiquidacionBorrador.Show;
+    end;
 end;
 
 procedure TListaLiquidacionesBorradores.btnnuevoClick(Sender: TObject);

@@ -31,6 +31,7 @@ type
     btnherramientas: TAdvGlowButton;
     NotasdePedido1: TMenuItem;
     documentoventa_equipo1: TGTBEdit;
+    Label14: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnagregarClick(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -43,7 +44,6 @@ type
       Field: TField);
     procedure btnimprimirClick(Sender: TObject);
     procedure NotasdePedido1Click(Sender: TObject);
-    procedure documentoventa_numeroChange(Sender: TObject);
   private
     { Private declarations }
     detalle_id:integer;
@@ -262,6 +262,8 @@ begin
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_saldo').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_total').AsString;
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_pagado').AsString:='0';
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PENDIENTE';
+                    if roundto(ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_total').AsFloat,-2)=0 then
+                      ZQExecSql.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PAGADA';
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_id').AsString:=Princ.codigo('docuvendetcomisionesvendedores','docuvendetcomisionvendedor_id');
                     ZQExecSql.ExecSql;
 
@@ -421,6 +423,9 @@ begin
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_saldo').AsString:=ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_total').AsString;
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_pagado').AsString:='0';
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PENDIENTE';
+                    if roundto(ZQDocuVenDetComisionesVendedores.FieldByName('docuvendetcomisionvendedor_total').AsFloat,-2)=0 then
+                      ZQExecSql.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PAGADA';
+
                     ZQExecSql.ParamByName('docuvendetcomisionvendedor_id').AsString:=Princ.codigo('docuvendetcomisionesvendedores','docuvendetcomisionvendedor_id');
                     ZQExecSql.ExecSql;
 
@@ -743,11 +748,5 @@ begin
 end;
 
 
-
-procedure TNotaPedidoComisiones.documentoventa_numeroChange(Sender: TObject);
-begin
-  inherited;
-    documentoventa_equipo1.Text:=documentoventa_numero.Text;
-end;
 
 end.

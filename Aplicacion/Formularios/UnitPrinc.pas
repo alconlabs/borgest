@@ -156,7 +156,7 @@ type
     BtnConsultasStock: TAdvGlowButton;
     BtnMovimientosdeStock: TAdvGlowButton;
     BtnLiquidacionesBorradores: TAdvGlowButton;
-    BtnSaldoBorradores: TAdvGlowButton;
+    BtnDetalleCuentasBorradores: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -224,7 +224,7 @@ type
     procedure btnnotasdedebitocompraClick(Sender: TObject);
     procedure BtnMovimientosdeStockClick(Sender: TObject);
     procedure BtnAjustesdeStockClick(Sender: TObject);
-    procedure BtnSaldoBorradoresClick(Sender: TObject);
+    procedure BtnDetalleCuentasBorradoresClick(Sender: TObject);
     procedure BtnLiquidacionesBorradoresClick(Sender: TObject);
   private
     { Private declarations }
@@ -4023,7 +4023,7 @@ begin
     end;
 end;
 
-procedure TPrinc.BtnSaldoBorradoresClick(Sender: TObject);
+procedure TPrinc.BtnDetalleCuentasBorradoresClick(Sender: TObject);
 begin
     try
       SaldosComisionesBorradores:=TSaldosComisionesBorradores.Create(self);

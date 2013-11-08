@@ -19,6 +19,7 @@ type
     fil_producto_precioventa4: TGTBEdit;
     fil_producdepo_stockactual: TGTBEdit;
     fil_producto_codigo: TGTBEdit;
+    fil_producto_fechaactualizacionprecio: TGTBEdit;
     procedure btnfiltrarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnnuevoClick(Sender: TObject);
@@ -96,6 +97,9 @@ begin
     if fil_proveedor_nombre.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_nombre like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_proveedor_nombre.Text,' ','%',false,0)+'%"';
 
+    if fil_producto_fechaactualizacionprecio.Text<>'' then
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_fechaactualizacionprecio "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_producto_fechaactualizacionprecio.Text,' ','%',false,0)+'%"';
+
     if Princ.GetConfiguracion('MOSTRARPRODUCTOSOCULTOS')<>'-1' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'and producto_estado="DISPONIBLE" ';
 
@@ -164,7 +168,7 @@ end;
 procedure TListaProductos1.FormShow(Sender: TObject);
 begin
   inherited;
-    DBGrid1.Columns.Items[2].Visible:=false;
+    DBGrid1.Columns.Items[3].Visible:=false;
     fil_producto_preciocosto.Text:='';
     fil_producto_preciocosto.Visible:=false;
 end;

@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageCompras
+    ActivePage = AdvPageComisiones
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -2783,14 +2783,14 @@ object Princ: TPrinc
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
         end
-        object BtnSaldoBorradores: TAdvGlowButton
+        object BtnDetalleCuentasBorradores: TAdvGlowButton
           Left = 202
           Top = 2
           Width = 100
           Height = 41
-          Caption = 'Saldos'
+          Caption = 'Detalle de Cuentas'
           TabOrder = 2
-          OnClick = BtnSaldoBorradoresClick
+          OnClick = BtnDetalleCuentasBorradoresClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219

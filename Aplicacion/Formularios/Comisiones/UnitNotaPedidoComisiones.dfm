@@ -48,13 +48,17 @@ inherited NotaPedidoComisiones: TNotaPedidoComisiones
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object Label14: TLabel [13]
+      Left = 411
+      Top = 39
+      Width = 33
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Equipo'
+    end
     inherited documentoventa_numero: TEdit
-      Left = 455
-      Enabled = False
-      TabOrder = 16
-      Visible = False
-      OnChange = documentoventa_numeroChange
-      ExplicitLeft = 455
+      Width = 201
+      ExplicitWidth = 201
     end
     inherited documentoventa_fecha: TDateTimePicker
       Left = 793
@@ -326,11 +330,11 @@ inherited NotaPedidoComisiones: TNotaPedidoComisiones
       DropDownMenu = AdvPopupMenu1
     end
     object documentoventa_equipo1: TGTBEdit
-      Left = 184
+      Left = 448
       Top = 36
       Width = 201
       Height = 21
-      TabOrder = 15
+      TabOrder = 16
       Tag2 = 0
       FieldName = 'documentoventa_equipo1'
     end
@@ -435,7 +439,7 @@ inherited NotaPedidoComisiones: TNotaPedidoComisiones
   end
   object AdvPopupMenu1: TAdvPopupMenu
     Version = '2.0.0.0'
-    Left = 440
+    Left = 616
     Top = 8
     object NotasdePedido1: TMenuItem
       Caption = 'Notas de Pedido'

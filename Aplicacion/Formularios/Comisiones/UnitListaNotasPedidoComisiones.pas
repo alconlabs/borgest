@@ -13,6 +13,7 @@ type
     fil_documentoventa_equipo1: TEdit;
     fil_cliente_nombre: TEdit;
     fil_documentoventa_total: TEdit;
+    fil_documentoventa_numero: TEdit;
     procedure btnfiltrarClick(Sender: TObject);
     procedure btnnuevoClick(Sender: TObject);
     procedure btnmodificarClick(Sender: TObject);
@@ -59,6 +60,9 @@ begin
 
     if fil_puntoventa_numero.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and puntoventa_numero like "'+primercaracter+fil_puntoventa_numero.Text+'%"';
+
+    if fil_documentoventa_numero.Text<>'' then
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentoventa_numero like "'+primercaracter+fil_documentoventa_numero.Text+'%"';
 
     if fil_cliente_nombre.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and clientes.cliente_nombre like "'+primercaracter+fil_cliente_nombre.Text+'%"';

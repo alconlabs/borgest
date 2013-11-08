@@ -11,9 +11,9 @@ uses
 type
   TLiquidacionBorrador = class(TABMbase)
     Label1: TLabel;
-    liquidacionvendedor_id: TEdit;
+    liquidacionborrador_id: TEdit;
     Label2: TLabel;
-    liquidacionvendedor_fecha: TDateTimePicker;
+    liquidacionborrador_fecha: TDateTimePicker;
     Label4: TLabel;
     personal_id: TSqlComboBox;
     DBGrid1: TDBGrid;
@@ -24,12 +24,11 @@ type
     Label10: TLabel;
     liquidacionborrador_total: TMoneyEdit;
     Label3: TLabel;
-    Memo1: TMemo;
+    liquidacionborrador_observaciones: TMemo;
     ZQliquidacionborradordetallesliquidacionborradordetalle_id: TIntegerField;
     ZQliquidacionborradordetallesliquidacionborradordetalle_importe: TFloatField;
     ZQliquidacionborradordetallesliquidacionborradordetalle_pagado: TFloatField;
     ZQliquidacionborradordetallesliquidacionborradordetalle_saldo: TFloatField;
-    ZQliquidacionborradordetallesliquidacionborradordetalle_estado: TFloatField;
     ZQliquidacionborradordetallesliquidacionborrador_id: TIntegerField;
     ZQliquidacionborradordetallesdocuvendetcomisionvendedor_id: TIntegerField;
     ZQliquidacionborradordetallesdocuvendetcomisionvendedor_id_1: TIntegerField;
@@ -93,13 +92,22 @@ type
     ZQliquidacionborradordetallescaja_id: TIntegerField;
     ZQliquidacionborradordetallesdocumentoventa_recargo: TFloatField;
     ZQliquidacionborradordetallesdocumentoventa_descuento: TFloatField;
+    Label5: TLabel;
+    liquidacionborrador_equipo: TEdit;
+    ZQliquidacionborradordetallesanterior: TZQuery;
+    ZQliquidacionborradordetallesliquidacionborradordetalle_estado: TStringField;
     procedure btnagregarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQSelectAfterOpen(DataSet: TDataSet);
+    procedure btnguardarClick(Sender: TObject);
   private
     { Private declarations }
     procedure CalcularTotal;
+    function control:boolean;
+    procedure agregar;
+    procedure modificar;
+    procedure eliminar;
   public
     { Public declarations }
   end;
@@ -112,6 +120,244 @@ implementation
 uses UnitComisionesBorradorPendientes, unitprinc;
 
 {$R *.dfm}
+
+procedure TLiquidacionBorrador.agregar;
+begin
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('begin');
+    ZQExecSQL.ExecSQL;
+
+    id:=Princ.codigo('liquidacionesborradores','liquidacionborrador_id');
+
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('insert into liquidacionesborradores set ');
+    ZQExecSQL.Sql.Add('liquidacionborrador_equipo=:liquidacionborrador_equipo, ');
+    ZQExecSQL.Sql.Add('personal_id=:personal_id, ');
+    ZQExecSQL.Sql.Add('liquidacionborrador_observaciones=:liquidacionborrador_observaciones, ');
+    ZQExecSQL.Sql.Add('liquidacionborrador_total=:liquidacionborrador_total, ');
+    ZQExecSQL.Sql.Add('liquidacionborrador_fecha=:liquidacionborrador_fecha, ');
+    ZQExecSQL.Sql.Add('liquidacionborrador_id=:liquidacionborrador_id ');
+    ZQExecSQL.ParamByName('liquidacionborrador_equipo').AsString:=liquidacionborrador_equipo.Text;
+    ZQExecSQL.ParamByName('personal_id').AsString:=personal_id.codigo;
+    ZQExecSQL.ParamByName('liquidacionborrador_observaciones').AsString:=liquidacionborrador_observaciones.Text;
+    ZQExecSQL.ParamByName('liquidacionborrador_total').AsString:=liquidacionborrador_total.Text;
+    ZQExecSQL.ParamByName('liquidacionborrador_fecha').AsString:=formatdatetime('yyyy-mm-dd',liquidacionborrador_fecha.Date);
+    ZQExecSQL.ParamByName('liquidacionborrador_id').AsString:=id;
+    ZQExecSQL.ExecSql;
+
+    ZQliquidacionborradordetalles.First;
+    while not ZQliquidacionborradordetalles.Eof do
+        begin
+            ZQExecSQL.Sql.Clear;
+            ZQExecSQL.Sql.Add('insert into liquidacionborradordetalles set ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_id=:docuvendetcomisionvendedor_id, ');
+            ZQExecSQL.Sql.Add('liquidacionborrador_id=:liquidacionborrador_id, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordetalle_estado=:liquidacionborradordetalle_estado, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordetalle_saldo=:liquidacionborradordetalle_saldo, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordetalle_pagado=:liquidacionborradordetalle_pagado, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordetalle_importe=:liquidacionborradordetalle_importe, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordetalle_id=:liquidacionborradordetalle_id ');
+            ZQExecSQL.ParamByName('docuvendetcomisionvendedor_id').AsString:=ZQliquidacionborradordetalles.FieldByName('docuvendetcomisionvendedor_id').AsString;
+            ZQExecSQL.ParamByName('liquidacionborrador_id').AsString:=id;
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_estado').AsString:='PENDIENTE';
+            if ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_saldo').AsFloat>0 then
+              ZQExecSQL.ParamByName('liquidacionborradordetalle_estado').AsString:='PAGADA';
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_saldo').AsString:=ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_saldo').AsString;
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_pagado').AsString:=ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_pagado').AsString;
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_importe').AsString:=ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_importe').AsString;
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_id').AsString:=Princ.codigo('liquidacionborradordetalles','liquidacionborradordetalle_id');
+            ZQExecSQL.ExecSql;
+
+            ZQExecSQL.Sql.Clear;
+            ZQExecSQL.Sql.Add('update docuvendetcomisionesvendedores set ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_estado=:docuvendetcomisionvendedor_estado, ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_pagado=docuvendetcomisionvendedor_pagado+:liquidacionborradordetalle_importe, ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_saldo=docuvendetcomisionvendedor_saldo-:liquidacionborradordetalle_importe ');
+            ZQExecSQL.Sql.Add('where docuvendetcomisionvendedor_id=:docuvendetcomisionvendedor_id ');
+            ZQExecSQL.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PENDIENTE';
+            if ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_saldo').AsFloat>0 then
+              ZQExecSQL.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PAGADA';
+
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_importe').AsString:=ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_importe').AsString;
+            ZQExecSQL.ParamByName('docuvendetcomisionvendedor_id').AsString:=ZQliquidacionborradordetalles.FieldByName('docuvendetcomisionvendedor_id').AsString;
+            ZQExecSQL.ExecSql;
+
+            ZQliquidacionborradordetalles.Next;
+        end;
+
+
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('commit');
+    ZQExecSQL.ExecSQL;
+
+    MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
+    Self.Close;
+
+end;
+
+procedure TLiquidacionBorrador.modificar;
+begin
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('begin');
+    ZQExecSQL.ExecSQL;
+
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('update liquidacionesborradores set ');
+    ZQExecSQL.Sql.Add('liquidacionborrador_equipo=:liquidacionborrador_equipo, ');
+    ZQExecSQL.Sql.Add('personal_id=:personal_id, ');
+    ZQExecSQL.Sql.Add('liquidacionborrador_observaciones=:liquidacionborrador_observaciones, ');
+    ZQExecSQL.Sql.Add('liquidacionborrador_total=:liquidacionborrador_total, ');
+    ZQExecSQL.Sql.Add('liquidacionborrador_fecha=:liquidacionborrador_fecha ');
+    ZQExecSQL.Sql.Add('where liquidacionborrador_id=:liquidacionborrador_id ');
+    ZQExecSQL.ParamByName('liquidacionborrador_equipo').AsString:=liquidacionborrador_equipo.Text;
+    ZQExecSQL.ParamByName('personal_id').AsString:=personal_id.codigo;
+    ZQExecSQL.ParamByName('liquidacionborrador_observaciones').AsString:=liquidacionborrador_observaciones.Text;
+    ZQExecSQL.ParamByName('liquidacionborrador_total').AsString:=liquidacionborrador_total.Text;
+    ZQExecSQL.ParamByName('liquidacionborrador_fecha').AsString:=formatdatetime('yyyy-mm-dd',liquidacionborrador_fecha.Date);
+    ZQExecSQL.ParamByName('liquidacionborrador_id').AsString:=id;
+    ZQExecSQL.ExecSql;
+
+
+    ZQliquidacionborradordetallesanterior.Active:=false;
+    ZQliquidacionborradordetallesanterior.ParamByName('liquidacionborrador_id').AsString:=id;
+    ZQliquidacionborradordetallesanterior.Active:=true;
+    ZQliquidacionborradordetallesanterior.First;
+    while not ZQliquidacionborradordetallesanterior.Eof do
+        begin
+            ZQExecSQL.Sql.Clear;
+            ZQExecSQL.Sql.Add('update docuvendetcomisionesvendedores set ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_estado=:docuvendetcomisionvendedor_estado, ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_pagado=docuvendetcomisionvendedor_pagado-:liquidacionborradordetalle_importe, ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_saldo=docuvendetcomisionvendedor_saldo+:liquidacionborradordetalle_importe ');
+            ZQExecSQL.Sql.Add('where docuvendetcomisionvendedor_id=:docuvendetcomisionvendedor_id ');
+            ZQExecSQL.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PENDIENTE';
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_importe').AsString:=ZQliquidacionborradordetallesanterior.FieldByName('liquidacionborradordetalle_importe').AsString;
+            ZQExecSQL.ParamByName('docuvendetcomisionvendedor_id').AsString:=ZQliquidacionborradordetallesanterior.FieldByName('docuvendetcomisionvendedor_id').AsString;
+            ZQExecSQL.ExecSql;
+
+
+            ZQliquidacionborradordetallesanterior.Next;
+        end;
+
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('delete from liquidacionborradordetalles ');
+    ZQExecSQL.Sql.Add('where liquidacionborrador_id=:liquidacionborrador_id ');
+    ZQExecSQL.ParamByName('liquidacionborrador_id').AsString:=id;
+    ZQExecSQL.ExecSql;
+
+
+    ZQliquidacionborradordetalles.First;
+    while not ZQliquidacionborradordetalles.Eof do
+        begin
+            ZQExecSQL.Sql.Clear;
+            ZQExecSQL.Sql.Add('insert into liquidacionborradordetalles set ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_id=:docuvendetcomisionvendedor_id, ');
+            ZQExecSQL.Sql.Add('liquidacionborrador_id=:liquidacionborrador_id, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordetalle_estado=:liquidacionborradordetalle_estado, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordetalle_saldo=:liquidacionborradordetalle_saldo, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordetalle_pagado=:liquidacionborradordetalle_pagado, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordetalle_importe=:liquidacionborradordetalle_importe, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordetalle_id=:liquidacionborradordetalle_id ');
+            ZQExecSQL.ParamByName('docuvendetcomisionvendedor_id').AsString:=ZQliquidacionborradordetalles.FieldByName('docuvendetcomisionvendedor_id').AsString;
+            ZQExecSQL.ParamByName('liquidacionborrador_id').AsString:=id;
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_estado').AsString:='PENDIENTE';
+            if ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_saldo').AsFloat>0 then
+              ZQExecSQL.ParamByName('liquidacionborradordetalle_estado').AsString:='PAGADA';
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_saldo').AsString:=ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_saldo').AsString;
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_pagado').AsString:=ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_pagado').AsString;
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_importe').AsString:=ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_importe').AsString;
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_id').AsString:=Princ.codigo('liquidacionborradordetalles','liquidacionborradordetalle_id');
+            ZQExecSQL.ExecSql;
+
+            ZQExecSQL.Sql.Clear;
+            ZQExecSQL.Sql.Add('update docuvendetcomisionesvendedores set ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_estado=:docuvendetcomisionvendedor_estado, ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_pagado=docuvendetcomisionvendedor_pagado+:liquidacionborradordetalle_importe, ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_saldo=docuvendetcomisionvendedor_saldo-:liquidacionborradordetalle_importe ');
+            ZQExecSQL.Sql.Add('where docuvendetcomisionvendedor_id=:docuvendetcomisionvendedor_id ');
+            ZQExecSQL.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PENDIENTE';
+            if ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_saldo').AsFloat>0 then
+              ZQExecSQL.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PAGADA';
+
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_importe').AsString:=ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_importe').AsString;
+            ZQExecSQL.ParamByName('docuvendetcomisionvendedor_id').AsString:=ZQliquidacionborradordetalles.FieldByName('docuvendetcomisionvendedor_id').AsString;
+            ZQExecSQL.ExecSql;
+
+            ZQliquidacionborradordetalles.Next;
+        end;
+
+
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('commit');
+    ZQExecSQL.ExecSQL;
+
+    MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
+    Self.Close;
+
+end;
+
+procedure TLiquidacionBorrador.eliminar;
+begin
+
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('begin');
+    ZQExecSQL.ExecSQL;
+
+    ZQliquidacionborradordetallesanterior.Active:=false;
+    ZQliquidacionborradordetallesanterior.ParamByName('liquidacionborrador_id').AsString:=id;
+    ZQliquidacionborradordetallesanterior.Active:=true;
+    ZQliquidacionborradordetallesanterior.First;
+    while not ZQliquidacionborradordetallesanterior.Eof do
+        begin
+            ZQExecSQL.Sql.Clear;
+            ZQExecSQL.Sql.Add('update docuvendetcomisionesvendedores set ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_estado=:docuvendetcomisionvendedor_estado, ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_pagado=docuvendetcomisionvendedor_pagado-:liquidacionborradordetalle_importe, ');
+            ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_saldo=docuvendetcomisionvendedor_saldo+:liquidacionborradordetalle_importe ');
+            ZQExecSQL.Sql.Add('where docuvendetcomisionvendedor_id=:docuvendetcomisionvendedor_id ');
+            ZQExecSQL.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PENDIENTE';
+            ZQExecSQL.ParamByName('liquidacionborradordetalle_importe').AsString:=ZQliquidacionborradordetallesanterior.FieldByName('liquidacionborradordetalle_importe').AsString;
+            ZQExecSQL.ParamByName('docuvendetcomisionvendedor_id').AsString:=ZQliquidacionborradordetallesanterior.FieldByName('docuvendetcomisionvendedor_id').AsString;
+            ZQExecSQL.ExecSql;
+
+
+            ZQliquidacionborradordetallesanterior.Next;
+        end;
+
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('delete from liquidacionborradordetalles ');
+    ZQExecSQL.Sql.Add('where liquidacionborrador_id=:liquidacionborrador_id ');
+    ZQExecSQL.ParamByName('liquidacionborrador_id').AsString:=id;
+    ZQExecSQL.ExecSql;
+
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('delete from liquidacionesborradores ');
+    ZQExecSQL.Sql.Add('where liquidacionborrador_id=:liquidacionborrador_id ');
+    ZQExecSQL.ParamByName('liquidacionborrador_id').AsString:=id;
+    ZQExecSQL.ExecSql;
+
+
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('commit');
+    ZQExecSQL.ExecSQL;
+
+    MessageDlg('Datos borrados correctamente.', mtInformation, [mbOK], 0);
+    Self.Close;
+
+end;
+
+
+
+function TLiquidacionBorrador.control:boolean;
+var
+  error:integer;
+begin
+    error:=0;
+
+
+
+    result:=error=0;
+end;
 
 procedure TLiquidacionBorrador.CalcularTotal;
 begin
@@ -190,6 +436,29 @@ begin
     else
 
     ComisionesBorradorPendientes.Free;
+    CalcularTotal;
+end;
+
+procedure TLiquidacionBorrador.btnguardarClick(Sender: TObject);
+begin
+  inherited;
+    case abm of
+        ABM_AGREGAR:begin
+            if control then
+              agregar;
+        end;
+
+        ABM_MODIFICAR:begin
+            if control then
+              modificar;
+        end;
+
+        ABM_ELIMINAR:begin
+        if (MessageDlg('Seguro desea eliminar esta liquidacion?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+          eliminar;
+        end;
+
+    end;
 end;
 
 procedure TLiquidacionBorrador.FormCreate(Sender: TObject);
@@ -211,13 +480,19 @@ begin
   inherited;
     if abm=ABM_AGREGAR then
       begin
-          liquidacionvendedor_id.Text:=Princ.codigo('liquidacionesborradores','liquidacionborrador_id');
-          liquidacionvendedor_fecha.Date:=Date;
+          liquidacionborrador_id.Text:=Princ.codigo('liquidacionesborradores','liquidacionborrador_id');
+          liquidacionborrador_fecha.Date:=Date;
+          liquidacionborrador_equipo.Text:='';
+          liquidacionborrador_observaciones.Text:='';
 
       end
     else
       begin
-
+          personal_id.Buscar(ZQSelect.FieldByName('personal_id').AsString);
+          liquidacionborrador_id.Text:=ZQSelect.FieldByName('liquidacionborrador_id').AsString;
+          liquidacionborrador_fecha.Date:=ZQSelect.FieldByName('liquidacionborrador_fecha').AsDateTime;
+          liquidacionborrador_equipo.Text:=ZQSelect.FieldByName('liquidacionborrador_equipo').AsString;
+          liquidacionborrador_observaciones.Text:=ZQSelect.FieldByName('liquidacionborrador_observaciones').AsString;
 
 
       end;
@@ -226,6 +501,8 @@ begin
     ZQliquidacionborradordetalles.Active:=false;
     ZQliquidacionborradordetalles.ParamByName('liquidacionborrador_id').AsString:=id;
     ZQliquidacionborradordetalles.Active:=true;
+
+    CalcularTotal;
 end;
 
 end.

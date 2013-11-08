@@ -76,7 +76,7 @@ Comisiones
 	Borradores
 		Borradores
 		Liquidaciones Borradores
-		Saldos
+		Detalle de Cuentas
 Herramientas
 	Herramientas
 		Configuracion

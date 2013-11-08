@@ -20,6 +20,10 @@ type
     MQDetallesimporte: TFloatField;
     MQDetallestipodocu_nombre: TStringField;
     MQDetallesnumero: TStringField;
+    MQDetallesorden: TIntegerField;
+    MQDetallesacumulado: TFloatField;
+    MQDetallesdetalle_id: TIntegerField;
+    MQDetallesequipo: TStringField;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
@@ -39,6 +43,8 @@ uses Unitprinc;
 {$R *.dfm}
 
 procedure TSaldosComisionesBorradores.btnguardarClick(Sender: TObject);
+var
+  acumulado:real;
 begin
   inherited;
     ZQSelect.Active:=false;
@@ -47,7 +53,7 @@ begin
                        'inner join docuvendetcomisionesvendedores on documentoventadetalles.documentoventadetalle_id=docuvendetcomisionesvendedores.documentoventadetalle_id '+
                        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
                        'where tiposdocumento.tipodocu_nombre="'+TIPODOCU_NOTAPEDIDOCOMISIONES+'" and '+
-                       'docuvendetcomisionesvendedores.personal_id="'+personal_id.codigo+'" ';
+                       'docuvendetcomisionesvendedores.personal_id="'+personal_id.codigo+'" and docuvendetcomisionesvendedores.docuvendetcomisionvendedor_total>0';
     ZQSelect.Active:=true;
     ZQSelect.First;
     MQDetalles.Active:=false;
@@ -58,14 +64,57 @@ begin
             MQDetalles.FieldByName('id').AsString:=ZQSelect.FieldByName('documentoventa_id').AsString;
             MQDetalles.FieldByName('fecha').AsDateTime:=ZQSelect.FieldByName('documentoventa_fecha').AsDateTime;
             MQDetalles.FieldByName('tipo').AsString:='Borrador';
-            MQDetalles.FieldByName('numero').AsString:=ZQSelect.FieldByName('documentoventa_equipo1').AsString;
+            MQDetalles.FieldByName('numero').AsString:=ZQSelect.FieldByName('documentoventa_numero').AsString;
             MQDetalles.FieldByName('importe').AsString:=ZQSelect.FieldByName('docuvendetcomisionvendedor_total').AsString;
             MQDetalles.FieldByName('tipodocu_nombre').AsString:=TIPODOCU_NOTAPEDIDOCOMISIONES;
+            MQDetalles.FieldByName('orden').AsInteger:=1;
+            MQDetalles.FieldByName('acumulado').AsFloat:=0;
+            MQDetalles.FieldByName('detalle_id').AsString:=ZQSelect.FieldByName('docuvendetcomisionvendedor_id').AsString;
+            MQDetalles.FieldByName('equipo').AsString:=ZQSelect.FieldByName('documentoventa_equipo1').AsString;
             MQDetalles.Post;
 
 
             ZQSelect.Next;
         end;
+
+
+
+    ZQSelect.Active:=false;
+    ZQSelect.SQL.Text:='select * from liquidacionesborradores '+
+                       'where liquidacionesborradores.personal_id="'+personal_id.codigo+'" ';
+    ZQSelect.Active:=true;
+    ZQSelect.First;
+    while not ZQSelect.Eof do
+        begin
+            MQDetalles.Insert;
+            MQDetalles.FieldByName('id').AsString:=ZQSelect.FieldByName('liquidacionborrador_id').AsString;
+            MQDetalles.FieldByName('fecha').AsDateTime:=ZQSelect.FieldByName('liquidacionborrador_fecha').AsDateTime;
+            MQDetalles.FieldByName('tipo').AsString:='Liquidacion';
+            MQDetalles.FieldByName('numero').AsString:=ZQSelect.FieldByName('liquidacionborrador_id').AsString;
+            MQDetalles.FieldByName('importe').AsFloat:=ZQSelect.FieldByName('liquidacionborrador_total').AsFloat*-1;
+            MQDetalles.FieldByName('tipodocu_nombre').AsString:='Liquidacion Borradores';
+            MQDetalles.FieldByName('acumulado').AsFloat:=0;
+            MQDetalles.FieldByName('detalle_id').AsString:=ZQSelect.FieldByName('liquidacionborrador_id').AsString;
+            MQDetalles.FieldByName('equipo').AsString:=ZQSelect.FieldByName('liquidacionborrador_equipo').AsString;
+            MQDetalles.Post;
+
+
+            ZQSelect.Next;
+        end;
+
+    acumulado:=0;
+    MQDetalles.First;
+    while not MQDetalles.Eof do
+    begin
+        acumulado:=acumulado+MQDetalles.FieldByName('importe').AsFloat;
+
+        MQDetalles.Edit;
+        MQDetalles.FieldByName('acumulado').AsFloat:=acumulado;
+        MQDetalles.Post;
+
+        MQDetalles.Next;
+
+    end;
 
 end;
 

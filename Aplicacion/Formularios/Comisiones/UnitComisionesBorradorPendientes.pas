@@ -143,7 +143,7 @@ begin
     ZQDocumentosVentasPendientes.SQL.Add('inner join docuvendetcomisionesvendedores on documentoventadetalles.documentoventadetalle_id=docuvendetcomisionesvendedores.documentoventadetalle_id ');
     ZQDocumentosVentasPendientes.SQL.Add('inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id ');
     ZQDocumentosVentasPendientes.SQL.Add('where documentoventa_estado<>"ANULADA" and docuvendetcomisionesvendedores.personal_id="'+personal_id+'" ');
-    ZQDocumentosVentasPendientes.SQL.Add('and docuvendetcomisionesvendedores.docuvendetcomisionvendedor_estado="PENDIENTE"');
+    ZQDocumentosVentasPendientes.SQL.Add('and docuvendetcomisionesvendedores.docuvendetcomisionvendedor_estado="PENDIENTE" ');
     ZQDocumentosVentasPendientes.Active:=true;
 
     ZQDocumentosVentasPendientes.Active:=true;

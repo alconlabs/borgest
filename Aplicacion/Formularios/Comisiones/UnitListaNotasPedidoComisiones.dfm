@@ -22,21 +22,28 @@ inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
           Expanded = False
           FieldName = 'documentoventa_fecha'
           Title.Caption = 'Fecha'
-          Width = 80
+          Width = 78
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'puntoventa_numero'
           Title.Caption = 'Pto. Vta.'
-          Width = 46
+          Width = 43
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'documentoventa_numero'
+          Title.Caption = 'Numero'
+          Width = 90
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'documentoventa_equipo1'
-          Title.Caption = 'Numero'
-          Width = 90
+          Title.Caption = 'Equipo'
+          Width = 89
           Visible = True
         end
         item
@@ -76,28 +83,42 @@ inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
         TabOrder = 2
       end
       object fil_documentoventa_equipo1: TEdit
-        Left = 138
+        Left = 228
         Top = 0
         Width = 90
         Height = 21
         Align = alLeft
         TabOrder = 3
+        ExplicitLeft = 266
+        ExplicitTop = 6
       end
       object fil_cliente_nombre: TEdit
-        Left = 228
+        Left = 318
         Top = 0
         Width = 430
         Height = 21
         Align = alLeft
         TabOrder = 4
+        ExplicitLeft = 228
       end
       object fil_documentoventa_total: TEdit
-        Left = 658
+        Left = 748
         Top = 0
         Width = 130
         Height = 21
         Align = alLeft
         TabOrder = 5
+        ExplicitLeft = 658
+      end
+      object fil_documentoventa_numero: TEdit
+        Left = 138
+        Top = 0
+        Width = 90
+        Height = 21
+        Align = alLeft
+        TabOrder = 6
+        ExplicitLeft = 250
+        ExplicitTop = -6
       end
     end
   end

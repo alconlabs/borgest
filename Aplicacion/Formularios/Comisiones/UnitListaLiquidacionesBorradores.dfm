@@ -8,6 +8,14 @@ inherited ListaLiquidacionesBorradores: TListaLiquidacionesBorradores
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
       FullHeight = 0
+      inherited btnanular: TButton
+        Enabled = False
+        Visible = True
+      end
+      inherited btnver: TButton
+        Enabled = False
+        Visible = True
+      end
     end
     inherited DBGrid1: TDBGrid
       Columns = <

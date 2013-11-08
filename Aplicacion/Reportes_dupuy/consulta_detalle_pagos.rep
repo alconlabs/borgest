@@ -21,11 +21,6 @@ object TRpReport
         ' puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.punto' +
         'venta_id'#13#10'inner join clientes on documentosventas.cliente_id=cli' +
         'entes.cliente_id'
-    end
-    item
-      Alias = 'ALIAS_EMPRESA'
-      DatabaseAlias = 'CONEXION_DBBORGEST'
-      SQL = 'select * from empresas'
     end>
   DatabaseInfo = <
     item
@@ -167,7 +162,7 @@ object TRpReport
   end
   object TRpSection2: TRpSection
     Width = 10772
-    Height = 2625
+    Height = 1590
     SubReport = TRpSubReport0
     ChangeBool = False
     PageRepeat = False
@@ -225,15 +220,6 @@ object TRpReport
       end
       item
         Component = TRpShape16
-      end
-      item
-        Component = TRpShape1
-      end
-      item
-        Component = TRpExpression9
-      end
-      item
-        Component = TRpExpression10
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -283,7 +269,7 @@ object TRpReport
     Width = 2385
     Height = 285
     PosX = 120
-    PosY = 1086
+    PosY = 60
     Type1Font = poHelvetica
     FontStyle = 1
     Alignment = 2
@@ -334,7 +320,7 @@ object TRpReport
     Width = 1050
     Height = 264
     PosX = 9000
-    PosY = 1086
+    PosY = 60
     Type1Font = poHelvetica
     DataType = rpParamDate
     AutoExpand = False
@@ -357,7 +343,7 @@ object TRpReport
     Width = 622
     Height = 232
     PosX = 8265
-    PosY = 1086
+    PosY = 60
     Type1Font = poHelvetica
     FontStyle = 1
     Alignment = 2
@@ -372,7 +358,7 @@ object TRpReport
     Width = 2685
     Height = 285
     PosX = 1085
-    PosY = 1769
+    PosY = 515
     Type1Font = poHelvetica
     AutoExpand = False
     AutoContract = False
@@ -394,7 +380,7 @@ object TRpReport
     Width = 850
     Height = 230
     PosX = 120
-    PosY = 1764
+    PosY = 510
     Type1Font = poHelvetica
     FontStyle = 1
     Alignment = 2
@@ -409,7 +395,7 @@ object TRpReport
     Width = 795
     Height = 225
     PosX = 1485
-    PosY = 2053
+    PosY = 970
     Type1Font = poHelvetica
     AutoExpand = False
     AutoContract = False
@@ -431,7 +417,7 @@ object TRpReport
     Width = 1250
     Height = 280
     PosX = 115
-    PosY = 2053
+    PosY = 970
     Type1Font = poHelvetica
     FontStyle = 1
     Alignment = 2
@@ -599,7 +585,7 @@ object TRpReport
     Width = 172
     Height = 238
     PosX = 2510
-    PosY = 2394
+    PosY = 1368
     BrushStyle = 1
     Shape = rpsVertLine
     PenWidth = 0
@@ -611,7 +597,7 @@ object TRpReport
     Width = 172
     Height = 238
     PosX = 3535
-    PosY = 2394
+    PosY = 1368
     BrushStyle = 1
     Shape = rpsVertLine
     PenWidth = 0
@@ -623,7 +609,7 @@ object TRpReport
     Width = 9120
     Height = 230
     PosX = 115
-    PosY = 2394
+    PosY = 1368
     BrushStyle = 1
     PenWidth = 0
     PrintCondition = ''
@@ -634,7 +620,7 @@ object TRpReport
     Width = 740
     Height = 230
     PosX = 1540
-    PosY = 2394
+    PosY = 1368
     Type1Font = poHelvetica
     Alignment = 4
     PrintCondition = ''
@@ -648,7 +634,7 @@ object TRpReport
     Width = 915
     Height = 230
     PosX = 170
-    PosY = 2394
+    PosY = 1368
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''
@@ -661,7 +647,7 @@ object TRpReport
     Width = 740
     Height = 230
     PosX = 2680
-    PosY = 2394
+    PosY = 1368
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''
@@ -674,7 +660,7 @@ object TRpReport
     Width = 1028
     Height = 225
     PosX = 3705
-    PosY = 2394
+    PosY = 1368
     Type1Font = poHelvetica
     PrintCondition = ''
     DoBeforePrint = ''
@@ -687,7 +673,7 @@ object TRpReport
     Width = 1028
     Height = 225
     PosX = 8035
-    PosY = 2394
+    PosY = 1368
     Type1Font = poHelvetica
     Alignment = 4
     PrintCondition = ''
@@ -701,7 +687,7 @@ object TRpReport
     Width = 172
     Height = 238
     PosX = 7865
-    PosY = 2394
+    PosY = 1368
     BrushStyle = 1
     Shape = rpsVertLine
     PenWidth = 0
@@ -713,7 +699,7 @@ object TRpReport
     Width = 110
     Height = 235
     PosX = 1255
-    PosY = 2394
+    PosY = 1368
     BrushStyle = 1
     Shape = rpsVertLine
     PenWidth = 0
@@ -830,62 +816,5 @@ object TRpReport
     ExportDisplayFormat = ''
     AgIniValue = '0'
     ExportExpression = ''
-  end
-  object TRpExpression9: TRpExpression
-    Width = 4200
-    Height = 264
-    PosX = 165
-    PosY = 60
-    Type1Font = poHelvetica
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_EMPRESA.empresa_nombre'
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
-  object TRpExpression10: TRpExpression
-    Width = 4200
-    Height = 264
-    PosX = 165
-    PosY = 405
-    Type1Font = poHelvetica
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 
-      'ALIAS_EMPRESA.empresa_domicilio + '#39' - '#39' + ALIAS_EMPRESA.empresa_' +
-      'telefono'
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
-  object TRpShape1: TRpShape
-    Width = 10485
-    Height = 165
-    PosX = 120
-    PosY = 798
-    Shape = rpsHorzLine
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
   end
 end

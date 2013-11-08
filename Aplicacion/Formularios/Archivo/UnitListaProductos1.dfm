@@ -1,16 +1,16 @@
 inherited ListaProductos1: TListaProductos1
   Caption = 'Productos'
-  ClientWidth = 1034
-  ExplicitWidth = 1050
+  ClientWidth = 1045
+  ExplicitWidth = 1061
   ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Width = 1034
+    Width = 1045
     ExplicitWidth = 1034
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
-      Left = 931
+      Left = 942
       ExplicitLeft = 931
       FullHeight = 0
       inherited btnver: TButton
@@ -19,7 +19,7 @@ inherited ListaProductos1: TListaProductos1
       end
     end
     inherited DBGrid1: TDBGrid
-      Width = 931
+      Width = 942
       Columns = <
         item
           Expanded = False
@@ -95,16 +95,23 @@ inherited ListaProductos1: TListaProductos1
           Expanded = False
           FieldName = 'proveedor_nombre'
           Title.Caption = 'Proveedor'
-          Width = 140
+          Width = 127
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'producto_fechaactualizacionprecio'
+          Title.Caption = 'Fecha Act.'
+          Width = 73
           Visible = True
         end>
     end
     inherited panelfiltros: TAdvPanel
-      Width = 1034
+      Width = 1045
       ExplicitWidth = 1034
       FullHeight = 0
       inherited btnfiltrar: TButton
-        Left = 931
+        Left = 942
         ExplicitLeft = 931
         ExplicitTop = 0
       end
@@ -117,7 +124,6 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 2
         Tag2 = 0
         FieldName = 'producto_nombre'
-        ExplicitLeft = 85
       end
       object fil_producto_preciocosto: TGTBEdit
         Left = 530
@@ -128,7 +134,6 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 3
         Tag2 = 0
         FieldName = 'producto_preciocosto'
-        ExplicitLeft = 445
       end
       object fil_producto_precioventa1: TGTBEdit
         Left = 608
@@ -139,7 +144,6 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 4
         Tag2 = 0
         FieldName = 'producto_precioventa1'
-        ExplicitLeft = 523
       end
       object fil_rubro_nombre: TGTBEdit
         Left = 962
@@ -150,7 +154,6 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 5
         Tag2 = 0
         FieldName = 'rubro_nombre'
-        ExplicitLeft = 877
       end
       object fil_proveedor_nombre: TGTBEdit
         Left = 1062
@@ -161,7 +164,6 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 6
         Tag2 = 0
         FieldName = 'proveedor_nombre'
-        ExplicitLeft = 977
       end
       object fil_producto_precioventa2: TGTBEdit
         Left = 686
@@ -172,7 +174,6 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 7
         Tag2 = 0
         FieldName = 'producto_precioventa2'
-        ExplicitLeft = 601
       end
       object fil_producto_precioventa3: TGTBEdit
         Left = 764
@@ -183,7 +184,6 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 8
         Tag2 = 0
         FieldName = 'producto_precioventa3'
-        ExplicitLeft = 679
       end
       object fil_producto_precioventa4: TGTBEdit
         Left = 842
@@ -194,7 +194,6 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 9
         Tag2 = 0
         FieldName = 'producto_precioventa4'
-        ExplicitLeft = 757
       end
       object fil_producdepo_stockactual: TGTBEdit
         Left = 920
@@ -205,7 +204,6 @@ inherited ListaProductos1: TListaProductos1
         TabOrder = 10
         Tag2 = 0
         FieldName = 'producdepo_stockactual'
-        ExplicitLeft = 835
       end
       object fil_producto_codigo: TGTBEdit
         Left = 85
@@ -217,18 +215,26 @@ inherited ListaProductos1: TListaProductos1
         OnKeyPress = fil_idKeyPress
         Tag2 = 0
         FieldName = 'producto_codigo'
-        ExplicitLeft = 128
-        ExplicitTop = 6
+      end
+      object fil_producto_fechaactualizacionprecio: TGTBEdit
+        Left = 1202
+        Top = 0
+        Width = 76
+        Height = 21
+        Align = alLeft
+        TabOrder = 12
+        Tag2 = 0
+        FieldName = 'producto_fechaactualizacionprecio'
       end
     end
   end
   inherited panelabm: TAdvPanel
-    Width = 1034
+    Width = 1045
     ExplicitWidth = 1034
     FullHeight = 0
   end
   inherited StatusBar1: TStatusBar
-    Width = 1034
+    Width = 1045
     ExplicitWidth = 1034
   end
   inherited ZQGrilla: TZQuery
