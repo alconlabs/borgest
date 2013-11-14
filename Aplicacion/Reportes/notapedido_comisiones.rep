@@ -390,7 +390,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.documentoventa_equipo1'
+    Expression = 'ALIAS_DBBORGEST.documentoventa_numero'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -439,6 +439,7 @@ object TRpReport
     PosX = 285
     PosY = 855
     Type1Font = poHelvetica
+    Alignment = 4
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -465,6 +466,7 @@ object TRpReport
     PosX = 6725
     PosY = 855
     Type1Font = poHelvetica
+    Alignment = 4
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -478,6 +480,7 @@ object TRpReport
     PosX = 8095
     PosY = 855
     Type1Font = poHelvetica
+    Alignment = 4
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -491,6 +494,7 @@ object TRpReport
     PosX = 9460
     PosY = 855
     Type1Font = poHelvetica
+    Alignment = 4
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -504,6 +508,7 @@ object TRpReport
     PosX = 10715
     PosY = 855
     Type1Font = poHelvetica
+    Alignment = 4
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -517,6 +522,7 @@ object TRpReport
     PosX = 12255
     PosY = 855
     Type1Font = poHelvetica
+    Alignment = 4
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -530,6 +536,7 @@ object TRpReport
     PosX = 13625
     PosY = 855
     Type1Font = poHelvetica
+    Alignment = 4
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -950,9 +957,9 @@ object TRpReport
   end
   object TRpShape7: TRpShape
     Width = 14820
-    Height = 210
-    PosX = 170
-    PosY = 860
+    Height = 150
+    PosX = 165
+    PosY = 915
     BrushStyle = 1
     PenWidth = 0
     PrintCondition = ''
@@ -1352,6 +1359,7 @@ object TRpReport
     PosX = 6785
     PosY = 55
     Type1Font = poHelvetica
+    FontStyle = 1
     DataType = rpParamInteger
     Aggregate = rpAgGroup
     GroupName = 'VENDEDOR'

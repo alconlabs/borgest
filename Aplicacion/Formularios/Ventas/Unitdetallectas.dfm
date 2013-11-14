@@ -3,7 +3,7 @@ object detallectas: Tdetallectas
   Top = 0
   Caption = 'Estado de Cuentas - DETALLES'
   ClientHeight = 472
-  ClientWidth = 744
+  ClientWidth = 867
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object detallectas: Tdetallectas
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 744
+    Width = 867
     Height = 472
     Align = alClient
     BevelOuter = bvNone
@@ -61,6 +61,7 @@ object detallectas: Tdetallectas
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitWidth = 744
     FullHeight = 0
     object Label3: TLabel
       Left = 9
@@ -98,7 +99,7 @@ object detallectas: Tdetallectas
     object DBGrid1: TDBGrid
       Left = 9
       Top = 184
-      Width = 728
+      Width = 840
       Height = 233
       DataSource = DSCPendientes
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
@@ -151,6 +152,13 @@ object detallectas: Tdetallectas
           FieldName = 'documentoventanumero'
           Title.Caption = 'Nro.'
           Width = 58
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'documentoventa_equipo1'
+          Title.Caption = 'Equipo'
+          Width = 116
           Visible = True
         end
         item

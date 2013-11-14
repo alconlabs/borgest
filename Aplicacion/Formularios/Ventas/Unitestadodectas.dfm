@@ -3,7 +3,7 @@ object estadoctas: Testadoctas
   Top = 0
   Caption = 'Estado de Cuentas - SALDOS'
   ClientHeight = 472
-  ClientWidth = 744
+  ClientWidth = 867
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,12 +14,13 @@ object estadoctas: Testadoctas
   Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 744
+    Width = 867
     Height = 472
     Align = alClient
     BevelOuter = bvNone
@@ -63,6 +64,7 @@ object estadoctas: Testadoctas
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitWidth = 744
     FullHeight = 0
     object Label3: TLabel
       Left = 9
@@ -100,7 +102,7 @@ object estadoctas: Testadoctas
     object DBGrid1: TDBGrid
       Left = 9
       Top = 184
-      Width = 728
+      Width = 840
       Height = 233
       DataSource = DSCPendientes
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
@@ -158,6 +160,13 @@ object estadoctas: Testadoctas
         end
         item
           Expanded = False
+          FieldName = 'documentoventa_equipo1'
+          Title.Caption = 'Equipo'
+          Width = 116
+          Visible = True
+        end
+        item
+          Expanded = False
           FieldName = 'debito'
           Title.Caption = 'Debe'
           Visible = True
@@ -185,7 +194,7 @@ object estadoctas: Testadoctas
       OnClick = btnactualizarClick
     end
     object btnimprimir: TButton
-      Left = 662
+      Left = 766
       Top = 423
       Width = 75
       Height = 25
@@ -436,7 +445,7 @@ object estadoctas: Testadoctas
       ConfTodosCheckeados = True
     end
     object BtnDetalleImputacion: TButton
-      Left = 533
+      Left = 637
       Top = 423
       Width = 124
       Height = 25
@@ -1028,8 +1037,8 @@ object estadoctas: Testadoctas
   object ZQsoliciPendiente: TZQuery
     Connection = Princ.ZBase
     Params = <>
-    Left = 808
-    Top = 272
+    Left = 760
+    Top = 264
   end
   object MQsolicipendiente: TMQuery
     Connection = Princ.ZBase
@@ -1101,8 +1110,8 @@ object estadoctas: Testadoctas
     Memo.Strings = (
       'select * from puntodeventa'
       'order by puntoventa_numero')
-    Left = 456
-    Top = 184
+    Left = 424
+    Top = 288
   end
   object ZQDebitos: TZQuery
     Connection = Princ.ZBase

@@ -1407,3 +1407,36 @@ UPDATE `docuvendetcomisionesvendedores` SET `docuvendetcomisionvendedor_estado`=
 UPDATE `menu` SET `menu_path`='>Comisiones>Borradores>Detalle de Cuentas' WHERE `menu_id`=88;
 361;
 UPDATE `menu` SET `menu_nomb`='BtnDetalleCuentasBorradores' WHERE `menu_id`=88;
+362;
+CREATE  TABLE IF NOT EXISTS `imprimiretiquetas` (
+  `imprimiretiqueta_id` INT(11) NOT NULL ,
+  `imprimiretiqueta_codigo` VARCHAR(45) NULL DEFAULT NULL ,
+  `imprimiretiqueta_descripcion` VARCHAR(150) NULL DEFAULT NULL ,
+  `imprimiretiqueta_cantidad` INT(11) NULL DEFAULT NULL ,
+  `imprimiretiqueta_precio` FLOAT(20,2) NULL DEFAULT NULL ,
+  PRIMARY KEY (`imprimiretiqueta_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+363;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('89', '>Herramientas>Herramientas>Imprimir Etiquetas', '0', 'btnimprimiretiquetas', '', '0', '0', '');
+364;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,89,perfil_id,-1 from perfiles;
+365;
+CREATE  TABLE IF NOT EXISTS `liquidacionborradordebcred` (
+  `liquidacionborradordebcred_id` INT(11) NOT NULL ,
+  `liquidacionborradordebcred_descripcion` VARCHAR(150) NULL DEFAULT NULL ,
+  `liquidacionborradordebcred_importe` FLOAT(20,2) NULL DEFAULT NULL ,
+  `liquidacionborrador_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`liquidacionborradordebcred_id`) ,
+  INDEX `fk_liquidacionborradordebcred_liquidacionesborradores1` (`liquidacionborrador_id` ASC) ,
+  CONSTRAINT `fk_liquidacionborradordebcred_liquidacionesborradores1`
+    FOREIGN KEY (`liquidacionborrador_id` )
+    REFERENCES `liquidacionesborradores` (`liquidacionborrador_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+366;
+Replace config set config_valor='0', config_nombre='MOSTRAREQUIPO';

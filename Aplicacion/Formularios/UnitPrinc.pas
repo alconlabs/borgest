@@ -157,6 +157,7 @@ type
     BtnMovimientosdeStock: TAdvGlowButton;
     BtnLiquidacionesBorradores: TAdvGlowButton;
     BtnDetalleCuentasBorradores: TAdvGlowButton;
+    btnimprimiretiquetas: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -226,6 +227,7 @@ type
     procedure BtnAjustesdeStockClick(Sender: TObject);
     procedure BtnDetalleCuentasBorradoresClick(Sender: TObject);
     procedure BtnLiquidacionesBorradoresClick(Sender: TObject);
+    procedure btnimprimiretiquetasClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -254,6 +256,7 @@ type
     empresa_where:string;
     ruta_carpeta_reportes:string;
     ultima_busqueda_productos:string;
+    MOSTRAREQUIPO:boolean;
     function codigo(tabla:string;campo:string):string;
     function buscar(sql:string;campo:string):string;
     function fechaservidor():TDateTime;
@@ -448,7 +451,8 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitListaNotasDeCreditodeCompras, UnitNotaDebitoCompra,
   Unitdetallectasproveedores, UnitListaNotasDeDebitodeCompras,
   UnitMovimientosdeStock, UnitListaAjustesdeStock,
-  UnitSaldosComisionesBorradores, UnitListaLiquidacionesBorradores;
+  UnitSaldosComisionesBorradores, UnitListaLiquidacionesBorradores,
+  UnitImprimirEtiquetas;
 
 {$R *.dfm}
 
@@ -3451,6 +3455,8 @@ begin
 
     VENTASNCNDCONCEPTOS:=Princ.GetConfiguracion('VENTASNCNDCONCEPTOS');
 
+    MOSTRAREQUIPO:=strtobool(Princ.GetConfiguracion('MOSTRAREQUIPO'));
+
     MenuConfiguracion;
 
 end;
@@ -3754,6 +3760,15 @@ begin
       impresorafiscalcola:=Timpresorafiscalcola.Create(self);
     finally
       impresorafiscalcola.Show;
+    end;
+end;
+
+procedure TPrinc.btnimprimiretiquetasClick(Sender: TObject);
+begin
+    try
+      ImprimirEtiquetas:=TImprimirEtiquetas.Create(self);
+    finally
+      ImprimirEtiquetas.Show;
     end;
 end;
 

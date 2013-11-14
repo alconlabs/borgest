@@ -16,11 +16,8 @@ type
     liquidacionborrador_fecha: TDateTimePicker;
     Label4: TLabel;
     personal_id: TSqlComboBox;
-    DBGrid1: TDBGrid;
     ZQliquidacionborradordetalles: TZQuery;
     DTSliquidacionborradordetalles: TDataSource;
-    btnagregar: TButton;
-    btnquitar: TButton;
     Label10: TLabel;
     liquidacionborrador_total: TMoneyEdit;
     Label3: TLabel;
@@ -96,11 +93,49 @@ type
     liquidacionborrador_equipo: TEdit;
     ZQliquidacionborradordetallesanterior: TZQuery;
     ZQliquidacionborradordetallesliquidacionborradordetalle_estado: TStringField;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    DBGrid1: TDBGrid;
+    btnagregar: TButton;
+    btnquitar: TButton;
+    Label6: TLabel;
+    total_borradores: TEdit;
+    DBGrid2: TDBGrid;
+    DTSliquidacionborradordebcred: TDataSource;
+    ZQliquidacionborradordebcred: TZQuery;
+    ZQliquidacionborradordebcredliquidacionborradordebcred_id: TIntegerField;
+    ZQliquidacionborradordebcredliquidacionborradordebcred_importe: TFloatField;
+    ZQliquidacionborradordebcredliquidacionborrador_id: TIntegerField;
+    Label7: TLabel;
+    total_debcre: TEdit;
+    btnagregardebcred: TButton;
+    btnquitardebcred: TButton;
+    ZQliquidacionborradordebcredliquidacionborradordebcred_descripcion: TStringField;
+    ZQliquidacionborradordetallescliente_id_1: TIntegerField;
+    ZQliquidacionborradordetallescliente_nombre: TStringField;
+    ZQliquidacionborradordetallescliente_domicilio: TStringField;
+    ZQliquidacionborradordetallescliente_documentonro: TStringField;
+    ZQliquidacionborradordetallescliente_documentotipo: TStringField;
+    ZQliquidacionborradordetallescliente_telefono: TStringField;
+    ZQliquidacionborradordetallescliente_celular: TStringField;
+    ZQliquidacionborradordetallescliente_mail: TStringField;
+    ZQliquidacionborradordetallescondicioniva_id: TIntegerField;
+    ZQliquidacionborradordetallescliente_listaprecio: TIntegerField;
+    ZQliquidacionborradordetallescliente_condicionventa: TStringField;
+    ZQliquidacionborradordetalleslocalidad_id: TIntegerField;
+    ZQliquidacionborradordetallescliente_observaciones: TStringField;
+    ZQliquidacionborradordetallespersonal_id_2: TIntegerField;
+    ZQliquidacionborradordetallescliente_diasvenc: TIntegerField;
+    btnimprimir: TButton;
     procedure btnagregarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQSelectAfterOpen(DataSet: TDataSet);
     procedure btnguardarClick(Sender: TObject);
+    procedure btnagregardebcredClick(Sender: TObject);
+    procedure btnquitardebcredClick(Sender: TObject);
+    procedure btnimprimirClick(Sender: TObject);
   private
     { Private declarations }
     procedure CalcularTotal;
@@ -117,7 +152,8 @@ var
 
 implementation
 
-uses UnitComisionesBorradorPendientes, unitprinc;
+uses UnitComisionesBorradorPendientes, unitprinc,
+  UnitLiquidacionBorradorDebCred;
 
 {$R *.dfm}
 
@@ -184,6 +220,26 @@ begin
 
             ZQliquidacionborradordetalles.Next;
         end;
+
+
+    ZQliquidacionborradordebcred.First;
+    while not ZQliquidacionborradordebcred.Eof do
+        begin
+            ZQExecSQL.Sql.Clear;
+            ZQExecSQL.Sql.Add('insert into liquidacionborradordebcred set ');
+            ZQExecSQL.Sql.Add('liquidacionborrador_id=:liquidacionborrador_id, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordebcred_importe=:liquidacionborradordebcred_importe, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordebcred_descripcion=:liquidacionborradordebcred_descripcion, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordebcred_id=:liquidacionborradordebcred_id ');
+            ZQExecSQL.ParamByName('liquidacionborrador_id').AsString:=id;
+            ZQExecSQL.ParamByName('liquidacionborradordebcred_importe').AsString:=ZQliquidacionborradordebcred.FieldByName('liquidacionborradordebcred_importe').AsString;
+            ZQExecSQL.ParamByName('liquidacionborradordebcred_descripcion').AsString:=ZQliquidacionborradordebcred.FieldByName('liquidacionborradordebcred_descripcion').AsString;
+            ZQExecSQL.ParamByName('liquidacionborradordebcred_id').AsString:=Princ.codigo('liquidacionborradordebcred','liquidacionborradordebcred_id');
+            ZQExecSQL.ExecSql;
+
+            ZQliquidacionborradordebcred.Next;
+        end;
+
 
 
     ZQExecSQL.Sql.Clear;
@@ -287,6 +343,33 @@ begin
         end;
 
 
+
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('delete from liquidacionborradordebcred ');
+    ZQExecSQL.Sql.Add('where liquidacionborrador_id=:liquidacionborrador_id ');
+    ZQExecSQL.ParamByName('liquidacionborrador_id').AsString:=id;
+    ZQExecSQL.ExecSql;
+
+
+    ZQliquidacionborradordebcred.First;
+    while not ZQliquidacionborradordebcred.Eof do
+        begin
+            ZQExecSQL.Sql.Clear;
+            ZQExecSQL.Sql.Add('insert into liquidacionborradordebcred set ');
+            ZQExecSQL.Sql.Add('liquidacionborrador_id=:liquidacionborrador_id, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordebcred_importe=:liquidacionborradordebcred_importe, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordebcred_descripcion=:liquidacionborradordebcred_descripcion, ');
+            ZQExecSQL.Sql.Add('liquidacionborradordebcred_id=:liquidacionborradordebcred_id ');
+            ZQExecSQL.ParamByName('liquidacionborrador_id').AsString:=id;
+            ZQExecSQL.ParamByName('liquidacionborradordebcred_importe').AsString:=ZQliquidacionborradordebcred.FieldByName('liquidacionborradordebcred_importe').AsString;
+            ZQExecSQL.ParamByName('liquidacionborradordebcred_descripcion').AsString:=ZQliquidacionborradordebcred.FieldByName('liquidacionborradordebcred_descripcion').AsString;
+            ZQExecSQL.ParamByName('liquidacionborradordebcred_id').AsString:=Princ.codigo('liquidacionborradordebcred','liquidacionborradordebcred_id');
+            ZQExecSQL.ExecSql;
+
+            ZQliquidacionborradordebcred.Next;
+        end;
+
+
     ZQExecSQL.Sql.Clear;
     ZQExecSQL.Sql.Add('commit');
     ZQExecSQL.ExecSQL;
@@ -331,6 +414,12 @@ begin
     ZQExecSQL.ExecSql;
 
     ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('delete from liquidacionborradordebcred ');
+    ZQExecSQL.Sql.Add('where liquidacionborrador_id=:liquidacionborrador_id ');
+    ZQExecSQL.ParamByName('liquidacionborrador_id').AsString:=id;
+    ZQExecSQL.ExecSql;
+
+    ZQExecSQL.Sql.Clear;
     ZQExecSQL.Sql.Add('delete from liquidacionesborradores ');
     ZQExecSQL.Sql.Add('where liquidacionborrador_id=:liquidacionborrador_id ');
     ZQExecSQL.ParamByName('liquidacionborrador_id').AsString:=id;
@@ -360,17 +449,33 @@ begin
 end;
 
 procedure TLiquidacionBorrador.CalcularTotal;
+var
+  temp_total_borradores:real;
+  temp_total_debcred:real;
 begin
-    liquidacionborrador_total.Value:=0;
+    temp_total_borradores:=0;
     ZQliquidacionborradordetalles.First;
     while not ZQliquidacionborradordetalles.Eof do
         begin
-            liquidacionborrador_total.Value:=liquidacionborrador_total.Value+ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_importe').AsFloat;
+            temp_total_borradores:=temp_total_borradores+ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_importe').AsFloat;
 
             ZQliquidacionborradordetalles.Next;
         end;
 
 
+    temp_total_debcred:=0;
+    ZQliquidacionborradordebcred.First;
+    while not ZQliquidacionborradordebcred.Eof do
+        begin
+            temp_total_debcred:=temp_total_debcred+ZQliquidacionborradordebcred.FieldByName('liquidacionborradordebcred_importe').AsFloat;
+
+            ZQliquidacionborradordebcred.Next;
+        end;
+
+
+    total_borradores.Text:=floattostr(temp_total_borradores);
+    total_debcre.Text:=floattostr(temp_total_debcred);
+    liquidacionborrador_total.Value:=temp_total_borradores+temp_total_debcred;
 end;
 
 procedure TLiquidacionBorrador.btnagregarClick(Sender: TObject);
@@ -439,6 +544,24 @@ begin
     CalcularTotal;
 end;
 
+procedure TLiquidacionBorrador.btnagregardebcredClick(Sender: TObject);
+begin
+  inherited;
+    LiquidacionBorradorDebCred:=TLiquidacionBorradorDebCred.Create(self);
+    if LiquidacionBorradorDebCred.ShowModal=mrOk then
+      begin
+          ZQliquidacionborradordebcred.Insert;
+          ZQliquidacionborradordebcred.FieldByName('liquidacionborradordebcred_id').AsString:='0';
+          ZQliquidacionborradordebcred.FieldByName('liquidacionborradordebcred_descripcion').AsString:=LiquidacionBorradorDebCred.liquidacionborradordebcred_descripcion.Text;
+          ZQliquidacionborradordebcred.FieldByName('liquidacionborradordebcred_importe').AsString:=LiquidacionBorradorDebCred.liquidacionborradordebcred_importe.Text;
+          ZQliquidacionborradordebcred.FieldByName('liquidacionborrador_id').AsString:='0';
+          ZQliquidacionborradordebcred.Post;
+
+      end;
+    LiquidacionBorradorDebCred.Free;
+    CalcularTotal;
+end;
+
 procedure TLiquidacionBorrador.btnguardarClick(Sender: TObject);
 begin
   inherited;
@@ -461,6 +584,39 @@ begin
     end;
 end;
 
+procedure TLiquidacionBorrador.btnimprimirClick(Sender: TObject);
+begin
+  inherited;
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'liquidacion_borradores.rep';
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from liquidacionesborradores '+
+                                                   'inner join personal on liquidacionesborradores.personal_id=personal.personal_id '+
+                                                   'inner join liquidacionborradordetalles on liquidacionesborradores.liquidacionborrador_id=liquidacionborradordetalles.liquidacionborrador_id '+
+                                                   'inner join docuvendetcomisionesvendedores on liquidacionborradordetalles.docuvendetcomisionvendedor_id=docuvendetcomisionesvendedores.docuvendetcomisionvendedor_id '+
+                                                   'inner join documentoventadetalles on docuvendetcomisionesvendedores.documentoventadetalle_id=documentoventadetalles.documentoventadetalle_id '+
+                                                   'inner join documentosventas on documentoventadetalles.documentoventa_id=documentosventas.documentoventa_id '+
+                                                   'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                                   'where liquidacionesborradores.liquidacionborrador_id="'+id+'"';
+
+    Princ.VCLReport1.Report.Datainfo.Items[1].sql:='select * from liquidacionborradordebcred '+
+                                                   'where liquidacionborradordebcred.liquidacionborrador_id="'+id+'"';
+
+    Princ.VCLReport1.Execute;
+end;
+
+procedure TLiquidacionBorrador.btnquitardebcredClick(Sender: TObject);
+begin
+  inherited;
+    if ZQliquidacionborradordebcred.RecordCount>0 then
+      begin
+          if (MessageDlg('Seguro desea quitar este registro?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+            begin
+                ZQliquidacionborradordebcred.Delete;
+
+                CalcularTotal;
+            end;
+      end;
+end;
+
 procedure TLiquidacionBorrador.FormCreate(Sender: TObject);
 begin
   inherited;
@@ -473,6 +629,7 @@ begin
     ZQSelect.Active:=false;
     ZQSelect.ParamByName('liquidacionborrador_id').AsString:=id;
     ZQSelect.Active:=true;
+    PageControl1.ActivePage:=TabSheet1;
 end;
 
 procedure TLiquidacionBorrador.ZQSelectAfterOpen(DataSet: TDataSet);
@@ -501,6 +658,12 @@ begin
     ZQliquidacionborradordetalles.Active:=false;
     ZQliquidacionborradordetalles.ParamByName('liquidacionborrador_id').AsString:=id;
     ZQliquidacionborradordetalles.Active:=true;
+
+    ZQliquidacionborradordebcred.Active:=false;
+    ZQliquidacionborradordebcred.ParamByName('liquidacionborrador_id').AsString:=id;
+    ZQliquidacionborradordebcred.Active:=true;
+
+
 
     CalcularTotal;
 end;

@@ -1,17 +1,17 @@
 inherited LiquidacionBorrador: TLiquidacionBorrador
   Caption = 'LiquidacionBorrador'
-  ClientHeight = 353
-  ClientWidth = 730
+  ClientHeight = 421
+  ClientWidth = 912
   OnShow = FormShow
-  ExplicitWidth = 746
-  ExplicitHeight = 391
+  ExplicitWidth = 928
+  ExplicitHeight = 459
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Width = 730
-    Height = 353
-    ExplicitWidth = 730
-    ExplicitHeight = 353
+    Width = 912
+    Height = 421
+    ExplicitWidth = 912
+    ExplicitHeight = 421
     FullHeight = 0
     object Label1: TLabel [0]
       Left = 17
@@ -22,7 +22,7 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Caption = 'Numero'
     end
     object Label2: TLabel [1]
-      Left = 570
+      Left = 746
       Top = 12
       Width = 30
       Height = 13
@@ -38,8 +38,8 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Caption = 'Vendedor'
     end
     object Label10: TLabel [3]
-      Left = 511
-      Top = 217
+      Left = 703
+      Top = 281
       Width = 47
       Height = 24
       Alignment = taRightJustify
@@ -53,7 +53,7 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
     end
     object Label3: TLabel [4]
       Left = 8
-      Top = 249
+      Top = 281
       Width = 71
       Height = 13
       Alignment = taRightJustify
@@ -68,19 +68,19 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Caption = 'Equipo'
     end
     inherited btncancelar: TButton
-      Left = 628
-      Top = 270
-      TabOrder = 10
-      ExplicitLeft = 628
-      ExplicitTop = 270
+      Left = 820
+      Top = 334
+      TabOrder = 7
+      ExplicitLeft = 820
+      ExplicitTop = 334
     end
     inherited btnguardar: TButton
-      Left = 547
-      Top = 270
-      TabOrder = 9
+      Left = 739
+      Top = 334
+      TabOrder = 6
       OnClick = btnguardarClick
-      ExplicitLeft = 547
-      ExplicitTop = 270
+      ExplicitLeft = 739
+      ExplicitTop = 334
     end
     object liquidacionborrador_id: TEdit
       Left = 60
@@ -91,7 +91,7 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       TabOrder = 0
     end
     object liquidacionborrador_fecha: TDateTimePicker
-      Left = 606
+      Left = 782
       Top = 9
       Width = 106
       Height = 21
@@ -114,88 +114,9 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Confcampo_nomb = 'personal_nombre'
       Tag2 = 0
     end
-    object DBGrid1: TDBGrid
-      Left = 8
-      Top = 62
-      Width = 705
-      Height = 150
-      DataSource = DTSliquidacionborradordetalles
-      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
-      TabOrder = 4
-      TitleFont.Charset = DEFAULT_CHARSET
-      TitleFont.Color = clWindowText
-      TitleFont.Height = -11
-      TitleFont.Name = 'MS Sans Serif'
-      TitleFont.Style = []
-      Columns = <
-        item
-          ButtonStyle = cbsNone
-          Expanded = False
-          FieldName = 'documentoventa_fecha'
-          Title.Caption = 'Fecha'
-          Width = 80
-          Visible = True
-        end
-        item
-          ButtonStyle = cbsNone
-          Expanded = False
-          FieldName = 'documentoventa_equipo1'
-          Title.Caption = 'Numero'
-          Width = 90
-          Visible = True
-        end
-        item
-          ButtonStyle = cbsNone
-          Expanded = False
-          FieldName = 'docuvendetcomisionvendedor_total'
-          Title.Caption = 'Importe'
-          Width = 120
-          Visible = True
-        end
-        item
-          ButtonStyle = cbsNone
-          Expanded = False
-          FieldName = 'liquidacionborradordetalle_pagado'
-          Title.Caption = 'Pagado'
-          Width = 120
-          Visible = True
-        end
-        item
-          ButtonStyle = cbsNone
-          Expanded = False
-          FieldName = 'liquidacionborradordetalle_saldo'
-          Title.Caption = 'Saldo'
-          Width = 120
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'liquidacionborradordetalle_importe'
-          Title.Caption = 'Cobrado'
-          Width = 120
-          Visible = True
-        end>
-    end
-    object btnagregar: TButton
-      Left = 8
-      Top = 218
-      Width = 75
-      Height = 25
-      Caption = 'Agregar'
-      TabOrder = 5
-      OnClick = btnagregarClick
-    end
-    object btnquitar: TButton
-      Left = 81
-      Top = 218
-      Width = 75
-      Height = 25
-      Caption = 'Quitar'
-      TabOrder = 6
-    end
     object liquidacionborrador_total: TMoneyEdit
-      Left = 564
-      Top = 214
+      Left = 756
+      Top = 278
       Width = 134
       Height = 32
       TabStop = False
@@ -216,15 +137,15 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Font.Style = [fsBold]
       ParentFont = False
       ReadOnly = True
-      TabOrder = 8
+      TabOrder = 5
       Version = '1.1.0.1'
     end
     object liquidacionborrador_observaciones: TMemo
       Left = 8
-      Top = 264
-      Width = 385
+      Top = 296
+      Width = 649
       Height = 65
-      TabOrder = 7
+      TabOrder = 4
     end
     object liquidacionborrador_equipo: TEdit
       Left = 260
@@ -232,6 +153,204 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Width = 153
       Height = 21
       TabOrder = 1
+    end
+    object PageControl1: TPageControl
+      Left = 8
+      Top = 60
+      Width = 889
+      Height = 212
+      ActivePage = TabSheet1
+      TabOrder = 8
+      object TabSheet1: TTabSheet
+        Caption = 'Borradores'
+        object Label6: TLabel
+          Left = 672
+          Top = 159
+          Width = 78
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Total Borradores'
+        end
+        object DBGrid1: TDBGrid
+          Left = 0
+          Top = 0
+          Width = 881
+          Height = 150
+          Align = alTop
+          DataSource = DTSliquidacionborradordetalles
+          Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'MS Sans Serif'
+          TitleFont.Style = []
+          Columns = <
+            item
+              ButtonStyle = cbsNone
+              Expanded = False
+              FieldName = 'documentoventa_fecha'
+              Title.Caption = 'Fecha'
+              Width = 80
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'documentoventa_numero'
+              Title.Caption = 'Numero'
+              Visible = True
+            end
+            item
+              ButtonStyle = cbsNone
+              Expanded = False
+              FieldName = 'documentoventa_equipo1'
+              Title.Caption = 'Equipo'
+              Width = 109
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'cliente_nombre'
+              Title.Caption = 'Cliente'
+              Width = 204
+              Visible = True
+            end
+            item
+              ButtonStyle = cbsNone
+              Expanded = False
+              FieldName = 'docuvendetcomisionvendedor_total'
+              Title.Caption = 'Importe'
+              Width = 96
+              Visible = True
+            end
+            item
+              ButtonStyle = cbsNone
+              Expanded = False
+              FieldName = 'liquidacionborradordetalle_pagado'
+              Title.Caption = 'Pagado'
+              Width = 98
+              Visible = True
+            end
+            item
+              ButtonStyle = cbsNone
+              Expanded = False
+              FieldName = 'liquidacionborradordetalle_saldo'
+              Title.Caption = 'Saldo'
+              Width = 94
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'liquidacionborradordetalle_importe'
+              Title.Caption = 'Cobrado'
+              Width = 95
+              Visible = True
+            end>
+        end
+        object btnagregar: TButton
+          Left = 3
+          Top = 154
+          Width = 75
+          Height = 25
+          Caption = 'Agregar'
+          TabOrder = 1
+          OnClick = btnagregarClick
+        end
+        object btnquitar: TButton
+          Left = 82
+          Top = 154
+          Width = 75
+          Height = 25
+          Caption = 'Quitar'
+          TabOrder = 2
+        end
+        object total_borradores: TEdit
+          Left = 760
+          Top = 156
+          Width = 101
+          Height = 21
+          ReadOnly = True
+          TabOrder = 3
+        end
+      end
+      object TabSheet2: TTabSheet
+        Caption = 'Creditos/Debitos'
+        ImageIndex = 1
+        object Label7: TLabel
+          Left = 676
+          Top = 159
+          Width = 74
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Total Deb/Cred'
+        end
+        object DBGrid2: TDBGrid
+          Left = 0
+          Top = 0
+          Width = 881
+          Height = 150
+          Align = alTop
+          DataSource = DTSliquidacionborradordebcred
+          Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -11
+          TitleFont.Name = 'MS Sans Serif'
+          TitleFont.Style = []
+          Columns = <
+            item
+              ButtonStyle = cbsNone
+              Expanded = False
+              FieldName = 'liquidacionborradordebcred_descripcion'
+              Title.Caption = 'Descripcion'
+              Width = 544
+              Visible = True
+            end
+            item
+              Expanded = False
+              FieldName = 'liquidacionborradordebcred_importe'
+              Title.Caption = 'Importe'
+              Width = 135
+              Visible = True
+            end>
+        end
+        object total_debcre: TEdit
+          Left = 760
+          Top = 156
+          Width = 101
+          Height = 21
+          ReadOnly = True
+          TabOrder = 1
+        end
+        object btnagregardebcred: TButton
+          Left = 3
+          Top = 154
+          Width = 75
+          Height = 25
+          Caption = 'Agregar'
+          TabOrder = 2
+          OnClick = btnagregardebcredClick
+        end
+        object btnquitardebcred: TButton
+          Left = 82
+          Top = 154
+          Width = 75
+          Height = 25
+          Caption = 'Quitar'
+          TabOrder = 3
+          OnClick = btnquitardebcredClick
+        end
+      end
+    end
+    object btnimprimir: TButton
+      Left = 8
+      Top = 366
+      Width = 75
+      Height = 25
+      Caption = 'Imprimir'
+      TabOrder = 9
+      OnClick = btnimprimirClick
     end
   end
   inherited ZQSelect: TZQuery
@@ -268,6 +387,9 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       
         'inner join documentosventas on documentoventadetalles.documentov' +
         'enta_id=documentosventas.documentoventa_id'
+      
+        'inner join clientes on documentosventas.cliente_id=clientes.clie' +
+        'nte_id'
       
         'where liquidacionborradordetalles.liquidacionborrador_id=:liquid' +
         'acionborrador_id')
@@ -503,6 +625,64 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       FieldName = 'liquidacionborradordetalle_estado'
       Size = 45
     end
+    object ZQliquidacionborradordetallescliente_id_1: TIntegerField
+      FieldName = 'cliente_id_1'
+      Required = True
+    end
+    object ZQliquidacionborradordetallescliente_nombre: TStringField
+      FieldName = 'cliente_nombre'
+      Size = 100
+    end
+    object ZQliquidacionborradordetallescliente_domicilio: TStringField
+      FieldName = 'cliente_domicilio'
+      Size = 150
+    end
+    object ZQliquidacionborradordetallescliente_documentonro: TStringField
+      FieldName = 'cliente_documentonro'
+      Size = 45
+    end
+    object ZQliquidacionborradordetallescliente_documentotipo: TStringField
+      FieldName = 'cliente_documentotipo'
+      Size = 45
+    end
+    object ZQliquidacionborradordetallescliente_telefono: TStringField
+      FieldName = 'cliente_telefono'
+      Size = 45
+    end
+    object ZQliquidacionborradordetallescliente_celular: TStringField
+      FieldName = 'cliente_celular'
+      Size = 45
+    end
+    object ZQliquidacionborradordetallescliente_mail: TStringField
+      FieldName = 'cliente_mail'
+      Size = 45
+    end
+    object ZQliquidacionborradordetallescondicioniva_id: TIntegerField
+      FieldName = 'condicioniva_id'
+      Required = True
+    end
+    object ZQliquidacionborradordetallescliente_listaprecio: TIntegerField
+      FieldName = 'cliente_listaprecio'
+    end
+    object ZQliquidacionborradordetallescliente_condicionventa: TStringField
+      FieldName = 'cliente_condicionventa'
+      Size = 45
+    end
+    object ZQliquidacionborradordetalleslocalidad_id: TIntegerField
+      FieldName = 'localidad_id'
+      Required = True
+    end
+    object ZQliquidacionborradordetallescliente_observaciones: TStringField
+      FieldName = 'cliente_observaciones'
+      Size = 255
+    end
+    object ZQliquidacionborradordetallespersonal_id_2: TIntegerField
+      FieldName = 'personal_id_2'
+      Required = True
+    end
+    object ZQliquidacionborradordetallescliente_diasvenc: TIntegerField
+      FieldName = 'cliente_diasvenc'
+    end
   end
   object DTSliquidacionborradordetalles: TDataSource
     DataSet = ZQliquidacionborradordetalles
@@ -534,13 +714,56 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
         Name = 'liquidacionborrador_id'
         ParamType = ptUnknown
       end>
-    Left = 72
-    Top = 80
+    Left = 80
+    Top = 128
     ParamData = <
       item
         DataType = ftUnknown
         Name = 'liquidacionborrador_id'
         ParamType = ptUnknown
       end>
+  end
+  object DTSliquidacionborradordebcred: TDataSource
+    DataSet = ZQliquidacionborradordebcred
+    Left = 584
+    Top = 152
+  end
+  object ZQliquidacionborradordebcred: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select * from liquidacionborradordebcred'
+      'where liquidacionborrador_id=:liquidacionborrador_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'liquidacionborrador_id'
+        ParamType = ptUnknown
+      end>
+    Left = 232
+    Top = 184
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'liquidacionborrador_id'
+        ParamType = ptUnknown
+      end>
+    object ZQliquidacionborradordebcredliquidacionborradordebcred_id: TIntegerField
+      FieldName = 'liquidacionborradordebcred_id'
+      Required = True
+    end
+    object ZQliquidacionborradordebcredliquidacionborradordebcred_importe: TFloatField
+      FieldName = 'liquidacionborradordebcred_importe'
+      DisplayFormat = '0.00'
+      EditFormat = '0.00'
+    end
+    object ZQliquidacionborradordebcredliquidacionborrador_id: TIntegerField
+      FieldName = 'liquidacionborrador_id'
+      Required = True
+    end
+    object ZQliquidacionborradordebcredliquidacionborradordebcred_descripcion: TStringField
+      FieldName = 'liquidacionborradordebcred_descripcion'
+      Size = 150
+    end
   end
 end

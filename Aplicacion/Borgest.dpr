@@ -130,7 +130,9 @@ uses
   UnitSaldosComisionesBorradores in 'Formularios\Comisiones\UnitSaldosComisionesBorradores.pas' {SaldosComisionesBorradores},
   UnitListaLiquidacionesBorradores in 'Formularios\Comisiones\UnitListaLiquidacionesBorradores.pas' {ListaLiquidacionesBorradores},
   UnitLiquidacionBorrador in 'Formularios\Comisiones\UnitLiquidacionBorrador.pas' {LiquidacionBorrador},
-  UnitComisionesBorradorPendientes in 'Formularios\Comisiones\UnitComisionesBorradorPendientes.pas' {ComisionesBorradorPendientes};
+  UnitComisionesBorradorPendientes in 'Formularios\Comisiones\UnitComisionesBorradorPendientes.pas' {ComisionesBorradorPendientes},
+  UnitImprimirEtiquetas in 'Formularios\Herramientas\UnitImprimirEtiquetas.pas' {ImprimirEtiquetas},
+  UnitLiquidacionBorradorDebCred in 'Formularios\Comisiones\UnitLiquidacionBorradorDebCred.pas' {LiquidacionBorradorDebCred};
 
 {$R *.res}
 
@@ -139,8 +141,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Borgest - Sistema de Gestion Comercial';
   Application.CreateForm(TPrinc, Princ);
-  Application.CreateForm(TListaLiquidacionesBorradores, ListaLiquidacionesBorradores);
-  Application.CreateForm(TLiquidacionBorrador, LiquidacionBorrador);
-  Application.CreateForm(TComisionesBorradorPendientes, ComisionesBorradorPendientes);
+  Application.CreateForm(TLiquidacionBorradorDebCred, LiquidacionBorradorDebCred);
   Application.Run;
 end.

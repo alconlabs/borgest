@@ -532,6 +532,7 @@ begin
             Princ.ZQExcecSQL.Sql.Add('temporal_float1=:temporal_float1, ');
             Princ.ZQExcecSQL.Sql.Add('temporal_string1=:temporal_string1, ');
             Princ.ZQExcecSQL.Sql.Add('temporal_string2=:temporal_string2, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string3=:temporal_string3, ');
             Princ.ZQExcecSQL.Sql.Add('temporal_idproceso=:temporal_idproceso ');
             Princ.ZQExcecSQL.ParamByName('temporal_fecha1').AsString:=formatdatetime('yyyy-mm-dd',ZQDebitos.FieldByName('documentoventa_fecha').AsDateTime);
             Princ.ZQExcecSQL.ParamByName('temporal_int4').AsInteger:=orden;
@@ -542,6 +543,7 @@ begin
             Princ.ZQExcecSQL.ParamByName('temporal_float1').AsString:='0';
             Princ.ZQExcecSQL.ParamByName('temporal_string1').AsString:=ZQDebitos.FieldByName('tipodocu_nombreabrev').AsString;
             Princ.ZQExcecSQL.ParamByName('temporal_string2').AsString:=ZQDebitos.FieldByName('cliente_nombre').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_string3').AsString:=ZQDebitos.FieldByName('documentoventa_equipo1').AsString;
             Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
             Princ.ZQExcecSQL.ExecSql;
 
@@ -563,6 +565,7 @@ begin
                     Princ.ZQExcecSQL.Sql.Add('temporal_float1=:temporal_float1, ');
                     Princ.ZQExcecSQL.Sql.Add('temporal_string1=:temporal_string1, ');
                     Princ.ZQExcecSQL.Sql.Add('temporal_string2=:temporal_string2, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_string3=:temporal_string3, ');
                     Princ.ZQExcecSQL.Sql.Add('temporal_idproceso=:temporal_idproceso ');
                     Princ.ZQExcecSQL.ParamByName('temporal_fecha1').AsString:=formatdatetime('yyyy-mm-dd',ZQCreditos.FieldByName('documentoventa_fecha').AsDateTime);
                     Princ.ZQExcecSQL.ParamByName('temporal_int4').AsInteger:=orden;
@@ -573,6 +576,7 @@ begin
                     Princ.ZQExcecSQL.ParamByName('temporal_float1').AsString:='0';
                     Princ.ZQExcecSQL.ParamByName('temporal_string1').AsString:=ZQCreditos.FieldByName('tipodocu_nombreabrev').AsString;
                     Princ.ZQExcecSQL.ParamByName('temporal_string2').AsString:=ZQDebitos.FieldByName('cliente_nombre').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_string3').AsString:=ZQDebitos.FieldByName('documentoventa_equipo1').AsString;
                     Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
                     Princ.ZQExcecSQL.ExecSql;
 

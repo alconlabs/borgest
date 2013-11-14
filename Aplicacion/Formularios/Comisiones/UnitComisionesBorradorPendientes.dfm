@@ -3,7 +3,7 @@ object ComisionesBorradorPendientes: TComisionesBorradorPendientes
   Top = 0
   Caption = 'Documentos Pendientes'
   ClientHeight = 365
-  ClientWidth = 752
+  ClientWidth = 876
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,7 +21,7 @@ object ComisionesBorradorPendientes: TComisionesBorradorPendientes
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 752
+    Width = 876
     Height = 365
     Align = alClient
     BevelOuter = bvNone
@@ -69,7 +69,7 @@ object ComisionesBorradorPendientes: TComisionesBorradorPendientes
     Styler = Princ.AdvPanelStyler1
     FullHeight = 0
     object lblpagado: TLabel
-      Left = 636
+      Left = 756
       Top = 276
       Width = 63
       Height = 13
@@ -85,7 +85,7 @@ object ComisionesBorradorPendientes: TComisionesBorradorPendientes
     object DBGrid1: TDBGrid
       Left = 0
       Top = 0
-      Width = 752
+      Width = 876
       Height = 270
       Align = alTop
       DataSource = DTSDocumentosVentasPendientes
@@ -115,11 +115,25 @@ object ComisionesBorradorPendientes: TComisionesBorradorPendientes
           Visible = True
         end
         item
+          Expanded = False
+          FieldName = 'documentoventa_equipo1'
+          Title.Caption = 'Equipo'
+          Width = 131
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'cliente_nombre'
+          Title.Caption = 'Cliente'
+          Width = 206
+          Visible = True
+        end
+        item
           ButtonStyle = cbsNone
           Expanded = False
           FieldName = 'docuvendetcomisionvendedor_total'
           Title.Caption = 'Importe'
-          Width = 90
+          Width = 82
           Visible = True
         end
         item
@@ -127,7 +141,7 @@ object ComisionesBorradorPendientes: TComisionesBorradorPendientes
           Expanded = False
           FieldName = 'docuvendetcomisionvendedor_pagado'
           Title.Caption = 'Pagado'
-          Width = 90
+          Width = 81
           Visible = True
         end
         item
@@ -148,7 +162,7 @@ object ComisionesBorradorPendientes: TComisionesBorradorPendientes
         end>
     end
     object btnaceptar: TButton
-      Left = 593
+      Left = 713
       Top = 318
       Width = 75
       Height = 25
@@ -157,7 +171,7 @@ object ComisionesBorradorPendientes: TComisionesBorradorPendientes
       TabOrder = 1
     end
     object btncancelar: TButton
-      Left = 667
+      Left = 787
       Top = 318
       Width = 75
       Height = 25
@@ -194,7 +208,10 @@ object ComisionesBorradorPendientes: TComisionesBorradorPendientes
         'mentoventadetalle_id'
       
         'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
-        'ocumento.tipodocu_id')
+        'ocumento.tipodocu_id'
+      
+        'inner join clientes on documentosventas.cliente_id=clientes.clie' +
+        'nte_id')
     Params = <>
     Left = 240
     Top = 168
@@ -478,6 +495,64 @@ object ComisionesBorradorPendientes: TComisionesBorradorPendientes
       FieldName = 'liquidacionborradordetalle_importe'
       DisplayFormat = '0.00'
       EditFormat = '0.00'
+    end
+    object ZQDocumentosVentasPendientescliente_id_1: TIntegerField
+      FieldName = 'cliente_id_1'
+      Required = True
+    end
+    object ZQDocumentosVentasPendientescliente_nombre: TStringField
+      FieldName = 'cliente_nombre'
+      Size = 100
+    end
+    object ZQDocumentosVentasPendientescliente_domicilio: TStringField
+      FieldName = 'cliente_domicilio'
+      Size = 150
+    end
+    object ZQDocumentosVentasPendientescliente_documentonro: TStringField
+      FieldName = 'cliente_documentonro'
+      Size = 45
+    end
+    object ZQDocumentosVentasPendientescliente_documentotipo: TStringField
+      FieldName = 'cliente_documentotipo'
+      Size = 45
+    end
+    object ZQDocumentosVentasPendientescliente_telefono: TStringField
+      FieldName = 'cliente_telefono'
+      Size = 45
+    end
+    object ZQDocumentosVentasPendientescliente_celular: TStringField
+      FieldName = 'cliente_celular'
+      Size = 45
+    end
+    object ZQDocumentosVentasPendientescliente_mail: TStringField
+      FieldName = 'cliente_mail'
+      Size = 45
+    end
+    object ZQDocumentosVentasPendientescondicioniva_id: TIntegerField
+      FieldName = 'condicioniva_id'
+      Required = True
+    end
+    object ZQDocumentosVentasPendientescliente_listaprecio: TIntegerField
+      FieldName = 'cliente_listaprecio'
+    end
+    object ZQDocumentosVentasPendientescliente_condicionventa: TStringField
+      FieldName = 'cliente_condicionventa'
+      Size = 45
+    end
+    object ZQDocumentosVentasPendienteslocalidad_id: TIntegerField
+      FieldName = 'localidad_id'
+      Required = True
+    end
+    object ZQDocumentosVentasPendientescliente_observaciones: TStringField
+      FieldName = 'cliente_observaciones'
+      Size = 255
+    end
+    object ZQDocumentosVentasPendientespersonal_id_2: TIntegerField
+      FieldName = 'personal_id_2'
+      Required = True
+    end
+    object ZQDocumentosVentasPendientescliente_diasvenc: TIntegerField
+      FieldName = 'cliente_diasvenc'
     end
   end
   object DTSDocumentosVentasPendientes: TDataSource

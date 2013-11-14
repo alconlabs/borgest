@@ -94,8 +94,6 @@ object configuracion: Tconfiguracion
       TabOrder = 2
       object TabSheet1: TTabSheet
         Caption = 'General'
-        ExplicitLeft = 0
-        ExplicitTop = 28
         object Label14: TLabel
           Left = 44
           Top = 10
@@ -313,6 +311,15 @@ object configuracion: Tconfiguracion
           valores.Strings = (
             '1'
             '2')
+        end
+        object MOSTRAREQUIPO: TCheckBox
+          Left = 312
+          Top = 152
+          Width = 177
+          Height = 17
+          Alignment = taLeftJustify
+          Caption = 'Mostrar columna equipo en listas'
+          TabOrder = 10
         end
       end
       object TabSheet2: TTabSheet

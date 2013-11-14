@@ -141,6 +141,9 @@
     <DCCReference Include="Formularios\Comisiones\UnitLiquidacionBorrador.pas">
       <Form>LiquidacionBorrador</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Comisiones\UnitLiquidacionBorradorDebCred.pas">
+      <Form>LiquidacionBorradorDebCred</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Comisiones\Unitliquidaciones.pas">
       <Form>liquidaciones</Form>
     </DCCReference>
@@ -242,6 +245,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Herramientas\UnitConfiguracion.pas">
       <Form>configuracion</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Herramientas\UnitImprimirEtiquetas.pas">
+      <Form>ImprimirEtiquetas</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Herramientas\UnitListaConfigListas.pas">
       <Form>ListaConfigListas</Form>

@@ -82,5 +82,6 @@ Herramientas
 		Configuracion
 		Actualizar Productos
 		Configurar Listas
+		Imprimir Etiquetas
 	Seguridad
 		Perfiles de Seguridad

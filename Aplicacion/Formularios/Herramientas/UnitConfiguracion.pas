@@ -107,6 +107,7 @@ type
     CARPETAREPORTES: TEdit;
     Label28: TLabel;
     TIPOBUSQUEDA: TGTBComboBox;
+    MOSTRAREQUIPO: TCheckBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -390,6 +391,9 @@ begin
     ZQuery1.parambyname('config_valor').AsString:=TIPOBUSQUEDA.codigo;
     ZQuery1.ExecSQL;
 
+    ZQuery1.parambyname('config_nombre').AsString:='MOSTRAREQUIPO';
+    ZQuery1.parambyname('config_valor').AsString:=booltostr(MOSTRAREQUIPO.Checked);
+    ZQuery1.ExecSQL;
 
 
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK], 0);
@@ -708,6 +712,9 @@ begin
 
     if ZQConfig.Locate('config_nombre','TIPOBUSQUEDA',[]) then
       TIPOBUSQUEDA.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','MOSTRAREQUIPO',[]) then
+      MOSTRAREQUIPO.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
 
 
 end;
