@@ -44,6 +44,8 @@ $sql=$sql." order by producto_nombre";
           <td width="20"></td>
           <td width="20"></td>
           <td width="20"></td>
+          <td width="20"></td>
+          <td width="20"></td>
         </tr>
         <tr>
           <td width="5"></td>
@@ -56,13 +58,15 @@ $sql=$sql." order by producto_nombre";
           <td width="20"><strong>Agregar</strong></td>
           <td width="20"><strong>Aplicar</strong></td>
           <td width="20"></td>
+          <td width="20"><strong>Etiquetas</strong></td>
+          <td width="20"></td>
         </tr>
         <?php // Obtener valores de tabla  
 			if ($productos = $conex->Consulta("$sql")) {
 				for($x=0; $x<count($productos); $x++) {
 		?>
         
-        <form id="form1" name="form1" method="post" action="aplicar_stock.php">
+        <form id="form1" name="form1" method="post" >
         <tr>
           <td width="5"></td>
           <td width="100" align="right" valign="middle"><?php echo $productos[$x]->producto_id; ?></td>
@@ -73,7 +77,9 @@ $sql=$sql." order by producto_nombre";
           <td width="5"><input name="stockactual" type="hidden" id="stockactual" value="<?php echo $productos[$x]->stockactual; ?>" /></td>
           <td width="20" align="right"><input name="agregar" type="text" size="4" maxlength="4" value="0" id="agregar"/></td>
           <td width="20" align="right"><input name="aplicar" type="text" size="4" maxlength="4" value="0" id="aplicar"/></td>
-          <td width="20"><input type="submit" name="btn" id="btn" value="Guardar" /></td>
+          <td width="20"><input type="submit" onclick = "this.form.action = 'aplicar_stock.php'" name="btn" id="btn" value="Guardar" /></td>
+          <td width="20"><input name="etiquetas" type="text" size="4" maxlength="4" value="0" id="etiquetas"/></td>
+          <td width="20"><input type="submit" onclick = "this.form.action = 'agregar_etiquetas.php'" name="btnetiquetas" id="btnetiquetas" value="Guardar" /></td>
         </tr>
         </form>
         <?php  } };?>
@@ -87,6 +93,8 @@ $sql=$sql." order by producto_nombre";
           <td width="5"></td>
           <td width="50"></td>
           <td width="5"></td>
+          <td width="20"></td>
+          <td width="20"></td>
           <td width="20"></td>
           <td width="20"></td>
           <td width="20"></td>
