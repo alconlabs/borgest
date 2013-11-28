@@ -504,18 +504,22 @@ object productos: Tproductos
         object politicaprecio_id: TSqlComboBox
           Left = 114
           Top = 225
-          Width = 206
+          Width = 329
           Height = 21
           ItemHeight = 13
           TabOrder = 10
           OnExit = politicaprecio_idExit
           Confbase = Princ.ZBase
           Confsql.Strings = (
-            'select * from politicasdeprecios'
+            
+              'select *, concat(politicaprecio_nombre, "   ",ROUND(politicaprec' +
+              'io_politica1,2), " - ", ROUND(politicaprecio_politica2,2), " - "' +
+              ', ROUND(politicaprecio_politica3,2), " - ", ROUND(politicaprecio' +
+              '_politica4,2)) as descripcion from politicasdeprecios'
             'order by politicaprecio_nombre')
           ConfTabla = 'politicasdeprecios'
           Confcampo_codigo = 'politicaprecio_id'
-          Confcampo_nomb = 'politicaprecio_nombre'
+          Confcampo_nomb = 'descripcion'
           Tag2 = 0
         end
         object producto_neto1: TDBAdvEdit
@@ -652,7 +656,6 @@ object productos: Tproductos
             item
               Expanded = False
               FieldName = 'producdepo_stockactual'
-              ReadOnly = True
               Title.Caption = 'Actual'
               Width = 50
               Visible = True

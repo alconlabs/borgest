@@ -74,6 +74,7 @@ begin
     documentoventadetalle_importe2.FloatValue:=documentoventadetalle_importe1.FloatValue+ventadetalle_preciounitario.FloatValue;
     documentoventadetalle_importe4.FloatValue:=ventadetalle_preciounitario.FloatValue+documentoventadetalle_importe1.FloatValue+documentoventadetalle_importe3.FloatValue;
     documentoventadetalle_importe5.FloatValue:=ventadeta_cantidad.Value*ventadetalle_preciounitario.FloatValue;
+    documentoventadetalle_importe6.FloatValue:=ventadeta_cantidad.Value*documentoventadetalle_importe1.FloatValue;
     ventadetalle_total.FloatValue:=documentoventadetalle_importe2.FloatValue*ventadeta_cantidad.Value;
 
 

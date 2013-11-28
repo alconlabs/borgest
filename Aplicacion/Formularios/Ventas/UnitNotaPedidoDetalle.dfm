@@ -1,13 +1,13 @@
 inherited NotapedidoDetalle: TNotapedidoDetalle
   Caption = 'Detalle'
   ClientHeight = 254
-  ClientWidth = 679
-  ExplicitWidth = 695
+  ClientWidth = 715
+  ExplicitWidth = 731
   ExplicitHeight = 292
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Width = 679
+    Width = 715
     Height = 254
     ExplicitWidth = 679
     ExplicitHeight = 254
@@ -153,7 +153,7 @@ inherited NotapedidoDetalle: TNotapedidoDetalle
     end
     inherited GroupBoxPrecios: TGroupBox
       Top = 189
-      Width = 679
+      Width = 715
       TabOrder = 14
       ExplicitTop = 189
       ExplicitWidth = 679
@@ -298,11 +298,11 @@ inherited NotapedidoDetalle: TNotapedidoDetalle
     end
   end
   inherited ZQDocumentoventadetalles: TZQuery
-    Left = 80
-    Top = 152
+    Left = 72
+    Top = 144
   end
   inherited AdvPopupMenu1: TAdvPopupMenu
-    Left = 296
-    Top = 208
+    Left = 440
+    Top = 88
   end
 end

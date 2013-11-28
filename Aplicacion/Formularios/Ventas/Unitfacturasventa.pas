@@ -728,7 +728,7 @@ begin
       end;
 
     ZQuery2.FieldByName('documentoventa_recargo').AsString:=documentoventa_recargo.Text;
-    ZQuery2.ParamByName('documentoventa_descuento').AsString:=documentoventa_descuento.Text;
+    ZQuery2.FieldByName('documentoventa_descuento').AsString:=documentoventa_descuento.Text;
     ZQuery2.FieldByName('documentoventa_total').AsString:=documentoventa_total.Text;
     ZQuery2.FieldByName('documentoventa_netonogravado').AsString:='0';
     ZQuery2.FieldByName('documentoventa_iva105').AsString:=documentoventa_iva105.Text;

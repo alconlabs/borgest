@@ -266,14 +266,21 @@ object facturacompra: Tfacturacompra
           Expanded = False
           FieldName = 'documentocompradetalle_cantidad'
           Title.Caption = 'Cant.'
-          Width = 65
+          Width = 44
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'producto_id'
+          Title.Caption = 'Codigo1'
+          Width = 92
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'producto_codigo'
-          Title.Caption = 'Codigo'
-          Width = 142
+          Title.Caption = 'Codigo2'
+          Width = 122
           Visible = True
         end
         item
@@ -287,14 +294,14 @@ object facturacompra: Tfacturacompra
           Expanded = False
           FieldName = 'documentocompradetalle_precio'
           Title.Caption = 'Precio'
-          Width = 124
+          Width = 88
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'documentocompradetalle_total'
           Title.Caption = 'Total'
-          Width = 109
+          Width = 88
           Visible = True
         end>
     end
@@ -969,12 +976,12 @@ object facturacompra: Tfacturacompra
     SQL.Strings = (
       'select * from documentocompradetalles'
       
-        'inner join productos on documentocompradetalles.producto_id=prod' +
-        'uctos.producto_id'
+        'left join productos on documentocompradetalles.producto_id=produ' +
+        'ctos.producto_id'
       'where 1=2')
     Params = <>
-    Left = 240
-    Top = 168
+    Left = 392
+    Top = 216
     object ZQDocumentocompradetallesdocumentocompradetalle_id: TIntegerField
       FieldName = 'documentocompradetalle_id'
     end
@@ -1108,7 +1115,7 @@ object facturacompra: Tfacturacompra
   end
   object DTSDocumentocompradetalle: TDataSource
     DataSet = ZQDocumentocompradetalles
-    Left = 440
+    Left = 536
     Top = 208
   end
   object ZQRecibo: TZQuery
@@ -1118,8 +1125,8 @@ object facturacompra: Tfacturacompra
       'select * from documentosventas'
       'where documentoventa_id=-1')
     Params = <>
-    Left = 624
-    Top = 136
+    Left = 608
+    Top = 200
   end
   object ZQdocumentoventadocus: TZQuery
     Connection = Princ.ZBase

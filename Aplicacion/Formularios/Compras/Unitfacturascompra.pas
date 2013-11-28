@@ -771,7 +771,7 @@ begin
       end;
 
     ZQDocumentocompradetalles.Active:=false;
-    ZQDocumentocompradetalles.SQL.Text:='select * from documentocompradetalles inner join productos on documentocompradetalles.producto_id=productos.producto_id where documentocompra_id="'+id+'"';
+    ZQDocumentocompradetalles.SQL.Text:='select * from documentocompradetalles left join productos on documentocompradetalles.producto_id=productos.producto_id where documentocompra_id="'+id+'"';
     ZQDocumentocompradetalles.Active:=true;
 
 end;

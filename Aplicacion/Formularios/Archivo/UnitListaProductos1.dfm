@@ -7,11 +7,11 @@ inherited ListaProductos1: TListaProductos1
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Width = 1045
-    ExplicitWidth = 1034
+    ExplicitWidth = 1045
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
       Left = 942
-      ExplicitLeft = 931
+      ExplicitLeft = 942
       FullHeight = 0
       inherited btnver: TButton
         Visible = True
@@ -108,11 +108,11 @@ inherited ListaProductos1: TListaProductos1
     end
     inherited panelfiltros: TAdvPanel
       Width = 1045
-      ExplicitWidth = 1034
+      ExplicitWidth = 1045
       FullHeight = 0
       inherited btnfiltrar: TButton
         Left = 942
-        ExplicitLeft = 931
+        ExplicitLeft = 942
         ExplicitTop = 0
       end
       object fil_producto_nombre: TGTBEdit
@@ -230,12 +230,12 @@ inherited ListaProductos1: TListaProductos1
   end
   inherited panelabm: TAdvPanel
     Width = 1045
-    ExplicitWidth = 1034
+    ExplicitWidth = 1045
     FullHeight = 0
   end
   inherited StatusBar1: TStatusBar
     Width = 1045
-    ExplicitWidth = 1034
+    ExplicitWidth = 1045
   end
   inherited ZQGrilla: TZQuery
     SQL.Strings = (

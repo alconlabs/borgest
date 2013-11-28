@@ -228,6 +228,7 @@ type
     procedure BtnDetalleCuentasBorradoresClick(Sender: TObject);
     procedure BtnLiquidacionesBorradoresClick(Sender: TObject);
     procedure btnimprimiretiquetasClick(Sender: TObject);
+    procedure BtnConsultasStockClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -452,7 +453,7 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   Unitdetallectasproveedores, UnitListaNotasDeDebitodeCompras,
   UnitMovimientosdeStock, UnitListaAjustesdeStock,
   UnitSaldosComisionesBorradores, UnitListaLiquidacionesBorradores,
-  UnitImprimirEtiquetas;
+  UnitImprimirEtiquetas, UnitConsultaStock;
 
 {$R *.dfm}
 
@@ -2518,6 +2519,8 @@ begin
           impresorafiscal.tipodocu_leyenda:=ZQDocumentosventas.FieldByName('documentoventa_observacion').AsString;
           impresorafiscal.Nombre_cliente:=QuitarCaracteresEspeciales(ZQDocumentosventas.FieldByName('cliente_nombre').AsString);
           impresorafiscal.Direccion_cliente:=QuitarCaracteresEspeciales(ZQDocumentosventas.FieldByName('cliente_domicilio').AsString);
+          impresorafiscal.documentoventa_condicionventa:=ZQDocumentosventas.FieldByName('documentoventa_condicionventa').AsString;
+          impresorafiscal.documentoventa_total:=ZQDocumentosventas.FieldByName('documentoventa_total').AsFloat;
 
           if impresorafiscal.Direccion_cliente='' then
             impresorafiscal.Direccion_cliente:='0';
@@ -3656,6 +3659,15 @@ begin
       ConsultaEquipos:=TConsultaEquipos.Create(self);
     finally
       ConsultaEquipos.Show;
+    end;
+end;
+
+procedure TPrinc.BtnConsultasStockClick(Sender: TObject);
+begin
+    try
+      ConsultaStock:=TConsultaStock.Create(self);
+    finally
+      ConsultaStock.Show;
     end;
 end;
 

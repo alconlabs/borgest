@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageVentas
+    ActivePage = AdvPageArchivo
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -1320,6 +1320,7 @@ object Princ: TPrinc
           Height = 41
           Caption = 'Consultas de Stock'
           TabOrder = 2
+          OnClick = BtnConsultasStockClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219

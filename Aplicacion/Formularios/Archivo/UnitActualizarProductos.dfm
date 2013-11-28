@@ -67,7 +67,7 @@ object ActualizarProductos: TActualizarProductos
       Top = 0
       Width = 1035
       Height = 570
-      ActivePage = TabSheet1
+      ActivePage = TabSheet2
       Align = alClient
       TabOrder = 0
       object TabSheet2: TTabSheet
@@ -212,18 +212,22 @@ object ActualizarProductos: TActualizarProductos
         object fil_politicaprecio_id: TSqlComboBox
           Left = 490
           Top = 57
-          Width = 151
+          Width = 290
           Height = 21
           Style = csDropDownList
           ItemHeight = 13
           TabOrder = 7
           Confbase = Princ.ZBase
           Confsql.Strings = (
-            'select * from politicasdeprecios'
+            
+              'select *, concat(politicaprecio_nombre, "   ",ROUND(politicaprec' +
+              'io_politica1,2), " - ", ROUND(politicaprecio_politica2,2), " - "' +
+              ', ROUND(politicaprecio_politica3,2), " - ", ROUND(politicaprecio' +
+              '_politica4,2)) as descripcion from politicasdeprecios'
             'order by politicaprecio_nombre')
           ConfTabla = 'politicasdeprecios'
           Confcampo_codigo = 'politicaprecio_id'
-          Confcampo_nomb = 'politicaprecio_nombre'
+          Confcampo_nomb = 'descripcion'
           Tag2 = 0
           ConfTodos = True
         end
@@ -613,11 +617,15 @@ object ActualizarProductos: TActualizarProductos
             TabOrder = 1
             Confbase = Princ.ZBase
             Confsql.Strings = (
-              'select * from politicasdeprecios'
+              
+                'select *, concat(politicaprecio_nombre, "   ",ROUND(politicaprec' +
+                'io_politica1,2), " - ", ROUND(politicaprecio_politica2,2), " - "' +
+                ', ROUND(politicaprecio_politica3,2), " - ", ROUND(politicaprecio' +
+                '_politica4,2)) as descripcion from politicasdeprecios'
               'order by politicaprecio_nombre')
             ConfTabla = 'politicasdeprecios'
             Confcampo_codigo = 'politicaprecio_id'
-            Confcampo_nomb = 'politicaprecio_nombre'
+            Confcampo_nomb = 'descripcion'
             Tag2 = 0
           end
         end
@@ -911,17 +919,21 @@ object ActualizarProductos: TActualizarProductos
         object xls_politicaprecio_id: TSqlComboBox
           Left = 602
           Top = 74
-          Width = 151
+          Width = 271
           Height = 21
           ItemHeight = 13
           TabOrder = 17
           Confbase = Princ.ZBase
           Confsql.Strings = (
-            'select * from politicasdeprecios'
+            
+              'select *, concat(politicaprecio_nombre, "   ",ROUND(politicaprec' +
+              'io_politica1,2), " - ", ROUND(politicaprecio_politica2,2), " - "' +
+              ', ROUND(politicaprecio_politica3,2), " - ", ROUND(politicaprecio' +
+              '_politica4,2)) as descripcion from politicasdeprecios'
             'order by politicaprecio_nombre')
           ConfTabla = 'politicasdeprecios'
           Confcampo_codigo = 'politicaprecio_id'
-          Confcampo_nomb = 'politicaprecio_nombre'
+          Confcampo_nomb = 'descripcion'
           Tag2 = 0
         end
         object xls_tipoiva_id: TSqlComboBox

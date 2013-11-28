@@ -68,6 +68,8 @@ type
     puerto:integer;
     devoluciones:real;
     recargo:real;
+    documentoventa_condicionventa:string;
+    documentoventa_total:real;
   end;
 
 var
@@ -408,7 +410,189 @@ end;
 
 
 procedure Timpresorafiscal.ImprimeTicketNotaDebito;
+var
+  error:integer;
 begin
+    error:=0;
+
+    HASAR1.Modelo:=self.modelo;
+    HASAR1.Puerto:=self.puerto;
+
+    //hasar1.Modelo:=8;
+
+    Memo1.Lines.Clear;
+    Memo1.Lines.Add('Iniciando Impresora.');
+
+    HASAR1.Comenzar;
+
+    if HASAR1.HuboErrorFiscal then
+      begin
+          MessageDlg('error=1', mtWarning, [mbOK], 0);
+          MResult:=mrCancel;
+      end;
+
+    HASAR1.TratarDeCancelarTodo;
+
+
+//    hasar1.Enviar(chr(93)+chr(28)+'12'+chr(28)+chr(46));
+//    hasar1.Enviar(chr(93)+chr(28)+'12'+chr(28)+'Vendedor: '+vendedor_nombre);
+//
+//    if HASAR1.HuboErrorFiscal then
+//      begin
+//          MessageDlg('error=2', mtWarning, [mbOK], 0);
+//          MResult:=mrCancel;
+//      end;
+
+    if tipodocu_leyenda<>'' then
+      begin
+          hasar1.Enviar(chr(93)+chr(28)+'13'+chr(28)+chr(46));
+          hasar1.Enviar(chr(93)+chr(28)+'13'+chr(28)+tipodocu_leyenda);
+      end;
+
+
+    if HASAR1.HuboErrorFiscal then
+      begin
+          MessageDlg('error=3', mtWarning, [mbOK], 0);
+          MResult:=mrCancel;
+      end;
+
+    hasar1.PrecioBase:=false;
+
+    if HASAR1.HuboErrorFiscal then
+      begin
+          MessageDlg('error=4', mtWarning, [mbOK], 0);
+          MResult:=mrCancel;
+      end;
+
+    Memo1.Lines.Add('Enviando datos de cliente.');
+
+
+    hasar1.DatosCliente(Nombre_cliente,NroDocumento_cliente,TipoDocumento_cliente,ResponsabilidadIVA_cliente,Direccion_cliente);
+
+//    if tipodocu_letra='A' then
+//     begin
+//         hasar1.DatosCliente(Nombre_cliente,NroDocumento_cliente,TipoDocumento_cliente,ResponsabilidadIVA_cliente,Direccion_cliente);
+//     end
+//    else
+//      begin
+//          //hasar1.Modelo:=2;
+//          hasar1.DatosCliente(Nombre_cliente,NroDocumento_cliente,TipoDocumento_cliente,ResponsabilidadIVA_cliente);
+//
+//      end;
+
+
+//    HASAR1.DatosCliente(Nombre_cliente,NroDocumento_cliente,TipoDocumento_cliente,ResponsabilidadIVA_cliente,Direccion_cliente);
+
+    if HASAR1.HuboErrorFiscal then
+      begin
+          MessageDlg('error=5', mtWarning, [mbOK], 0);
+          MResult:=mrCancel;
+      end;
+
+    Memo1.Lines.Add('Abriendo comprobante fiscal.');
+
+    //hasar1.Modelo:=2;
+
+    HASAR1.AbrirComprobanteFiscal(tipodocufiscal_id);
+
+    if HASAR1.HuboErrorFiscal then
+      begin
+          MessageDlg('error=6', mtWarning, [mbOK], 0);
+          MResult:=mrCancel;
+      end;
+
+    Memo1.Lines.Add('Imprimiendo detalles.');
+
+    MQDetalle.First;
+    while not MQDetalle.Eof do
+        begin
+            HASAR1.ImprimirItem(MQDetalle.FieldByName('descripcion').AsString,MQDetalle.FieldByName('cantidad').AsFloat, MQDetalle.FieldByName('monto').AsFloat, MQDetalle.FieldByName('IVA').AsFloat, MQDetalle.FieldByName('impuestosinternos').AsFloat);
+
+            if HASAR1.HuboErrorFiscal then
+              begin
+                  MessageDlg('error=7', mtWarning, [mbOK], 0);
+                  MResult:=mrCancel;
+              end;
+
+            MQDetalle.Next;
+        end;
+
+
+//    if recargo>0 then
+//      HASAR1.ImprimirItem('Recargo',1, recargo, 21, 0);
+
+
+//    if devoluciones>0 then
+//      begin
+//          HASAR1.DescuentoGeneral('Devoluciones',devoluciones,true);
+//      end;
+
+
+    Memo1.Lines.Add('Imprimiendo pagos.');
+
+    if documentoventa_condicionventa=CONDICIONVENTA_CONTADO then
+    HASAR1.ImprimirPago('Efectivo',documentoventa_total);
+
+
+//    MQpagos.First;
+//    while not MQpagos.Eof do
+//        begin
+//            HASAR1.ImprimirPago(MQpagos.FieldByName('descripcion').AsString,MQpagos.FieldByName('monto').AsFloat);
+//
+//            if HASAR1.HuboErrorFiscal then
+//              begin
+//                  MessageDlg('error=8', mtWarning, [mbOK], 0);
+//                  MResult:=mrCancel;
+//              end;
+//            MQpagos.Next;
+//        end;
+
+    Memo1.Lines.Add('Cerrando comprobante fiscal.');
+
+    HASAR1.CerrarComprobanteFiscal;
+
+    if HASAR1.HuboErrorFiscal then
+      begin
+          MessageDlg('error=9', mtWarning, [mbOK], 0);
+          MResult:=mrCancel;
+      end;
+
+    Memo1.Lines.Add('Imprimiendo Duplicado.');
+
+    documentoventa_fecha:=HASAR1.FechaHoraFiscal;
+    if tipodocu_letra='A' then
+      documentoventa_numero:=hasar1.UltimoDocumentoFiscalA
+    else
+      documentoventa_numero:=hasar1.UltimoDocumentoFiscalBC;
+//    documentoventa_numero:=strtoint(hasar1.Respuesta[3]);             ////APARENTEMENTE ESTO ES LA FECHA
+
+    Memo1.Lines.Add('Cerrando Documento numero '+inttostr(documentoventa_numero));
+
+    if HASAR1.HuboErrorFiscal then
+      begin
+          MessageDlg('error=10', mtWarning, [mbOK], 0);
+          MResult:=mrCancel;
+      end;
+
+    hasar1.Enviar(chr(93)+chr(28)+'12'+chr(28)+chr(46));  //  Limpiar lineas de vendedor
+    hasar1.Enviar(chr(93)+chr(28)+'13'+chr(28)+chr(46));   //  limpiar lineas de observacion
+
+    if HASAR1.HuboErrorFiscal then
+      begin
+          MessageDlg('error=11', mtWarning, [mbOK], 0);
+          MResult:=mrCancel;
+      end;
+
+    Memo1.Lines.Add('Cerrando puerto.');
+    HASAR1.Finalizar;
+
+    if HASAR1.HuboErrorFiscal then
+      begin
+          MessageDlg('error=12', mtWarning, [mbOK], 0);
+          MResult:=mrCancel;
+      end;
+
+    self.ModalResult:=MResult;
 
 
 end;

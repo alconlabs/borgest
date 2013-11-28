@@ -79,6 +79,9 @@ begin
     if fil_id.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and productos.'+Princ.CAMPO_ID_PRODUCTO+' like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_id.Text,' ','%',false,0)+'%"';
 
+    if fil_producto_codigo.Text<>'' then
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_codigo like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_producto_codigo.Text,' ','%',false,0)+'%"';
+
     if fil_producto_nombre.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_nombre like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_producto_nombre.Text,' ','%',false,0)+'%"';
 

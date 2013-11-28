@@ -1,5 +1,5 @@
 inherited LIstaFacturasDeCompras: TLIstaFacturasDeCompras
-  Caption = 'LIstaFacturasDeCompras'
+  Caption = 'Facturas de Compras'
   ClientWidth = 1035
   ExplicitWidth = 1051
   ExplicitHeight = 494
@@ -63,6 +63,7 @@ inherited LIstaFacturasDeCompras: TLIstaFacturasDeCompras
       inherited btnfiltrar: TButton
         Left = 932
         ExplicitLeft = 932
+        ExplicitTop = 0
       end
       object fil_documentocompra_numero: TEdit
         Left = 85
