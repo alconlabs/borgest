@@ -50,6 +50,8 @@ type
     tipodocu_manual: TCheckBox;
     Label15: TLabel;
     tipodocu_nombreabrev: TEdit;
+    Label16: TLabel;
+    tipodocu_importemax: TMoneyEdit;
     procedure tipodocu_fiscalClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -83,12 +85,12 @@ begin
     ZQExecSQL.sql.add('tipodocu_stock, tipodocu_iva, tipodocu_fiscal, tipodocu_ultimonumero, ');
     ZQExecSQL.sql.add('puntoventa_id, tipodocu_letra, tipodocu_debcred, tipodocufiscal_id, ');
     ZQExecSQL.sql.add('tipodocu_preimpresos, tipodocu_impresora, tipodocu_copias, tipodocu_preview, ');
-    ZQExecSQL.sql.add('tipodocu_prompt, tipodocu_ctacte, tipodocu_archivoimpresion, tipodocu_leyenda, tipodocu_manual, tipodocu_nombreabrev) ');
+    ZQExecSQL.sql.add('tipodocu_prompt, tipodocu_ctacte, tipodocu_archivoimpresion, tipodocu_leyenda, tipodocu_manual, tipodocu_nombreabrev, tipodocu_importemax) ');
     ZQExecSQL.sql.add('values (:tipodocu_id, :tipodocu_nombre, :tipodocu_tipo, :tipodocu_caja, ');
     ZQExecSQL.sql.add(':tipodocu_stock, :tipodocu_iva, :tipodocu_fiscal, :tipodocu_ultimonumero, ');
     ZQExecSQL.sql.add(':puntoventa_id, :tipodocu_letra, :tipodocu_debcred, :tipodocufiscal_id, ');
     ZQExecSQL.sql.add(':tipodocu_preimpresos, :tipodocu_impresora, :tipodocu_copias, :tipodocu_preview, ');
-    ZQExecSQL.sql.add(':tipodocu_prompt, :tipodocu_ctacte, :tipodocu_archivoimpresion, :tipodocu_leyenda, :tipodocu_manual, :tipodocu_nombreabrev) ');
+    ZQExecSQL.sql.add(':tipodocu_prompt, :tipodocu_ctacte, :tipodocu_archivoimpresion, :tipodocu_leyenda, :tipodocu_manual, :tipodocu_nombreabrev, :tipodocu_importemax) ');
     ZQExecSQL.parambyname('tipodocu_id').asstring:=id;
     ZQExecSQL.parambyname('tipodocu_nombre').asstring:=tipodocu_nombre.Text;
     ZQExecSQL.parambyname('tipodocu_tipo').asstring:=tipodocu_tipo.codigo;
@@ -111,6 +113,7 @@ begin
     ZQExecSQL.parambyname('tipodocu_leyenda').asstring:=tipodocu_leyenda.Text;
     ZQExecSQL.parambyname('tipodocu_manual').asstring:=booltostr(tipodocu_manual.Checked);
     ZQExecSQL.parambyname('tipodocu_nombreabrev').asstring:=tipodocu_nombreabrev.Text;
+    ZQExecSQL.parambyname('tipodocu_importemax').asstring:=tipodocu_importemax.Text;
     ZQExecSQL.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
@@ -141,7 +144,8 @@ begin
     ZQExecSQL.sql.add('tipodocu_archivoimpresion=:tipodocu_archivoimpresion, ');
     ZQExecSQL.sql.add('tipodocu_leyenda=:tipodocu_leyenda, ');
     ZQExecSQL.sql.add('tipodocu_manual=:tipodocu_manual, ');
-    ZQExecSQL.sql.add('tipodocu_nombreabrev=:tipodocu_nombreabrev ');
+    ZQExecSQL.sql.add('tipodocu_nombreabrev=:tipodocu_nombreabrev, ');
+    ZQExecSQL.sql.add('tipodocu_importemax=:tipodocu_importemax ');
     ZQExecSQL.sql.add('where tipodocu_id=:tipodocu_id');
     ZQExecSQL.parambyname('tipodocu_id').asstring:=id;
     ZQExecSQL.parambyname('tipodocu_nombre').asstring:=tipodocu_nombre.Text;
@@ -165,6 +169,7 @@ begin
     ZQExecSQL.parambyname('tipodocu_leyenda').asstring:=tipodocu_leyenda.Text;
     ZQExecSQL.parambyname('tipodocu_manual').asstring:=booltostr(tipodocu_manual.Checked);
     ZQExecSQL.parambyname('tipodocu_nombreabrev').asstring:=tipodocu_nombreabrev.Text;
+    ZQExecSQL.parambyname('tipodocu_importemax').asstring:=tipodocu_importemax.Text;
     ZQExecSQL.ExecSQL;
 
 
@@ -334,6 +339,7 @@ begin
     tipodocu_archivoimpresion.Text:=ZQSelect.FieldByName('tipodocu_archivoimpresion').AsString;
     tipodocu_leyenda.Text:=ZQSelect.FieldByName('tipodocu_leyenda').AsString;
     tipodocu_nombreabrev.Text:=ZQSelect.FieldByName('tipodocu_nombreabrev').AsString;
+    tipodocu_importemax.Text:=ZQSelect.FieldByName('tipodocu_importemax').AsString;
 
 end;
 

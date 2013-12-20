@@ -133,7 +133,9 @@ uses
   UnitComisionesBorradorPendientes in 'Formularios\Comisiones\UnitComisionesBorradorPendientes.pas' {ComisionesBorradorPendientes},
   UnitImprimirEtiquetas in 'Formularios\Herramientas\UnitImprimirEtiquetas.pas' {ImprimirEtiquetas},
   UnitLiquidacionBorradorDebCred in 'Formularios\Comisiones\UnitLiquidacionBorradorDebCred.pas' {LiquidacionBorradorDebCred},
-  UnitConsultaStock in 'Formularios\Compras\UnitConsultaStock.pas' {ConsultaStock};
+  UnitConsultaStock in 'Formularios\Compras\UnitConsultaStock.pas' {ConsultaStock},
+  UnitEstadoComisionesBorradores in 'Formularios\Comisiones\UnitEstadoComisionesBorradores.pas' {EstadoComisionesBorradores},
+  UnitDetalleComisionesBorradores in 'Formularios\Comisiones\UnitDetalleComisionesBorradores.pas' {DetalleComisionesBorradores};
 
 {$R *.res}
 

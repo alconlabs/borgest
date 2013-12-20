@@ -9,7 +9,7 @@ inherited NotapedidoDetalle: TNotapedidoDetalle
   inherited panelgrilla: TAdvPanel
     Width = 715
     Height = 254
-    ExplicitWidth = 679
+    ExplicitWidth = 715
     ExplicitHeight = 254
     FullHeight = 0
     inherited Label3: TLabel
@@ -156,7 +156,7 @@ inherited NotapedidoDetalle: TNotapedidoDetalle
       Width = 715
       TabOrder = 14
       ExplicitTop = 189
-      ExplicitWidth = 679
+      ExplicitWidth = 715
     end
     inherited ventadetalle_preciounitoriginal: TDBAdvEdit
       Top = 151
@@ -302,7 +302,7 @@ inherited NotapedidoDetalle: TNotapedidoDetalle
     Top = 144
   end
   inherited AdvPopupMenu1: TAdvPopupMenu
-    Left = 440
-    Top = 88
+    Left = 656
+    Top = 48
   end
 end

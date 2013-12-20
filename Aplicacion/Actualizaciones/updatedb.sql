@@ -1440,3 +1440,11 @@ DEFAULT CHARACTER SET = latin1
 COLLATE = latin1_swedish_ci;
 366;
 Replace config set config_valor='0', config_nombre='MOSTRAREQUIPO';
+367;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('90', '>Comisiones>Borradores>Estado de Cuentas', '0', 'btnestadoctasborradores', '', '0', '0', '');
+368;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,90,perfil_id,-1 from perfiles;
+369;
+UPDATE `empresas` SET `empresa_razonsocial`='CgAAAGRch/8fvnr/yNM0+myR3Bg=\r\n' WHERE `empresa_id`=1;
+370;
+ALTER TABLE `tiposdocumento` ADD COLUMN `tipodocu_importemax` FLOAT(20,2) NULL DEFAULT NULL  AFTER `tipodocu_manual` ;

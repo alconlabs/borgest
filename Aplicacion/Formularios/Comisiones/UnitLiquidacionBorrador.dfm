@@ -70,14 +70,14 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
     inherited btncancelar: TButton
       Left = 820
       Top = 334
-      TabOrder = 7
+      TabOrder = 6
       ExplicitLeft = 820
       ExplicitTop = 334
     end
     inherited btnguardar: TButton
       Left = 739
       Top = 334
-      TabOrder = 6
+      TabOrder = 5
       OnClick = btnguardarClick
       ExplicitLeft = 739
       ExplicitTop = 334
@@ -88,7 +88,7 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Width = 121
       Height = 21
       ReadOnly = True
-      TabOrder = 0
+      TabOrder = 9
     end
     object liquidacionborrador_fecha: TDateTimePicker
       Left = 782
@@ -97,15 +97,16 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Height = 21
       Date = 40384.167574155090000000
       Time = 40384.167574155090000000
-      TabOrder = 2
+      TabOrder = 1
     end
     object personal_id: TSqlComboBox
       Left = 60
       Top = 33
       Width = 354
       Height = 21
+      Style = csDropDownList
       ItemHeight = 13
-      TabOrder = 3
+      TabOrder = 2
       Confbase = Princ.ZBase
       Confsql.Strings = (
         'select * from personal'
@@ -137,7 +138,7 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Font.Style = [fsBold]
       ParentFont = False
       ReadOnly = True
-      TabOrder = 5
+      TabOrder = 4
       Version = '1.1.0.1'
     end
     object liquidacionborrador_observaciones: TMemo
@@ -145,14 +146,14 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Top = 296
       Width = 649
       Height = 65
-      TabOrder = 4
+      TabOrder = 3
     end
     object liquidacionborrador_equipo: TEdit
       Left = 260
       Top = 9
       Width = 153
       Height = 21
-      TabOrder = 1
+      TabOrder = 0
     end
     object PageControl1: TPageControl
       Left = 8
@@ -160,7 +161,7 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Width = 889
       Height = 212
       ActivePage = TabSheet1
-      TabOrder = 8
+      TabOrder = 7
       object TabSheet1: TTabSheet
         Caption = 'Borradores'
         object Label6: TLabel
@@ -276,6 +277,10 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       object TabSheet2: TTabSheet
         Caption = 'Creditos/Debitos'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label7: TLabel
           Left = 676
           Top = 159
@@ -349,7 +354,7 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Width = 75
       Height = 25
       Caption = 'Imprimir'
-      TabOrder = 9
+      TabOrder = 8
       OnClick = btnimprimirClick
     end
   end
@@ -627,7 +632,6 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
     end
     object ZQliquidacionborradordetallescliente_id_1: TIntegerField
       FieldName = 'cliente_id_1'
-      Required = True
     end
     object ZQliquidacionborradordetallescliente_nombre: TStringField
       FieldName = 'cliente_nombre'
@@ -659,7 +663,6 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
     end
     object ZQliquidacionborradordetallescondicioniva_id: TIntegerField
       FieldName = 'condicioniva_id'
-      Required = True
     end
     object ZQliquidacionborradordetallescliente_listaprecio: TIntegerField
       FieldName = 'cliente_listaprecio'
@@ -670,7 +673,6 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
     end
     object ZQliquidacionborradordetalleslocalidad_id: TIntegerField
       FieldName = 'localidad_id'
-      Required = True
     end
     object ZQliquidacionborradordetallescliente_observaciones: TStringField
       FieldName = 'cliente_observaciones'
@@ -678,7 +680,6 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
     end
     object ZQliquidacionborradordetallespersonal_id_2: TIntegerField
       FieldName = 'personal_id_2'
-      Required = True
     end
     object ZQliquidacionborradordetallescliente_diasvenc: TIntegerField
       FieldName = 'cliente_diasvenc'

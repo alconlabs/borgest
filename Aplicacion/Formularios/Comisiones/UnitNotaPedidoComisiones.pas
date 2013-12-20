@@ -548,7 +548,20 @@ begin
               if control_eliminar_borrar then
                 begin
                     if (MessageDlg('Seguro desea eliminar este registro?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
-                      eliminar;
+                      begin
+                          eliminar;
+
+                          if eliminado then
+                            begin
+                                MessageDlg('Documento eliminado correctamente', mtInformation, [mbOK], 0);
+
+                                Self.Close;
+
+                            end;
+
+
+                      end;
+
                 end;
           end;
 

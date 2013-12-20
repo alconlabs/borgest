@@ -158,6 +158,7 @@ type
     BtnLiquidacionesBorradores: TAdvGlowButton;
     BtnDetalleCuentasBorradores: TAdvGlowButton;
     btnimprimiretiquetas: TAdvGlowButton;
+    btnestadoctasborradores: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -229,6 +230,7 @@ type
     procedure BtnLiquidacionesBorradoresClick(Sender: TObject);
     procedure btnimprimiretiquetasClick(Sender: TObject);
     procedure BtnConsultasStockClick(Sender: TObject);
+    procedure btnestadoctasborradoresClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -453,7 +455,8 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   Unitdetallectasproveedores, UnitListaNotasDeDebitodeCompras,
   UnitMovimientosdeStock, UnitListaAjustesdeStock,
   UnitSaldosComisionesBorradores, UnitListaLiquidacionesBorradores,
-  UnitImprimirEtiquetas, UnitConsultaStock;
+  UnitImprimirEtiquetas, UnitConsultaStock, UnitEstadoComisionesBorradores,
+  UnitDetalleComisionesBorradores;
 
 {$R *.dfm}
 
@@ -3980,6 +3983,15 @@ begin
     end;
 end;
 
+procedure TPrinc.btnestadoctasborradoresClick(Sender: TObject);
+begin
+    try
+      EstadoComisionesBorradores:=TEstadoComisionesBorradores.Create(self);
+    finally
+      EstadoComisionesBorradores.Show;
+    end;
+end;
+
 procedure TPrinc.btnfacturascomprasClick(Sender: TObject);
 begin
     try
@@ -4053,9 +4065,9 @@ end;
 procedure TPrinc.BtnDetalleCuentasBorradoresClick(Sender: TObject);
 begin
     try
-      SaldosComisionesBorradores:=TSaldosComisionesBorradores.Create(self);
+      DetalleComisionesBorradores:=TDetalleComisionesBorradores.Create(self);
     finally
-      SaldosComisionesBorradores.Show;
+      DetalleComisionesBorradores.Show;
     end;
 end;
 

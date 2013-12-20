@@ -11,6 +11,7 @@ uses
 type
   TNotapedidoComisionesDetalle = class(TNotapedidoDetalle)
     procedure ventadetalle_preciounitarioExit(Sender: TObject);
+    procedure btnaceptarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -23,6 +24,14 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TNotapedidoComisionesDetalle.btnaceptarClick(Sender: TObject);
+begin
+  inherited;
+    ZQDocumentoventadetalles.Edit;
+    ZQDocumentoventadetalles.FieldByName('documentoventadetalle_total').AsString:=ventadetalle_total.Text;
+    ZQDocumentoventadetalles.Post;
+end;
 
 procedure TNotapedidoComisionesDetalle.ventadetalle_preciounitarioExit(
   Sender: TObject);

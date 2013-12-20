@@ -10,6 +10,8 @@ inherited tipodocumento: Ttipodocumento
   inherited panelgrilla: TAdvPanel
     Width = 821
     Height = 386
+    ExplicitLeft = -48
+    ExplicitTop = -8
     ExplicitWidth = 821
     ExplicitHeight = 386
     FullHeight = 0
@@ -109,20 +111,28 @@ inherited tipodocumento: Ttipodocumento
       Alignment = taRightJustify
       Caption = 'Nombre Abrev.'
     end
+    object Label16: TLabel [12]
+      Left = 26
+      Top = 324
+      Width = 74
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Importe Maximo'
+    end
     inherited btncancelar: TButton
       Left = 550
-      Top = 264
-      TabOrder = 19
+      Top = 319
+      TabOrder = 20
       ExplicitLeft = 550
-      ExplicitTop = 264
+      ExplicitTop = 319
     end
     inherited btnguardar: TButton
       Left = 469
-      Top = 264
-      TabOrder = 18
+      Top = 319
+      TabOrder = 19
       OnClick = btnguardarClick
       ExplicitLeft = 469
-      ExplicitTop = 264
+      ExplicitTop = 319
     end
     object tipodocu_id: TEdit
       Left = 106
@@ -246,7 +256,7 @@ inherited tipodocumento: Ttipodocumento
       Height = 21
       Style = csDropDownList
       ItemHeight = 13
-      TabOrder = 16
+      TabOrder = 17
       Confbase = Princ.ZBase
       Confsql.Strings = (
         'select * from tipodocumentofiscal'
@@ -280,7 +290,7 @@ inherited tipodocumento: Ttipodocumento
       Height = 17
       Alignment = taLeftJustify
       Caption = 'Controlador Fiscal'
-      TabOrder = 13
+      TabOrder = 14
       OnClick = tipodocu_fiscalClick
     end
     object tipodocu_preimpresos: TRadioButton
@@ -290,7 +300,7 @@ inherited tipodocumento: Ttipodocumento
       Height = 17
       Alignment = taLeftJustify
       Caption = 'Pre-Impresos'
-      TabOrder = 14
+      TabOrder = 15
       OnClick = tipodocu_fiscalClick
     end
     object GroupBoxImpresion: TGroupBox
@@ -299,7 +309,7 @@ inherited tipodocumento: Ttipodocumento
       Width = 248
       Height = 149
       Caption = 'Datos de Impresion'
-      TabOrder = 17
+      TabOrder = 18
       object Label17: TLabel
         Left = 62
         Top = 20
@@ -442,7 +452,7 @@ inherited tipodocumento: Ttipodocumento
       Height = 15
       Alignment = taLeftJustify
       Caption = 'Ingresar Numeracion Manualmente'
-      TabOrder = 15
+      TabOrder = 16
     end
     object tipodocu_nombreabrev: TEdit
       Left = 106
@@ -450,6 +460,24 @@ inherited tipodocumento: Ttipodocumento
       Width = 63
       Height = 21
       TabOrder = 3
+    end
+    object tipodocu_importemax: TMoneyEdit
+      Left = 106
+      Top = 321
+      Width = 103
+      Height = 21
+      CalculatorLook.ButtonWidth = 24
+      CalculatorLook.ButtonHeight = 24
+      CalculatorLook.ButtonColor = clSilver
+      CalculatorLook.Color = clWhite
+      CalculatorLook.Flat = False
+      CalculatorLook.Font.Charset = DEFAULT_CHARSET
+      CalculatorLook.Font.Color = clWindowText
+      CalculatorLook.Font.Height = -11
+      CalculatorLook.Font.Name = 'Tahoma'
+      CalculatorLook.Font.Style = []
+      TabOrder = 13
+      Version = '1.1.0.1'
     end
   end
   inherited ZQSelect: TZQuery

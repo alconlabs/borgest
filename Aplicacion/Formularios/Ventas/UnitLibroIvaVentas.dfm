@@ -9,8 +9,8 @@ inherited LibroIvaVentas: TLibroIvaVentas
   inherited panelgrilla: TAdvPanel
     Width = 408
     Height = 276
-    ExplicitWidth = 228
-    ExplicitHeight = 137
+    ExplicitWidth = 408
+    ExplicitHeight = 276
     FullHeight = 0
     object Label1: TLabel [0]
       Left = 76

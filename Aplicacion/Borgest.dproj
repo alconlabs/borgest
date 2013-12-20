@@ -138,6 +138,12 @@
     <DCCReference Include="Formularios\Comisiones\UnitComisionesVendedores.pas">
       <Form>ComisionesVendedores</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Comisiones\UnitDetalleComisionesBorradores.pas">
+      <Form>DetalleComisionesBorradores</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Comisiones\UnitEstadoComisionesBorradores.pas">
+      <Form>EstadoComisionesBorradores</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Comisiones\UnitLiquidacionBorrador.pas">
       <Form>LiquidacionBorrador</Form>
     </DCCReference>

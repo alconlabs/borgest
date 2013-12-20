@@ -210,9 +210,9 @@ begin
             ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_pagado=docuvendetcomisionvendedor_pagado+:liquidacionborradordetalle_importe, ');
             ZQExecSQL.Sql.Add('docuvendetcomisionvendedor_saldo=docuvendetcomisionvendedor_saldo-:liquidacionborradordetalle_importe ');
             ZQExecSQL.Sql.Add('where docuvendetcomisionvendedor_id=:docuvendetcomisionvendedor_id ');
-            ZQExecSQL.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PENDIENTE';
-            if ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_saldo').AsFloat>0 then
-              ZQExecSQL.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PAGADA';
+            ZQExecSQL.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PAGADA';
+            if roundto(ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_saldo').AsFloat,-2)>0 then
+              ZQExecSQL.ParamByName('docuvendetcomisionvendedor_estado').AsString:='PENDIENTE';
 
             ZQExecSQL.ParamByName('liquidacionborradordetalle_importe').AsString:=ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_importe').AsString;
             ZQExecSQL.ParamByName('docuvendetcomisionvendedor_id').AsString:=ZQliquidacionborradordetalles.FieldByName('docuvendetcomisionvendedor_id').AsString;
@@ -514,6 +514,8 @@ begin
                           ZQliquidacionborradordetalles.Insert;
 
                         ZQliquidacionborradordetalles.FieldByName('documentoventa_fecha').AsString:=ComisionesBorradorPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_fecha').AsString;
+                        ZQliquidacionborradordetalles.FieldByName('documentoventa_numero').AsString:=ComisionesBorradorPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_numero').AsString;
+                        ZQliquidacionborradordetalles.FieldByName('cliente_nombre').AsString:=ComisionesBorradorPendientes.ZQDocumentosVentasPendientes.FieldByName('cliente_nombre').AsString;
                         ZQliquidacionborradordetalles.FieldByName('documentoventa_equipo1').AsString:=ComisionesBorradorPendientes.ZQDocumentosVentasPendientes.FieldByName('documentoventa_equipo1').AsString;
                         ZQliquidacionborradordetalles.FieldByName('docuvendetcomisionvendedor_total').AsString:=ComisionesBorradorPendientes.ZQDocumentosVentasPendientes.FieldByName('docuvendetcomisionvendedor_total').AsString;
                         ZQliquidacionborradordetalles.FieldByName('liquidacionborradordetalle_pagado').AsFloat:=roundto(ComisionesBorradorPendientes.ZQDocumentosVentasPendientes.FieldByName('docuvendetcomisionvendedor_pagado').AsFloat+ComisionesBorradorPendientes.ZQDocumentosVentasPendientes.FieldByName('liquidacionborradordetalle_importe').AsFloat,-2);
@@ -630,6 +632,14 @@ begin
     ZQSelect.ParamByName('liquidacionborrador_id').AsString:=id;
     ZQSelect.Active:=true;
     PageControl1.ActivePage:=TabSheet1;
+
+    case abm of
+        1:btnguardar.Caption:='Guardar';
+        2:btnguardar.Caption:='Guardar';
+        3:btnguardar.Caption:='Eliminar';
+        4:btnguardar.Caption:='Imprimir';
+        5:btnguardar.Caption:='Anular';
+    end;
 end;
 
 procedure TLiquidacionBorrador.ZQSelectAfterOpen(DataSet: TDataSet);

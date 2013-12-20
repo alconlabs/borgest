@@ -10,7 +10,7 @@ inherited SaldosComisionesBorradores: TSaldosComisionesBorradores
   inherited panelgrilla: TAdvPanel
     Width = 740
     Height = 385
-    ExplicitWidth = 574
+    ExplicitWidth = 740
     ExplicitHeight = 385
     FullHeight = 0
     object Label4: TLabel [0]

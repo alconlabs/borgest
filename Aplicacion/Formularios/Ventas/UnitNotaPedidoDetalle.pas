@@ -55,6 +55,7 @@ begin
     ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe6').AsString:=documentoventadetalle_importe6.Text;
     ZQDocumentoventadetalles.FieldByName('documentoventadetalle_estado').AsString:='PEDIDO';
     ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidadpendiente').AsString:=ventadeta_cantidad.Text;
+    ZQDocumentoventadetalles.FieldByName('documentoventadetalle_total').AsString:=documentoventadetalle_importe5.Text;
     ZQDocumentoventadetalles.Post;
 
 

@@ -325,15 +325,15 @@ begin
 
     if ZQuery2.FieldByName('documentoventa_estado').AsString='PAGADA' then
       begin
-          ZQNotacredito.FieldByName('documentoventa_estado').AsString:='PENDIENTE';
-          ZQNotacredito.FieldByName('documentoventa_pagado').AsString:='0';
-          ZQNotacredito.FieldByName('documentoventa_saldo').AsString:=documentoventa_total.Text;
-      end
-    else
-      begin
           ZQNotacredito.FieldByName('documentoventa_estado').AsString:='PAGADA';
           ZQNotacredito.FieldByName('documentoventa_pagado').AsString:=documentoventa_total.Text;
           ZQNotacredito.FieldByName('documentoventa_saldo').AsString:='0';
+      end
+    else
+      begin
+          ZQNotacredito.FieldByName('documentoventa_estado').AsString:='PENDIENTE';
+          ZQNotacredito.FieldByName('documentoventa_pagado').AsString:='0';
+          ZQNotacredito.FieldByName('documentoventa_saldo').AsString:=documentoventa_total.Text;
 
       end;
 
@@ -369,6 +369,7 @@ begin
           ZQdocumentoventadocus.FieldByName('documentoventa_saldo').asstring:='0';
           ZQdocumentoventadocus.FieldByName('documentoventadoc_id').asstring:='0';
           ZQdocumentoventadocus.FieldByName('documentoventadoc_importe').asstring:=documentoventa_total.Text;
+          ZQdocumentoventadocus.FieldByName('documentoventadoc_tiporelacion').AsString:='IMPUTACION';
           ZQdocumentoventadocus.Post;
 
 //      end;
