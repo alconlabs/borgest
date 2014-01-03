@@ -159,6 +159,7 @@ type
     BtnDetalleCuentasBorradores: TAdvGlowButton;
     btnimprimiretiquetas: TAdvGlowButton;
     btnestadoctasborradores: TAdvGlowButton;
+    BtnCuponesTarjetas: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -231,6 +232,7 @@ type
     procedure btnimprimiretiquetasClick(Sender: TObject);
     procedure BtnConsultasStockClick(Sender: TObject);
     procedure btnestadoctasborradoresClick(Sender: TObject);
+    procedure BtnCuponesTarjetasClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -456,7 +458,7 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitMovimientosdeStock, UnitListaAjustesdeStock,
   UnitSaldosComisionesBorradores, UnitListaLiquidacionesBorradores,
   UnitImprimirEtiquetas, UnitConsultaStock, UnitEstadoComisionesBorradores,
-  UnitDetalleComisionesBorradores;
+  UnitDetalleComisionesBorradores, UnitListaCuponesTarjetasCredito;
 
 {$R *.dfm}
 
@@ -3671,6 +3673,16 @@ begin
       ConsultaStock:=TConsultaStock.Create(self);
     finally
       ConsultaStock.Show;
+    end;
+end;
+
+procedure TPrinc.BtnCuponesTarjetasClick(Sender: TObject);
+begin
+    try
+      ListaCuponesTarjetasCredito:=TListaCuponesTarjetasCredito.Create(self);
+    finally
+      ListaCuponesTarjetasCredito.campo_id:='cupontarjeta_id';
+      ListaCuponesTarjetasCredito.Show;
     end;
 end;
 

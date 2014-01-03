@@ -28,6 +28,10 @@ inherited ListaCalculosPrecios1: TListaCalculosPrecios1
     end
     inherited panelfiltros: TAdvPanel
       FullHeight = 0
+      inherited btnfiltrar: TButton
+        ExplicitLeft = 831
+        ExplicitTop = 0
+      end
       object fil_calculoprecio_nombre: TEdit
         Left = 85
         Top = 0

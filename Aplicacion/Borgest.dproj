@@ -306,6 +306,9 @@
     <DCCReference Include="Formularios\Ventas\UnitConsultaEquipos.pas">
       <Form>ConsultaEquipos</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitCuponTarjetaCredito.pas">
+      <Form>CuponTarjetaCredito</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitdetallectas.pas">
       <Form>detallectas</Form>
     </DCCReference>
@@ -347,6 +350,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitLibroIvaVentas.pas">
       <Form>LibroIvaVentas</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Ventas\UnitListaCuponesTarjetasCredito.pas">
+      <Form>ListaCuponesTarjetasCredito</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitListaDebCred.pas">
       <Form>listaconceptosdebcred</Form>

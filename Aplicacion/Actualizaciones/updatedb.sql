@@ -1448,3 +1448,29 @@ INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,90,perfil_id,-1 from perfi
 UPDATE `empresas` SET `empresa_razonsocial`='CgAAAGRch/8fvnr/yNM0+myR3Bg=\r\n' WHERE `empresa_id`=1;
 370;
 ALTER TABLE `tiposdocumento` ADD COLUMN `tipodocu_importemax` FLOAT(20,2) NULL DEFAULT NULL  AFTER `tipodocu_manual` ;
+371;
+CREATE  TABLE IF NOT EXISTS `cuponestarjetas` (
+  `cupontarjeta_id` INT(11) NOT NULL ,
+  `cupontarjeta_fecha` DATE NULL DEFAULT NULL ,
+  `cupontarjeta_importe` FLOAT(20,2) NULL DEFAULT NULL ,
+  `cupontarjeta_cuotas` INT(11) NULL DEFAULT NULL ,
+  `cupontarjeta_autoriz` VARCHAR(45) NULL DEFAULT NULL ,
+  `cupontarjeta_titular` VARCHAR(50) NULL DEFAULT NULL ,
+  `cupontarjeta_dni` VARCHAR(20) NULL DEFAULT NULL ,
+  `cupontarjeta_telefono` VARCHAR(20) NULL DEFAULT NULL ,
+  `cupontarjeta_recargo` FLOAT(20,2) NULL DEFAULT NULL ,
+  `tarjeta_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`cupontarjeta_id`) ,
+  INDEX `fk_cuponestarjetas_tarjetas1` (`tarjeta_id` ASC) ,
+  CONSTRAINT `fk_cuponestarjetas_tarjetas1`
+    FOREIGN KEY (`tarjeta_id` )
+    REFERENCES `tarjetas` (`tarjeta_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+372;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('91', '>Ventas>Caja>Cupones Tarjetas', '0', 'BtnCuponesTarjetas', '', '0', '0', 'TListaCuponesTarjetasCredito');
+373;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,91,perfil_id,-1 from perfiles;

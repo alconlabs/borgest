@@ -60,6 +60,7 @@ Ventas
 		Estado Caja
 		Caja
 		Caja Bar
+		Cupones Tarjetas
 	Informes
 		Informes
 		Detalle de Pagos
