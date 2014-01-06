@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageVentas
+    ActivePage = AdvPageComisiones
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -4345,5 +4345,10 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
+  end
+  object TablaTemporal1: TTablaTemporal
+    Confbase = ZBase
+    Left = 600
+    Top = 520
   end
 end

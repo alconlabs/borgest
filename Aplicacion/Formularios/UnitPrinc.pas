@@ -9,7 +9,8 @@ uses
   Grids, BaseGrid, AdvGrid, DBAdvGrid, StdCtrls, ADODB, rpcompobase, rpvclreport,
   ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
   rpalias, GTBComboBox, ComCtrls, rpexpredlgvcl, DBClient,
-  rpclientdataset, Menus, Encriptador, Utilidades, Permisos, DBGrids;
+  rpclientdataset, Menus, Encriptador, Utilidades, Permisos, DBGrids,
+  TablaTemporal;
 
 
 
@@ -160,6 +161,7 @@ type
     btnimprimiretiquetas: TAdvGlowButton;
     btnestadoctasborradores: TAdvGlowButton;
     BtnCuponesTarjetas: TAdvGlowButton;
+    TablaTemporal1: TTablaTemporal;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
