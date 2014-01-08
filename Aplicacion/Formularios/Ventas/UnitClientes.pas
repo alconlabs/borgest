@@ -71,6 +71,7 @@ type
     procedure cliente_documentotipoSelect(Sender: TObject);
     procedure condicioniva_idExit(Sender: TObject);
     procedure ZQClienteVehiculoAfterOpen(DataSet: TDataSet);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     CLIENTEVEHICULO:boolean;
@@ -397,6 +398,12 @@ begin
 
     cliente_diasvenc.Text:='15';
 
+end;
+
+procedure Tclientes.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tclientes.FormShow(Sender: TObject);

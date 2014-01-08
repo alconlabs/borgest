@@ -490,7 +490,9 @@ object TRpReport
     PosX = 3590
     PosY = 0
     Type1Font = poHelvetica
+    CutText = True
     Alignment = 1
+    SingleLine = True
     DataType = rpParamString
     AutoExpand = False
     AutoContract = False

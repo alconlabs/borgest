@@ -42,6 +42,7 @@ type
     procedure producto_idSelect(Sender: TObject);
     procedure ventadeta_cantidadExit(Sender: TObject);
     procedure ventadetalle_preciounitarioExit(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     procedure calculartotal;
@@ -120,6 +121,12 @@ procedure Tventadetalle.FormCreate(Sender: TObject);
 begin
     producto_id.llenarcombo;
     ventadeta_cantidad.Text:='1';
+end;
+
+procedure Tventadetalle.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tventadetalle.ventadetalle_preciounitarioExit(Sender: TObject);

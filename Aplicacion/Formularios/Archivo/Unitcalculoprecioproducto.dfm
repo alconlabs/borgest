@@ -14,6 +14,7 @@ object calculoprecioproductos: Tcalculoprecioproductos
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -62,8 +63,6 @@ object calculoprecioproductos: Tcalculoprecioproductos
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitWidth = 709
-    ExplicitHeight = 272
     FullHeight = 0
     object btncancelar: TButton
       Left = 502

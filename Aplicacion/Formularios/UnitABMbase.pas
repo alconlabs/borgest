@@ -61,6 +61,8 @@ end;
 procedure TABMbase.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+    Princ.OnKeyDown(sender, Key, Shift);
+    
     case key of
         VK_ESCAPE:btncancelar.Click;
         VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);

@@ -231,8 +231,6 @@ object listabase: Tlistabase
         Caption = 'Filtrar'
         TabOrder = 1
         OnClick = btnfiltrarClick
-        ExplicitLeft = 837
-        ExplicitTop = -6
       end
       object fil_id: TGTBEdit
         Left = 0

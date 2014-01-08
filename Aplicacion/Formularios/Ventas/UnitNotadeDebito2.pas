@@ -412,6 +412,7 @@ end;
 procedure TNotadeDebito2.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+    Princ.OnKeyDown(sender, Key, Shift);
     case key of
         VK_F4:btnagregar.Click;
         VK_F6:btnquitar.Click;

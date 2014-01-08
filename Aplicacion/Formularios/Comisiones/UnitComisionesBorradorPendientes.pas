@@ -243,6 +243,7 @@ end;
 procedure TComisionesBorradorPendientes.FormKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
+    Princ.OnKeyDown(sender, Key, Shift);
     case key of
         VK_F9:btnaceptar.Click;
     end;

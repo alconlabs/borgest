@@ -45,6 +45,7 @@ type
     procedure btncancelarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure localidad_idSelect(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     function control:boolean;
@@ -322,6 +323,12 @@ begin
 
     localidad_id.llenarcombo;
 
+end;
+
+procedure Tproveedores.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tproveedores.FormShow(Sender: TObject);

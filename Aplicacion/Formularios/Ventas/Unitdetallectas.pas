@@ -171,6 +171,7 @@ type
     procedure cbdesdefechavencClick(Sender: TObject);
     procedure cbhastafechavencClick(Sender: TObject);
     procedure BtnDetalleImputacionClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     temporal_idproceso:string;
@@ -266,6 +267,12 @@ begin
     personal_id.ItemIndex:=0;
     Titles1.Memo.Text:='select * from puntodeventa where 1=1 '+Princ.empresa_where;
     puntoventa_id.Fill;
+end;
+
+procedure Tdetallectas.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tdetallectas.cargatemporal;

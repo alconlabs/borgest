@@ -3438,6 +3438,13 @@ begin
             empresa_where:='and 1=1 ';
       end;
 
+    case key of
+        VK_F10:btnimpresorafiscal.Click;
+
+    end;
+
+
+
 end;
 
 procedure TPrinc.FormShow(Sender: TObject);
@@ -3785,11 +3792,14 @@ end;
 
 procedure TPrinc.btnimpresorafiscalClick(Sender: TObject);
 begin
-    try
-      impresorafiscalcola:=Timpresorafiscalcola.Create(self);
-    finally
-      impresorafiscalcola.Show;
-    end;
+    if btnimpresorafiscal.Enabled then
+      begin
+          try
+            impresorafiscalcola:=Timpresorafiscalcola.Create(self);
+          finally
+            impresorafiscalcola.Show;
+          end;
+      end;
 end;
 
 procedure TPrinc.btnimprimiretiquetasClick(Sender: TObject);

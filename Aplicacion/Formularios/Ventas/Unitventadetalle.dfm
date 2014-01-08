@@ -12,6 +12,7 @@ object ventadetalle: Tventadetalle
   OldCreateOrder = False
   Position = poOwnerFormCenter
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
   object panelgrilla: TAdvPanel
@@ -59,8 +60,6 @@ object ventadetalle: Tventadetalle
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitWidth = 432
-    ExplicitHeight = 147
     FullHeight = 0
     object Label3: TLabel
       Left = 44

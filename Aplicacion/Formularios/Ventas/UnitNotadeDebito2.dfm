@@ -186,7 +186,7 @@ object NotadeDebito2: TNotadeDebito2
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       OnSelect = cliente_idSelect
       Confbase = Princ.ZBase
@@ -203,7 +203,7 @@ object NotadeDebito2: TNotadeDebito2
       Width = 220
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 1
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -413,7 +413,7 @@ object NotadeDebito2: TNotadeDebito2
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 9
       OnSelect = puntoventa_idSelect
       Confbase = Princ.ZBase
@@ -429,7 +429,7 @@ object NotadeDebito2: TNotadeDebito2
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 10
       OnSelect = tipodocu_idSelect
       Confbase = Princ.ZBase
@@ -462,7 +462,7 @@ object NotadeDebito2: TNotadeDebito2
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 8
       OnSelect = sucursal_idSelect
       Confbase = Princ.ZBase
@@ -491,10 +491,6 @@ object NotadeDebito2: TNotadeDebito2
       TabOrder = 13
       object TabSheet1: TTabSheet
         Caption = 'Productos'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGrid1: TDBGrid
           Left = 0
           Top = 0

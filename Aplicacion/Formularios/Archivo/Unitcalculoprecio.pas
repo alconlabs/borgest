@@ -44,6 +44,7 @@ type
     procedure btnagregarClick(Sender: TObject);
     procedure btnquitarClick(Sender: TObject);
     procedure ZQCalculopreciodetaBeforePost(DataSet: TDataSet);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     tipocuota:integer;
@@ -110,6 +111,12 @@ procedure Tcalculoprecio.FormCreate(Sender: TObject);
 begin
     id:='';
 
+end;
+
+procedure Tcalculoprecio.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tcalculoprecio.FormShow(Sender: TObject);

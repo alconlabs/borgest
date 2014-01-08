@@ -266,6 +266,7 @@ type
     procedure btnrecalculartodoClick(Sender: TObject);
     procedure bnteliminarproductosClick(Sender: TObject);
     procedure BtnAplicarRubroClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     destino:string;
@@ -861,6 +862,12 @@ begin
     nuevo_calculoprecio_id.llenarcombo;
     nuevo_politicaprecio_id.llenarcombo;
     nuevo_rubro_id.llenarcombo;
+end;
+
+procedure TActualizarProductos.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure TActualizarProductos.tipo_codigoSelect(Sender: TObject);

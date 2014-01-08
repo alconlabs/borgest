@@ -26,6 +26,7 @@ type
     procedure fil_idKeyPress(Sender: TObject; var Key: Char);
     procedure FormShow(Sender: TObject);
     procedure DBGrid1TitleClick(Column: TColumn);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     abm:integer;
@@ -71,6 +72,12 @@ procedure Tbusquedabase.fil_idKeyPress(Sender: TObject; var Key: Char);
 begin
     if key=#13 then
       btnfiltrar.Click;
+end;
+
+procedure Tbusquedabase.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tbusquedabase.FormShow(Sender: TObject);

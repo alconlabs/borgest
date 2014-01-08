@@ -39,6 +39,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     abm:integer;
@@ -82,6 +83,12 @@ procedure Tprovincias.FormCreate(Sender: TObject);
 begin
     abm:=0;
     Panelabm.Visible:=false;
+end;
+
+procedure Tprovincias.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tprovincias.modificar;

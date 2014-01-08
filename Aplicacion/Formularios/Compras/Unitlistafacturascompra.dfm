@@ -15,6 +15,7 @@ object listafacturascompra: Tlistafacturascompra
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
   object panelgrilla: TAdvPanel

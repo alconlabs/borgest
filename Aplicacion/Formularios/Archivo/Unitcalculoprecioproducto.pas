@@ -38,6 +38,7 @@ type
     procedure ZQCalculopreciodetaprodBeforePost(DataSet: TDataSet);
     procedure btnguardarClick(Sender: TObject);
     procedure ZQCalculopreciodetaprodBeforeInsert(DataSet: TDataSet);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     ultimo:integer;
@@ -63,6 +64,12 @@ procedure Tcalculoprecioproductos.FormCreate(Sender: TObject);
 begin
     id:='';
 
+end;
+
+procedure Tcalculoprecioproductos.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tcalculoprecioproductos.FormShow(Sender: TObject);

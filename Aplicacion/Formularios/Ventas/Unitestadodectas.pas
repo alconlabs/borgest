@@ -173,6 +173,7 @@ type
     procedure cbhastafechavencClick(Sender: TObject);
     procedure BtnDetalleImputacionClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     temporal_idproceso:string;
@@ -277,6 +278,12 @@ begin
     Titles1.Memo.Text:='select * from puntodeventa where 1=1 '+Princ.empresa_where;
     puntoventa_id.Fill;
     
+end;
+
+procedure Testadoctas.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Testadoctas.FormShow(Sender: TObject);

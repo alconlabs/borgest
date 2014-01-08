@@ -124,6 +124,7 @@ type
     procedure FACTURAVENTASUCURSALIDSelect(Sender: TObject);
     procedure FACTURAVENTAPUNTOVENTAIDSelect(Sender: TObject);
     procedure FACTURAVENTACLIENTEIDSelect(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -565,6 +566,12 @@ begin
     USUARIOPORDEFECTO.llenarcombo;
     USUARIOPORDEFECTO.ItemIndex:=-1;
 
+end;
+
+procedure Tconfiguracion.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tconfiguracion.FormShow(Sender: TObject);

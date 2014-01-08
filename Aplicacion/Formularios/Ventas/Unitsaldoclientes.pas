@@ -105,6 +105,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure BtnDetalleImputacionClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     temporal_idproceso:string;
@@ -143,6 +144,12 @@ end;
 procedure Tsaldoclientes.FormCreate(Sender: TObject);
 begin
     temporal_idproceso:='';
+end;
+
+procedure Tsaldoclientes.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tsaldoclientes.FormShow(Sender: TObject);

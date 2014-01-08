@@ -32,6 +32,7 @@ type
     procedure btnfiltrarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnanularClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     abm:integer;
@@ -75,6 +76,12 @@ procedure Tlistafacturascompra.FormCreate(Sender: TObject);
 begin
     abm:=0;
 //    Panelabm.Visible:=false;
+end;
+
+procedure Tlistafacturascompra.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tlistafacturascompra.modificar;

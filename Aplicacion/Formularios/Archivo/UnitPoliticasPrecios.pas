@@ -36,6 +36,7 @@ type
     procedure btnguardarClick(Sender: TObject);
     procedure btncancelarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     function control:boolean;
@@ -225,6 +226,12 @@ end;
 procedure Tpoliticasprecios.FormCreate(Sender: TObject);
 begin
     id:='0';
+end;
+
+procedure Tpoliticasprecios.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tpoliticasprecios.FormShow(Sender: TObject);

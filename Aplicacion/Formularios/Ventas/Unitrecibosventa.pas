@@ -174,6 +174,7 @@ type
     procedure DBGrid1DblClick(Sender: TObject);
     procedure btntomardocumentosAutoClick(Sender: TObject);
     procedure btnimprimirClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     tipocuota:integer;
@@ -343,6 +344,12 @@ begin
     personal_id.llenarcombo;
     personal_id.ItemIndex:=-1;
 
+end;
+
+procedure Trecibosventa.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Trecibosventa.FormShow(Sender: TObject);

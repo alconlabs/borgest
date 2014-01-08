@@ -105,6 +105,7 @@ end;
 procedure Tlistabase.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+    Princ.OnKeyDown(sender, Key, Shift);
     if Key=VK_F2 then
       begin
           if tipo_busqueda=1 then

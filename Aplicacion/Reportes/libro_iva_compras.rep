@@ -570,7 +570,9 @@ object TRpReport
     PosY = 0
     Type1Font = poHelvetica
     FontSize = 9
+    CutText = True
     Alignment = 1
+    SingleLine = True
     DataType = rpParamString
     AutoExpand = False
     AutoContract = False

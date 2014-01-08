@@ -47,6 +47,7 @@ end;
 procedure TCargarPagos.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+    Princ.OnKeyDown(sender, Key, Shift);
     case key of
         VK_F9:btnguardar.Click;
         VK_ESCAPE:btncancelar.Click;

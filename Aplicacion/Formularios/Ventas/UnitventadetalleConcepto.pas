@@ -380,6 +380,7 @@ end;
 procedure Tventadetalleconcepto.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+    Princ.OnKeyDown(sender, Key, Shift);
     case key of
         VK_F9:btnaceptar.Click;
         VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);

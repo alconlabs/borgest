@@ -14,6 +14,7 @@ object detallectas: Tdetallectas
   Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
   object panelgrilla: TAdvPanel
@@ -61,7 +62,6 @@ object detallectas: Tdetallectas
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitWidth = 744
     FullHeight = 0
     object Label3: TLabel
       Left = 9

@@ -147,6 +147,7 @@ type
     procedure tipodocu_idSelect(Sender: TObject);
     procedure btngenerarfacturaClick(Sender: TObject);
     procedure btnverfacturaClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     tipocuota:integer;
@@ -671,6 +672,12 @@ begin
 
 
 
+end;
+
+procedure Tliquidacionessucu.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tliquidacionessucu.FormShow(Sender: TObject);

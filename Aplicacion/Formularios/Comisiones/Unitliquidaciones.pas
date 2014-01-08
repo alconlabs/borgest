@@ -152,6 +152,7 @@ type
     procedure btnquitardebcredClick(Sender: TObject);
     procedure ZQliquidacionesvendedoresAfterOpen(DataSet: TDataSet);
     procedure btnimprimirClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     { Private declarations }
     tipocuota:integer;
@@ -611,6 +612,12 @@ begin
 
     EsVendedorPorDefecto:=true;
 
+end;
+
+procedure Tliquidaciones.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+    Princ.OnKeyDown(sender, Key, Shift);
 end;
 
 procedure Tliquidaciones.FormShow(Sender: TObject);

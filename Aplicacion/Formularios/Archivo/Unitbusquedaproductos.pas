@@ -232,6 +232,7 @@ end;
 procedure Tbusquedaproductos.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+    Princ.OnKeyDown(sender, Key, Shift);
     if key=VK_F2 then
       begin
           if campo.ItemIndex=campo.Items.Count-1 then
