@@ -1474,3 +1474,18 @@ COLLATE = latin1_swedish_ci;
 Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('91', '>Ventas>Caja>Cupones Tarjetas', '0', 'BtnCuponesTarjetas', '', '0', '0', 'TListaCuponesTarjetasCredito');
 373;
 INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,91,perfil_id,-1 from perfiles;
+374;
+update personal set perfil_id=1
+where personal_id=(select config_valor from config where config_nombre='USUARIOPORDEFECTO');
+375;
+Replace config set config_valor='0', config_nombre='USUARIOPROTECTOR';
+376;
+CREATE  TABLE IF NOT EXISTS `protegidospass` (
+  `protegido_id` INT(11) NOT NULL ,
+  `protegido_nombre` VARCHAR(100) NULL DEFAULT NULL ,
+  PRIMARY KEY (`protegido_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+377;
+INSERT INTO `protegidospass` SET `protegido_id`=1,`protegido_nombre`='';

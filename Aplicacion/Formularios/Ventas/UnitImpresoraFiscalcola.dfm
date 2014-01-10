@@ -2,7 +2,7 @@ object impresorafiscalcola: Timpresorafiscalcola
   Left = 0
   Top = 0
   Caption = 'Documentos para imprimir en Controlador Fiscal'
-  ClientHeight = 445
+  ClientHeight = 487
   ClientWidth = 680
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -19,7 +19,7 @@ object impresorafiscalcola: Timpresorafiscalcola
     Left = 0
     Top = 0
     Width = 680
-    Height = 445
+    Height = 487
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -60,6 +60,7 @@ object impresorafiscalcola: Timpresorafiscalcola
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitHeight = 445
     FullHeight = 0
     object Label15: TLabel
       Left = 298
@@ -174,6 +175,15 @@ object impresorafiscalcola: Timpresorafiscalcola
       Confcampo_codigo = 'puntoventa_id'
       Confcampo_nomb = 'puntoventa_numero'
       Tag2 = 0
+    end
+    object btneliminar: TButton
+      Left = 11
+      Top = 437
+      Width = 115
+      Height = 25
+      Caption = 'Eliminar'
+      TabOrder = 6
+      OnClick = btneliminarClick
     end
   end
   object DSCDocumentosventas: TDataSource

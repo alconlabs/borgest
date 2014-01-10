@@ -21,10 +21,12 @@ type
     btnactualizar: TButton;
     puntoventa_id: TSqlComboBox;
     Label15: TLabel;
+    btneliminar: TButton;
     procedure btnimprimirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnreportezClick(Sender: TObject);
     procedure btnactualizarClick(Sender: TObject);
+    procedure btneliminarClick(Sender: TObject);
   private
     { Private declarations }
 
@@ -46,6 +48,26 @@ uses UnitPrinc, Unitventadetalle;
 procedure Timpresorafiscalcola.btnactualizarClick(Sender: TObject);
 begin
     self.OnShow(self);
+end;
+
+procedure Timpresorafiscalcola.btneliminarClick(Sender: TObject);
+begin
+    if ZQDocumentosventas.RecordCount>0 then
+      begin
+          if (MessageDlg('Seguro desea eliminar este comprobante?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+            begin
+                if not Princ.BorrarDocumentoVenta(ZQDocumentosventas.FieldByName('documentoventa_id').AsString) then
+                  MessageDlg('No se pudo eliminar el comprobante. Verifique comprobantes asociados', mtInformation, [mbOK], 0);
+                btnactualizar.Click;
+                btnactualizar.SetFocus;
+
+
+            end;
+
+
+      end;
+
+
 end;
 
 procedure Timpresorafiscalcola.btnimprimirClick(Sender: TObject);

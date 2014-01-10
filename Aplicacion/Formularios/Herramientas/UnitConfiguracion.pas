@@ -108,6 +108,9 @@ type
     Label28: TLabel;
     TIPOBUSQUEDA: TGTBComboBox;
     MOSTRAREQUIPO: TCheckBox;
+    Label29: TLabel;
+    USUARIOPROTECTOR: TSqlComboBox;
+    Label30: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -396,6 +399,9 @@ begin
     ZQuery1.parambyname('config_valor').AsString:=booltostr(MOSTRAREQUIPO.Checked);
     ZQuery1.ExecSQL;
 
+    ZQuery1.parambyname('config_nombre').AsString:='USUARIOPROTECTOR';
+    ZQuery1.parambyname('config_valor').AsString:=USUARIOPROTECTOR.codigo;
+    ZQuery1.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK], 0);
 
@@ -566,6 +572,10 @@ begin
     USUARIOPORDEFECTO.llenarcombo;
     USUARIOPORDEFECTO.ItemIndex:=-1;
 
+    USUARIOPROTECTOR.llenarcombo;
+    USUARIOPROTECTOR.agregaritem('NINGUNO','0');
+    USUARIOPROTECTOR.Buscar('0');
+
 end;
 
 procedure Tconfiguracion.FormKeyDown(Sender: TObject; var Key: Word;
@@ -722,6 +732,9 @@ begin
 
     if ZQConfig.Locate('config_nombre','MOSTRAREQUIPO',[]) then
       MOSTRAREQUIPO.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','USUARIOPROTECTOR',[]) then
+      USUARIOPROTECTOR.Buscar(ZQConfig.FieldByName('config_valor').AsString);
 
 
 end;

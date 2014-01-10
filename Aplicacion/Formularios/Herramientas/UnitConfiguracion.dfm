@@ -95,6 +95,8 @@ object configuracion: Tconfiguracion
       TabOrder = 2
       object TabSheet1: TTabSheet
         Caption = 'General'
+        ExplicitLeft = 8
+        ExplicitTop = 28
         object Label14: TLabel
           Left = 44
           Top = 10
@@ -134,6 +136,22 @@ object configuracion: Tconfiguracion
           Height = 13
           Alignment = taRightJustify
           Caption = 'Tipo de Busqueda'
+        end
+        object Label29: TLabel
+          Left = 33
+          Top = 328
+          Width = 109
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Proteger Ventanas con'
+        end
+        object Label30: TLabel
+          Left = 37
+          Top = 344
+          Width = 105
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'contrase'#241'a de usuario'
         end
         object SUCURSALDEFECTO: TSqlComboBox
           Left = 148
@@ -322,22 +340,30 @@ object configuracion: Tconfiguracion
           Caption = 'Mostrar columna equipo en listas'
           TabOrder = 10
         end
+        object USUARIOPROTECTOR: TSqlComboBox
+          Left = 148
+          Top = 325
+          Width = 145
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          TabOrder = 11
+          Confbase = Princ.ZBase
+          Confsql.Strings = (
+            'select * from personal'
+            'order by personal_usuario')
+          Confcampo_codigo = 'personal_id'
+          Confcampo_nomb = 'personal_usuario'
+          Tag2 = 0
+        end
       end
       object TabSheet2: TTabSheet
         Caption = 'Compras'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
       end
       object TabSheet3: TTabSheet
         Caption = 'Ventas'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label1: TLabel
           Left = 49
           Top = 44
@@ -375,7 +401,7 @@ object configuracion: Tconfiguracion
           Top = 17
           Width = 153
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 0
           Text = 'MODELO_614'
@@ -421,7 +447,7 @@ object configuracion: Tconfiguracion
           Top = 41
           Width = 89
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 1
           Text = 'COM1'
@@ -502,7 +528,7 @@ object configuracion: Tconfiguracion
             Width = 52
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 1
             OnSelect = VENTARAPIDAPUNTOVENTAIDSelect
             Confbase = Princ.ZBase
@@ -518,7 +544,7 @@ object configuracion: Tconfiguracion
             Width = 52
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 2
             Confbase = Princ.ZBase
             Confsql.Strings = (
@@ -534,7 +560,7 @@ object configuracion: Tconfiguracion
             Width = 220
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 3
             OnSelect = VENTARAPIDACLIENTEIDSelect
             Confbase = Princ.ZBase
@@ -551,7 +577,7 @@ object configuracion: Tconfiguracion
             Width = 220
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 4
             Confbase = Princ.ZBase
             Confsql.Strings = (
@@ -566,7 +592,7 @@ object configuracion: Tconfiguracion
             Width = 220
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 0
             OnSelect = VENTARAPIDASUCURSALIDSelect
             Confbase = Princ.ZBase
@@ -657,7 +683,7 @@ object configuracion: Tconfiguracion
             Width = 162
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             ItemIndex = 0
             TabOrder = 0
             Text = 'Codigo 1'
@@ -677,7 +703,7 @@ object configuracion: Tconfiguracion
             Width = 162
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             ItemIndex = 0
             TabOrder = 1
             Items.Strings = (
@@ -698,7 +724,7 @@ object configuracion: Tconfiguracion
             Width = 162
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             ItemIndex = 0
             TabOrder = 2
             Items.Strings = (
@@ -744,7 +770,7 @@ object configuracion: Tconfiguracion
           Width = 141
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 12
           Text = '1. Cantidad - Codigo...'
@@ -801,7 +827,7 @@ object configuracion: Tconfiguracion
             Width = 52
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 1
             OnSelect = FACTURAVENTAPUNTOVENTAIDSelect
             Confbase = Princ.ZBase
@@ -817,7 +843,7 @@ object configuracion: Tconfiguracion
             Width = 52
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 2
             Confbase = Princ.ZBase
             Confsql.Strings = (
@@ -833,7 +859,7 @@ object configuracion: Tconfiguracion
             Width = 220
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 3
             OnSelect = FACTURAVENTACLIENTEIDSelect
             Confbase = Princ.ZBase
@@ -850,7 +876,7 @@ object configuracion: Tconfiguracion
             Width = 220
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 4
             Confbase = Princ.ZBase
             Confsql.Strings = (
@@ -865,7 +891,7 @@ object configuracion: Tconfiguracion
             Width = 220
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 0
             OnSelect = FACTURAVENTASUCURSALIDSelect
             Confbase = Princ.ZBase
@@ -881,10 +907,6 @@ object configuracion: Tconfiguracion
       object TabSheet5: TTabSheet
         Caption = 'Bar'
         ImageIndex = 4
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object GroupBox4: TGroupBox
           Left = 3
           Top = 16
@@ -914,7 +936,7 @@ object configuracion: Tconfiguracion
             Width = 52
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 0
             OnSelect = BARPUNTOVENTAIDSelect
             Confbase = Princ.ZBase
@@ -930,7 +952,7 @@ object configuracion: Tconfiguracion
             Width = 259
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 1
             Confbase = Princ.ZBase
             Confsql.Strings = (
@@ -949,7 +971,7 @@ object configuracion: Tconfiguracion
             Width = 317
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 2
             OnSelect = VENTARAPIDACLIENTEIDSelect
             Confbase = Princ.ZBase
@@ -982,7 +1004,7 @@ object configuracion: Tconfiguracion
             Width = 52
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 0
             OnSelect = BARFACTURAPUNTOVENTAIDSelect
             Confbase = Princ.ZBase
@@ -998,7 +1020,7 @@ object configuracion: Tconfiguracion
             Width = 259
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 1
             Confbase = Princ.ZBase
             Confsql.Strings = (
@@ -1016,10 +1038,6 @@ object configuracion: Tconfiguracion
       object TabSheet6: TTabSheet
         Caption = 'Cajas'
         ImageIndex = 5
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label21: TLabel
           Left = 10
           Top = 33
@@ -1034,7 +1052,7 @@ object configuracion: Tconfiguracion
           Width = 240
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 0
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -1049,10 +1067,6 @@ object configuracion: Tconfiguracion
       object TabSheet4: TTabSheet
         Caption = 'Actualizaciones'
         ImageIndex = 5
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object lblVERSIONEXE: TLabel
           Left = 469
           Top = 24

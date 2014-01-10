@@ -13,6 +13,9 @@ uses
   TablaTemporal;
 
 
+const
+  InputBoxMessage = WM_USER + 200;
+
 
 type
   TPrinc = class(TForm)
@@ -239,6 +242,7 @@ type
     { Private declarations }
     procedure MenuConfiguracion;
     procedure RefrescarMenu;
+    procedure InputBoxSetPasswordChar(var Msg: TMessage); message InputBoxMessage;
   public
     { Public declarations }
     EXCEL_FILE:string;
@@ -333,6 +337,7 @@ type
     procedure ActualizarSaldoDocumentoCompra(id: string; importe: Real; inversa:boolean=false);
     function ControlDocumentoComprarepetido(tipodocu_id:string; documentocompra_puntoventa:string; documentocompra_numero:string; proveedor_id:string):boolean;
     procedure CargarDocumentoCompraDetalle(QDocumentoCompraDetalles:TDataset; Detalle:TDataset; abm:integer=1; bm:pointer=nil);
+    function ProtegidoxPass(nombre:string):boolean;
   end;
 
 
@@ -464,6 +469,51 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
 
 {$R *.dfm}
 
+
+
+procedure TPrinc.InputBoxSetPasswordChar(var Msg: TMessage);
+var
+  hInputForm, hEdit, hButton: HWND;
+begin
+  hInputForm := Screen.Forms[0].Handle;
+  if (hInputForm <> 0) then
+  begin
+    hEdit := FindWindowEx(hInputForm, 0, 'TEdit', nil);
+    {
+      // Change button text:
+      hButton := FindWindowEx(hInputForm, 0, 'TButton', nil);
+      SendMessage(hButton, WM_SETTEXT, 0, Integer(PChar('Cancel')));
+    }
+    SendMessage(hEdit, EM_SETPASSWORDCHAR, Ord('*'), 0);
+  end;
+end;
+
+
+function TPrinc.ProtegidoxPass(nombre: string):boolean;
+var
+  error:integer;
+  passingresada:string;
+  passusuarioprotector:string;
+begin
+    error:=0;
+
+    if Princ.GetConfiguracion('USUARIOPROTECTOR')<>'0' then
+      begin
+            if Princ.buscar('select protegido_id from protegidospass where protegido_nombre="'+nombre+'"','protegido_id')<>'' then
+            begin
+                PostMessage(Handle, InputBoxMessage, 0, 0);
+                passingresada := InputBox('Protegido', 'Ingrese contraseña', '');
+                passusuarioprotector:=Princ.buscar('select personal_pass from personal where personal_id="'+Princ.GetConfiguracion('USUARIOPROTECTOR')+'"','personal_pass');
+                Princ.Encriptador1.ADesencriptar:=passusuarioprotector;
+                Princ.Encriptador1.MetodoEncriptado:=2;
+                Princ.Encriptador1.Desencriptar;
+                if passingresada<>Princ.Encriptador1.Desencriptado then
+                  error:=1;
+            end;
+      end;
+
+    Result:=error=0;
+end;
 
 function TPrinc.ControlDocumentoComprarepetido(tipodocu_id:string; documentocompra_puntoventa:string; documentocompra_numero:string; proveedor_id:string):boolean;
 var
@@ -1019,6 +1069,17 @@ var
   i:integer;
 begin
     ZQMenu.Active:=false;
+    if perfil_id_logueado<>'0' then
+      begin
+          ZQMenu.SQL.Text:='select *, (menu_enabled and menuperfil_habilitado) as enabled, (menu_visible and menuperfil_habilitado) as visible from menu inner join menuperfil on menu.menu_id=menuperfil.menu_id where menuperfil.perfil_id="'+perfil_id_logueado+'"';
+      end
+    else
+      begin
+          ZQMenu.SQL.Text:='select *, menu_enabled as enabled, menu_visible as visible from menu';
+
+      end;
+
+
 //    ZQMenu.ParamByName('perfil_id').AsString:=perfil_id_logueado;
     ZQMenu.Active:=true;
     for i := 0 to princ.ComponentCount-1 do
@@ -1027,14 +1088,14 @@ begin
             begin
                 if (princ.Components[i] is TAdvPage) then
                   begin
-                      (princ.Components[i] as TAdvPage).TabVisible:=strtobool(ZQMenu.FieldByName('menu_visible').AsString);
+                      (princ.Components[i] as TAdvPage).TabVisible:=strtobool(ZQMenu.FieldByName('visible').AsString);
                   end;
 
                 if (princ.Components[i] is TAdvToolBar) then
                   begin
 //                      (princ.Components[i] as TAdvToolBar).Enabled:=strtobool(ZQMenu.FieldByName('menu_enabled').AsString) and strtobool(ZQMenu.FieldByName('menuperfil_habilitado').AsString);
-                      (princ.Components[i] as TAdvToolBar).Enabled:=strtobool(ZQMenu.FieldByName('menu_enabled').AsString);
-                      (princ.Components[i] as TAdvToolBar).Visible:=strtobool(ZQMenu.FieldByName('menu_visible').AsString);
+                      (princ.Components[i] as TAdvToolBar).Enabled:=strtobool(ZQMenu.FieldByName('enabled').AsString);
+                      (princ.Components[i] as TAdvToolBar).Visible:=strtobool(ZQMenu.FieldByName('visible').AsString);
                   end;
 
                 if (princ.Components[i] is TAdvGlowButton) then
@@ -1042,14 +1103,18 @@ begin
                       (princ.Components[i] as TAdvGlowButton).ShowHint:=true;
                       (princ.Components[i] as TAdvGlowButton).Hint:=(princ.Components[i] as TAdvGlowButton).Caption;
 //                      (princ.Components[i] as TAdvGlowButton).Enabled:=strtobool(ZQMenu.FieldByName('menu_enabled').AsString) and strtobool(ZQMenu.FieldByName('menuperfil_habilitado').AsString);
-                      (princ.Components[i] as TAdvGlowButton).Enabled:=strtobool(ZQMenu.FieldByName('menu_enabled').AsString);
-                      (princ.Components[i] as TAdvGlowButton).Visible:=strtobool(ZQMenu.FieldByName('menu_visible').AsString);
+                      (princ.Components[i] as TAdvGlowButton).Enabled:=strtobool(ZQMenu.FieldByName('enabled').AsString);
+                      (princ.Components[i] as TAdvGlowButton).Visible:=strtobool(ZQMenu.FieldByName('visible').AsString);
                       (princ.Components[i] as TAdvGlowButton).ShowHint:=true;
                       (princ.Components[i] as TAdvGlowButton).Hint:=(princ.Components[i] as TAdvGlowButton).Caption;
 
                   end;
             end;
       end;
+
+    if not MenuPrincipal.ActivePage.TabVisible then
+      MenuPrincipal.ActivePageIndex:=MenuPrincipal.ActivePageIndex+1;
+
 
     Princ.RefrescarMenu;
 end;
@@ -3417,8 +3482,8 @@ begin
     end;
 
 
-    Permisos1.ConfPerfil_id:='1';
-    Permisos1.ConfPersonal_id:='1';
+    Permisos1.ConfPerfil_id:=perfil_id_logueado;
+    Permisos1.ConfPersonal_id:=personal_id_logueado;
 
     MenuConfiguracion;
 
@@ -3744,6 +3809,8 @@ end;
 
 procedure TPrinc.btncajaClick(Sender: TObject);
 begin
+    if not Princ.ProtegidoxPass('TPrinc.btncaja.Click') then
+      exit;
     try
       EstadoCaja:=TEstadoCaja.Create(self);
     finally

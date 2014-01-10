@@ -58,6 +58,10 @@ end;
 procedure TListaFacturasDeVenta.btnfiltrarClick(Sender: TObject);
 begin
   inherited;
+    if not Princ.ProtegidoxPass('TListaFacturasDeVenta.btnfiltrar.Click') then
+      exit;
+
+
     ZQGrilla.Active:=false;
     ZQGrilla.SQL.Text:='select * from documentosventas '+
                        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+

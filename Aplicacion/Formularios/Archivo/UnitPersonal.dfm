@@ -1,20 +1,21 @@
 inherited personal: Tpersonal
   Caption = 'Vendedores'
   ClientHeight = 493
+  ExplicitWidth = 950
   ExplicitHeight = 531
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Height = 321
+    Height = 292
     ExplicitHeight = 321
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
-      Height = 300
+      Height = 271
       ExplicitHeight = 300
       FullHeight = 0
     end
     inherited DBGrid1: TDBGrid
-      Height = 300
+      Height = 271
       Columns = <
         item
           Expanded = False
@@ -44,7 +45,7 @@ inherited personal: Tpersonal
         end>
     end
     inherited panelfiltros: TAdvPanel
-      Top = 300
+      Top = 271
       ExplicitTop = 300
       FullHeight = 0
       inherited btnfiltrar: TButton
@@ -80,10 +81,10 @@ inherited personal: Tpersonal
     end
   end
   inherited panelabm: TAdvPanel
-    Top = 340
-    Height = 153
-    ExplicitTop = 340
-    ExplicitHeight = 153
+    Top = 311
+    Height = 182
+    ExplicitTop = 311
+    ExplicitHeight = 182
     FullHeight = 0
     object Label1: TLabel [0]
       Left = 15
@@ -118,44 +119,52 @@ inherited personal: Tpersonal
       Caption = 'Telefono'
     end
     object Label4: TLabel [4]
-      Left = 368
-      Top = 33
+      Left = 16
+      Top = 105
       Width = 32
       Height = 13
       Alignment = taRightJustify
       Caption = 'Celular'
     end
     object Label6: TLabel [5]
-      Left = 372
-      Top = 57
+      Left = 20
+      Top = 129
       Width = 28
       Height = 13
       Alignment = taRightJustify
       Caption = 'E-mail'
     end
     object Label11: TLabel [6]
-      Left = 364
-      Top = 81
+      Left = 460
+      Top = 33
       Width = 36
       Height = 13
       Alignment = taRightJustify
       Caption = 'Usuario'
     end
     object Label7: TLabel [7]
-      Left = 346
-      Top = 105
+      Left = 442
+      Top = 57
       Width = 54
       Height = 13
       Alignment = taRightJustify
       Caption = 'Contrase'#241'a'
     end
     object Label8: TLabel [8]
-      Left = 312
-      Top = 129
+      Left = 408
+      Top = 81
       Width = 88
       Height = 13
       Alignment = taRightJustify
       Caption = 'Repita Contrase'#241'a'
+    end
+    object Label21: TLabel [9]
+      Left = 409
+      Top = 105
+      Width = 87
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Perfil de seguridad'
     end
     inherited btnguardar: TButton
       TabOrder = 9
@@ -199,47 +208,63 @@ inherited personal: Tpersonal
       Tag2 = 0
     end
     object personal_celular: TGTBEdit
-      Left = 406
-      Top = 30
+      Left = 54
+      Top = 102
       Width = 203
       Height = 21
       TabOrder = 4
       Tag2 = 0
     end
     object personal_mail: TGTBEdit
-      Left = 406
-      Top = 54
+      Left = 54
+      Top = 126
       Width = 299
       Height = 21
       TabOrder = 5
       Tag2 = 0
     end
     object personal_usuario: TEdit
-      Left = 406
-      Top = 78
+      Left = 502
+      Top = 30
       Width = 203
       Height = 21
       TabOrder = 6
     end
     object personal_pass: TEdit
-      Left = 406
-      Top = 102
+      Left = 502
+      Top = 54
       Width = 203
       Height = 21
       PasswordChar = '*'
       TabOrder = 7
     end
     object personal_pass2: TEdit
-      Left = 406
-      Top = 126
+      Left = 502
+      Top = 78
       Width = 203
       Height = 21
       PasswordChar = '*'
       TabOrder = 8
     end
+    object perfil_id: TSqlComboBox
+      Left = 502
+      Top = 102
+      Width = 203
+      Height = 21
+      ItemHeight = 13
+      TabOrder = 11
+      Confbase = Princ.ZBase
+      Confsql.Strings = (
+        'select * from perfiles'
+        'order by perfil_nombre')
+      ConfTabla = 'perfiles'
+      Confcampo_codigo = 'perfil_id'
+      Confcampo_nomb = 'perfil_nombre'
+      Tag2 = 0
+    end
   end
   inherited StatusBar1: TStatusBar
-    Top = 321
+    Top = 292
     ExplicitTop = 321
   end
   inherited ZQGrilla: TZQuery

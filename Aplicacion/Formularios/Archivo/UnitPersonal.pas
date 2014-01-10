@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Unitlistabase, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
-  StdCtrls, GBTEdit, Grids, DBGrids, ExtCtrls, AdvPanel, ComCtrls;
+  StdCtrls, GBTEdit, Grids, DBGrids, ExtCtrls, AdvPanel, ComCtrls,
+  UnitSqlComboBox;
 
 type
   Tpersonal = class(Tlistabase)
@@ -30,6 +31,8 @@ type
     personal_pass: TEdit;
     personal_pass2: TEdit;
     Label8: TLabel;
+    Label21: TLabel;
+    perfil_id: TSqlComboBox;
     procedure btnfiltrarClick(Sender: TObject);
     procedure btnnuevoClick(Sender: TObject);
     procedure btnmodificarClick(Sender: TObject);
@@ -119,9 +122,9 @@ begin
     id:=princ.codigo('personal','personal_id');
     ZQuery2.sql.clear;
     ZQuery2.sql.add('Insert into personal (personal_id, personal_nombre, personal_domicilio, ');
-    ZQuery2.sql.add('personal_telefono, personal_mail, personal_celular, personal_usuario, personal_pass) ');
+    ZQuery2.sql.add('personal_telefono, personal_mail, personal_celular, personal_usuario, personal_pass, perfil_id) ');
     ZQuery2.sql.add('values (:personal_id, :personal_nombre, :personal_domicilio, ');
-    ZQuery2.sql.add(':personal_telefono, :personal_mail, :personal_celular, :personal_usuario, :personal_pass) ');
+    ZQuery2.sql.add(':personal_telefono, :personal_mail, :personal_celular, :personal_usuario, :personal_pass, :perfil_id) ');
     ZQuery2.parambyname('personal_id').asstring:=id;
     ZQuery2.parambyname('personal_nombre').asstring:=personal_nombre.text;
     ZQuery2.parambyname('personal_domicilio').asstring:=personal_domicilio.text;
@@ -135,6 +138,7 @@ begin
     Princ.Encriptador1.Encriptar;
     ZQuery2.parambyname('personal_pass').asstring:=Princ.Encriptador1.Encriptado;
 //    ZQuery2.parambyname('personal_pass').asstring:='';
+    ZQuery2.parambyname('perfil_id').asstring:=perfil_id.codigo;
     ZQuery2.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
@@ -155,7 +159,8 @@ begin
     ZQuery2.sql.add('personal_celular=:personal_celular, ');
     ZQuery2.sql.add('personal_mail=:personal_mail, ');
     ZQuery2.sql.add('personal_usuario=:personal_usuario, ');
-    ZQuery2.sql.add('personal_pass=:personal_pass ');
+    ZQuery2.sql.add('personal_pass=:personal_pass, ');
+    ZQuery2.sql.add('perfil_id=:perfil_id ');
     ZQuery2.sql.add('where personal_id=:personal_id');
     ZQuery2.parambyname('personal_id').asstring:=id;
     ZQuery2.parambyname('personal_nombre').asstring:=personal_nombre.text;
@@ -169,6 +174,7 @@ begin
     Princ.Encriptador1.Key:=CLAVE_ENCRIPTADO;
     Princ.Encriptador1.Encriptar;
     ZQuery2.parambyname('personal_pass').asstring:=Princ.Encriptador1.Encriptado;
+    ZQuery2.parambyname('perfil_id').asstring:=perfil_id.codigo;
 //    ZQuery2.parambyname('personal_pass').asstring:='';
     ZQuery2.ExecSQL;
 
@@ -270,7 +276,8 @@ begin
                 Princ.Encriptador1.Desencriptar;
                 personal_pass.Text:=Princ.Encriptador1.Desencriptado;
                 personal_pass2.Text:=Princ.Encriptador1.Desencriptado;
-
+                perfil_id.llenarcombo;
+                perfil_id.Buscar(ZQGrilla.FieldByName('perfil_id').AsString);
 
                 personal_nombre.SetFocus;
             end;
@@ -292,6 +299,8 @@ begin
     personal_usuario.Text:='';
     personal_pass.Text:='';
     personal_pass2.Text:='';
+    perfil_id.llenarcombo;
+    perfil_id.ItemIndex:=0;
 
 end;
 

@@ -1,5 +1,5 @@
-inherited LIstaFacturasDeCompras: TLIstaFacturasDeCompras
-  Caption = 'Facturas de Compras'
+inherited ListaOrdenesdePago: TListaOrdenesdePago
+  Caption = 'Ordenes de Pago'
   ClientWidth = 1035
   ExplicitWidth = 1051
   ExplicitHeight = 494
@@ -14,7 +14,12 @@ inherited LIstaFacturasDeCompras: TLIstaFacturasDeCompras
       ExplicitLeft = 932
       FullHeight = 0
       inherited btnanular: TButton
+        Enabled = False
         Visible = True
+      end
+      inherited btnver: TButton
+        Visible = True
+        OnClick = btnverClick
       end
     end
     inherited DBGrid1: TDBGrid
@@ -25,6 +30,13 @@ inherited LIstaFacturasDeCompras: TLIstaFacturasDeCompras
           FieldName = 'documentocompra_fecha'
           Title.Caption = 'Fecha'
           Width = 80
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'puntoventa_numero'
+          Title.Caption = 'Pto. Vta.'
+          Width = 46
           Visible = True
         end
         item
@@ -62,40 +74,56 @@ inherited LIstaFacturasDeCompras: TLIstaFacturasDeCompras
       FullHeight = 0
       inherited btnfiltrar: TButton
         Left = 932
-        ExplicitLeft = 938
-        ExplicitTop = 6
+        ExplicitLeft = 932
       end
-      object fil_documentocompra_numero: TEdit
+      object fil_puntoventa_numero: TGTBEdit
         Left = 85
+        Top = 0
+        Width = 46
+        Height = 21
+        Align = alLeft
+        TabOrder = 2
+        Tag2 = 0
+      end
+      object fil_documentocompra_numero: TGTBEdit
+        Left = 131
         Top = 0
         Width = 90
         Height = 21
         Align = alLeft
-        TabOrder = 2
+        TabOrder = 3
+        Tag2 = 0
+        FieldName = 'documentocompra_numero'
       end
-      object fil_proveedor_nombre: TEdit
-        Left = 175
+      object fil_proveedor_nombre: TGTBEdit
+        Left = 221
         Top = 0
         Width = 430
         Height = 21
         Align = alLeft
-        TabOrder = 3
-      end
-      object fil_documentocompra_total: TEdit
-        Left = 605
-        Top = 0
-        Width = 130
-        Height = 21
-        Align = alLeft
         TabOrder = 4
+        Tag2 = 0
+        FieldName = 'proveedor_nombre'
       end
-      object fil_documentocompra_estado: TEdit
-        Left = 735
+      object fil_documentocompra_total: TGTBEdit
+        Left = 651
         Top = 0
         Width = 130
         Height = 21
         Align = alLeft
         TabOrder = 5
+        Tag2 = 0
+        FieldName = 'documentocompra_total'
+      end
+      object fil_documentocompra_estado: TGTBEdit
+        Left = 781
+        Top = 0
+        Width = 130
+        Height = 21
+        Align = alLeft
+        TabOrder = 6
+        Tag2 = 0
+        FieldName = 'documentocompra_estado'
       end
     end
   end
@@ -120,6 +148,6 @@ inherited LIstaFacturasDeCompras: TLIstaFacturasDeCompras
       
         'inner join proveedores on documentoscompras.proveedor_id=proveed' +
         'ores.proveedor_id'
-      'order by documentocompra_fecha, documentocompra_numero')
+      'order by documentocompra_fecha desc, documentocompra_id desc')
   end
 end
