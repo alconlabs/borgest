@@ -165,6 +165,7 @@ type
     btnestadoctasborradores: TAdvGlowButton;
     BtnCuponesTarjetas: TAdvGlowButton;
     TablaTemporal1: TTablaTemporal;
+    BaseRemota: TZConnection;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);

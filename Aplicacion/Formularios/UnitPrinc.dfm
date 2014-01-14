@@ -23,7 +23,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageVentas
+    ActivePage = AdvPageHerramientas
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -4350,5 +4350,16 @@ object Princ: TPrinc
     Confbase = ZBase
     Left = 600
     Top = 520
+  end
+  object BaseRemota: TZConnection
+    Protocol = 'mysql-5'
+    HostName = 'localhost'
+    Port = 3306
+    Database = 'dbborgest'
+    User = 'root'
+    Password = 'root'
+    Connected = True
+    Left = 808
+    Top = 176
   end
 end

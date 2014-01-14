@@ -7,11 +7,11 @@ inherited personal: Tpersonal
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Height = 292
-    ExplicitHeight = 321
+    ExplicitHeight = 292
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
       Height = 271
-      ExplicitHeight = 300
+      ExplicitHeight = 271
       FullHeight = 0
     end
     inherited DBGrid1: TDBGrid
@@ -46,7 +46,7 @@ inherited personal: Tpersonal
     end
     inherited panelfiltros: TAdvPanel
       Top = 271
-      ExplicitTop = 300
+      ExplicitTop = 271
       FullHeight = 0
       inherited btnfiltrar: TButton
         TabOrder = 4
@@ -265,7 +265,7 @@ inherited personal: Tpersonal
   end
   inherited StatusBar1: TStatusBar
     Top = 292
-    ExplicitTop = 321
+    ExplicitTop = 292
   end
   inherited ZQGrilla: TZQuery
     SQL.Strings = (

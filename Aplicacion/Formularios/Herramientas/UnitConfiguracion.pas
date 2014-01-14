@@ -111,6 +111,16 @@ type
     Label29: TLabel;
     USUARIOPROTECTOR: TSqlComboBox;
     Label30: TLabel;
+    TabSheet7: TTabSheet;
+    GroupBox7: TGroupBox;
+    Label31: TLabel;
+    Label32: TLabel;
+    Label33: TLabel;
+    Label34: TLabel;
+    DBREMOTASERVIDOR: TEdit;
+    DBREMOTADB: TEdit;
+    DBREMOTAUSUARIO: TEdit;
+    DBREMOTAPASS: TEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -401,6 +411,26 @@ begin
 
     ZQuery1.parambyname('config_nombre').AsString:='USUARIOPROTECTOR';
     ZQuery1.parambyname('config_valor').AsString:=USUARIOPROTECTOR.codigo;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='DBREMOTASERVIDOR';
+    ZQuery1.parambyname('config_valor').AsString:=DBREMOTASERVIDOR.Text;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='DBREMOTADB';
+    ZQuery1.parambyname('config_valor').AsString:=DBREMOTADB.Text;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='DBREMOTAUSUARIO';
+    ZQuery1.parambyname('config_valor').AsString:=DBREMOTAUSUARIO.Text;
+    ZQuery1.ExecSQL;
+
+    ZQuery1.parambyname('config_nombre').AsString:='DBREMOTAPASS';
+    Princ.Encriptador1.AEncriptar:=DBREMOTAPASS.Text;
+    Princ.Encriptador1.MetodoEncriptado:=strtoint(Princ.ini1.ReadiniString('Config','Tipo','0'));
+    Princ.Encriptador1.Key:=CLAVE_ENCRIPTADO;
+    Princ.Encriptador1.Encriptar;
+    ZQuery1.parambyname('config_valor').AsString:=Princ.Encriptador1.Encriptado;
     ZQuery1.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK], 0);
@@ -735,6 +765,25 @@ begin
 
     if ZQConfig.Locate('config_nombre','USUARIOPROTECTOR',[]) then
       USUARIOPROTECTOR.Buscar(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre','DBREMOTASERVIDOR',[]) then
+      DBREMOTASERVIDOR.Text:=ZQConfig.FieldByName('config_valor').AsString;
+
+    if ZQConfig.Locate('config_nombre','DBREMOTADB',[]) then
+      DBREMOTADB.Text:=ZQConfig.FieldByName('config_valor').AsString;
+
+    if ZQConfig.Locate('config_nombre','DBREMOTAUSUARIO',[]) then
+      DBREMOTAUSUARIO.Text:=ZQConfig.FieldByName('config_valor').AsString;
+
+    if ZQConfig.Locate('config_nombre','DBREMOTAPASS',[]) then
+      begin
+          Princ.Encriptador1.ADesencriptar:=ZQConfig.FieldByName('config_valor').AsString;
+          Princ.Encriptador1.MetodoEncriptado:=strtoint(Princ.ini1.ReadiniString('Config','Tipo','0'));
+          Princ.Encriptador1.Key:=CLAVE_ENCRIPTADO;
+          Princ.Encriptador1.Desencriptar;
+          DBREMOTAPASS.Text:=Princ.Encriptador1.Desencriptado;
+      end;
+
 
 
 end;

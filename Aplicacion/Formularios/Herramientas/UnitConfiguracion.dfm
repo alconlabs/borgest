@@ -90,13 +90,11 @@ object configuracion: Tconfiguracion
       Top = 0
       Width = 589
       Height = 465
-      ActivePage = TabSheet1
+      ActivePage = TabSheet7
       Align = alTop
       TabOrder = 2
       object TabSheet1: TTabSheet
         Caption = 'General'
-        ExplicitLeft = 8
-        ExplicitTop = 28
         object Label14: TLabel
           Left = 44
           Top = 10
@@ -1121,6 +1119,79 @@ object configuracion: Tconfiguracion
           Caption = 'Actualizar DB desde archivo'
           TabOrder = 4
           OnClick = btnactualizardbfileClick
+        end
+      end
+      object TabSheet7: TTabSheet
+        Caption = 'Sincronizacion'
+        ImageIndex = 6
+        object GroupBox7: TGroupBox
+          Left = 25
+          Top = 24
+          Width = 288
+          Height = 129
+          Caption = 'Conexion Remota'
+          TabOrder = 0
+          object Label31: TLabel
+            Left = 39
+            Top = 20
+            Width = 39
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Servidor'
+          end
+          object Label32: TLabel
+            Left = 8
+            Top = 44
+            Width = 70
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Base de Datos'
+          end
+          object Label33: TLabel
+            Left = 42
+            Top = 68
+            Width = 36
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Usuario'
+          end
+          object Label34: TLabel
+            Left = 24
+            Top = 92
+            Width = 54
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Contrase'#241'a'
+          end
+          object DBREMOTASERVIDOR: TEdit
+            Left = 84
+            Top = 17
+            Width = 189
+            Height = 21
+            TabOrder = 0
+          end
+          object DBREMOTADB: TEdit
+            Left = 84
+            Top = 41
+            Width = 189
+            Height = 21
+            TabOrder = 1
+          end
+          object DBREMOTAUSUARIO: TEdit
+            Left = 84
+            Top = 65
+            Width = 189
+            Height = 21
+            TabOrder = 2
+          end
+          object DBREMOTAPASS: TEdit
+            Left = 84
+            Top = 89
+            Width = 189
+            Height = 21
+            PasswordChar = '*'
+            TabOrder = 3
+          end
         end
       end
     end
