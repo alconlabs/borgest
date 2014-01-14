@@ -1844,6 +1844,8 @@ begin
         begin
             ZQProductosABM.sql.clear;
             ZQProductosABM.sql.add('Update productos set ');
+            ZQProductosABM.sql.add('politicaprecio_id=:politicaprecio_id, ');
+            ZQProductosABM.sql.add('tipoiva_id=:tipoiva_id, ');
             ZQProductosABM.sql.add('producto_neto1=:producto_neto1, ');
             ZQProductosABM.sql.add('producto_neto2=:producto_neto2, ');
             ZQProductosABM.sql.add('producto_neto3=:producto_neto3, ');
@@ -1868,6 +1870,8 @@ begin
             ZQProductosABM.parambyname('producto_precioventabase').asstring:=QProductos.FieldByName('producto_precioventabase').AsString;
             ZQProductosABM.parambyname('producto_id').asstring:=QProductos.FieldByName('producto_id').AsString;
             ZQProductosABM.parambyname('producto_fechaactualizacionprecio').asstring:=producto_fechaactualizacionprecio;
+            ZQProductosABM.parambyname('politicaprecio_id').asstring:=QProductos.FieldByName('politicaprecio_id').AsString;
+            ZQProductosABM.parambyname('tipoiva_id').asstring:=QProductos.FieldByName('tipoiva_id').AsString;
             ZQProductosABM.ExecSQL;
 
             QProductos.Next;
@@ -2018,6 +2022,7 @@ begin
                   ZQExcecSQL.sql.add('producto_precioventabase=:producto_precioventabase, ');
                   ZQExcecSQL.sql.add('calculoprecio_id=:calculoprecio_id, ');
                   ZQExcecSQL.sql.add('politicaprecio_id=:politicaprecio_id, ');
+                  ZQExcecSQL.sql.add('producto_preciocosto=:producto_preciocosto, ');
                   ZQExcecSQL.sql.add('producto_neto1=:producto_neto1, ');
                   ZQExcecSQL.sql.add('producto_neto2=:producto_neto2, ');
                   ZQExcecSQL.sql.add('producto_neto3=:producto_neto3, ');
@@ -2042,6 +2047,8 @@ begin
                   ZQExcecSQL.parambyname('calculoprecio_id').asstring:=QProductos.FieldByName('calculoprecio_id').AsString;
                   ZQExcecSQL.parambyname('politicaprecio_id').asstring:=QProductos.FieldByName('politicaprecio_id').AsString;
                   ZQExcecSQL.parambyname('producto_id').asstring:=QProductos.FieldByName('producto_id').AsString;
+                  ZQExcecSQL.parambyname('producto_preciocosto').asstring:=QProductos.FieldByName('producto_preciocosto').AsString;
+
                   ZQExcecSQL.ExecSQL;
 
               end;
@@ -3809,7 +3816,7 @@ end;
 
 procedure TPrinc.btncajaClick(Sender: TObject);
 begin
-    if not Princ.ProtegidoxPass('TPrinc.btncaja.Click') then
+    if not Princ.ProtegidoxPass(self.ClassName+'.'+(sender as TComponent).Name+'.Click') then
       exit;
     try
       EstadoCaja:=TEstadoCaja.Create(self);

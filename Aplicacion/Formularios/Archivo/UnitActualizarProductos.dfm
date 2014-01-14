@@ -68,7 +68,7 @@ object ActualizarProductos: TActualizarProductos
       Top = 0
       Width = 1035
       Height = 570
-      ActivePage = TabSheet2
+      ActivePage = TabSheet1
       Align = alClient
       TabOrder = 0
       object TabSheet2: TTabSheet
@@ -540,8 +540,8 @@ object ActualizarProductos: TActualizarProductos
             ParentFont = False
           end
           object btnAplicarCalculo: TButton
-            Left = 3
-            Top = 83
+            Left = -1
+            Top = 85
             Width = 91
             Height = 25
             Caption = 'Aplicar'
@@ -708,10 +708,6 @@ object ActualizarProductos: TActualizarProductos
       object TabSheet1: TTabSheet
         Caption = 'Actualizar desde Excel'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label2: TLabel
           Left = 40
           Top = 5
@@ -870,7 +866,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 26
           Width = 271
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 3
         end
         object xls_rubro_id: TSqlComboBox
@@ -878,7 +874,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 50
           Width = 151
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 16
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -894,7 +890,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 2
           Width = 271
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 14
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -910,7 +906,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 26
           Width = 151
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 15
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -926,7 +922,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 74
           Width = 271
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 17
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -946,7 +942,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 98
           Width = 121
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 18
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -962,7 +958,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 50
           Width = 73
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 4
           Items.Strings = (
             'A'
@@ -987,7 +983,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 98
           Width = 73
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 8
           Items.Strings = (
             'A'
@@ -1012,7 +1008,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 122
           Width = 73
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 9
           Items.Strings = (
             'A'
@@ -1056,7 +1052,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 50
           Width = 144
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 5
           OnSelect = tipo_codigoSelect
           Items.Strings = (
@@ -1112,7 +1108,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 122
           Width = 73
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 10
           Items.Strings = (
             'A'
@@ -1137,7 +1133,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 146
           Width = 73
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 11
           Items.Strings = (
             'A'
@@ -1171,16 +1167,12 @@ object ActualizarProductos: TActualizarProductos
             Top = 0
             Width = 1027
             Height = 345
-            ActivePage = TabSheet5
+            ActivePage = TabSheet3
             Align = alClient
             TabOrder = 0
             object TabSheet3: TTabSheet
               Caption = 'Productos Nuevos'
               ImageIndex = 1
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
               object lblcantidadnuevos: TLabel
                 Left = 7
                 Top = 245
@@ -1297,10 +1289,6 @@ object ActualizarProductos: TActualizarProductos
             object TabSheet4: TTabSheet
               Caption = 'A Incrementar'
               ImageIndex = 2
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
               object lblcantidadincrementar: TLabel
                 Left = 7
                 Top = 245
@@ -1436,10 +1424,6 @@ object ActualizarProductos: TActualizarProductos
             object TabSheet5: TTabSheet
               Caption = 'A Disminuir'
               ImageIndex = 3
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
               object lblcantidadisminuir: TLabel
                 Left = 7
                 Top = 245
@@ -1575,10 +1559,6 @@ object ActualizarProductos: TActualizarProductos
             object TabSheet6: TTabSheet
               Caption = 'Sin Cambios'
               ImageIndex = 3
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
               object lblcantidadsincambios: TLabel
                 Left = 7
                 Top = 245
@@ -1677,6 +1657,22 @@ object ActualizarProductos: TActualizarProductos
               end
             end
           end
+        end
+        object ckbAplicarPolitica: TCheckBox
+          Left = 879
+          Top = 73
+          Width = 97
+          Height = 17
+          Caption = 'Aplicar a Productos existentes'
+          TabOrder = 21
+        end
+        object CKBAplicarIVA: TCheckBox
+          Left = 731
+          Top = 97
+          Width = 97
+          Height = 17
+          Caption = 'Aplicar a Productos existentes'
+          TabOrder = 22
         end
       end
     end

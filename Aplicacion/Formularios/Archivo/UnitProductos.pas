@@ -679,7 +679,7 @@ begin
 
     tipoiva_id.llenarcombo;
     try
-      tipoiva_id.ItemIndex:=0;
+      tipoiva_id.ItemIndex:=1;
     except
     end;
 

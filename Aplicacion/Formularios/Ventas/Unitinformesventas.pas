@@ -38,6 +38,7 @@ type
     procedure RankingProductos;
     procedure InformedeVentasCEquipos;
     procedure InformedeEquipos;
+    procedure InformedeCuponesTarjetas;
 
   public
     { Public declarations }
@@ -53,7 +54,34 @@ uses UnitPrinc;
 {$R *.dfm}
 
 
+procedure TInformesVentas.InformedeCuponesTarjetas;
+begin
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_cupones_tarjetas.rep';
+    Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
+    Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select documentopagos.*, tipospago.*,  sum(documentopago_importe) as importe,  '+
+                                                   'count(documentopagos.documentopago_nombre) as cantidad '+
+                                                   'from documentopagos '+
+                                                   'inner join tipospago on documentopagos.tipopago_id=tipospago.tipopago_id '+
+                                                   'inner join documentosventas on documentopagos.documentoventa_id=documentosventas.documentoventa_id '+
+                                                   'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                                   'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                                   'where tipopago_caja=-1 and tipospago.tipopago_id=2 and '+
+                                                   'documentosventas.documentoventa_fecha>="'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'" and '+
+                                                   'documentosventas.documentoventa_fecha<="'+formatdatetime('yyyy-mm-dd',hasta_fecha.Date)+'" and '+
+                                                   'documentosventas.documentoventa_estado<>"ANULADA"'+Princ.empresa_where+
+                                                   ' group by documentopagos.documentopago_nombre '+
+                                                   'order by documentopagos.documentopago_nombre ';
 
+    Princ.VCLReport1.Report.Datainfo.Items[2].sql:='select *, sum(cupontarjeta_importe) as importe, count(cupontarjeta_id) as cantidad from cuponestarjetas  '+
+                                                   'inner join tarjetas on cuponestarjetas.tarjeta_id=tarjetas.tarjeta_id '+
+                                                   'where cupontarjeta_fecha>="'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'" and '+
+                                                   'cupontarjeta_fecha>="'+formatdatetime('yyyy-mm-dd',hasta_fecha.Date)+'" '+
+                                                   'group by cuponestarjetas.tarjeta_id, cuponestarjetas.cupontarjeta_cuotas ';
+
+    Princ.VCLReport1.Execute;
+
+end;
 
 procedure TInformesVentas.InformedeEquipos;
 begin
@@ -401,6 +429,10 @@ begin
           end;
         8:begin
               InformedeEquipos;
+
+          end;
+        9:begin
+              InformedeCuponesTarjetas;
 
           end;
 

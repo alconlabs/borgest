@@ -244,6 +244,8 @@ type
     Label37: TLabel;
     BtnAplicarRubro: TButton;
     nuevo_rubro_id: TSqlComboBox;
+    ckbAplicarPolitica: TCheckBox;
+    CKBAplicarIVA: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btnexaminarClick(Sender: TObject);
     procedure btnabrirarchivoClick(Sender: TObject);
@@ -514,6 +516,7 @@ begin
     if (MessageDlg('Seguro desea actualizar estos precios?', mtConfirmation, [mbOK, mbCancel], 0) in [mrOk, mrNone]) then
       begin
           btnincrementarprecios.Enabled:=false;
+//          Princ.CalcularPreciosProducto(MQIncrementar,true);
           Princ.ActualizarPrecios(MQIncrementar);
 
       end;
@@ -731,7 +734,17 @@ begin
                                     MQIncrementar.FieldByName('producto_preciocosto').AsFloat:=roundto(Princ.ADODataSet1.Fields[columna_preciocompra.ItemIndex].AsFloat,-2);
                                     MQIncrementar.FieldByName('calculoprecio_id').AsString:=ZQproductos.FieldByName('calculoprecio_id').AsString;
                                     MQIncrementar.FieldByName('politicaprecio_id').AsString:=ZQproductos.FieldByName('politicaprecio_id').AsString;
+                                    if ckbAplicarPolitica.Checked then
+                                      begin
+                                          MQIncrementar.FieldByName('politicaprecio_id').AsString:=xls_politicaprecio_id.codigo;
+                                      end;
+
                                     MQIncrementar.FieldByName('tipoiva_id').AsString:=ZQproductos.FieldByName('tipoiva_id').AsString;
+
+                                    if CKBAplicarIVA.Checked then
+                                      begin
+                                          MQIncrementar.FieldByName('tipoiva_id').AsString:=xls_tipoiva_id.codigo;
+                                      end;
                                     MQIncrementar.FieldByName('rubro_id').AsString:=ZQproductos.FieldByName('rubro_id').AsString;
                                     MQIncrementar.FieldByName('proveedor_id').AsString:=ZQproductos.FieldByName('proveedor_id').AsString;
                                     MQIncrementar.FieldByName('diferencia').AsFloat:=MQIncrementar.FieldByName('producto_preciocostoprev').AsFloat-MQIncrementar.FieldByName('producto_preciocosto').AsFloat;
@@ -780,7 +793,18 @@ begin
                                           MQDisminuir.FieldByName('producto_preciocosto').AsFloat:=roundto(Princ.ADODataSet1.Fields[columna_preciocompra.ItemIndex].AsFloat,-2);
                                           MQDisminuir.FieldByName('calculoprecio_id').AsString:=ZQproductos.FieldByName('calculoprecio_id').AsString;
                                           MQDisminuir.FieldByName('politicaprecio_id').AsString:=ZQproductos.FieldByName('politicaprecio_id').AsString;
+                                          if ckbAplicarPolitica.Checked then
+                                            begin
+                                                MQDisminuir.FieldByName('politicaprecio_id').AsString:=xls_politicaprecio_id.codigo;
+                                            end;
+
                                           MQDisminuir.FieldByName('tipoiva_id').AsString:=ZQproductos.FieldByName('tipoiva_id').AsString;
+
+                                          if CKBAplicarIVA.Checked then
+                                            begin
+                                                MQDisminuir.FieldByName('tipoiva_id').AsString:=xls_tipoiva_id.codigo;
+                                            end;
+
                                           MQDisminuir.FieldByName('rubro_id').AsString:=ZQproductos.FieldByName('rubro_id').AsString;
                                           MQDisminuir.FieldByName('proveedor_id').AsString:=ZQproductos.FieldByName('proveedor_id').AsString;
                                           MQDisminuir.FieldByName('diferencia').AsFloat:=MQDisminuir.FieldByName('producto_preciocostoprev').AsFloat-MQDisminuir.FieldByName('producto_preciocosto').AsFloat;
@@ -852,7 +876,7 @@ begin
     xls_politicaprecio_id.Buscar('-1');
 
     xls_tipoiva_id.llenarcombo;
-    xls_tipoiva_id.Buscar('-1');
+    xls_tipoiva_id.Buscar('2');
 
     xls_proveedor_id.llenarcombo;
     xls_proveedor_id.Buscar('-1');
