@@ -12,6 +12,8 @@ type
     fil_tarjeta_nombre: TGTBEdit;
     fil_cupontarjeta_importe: TGTBEdit;
     fil_cupontarjeta_cuotas: TGTBEdit;
+    fil_cupontarjeta_numero: TGTBEdit;
+    fil_cupontarjeta_fecha: TGTBEdit;
     procedure btnfiltrarClick(Sender: TObject);
     procedure btnnuevoClick(Sender: TObject);
     procedure btnmodificarClick(Sender: TObject);
@@ -63,6 +65,12 @@ begin
 
     if fil_cupontarjeta_cuotas.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and cupontarjeta_cuotas like "'+primercaracter+fil_cupontarjeta_cuotas.Text+'%"';
+
+    if fil_cupontarjeta_numero.Text<>'' then
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and cupontarjeta_numero like "'+primercaracter+fil_cupontarjeta_numero.Text+'%"';
+
+    if fil_cupontarjeta_fecha.Text<>'' then
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and cupontarjeta_fecha like "'+primercaracter+fil_cupontarjeta_fecha.Text+'%"';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'order by cupontarjeta_fecha desc';
 

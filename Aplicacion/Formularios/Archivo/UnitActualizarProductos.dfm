@@ -68,7 +68,7 @@ object ActualizarProductos: TActualizarProductos
       Top = 0
       Width = 1035
       Height = 570
-      ActivePage = TabSheet1
+      ActivePage = TabSheet2
       Align = alClient
       TabOrder = 0
       object TabSheet2: TTabSheet

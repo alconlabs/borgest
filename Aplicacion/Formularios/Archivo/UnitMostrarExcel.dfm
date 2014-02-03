@@ -50,7 +50,7 @@ inherited MostrarExcel: TMostrarExcel
     end
   end
   object DataSource1: TDataSource
-    DataSet = Princ.ADOTable1
+    DataSet = Princ.ADODataSet1
     OnDataChange = DataSource1DataChange
     Left = 304
     Top = 104

@@ -85,5 +85,7 @@ Herramientas
 		Actualizar Productos
 		Configurar Listas
 		Imprimir Etiquetas
+		Exportar DB
+		Importar DB
 	Seguridad
 		Perfiles de Seguridad

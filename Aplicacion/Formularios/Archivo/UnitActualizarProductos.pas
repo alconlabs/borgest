@@ -587,8 +587,8 @@ begin
     Princ.ADODataSet1.Active:=false;
     Princ.ADOConnection1.Connected:=false;
     Princ.ADOConnection1.Connected:=true;
-//    Princ.ADODataSet1.CommandText:=hojas.Text;
-//    Princ.ADODataSet1.Active:=true;
+    Princ.ADODataSet1.CommandText:=hojas.Text;
+    Princ.ADODataSet1.Active:=true;
     Princ.ADOTable1.TableName:=Hojas.Text;
     Princ.ADOTable1.Active:=true;
 

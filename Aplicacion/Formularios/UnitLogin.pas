@@ -66,6 +66,7 @@ begin
 
           ZQSelect.SQL.Clear;
           ZQSelect.SQL.Add('select * from personal ');
+          ZQSelect.SQL.Add('inner join perfiles on personal.perfil_id=perfiles.perfil_id ');
           ZQSelect.SQL.Add('where personal_usuario=:personal_usuario ');
           ZQSelect.SQL.Add('and personal_pass=:personal_pass');
           ZQSelect.parambyname('personal_usuario').asstring:=personal_usuario.Text;

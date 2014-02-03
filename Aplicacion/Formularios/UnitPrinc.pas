@@ -10,7 +10,7 @@ uses
   ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
   rpalias, GTBComboBox, ComCtrls, rpexpredlgvcl, DBClient,
   rpclientdataset, Menus, Encriptador, Utilidades, Permisos, DBGrids,
-  TablaTemporal;
+  TablaTemporal, UtilidadesDB, ExtCtrls, XiProgressBar;
 
 
 const
@@ -132,8 +132,6 @@ type
     btnprovincias: TAdvGlowButton;
     btnconceptosdebcred: TAdvGlowButton;
     btnRecibosPendientes: TAdvGlowButton;
-    AdvGlowButton1: TAdvGlowButton;
-    AdvGlowButton4: TAdvGlowButton;
     Permisos1: TPermisos;
     btntarjetas: TAdvGlowButton;
     ZQRecargoTarjetas: TZQuery;
@@ -166,6 +164,13 @@ type
     BtnCuponesTarjetas: TAdvGlowButton;
     TablaTemporal1: TTablaTemporal;
     BaseRemota: TZConnection;
+    btnexportardb: TAdvGlowButton;
+    btnimportardb: TAdvGlowButton;
+    UtilidadesDB1: TUtilidadesDB;
+    Timer1: TTimer;
+    StatusBar1: TStatusBar;
+    XiProgressBar1: TXiProgressBar;
+    TimerBarraProgreso: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -239,6 +244,12 @@ type
     procedure BtnConsultasStockClick(Sender: TObject);
     procedure btnestadoctasborradoresClick(Sender: TObject);
     procedure BtnCuponesTarjetasClick(Sender: TObject);
+    procedure BaseRemotaBeforeConnect(Sender: TObject);
+    procedure btnexportardbClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure StatusBar1DrawPanel(StatusBar: TStatusBar; Panel: TStatusPanel;
+      const Rect: TRect);
+    procedure TimerBarraProgresoTimer(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -339,11 +350,19 @@ type
     function ControlDocumentoComprarepetido(tipodocu_id:string; documentocompra_puntoventa:string; documentocompra_numero:string; proveedor_id:string):boolean;
     procedure CargarDocumentoCompraDetalle(QDocumentoCompraDetalles:TDataset; Detalle:TDataset; abm:integer=1; bm:pointer=nil);
     function ProtegidoxPass(nombre:string):boolean;
+    function GetPCName: string;
   end;
 
+type
+THilo = class( TThread )
+  Ejecutar: procedure of object;
+  procedure Execute; override;
+//  procedure ActualizarProgreso;
+end;
 
 var
   Princ: TPrinc;
+  Hilo: THilo; // variable global o pública
 
 const
   TIPO_CUIT = $00000043;
@@ -388,7 +407,7 @@ const
   CONNECTION_STRING1='Provider=Microsoft.Jet.OLEDB.4.0;Data Source=';
   CONNECTION_STRING3=';Extended Properties=Excel 8.0';
 
-  VERSIONEXE='54';
+  VERSIONEXE='55';
 
   CLAVE_ENCRIPTADO='1234567890';
 
@@ -466,11 +485,70 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitMovimientosdeStock, UnitListaAjustesdeStock,
   UnitSaldosComisionesBorradores, UnitListaLiquidacionesBorradores,
   UnitImprimirEtiquetas, UnitConsultaStock, UnitEstadoComisionesBorradores,
-  UnitDetalleComisionesBorradores, UnitListaCuponesTarjetasCredito;
+  UnitDetalleComisionesBorradores, UnitListaCuponesTarjetasCredito,
+  UnitSincronizarDB;
 
 {$R *.dfm}
 
 
+
+//procedure THilo.ActualizarProgreso;
+//begin
+//
+//
+//end;
+
+
+
+procedure THilo.Execute;
+begin
+  Ejecutar;
+//  Synchronize(ActualizarProgreso);
+  Terminate;
+end;
+
+
+procedure ProcesarDatos;
+begin
+  // Este es el procedimiento que ejecutará nuestro hilo
+  // Cuidado con hacer procesos críticos aquí
+  // El procesamiento paralelo de XP no es el de Linux
+  // Se puede ir por las patas abajo...
+
+    try
+      SincronizarDB:=TSincronizarDB.Create(Princ);
+    finally
+      //                              SincronizarDB.Show;
+//      if SincronizarDB.sincronizarahora then
+        MessageDlg('Exportacion finalizada', mtInformation, [mbOK], 0);
+    end;
+end;
+
+
+procedure CrearHilo;
+begin
+  hilo:=Thilo.Create(true);
+//  Hilo.Ejecutar := ProcesarDatos;
+//  Hilo.Priority := tpNormal;
+//  Hilo.Resume;
+end;
+
+
+
+
+
+function TPrinc.GetPCName: string;
+var
+  Buffer: array[0..MAX_COMPUTERNAME_LENGTH] of Char;
+  Size: Cardinal;
+begin
+  FillChar(Buffer,Sizeof(Buffer),0);
+  Size:= Sizeof(Buffer);
+  if GetComputerName(Buffer,Size) then
+    Result:= String(PChar(@Buffer))
+  else
+    Result:= '';
+end;
 
 procedure TPrinc.InputBoxSetPasswordChar(var Msg: TMessage);
 var
@@ -859,6 +937,20 @@ begin
     AdvToolBarDocCompras.AutoSize:=true;
     AdvToolBarHerramientas.AutoSize:=true;
 
+
+
+end;
+
+procedure TPrinc.StatusBar1DrawPanel(StatusBar: TStatusBar; Panel: TStatusPanel;
+  const Rect: TRect);
+begin
+     if Panel = StatusBar.Panels[1] then
+        with XiProgressBar1 do begin
+          Top := Rect.Top;
+          Left := Rect.Left;
+          Width := Rect.Right - Rect.Left - 15;
+          Height := Rect.Bottom - Rect.Top;
+        end;
 
 
 end;
@@ -1262,6 +1354,26 @@ begin
       ListaAjustedeStock.campo_id:='ajustestock_id';
       ListaAjustedeStock.Show;
     end;
+end;
+
+procedure TPrinc.BaseRemotaBeforeConnect(Sender: TObject);
+var
+  tipo_encriptacion:string;
+begin
+    BaseRemota.Database:=Princ.GetConfiguracion('DBREMOTADB');
+    BaseRemota.HostName:=Princ.GetConfiguracion('DBREMOTASERVIDOR');
+    BaseRemota.Port:=3306;
+    BaseRemota.Protocol:='mysql-5';
+    BaseRemota.User:=Princ.GetConfiguracion('DBREMOTAUSUARIO');
+    BaseRemota.Password:=Princ.GetConfiguracion('DBREMOTAPASS');
+    tipo_encriptacion:=ini1.ReadiniString('Config','Tipo','0');
+    Encriptador1.ADesencriptar:=BaseRemota.Password;
+    Encriptador1.MetodoEncriptado:=strtoint(tipo_encriptacion);
+    Encriptador1.Key:=CLAVE_ENCRIPTADO;
+    Encriptador1.Desencriptar;
+    BaseRemota.Password:=Encriptador1.Desencriptado;
+    BaseRemota.Database:=Princ.GetConfiguracion('DBREMOTADB');
+
 end;
 
 function TPrinc.BorrarDocumentoCompra(documentocompra_id: string):boolean;
@@ -3486,20 +3598,35 @@ begin
       login.liberar_al_cerrar:=false;
       login.personal_usuario.Text:=personal_usuario;
       login.personal_pass.Text:=personal_pass;
-      login.ShowModal;
+
     end;
 
+    if login.ShowModal=mrOk then
+      begin
+          Permisos1.ConfPerfil_id:=perfil_id_logueado;
+          Permisos1.ConfPersonal_id:=personal_id_logueado;
 
-    Permisos1.ConfPerfil_id:=perfil_id_logueado;
-    Permisos1.ConfPersonal_id:=personal_id_logueado;
+          princ.StatusBar1.Panels.Items[0].Text:=login.ZQSelect.FieldByName('personal_nombre').AsString+' - '+login.ZQSelect.FieldByName('perfil_nombre').AsString;
 
-    MenuConfiguracion;
+          MenuConfiguracion;
 
-    ruta_carpeta_reportes:=Princ.GetConfiguracion('CARPETAREPORTES');
-    if ruta_carpeta_reportes='' then
-      ruta_carpeta_reportes:='Reportes';
+          ruta_carpeta_reportes:=Princ.GetConfiguracion('CARPETAREPORTES');
+          if ruta_carpeta_reportes='' then
+            ruta_carpeta_reportes:='Reportes';
 
-    ruta_carpeta_reportes:=ExtractFilePath(Application.ExeName)+ruta_carpeta_reportes+'\';
+          ruta_carpeta_reportes:=ExtractFilePath(Application.ExeName)+ruta_carpeta_reportes+'\';
+      end
+    else
+      begin
+          Application.Terminate;
+
+
+      end;
+
+    Timer1.Enabled:=true;
+
+    princ.XiProgressBar1.Parent:=Princ.StatusBar1;
+
 end;
 
 procedure TPrinc.FormKeyDown(Sender: TObject; var Key: Word;
@@ -3983,6 +4110,41 @@ begin
     end;
 end;
 
+procedure TPrinc.Timer1Timer(Sender: TObject);
+var
+  dia:string;
+begin
+    if (Princ.GetConfiguracion('PCSINCRONIZADORA')=Princ.GetPCName) then
+      begin
+          if strtodate(Princ.GetConfiguracion('ULTIMAEXPORTACION'))<date then
+            begin
+                dia:=formatdatetime('dddd',date);
+                if strtobool(GetConfiguracion('EXPORTACION'+dia)) then
+                  begin
+                      if strtotime(GetConfiguracion('EXPORTACIONhora'))<=time then
+                        begin
+                            CrearHilo;
+                            try
+                              SincronizarDB:=TSincronizarDB.Create(Princ);
+                            finally
+                              //                              SincronizarDB.Show;
+                              Hilo.Ejecutar := SincronizarDB.sincronizarahora;
+                              Hilo.Priority := tpNormal;
+                              Hilo.Resume;
+                            end;
+
+                        end;
+                  end;
+            end;
+      end;
+end;
+
+procedure TPrinc.TimerBarraProgresoTimer(Sender: TObject);
+begin
+    Princ.XiProgressBar1.Position:=Princ.UtilidadesDB1.item_actual;
+    Princ.StatusBar1.Repaint;
+end;
+
 procedure TPrinc.VCLReport1BeforePrint(Sender: TObject);
 begin
     VCLReport1.Report.SetLanguage(1);
@@ -4088,6 +4250,15 @@ begin
       EstadoComisionesBorradores:=TEstadoComisionesBorradores.Create(self);
     finally
       EstadoComisionesBorradores.Show;
+    end;
+end;
+
+procedure TPrinc.btnexportardbClick(Sender: TObject);
+begin
+    try
+      SincronizarDB:=TSincronizarDB.Create(self);
+    finally
+      SincronizarDB.Show;
     end;
 end;
 

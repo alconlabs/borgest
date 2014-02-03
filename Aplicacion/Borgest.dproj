@@ -267,6 +267,9 @@
     <DCCReference Include="Formularios\Herramientas\UnitPerfil.pas">
       <Form>Perfil</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Herramientas\UnitSincronizarDB.pas">
+      <Form>SincronizarDB</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\UnitABMbase.pas">
       <Form>ABMbase</Form>
     </DCCReference>

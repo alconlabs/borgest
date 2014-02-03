@@ -121,6 +121,7 @@ type
     DBREMOTADB: TEdit;
     DBREMOTAUSUARIO: TEdit;
     DBREMOTAPASS: TEdit;
+    PCSERVIDOR: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -784,7 +785,7 @@ begin
           DBREMOTAPASS.Text:=Princ.Encriptador1.Desencriptado;
       end;
 
-
+    PCSERVIDOR.Caption:='Servidor Base de Datos: '+Princ.ZBase.HostName;
 
 end;
 

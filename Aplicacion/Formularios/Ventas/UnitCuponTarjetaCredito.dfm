@@ -10,10 +10,8 @@ inherited CuponTarjetaCredito: TCuponTarjetaCredito
   inherited panelgrilla: TAdvPanel
     Width = 503
     Height = 232
-    ExplicitLeft = -32
-    ExplicitTop = 16
     ExplicitWidth = 503
-    ExplicitHeight = 479
+    ExplicitHeight = 232
     FullHeight = 0
     object Label9: TLabel [0]
       Left = 69
@@ -242,7 +240,7 @@ inherited CuponTarjetaCredito: TCuponTarjetaCredito
       Visible = False
       Version = '1.1.0.1'
     end
-    object tarjeta_cupon: TEdit
+    object cupontarjeta_numero: TEdit
       Left = 348
       Top = 62
       Width = 117
@@ -347,7 +345,7 @@ inherited CuponTarjetaCredito: TCuponTarjetaCredito
       end>
   end
   inherited ZQExecSQL: TZQuery
-    Left = 360
-    Top = 40
+    Left = 240
+    Top = 56
   end
 end

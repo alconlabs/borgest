@@ -90,7 +90,7 @@ object configuracion: Tconfiguracion
       Top = 0
       Width = 589
       Height = 465
-      ActivePage = TabSheet7
+      ActivePage = TabSheet1
       Align = alTop
       TabOrder = 2
       object TabSheet1: TTabSheet
@@ -150,6 +150,13 @@ object configuracion: Tconfiguracion
           Height = 13
           Alignment = taRightJustify
           Caption = 'contrase'#241'a de usuario'
+        end
+        object PCSERVIDOR: TLabel
+          Left = 6
+          Top = 413
+          Width = 115
+          Height = 13
+          Caption = 'Servidor Base de Datos:'
         end
         object SUCURSALDEFECTO: TSqlComboBox
           Left = 148

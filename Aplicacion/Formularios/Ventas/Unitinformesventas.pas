@@ -73,10 +73,10 @@ begin
                                                    ' group by documentopagos.documentopago_nombre '+
                                                    'order by documentopagos.documentopago_nombre ';
 
-    Princ.VCLReport1.Report.Datainfo.Items[2].sql:='select *, sum(cupontarjeta_importe) as importe, count(cupontarjeta_id) as cantidad from cuponestarjetas  '+
+    Princ.VCLReport1.Report.Datainfo.ItemByName('ALIAS_CUPONESMANUALES').sql:='select *, sum(cupontarjeta_importe) as importe, count(cupontarjeta_id) as cantidad from cuponestarjetas  '+
                                                    'inner join tarjetas on cuponestarjetas.tarjeta_id=tarjetas.tarjeta_id '+
-                                                   'where cupontarjeta_fecha>="'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'" and '+
-                                                   'cupontarjeta_fecha>="'+formatdatetime('yyyy-mm-dd',hasta_fecha.Date)+'" '+
+                                                   'where (cupontarjeta_fecha>="'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'") and '+
+                                                   '(cupontarjeta_fecha<="'+formatdatetime('yyyy-mm-dd',hasta_fecha.Date)+'") '+
                                                    'group by cuponestarjetas.tarjeta_id, cuponestarjetas.cupontarjeta_cuotas ';
 
     Princ.VCLReport1.Execute;

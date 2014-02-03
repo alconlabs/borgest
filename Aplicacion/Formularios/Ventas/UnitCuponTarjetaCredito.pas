@@ -25,7 +25,7 @@ type
     cupontarjeta_cuotas: TMoneyEdit;
     cupontarjeta_recargo: TMoneyEdit;
     tarjeta_cobrado: TMoneyEdit;
-    tarjeta_cupon: TEdit;
+    cupontarjeta_numero: TEdit;
     cupontarjeta_autoriz: TEdit;
     cupontarjeta_titular: TEdit;
     cupontarjeta_dni: TEdit;
@@ -109,6 +109,7 @@ begin
     ZQExecSQL.Sql.Add('cupontarjeta_titular=:cupontarjeta_titular, ');
     ZQExecSQL.Sql.Add('cupontarjeta_autoriz=:cupontarjeta_autoriz, ');
     ZQExecSQL.Sql.Add('cupontarjeta_cuotas=:cupontarjeta_cuotas, ');
+    ZQExecSQL.Sql.Add('cupontarjeta_numero=:cupontarjeta_numero, ');
     ZQExecSQL.Sql.Add('cupontarjeta_importe=:cupontarjeta_importe, ');
     ZQExecSQL.Sql.Add('cupontarjeta_fecha=:cupontarjeta_fecha, ');
     ZQExecSQL.Sql.Add('cupontarjeta_id=:cupontarjeta_id ');
@@ -119,6 +120,7 @@ begin
     ZQExecSQL.ParamByName('cupontarjeta_titular').AsString:=cupontarjeta_titular.Text;
     ZQExecSQL.ParamByName('cupontarjeta_autoriz').AsString:=cupontarjeta_autoriz.Text;
     ZQExecSQL.ParamByName('cupontarjeta_cuotas').AsString:=cupontarjeta_cuotas.Text;
+    ZQExecSQL.ParamByName('cupontarjeta_numero').AsString:=cupontarjeta_numero.Text;
     ZQExecSQL.ParamByName('cupontarjeta_importe').AsString:=cupontarjeta_importe.Text;
     ZQExecSQL.ParamByName('cupontarjeta_fecha').AsString:=formatdatetime('yyyy-mm-dd',cupontarjeta_fecha.Date);
     ZQExecSQL.ParamByName('cupontarjeta_id').AsString:=id;
@@ -140,6 +142,7 @@ begin
     ZQExecSQL.Sql.Add('cupontarjeta_titular=:cupontarjeta_titular, ');
     ZQExecSQL.Sql.Add('cupontarjeta_autoriz=:cupontarjeta_autoriz, ');
     ZQExecSQL.Sql.Add('cupontarjeta_cuotas=:cupontarjeta_cuotas, ');
+    ZQExecSQL.Sql.Add('cupontarjeta_numero=:cupontarjeta_numero, ');
     ZQExecSQL.Sql.Add('cupontarjeta_importe=:cupontarjeta_importe, ');
     ZQExecSQL.Sql.Add('cupontarjeta_fecha=:cupontarjeta_fecha ');
     ZQExecSQL.Sql.Add('where cupontarjeta_id=:cupontarjeta_id ');
@@ -150,6 +153,7 @@ begin
     ZQExecSQL.ParamByName('cupontarjeta_titular').AsString:=cupontarjeta_titular.Text;
     ZQExecSQL.ParamByName('cupontarjeta_autoriz').AsString:=cupontarjeta_autoriz.Text;
     ZQExecSQL.ParamByName('cupontarjeta_cuotas').AsString:=cupontarjeta_cuotas.Text;
+    ZQExecSQL.ParamByName('cupontarjeta_numero').AsString:=cupontarjeta_numero.Text;
     ZQExecSQL.ParamByName('cupontarjeta_importe').AsString:=cupontarjeta_importe.Text;
     ZQExecSQL.ParamByName('cupontarjeta_fecha').AsString:=formatdatetime('yyyy-mm-dd',cupontarjeta_fecha.Date);
     ZQExecSQL.ParamByName('cupontarjeta_id').AsString:=id;
@@ -213,6 +217,7 @@ begin
           cupontarjeta_cuotas.Value:=1;
           cupontarjeta_recargo.Value:=0;
           cupontarjeta_autoriz.Text:='';
+          cupontarjeta_numero.Text:='';
           cupontarjeta_titular.Text:='';
           cupontarjeta_dni.Text:='';
           cupontarjeta_telefono.Text:='';
@@ -226,6 +231,7 @@ begin
           cupontarjeta_cuotas.Value:=ZQSelect.FieldByName('cupontarjeta_cuotas').AsFloat;
           cupontarjeta_recargo.Value:=ZQSelect.FieldByName('cupontarjeta_recargo').AsFloat;
           cupontarjeta_autoriz.Text:=ZQSelect.FieldByName('cupontarjeta_autoriz').AsString;
+          cupontarjeta_numero.Text:=ZQSelect.FieldByName('cupontarjeta_numero').AsString;
           cupontarjeta_titular.Text:=ZQSelect.FieldByName('cupontarjeta_titular').AsString;
           cupontarjeta_dni.Text:=ZQSelect.FieldByName('cupontarjeta_dni').AsString;
           cupontarjeta_telefono.Text:=ZQSelect.FieldByName('cupontarjeta_telefono').AsString;

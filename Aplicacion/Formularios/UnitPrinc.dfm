@@ -18,6 +18,23 @@ object Princ: TPrinc
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object XiProgressBar1: TXiProgressBar
+    Left = 360
+    Top = 536
+    Width = 200
+    Height = 16
+    ColorBorder = 22144
+    BackColorFace = 13036799
+    BackColorGrad = clWhite
+    ForeColorFace = 10215167
+    ForeColorGrad = 31671
+    ColorScheme = csDesert
+    Max = 100
+    Min = 0
+    Position = 0
+    Step = 10
+    Orientation = pbHorizontal
+  end
   object MenuPrincipal: TAdvToolBarPager
     Left = 0
     Top = 0
@@ -2909,7 +2926,7 @@ object Princ: TPrinc
       object AdvToolBarHerramientas: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 406
+        Width = 606
         Height = 63
         AllowFloating = True
         Caption = 'Herramientas'
@@ -3079,9 +3096,84 @@ object Princ: TPrinc
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
         end
+        object btnexportardb: TAdvGlowButton
+          Left = 402
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Exportar DB'
+          TabOrder = 4
+          OnClick = btnexportardbClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
+        object btnimportardb: TAdvGlowButton
+          Left = 502
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Importar DB'
+          TabOrder = 5
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
       end
       object AdvToolBarSeguridad: TAdvToolBar
-        Left = 412
+        Left = 612
         Top = 3
         Width = 106
         Height = 63
@@ -3142,96 +3234,22 @@ object Princ: TPrinc
       end
     end
   end
-  object AdvGlowButton1: TAdvGlowButton
-    Left = 256
-    Top = 160
-    Width = 110
-    Height = 49
-    Caption = 'Borgest'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -21
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 1
-    Visible = False
-    Appearance.BorderColor = 9598070
-    Appearance.BorderColorHot = 10079963
-    Appearance.BorderColorDown = 4548219
-    Appearance.BorderColorChecked = 4548219
-    Appearance.Color = 15586496
-    Appearance.ColorTo = 15128792
-    Appearance.ColorChecked = 11918331
-    Appearance.ColorCheckedTo = 7915518
-    Appearance.ColorDisabled = 15921906
-    Appearance.ColorDisabledTo = 15921906
-    Appearance.ColorDown = 7778289
-    Appearance.ColorDownTo = 4296947
-    Appearance.ColorHot = 15465983
-    Appearance.ColorHotTo = 11332863
-    Appearance.ColorMirror = 15586496
-    Appearance.ColorMirrorTo = 13152947
-    Appearance.ColorMirrorHot = 5888767
-    Appearance.ColorMirrorHotTo = 10807807
-    Appearance.ColorMirrorDown = 946929
-    Appearance.ColorMirrorDownTo = 5021693
-    Appearance.ColorMirrorChecked = 10480637
-    Appearance.ColorMirrorCheckedTo = 5682430
-    Appearance.ColorMirrorDisabled = 11974326
-    Appearance.ColorMirrorDisabledTo = 15921906
-    Appearance.GradientHot = ggVertical
-    Appearance.GradientMirrorHot = ggVertical
-    Appearance.GradientDown = ggVertical
-    Appearance.GradientMirrorDown = ggVertical
-    Appearance.GradientChecked = ggVertical
-    Enabled = False
-  end
-  object AdvGlowButton4: TAdvGlowButton
-    Left = 344
-    Top = 231
-    Width = 41
-    Height = 50
-    Caption = 'B'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -48
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 4
-    Visible = False
-    Appearance.BorderColor = 9598070
-    Appearance.BorderColorHot = 10079963
-    Appearance.BorderColorDown = 4548219
-    Appearance.BorderColorChecked = 4548219
-    Appearance.Color = 15586496
-    Appearance.ColorTo = 15128792
-    Appearance.ColorChecked = 11918331
-    Appearance.ColorCheckedTo = 7915518
-    Appearance.ColorDisabled = 15921906
-    Appearance.ColorDisabledTo = 15921906
-    Appearance.ColorDown = 7778289
-    Appearance.ColorDownTo = 4296947
-    Appearance.ColorHot = 15465983
-    Appearance.ColorHotTo = 11332863
-    Appearance.ColorMirror = 15586496
-    Appearance.ColorMirrorTo = 13152947
-    Appearance.ColorMirrorHot = 5888767
-    Appearance.ColorMirrorHotTo = 10807807
-    Appearance.ColorMirrorDown = 946929
-    Appearance.ColorMirrorDownTo = 5021693
-    Appearance.ColorMirrorChecked = 10480637
-    Appearance.ColorMirrorCheckedTo = 5682430
-    Appearance.ColorMirrorDisabled = 11974326
-    Appearance.ColorMirrorDisabledTo = 15921906
-    Appearance.GradientHot = ggVertical
-    Appearance.GradientMirrorHot = ggVertical
-    Appearance.GradientDown = ggVertical
-    Appearance.GradientMirrorDown = ggVertical
-    Appearance.GradientChecked = ggVertical
-    Enabled = False
-    Layout = blGlyphBottom
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 572
+    Width = 1362
+    Height = 19
+    Panels = <
+      item
+        Text = 'Usuario'
+        Width = 300
+      end
+      item
+        Style = psOwnerDraw
+        Text = 'panelprogreso'
+        Width = 210
+      end>
+    OnDrawPanel = StatusBar1DrawPanel
   end
   object AdvToolBarOfficeStyler1: TAdvToolBarOfficeStyler
     Style = bsOffice2003Silver
@@ -3482,8 +3500,8 @@ object Princ: TPrinc
     TabAppearance.BackGround.Color = 15128792
     TabAppearance.BackGround.ColorTo = 15128792
     TabAppearance.BackGround.Direction = gdHorizontal
-    Left = 80
-    Top = 128
+    Left = 48
+    Top = 112
   end
   object AdvMenuStyler1: TAdvMenuStyler
     Background.Position = bpCenter
@@ -3527,8 +3545,8 @@ object Princ: TPrinc
     Font.Height = -12
     Font.Name = 'Segoe UI'
     Font.Style = []
-    Left = 56
-    Top = 376
+    Left = 48
+    Top = 232
   end
   object AdvPanelStyler1: TAdvPanelStyler
     Tag = 0
@@ -3594,8 +3612,8 @@ object Princ: TPrinc
     Settings.URLColor = clBlue
     Settings.Width = 0
     Style = psOffice2003Silver
-    Left = 80
-    Top = 192
+    Left = 48
+    Top = 168
   end
   object ZBase: TZConnection
     Protocol = 'mysql-5'
@@ -3607,20 +3625,20 @@ object Princ: TPrinc
     Connected = True
     BeforeConnect = ZBaseBeforeConnect
     AfterConnect = ZBaseAfterConnect
-    Left = 720
-    Top = 128
+    Left = 392
+    Top = 112
   end
   object ZQBuscar: TZQuery
     Connection = ZBase
     Params = <>
-    Left = 592
-    Top = 448
+    Left = 504
+    Top = 432
   end
   object ZQCodigo: TZQuery
     Connection = ZBase
     Params = <>
-    Left = 592
-    Top = 376
+    Left = 504
+    Top = 360
   end
   object ZQActualizarStock: TZQuery
     Connection = ZBase
@@ -3638,8 +3656,8 @@ object Princ: TPrinc
         Name = 'articulo_id'
         ParamType = ptUnknown
       end>
-    Left = 592
-    Top = 312
+    Left = 504
+    Top = 296
     ParamData = <
       item
         DataType = ftUnknown
@@ -3654,8 +3672,8 @@ object Princ: TPrinc
   end
   object ini1: Tini
     IniFilename = 'c:\program files\codegear\rad studio\5.0\bin\config.ini'
-    Left = 520
-    Top = 432
+    Left = 288
+    Top = 336
   end
   object ZQCalculopreciodeta: TZQuery
     Connection = ZBase
@@ -3674,8 +3692,8 @@ object Princ: TPrinc
     IndexFieldNames = 'calculopreciodeta_orden Asc'
     UpdateMode = umUpdateAll
     WhereMode = wmWhereAll
-    Left = 592
-    Top = 256
+    Left = 504
+    Top = 240
     ParamData = <
       item
         DataType = ftUnknown
@@ -3703,8 +3721,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 720
-    Top = 197
+    Left = 640
+    Top = 125
     ParamData = <
       item
         DataType = ftUnknown
@@ -3736,8 +3754,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 888
-    Top = 200
+    Left = 808
+    Top = 192
     ParamData = <
       item
         DataType = ftUnknown
@@ -3770,8 +3788,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 888
-    Top = 256
+    Left = 808
+    Top = 248
     ParamData = <
       item
         DataType = ftUnknown
@@ -3804,8 +3822,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 720
-    Top = 312
+    Left = 640
+    Top = 240
     ParamData = <
       item
         DataType = ftUnknown
@@ -3841,8 +3859,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 720
-    Top = 256
+    Left = 640
+    Top = 184
     ParamData = <
       item
         DataType = ftUnknown
@@ -3865,8 +3883,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 720
-    Top = 376
+    Left = 640
+    Top = 304
     ParamData = <
       item
         DataType = ftUnknown
@@ -3885,8 +3903,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 888
-    Top = 312
+    Left = 808
+    Top = 304
     ParamData = <
       item
         DataType = ftUnknown
@@ -3909,8 +3927,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 720
-    Top = 448
+    Left = 640
+    Top = 376
     ParamData = <
       item
         DataType = ftUnknown
@@ -3937,8 +3955,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 888
-    Top = 376
+    Left = 808
+    Top = 368
     ParamData = <
       item
         DataType = ftUnknown
@@ -3967,34 +3985,34 @@ object Princ: TPrinc
     Mode = cmShareDenyNone
     Provider = 'Microsoft.Jet.OLEDB.4.0'
     BeforeConnect = ADOConnection1BeforeConnect
-    Left = 208
-    Top = 136
+    Left = 184
+    Top = 120
   end
   object ADODataSet1: TADODataSet
     Connection = ADOConnection1
     CommandText = 'Table1$'
     CommandType = cmdTableDirect
     Parameters = <>
-    Left = 200
-    Top = 216
+    Left = 184
+    Top = 184
   end
   object OpenDialog1: TOpenDialog
-    Left = 64
-    Top = 296
+    Left = 48
+    Top = 352
   end
   object ZQProductosABM: TZQuery
     Connection = ZBase
     Params = <>
-    Left = 888
-    Top = 448
+    Left = 808
+    Top = 440
   end
   object VCLReport1: TVCLReport
     ConnectionName = 'conexion_prueba'
     AsyncExecution = False
     OnBeforePrint = VCLReport1BeforePrint
     Title = 'Untitled'
-    Left = 256
-    Top = 192
+    Left = 184
+    Top = 320
   end
   object ZQExcecSQL: TZQuery
     Connection = ZBase
@@ -4011,8 +4029,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 592
-    Top = 198
+    Left = 504
+    Top = 182
     ParamData = <
       item
         DataType = ftUnknown
@@ -4024,8 +4042,8 @@ object Princ: TPrinc
     Params = <>
     Connection = ZBase
     Delimiter = ';'
-    Left = 592
-    Top = 128
+    Left = 392
+    Top = 304
   end
   object ZQCalculopreciodetaprod: TZQuery
     Connection = ZBase
@@ -4044,8 +4062,8 @@ object Princ: TPrinc
     IndexFieldNames = 'calculopreciodetaprod_orden Asc'
     UpdateMode = umUpdateAll
     WhereMode = wmWhereAll
-    Left = 888
-    Top = 128
+    Left = 808
+    Top = 120
     ParamData = <
       item
         DataType = ftUnknown
@@ -4056,8 +4074,8 @@ object Princ: TPrinc
   object BackupDB1: TBackupDB
     KVersionMySql = 0
     Kbase = ZBase
-    Left = 496
-    Top = 272
+    Left = 288
+    Top = 232
   end
   object ZQDocumentoventadocus: TZQuery
     Connection = ZBase
@@ -4074,8 +4092,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 440
-    Top = 392
+    Left = 504
+    Top = 488
     ParamData = <
       item
         DataType = ftUnknown
@@ -4086,8 +4104,8 @@ object Princ: TPrinc
   object ADOTable1: TADOTable
     Connection = ADOConnection1
     TableDirect = True
-    Left = 200
-    Top = 296
+    Left = 184
+    Top = 248
   end
   object ZQProductos: TZQuery
     Connection = ZBase
@@ -4111,8 +4129,8 @@ object Princ: TPrinc
         Name = 'producto_id'
         ParamType = ptUnknown
       end>
-    Left = 888
-    Top = 504
+    Left = 808
+    Top = 496
     ParamData = <
       item
         DataType = ftUnknown
@@ -4131,13 +4149,13 @@ object Princ: TPrinc
     SQL.Strings = (
       'select * from menu')
     Params = <>
-    Left = 464
-    Top = 144
+    Left = 504
+    Top = 128
   end
   object ZSQLMonitor1: TZSQLMonitor
     MaxTraceCount = 100
-    Left = 280
-    Top = 352
+    Left = 392
+    Top = 240
   end
   object ZQdocumentocompradetalles: TZQuery
     Connection = ZBase
@@ -4154,8 +4172,8 @@ object Princ: TPrinc
         Name = 'documentocompra_id'
         ParamType = ptUnknown
       end>
-    Left = 1096
-    Top = 312
+    Left = 968
+    Top = 256
     ParamData = <
       item
         DataType = ftUnknown
@@ -4174,8 +4192,8 @@ object Princ: TPrinc
   object AdvPopupMenu1: TAdvPopupMenu
     MenuStyler = AdvMenuStyler1
     Version = '2.0.0.0'
-    Left = 264
-    Top = 272
+    Left = 48
+    Top = 288
     object aver1: TMenuItem
       Caption = 'a ver'
     end
@@ -4191,19 +4209,19 @@ object Princ: TPrinc
   end
   object Encriptador1: TEncriptador
     MetodoEncriptado = 1
-    Left = 512
-    Top = 200
+    Left = 288
+    Top = 184
   end
   object GTBUtilidades1: TGTBUtilidades
-    Left = 512
-    Top = 368
+    Left = 288
+    Top = 288
   end
   object Permisos1: TPermisos
     abm = 0
     ConfSqlConnection = ZBase
     ConfIni = ini1
-    Left = 400
-    Top = 472
+    Left = 288
+    Top = 384
   end
   object ZQRecargoTarjetas: TZQuery
     Connection = ZBase
@@ -4238,8 +4256,8 @@ object Princ: TPrinc
         Name = 'tarjeta_id'
         ParamType = ptUnknown
       end>
-    Left = 1088
-    Top = 496
+    Left = 968
+    Top = 384
     ParamData = <
       item
         DataType = ftUnknown
@@ -4272,8 +4290,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 720
-    Top = 520
+    Left = 640
+    Top = 448
     ParamData = <
       item
         DataType = ftUnknown
@@ -4295,8 +4313,8 @@ object Princ: TPrinc
         Name = 'configcolumna_grilla'
         ParamType = ptUnknown
       end>
-    Left = 1192
-    Top = 504
+    Left = 968
+    Top = 448
     ParamData = <
       item
         DataType = ftUnknown
@@ -4307,20 +4325,20 @@ object Princ: TPrinc
   object ZQProcedimientosAlmacenados: TZQuery
     Connection = ZBase
     Params = <>
-    Left = 248
-    Top = 472
+    Left = 392
+    Top = 368
   end
   object ZQOrdendePago: TZQuery
     Connection = ZBase
     Params = <>
-    Left = 1096
-    Top = 136
+    Left = 968
+    Top = 120
   end
   object ZQActualizarSaldoDocumentoCompra: TZQuery
     Connection = ZBase
     Params = <>
-    Left = 1096
-    Top = 221
+    Left = 968
+    Top = 197
   end
   object ZQDocumentocompradocus: TZQuery
     Connection = ZBase
@@ -4337,8 +4355,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 1096
-    Top = 392
+    Left = 968
+    Top = 320
     ParamData = <
       item
         DataType = ftUnknown
@@ -4348,8 +4366,8 @@ object Princ: TPrinc
   end
   object TablaTemporal1: TTablaTemporal
     Confbase = ZBase
-    Left = 600
-    Top = 520
+    Left = 288
+    Top = 440
   end
   object BaseRemota: TZConnection
     Protocol = 'mysql-5'
@@ -4358,8 +4376,29 @@ object Princ: TPrinc
     Database = 'dbborgest'
     User = 'root'
     Password = 'root'
-    Connected = True
-    Left = 808
-    Top = 176
+    BeforeConnect = BaseRemotaBeforeConnect
+    Left = 392
+    Top = 168
+  end
+  object UtilidadesDB1: TUtilidadesDB
+    ConfBaseOrigen = ZBase
+    ConfBaseDestino = BaseRemota
+    ConfTipoDestino = 'DB'
+    Left = 288
+    Top = 128
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 360000
+    OnTimer = Timer1Timer
+    Left = 48
+    Top = 408
+  end
+  object TimerBarraProgreso: TTimer
+    Enabled = False
+    Interval = 500
+    OnTimer = TimerBarraProgresoTimer
+    Left = 48
+    Top = 464
   end
 end

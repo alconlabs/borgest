@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ZConnection, StdCtrls, ini, UnitSqlComboBox, Titles, ComCtrls,
-  AdvListV, UnitSqlListView, Encriptador, GTBComboBox;
+  AdvListV, UnitSqlListView, Encriptador, GTBComboBox, Utilidades;
 
 type
   TPrinc = class(TForm)
@@ -46,6 +46,12 @@ type
     Label7: TLabel;
     Label8: TLabel;
     clave: TEdit;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    Edit6: TEdit;
+    Edit5: TEdit;
+    GTBUtilidades1: TGTBUtilidades;
+    Button3: TButton;
     procedure Button1Click(Sender: TObject);
     procedure tablaSelect(Sender: TObject);
     procedure btninsertClick(Sender: TObject);
@@ -55,6 +61,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnencriptarClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
     abm:integer;
@@ -257,6 +264,11 @@ begin
     Encriptador1.Key:=clave.Text;
     Encriptador1.Desencriptar;
     Edit1.Text:=Encriptador1.Desencriptado;
+end;
+
+procedure TPrinc.Button3Click(Sender: TObject);
+begin
+    Edit6.Text:=GTBUtilidades1.Reemplazar(Edit3.Text,Edit4.Text,Edit5.Text);
 end;
 
 procedure TPrinc.FormCreate(Sender: TObject);
