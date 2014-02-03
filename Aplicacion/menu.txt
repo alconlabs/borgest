@@ -79,6 +79,9 @@ Comisiones
 		Liquidaciones Borradores
 		Estado de Cuentas
 		Detalle de Cuentas
+Contabilidad
+	Libros IVAs
+		Estado IVA
 Herramientas
 	Herramientas
 		Configuracion

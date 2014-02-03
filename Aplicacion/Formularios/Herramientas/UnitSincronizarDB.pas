@@ -57,6 +57,7 @@ var
   error:integer;
 begin
     error:=0;
+    princ.XiProgressBar1.Visible:=true;
     Princ.StatusBar1.Panels.Add.Text:='Exportacion iniciada - '+formatdatetime('HH:mm',time);
     Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Width:=200;
     tablasinc_id.LlenarMQuery;

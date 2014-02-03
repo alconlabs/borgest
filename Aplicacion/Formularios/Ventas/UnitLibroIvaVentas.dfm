@@ -9,6 +9,8 @@ inherited LibroIvaVentas: TLibroIvaVentas
   inherited panelgrilla: TAdvPanel
     Width = 408
     Height = 276
+    ExplicitLeft = 88
+    ExplicitTop = 8
     ExplicitWidth = 408
     ExplicitHeight = 276
     FullHeight = 0

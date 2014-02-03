@@ -246,6 +246,9 @@
     <DCCReference Include="Formularios\Compras\Unitsaldoproveedores.pas">
       <Form>saldoproveedores</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Contabilidad\UnitEstadoIVAs.pas">
+      <Form>EstadoIVAs</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Herramientas\UnitActualizarSistema.pas">
       <Form>ABMbase1</Form>
     </DCCReference>

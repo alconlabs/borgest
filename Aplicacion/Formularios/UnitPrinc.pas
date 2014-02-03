@@ -171,6 +171,9 @@ type
     StatusBar1: TStatusBar;
     XiProgressBar1: TXiProgressBar;
     TimerBarraProgreso: TTimer;
+    AdvPageContabilidad: TAdvPage;
+    AdvToolBarLibrosIvas: TAdvToolBar;
+    btnestadoiva: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -250,6 +253,7 @@ type
     procedure StatusBar1DrawPanel(StatusBar: TStatusBar; Panel: TStatusPanel;
       const Rect: TRect);
     procedure TimerBarraProgresoTimer(Sender: TObject);
+    procedure btnestadoivaClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -486,7 +490,7 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitSaldosComisionesBorradores, UnitListaLiquidacionesBorradores,
   UnitImprimirEtiquetas, UnitConsultaStock, UnitEstadoComisionesBorradores,
   UnitDetalleComisionesBorradores, UnitListaCuponesTarjetasCredito,
-  UnitSincronizarDB;
+  UnitSincronizarDB, UnitEstadoIVAs;
 
 {$R *.dfm}
 
@@ -3626,6 +3630,7 @@ begin
     Timer1.Enabled:=true;
 
     princ.XiProgressBar1.Parent:=Princ.StatusBar1;
+    princ.XiProgressBar1.Visible:=false;
 
 end;
 
@@ -4250,6 +4255,15 @@ begin
       EstadoComisionesBorradores:=TEstadoComisionesBorradores.Create(self);
     finally
       EstadoComisionesBorradores.Show;
+    end;
+end;
+
+procedure TPrinc.btnestadoivaClick(Sender: TObject);
+begin
+    try
+      EstadoIVAs:=TEstadoIVAs.Create(self);
+    finally
+      EstadoIVAs.Show;
     end;
 end;
 

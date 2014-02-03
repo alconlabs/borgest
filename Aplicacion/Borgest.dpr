@@ -138,7 +138,8 @@ uses
   UnitDetalleComisionesBorradores in 'Formularios\Comisiones\UnitDetalleComisionesBorradores.pas' {DetalleComisionesBorradores},
   UnitCuponTarjetaCredito in 'Formularios\Ventas\UnitCuponTarjetaCredito.pas' {CuponTarjetaCredito},
   UnitListaCuponesTarjetasCredito in 'Formularios\Ventas\UnitListaCuponesTarjetasCredito.pas' {ListaCuponesTarjetasCredito},
-  UnitSincronizarDB in 'Formularios\Herramientas\UnitSincronizarDB.pas' {SincronizarDB};
+  UnitSincronizarDB in 'Formularios\Herramientas\UnitSincronizarDB.pas' {SincronizarDB},
+  UnitEstadoIVAs in 'Formularios\Contabilidad\UnitEstadoIVAs.pas' {EstadoIVAs};
 
 {$R *.res}
 
@@ -147,5 +148,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Borgest - Sistema de Gestion Comercial';
   Application.CreateForm(TPrinc, Princ);
+  Application.CreateForm(TEstadoIVAs, EstadoIVAs);
   Application.Run;
 end.
