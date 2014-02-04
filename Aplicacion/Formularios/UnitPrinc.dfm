@@ -40,7 +40,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageContabilidad
+    ActivePage = AdvPageArchivo
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
