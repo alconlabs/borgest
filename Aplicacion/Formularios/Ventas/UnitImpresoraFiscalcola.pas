@@ -91,6 +91,7 @@ begin
 
     puntoventa_id.llenarcombo;
     puntoventa_id.ItemIndex:=0;
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 end.

@@ -1815,3 +1815,15 @@ INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,95,perfil_id,-1 from perfi
 Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('96', '>Contabilidad>Libros IVAs>Estado IVA', '0', 'btnestadoiva', '', '0', '0', '');
 528;
 INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,96,perfil_id,-1 from perfiles;
+529;
+CREATE  TABLE IF NOT EXISTS `logs` (
+  `log_id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `log_fecha` DATE NULL DEFAULT NULL ,
+  `log_hora` TIME NULL DEFAULT NULL ,
+  `personal_id` INT(11) NULL DEFAULT NULL ,
+  `log_accion` VARCHAR(150) NULL DEFAULT NULL ,
+  `log_pcname` VARCHAR(100) NULL DEFAULT NULL ,
+  PRIMARY KEY (`log_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;

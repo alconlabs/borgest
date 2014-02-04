@@ -2,7 +2,6 @@ inherited ImprimirEtiquetas: TImprimirEtiquetas
   Caption = 'Imprimir Etiquetas'
   ClientHeight = 375
   ClientWidth = 630
-  OnShow = FormShow
   ExplicitWidth = 646
   ExplicitHeight = 413
   PixelsPerInch = 96
@@ -10,9 +9,8 @@ inherited ImprimirEtiquetas: TImprimirEtiquetas
   inherited panelgrilla: TAdvPanel
     Width = 630
     Height = 375
-    ExplicitTop = -8
     ExplicitWidth = 630
-    ExplicitHeight = 391
+    ExplicitHeight = 375
     FullHeight = 0
     object Label3: TLabel [0]
       Left = 15
@@ -50,7 +48,6 @@ inherited ImprimirEtiquetas: TImprimirEtiquetas
       Left = 539
       Top = 322
       Caption = 'Imprimir'
-      OnClick = btnguardarClick
       ExplicitLeft = 539
       ExplicitTop = 322
     end

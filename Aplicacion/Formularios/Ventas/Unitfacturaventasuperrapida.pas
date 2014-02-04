@@ -6,13 +6,12 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Unitfacturasventa, DB, ZAbstractRODataset, ZAbstractDataset,
   ZDataset, MoneyEdit, StdCtrls, Grids, DBGrids, UnitSqlComboBox, ComCtrls,
-  ExtCtrls, AdvPanel;
+  ExtCtrls, AdvPanel, Menus, AdvMenus, AdvGlowButton;
 
 type
   Tfacturaventasuperrapida = class(Tfacturasventa)
     producto_id: TSqlComboBox;
     Label14: TLabel;
-    Label16: TLabel;
     documentopago_importe: TMoneyEdit;
     procedure FormCreate(Sender: TObject);
     procedure cliente_idExit(Sender: TObject);

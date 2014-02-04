@@ -546,6 +546,8 @@ begin
         4:btnguardar.Caption:='Imprimir';
         5:btnguardar.Caption:='Anular';
     end;
+
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tfacturacompra.modificar;

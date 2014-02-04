@@ -3,7 +3,6 @@ inherited CajaAsiento: TCajaAsiento
   Caption = 'Asiento de Caja'
   ClientHeight = 182
   ClientWidth = 554
-  OnShow = FormShow
   ExplicitWidth = 570
   ExplicitHeight = 220
   PixelsPerInch = 96
@@ -70,7 +69,6 @@ inherited CajaAsiento: TCajaAsiento
     inherited btnguardar: TButton
       Top = 150
       TabOrder = 6
-      OnClick = btnguardarClick
       ExplicitTop = 150
     end
     object cajaasiento_fecha: TDateTimePicker

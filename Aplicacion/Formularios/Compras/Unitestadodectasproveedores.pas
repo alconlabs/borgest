@@ -160,6 +160,7 @@ type
     procedure cbhastafechavencClick(Sender: TObject);
     procedure BtnDetalleImputacionClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     temporal_idproceso:string;
@@ -266,6 +267,11 @@ procedure Testadoctasproveedores.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
     Princ.OnKeyDown(sender, Key, Shift);
+end;
+
+procedure Testadoctasproveedores.FormShow(Sender: TObject);
+begin
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Testadoctasproveedores.cargatemporal;

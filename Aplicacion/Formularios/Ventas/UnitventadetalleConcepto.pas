@@ -57,6 +57,7 @@ type
     procedure btnprecio3Click(Sender: TObject);
     procedure btnprecio4Click(Sender: TObject);
     procedure ventadetalle_totalExit(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     PRODUCTOMODIFICARDESCR:string;
@@ -385,6 +386,11 @@ begin
         VK_F9:btnaceptar.Click;
         VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);
     end;
+end;
+
+procedure Tventadetalleconcepto.FormShow(Sender: TObject);
+begin
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tventadetalleconcepto.ventadetalle_preciounitarioExit(Sender: TObject);

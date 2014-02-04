@@ -83,7 +83,6 @@ inherited ListaCuponesTarjetasCredito: TListaCuponesTarjetasCredito
         OnKeyPress = fil_idKeyPress
         Tag2 = 0
         FieldName = 'cupontarjeta_importe'
-        ExplicitLeft = 473
       end
       object fil_cupontarjeta_cuotas: TGTBEdit
         Left = 577
@@ -95,7 +94,6 @@ inherited ListaCuponesTarjetasCredito: TListaCuponesTarjetasCredito
         OnKeyPress = fil_idKeyPress
         Tag2 = 0
         FieldName = 'cupontarjeta_cuotas'
-        ExplicitLeft = 585
       end
       object fil_cupontarjeta_numero: TGTBEdit
         Left = 353
@@ -107,7 +105,6 @@ inherited ListaCuponesTarjetasCredito: TListaCuponesTarjetasCredito
         OnKeyPress = fil_idKeyPress
         Tag2 = 0
         FieldName = 'cupontarjeta_numero'
-        ExplicitLeft = 473
       end
       object fil_cupontarjeta_fecha: TGTBEdit
         Left = 689
@@ -119,8 +116,6 @@ inherited ListaCuponesTarjetasCredito: TListaCuponesTarjetasCredito
         OnKeyPress = fil_idKeyPress
         Tag2 = 0
         FieldName = 'cupontarjeta_fecha'
-        ExplicitLeft = 713
-        ExplicitTop = -6
       end
     end
   end

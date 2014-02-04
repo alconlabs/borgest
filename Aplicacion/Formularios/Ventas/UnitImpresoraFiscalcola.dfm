@@ -60,7 +60,6 @@ object impresorafiscalcola: Timpresorafiscalcola
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitHeight = 445
     FullHeight = 0
     object Label15: TLabel
       Left = 298

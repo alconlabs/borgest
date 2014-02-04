@@ -77,7 +77,7 @@ begin
     ZQCalculopreciodetaprod.Active:=false;
     ZQCalculopreciodetaprod.SQL.Text:='select * from calculopreciodetaprod where producto_id="'+producto_id+'" order by calculopreciodetaprod_orden';
     ZQCalculopreciodetaprod.Active:=true;
-
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tcalculoprecioproductos.ZQCalculopreciodetaprodBeforeInsert(

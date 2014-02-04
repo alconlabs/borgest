@@ -43,6 +43,7 @@ type
     procedure ventadeta_cantidadExit(Sender: TObject);
     procedure ventadetalle_preciounitarioExit(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     procedure calculartotal;
@@ -127,6 +128,11 @@ procedure Tventadetalle.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
     Princ.OnKeyDown(sender, Key, Shift);
+end;
+
+procedure Tventadetalle.FormShow(Sender: TObject);
+begin
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tventadetalle.ventadetalle_preciounitarioExit(Sender: TObject);

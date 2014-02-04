@@ -2,7 +2,6 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
   Caption = 'LiquidacionBorrador'
   ClientHeight = 421
   ClientWidth = 912
-  OnShow = FormShow
   ExplicitWidth = 928
   ExplicitHeight = 459
   PixelsPerInch = 96
@@ -78,7 +77,6 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Left = 739
       Top = 334
       TabOrder = 5
-      OnClick = btnguardarClick
       ExplicitLeft = 739
       ExplicitTop = 334
     end

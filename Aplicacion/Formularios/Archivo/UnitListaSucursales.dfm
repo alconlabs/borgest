@@ -10,9 +10,6 @@ inherited listasucursales: Tlistasucursales
       Height = 241
       ExplicitHeight = 241
       FullHeight = 0
-      inherited btnanular: TButton
-        Visible = False
-      end
     end
     inherited DBGrid1: TDBGrid
       Height = 241

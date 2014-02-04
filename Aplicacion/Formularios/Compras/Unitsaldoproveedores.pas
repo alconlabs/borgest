@@ -165,7 +165,7 @@ begin
     sucursal_id.ItemIndex:=0;
     proveedor_id.llenarcombo;
     proveedor_id.ItemIndex:=0;
-
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tsaldoproveedores.cargatemporal;

@@ -68,7 +68,6 @@ inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
       inherited btnfiltrar: TButton
         Left = 932
         ExplicitLeft = 932
-        ExplicitTop = 0
       end
       inherited fil_id: TGTBEdit
         Width = 92
@@ -89,8 +88,6 @@ inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
         Height = 21
         Align = alLeft
         TabOrder = 3
-        ExplicitLeft = 266
-        ExplicitTop = 6
       end
       object fil_cliente_nombre: TEdit
         Left = 318
@@ -99,7 +96,6 @@ inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
         Height = 21
         Align = alLeft
         TabOrder = 4
-        ExplicitLeft = 228
       end
       object fil_documentoventa_total: TEdit
         Left = 748
@@ -108,7 +104,6 @@ inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
         Height = 21
         Align = alLeft
         TabOrder = 5
-        ExplicitLeft = 658
       end
       object fil_documentoventa_numero: TEdit
         Left = 138
@@ -117,8 +112,6 @@ inherited ListaNotasPedidoComisiones: TListaNotasPedidoComisiones
         Height = 21
         Align = alLeft
         TabOrder = 6
-        ExplicitLeft = 250
-        ExplicitTop = -6
       end
     end
   end

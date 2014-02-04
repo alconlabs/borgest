@@ -15,6 +15,7 @@ object detallectasproveedores: Tdetallectasproveedores
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object panelgrilla: TAdvPanel

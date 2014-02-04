@@ -132,7 +132,6 @@ type
     btnprovincias: TAdvGlowButton;
     btnconceptosdebcred: TAdvGlowButton;
     btnRecibosPendientes: TAdvGlowButton;
-    Permisos1: TPermisos;
     btntarjetas: TAdvGlowButton;
     ZQRecargoTarjetas: TZQuery;
     ZQpagotarjeta: TZQuery;
@@ -174,6 +173,7 @@ type
     AdvPageContabilidad: TAdvPage;
     AdvToolBarLibrosIvas: TAdvToolBar;
     btnestadoiva: TAdvGlowButton;
+    Permisos1: TPermisos;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -3609,6 +3609,7 @@ begin
       begin
           Permisos1.ConfPerfil_id:=perfil_id_logueado;
           Permisos1.ConfPersonal_id:=personal_id_logueado;
+          Permisos1.ConfPcName:=Princ.GetPCName;
 
           princ.StatusBar1.Panels.Items[0].Text:=login.ZQSelect.FieldByName('personal_nombre').AsString+' - '+login.ZQSelect.FieldByName('perfil_nombre').AsString;
 

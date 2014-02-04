@@ -354,6 +354,7 @@ begin
           proveedor_condicionventa.ItemIndex:=0;
 
       end;
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tproveedores.localidad_idSelect(Sender: TObject);

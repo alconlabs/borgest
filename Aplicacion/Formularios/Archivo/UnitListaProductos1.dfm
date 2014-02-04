@@ -113,7 +113,6 @@ inherited ListaProductos1: TListaProductos1
       inherited btnfiltrar: TButton
         Left = 942
         ExplicitLeft = 942
-        ExplicitTop = 0
       end
       object fil_producto_nombre: TGTBEdit
         Left = 170

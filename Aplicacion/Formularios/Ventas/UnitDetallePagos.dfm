@@ -64,7 +64,6 @@ inherited DetallePagos: TDetallePagos
       Top = 366
       Caption = 'Imprimir'
       TabOrder = 6
-      OnClick = btnguardarClick
       ExplicitLeft = 11
       ExplicitTop = 366
     end
@@ -158,7 +157,7 @@ inherited DetallePagos: TDetallePagos
       Width = 202
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 2
       Confbase = Princ.ZBase
       Confsql.Strings = (

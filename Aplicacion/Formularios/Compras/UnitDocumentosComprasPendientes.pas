@@ -213,6 +213,7 @@ begin
     DTSDocumentoscomprasPendientes.OnDataChange(Self,ZQDocumentoscomprasPendientes.FieldByName('documentocompradoc_importe'));
     btnimputardocumentos.Visible:=documentocompra_apagar>0;
     lblapagar.Visible:=documentocompra_apagar>0;
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure TDocumentosComprasPendientes.ZQDocumentosComprasPendientesAfterPost(

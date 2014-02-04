@@ -2,7 +2,6 @@ inherited FacturarDocumentos: TFacturarDocumentos
   Caption = 'Facturar Documentos'
   ClientHeight = 380
   ClientWidth = 787
-  OnShow = FormShow
   ExplicitWidth = 803
   ExplicitHeight = 418
   PixelsPerInch = 96
@@ -24,7 +23,6 @@ inherited FacturarDocumentos: TFacturarDocumentos
       Left = 699
       Top = 326
       Caption = 'Aceptar'
-      OnClick = btnguardarClick
       ExplicitLeft = 699
       ExplicitTop = 326
     end

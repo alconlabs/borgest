@@ -158,7 +158,7 @@ begin
     sucursal_id.ItemIndex:=0;
     cliente_id.llenarcombo;
     cliente_id.ItemIndex:=0;
-    
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tsaldoclientes.cargatemporal;

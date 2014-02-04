@@ -6,9 +6,6 @@ inherited listapuntosdeventa: Tlistapuntosdeventa
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
       FullHeight = 0
-      inherited btnanular: TButton
-        Visible = False
-      end
     end
     inherited DBGrid1: TDBGrid
       Columns = <

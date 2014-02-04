@@ -2,7 +2,6 @@ inherited EstadoComisionesBorradores: TEstadoComisionesBorradores
   Caption = 'Detalle Comisiones Borradores'
   ClientHeight = 385
   ClientWidth = 740
-  OnShow = FormShow
   ExplicitWidth = 756
   ExplicitHeight = 423
   PixelsPerInch = 96
@@ -32,7 +31,6 @@ inherited EstadoComisionesBorradores: TEstadoComisionesBorradores
       Left = 454
       Top = 11
       Caption = 'Actualizar'
-      OnClick = btnguardarClick
       ExplicitLeft = 454
       ExplicitTop = 11
     end

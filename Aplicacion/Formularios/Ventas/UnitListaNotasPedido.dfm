@@ -12,9 +12,6 @@ inherited ListaNotasPedido: TListaNotasPedido
       Left = 932
       ExplicitLeft = 932
       FullHeight = 0
-      inherited btnanular: TButton
-        Visible = False
-      end
     end
     inherited DBGrid1: TDBGrid
       Width = 932

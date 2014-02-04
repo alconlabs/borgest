@@ -8,10 +8,6 @@ inherited ListaAjustedeStock: TListaAjustedeStock
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
       FullHeight = 0
-      inherited btnnuevo: TButton
-        ExplicitLeft = 6
-        ExplicitTop = -6
-      end
       inherited btnanular: TButton
         Visible = True
       end

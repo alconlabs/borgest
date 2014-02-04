@@ -2,7 +2,6 @@ inherited CajaApertura: TCajaApertura
   Caption = 'Abrir Nueva Caja'
   ClientHeight = 105
   ClientWidth = 328
-  OnShow = FormShow
   ExplicitWidth = 344
   ExplicitHeight = 143
   PixelsPerInch = 96
@@ -35,7 +34,6 @@ inherited CajaApertura: TCajaApertura
       Top = 54
       Caption = 'Aceptar'
       TabOrder = 1
-      OnClick = btnguardarClick
       ExplicitLeft = 155
       ExplicitTop = 54
     end

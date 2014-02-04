@@ -289,6 +289,8 @@ end;
 procedure Testadoctas.FormShow(Sender: TObject);
 begin
     DBGrid1.Columns.Items[6].Visible:=Princ.MOSTRAREQUIPO;
+
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Testadoctas.cargatemporal;

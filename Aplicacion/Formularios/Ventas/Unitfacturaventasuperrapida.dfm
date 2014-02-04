@@ -86,14 +86,6 @@ inherited facturaventasuperrapida: Tfacturaventasuperrapida
       Alignment = taRightJustify
       Caption = 'Producto'
     end
-    object Label16: TLabel [13]
-      Left = 19
-      Top = 83
-      Width = 35
-      Height = 13
-      Alignment = taRightJustify
-      Caption = 'Importe'
-    end
     inherited documentoventa_numero: TEdit
       Top = 252
       TabOrder = 18
@@ -103,7 +95,7 @@ inherited facturaventasuperrapida: Tfacturaventasuperrapida
     inherited documentoventa_fecha: TDateTimePicker
       Left = 601
       Top = 212
-      TabOrder = 19
+      TabOrder = 26
       Visible = False
       ExplicitLeft = 601
       ExplicitTop = 212
@@ -212,7 +204,6 @@ inherited facturaventasuperrapida: Tfacturaventasuperrapida
       Top = 322
       Width = 186
       Height = 65
-      TabOrder = 13
       Visible = False
     end
     inherited btnagregarpago: TButton
@@ -229,7 +220,7 @@ inherited facturaventasuperrapida: Tfacturaventasuperrapida
     end
     inherited sucursal_id: TSqlComboBox
       Top = 223
-      TabOrder = 20
+      TabOrder = 25
       Visible = False
       ExplicitTop = 223
     end

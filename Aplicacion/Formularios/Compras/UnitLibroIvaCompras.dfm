@@ -39,7 +39,6 @@ inherited LibroIvaCompras: TLibroIvaCompras
       Left = 115
       Top = 80
       Caption = 'Imprimir'
-      OnClick = btnguardarClick
       ExplicitLeft = 115
       ExplicitTop = 80
     end

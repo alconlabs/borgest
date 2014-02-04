@@ -2,7 +2,6 @@ inherited AjusteStock: TAjusteStock
   Caption = 'Ajuste de Stock'
   ClientHeight = 405
   ClientWidth = 722
-  OnShow = FormShow
   ExplicitWidth = 738
   ExplicitHeight = 443
   PixelsPerInch = 96
@@ -10,6 +9,8 @@ inherited AjusteStock: TAjusteStock
   inherited panelgrilla: TAdvPanel
     Width = 722
     Height = 405
+    ExplicitWidth = 722
+    ExplicitHeight = 405
     FullHeight = 0
     object Label15: TLabel [0]
       Left = 25
@@ -53,7 +54,6 @@ inherited AjusteStock: TAjusteStock
       Left = 539
       Top = 342
       TabOrder = 8
-      OnClick = btnguardarClick
       ExplicitLeft = 539
       ExplicitTop = 342
     end

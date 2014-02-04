@@ -9,9 +9,8 @@ inherited EstadoIVAs: TEstadoIVAs
   inherited panelgrilla: TAdvPanel
     Width = 442
     Height = 398
-    ExplicitLeft = 56
-    ExplicitTop = -24
-    ExplicitWidth = 948
+    ExplicitWidth = 442
+    ExplicitHeight = 398
     FullHeight = 0
     object Label1: TLabel [0]
       Left = 76
@@ -40,7 +39,6 @@ inherited EstadoIVAs: TEstadoIVAs
       Left = 235
       Top = 35
       Caption = 'Actualizar'
-      OnClick = btnguardarClick
       ExplicitLeft = 235
       ExplicitTop = 35
     end

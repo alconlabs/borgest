@@ -2,7 +2,6 @@ inherited ConfigListas: TConfigListas
   Caption = 'Configurar Listas'
   ClientHeight = 337
   ClientWidth = 454
-  OnShow = FormShow
   ExplicitWidth = 470
   ExplicitHeight = 375
   PixelsPerInch = 96
@@ -10,6 +9,8 @@ inherited ConfigListas: TConfigListas
   inherited panelgrilla: TAdvPanel
     Width = 454
     Height = 337
+    ExplicitWidth = 454
+    ExplicitHeight = 337
     FullHeight = 0
     object Label3: TLabel [0]
       Left = 9
@@ -38,7 +39,6 @@ inherited ConfigListas: TConfigListas
       Left = 283
       Top = 286
       TabOrder = 3
-      OnClick = btnguardarClick
       ExplicitLeft = 283
       ExplicitTop = 286
     end

@@ -18,6 +18,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btnguardarClick(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -45,6 +47,11 @@ begin
       Self.Close;
 end;
 
+procedure TABMbase.btnguardarClick(Sender: TObject);
+begin
+    princ.Permisos1.guardarlog(self.ClassName+'.Guardar; abm='+inttostr(abm));
+end;
+
 procedure TABMbase.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
     if liberar_al_cerrar then
@@ -68,6 +75,11 @@ begin
         VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);
         VK_F9:if btnguardar.Enabled then btnguardar.Click;
     end;
+end;
+
+procedure TABMbase.FormShow(Sender: TObject);
+begin
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 end.

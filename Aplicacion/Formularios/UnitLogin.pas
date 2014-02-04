@@ -97,7 +97,7 @@ begin
           else
             begin
                 ZQSelect.SQL.Clear;
-                ZQSelect.SQL.Add('select *, "root" as personal_nombre, "root" as perfil_nombre from personal ');
+                ZQSelect.SQL.Add('select "root" as personal_nombre, "root" as perfil_nombre from personal ');
                 ZQSelect.Active:=true;
 
 

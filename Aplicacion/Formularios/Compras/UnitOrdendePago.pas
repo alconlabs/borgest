@@ -378,6 +378,7 @@ begin
           end;
 
     end;
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure TOrdendePago.modificar;

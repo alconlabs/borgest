@@ -35,7 +35,6 @@ inherited MenuConfig: TMenuConfig
     inherited btnguardar: TButton
       Left = 193
       Top = 326
-      OnClick = btnguardarClick
       ExplicitLeft = 193
       ExplicitTop = 326
     end

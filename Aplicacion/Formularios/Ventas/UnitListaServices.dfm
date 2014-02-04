@@ -12,9 +12,6 @@ inherited Listaservices: TListaservices
       Left = 932
       ExplicitLeft = 932
       FullHeight = 0
-      inherited btnanular: TButton
-        Visible = False
-      end
       inherited btnver: TButton
         TabOrder = 5
       end

@@ -2,7 +2,6 @@ inherited EstadoCaja: TEstadoCaja
   Caption = 'Estado de Caja'
   ClientHeight = 483
   ClientWidth = 1059
-  OnShow = FormShow
   ExplicitWidth = 1075
   ExplicitHeight = 521
   PixelsPerInch = 96

@@ -34,7 +34,6 @@ uses
   UnitActualizarSistema in 'Formularios\Herramientas\UnitActualizarSistema.pas' {ABMbase1},
   Unitcalculoprecioproducto in 'Formularios\Archivo\Unitcalculoprecioproducto.pas' {calculoprecioproductos},
   Unitdocumentoventabase in 'Formularios\Ventas\Unitdocumentoventabase.pas' {documentoventabase},
-  Unitfacturaventasuperrapida in 'Formularios\Ventas\Unitfacturaventasuperrapida.pas' {facturaventasuperrapida},
   UnitMostrarExcel in 'Formularios\Archivo\UnitMostrarExcel.pas' {MostrarExcel},
   UnitDocumentoVentaExcel in 'Formularios\Ventas\UnitDocumentoVentaExcel.pas' {DocumentoVentaExcel},
   UnitMenuConfig in 'Formularios\Herramientas\UnitMenuConfig.pas' {MenuConfig},
@@ -139,7 +138,8 @@ uses
   UnitCuponTarjetaCredito in 'Formularios\Ventas\UnitCuponTarjetaCredito.pas' {CuponTarjetaCredito},
   UnitListaCuponesTarjetasCredito in 'Formularios\Ventas\UnitListaCuponesTarjetasCredito.pas' {ListaCuponesTarjetasCredito},
   UnitSincronizarDB in 'Formularios\Herramientas\UnitSincronizarDB.pas' {SincronizarDB},
-  UnitEstadoIVAs in 'Formularios\Contabilidad\UnitEstadoIVAs.pas' {EstadoIVAs};
+  UnitEstadoIVAs in 'Formularios\Contabilidad\UnitEstadoIVAs.pas' {EstadoIVAs},
+  UnitSplash in 'Formularios\UnitSplash.pas' {splash};
 
 {$R *.res}
 
@@ -149,5 +149,6 @@ begin
   Application.Title := 'Borgest - Sistema de Gestion Comercial';
   Application.CreateForm(TPrinc, Princ);
   Application.CreateForm(TEstadoIVAs, EstadoIVAs);
+  Application.CreateForm(Tsplash, splash);
   Application.Run;
 end.

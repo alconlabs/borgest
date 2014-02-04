@@ -159,6 +159,8 @@ begin
     btnver.Enabled:=Princ.Permisos1.Permiso_ver;
     btnfiltrar.Enabled:=Princ.Permisos1.Permiso_habilitado;
 
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
+
 //    MessageDlg('end show', mtWarning, [mbOK], 0);
 end;
 

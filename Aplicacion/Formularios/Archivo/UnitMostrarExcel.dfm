@@ -2,7 +2,6 @@ inherited MostrarExcel: TMostrarExcel
   Caption = 'Archivo Excel'
   ClientHeight = 508
   ClientWidth = 828
-  OnShow = FormShow
   ExplicitWidth = 844
   ExplicitHeight = 546
   PixelsPerInch = 96

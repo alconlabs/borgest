@@ -2,7 +2,6 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
   Caption = 'Imprimir Lista de Precios'
   ClientHeight = 519
   ClientWidth = 865
-  OnShow = FormShow
   ExplicitWidth = 881
   ExplicitHeight = 557
   PixelsPerInch = 96
@@ -46,7 +45,6 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
       Left = 142
       Top = 464
       Visible = False
-      OnClick = btnguardarClick
       ExplicitLeft = 142
       ExplicitTop = 464
     end

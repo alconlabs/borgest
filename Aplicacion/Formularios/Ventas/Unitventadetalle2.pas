@@ -432,7 +432,7 @@ begin
 
 
       end;
-
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tventadetalle2.ventadetalle_preciounitarioExit(Sender: TObject);

@@ -12,9 +12,6 @@ inherited ListaPoliticasdePrecios: TListaPoliticasdePrecios
       Left = 900
       ExplicitLeft = 900
       FullHeight = 0
-      inherited btnanular: TButton
-        Visible = False
-      end
     end
     inherited DBGrid1: TDBGrid
       Width = 900

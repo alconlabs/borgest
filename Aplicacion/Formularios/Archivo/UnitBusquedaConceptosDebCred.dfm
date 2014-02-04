@@ -25,7 +25,6 @@ inherited BusquedaConceptosDebCred: TBusquedaConceptosDebCred
     end
     inherited panelfiltros: TAdvPanel
       TabOrder = 0
-      ExplicitTop = 451
       FullHeight = 0
       inherited fil_id: TGTBEdit
         TabOrder = 2
@@ -39,6 +38,7 @@ inherited BusquedaConceptosDebCred: TBusquedaConceptosDebCred
         TabOrder = 0
         OnKeyPress = fil_idKeyPress
         Tag2 = 0
+        ExplicitHeight = 21
       end
     end
     inherited AdvPanel1: TAdvPanel

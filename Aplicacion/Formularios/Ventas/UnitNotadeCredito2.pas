@@ -445,6 +445,7 @@ begin
     
     limpiar_al_guardar:=abm=1;
     PageControl1.ActivePage:=TabSheet1;
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure TNotadeCredito2.modificar;

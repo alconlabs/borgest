@@ -30,6 +30,10 @@ inherited CargaDetallePagos: TCargaDetallePagos
       object TabSheet1: TTabSheet
         Caption = '1 - Efectivo'
         OnShow = TabSheet1Show
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label1: TLabel
           Left = 38
           Top = 25
@@ -436,6 +440,10 @@ inherited CargaDetallePagos: TCargaDetallePagos
         Caption = '3 - Cheque'
         ImageIndex = 2
         OnShow = TabSheet3Show
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label4: TLabel
           Left = 38
           Top = 25
@@ -506,6 +514,10 @@ inherited CargaDetallePagos: TCargaDetallePagos
         Caption = '4 - Deposito'
         ImageIndex = 3
         OnShow = TabSheet4Show
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label7: TLabel
           Left = 38
           Top = 25

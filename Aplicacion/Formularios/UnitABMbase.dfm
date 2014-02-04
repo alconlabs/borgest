@@ -16,6 +16,7 @@ object ABMbase: TABMbase
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object panelgrilla: TAdvPanel
@@ -81,6 +82,7 @@ object ABMbase: TABMbase
       Height = 25
       Caption = 'Guardar'
       TabOrder = 0
+      OnClick = btnguardarClick
     end
   end
   object ZQSelect: TZQuery

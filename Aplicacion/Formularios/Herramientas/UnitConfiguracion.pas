@@ -786,7 +786,7 @@ begin
       end;
 
     PCSERVIDOR.Caption:='Servidor Base de Datos: '+Princ.ZBase.HostName;
-
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tconfiguracion.VENTARAPIDACLIENTEIDSelect(Sender: TObject);

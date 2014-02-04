@@ -804,7 +804,7 @@ begin
 
     end;
 
-
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tproductos.ZQproductosAfterOpen(DataSet: TDataSet);

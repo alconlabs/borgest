@@ -49,10 +49,6 @@ inherited ListaLiquidacionesBorradores: TListaLiquidacionesBorradores
     end
     inherited panelfiltros: TAdvPanel
       FullHeight = 0
-      inherited btnfiltrar: TButton
-        ExplicitLeft = 831
-        ExplicitTop = 0
-      end
       object fil_liquidacionborrador_fecha: TGTBEdit
         Left = 85
         Top = 0

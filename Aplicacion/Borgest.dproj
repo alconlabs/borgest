@@ -291,6 +291,9 @@
     <DCCReference Include="Formularios\UnitPrinc.pas">
       <Form>Princ</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\UnitSplash.pas">
+      <Form>splash</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitAplicarRecibosPendientes.pas">
       <Form>AplicarRecibosPendientes</Form>
     </DCCReference>
@@ -341,9 +344,6 @@
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\Unitfacturaventarapida.pas">
       <Form>facturasventarapida</Form>
-    </DCCReference>
-    <DCCReference Include="Formularios\Ventas\Unitfacturaventasuperrapida.pas">
-      <Form>facturaventasuperrapida</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitImpresoraFiscal.pas">
       <Form>impresorafiscal</Form>

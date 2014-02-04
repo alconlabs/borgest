@@ -40,6 +40,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     abm:integer;
@@ -89,6 +90,11 @@ procedure Tprovincias.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
     Princ.OnKeyDown(sender, Key, Shift);
+end;
+
+procedure Tprovincias.FormShow(Sender: TObject);
+begin
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tprovincias.modificar;

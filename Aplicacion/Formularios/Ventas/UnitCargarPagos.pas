@@ -21,6 +21,7 @@ type
     btncancelar: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -53,6 +54,11 @@ begin
         VK_ESCAPE:btncancelar.Click;
         VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);
     end;
+end;
+
+procedure TCargarPagos.FormShow(Sender: TObject);
+begin
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 end.

@@ -2,7 +2,6 @@ inherited LiquidacionBorradorDebCred: TLiquidacionBorradorDebCred
   Caption = 'Debito/Credito'
   ClientHeight = 105
   ClientWidth = 509
-  OnShow = FormShow
   ExplicitWidth = 525
   ExplicitHeight = 143
   PixelsPerInch = 96
@@ -43,7 +42,6 @@ inherited LiquidacionBorradorDebCred: TLiquidacionBorradorDebCred
       Top = 54
       Caption = 'Aceptar'
       TabOrder = 2
-      OnClick = btnguardarClick
       ExplicitLeft = 341
       ExplicitTop = 54
     end

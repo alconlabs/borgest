@@ -705,7 +705,8 @@ begin
 
     end;
 
-    VENTASEMITIRREMITOCTACTE.Visible:=abm=1
+    VENTASEMITIRREMITOCTACTE.Visible:=abm=1;
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tfacturasventa.modificar;

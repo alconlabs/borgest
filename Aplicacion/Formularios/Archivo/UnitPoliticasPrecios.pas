@@ -254,6 +254,7 @@ begin
           politicaprecio_obse.Lines.Text:='';
 
       end;
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tpoliticasprecios.ZQpoliticasdeprecioAfterOpen(DataSet: TDataSet);

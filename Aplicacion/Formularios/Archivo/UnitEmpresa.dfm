@@ -2,7 +2,6 @@ inherited empresa: Tempresa
   Caption = 'Empresa'
   ClientHeight = 185
   ClientWidth = 500
-  OnShow = FormShow
   ExplicitWidth = 516
   ExplicitHeight = 223
   PixelsPerInch = 96
@@ -10,10 +9,8 @@ inherited empresa: Tempresa
   inherited panelgrilla: TAdvPanel
     Width = 500
     Height = 185
-    ExplicitLeft = -48
-    ExplicitTop = -8
-    ExplicitWidth = 563
-    ExplicitHeight = 464
+    ExplicitWidth = 500
+    ExplicitHeight = 185
     FullHeight = 0
     object Label3: TLabel [0]
       Left = 18
@@ -66,7 +63,6 @@ inherited empresa: Tempresa
       Left = 331
       Top = 134
       TabOrder = 5
-      OnClick = btnguardarClick
       ExplicitLeft = 331
       ExplicitTop = 134
     end

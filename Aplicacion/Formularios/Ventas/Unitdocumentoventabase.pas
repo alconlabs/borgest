@@ -402,7 +402,7 @@ begin
     end;
 
     limpiar_al_guardar:=abm=1;
-
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tdocumentoventabase.modificar;

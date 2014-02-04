@@ -4283,13 +4283,6 @@ object Princ: TPrinc
     Left = 288
     Top = 288
   end
-  object Permisos1: TPermisos
-    abm = 0
-    ConfSqlConnection = ZBase
-    ConfIni = ini1
-    Left = 288
-    Top = 384
-  end
   object ZQRecargoTarjetas: TZQuery
     Connection = ZBase
     SQL.Strings = (
@@ -4467,5 +4460,12 @@ object Princ: TPrinc
     OnTimer = TimerBarraProgresoTimer
     Left = 48
     Top = 464
+  end
+  object Permisos1: TPermisos
+    abm = 0
+    ConfSqlConnection = ZBase
+    ConfIni = ini1
+    Left = 288
+    Top = 392
   end
 end

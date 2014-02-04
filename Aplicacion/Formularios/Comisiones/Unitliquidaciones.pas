@@ -632,7 +632,7 @@ begin
 
     if abm=3 then
       btnguardar.Caption:='Eliminar';
-
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tliquidaciones.modificar;

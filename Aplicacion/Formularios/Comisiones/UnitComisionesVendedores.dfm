@@ -340,6 +340,8 @@ inherited ComisionesVendedores: TComisionesVendedores
   inherited StatusBar1: TStatusBar
     Top = 206
     Width = 1029
+    ExplicitTop = 206
+    ExplicitWidth = 1029
   end
   inherited ZQGrilla: TZQuery
     SQL.Strings = (

@@ -67,7 +67,6 @@ inherited ListaClientes1: TListaClientes1
       inherited btnfiltrar: TButton
         Left = 907
         ExplicitLeft = 907
-        ExplicitTop = 0
       end
       object fil_cliente_nombre: TEdit
         Left = 85

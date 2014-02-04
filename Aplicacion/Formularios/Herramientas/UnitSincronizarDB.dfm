@@ -42,7 +42,6 @@ inherited SincronizarDB: TSincronizarDB
     inherited btnguardar: TButton
       Left = 443
       Top = 478
-      OnClick = btnguardarClick
       ExplicitLeft = 443
       ExplicitTop = 478
     end
@@ -64,6 +63,10 @@ inherited SincronizarDB: TSincronizarDB
       TabOrder = 3
       object TabSheet1: TTabSheet
         Caption = 'Tablas'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object tablasinc_id: TSqlListView
           Left = 0
           Top = 0
@@ -166,6 +169,7 @@ inherited SincronizarDB: TSincronizarDB
           ConfIni = Princ.ini1
           Tag2 = 0
           ConfTodosCheckeados = False
+          ExplicitWidth = 464
         end
       end
       object TabSheet2: TTabSheet

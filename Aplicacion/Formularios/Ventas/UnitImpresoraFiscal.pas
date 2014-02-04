@@ -1048,6 +1048,7 @@ end;
 procedure Timpresorafiscal.FormShow(Sender: TObject);
 begin
     Timer1.Enabled:=true;
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Timpresorafiscal.Timer1Timer(Sender: TObject);

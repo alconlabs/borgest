@@ -77,7 +77,6 @@ inherited InformesVentas: TInformesVentas
       Left = 387
       Top = 176
       Caption = 'Imprimir'
-      OnClick = btnguardarClick
       ExplicitLeft = 387
       ExplicitTop = 176
     end

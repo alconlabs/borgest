@@ -254,6 +254,7 @@ begin
     DTSDocumentosVentasPendientes.OnDataChange(Self,ZQDocumentosVentasPendientes.FieldByName('liquidacionborradordetalle_importe'));
     btnimputardocumentos.Visible:=documentoventa_apagar>0;
     lblapagar.Visible:=documentoventa_apagar>0;
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure TComisionesBorradorPendientes.ZQDocumentosVentasPendientesAfterPost(

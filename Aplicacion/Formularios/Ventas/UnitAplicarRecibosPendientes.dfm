@@ -2,7 +2,6 @@ inherited AplicarRecibosPendientes: TAplicarRecibosPendientes
   Caption = 'Aplicar Recibos Pendientes'
   ClientHeight = 421
   ClientWidth = 753
-  OnShow = FormShow
   ExplicitWidth = 769
   ExplicitHeight = 459
   PixelsPerInch = 96
@@ -126,7 +125,6 @@ inherited AplicarRecibosPendientes: TAplicarRecibosPendientes
       Left = 579
       Top = 366
       TabOrder = 7
-      OnClick = btnguardarClick
       ExplicitLeft = 579
       ExplicitTop = 366
     end
@@ -136,7 +134,7 @@ inherited AplicarRecibosPendientes: TAplicarRecibosPendientes
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       OnSelect = cliente_idSelect
       Confbase = Princ.ZBase
@@ -254,7 +252,7 @@ inherited AplicarRecibosPendientes: TAplicarRecibosPendientes
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 1
       OnSelect = documentoventa_idSelect
       Confbase = Princ.ZBase

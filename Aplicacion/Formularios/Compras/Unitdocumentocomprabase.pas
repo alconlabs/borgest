@@ -472,6 +472,8 @@ begin
         4:btnguardar.Caption:='Imprimir';
         5:btnguardar.Caption:='Anular';
     end;
+
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure Tdocumentocomprabase.modificar;
@@ -618,10 +620,10 @@ begin
     puntoventa_id.Confsql.Text:='select * from puntodeventa where sucursal_id="'+sucursal_id.codigo+'" order by puntoventa_numero';
     puntoventa_id.llenarcombo;
     try
-       puntoventa_id.ItemIndex:=0;
-     except
-       puntoventa_id.ItemIndex:=-1;
-     end;
+      puntoventa_id.ItemIndex:=0;
+    except
+      puntoventa_id.ItemIndex:=-1;
+    end;
 
     puntoventa_id.OnSelect(self);
 end;

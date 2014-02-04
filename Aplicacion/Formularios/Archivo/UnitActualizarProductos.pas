@@ -269,6 +269,7 @@ type
     procedure bnteliminarproductosClick(Sender: TObject);
     procedure BtnAplicarRubroClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     destino:string;
@@ -892,6 +893,11 @@ procedure TActualizarProductos.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
     Princ.OnKeyDown(sender, Key, Shift);
+end;
+
+procedure TActualizarProductos.FormShow(Sender: TObject);
+begin
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 procedure TActualizarProductos.tipo_codigoSelect(Sender: TObject);

@@ -2,7 +2,6 @@ inherited CuponTarjetaCredito: TCuponTarjetaCredito
   Caption = 'Cupon de Tarjeta de Credito'
   ClientHeight = 232
   ClientWidth = 503
-  OnShow = FormShow
   ExplicitWidth = 519
   ExplicitHeight = 270
   PixelsPerInch = 96
@@ -143,7 +142,6 @@ inherited CuponTarjetaCredito: TCuponTarjetaCredito
       Left = 331
       Top = 174
       TabOrder = 14
-      OnClick = btnguardarClick
       ExplicitLeft = 331
       ExplicitTop = 174
     end

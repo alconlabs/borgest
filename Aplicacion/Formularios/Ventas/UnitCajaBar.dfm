@@ -2,7 +2,6 @@ inherited CajaBar: TCajaBar
   Caption = 'Caja Bar'
   ClientHeight = 517
   ClientWidth = 999
-  OnShow = FormShow
   ExplicitWidth = 1015
   ExplicitHeight = 555
   PixelsPerInch = 96
@@ -74,10 +73,6 @@ inherited CajaBar: TCajaBar
       TabOrder = 2
       object TabVentas: TTabSheet
         Caption = 'Ventas'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label3: TLabel
           Left = 415
           Top = 10

@@ -90,6 +90,8 @@ begin
             (panelfiltros.Controls[i] as TEdit).OnKeyPress:=fil_idKeyPress;
 
       end;
+
+    princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 
 end.

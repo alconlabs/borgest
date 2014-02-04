@@ -10,8 +10,8 @@ inherited MovimientosdeStock: TMovimientosdeStock
     Width = 713
     Height = 445
     StatusBar.BevelInner = True
-    ExplicitWidth = 1055
-    ExplicitHeight = 483
+    ExplicitWidth = 713
+    ExplicitHeight = 445
     FullHeight = 0
     object Label3: TLabel [0]
       Left = 31
