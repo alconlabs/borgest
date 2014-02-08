@@ -148,7 +148,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Borgest - Sistema de Gestion Comercial';
   Application.CreateForm(TPrinc, Princ);
-  Application.CreateForm(TEstadoIVAs, EstadoIVAs);
-  Application.CreateForm(Tsplash, splash);
   Application.Run;
 end.

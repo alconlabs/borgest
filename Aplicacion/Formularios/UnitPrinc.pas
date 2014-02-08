@@ -325,7 +325,7 @@ type
     procedure AbrirModificarCajaAsientoEgreso(id:string);
     function EsCUITValido(Num:String):boolean;
     function DescargarArchivo( sURL, sArchivoLocal: String ): boolean;
-    function EjecutarScriptDB(archivo_sql:string):boolean;
+    function EjecutarScriptDB(archivo_sql:string; base:TZConnection):boolean;
     function BorrarDocumentoVenta(documentoventa_id:string):boolean;
     function BorrarDocumentoCompra(documentocompra_id:string):boolean;
     function GetConfigTipoDocumento(documento_id:string; tipodocu_id:string; campo:string):string;
@@ -1450,7 +1450,7 @@ end;
 
 
 
-function TPrinc.EjecutarScriptDB(archivo_sql: string):boolean;
+function TPrinc.EjecutarScriptDB(archivo_sql:string; base:TZConnection):boolean;
 var
   error:integer;
   i:integer;
@@ -1459,8 +1459,10 @@ var
 
 begin
     error:=0;
+    ZSQLProcessor1.Connection:=base;
     ZSQLProcessor1.Script.LoadFromFile(archivo_sql);
     ZSQLProcessor1.Parse;
+
 
     continuar:=true;
     i:=0;
@@ -3549,6 +3551,7 @@ var
   USUARIOPORDEFECTO:string;
   personal_usuario:string;
   personal_pass:string;
+  logueado:boolean;
 begin
 //MessageDlg('creando principal', mtWarning, [mbOK], 0);
 
@@ -3596,13 +3599,25 @@ begin
       end;
 
 
+    if ParamCount=2 then
+     begin
+         Princ.Encriptador1.ADesencriptar:=ParamStr(1);
+         Princ.Encriptador1.Desencriptar;
+         personal_usuario:=Princ.Encriptador1.Desencriptado;
+
+         Princ.Encriptador1.ADesencriptar:=ParamStr(2);
+         Princ.Encriptador1.Desencriptar;
+         personal_pass:=Princ.Encriptador1.Desencriptado;
+
+     end;
+
+
     try
       login:=Tlogin.Create(self);
     finally
       login.liberar_al_cerrar:=false;
       login.personal_usuario.Text:=personal_usuario;
       login.personal_pass.Text:=personal_pass;
-
     end;
 
     if login.ShowModal=mrOk then

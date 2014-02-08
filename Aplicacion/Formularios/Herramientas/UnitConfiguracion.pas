@@ -122,6 +122,7 @@ type
     DBREMOTAUSUARIO: TEdit;
     DBREMOTAPASS: TEdit;
     PCSERVIDOR: TLabel;
+    btnactualizardbremotafile: TButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -139,6 +140,7 @@ type
     procedure FACTURAVENTAPUNTOVENTAIDSelect(Sender: TObject);
     procedure FACTURAVENTACLIENTEIDSelect(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btnactualizardbremotafileClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -451,7 +453,7 @@ begin
 
     if Princ.DescargarArchivo(LINKSCRIPTDB.Text, script_db) then
       begin
-         if Princ.EjecutarScriptDB(script_db) then
+         if Princ.EjecutarScriptDB(script_db,princ.ZBase) then
            MessageDlg('Base de Datos actualizada.'+#13+#10+'Debe reiniciar el sistema para ver los cambios.', mtInformation, [mbOK], 0);
       end
     else
@@ -464,12 +466,8 @@ begin
     Princ.OpenDialog1.Filter:='SQL|*.sql';
     if Princ.OpenDialog1.Execute() then
       begin
-          if Princ.EjecutarScriptDB(Princ.OpenDialog1.FileName) then
+          if Princ.EjecutarScriptDB(Princ.OpenDialog1.FileName,princ.ZBase) then
             MessageDlg('Base de Datos actualizada.'+#13+#10+'Debe reiniciar el sistema para ver los cambios.', mtInformation, [mbOK], 0);
-
-
-
-
       end;
 end;
 
@@ -480,6 +478,16 @@ begin
     finally
       MenuConfig.Show;
     end;
+end;
+
+procedure Tconfiguracion.btnactualizardbremotafileClick(Sender: TObject);
+begin
+    Princ.OpenDialog1.Filter:='SQL|*.sql';
+    if Princ.OpenDialog1.Execute() then
+      begin
+          if Princ.EjecutarScriptDB(Princ.OpenDialog1.FileName,princ.BaseRemota) then
+            MessageDlg('Base de Datos actualizada.'+#13+#10+'Debe reiniciar el sistema para ver los cambios.', mtInformation, [mbOK], 0);
+      end;
 end;
 
 procedure Tconfiguracion.FACTURAVENTACLIENTEIDSelect(Sender: TObject);

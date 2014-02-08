@@ -18,11 +18,14 @@ type
     personal_pass: TEdit;
     Label7: TLabel;
     Label11: TLabel;
+    Timer1: TTimer;
     procedure btncancelarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -133,6 +136,18 @@ begin
         VK_F9:btnguardar.Click;
         VK_RETURN:btnguardar.Click;
     end;
+end;
+
+procedure Tlogin.FormShow(Sender: TObject);
+begin
+    if ParamCount=2 then
+      Timer1.Enabled:=true;
+
+end;
+
+procedure Tlogin.Timer1Timer(Sender: TObject);
+begin
+    self.btnguardar.Click;
 end;
 
 end.

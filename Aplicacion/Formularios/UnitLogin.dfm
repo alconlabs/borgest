@@ -16,6 +16,7 @@ object login: Tlogin
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object panelgrilla: TAdvPanel
@@ -152,5 +153,11 @@ object login: Tlogin
         Name = 'cliente_id'
         ParamType = ptUnknown
       end>
+  end
+  object Timer1: TTimer
+    Enabled = False
+    OnTimer = Timer1Timer
+    Left = 24
+    Top = 64
   end
 end
