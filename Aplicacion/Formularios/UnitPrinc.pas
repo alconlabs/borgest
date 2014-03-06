@@ -490,7 +490,7 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitSaldosComisionesBorradores, UnitListaLiquidacionesBorradores,
   UnitImprimirEtiquetas, UnitConsultaStock, UnitEstadoComisionesBorradores,
   UnitDetalleComisionesBorradores, UnitListaCuponesTarjetasCredito,
-  UnitSincronizarDB, UnitEstadoIVAs;
+  UnitSincronizarDB, UnitEstadoIVAs, UnitFacturaventa02;
 
 {$R *.dfm}
 
@@ -979,6 +979,7 @@ begin
           finally
             recibosventa.abm:=abm;
             recibosventa.id:=id;
+            recibosventa.limpiar_al_guardar:=true;
             recibosventa.Show;
           end;
       end;
@@ -993,6 +994,7 @@ begin
                   notacreditoventa.abm:=abm;
                   notacreditoventa.id:=id;
                   notacreditoventa.tipodocu_nombre:=tipodocu_nombre;
+                  notacreditoventa.limpiar_al_guardar:=true;
                   notacreditoventa.Show;
                 end;
 
@@ -1005,6 +1007,7 @@ begin
                   NotadeCredito2.abm:=abm;
                   NotadeCredito2.id:=id;
                   NotadeCredito2.tipodocu_nombre:=tipodocu_nombre;
+                  NotadeCredito2.limpiar_al_guardar:=true;
                   NotadeCredito2.Show;
                 end;
 
@@ -1022,6 +1025,7 @@ begin
                   notadebitoventa.abm:=abm;
                   notadebitoventa.id:=id;
                   notadebitoventa.tipodocu_nombre:=tipodocu_nombre;
+                  notadebitoventa.limpiar_al_guardar:=true;
                   notadebitoventa.Show;
                 end;
 
@@ -1034,6 +1038,7 @@ begin
                   NotadeDebito2.abm:=abm;
                   NotadeDebito2.id:=id;
                   NotadeDebito2.tipodocu_nombre:=tipodocu_nombre;
+                  NotadeDebito2.limpiar_al_guardar:=true;
                   NotadeDebito2.Show;
                 end;
 
@@ -3696,6 +3701,15 @@ begin
     MOSTRAREQUIPO:=strtobool(Princ.GetConfiguracion('MOSTRAREQUIPO'));
 
     MenuConfiguracion;
+
+
+//    try
+//      facturaventa02:=Tfacturaventa02.Create(self);
+//    finally
+//      facturaventa02.abm:=1;
+//      facturaventa02.btnguardar.Caption:='Guardar';
+//      facturaventa02.Show;
+//    end;
 
 end;
 

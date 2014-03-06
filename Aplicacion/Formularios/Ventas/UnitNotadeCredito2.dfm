@@ -487,14 +487,10 @@ object NotadeCredito2: TNotadeCredito2
       Top = 135
       Width = 836
       Height = 185
-      ActivePage = TabSheet3
+      ActivePage = TabSheet2
       TabOrder = 13
       object TabSheet1: TTabSheet
         Caption = 'Productos'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGrid1: TDBGrid
           Left = 0
           Top = 0
@@ -578,10 +574,6 @@ object NotadeCredito2: TNotadeCredito2
       object TabSheet2: TTabSheet
         Caption = 'Conceptos'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGrid2: TDBGrid
           Left = 0
           Top = 0

@@ -139,7 +139,8 @@ uses
   UnitListaCuponesTarjetasCredito in 'Formularios\Ventas\UnitListaCuponesTarjetasCredito.pas' {ListaCuponesTarjetasCredito},
   UnitSincronizarDB in 'Formularios\Herramientas\UnitSincronizarDB.pas' {SincronizarDB},
   UnitEstadoIVAs in 'Formularios\Contabilidad\UnitEstadoIVAs.pas' {EstadoIVAs},
-  UnitSplash in 'Formularios\UnitSplash.pas' {splash};
+  UnitSplash in 'Formularios\UnitSplash.pas' {splash},
+  UnitFacturaventa02 in 'Formularios\Ventas\UnitFacturaventa02.pas' {facturaventa02};
 
 {$R *.res}
 

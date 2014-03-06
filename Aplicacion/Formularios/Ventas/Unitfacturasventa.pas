@@ -113,6 +113,7 @@ type
     procedure documentoventa_condicionventaSelect(Sender: TObject);
     procedure btnmodificarClick(Sender: TObject);
     procedure documentoventa_recargoExit(Sender: TObject);
+    procedure documentoventa_fechaExit(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -300,6 +301,12 @@ begin
     VENTASEMITIRREMITOCTACTE.Checked:=(abm=1) and (documentoventa_condicionventa.ItemIndex=strtoint(CONDICIONVENTA_CTACTE)) and strtobool(Princ.GetConfiguracion('VENTASEMITIRREMITOCTACTE'));
     btnagregarpago.Enabled:=documentoventa_condicionventa.ItemIndex=strtoint(CONDICIONVENTA_CONTADO);
     btnquitarpago.Enabled:=documentoventa_condicionventa.ItemIndex=strtoint(CONDICIONVENTA_CONTADO);
+end;
+
+procedure Tfacturasventa.documentoventa_fechaExit(Sender: TObject);
+begin
+    if cliente_id.codigo<>'' then
+      documentoventa_fechavenc.Date:=documentoventa_fecha.Date + strtoint(Princ.buscar('select cliente_diasvenc from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_diasvenc'));
 end;
 
 procedure Tfacturasventa.documentoventa_recargoExit(Sender: TObject);

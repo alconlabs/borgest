@@ -194,6 +194,7 @@ object facturasventa: Tfacturasventa
       Date = 40384.000000000000000000
       Time = 40384.000000000000000000
       TabOrder = 18
+      OnExit = documentoventa_fechaExit
     end
     object cliente_id: TSqlComboBox
       Left = 68

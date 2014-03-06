@@ -153,6 +153,7 @@ type
     ZQdocumentoventadocustipodocu_manual: TIntegerField;
     ZQdocumentoventadocuspuntoventa_controladorfiscalmodelo: TIntegerField;
     ZQdocumentoventadocuspuntoventa_controladorfiscalpuerto: TIntegerField;
+    ZQExecSql: TZQuery;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -189,6 +190,7 @@ type
     abm:integer;
     id:string;
     documentoventa_pagado, documentoventa_saldo:real;
+    limpiar_al_guardar:boolean;
     procedure calculartotales;
     procedure calculartotalpagos;
   end;
@@ -307,6 +309,7 @@ end;
 procedure Trecibosventa.FormCreate(Sender: TObject);
 begin
     id:='';
+    limpiar_al_guardar:=true;
 
     sucursal_id.llenarcombo;
     sucursal_id.Buscar(Princ.sucursal_actual);
@@ -466,6 +469,7 @@ begin
     if abm=1 then
       begin
           documentoventa_fecha.Date:=date;
+          documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,'');
       end
     else
       begin
@@ -522,9 +526,9 @@ var
   recibo_numero:string;
 begin
 
-    ZQuery2.SQL.Clear;
-    ZQuery2.SQL.Add('begin');
-    ZQuery2.ExecSQL;
+    ZQExecSql.SQL.Clear;
+    ZQExecSql.SQL.Add('begin');
+    ZQExecSql.ExecSQL;
 
     id:=Princ.codigo('documentosventas','documentoventa_id');
 
@@ -584,13 +588,22 @@ begin
 
     Princ.AgregarRecibo(ZQRecibo,ZQdocumentoventadocus,ZQDocumentopagos);
 
-    ZQuery2.SQL.Clear;
-    ZQuery2.SQL.Add('commit');
-    ZQuery2.ExecSQL;
+    ZQExecSql.SQL.Clear;
+    ZQExecSql.SQL.Add('commit');
+    ZQExecSql.ExecSQL;
 
 
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK, mbCancel], 0);
-    Self.Close;
+
+    if limpiar_al_guardar then
+      begin
+          id:='';
+          Self.OnShow(self);
+      end
+    else
+      begin
+          Self.Close;
+      end;
 end;
 
 

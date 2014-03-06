@@ -1827,3 +1827,5 @@ CREATE  TABLE IF NOT EXISTS `logs` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1
 COLLATE = latin1_swedish_ci;
+530;
+UPDATE `empresas` SET `empresa_razonsocial`='CgAAAKdAvm0+7DyPteQY85UbD2k=\r\n' WHERE `empresa_id`=1;

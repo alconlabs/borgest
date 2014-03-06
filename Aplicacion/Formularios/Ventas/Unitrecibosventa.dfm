@@ -1120,4 +1120,30 @@ object recibosventa: Trecibosventa
       Required = True
     end
   end
+  object ZQExecSql: TZQuery
+    Connection = Princ.ZBase
+    SQL.Strings = (
+      'select * from documentosventas'
+      
+        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
+        'ocumento.tipodocu_id'
+      
+        'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodev' +
+        'enta.puntoventa_id'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 440
+    Top = 24
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+  end
 end
