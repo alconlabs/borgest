@@ -4,7 +4,7 @@ object busquedaproductos: Tbusquedaproductos
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Productos'
   ClientHeight = 510
-  ClientWidth = 1039
+  ClientWidth = 1114
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,7 +22,7 @@ object busquedaproductos: Tbusquedaproductos
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 1039
+    Width = 1114
     Height = 510
     Align = alClient
     BevelOuter = bvNone
@@ -64,11 +64,12 @@ object busquedaproductos: Tbusquedaproductos
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitWidth = 1039
     FullHeight = 0
     object DBGrid1: TDBGrid
       Left = 0
       Top = 33
-      Width = 1039
+      Width = 1114
       Height = 403
       Align = alClient
       DataSource = DSCProveedores
@@ -85,7 +86,7 @@ object busquedaproductos: Tbusquedaproductos
           Expanded = False
           FieldName = 'producto_id'
           Title.Caption = 'Codigo'
-          Width = 47
+          Width = 51
           Visible = True
         end
         item
@@ -143,12 +144,19 @@ object busquedaproductos: Tbusquedaproductos
           Title.Caption = 'Proveedor'
           Width = 150
           Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'producto_fechaactualizacionprecio'
+          Title.Caption = 'Actualizado'
+          Width = 81
+          Visible = True
         end>
     end
     object panelfiltros: TAdvPanel
       Left = 0
       Top = 436
-      Width = 1039
+      Width = 1114
       Height = 22
       Align = alBottom
       BevelOuter = bvNone
@@ -189,9 +197,10 @@ object busquedaproductos: Tbusquedaproductos
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
+      ExplicitTop = 433
       FullHeight = 0
       object Button5: TButton
-        Left = 936
+        Left = 1011
         Top = 0
         Width = 103
         Height = 22
@@ -199,94 +208,134 @@ object busquedaproductos: Tbusquedaproductos
         Caption = 'Filtrar'
         TabOrder = 8
         OnClick = Button5Click
+        ExplicitLeft = 936
       end
-      object fil_producto_precioventa1: TEdit
-        Left = 482
+      object fil_producto_precioventa1: TGTBEdit
+        Left = 477
         Top = 0
         Width = 70
         Height = 22
         Align = alLeft
         TabOrder = 4
-        ExplicitHeight = 21
+        Tag2 = 0
+        FieldName = 'producto_precioventa1'
+        ExplicitLeft = 482
       end
-      object fil_producto_id: TEdit
-        Left = 0
+      object fil_producto_id: TGTBEdit
+        Left = 11
         Top = 0
-        Width = 72
+        Width = 56
         Height = 22
         Align = alLeft
         TabOrder = 0
         OnKeyPress = fil_producto_idKeyPress
-        ExplicitHeight = 21
+        Tag2 = 0
+        FieldName = 'producto_id'
+        ExplicitLeft = 9
       end
-      object fil_producto_nombre: TEdit
-        Left = 152
+      object fil_producto_nombre: TGTBEdit
+        Left = 147
         Top = 0
         Width = 260
         Height = 22
         Align = alLeft
         TabOrder = 2
-        ExplicitHeight = 21
+        Tag2 = 0
+        FieldName = 'producto_nombre'
+        ExplicitLeft = 152
       end
-      object fil_rubro_nombre: TEdit
-        Left = 672
+      object fil_rubro_nombre: TGTBEdit
+        Left = 667
         Top = 0
         Width = 100
         Height = 22
         Align = alLeft
         TabOrder = 6
-        ExplicitHeight = 21
+        Tag2 = 0
+        FieldName = 'rubro_nombre'
+        ExplicitLeft = 672
       end
-      object fil_producto_preciocosto: TEdit
-        Left = 412
+      object fil_producto_preciocosto: TGTBEdit
+        Left = 407
         Top = 0
         Width = 70
         Height = 22
         Align = alLeft
         TabOrder = 3
-        ExplicitHeight = 21
+        Tag2 = 0
+        FieldName = 'producto_preciocosto'
+        ExplicitLeft = 412
       end
-      object fil_producto_codigo: TEdit
-        Left = 72
+      object fil_producto_codigo: TGTBEdit
+        Left = 67
         Top = 0
         Width = 80
         Height = 22
         Align = alLeft
         TabOrder = 1
-        ExplicitHeight = 21
+        Tag2 = 0
+        FieldName = 'producto_codigo'
+        ExplicitLeft = 72
       end
-      object fil_producdepo_stockactual: TEdit
-        Left = 622
+      object fil_producdepo_stockactual: TGTBEdit
+        Left = 617
         Top = 0
         Width = 50
         Height = 22
         Align = alLeft
         TabOrder = 5
-        ExplicitHeight = 21
+        Tag2 = 0
+        FieldName = 'producdepo_stockactual'
+        ExplicitLeft = 622
       end
-      object fil_proveedor_nombre: TEdit
-        Left = 772
+      object fil_proveedor_nombre: TGTBEdit
+        Left = 767
         Top = 0
         Width = 150
         Height = 22
         Align = alLeft
         TabOrder = 7
-        ExplicitHeight = 21
+        Tag2 = 0
+        FieldName = 'proveedor_nombre'
+        ExplicitLeft = 772
       end
-      object fil_producto_precioventa2: TEdit
-        Left = 552
+      object fil_producto_precioventa2: TGTBEdit
+        Left = 547
         Top = 0
         Width = 70
         Height = 22
         Align = alLeft
         TabOrder = 9
-        ExplicitHeight = 21
+        Tag2 = 0
+        FieldName = 'producto_precioventa2'
+        ExplicitLeft = 558
+        ExplicitTop = -6
+      end
+      object fil_producto_fechaactualizacionprecio: TGTBEdit
+        Left = 917
+        Top = 0
+        Width = 81
+        Height = 22
+        Align = alLeft
+        TabOrder = 10
+        Tag2 = 0
+        FieldName = 'producto_fechaactualizacionprecio'
+        ExplicitLeft = 924
+        ExplicitTop = -3
+      end
+      object Panel1: TPanel
+        Left = 0
+        Top = 0
+        Width = 11
+        Height = 22
+        Align = alLeft
+        TabOrder = 11
       end
     end
     object panelbusqueda: TAdvPanel
       Left = 0
       Top = 0
-      Width = 1039
+      Width = 1114
       Height = 33
       Align = alTop
       BevelOuter = bvNone
@@ -327,6 +376,7 @@ object busquedaproductos: Tbusquedaproductos
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
+      ExplicitWidth = 1039
       FullHeight = 0
       object btnbuscar: TButton
         Left = 443
@@ -380,7 +430,7 @@ object busquedaproductos: Tbusquedaproductos
     object AdvPanel1: TAdvPanel
       Left = 0
       Top = 458
-      Width = 1039
+      Width = 1114
       Height = 34
       Align = alBottom
       BevelOuter = bvNone
@@ -421,6 +471,7 @@ object busquedaproductos: Tbusquedaproductos
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
+      ExplicitWidth = 1039
       FullHeight = 0
       object btnaceptar: TButton
         Left = 832

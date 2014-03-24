@@ -2,6 +2,7 @@ inherited ListaNotasPedido: TListaNotasPedido
   Caption = 'Notas de Pedido'
   ClientWidth = 1035
   ExplicitWidth = 1051
+  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel

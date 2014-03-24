@@ -377,6 +377,8 @@ procedure Tdocumentoventabase.FormKeyDown(Sender: TObject; var Key: Word;
 begin
     Princ.OnKeyDown(sender, Key, Shift);
     case key of
+        VK_ESCAPE:btncancelar.Click;
+        VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);
         VK_F4:btnagregar.Click;
         VK_F6:btnquitar.Click;
         VK_F9:btnguardar.Click;

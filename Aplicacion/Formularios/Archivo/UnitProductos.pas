@@ -735,7 +735,7 @@ begin
           producto_preciocosto.Text:='0';
           calculoprecio_id.ItemIndex:=0;
           politicaprecio_id.ItemIndex:=0;
-          tipoiva_id.ItemIndex:=0;
+          tipoiva_id.ItemIndex:=1;
           producto_precioventa1.Text:='0';
           producto_precioventa2.Text:='0';
           producto_precioventa3.Text:='0';

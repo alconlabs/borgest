@@ -140,7 +140,8 @@ uses
   UnitSincronizarDB in 'Formularios\Herramientas\UnitSincronizarDB.pas' {SincronizarDB},
   UnitEstadoIVAs in 'Formularios\Contabilidad\UnitEstadoIVAs.pas' {EstadoIVAs},
   UnitSplash in 'Formularios\UnitSplash.pas' {splash},
-  UnitFacturaventa02 in 'Formularios\Ventas\UnitFacturaventa02.pas' {facturaventa02};
+  UnitFacturaventa02 in 'Formularios\Ventas\UnitFacturaventa02.pas' {facturaventa02},
+  UnitProducto01 in 'Formularios\Archivo\UnitProducto01.pas' {producto01};
 
 {$R *.res}
 

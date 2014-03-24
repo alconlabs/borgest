@@ -111,9 +111,6 @@ object TRpReport
     SectionType = rpsecpheader
     Components = <
       item
-        Component = TRpExpression0
-      end
-      item
         Component = TRpExpression1
       end
       item
@@ -200,33 +197,6 @@ object TRpReport
     SkipToPageExpre = ''
     BackExpression = ''
     Stream = {0000000000000000}
-  end
-  object TRpExpression0: TRpExpression
-    Width = 2400
-    Height = 375
-    PosX = 9150
-    PosY = 1620
-    Type1Font = poHelvetica
-    FontSize = 16
-    Alignment = 1
-    DataType = rpParamInteger
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 
-      'SUBSTR('#39'00000000'#39',1,8-LENGTH(STR(ALIAS_DBBORGEST.documentoventa_' +
-      'numero)))+STR(ALIAS_DBBORGEST.documentoventa_numero)'
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
   end
   object TRpExpression1: TRpExpression
     Width = 1770
@@ -355,6 +325,8 @@ object TRpReport
     FontSize = 12
     FontStyle = 1
     Alignment = 1
+    DataType = rpParamCurrency
+    DisplayFormat = '0.00'
     AutoExpand = False
     AutoContract = False
     ExportPosition = 0
@@ -366,7 +338,7 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 'ALIAS_DBBORGEST.documentoventa_total'
-    DisplayFormat = ''
+    DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
     ExportExpression = ''
@@ -600,6 +572,8 @@ object TRpReport
     PosX = 1928
     PosY = 907
     Type1Font = poHelvetica
+    DataType = rpParamCurrency
+    DisplayFormat = '0.00'
     AutoExpand = False
     AutoContract = False
     ExportPosition = 0
@@ -613,7 +587,7 @@ object TRpReport
     Expression = 
       'ALIAS_DBBORGEST.documentoventa_neto21+ALIAS_DBBORGEST.documentov' +
       'enta_neto105'
-    DisplayFormat = ''
+    DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
     ExportExpression = ''
@@ -624,6 +598,8 @@ object TRpReport
     PosX = 6803
     PosY = 907
     Type1Font = poHelvetica
+    DataType = rpParamCurrency
+    DisplayFormat = '0.00'
     AutoExpand = False
     AutoContract = False
     ExportPosition = 0
@@ -637,7 +613,7 @@ object TRpReport
     Expression = 
       'ALIAS_DBBORGEST.documentoventa_iva21+ALIAS_DBBORGEST.documentove' +
       'nta_iva105'
-    DisplayFormat = ''
+    DisplayFormat = '0.00'
     ExportDisplayFormat = ''
     AgIniValue = '0'
     ExportExpression = ''

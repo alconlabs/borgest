@@ -39,7 +39,7 @@ var
 
 implementation
 
-uses UnitPrinc, UnitProductos;
+uses UnitPrinc, UnitProductos, UnitProducto01;
 
 {$R *.dfm}
 
@@ -51,14 +51,29 @@ begin
 
          if ZQGrilla.RecordCount>0 then
          begin
-              try
-                productos:=Tproductos.Create(self);
-              finally
-                productos.abm:=3;
-                productos.id:=ZQGrilla.FieldByName('producto_id').AsString;
-                productos.btnguardar.Caption:='Eliminar';
-                productos.Show;
-              end;
+              if princ.GetConfiguracion('VENTANAPRODUCTOTIPO')='0' then
+                  begin
+                      try
+                        productos:=Tproductos.Create(self);
+                      finally
+                        productos.abm:=3;
+                        productos.id:=ZQGrilla.FieldByName('producto_id').AsString;
+                        productos.btnguardar.Caption:='Eliminar';
+                        productos.Show;
+                      end;
+                  end;
+
+              if princ.GetConfiguracion('VENTANAPRODUCTOTIPO')='1' then
+                  begin
+                      try
+                        producto01:=Tproducto01.Create(self);
+                      finally
+                        producto01.abm:=2;
+                        producto01.id:=ZQGrilla.FieldByName('producto_id').AsString;
+                        producto01.btnguardar.Caption:='Modificar';
+                        producto01.Show;
+                      end;
+                  end;
 
          end;
 
@@ -118,14 +133,29 @@ begin
       begin
           if ZQGrilla.RecordCount>0 then
             begin
-                try
-                  productos:=Tproductos.Create(self);
-                finally
-                  productos.abm:=2;
-                  productos.id:=ZQGrilla.FieldByName('producto_id').AsString;
-                  productos.btnguardar.Caption:='Modificar';
-                  productos.Show;
-                end;
+                if princ.GetConfiguracion('VENTANAPRODUCTOTIPO')='0' then
+                  begin
+                      try
+                        productos:=Tproductos.Create(self);
+                      finally
+                        productos.abm:=2;
+                        productos.id:=ZQGrilla.FieldByName('producto_id').AsString;
+                        productos.btnguardar.Caption:='Modificar';
+                        productos.Show;
+                      end;
+                  end;
+
+                if princ.GetConfiguracion('VENTANAPRODUCTOTIPO')='1' then
+                  begin
+                      try
+                        producto01:=Tproducto01.Create(self);
+                      finally
+                        producto01.abm:=2;
+                        producto01.id:=ZQGrilla.FieldByName('producto_id').AsString;
+                        producto01.btnguardar.Caption:='Modificar';
+                        producto01.Show;
+                      end;
+                  end;
             end;
       end;
 end;
@@ -133,13 +163,30 @@ end;
 procedure TListaProductos1.btnnuevoClick(Sender: TObject);
 begin
   inherited;
-    try
-      productos:=Tproductos.Create(self);
-    finally
-      productos.abm:=1;
-      productos.btnguardar.Caption:='Guardar';
-      productos.Show;
-    end;
+    if princ.GetConfiguracion('VENTANAPRODUCTOTIPO')='0' then
+      begin
+          try
+            productos:=Tproductos.Create(self);
+          finally
+            productos.abm:=1;
+            productos.btnguardar.Caption:='Guardar';
+            productos.Show;
+          end;
+      end;
+
+    if princ.GetConfiguracion('VENTANAPRODUCTOTIPO')='1' then
+      begin
+          try
+            producto01:=Tproducto01.Create(self);
+          finally
+            producto01.abm:=1;
+            producto01.btnguardar.Caption:='Guardar';
+            producto01.Show;
+          end;
+      end;
+
+
+
 end;
 
 procedure TListaProductos1.btnverClick(Sender: TObject);

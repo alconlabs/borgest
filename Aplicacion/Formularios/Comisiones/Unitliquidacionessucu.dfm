@@ -249,14 +249,10 @@ object liquidacionessucu: Tliquidacionessucu
       Top = 79
       Width = 1011
       Height = 348
-      ActivePage = TabSheet2
+      ActivePage = TabSheet1
       TabOrder = 5
       object TabSheet1: TTabSheet
         Caption = 'Comisiones'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label5: TLabel
           Left = 814
           Top = 286
@@ -403,10 +399,6 @@ object liquidacionessucu: Tliquidacionessucu
       object TabSheet4: TTabSheet
         Caption = 'Recibos'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label18: TLabel
           Left = 37
           Top = 18
@@ -419,8 +411,7 @@ object liquidacionessucu: Tliquidacionessucu
           Left = 0
           Top = 48
           Width = 1003
-          Height = 272
-          Align = alBottom
+          Height = 233
           DataSource = DSCLiquisucudetaRecibos
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
@@ -502,6 +493,15 @@ object liquidacionessucu: Tliquidacionessucu
           Text = '0,00'
           Visible = True
           Version = '2.7.0.5'
+        end
+        object btnquitarrecibo: TButton
+          Left = 10
+          Top = 287
+          Width = 91
+          Height = 25
+          Caption = 'Quitar'
+          TabOrder = 2
+          OnClick = btnquitarreciboClick
         end
       end
       object TabSheet2: TTabSheet
@@ -597,10 +597,6 @@ object liquidacionessucu: Tliquidacionessucu
       object TabSheet3: TTabSheet
         Caption = 'Facturar Liquidacion'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label6: TLabel
           Left = 489
           Top = 7
@@ -726,7 +722,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 317
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 4
           OnSelect = cliente_idSelect
           Confbase = Princ.ZBase
@@ -743,7 +739,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 220
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 7
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -758,7 +754,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 219
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 8
           Text = 'Contado'
@@ -772,7 +768,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 52
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 1
           OnSelect = puntoventa_idSelect
           Confbase = Princ.ZBase
@@ -788,7 +784,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 52
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 2
           OnSelect = tipodocu_idSelect
           Confbase = Princ.ZBase
@@ -805,7 +801,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 219
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 9
           Text = 'Precio 1'
@@ -822,7 +818,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 317
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 0
           OnSelect = sucursalfactura_idSelect
           Confbase = Princ.ZBase

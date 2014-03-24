@@ -10,8 +10,8 @@ uses
 type
   TCargaDetallePagos = class(TABMbase)
     PageControl1: TPageControl;
-    TabSheet1: TTabSheet;
-    TabSheet2: TTabSheet;
+    TabSheetEfectivo: TTabSheet;
+    TabSheetTarjeta: TTabSheet;
     Label1: TLabel;
     efectivo_nombre: TEdit;
     Label5: TLabel;
@@ -24,8 +24,8 @@ type
     btncancelarefectivo: TButton;
     btntarjeta: TButton;
     btncancelartarjeta: TButton;
-    TabSheet3: TTabSheet;
-    TabSheet4: TTabSheet;
+    TabSheetCheque: TTabSheet;
+    TabSheetDeposito: TTabSheet;
     Label4: TLabel;
     cheque_nombre: TEdit;
     Label6: TLabel;
@@ -61,18 +61,28 @@ type
     Label19: TLabel;
     tarjeta_importecuota: TMoneyEdit;
     btnabmtarjetas: TButton;
+    TabSheetRetencion: TTabSheet;
+    Label12: TLabel;
+    Label20: TLabel;
+    retencion_nombre: TEdit;
+    retencion_importe: TMoneyEdit;
+    btncancelarretencion: TButton;
+    btnretencion: TButton;
     procedure efectivo_importeExit(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure TabSheet1Show(Sender: TObject);
-    procedure TabSheet2Show(Sender: TObject);
-    procedure TabSheet3Show(Sender: TObject);
-    procedure TabSheet4Show(Sender: TObject);
+    procedure TabSheetEfectivoShow(Sender: TObject);
+    procedure TabSheetTarjetaShow(Sender: TObject);
+    procedure TabSheetChequeShow(Sender: TObject);
+    procedure TabSheetDepositoShow(Sender: TObject);
     procedure btnefectivoClick(Sender: TObject);
     procedure btntarjetaClick(Sender: TObject);
     procedure btnchequeClick(Sender: TObject);
     procedure btndepositoClick(Sender: TObject);
     procedure tarjeta_idSelect(Sender: TObject);
     procedure btnabmtarjetasClick(Sender: TObject);
+    procedure TabSheetRetencionShow(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btnretencionClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -133,6 +143,18 @@ begin
     Self.ModalResult:=mrOk;
 end;
 
+procedure TCargaDetallePagos.btnretencionClick(Sender: TObject);
+begin
+  inherited;
+    documentopago_nombre:=retencion_nombre.Text;
+    documentopago_importe:=retencion_importe.Value;
+
+    tipopago_id:='5';
+    tipopago_nombre:='RETENCION';
+
+    Self.ModalResult:=mrOk;
+end;
+
 procedure TCargaDetallePagos.btntarjetaClick(Sender: TObject);
 begin
   inherited;
@@ -159,13 +181,13 @@ begin
     if (Shift=[ssCtrl])then
       begin
           case key of
-            49: Self.PageControl1.ActivePage:=TabSheet1;
-            50: Self.PageControl1.ActivePage:=TabSheet2;
-            51: Self.PageControl1.ActivePage:=TabSheet3;
-            52: Self.PageControl1.ActivePage:=TabSheet4;
+            49: Self.PageControl1.ActivePage:=TabSheetEfectivo;
+            50: Self.PageControl1.ActivePage:=TabSheetTarjeta;
+            51: Self.PageControl1.ActivePage:=TabSheetCheque;
+            52: Self.PageControl1.ActivePage:=TabSheetDeposito;
+            53: Self.PageControl1.ActivePage:=TabSheetRetencion;
 
           end;
-
 
       end;
 
@@ -173,7 +195,17 @@ begin
 
 end;
 
-procedure TCargaDetallePagos.TabSheet1Show(Sender: TObject);
+procedure TCargaDetallePagos.FormShow(Sender: TObject);
+begin
+  inherited;
+    TabSheetEfectivo.TabVisible:=Princ.DisponibleTipoPago('1');
+    TabSheetTarjeta.TabVisible:=Princ.DisponibleTipoPago('2');
+    TabSheetCheque.TabVisible:=Princ.DisponibleTipoPago('3');
+    TabSheetDeposito.TabVisible:=Princ.DisponibleTipoPago('4');
+    TabSheetRetencion.TabVisible:=Princ.DisponibleTipoPago('5');
+end;
+
+procedure TCargaDetallePagos.TabSheetEfectivoShow(Sender: TObject);
 begin
   inherited;
     efectivo_importe.Value:=documentopago_importe;
@@ -186,7 +218,7 @@ begin
 
 end;
 
-procedure TCargaDetallePagos.TabSheet2Show(Sender: TObject);
+procedure TCargaDetallePagos.TabSheetTarjetaShow(Sender: TObject);
 begin
   inherited;
     tipopago_id:='2';
@@ -198,7 +230,7 @@ begin
     tarjeta_cuotas.Text:='1';
 end;
 
-procedure TCargaDetallePagos.TabSheet3Show(Sender: TObject);
+procedure TCargaDetallePagos.TabSheetChequeShow(Sender: TObject);
 begin
   inherited;
     tipopago_id:='3';
@@ -208,7 +240,7 @@ begin
     cheque_nombre.SetFocus;
 end;
 
-procedure TCargaDetallePagos.TabSheet4Show(Sender: TObject);
+procedure TCargaDetallePagos.TabSheetDepositoShow(Sender: TObject);
 begin
   inherited;
     tipopago_id:='4';
@@ -216,6 +248,16 @@ begin
 
     deposito_importe.Value:=documentopago_importe;
     deposito_nombre.SetFocus;
+end;
+
+procedure TCargaDetallePagos.TabSheetRetencionShow(Sender: TObject);
+begin
+  inherited;
+    tipopago_id:='5';
+    tipopago_nombre:='RETENCION';
+
+    retencion_importe.Value:=documentopago_importe;
+    retencion_nombre.SetFocus;
 end;
 
 procedure TCargaDetallePagos.tarjeta_idSelect(Sender: TObject);

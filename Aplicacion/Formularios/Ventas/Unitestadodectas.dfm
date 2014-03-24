@@ -3,7 +3,7 @@ object estadoctas: Testadoctas
   Top = 0
   Caption = 'Estado de Cuentas - SALDOS'
   ClientHeight = 472
-  ClientWidth = 867
+  ClientWidth = 980
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,7 +21,7 @@ object estadoctas: Testadoctas
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 867
+    Width = 980
     Height = 472
     Align = alClient
     BevelOuter = bvNone
@@ -65,6 +65,7 @@ object estadoctas: Testadoctas
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitWidth = 867
     FullHeight = 0
     object Label3: TLabel
       Left = 9
@@ -102,7 +103,7 @@ object estadoctas: Testadoctas
     object DBGrid1: TDBGrid
       Left = 9
       Top = 184
-      Width = 840
+      Width = 960
       Height = 233
       DataSource = DSCPendientes
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
@@ -131,23 +132,29 @@ object estadoctas: Testadoctas
         end
         item
           Expanded = False
+          FieldName = 'documentoventa_diasvenc'
+          Title.Caption = 'Dias Venc.'
+          Visible = True
+        end
+        item
+          Expanded = False
           FieldName = 'cliente_nombre'
           Title.Caption = 'Cliente'
-          Width = 160
+          Width = 190
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'documento_nombre'
           Title.Caption = 'Documento'
-          Width = 80
+          Width = 88
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'puntoventanumero'
           Title.Caption = 'Pto. Vta.'
-          Width = 46
+          Width = 51
           Visible = True
         end
         item
@@ -155,7 +162,7 @@ object estadoctas: Testadoctas
           FieldName = 'documentoventanumero'
           Title.Alignment = taRightJustify
           Title.Caption = 'Nro.'
-          Width = 51
+          Width = 58
           Visible = True
         end
         item
@@ -194,7 +201,7 @@ object estadoctas: Testadoctas
       OnClick = btnactualizarClick
     end
     object btnimprimir: TButton
-      Left = 766
+      Left = 894
       Top = 423
       Width = 75
       Height = 25
@@ -445,7 +452,7 @@ object estadoctas: Testadoctas
       ConfTodosCheckeados = True
     end
     object BtnDetalleImputacion: TButton
-      Left = 637
+      Left = 765
       Top = 423
       Width = 124
       Height = 25
@@ -497,7 +504,10 @@ object estadoctas: Testadoctas
       'if(1=2,"0",puntoventa_numero) as puntoventanumero, '
       
         'if(1=2,"0",documentosventas.documentoventa_numero) as documentov' +
-        'entanumero '
+        'entanumero, '
+      
+        'DATEDIFF(documentoventa_fechavenc,curdate()) as documentoventa_d' +
+        'iasvenc'
       'from documentosventas '
       
         'inner join tiposdocumento on documentosventas.tipodocu_id=tiposd' +
@@ -945,6 +955,24 @@ object estadoctas: Testadoctas
     end
     object ZQPendientesacumulado_cliente: TFloatField
       FieldName = 'acumulado_cliente'
+    end
+    object ZQPendientesdocumentoventa_descuento: TFloatField
+      FieldName = 'documentoventa_descuento'
+    end
+    object ZQPendientestipodocu_importemax: TFloatField
+      FieldName = 'tipodocu_importemax'
+    end
+    object ZQPendientespersonal_auxint1: TIntegerField
+      FieldName = 'personal_auxint1'
+    end
+    object ZQPendientespersonal_auxint1_1: TIntegerField
+      FieldName = 'personal_auxint1_1'
+    end
+    object ZQPendientesdocumentoventa_diasvenc: TIntegerField
+      FieldName = 'documentoventa_diasvenc'
+      ReadOnly = True
+      DisplayFormat = '0'
+      EditFormat = '0'
     end
   end
   object MQdetalle: TMQuery

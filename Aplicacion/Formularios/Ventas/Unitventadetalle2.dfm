@@ -467,7 +467,7 @@ object ventadetalle2: Tventadetalle2
       'select * from documentoventadetalles'
       'where documentoventa_id=-1')
     Params = <>
-    Left = 392
+    Left = 296
   end
   object AdvPopupMenu1: TAdvPopupMenu
     Version = '2.0.0.0'

@@ -172,6 +172,10 @@ begin
                                                    'where temporal_idproceso="'+temporal_idproceso+'" '+
                                                    'order by temporal_string2, temporal_id, temporal_int4 ';
 
+    Princ.VCLReport1.Report.Datainfo.Items[2].sql:='select *, sum(documentoventadetalle_cantidad) as cantidad from documentoventadetalles '+
+                                                   'where documentoventa_id="'+id+'" '+
+                                                   'group by producto_id ';
+
     Princ.VCLReport1.Execute;
 
     if temporal_idproceso<>'' then

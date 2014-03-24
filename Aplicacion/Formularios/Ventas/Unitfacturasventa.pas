@@ -1330,6 +1330,37 @@ var
 begin
     error:=0;
 
+    if not strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+tipodocu_id.codigo+'"','tipodocu_fiscal')) then
+      begin
+          if abm=ABM_AGREGAR then
+            begin
+                if Princ.buscar('select documentoventa_id from documentosventas where documentoventa_numero="'+documentoventa_numero.Text+'" and tipodocu_id="'+tipodocu_id.codigo+'"', 'documentoventa_id')<>'' then
+                  error:=11;
+            end;
+          if abm=ABM_MODIFICAR then
+            begin
+                if Princ.buscar('select documentoventa_id from documentosventas where documentoventa_numero="'+documentoventa_numero.Text+'" and tipodocu_id="'+tipodocu_id.codigo+'" and documentoventa_id<>"'+id+'"', 'documentoventa_id')<>'' then
+                  error:=11;
+            end;
+      end
+    else
+      begin
+          if documentoventa_numero.Text<>'0' then
+            begin
+                if abm=ABM_AGREGAR then
+                  begin
+                      if Princ.buscar('select documentoventa_id from documentosventas where documentoventa_numero="'+documentoventa_numero.Text+'" and tipodocu_id="'+tipodocu_id.codigo+'"', 'documentoventa_id')<>'' then
+                        error:=11;
+                  end;
+                if abm=ABM_MODIFICAR then
+                  begin
+                      if Princ.buscar('select documentoventa_id from documentosventas where documentoventa_numero="'+documentoventa_numero.Text+'" and tipodocu_id="'+tipodocu_id.codigo+'" and documentoventa_id<>"'+id+'"', 'documentoventa_id')<>'' then
+                        error:=11;
+                  end;
+            end;
+      end;
+
+
     if documentoventa_condicionventa.ItemIndex=strtoint(CONDICIONVENTA_CONTADO) then
       begin
           if roundto(documentoventa_pagado,-2)<>0 then
@@ -1400,6 +1431,9 @@ begin
           end;
        10:begin
               MessageDlg('Importes no coinciden. Verifique Pagos', mtError, [mbOK], 0);
+          end;
+       11:begin
+              MessageDlg('Verifique el numero de comprobante. Ya existe otro comprobante con el mismo numero', mtError, [mbOK], 0);
           end;
 
     end;

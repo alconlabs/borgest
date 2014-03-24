@@ -1488,7 +1488,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'IIF(ALIAS_EQUIPOS.sucursal_id=2,'#39'Precio U$D'#39','#39'Precio'#39')'
+    Expression = 'IIF(ALIAS_EQUIPOS.sucursal_id=5,'#39'Precio U$D'#39','#39'Precio'#39')'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'

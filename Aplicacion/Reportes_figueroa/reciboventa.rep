@@ -6,10 +6,10 @@ object TRpReport
   PageHeight = 8120
   PageWidth = 5742
   PageBackColor = 16777215
-  LeftMargin = 0
-  TopMargin = 0
-  RightMargin = 0
-  BottomMargin = 0
+  LeftMargin = 850
+  TopMargin = 567
+  RightMargin = 567
+  BottomMargin = 567
   SubReports = <
     item
       SubReport = TRpSubReport0

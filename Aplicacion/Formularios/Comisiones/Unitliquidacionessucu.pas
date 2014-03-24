@@ -129,6 +129,7 @@ type
     liquidacionsucursal_neto21: TDBAdvEdit;
     liquidacionsucursal_iva21: TDBAdvEdit;
     Label20: TLabel;
+    btnquitarrecibo: TButton;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -148,6 +149,7 @@ type
     procedure btngenerarfacturaClick(Sender: TObject);
     procedure btnverfacturaClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btnquitarreciboClick(Sender: TObject);
   private
     { Private declarations }
     tipocuota:integer;
@@ -1217,6 +1219,19 @@ begin
       begin
           try
             ZQsucursalesdebcred.Delete;
+          finally
+
+          end;
+
+      end;
+end;
+
+procedure Tliquidacionessucu.btnquitarreciboClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea quitar este registro?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          try
+            MQLiquisucudetaRecibos.Delete;
           finally
 
           end;

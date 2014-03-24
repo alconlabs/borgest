@@ -96,6 +96,9 @@
     <DCCReference Include="Formularios\Archivo\UnitPoliticasPrecios.pas">
       <Form>politicasprecios</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitProducto01.pas">
+      <Form>producto01</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitProductos.pas">
       <Form>productos</Form>
     </DCCReference>

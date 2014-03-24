@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, AdvPanel, AdvGlowButton, Grids, DBGrids, StdCtrls, DB,
-  ZAbstractRODataset, ZAbstractDataset, ZDataset, CustomizeGrid;
+  ZAbstractRODataset, ZAbstractDataset, ZDataset, CustomizeGrid, GBTEdit;
 
 type
   Tbusquedaproductos = class(TForm)
@@ -15,12 +15,7 @@ type
     DSCProveedores: TDataSource;
     panelfiltros: TAdvPanel;
     Button5: TButton;
-    fil_producto_precioventa1: TEdit;
-    fil_producto_id: TEdit;
-    fil_producto_nombre: TEdit;
-    fil_rubro_nombre: TEdit;
     ZQuery2: TZQuery;
-    fil_producto_preciocosto: TEdit;
     CustomizeGrid1: TCustomizeGrid;
     ZQGrillaproducto_id: TIntegerField;
     ZQGrillaproducto_nombre: TStringField;
@@ -54,7 +49,6 @@ type
     btnaceptar: TButton;
     AdvPanel1: TAdvPanel;
     btncancelar: TButton;
-    fil_producto_codigo: TEdit;
     ZQGrillaproducto_codigoreferencia: TStringField;
     ZQGrillaproducto_imprimir: TIntegerField;
     ZQGrillaproveedor_id_1: TIntegerField;
@@ -75,9 +69,17 @@ type
     ZQGrilladeposito_id: TIntegerField;
     ZQGrillaproducdepo_stockminimo: TFloatField;
     ZQGrillaproducdepo_puntorepos: TFloatField;
-    fil_producdepo_stockactual: TEdit;
-    fil_proveedor_nombre: TEdit;
-    fil_producto_precioventa2: TEdit;
+    fil_producto_precioventa1: TGTBEdit;
+    fil_producto_id: TGTBEdit;
+    fil_producto_nombre: TGTBEdit;
+    fil_rubro_nombre: TGTBEdit;
+    fil_producto_preciocosto: TGTBEdit;
+    fil_producto_codigo: TGTBEdit;
+    fil_producdepo_stockactual: TGTBEdit;
+    fil_proveedor_nombre: TGTBEdit;
+    fil_producto_precioventa2: TGTBEdit;
+    fil_producto_fechaactualizacionprecio: TGTBEdit;
+    Panel1: TPanel;
     procedure Button5Click(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure buscarKeyPress(Sender: TObject; var Key: Char);
@@ -192,6 +194,9 @@ begin
     if fil_proveedor_nombre.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and proveedor_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_proveedor_nombre.Text,' ','%',false,0)+'%"';
 
+    if fil_producto_fechaactualizacionprecio.Text<>'' then
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_fechaactualizacionprecio like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_fechaactualizacionprecio.Text,' ','%',false,0)+'%"';
+
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by producto_nombre';
 
     ZQGrilla.Active:=true;
@@ -266,9 +271,11 @@ end;
 procedure Tbusquedaproductos.FormShow(Sender: TObject);
 var
   i: Integer;
-
+  grid_col:integer;
 begin
     tipo_busqueda.ItemIndex:=strtoint(Princ.GetConfiguracion('TIPOBUSQUEDA'))-1;
+
+    Princ.ConfigurarColumnas(self.DBGrid1);
 
     DBGrid1.Columns.Items[3].Visible:=false;
     fil_producto_preciocosto.Text:='';
@@ -278,6 +285,22 @@ begin
       begin
           if panelfiltros.Controls[i] is TEdit then
             (panelfiltros.Controls[i] as TEdit).OnKeyPress:=fil_producto_idKeyPress;
+
+          if panelfiltros.Controls[i] is TGTBEdit then
+            begin
+                if (panelfiltros.Controls[i] as TGTBEdit).FieldName<>'' then
+                  begin
+                      for grid_col := 0 to DBGrid1.Columns.Count-1 do
+                        begin
+                            if DBGrid1.Columns.Items[grid_col].FieldName=(panelfiltros.Controls[i] as TGTBEdit).FieldName then
+                              (panelfiltros.Controls[i] as TGTBEdit).Visible:=DBGrid1.Columns.Items[grid_col].Visible;
+
+                        end;
+
+                  end;
+            end;
+
+
 
       end;
     princ.Permisos1.guardarlog(self.ClassName+'.Show');

@@ -259,6 +259,8 @@ type
     procedure MenuConfiguracion;
     procedure RefrescarMenu;
     procedure InputBoxSetPasswordChar(var Msg: TMessage); message InputBoxMessage;
+    procedure TiposPagoDisponibles;
+    
   public
     { Public declarations }
     EXCEL_FILE:string;
@@ -284,6 +286,7 @@ type
     ruta_carpeta_reportes:string;
     ultima_busqueda_productos:string;
     MOSTRAREQUIPO:boolean;
+    tipospago:tstrings;
     function codigo(tabla:string;campo:string):string;
     function buscar(sql:string;campo:string):string;
     function fechaservidor():TDateTime;
@@ -355,6 +358,7 @@ type
     procedure CargarDocumentoCompraDetalle(QDocumentoCompraDetalles:TDataset; Detalle:TDataset; abm:integer=1; bm:pointer=nil);
     function ProtegidoxPass(nombre:string):boolean;
     function GetPCName: string;
+    function DisponibleTipoPago(tipopago_id:string):boolean;
   end;
 
 type
@@ -963,13 +967,26 @@ procedure TPrinc.AbrirDocumentoVenta(id: string; tipodocu_nombre: string; abm: I
 begin
     if tipodocu_nombre='Factura de Venta' then
       begin
-          try
-            facturasventa:=Tfacturasventa.Create(self);
-          finally
-            facturasventa.abm:=abm;
-            facturasventa.id:=id;
-            facturasventa.Show;
-          end;
+          if Princ.GetConfiguracion('FACTURAVENTATIPO')='0' then
+            begin
+                try
+                  facturasventa:=Tfacturasventa.Create(self);
+                finally
+                  facturasventa.abm:=abm;
+                  facturasventa.id:=id;
+                  facturasventa.Show;
+                end;
+            end;
+          if Princ.GetConfiguracion('FACTURAVENTATIPO')='2' then
+            begin
+                try
+                  facturaventa02:=Tfacturaventa02.Create(self);
+                finally
+                  facturaventa02.abm:=1;
+                  facturaventa02.btnguardar.Caption:='Guardar';
+                  facturaventa02.Show;
+                end;
+            end;
       end;
 
     if tipodocu_nombre='Recibo de Venta' then
@@ -1067,6 +1084,7 @@ begin
             NotaPedido.abm:=abm;
             NotaPedido.id:=id;
             NotaPedido.tipodocu_nombre:=tipodocu_nombre;
+            NotaPedido.limpiar_al_guardar:=true;
             NotaPedido.Show;
           end;
       end;
@@ -1105,6 +1123,7 @@ begin
             NotaPedidoComisiones.abm:=abm;
             NotaPedidoComisiones.id:=id;
             NotaPedidoComisiones.tipodocu_nombre:=tipodocu_nombre;
+            NotaPedidoComisiones.limpiar_al_guardar:=true;
             NotaPedidoComisiones.Show;
           end;
       end;
@@ -2825,7 +2844,7 @@ begin
           if (impresorafiscal.Showmodal=mrOk) and (id<>'-1') then
             begin
                 //MessageDlg('nro desde la impr'+inttostr(impresorafiscal.documentoventa_numero), mtInformation, [mbOK], 0);
-                Princ.ActualizarNumeroDocumento(id,inttostr(impresorafiscal.documentoventa_numero));
+                Princ.ActualizarNumeroDocumento(ZQDocumentosventas.FieldByName('tipodocu_id').AsString,inttostr(impresorafiscal.documentoventa_numero));
 
                 ZQuery1.sql.clear;
                 ZQuery1.sql.add('Update documentosventas set ');
@@ -3067,7 +3086,7 @@ begin
     CargaDetallePagos:=TCargaDetallePagos.Create(self);
     CargaDetallePagos.documentopago_importe:=importe;
     CargaDetallePagos.liberar_al_cerrar:=false;
-    CargaDetallePagos.PageControl1.ActivePage:=CargaDetallePagos.TabSheet1;
+    CargaDetallePagos.PageControl1.ActivePage:=CargaDetallePagos.TabSheetEfectivo;
     if CargaDetallePagos.ShowModal=mrOK then
       begin
           QDocumentopagos.Last;
@@ -3105,6 +3124,9 @@ begin
 
                 end;
               4:begin
+
+                end;
+              5:begin
 
                 end;
           end;
@@ -3640,6 +3662,8 @@ begin
             ruta_carpeta_reportes:='Reportes';
 
           ruta_carpeta_reportes:=ExtractFilePath(Application.ExeName)+ruta_carpeta_reportes+'\';
+
+          login.Free;
       end
     else
       begin
@@ -3653,7 +3677,35 @@ begin
     princ.XiProgressBar1.Parent:=Princ.StatusBar1;
     princ.XiProgressBar1.Visible:=false;
 
+    TiposPagoDisponibles;
+
+
 end;
+
+procedure TPrinc.TiposPagoDisponibles;
+begin
+    tipospago:=tstringlist.Create;
+    ZQuery1.Active:=false;
+    ZQuery1.SQL.Text:='select * from tipospago order by tipopago_id';
+    ZQuery1.Active:=true;
+    ZQuery1.First;
+    while not ZQuery1.Eof do
+        begin
+            tipospago.Add(ZQuery1.FieldByName('tipopago_id').AsString);
+
+            ZQuery1.Next;
+        end;
+    ZQuery1.Active:=false;
+
+end;
+
+
+function TPrinc.DisponibleTipoPago(tipopago_id: string):boolean;
+begin
+    result:=tipospago.IndexOf(tipopago_id)<>-1;
+
+end;
+
 
 procedure TPrinc.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
@@ -3702,14 +3754,6 @@ begin
 
     MenuConfiguracion;
 
-
-//    try
-//      facturaventa02:=Tfacturaventa02.Create(self);
-//    finally
-//      facturaventa02.abm:=1;
-//      facturaventa02.btnguardar.Caption:='Guardar';
-//      facturaventa02.Show;
-//    end;
 
 end;
 

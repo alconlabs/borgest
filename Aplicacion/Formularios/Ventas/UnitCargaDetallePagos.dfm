@@ -24,16 +24,12 @@ inherited CargaDetallePagos: TCargaDetallePagos
       Top = 0
       Width = 541
       Height = 294
-      ActivePage = TabSheet2
+      ActivePage = TabSheetEfectivo
       Align = alClient
       TabOrder = 2
-      object TabSheet1: TTabSheet
+      object TabSheetEfectivo: TTabSheet
         Caption = '1 - Efectivo'
-        OnShow = TabSheet1Show
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
+        OnShow = TabSheetEfectivoShow
         object Label1: TLabel
           Left = 38
           Top = 25
@@ -154,10 +150,10 @@ inherited CargaDetallePagos: TCargaDetallePagos
           OnClick = btncancelarClick
         end
       end
-      object TabSheet2: TTabSheet
-        Caption = '2 - Tarjetas'
+      object TabSheetTarjeta: TTabSheet
+        Caption = '2 - Tarjeta'
         ImageIndex = 1
-        OnShow = TabSheet2Show
+        OnShow = TabSheetTarjetaShow
         object Label9: TLabel
           Left = 69
           Top = 15
@@ -436,14 +432,10 @@ inherited CargaDetallePagos: TCargaDetallePagos
           OnClick = btnabmtarjetasClick
         end
       end
-      object TabSheet3: TTabSheet
+      object TabSheetCheque: TTabSheet
         Caption = '3 - Cheque'
         ImageIndex = 2
-        OnShow = TabSheet3Show
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
+        OnShow = TabSheetChequeShow
         object Label4: TLabel
           Left = 38
           Top = 25
@@ -510,14 +502,10 @@ inherited CargaDetallePagos: TCargaDetallePagos
           OnClick = btnchequeClick
         end
       end
-      object TabSheet4: TTabSheet
+      object TabSheetDeposito: TTabSheet
         Caption = '4 - Deposito'
         ImageIndex = 3
-        OnShow = TabSheet4Show
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
+        OnShow = TabSheetDepositoShow
         object Label7: TLabel
           Left = 38
           Top = 25
@@ -582,6 +570,76 @@ inherited CargaDetallePagos: TCargaDetallePagos
           Caption = 'Guardar'
           TabOrder = 2
           OnClick = btndepositoClick
+        end
+      end
+      object TabSheetRetencion: TTabSheet
+        Caption = '5 - Retencion'
+        ImageIndex = 4
+        OnShow = TabSheetRetencionShow
+        object Label12: TLabel
+          Left = 38
+          Top = 25
+          Width = 56
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Descripcion'
+        end
+        object Label20: TLabel
+          Left = 12
+          Top = 49
+          Width = 82
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Total a Cobrar'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object retencion_nombre: TEdit
+          Left = 100
+          Top = 22
+          Width = 381
+          Height = 21
+          TabOrder = 0
+        end
+        object retencion_importe: TMoneyEdit
+          Left = 100
+          Top = 46
+          Width = 109
+          Height = 21
+          CalculatorLook.ButtonWidth = 24
+          CalculatorLook.ButtonHeight = 24
+          CalculatorLook.ButtonColor = clSilver
+          CalculatorLook.Color = clWhite
+          CalculatorLook.Flat = False
+          CalculatorLook.Font.Charset = DEFAULT_CHARSET
+          CalculatorLook.Font.Color = clWindowText
+          CalculatorLook.Font.Height = -11
+          CalculatorLook.Font.Name = 'Tahoma'
+          CalculatorLook.Font.Style = []
+          TabOrder = 1
+          Version = '1.1.0.1'
+        end
+        object btncancelarretencion: TButton
+          Left = 396
+          Top = 222
+          Width = 75
+          Height = 25
+          Caption = 'Cancelar'
+          TabOrder = 3
+          OnClick = btncancelarClick
+        end
+        object btnretencion: TButton
+          Left = 315
+          Top = 222
+          Width = 75
+          Height = 25
+          Caption = 'Guardar'
+          TabOrder = 2
+          OnClick = btnretencionClick
         end
       end
     end

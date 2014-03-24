@@ -147,6 +147,7 @@ end;
 
 procedure Tlogin.Timer1Timer(Sender: TObject);
 begin
+    Timer1.Enabled:=false;
     self.btnguardar.Click;
 end;
 

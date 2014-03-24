@@ -70,7 +70,7 @@ begin
     if fil_documentoventa_total.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and documentoventa_total like "'+primercaracter+fil_documentoventa_total.Text+'%"';
 
-    ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'order by documentoventa_fecha desc, documentoventa_id desc';
+    ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'order by documentoventa_fecha desc, documentoventa_numero desc';
 
     ZQGrilla.Active:=true;
 end;

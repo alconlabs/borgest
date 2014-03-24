@@ -160,6 +160,11 @@ type
     ZQPendientessucursal_tipodocumentoliquidar: TIntegerField;
     ZQuery3: TZQuery;
     ZQPendientesacumulado_cliente: TFloatField;
+    ZQPendientesdocumentoventa_descuento: TFloatField;
+    ZQPendientestipodocu_importemax: TFloatField;
+    ZQPendientespersonal_auxint1: TIntegerField;
+    ZQPendientespersonal_auxint1_1: TIntegerField;
+    ZQPendientesdocumentoventa_diasvenc: TIntegerField;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnimprimirClick(Sender: TObject);
@@ -419,7 +424,8 @@ begin
                            'if('+condicion_saldoanterior+',"'+formatdatetime('dd/mm/yyyy',desde_fecha.Date)+'",DATE_FORMAT(documentosventas.documentoventa_fecha,"%d/%m/%Y")) as documentoventafecha, '+
                            'if('+condicion_saldoanterior+',"0",puntoventa_numero) as puntoventanumero, '+
                            'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero, '+
-                           '0.00 as acumulado_cliente '+
+                           '0.00 as acumulado_cliente, '+
+                           'DATEDIFF(documentoventa_fechavenc,curdate()) as documentoventa_diasvenc '+
                            'from documentosventas '+
 //                           'left join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
 //                           'left join documentoventadetalles documentoventadetalles2 on documentoventadetalles.documentoventadetalle_idorig=documentoventadetalles2.documentoventadetalle_id '+
@@ -689,18 +695,16 @@ begin
                            'if('+condicion_saldoanterior+',"Saldo anterior",CONCAT(tiposdocumento.tipodocu_nombreabrev," ",tiposdocumento.tipodocu_letra)) as documento_nombre, '+
                            'if('+condicion_saldoanterior+',"'+formatdatetime('dd/mm/yyyy',desde_fecha.Date)+'",DATE_FORMAT(documentosventas.documentoventa_fecha,"%d/%m/%Y")) as documentoventafecha, '+
                            'puntodeventa.puntoventa_id as puntoventanumero, '+
-                           'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero '+
-
+                           'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero, '+
+                           'DATEDIFF(documentoventa_fechavenc,curdate()) as documentoventa_diasvenc '+
                            'from documentosventas '+
-//                           'left join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
-//                           'left join documentoventadetalles documentoventadetalles2 on documentoventadetalles.documentoventadetalle_idorig=documentoventadetalles2.documentoventadetalle_id '+
-//                           'left join documentosventas documentosventas2 on documentoventadetalles2.documentoventa_id=documentosventas2.documentoventa_id '+
                            'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
                            'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
                            'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
                            'inner join personal on documentosventas.personal_id=personal.personal_id '+
                            'inner join personal as pesronalcliente on clientes.personal_id=pesronalcliente.personal_id '+
                            'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
+                           'left join documentopagos on documentosventas.documentoventa_id=documentopagos.documentoventa_id '+ 
                            'group by grupo '+
                            'order by sucursal_nombre, pesronalcliente.personal_nombre, cliente_nombre, clientes.cliente_id, documentoventa_fecha, documentoventa_numero ';
 

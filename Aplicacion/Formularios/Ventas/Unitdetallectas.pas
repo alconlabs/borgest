@@ -159,6 +159,11 @@ type
     ZQPendientesdocumentoventa_recargo: TFloatField;
     ZQPendientesgrupo: TStringField;
     ZQPendientesacumulado_cliente: TFloatField;
+    ZQPendientesdocumentoventa_descuento: TFloatField;
+    ZQPendientestipodocu_importemax: TFloatField;
+    ZQPendientespersonal_auxint1: TIntegerField;
+    ZQPendientespersonal_auxint1_1: TIntegerField;
+    ZQPendientesdocumentoventa_diasvenc: TIntegerField;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnimprimirClick(Sender: TObject);
@@ -413,7 +418,8 @@ begin
                            'if('+condicion_saldoanterior+',"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",DATE_FORMAT(documentosventas.documentoventa_fecha,"%d/%m/%Y")) as documentoventafecha, '+
                            'if('+condicion_saldoanterior+',"0",puntoventa_numero) as puntoventanumero, '+
                            'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero, '+
-                           '0.00 as acumulado_cliente '+
+                           '0.00 as acumulado_cliente, '+
+                           'DATEDIFF(documentoventa_fechavenc,curdate()) as documentoventa_diasvenc '+
                            'from documentosventas '+
 //                           'left join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
 //                           'left join documentoventadetalles documentoventadetalles2 on documentoventadetalles.documentoventadetalle_idorig=documentoventadetalles2.documentoventadetalle_id '+
@@ -680,8 +686,8 @@ begin
                            'if('+condicion_saldoanterior+',"Saldo anterior",CONCAT(tiposdocumento.tipodocu_nombreabrev," ",tiposdocumento.tipodocu_letra)) as documento_nombre, '+
                            'if('+condicion_saldoanterior+',"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",DATE_FORMAT(documentosventas.documentoventa_fecha,"%d/%m/%Y")) as documentoventafecha, '+
                            'puntodeventa.puntoventa_id as puntoventanumero, '+
-                           'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero '+
-
+                           'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero, '+
+                           'DATEDIFF(documentoventa_fechavenc,curdate()) as documentoventa_diasvenc '+
                            'from documentosventas '+
 //                           'left join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
 //                           'left join documentoventadetalles documentoventadetalles2 on documentoventadetalles.documentoventadetalle_idorig=documentoventadetalles2.documentoventadetalle_id '+
