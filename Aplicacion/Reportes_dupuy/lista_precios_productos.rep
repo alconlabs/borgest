@@ -16,9 +16,9 @@ object TRpReport
       Alias = 'ALIAS_DBBORGEST'
       DatabaseAlias = 'CONEXION_DBBORGEST'
       SQL = 
-        'select *, producto_precioventa1 as precio from productos'#13#10'inner ' +
-        'join rubros on productos.rubro_id=rubros.rubro_id'#13#10'order by prod' +
-        'ucto_nombre'
+        'select *, producto_precioventa1 as precio, producto_id as codigo' +
+        ' from productos'#13#10'inner join rubros on productos.rubro_id=rubros.' +
+        'rubro_id'#13#10'order by producto_nombre'
     end>
   DatabaseInfo = <
     item
@@ -225,7 +225,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.producto_codigobarras'
+    Expression = 'ALIAS_DBBORGEST.codigo'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'

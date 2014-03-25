@@ -123,6 +123,7 @@ type
     DBREMOTAPASS: TEdit;
     PCSERVIDOR: TLabel;
     btnactualizardbremotafile: TButton;
+    SOLICITARPASSVENDEDORVENTAS: TCheckBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -434,6 +435,11 @@ begin
     Princ.Encriptador1.Key:=CLAVE_ENCRIPTADO;
     Princ.Encriptador1.Encriptar;
     ZQuery1.parambyname('config_valor').AsString:=Princ.Encriptador1.Encriptado;
+    ZQuery1.ExecSQL;
+
+
+    ZQuery1.parambyname('config_nombre').AsString:='SOLICITARPASSVENDEDORVENTAS';
+    ZQuery1.parambyname('config_valor').AsString:=booltostr(SOLICITARPASSVENDEDORVENTAS.Checked);
     ZQuery1.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtConfirmation, [mbOK], 0);
@@ -794,6 +800,10 @@ begin
       end;
 
     PCSERVIDOR.Caption:='Servidor Base de Datos: '+Princ.ZBase.HostName;
+
+    if ZQConfig.Locate('config_nombre','SOLICITARPASSVENDEDORVENTAS',[]) then
+      SOLICITARPASSVENDEDORVENTAS.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
+
     princ.Permisos1.guardarlog(self.ClassName+'.Show');
 end;
 

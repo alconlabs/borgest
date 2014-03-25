@@ -720,9 +720,9 @@ object TRpReport
     DoAfterPrint = ''
   end
   object TRpLabel4: TRpLabel
-    Width = 1070
+    Width = 1815
     Height = 225
-    PosX = 8095
+    PosX = 7350
     PosY = 60
     Type1Font = poHelvetica
     Alignment = 2
@@ -731,7 +731,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    WideText = 'Recibo Nro:'
+    WideText = 'Presupuesto Nro:'
   end
   object TRpLabel5: TRpLabel
     Width = 1870

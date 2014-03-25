@@ -151,7 +151,7 @@ var
 implementation
 
 uses UnitPrinc, Unitventadetalle, Unitventadetalle2, UnitFacturarDocumentos,
-  UnitObservaciones;
+  UnitObservaciones, UnitLogin;
 
 {$R *.dfm}
 
@@ -544,6 +544,7 @@ begin
                                              'inner join localidades on clientes.localidad_id=localidades.localidad_id '+
                                              'inner join provincias on localidades.provincia_id=provincias.provincia_id '+
                                              'inner join paises on provincias.pais_id=paises.pais_id '+
+                                             'inner join personal on documentosventas.personal_id=personal.personal_id '+
                                              'where documentosventas.documentoventa_id="'+id+'"';
 
     Princ.VCLReport1.Execute;
@@ -1330,6 +1331,26 @@ var
 begin
     error:=0;
 
+    if abm=ABM_AGREGAR then
+      begin
+          if strtobool(Princ.GetConfiguracion('SOLICITARPASSVENDEDORVENTAS')) then
+            begin
+                try
+                  login:=Tlogin.Create(self);
+                finally
+                  login.liberar_al_cerrar:=false;
+                  login.abm:=2;
+                end;
+
+                if login.ShowModal=mrOk then
+                  begin
+                      personal_id.Buscar(Princ.personal_id_logueado);
+                  end
+                else
+                  error:=12;
+            end;
+      end;
+
     if not strtobool(Princ.buscar('select tipodocu_fiscal from tiposdocumento where tipodocu_id="'+tipodocu_id.codigo+'"','tipodocu_fiscal')) then
       begin
           if abm=ABM_AGREGAR then
@@ -1434,6 +1455,9 @@ begin
           end;
        11:begin
               MessageDlg('Verifique el numero de comprobante. Ya existe otro comprobante con el mismo numero', mtError, [mbOK], 0);
+          end;
+       12:begin
+              MessageDlg('Verifique contraseña', mtError, [mbOK], 0);
           end;
 
     end;

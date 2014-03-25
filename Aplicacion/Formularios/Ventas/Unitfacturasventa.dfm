@@ -202,7 +202,7 @@ object facturasventa: Tfacturasventa
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       OnSelect = cliente_idSelect
       Confbase = Princ.ZBase
@@ -219,7 +219,7 @@ object facturasventa: Tfacturasventa
       Width = 220
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 1
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -562,7 +562,7 @@ object facturasventa: Tfacturasventa
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 15
       OnSelect = puntoventa_idSelect
       Confbase = Princ.ZBase
@@ -578,7 +578,7 @@ object facturasventa: Tfacturasventa
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 16
       OnSelect = tipodocu_idSelect
       Confbase = Princ.ZBase
@@ -666,7 +666,7 @@ object facturasventa: Tfacturasventa
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 14
       OnSelect = sucursal_idSelect
       Confbase = Princ.ZBase

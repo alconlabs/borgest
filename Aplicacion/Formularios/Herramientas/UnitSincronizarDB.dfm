@@ -175,6 +175,10 @@ inherited SincronizarDB: TSincronizarDB
       object TabSheet2: TTabSheet
         Caption = 'Programar Automatico'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label1: TLabel
           Left = 16
           Top = 136

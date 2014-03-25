@@ -1857,3 +1857,7 @@ INSERT INTO `config` SET `config_nombre`='FACTURAVENTATIPO', `config_valor`='0';
 INSERT INTO `config` SET `config_nombre`='VENTANAPRODUCTOTIPO', `config_valor`='0';
 544;
 INSERT INTO `tipospago` SET `tipopago_id`=5,`tipopago_nombre`='RETENCION',`tipopago_caja`=0;
+545;
+Replace config set config_valor='0', config_nombre='SOLICITARPASSVENDEDORVENTAS';
+546;
+ALTER TABLE `personal` ADD COLUMN `personal_auxstring1` VARCHAR(45) NULL DEFAULT NULL  AFTER `personal_auxint1` ;

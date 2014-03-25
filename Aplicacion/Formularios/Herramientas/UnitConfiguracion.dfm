@@ -90,7 +90,7 @@ object configuracion: Tconfiguracion
       Top = 0
       Width = 589
       Height = 465
-      ActivePage = TabSheet4
+      ActivePage = TabSheet1
       Align = alTop
       TabOrder = 2
       object TabSheet1: TTabSheet
@@ -907,6 +907,14 @@ object configuracion: Tconfiguracion
             Confcampo_nomb = 'sucursal_nombre'
             Tag2 = 0
           end
+        end
+        object SOLICITARPASSVENDEDORVENTAS: TCheckBox
+          Left = 296
+          Top = 339
+          Width = 261
+          Height = 17
+          Caption = 'Solicitar contrase'#241'a de vendedor al guardar venta'
+          TabOrder = 14
         end
       end
       object TabSheet5: TTabSheet

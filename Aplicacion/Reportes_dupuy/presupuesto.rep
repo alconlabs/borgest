@@ -20,7 +20,8 @@ object TRpReport
         'select * from documentosventas'#13#10'inner join documentoventadetalle' +
         's on documentosventas.documentoventa_id=documentoventadetalles.d' +
         'ocumentoventa_id'#13#10'inner join clientes on documentosventas.client' +
-        'e_id=clientes.cliente_id'
+        'e_id=clientes.cliente_id'#13#10'inner join personal on documentosventa' +
+        's.personal_id=personal.personal_id'
     end>
   DatabaseInfo = <
     item
@@ -130,13 +131,13 @@ object TRpReport
         Component = TRpExpression1
       end
       item
-        Component = TRpLabel3
-      end
-      item
         Component = TRpLabel4
       end
       item
         Component = TRpLabel5
+      end
+      item
+        Component = TRpExpression7
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -324,26 +325,11 @@ object TRpReport
     AgIniValue = '0'
     ExportExpression = ''
   end
-  object TRpLabel3: TRpLabel
-    Width = 455
-    Height = 230
-    PosX = 4790
-    PosY = 55
-    Type1Font = poHelvetica
-    FontStyle = 1
-    Alignment = 2
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'Nro.'
-  end
   object TRpLabel4: TRpLabel
     Width = 2385
     Height = 285
     PosX = 2850
-    PosY = 60
+    PosY = 55
     Type1Font = poHelvetica
     FontStyle = 1
     Alignment = 2
@@ -681,5 +667,27 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     WideText = 'Total'
+  end
+  object TRpExpression7: TRpExpression
+    Width = 2220
+    Height = 285
+    PosX = 120
+    PosY = 630
+    Type1Font = poHelvetica
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.personal_auxstring1'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
   end
 end

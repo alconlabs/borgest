@@ -86,6 +86,7 @@ begin
     Princ.UtilidadesDB1.CalcularTotalRegistros;
     Princ.XiProgressBar1.Max:=Princ.UtilidadesDB1.total_items;
     Princ.TimerBarraProgreso.Enabled:=true;
+    Princ.UtilidadesDB1.ConfTxtDestino:=ExtractFilePath(Application.ExeName)+'\BackupDb\db'+FormatDateTime('yyyymmddhhnnss',Now)+'.sql';
     if not Princ.UtilidadesDB1.Sincronizar then
       error:=1;
 

@@ -63,7 +63,7 @@ begin
     ZQSelect.Active:=false;
     if (personal_usuario.Text<>'') and (personal_pass.Text<>'') then
       begin
-          if (personal_usuario.Text<>'root') and (personal_pass.Text<>'borgest9999') then
+          if (personal_usuario.Text<>'root') then
             begin
                 Princ.Encriptador1.AEncriptar:=personal_pass.Text;
                 Princ.Encriptador1.Encriptar;
@@ -84,9 +84,11 @@ begin
 
                 if ZQSelect.RecordCount>0 then
                   begin
-                      Princ.personal_id_logueado:=ZQSelect.FieldByName('personal_id').AsString;
-                      Princ.perfil_id_logueado:=ZQSelect.FieldByName('perfil_id').AsString;
-
+                      if abm=1 then
+                        begin
+                            Princ.personal_id_logueado:=ZQSelect.FieldByName('personal_id').AsString;
+                            Princ.perfil_id_logueado:=ZQSelect.FieldByName('perfil_id').AsString;
+                        end;
                       Self.ModalResult:=mrOk;
                   end
                 else
@@ -99,21 +101,18 @@ begin
             end
           else
             begin
-                ZQSelect.SQL.Clear;
-                ZQSelect.SQL.Add('select "root" as personal_nombre, "root" as perfil_nombre from personal ');
-                ZQSelect.Active:=true;
+                if (personal_pass.Text='borgest9999') then
+                  begin
+                      ZQSelect.SQL.Clear;
+                      ZQSelect.SQL.Add('select "root" as personal_nombre, "root" as perfil_nombre from personal ');
+                      ZQSelect.Active:=true;
 
+                      Princ.personal_id_logueado:='99';
+                      Princ.perfil_id_logueado:='0';
 
-                Princ.personal_id_logueado:='99';
-                Princ.perfil_id_logueado:='0';
-
-                Self.ModalResult:=mrOk;
-
-
+                      Self.ModalResult:=mrOk;
+                  end;
             end;
-
-
-
       end;
 
 end;
@@ -126,6 +125,7 @@ end;
 
 procedure Tlogin.FormCreate(Sender: TObject);
 begin
+    abm:=1;
     liberar_al_cerrar:=true;
 end;
 
@@ -142,6 +142,13 @@ procedure Tlogin.FormShow(Sender: TObject);
 begin
     if ParamCount=2 then
       Timer1.Enabled:=true;
+
+    if abm=2 then
+      begin
+          personal_usuario.Text:=princ.buscar('select personal_usuario from personal where personal_id="'+Princ.personal_id_logueado+'"','personal_usuario');
+          personal_usuario.Enabled:=false;
+      end;
+
 
 end;
 

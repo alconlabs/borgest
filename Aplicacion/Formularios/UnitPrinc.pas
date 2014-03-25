@@ -3672,6 +3672,10 @@ begin
 
       end;
 
+
+    if not DirectoryExists(ExtractFilePath(Application.ExeName)+'\BackupDb\') then
+      CreateDir(ExtractFilePath(Application.ExeName)+'\BackupDb\');
+
     Timer1.Enabled:=true;
 
     princ.XiProgressBar1.Parent:=Princ.StatusBar1;
@@ -4207,6 +4211,7 @@ begin
                               SincronizarDB:=TSincronizarDB.Create(Princ);
                             finally
                               //                              SincronizarDB.Show;
+
                               Hilo.Ejecutar := SincronizarDB.sincronizarahora;
                               Hilo.Priority := tpNormal;
                               Hilo.Resume;
@@ -4222,6 +4227,7 @@ procedure TPrinc.TimerBarraProgresoTimer(Sender: TObject);
 begin
     Princ.XiProgressBar1.Position:=Princ.UtilidadesDB1.item_actual;
     Princ.StatusBar1.Repaint;
+
 end;
 
 procedure TPrinc.VCLReport1BeforePrint(Sender: TObject);
