@@ -197,7 +197,7 @@ object detallectas: Tdetallectas
       OnClick = btnactualizarClick
     end
     object btnimprimir: TButton
-      Left = 662
+      Left = 894
       Top = 423
       Width = 75
       Height = 25
@@ -448,7 +448,7 @@ object detallectas: Tdetallectas
       ConfTodosCheckeados = True
     end
     object BtnDetalleImputacion: TButton
-      Left = 533
+      Left = 765
       Top = 423
       Width = 124
       Height = 25

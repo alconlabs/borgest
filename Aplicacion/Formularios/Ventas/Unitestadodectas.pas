@@ -425,7 +425,7 @@ begin
                            'if('+condicion_saldoanterior+',"0",puntoventa_numero) as puntoventanumero, '+
                            'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero, '+
                            '0.00 as acumulado_cliente, '+
-                           'DATEDIFF(documentoventa_fechavenc,curdate()) as documentoventa_diasvenc '+
+                           'if(documentosventas.documentoventa_estado="PENDIENTE",DATEDIFF(documentoventa_fechavenc,curdate()),0) as documentoventa_diasvenc '+
                            'from documentosventas '+
 //                           'left join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
 //                           'left join documentoventadetalles documentoventadetalles2 on documentoventadetalles.documentoventadetalle_idorig=documentoventadetalles2.documentoventadetalle_id '+
@@ -696,7 +696,7 @@ begin
                            'if('+condicion_saldoanterior+',"'+formatdatetime('dd/mm/yyyy',desde_fecha.Date)+'",DATE_FORMAT(documentosventas.documentoventa_fecha,"%d/%m/%Y")) as documentoventafecha, '+
                            'puntodeventa.puntoventa_id as puntoventanumero, '+
                            'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero, '+
-                           'DATEDIFF(documentoventa_fechavenc,curdate()) as documentoventa_diasvenc '+
+                           'if(documentosventas.documentoventa_estado="PENDIENTE",DATEDIFF(documentoventa_fechavenc,curdate()),0) as documentoventa_diasvenc '+
                            'from documentosventas '+
                            'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
                            'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+

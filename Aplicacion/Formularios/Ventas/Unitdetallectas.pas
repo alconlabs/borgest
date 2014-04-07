@@ -419,7 +419,7 @@ begin
                            'if('+condicion_saldoanterior+',"0",puntoventa_numero) as puntoventanumero, '+
                            'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero, '+
                            '0.00 as acumulado_cliente, '+
-                           'DATEDIFF(documentoventa_fechavenc,curdate()) as documentoventa_diasvenc '+
+                           'if(documentosventas.documentoventa_estado="PENDIENTE",DATEDIFF(documentoventa_fechavenc,curdate()),0) as documentoventa_diasvenc '+
                            'from documentosventas '+
 //                           'left join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
 //                           'left join documentoventadetalles documentoventadetalles2 on documentoventadetalles.documentoventadetalle_idorig=documentoventadetalles2.documentoventadetalle_id '+
@@ -687,7 +687,7 @@ begin
                            'if('+condicion_saldoanterior+',"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",DATE_FORMAT(documentosventas.documentoventa_fecha,"%d/%m/%Y")) as documentoventafecha, '+
                            'puntodeventa.puntoventa_id as puntoventanumero, '+
                            'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero, '+
-                           'DATEDIFF(documentoventa_fechavenc,curdate()) as documentoventa_diasvenc '+
+                           'if(documentosventas.documentoventa_estado="PENDIENTE",DATEDIFF(documentoventa_fechavenc,curdate()),0) as documentoventa_diasvenc '+
                            'from documentosventas '+
 //                           'left join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
 //                           'left join documentoventadetalles documentoventadetalles2 on documentoventadetalles.documentoventadetalle_idorig=documentoventadetalles2.documentoventadetalle_id '+
@@ -698,6 +698,7 @@ begin
                            'inner join personal on documentosventas.personal_id=personal.personal_id '+
                            'inner join personal as pesronalcliente on clientes.personal_id=pesronalcliente.personal_id '+
                            'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
+                           'left join documentopagos on documentosventas.documentoventa_id=documentopagos.documentoventa_id '+
                            'group by grupo '+
                            'order by pesronalcliente.personal_nombre, sucursal_nombre, cliente_nombre, clientes.cliente_id, documentoventa_fecha, documentoventa_numero ';
 

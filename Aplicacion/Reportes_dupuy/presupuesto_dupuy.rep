@@ -311,18 +311,6 @@ object TRpReport
     SectionType = rpsecgfooter
     Components = <
       item
-        Component = TRpShape9
-      end
-      item
-        Component = TRpExpression6
-      end
-      item
-        Component = TRpShape10
-      end
-      item
-        Component = TRpLabel7
-      end
-      item
         Component = TRpExpression9
       end
       item
@@ -381,72 +369,6 @@ object TRpReport
     LFontName = 'Helvetica'
     WideText = 'Descripcion'
   end
-  object TRpExpression6: TRpExpression
-    Width = 625
-    Height = 230
-    PosX = 3820
-    PosY = 55
-    Type1Font = poHelvetica
-    FontSize = 8
-    FontStyle = 1
-    Alignment = 2
-    DataType = rpParamCurrency
-    DisplayFormat = '0.00'
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.documentoventa_total'
-    DisplayFormat = '0.00'
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
-  object TRpShape10: TRpShape
-    Width = 170
-    Height = 285
-    PosX = 3760
-    PosY = 0
-    BrushStyle = 1
-    Shape = rpsVertLine
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-  end
-  object TRpLabel7: TRpLabel
-    Width = 622
-    Height = 232
-    PosX = 3080
-    PosY = 55
-    Type1Font = poHelvetica
-    FontSize = 8
-    FontStyle = 1
-    Alignment = 2
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'Total'
-  end
-  object TRpShape9: TRpShape
-    Width = 4395
-    Height = 285
-    PosX = 110
-    PosY = 0
-    BrushStyle = 1
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-  end
   object TRpExpression9: TRpExpression
     Width = 1370
     Height = 230
@@ -503,9 +425,9 @@ object TRpReport
     WideText = 'Total'
   end
   object TRpShape16: TRpShape
-    Width = 4450
-    Height = 285
-    PosX = 5870
+    Width = 10152
+    Height = 288
+    PosX = 168
     PosY = 0
     BrushStyle = 1
     PenWidth = 0

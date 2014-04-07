@@ -2,7 +2,6 @@ inherited tipodocumento: Ttipodocumento
   Caption = 'Tipo de Documento'
   ClientHeight = 386
   ClientWidth = 821
-  OnShow = FormShow
   ExplicitWidth = 837
   ExplicitHeight = 424
   PixelsPerInch = 96
@@ -10,8 +9,6 @@ inherited tipodocumento: Ttipodocumento
   inherited panelgrilla: TAdvPanel
     Width = 821
     Height = 386
-    ExplicitLeft = -48
-    ExplicitTop = -8
     ExplicitWidth = 821
     ExplicitHeight = 386
     FullHeight = 0
@@ -130,7 +127,6 @@ inherited tipodocumento: Ttipodocumento
       Left = 469
       Top = 319
       TabOrder = 19
-      OnClick = btnguardarClick
       ExplicitLeft = 469
       ExplicitTop = 319
     end

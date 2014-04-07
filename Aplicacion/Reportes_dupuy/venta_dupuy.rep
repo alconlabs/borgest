@@ -19,7 +19,8 @@ object TRpReport
         'select * from documentosventas'#13#10'inner join documentoventadetalle' +
         's on documentosventas.documentoventa_id=documentoventadetalles.d' +
         'ocumentoventa_id'#13#10'inner join clientes on documentosventas.client' +
-        'e_id=clientes.cliente_id'
+        'e_id=clientes.cliente_id'#13#10'inner join personal on documentosventa' +
+        's.personal_id=personal.personal_id'
     end>
   DatabaseInfo = <
     item
@@ -185,6 +186,12 @@ object TRpReport
       end
       item
         Component = TRpLabel15
+      end
+      item
+        Component = TRpExpression16
+      end
+      item
+        Component = TRpExpression17
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -1263,5 +1270,49 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     WideText = 'Cliente'
+  end
+  object TRpExpression16: TRpExpression
+    Width = 2385
+    Height = 270
+    PosX = 120
+    PosY = 285
+    Type1Font = poHelvetica
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.personal_auxstring1'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpExpression17: TRpExpression
+    Width = 2385
+    Height = 270
+    PosX = 5925
+    PosY = 285
+    Type1Font = poHelvetica
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.personal_auxstring1'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
   end
 end

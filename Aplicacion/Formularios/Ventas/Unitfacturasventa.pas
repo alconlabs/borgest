@@ -1355,6 +1355,8 @@ begin
       begin
           if abm=ABM_AGREGAR then
             begin
+                documentoventa_numero.Text:=Princ.NumeroDocumento(tipodocu_id.Codigo,documentoventa_numero.Text);
+
                 if Princ.buscar('select documentoventa_id from documentosventas where documentoventa_numero="'+documentoventa_numero.Text+'" and tipodocu_id="'+tipodocu_id.codigo+'"', 'documentoventa_id')<>'' then
                   error:=11;
             end;
