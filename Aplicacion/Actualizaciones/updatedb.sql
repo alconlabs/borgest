@@ -1861,3 +1861,68 @@ INSERT INTO `tipospago` SET `tipopago_id`=5,`tipopago_nombre`='RETENCION',`tipop
 Replace config set config_valor='0', config_nombre='SOLICITARPASSVENDEDORVENTAS';
 546;
 ALTER TABLE `personal` ADD COLUMN `personal_auxstring1` VARCHAR(45) NULL DEFAULT NULL  AFTER `personal_auxint1` ;
+547;
+CREATE  TABLE IF NOT EXISTS `marcas` (
+  `marca_id` INT(11) NOT NULL ,
+  `marca_nombre` VARCHAR(100) NULL DEFAULT NULL ,
+  PRIMARY KEY (`marca_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+548;
+CREATE  TABLE IF NOT EXISTS `secciones` (
+  `seccion_id` INT(11) NOT NULL ,
+  `seccion_nombre` VARCHAR(100) NULL DEFAULT NULL ,
+  PRIMARY KEY (`seccion_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+549;
+CREATE  TABLE IF NOT EXISTS `curvas` (
+  `curva_id` INT(11) NOT NULL ,
+  `curva_descripcion` VARCHAR(100) NULL DEFAULT NULL ,
+  `seccion_id` INT(11) NOT NULL ,
+  `marca_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`curva_id`) ,
+  INDEX `fk_curvas_secciones1` (`seccion_id` ASC) ,
+  INDEX `fk_curvas_marcas1` (`marca_id` ASC) ,
+  CONSTRAINT `fk_curvas_secciones1`
+    FOREIGN KEY (`seccion_id` )
+    REFERENCES `secciones` (`seccion_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_curvas_marcas1`
+    FOREIGN KEY (`marca_id` )
+    REFERENCES `marcas` (`marca_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+550;
+CREATE  TABLE IF NOT EXISTS `curvadetalles` (
+  `curvadetalle_id` INT(11) NOT NULL ,
+  `curvadetalle_talle` VARCHAR(10) NULL DEFAULT NULL ,
+  `curva_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`curvadetalle_id`) ,
+  INDEX `fk_curvadetalles_curvas1` (`curva_id` ASC) ,
+  CONSTRAINT `fk_curvadetalles_curvas1`
+    FOREIGN KEY (`curva_id` )
+    REFERENCES `curvas` (`curva_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+551;
+ALTER TABLE `curvas` ADD COLUMN `rubro_id` INT(11) NOT NULL  AFTER `marca_id` , 
+  ADD CONSTRAINT `fk_curvas_rubros1`
+  FOREIGN KEY (`rubro_id` )
+  REFERENCES `rubros` (`rubro_id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+, ADD INDEX `fk_curvas_rubros1` (`rubro_id` ASC) ;
+552;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('97', '>Archivo>General>Curvas', '0', 'btncurvas', '', '0', '0', 'Tlistacurvas');
+553;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,97,perfil_id,-1 from perfiles;

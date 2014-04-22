@@ -131,16 +131,10 @@ object TRpReport
         Component = TRpExpression2
       end
       item
-        Component = TRpExpression3
-      end
-      item
         Component = TRpExpression4
       end
       item
         Component = TRpExpression5
-      end
-      item
-        Component = TRpShape0
       end
       item
         Component = TRpShape1
@@ -156,6 +150,12 @@ object TRpReport
       end
       item
         Component = TRpShape5
+      end
+      item
+        Component = TRpShape12
+      end
+      item
+        Component = TRpExpression14
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -184,25 +184,7 @@ object TRpReport
     SectionType = rpsecpheader
     Components = <
       item
-        Component = TRpLabel5
-      end
-      item
         Component = TRpLabel0
-      end
-      item
-        Component = TRpLabel1
-      end
-      item
-        Component = TRpLabel2
-      end
-      item
-        Component = TRpLabel3
-      end
-      item
-        Component = TRpLabel4
-      end
-      item
-        Component = TRpLabel6
       end
       item
         Component = TRpLabel7
@@ -215,24 +197,6 @@ object TRpReport
       end
       item
         Component = TRpExpression7
-      end
-      item
-        Component = TRpShape6
-      end
-      item
-        Component = TRpShape8
-      end
-      item
-        Component = TRpShape9
-      end
-      item
-        Component = TRpShape10
-      end
-      item
-        Component = TRpShape11
-      end
-      item
-        Component = TRpShape12
       end
       item
         Component = TRpExpression9
@@ -351,59 +315,10 @@ object TRpReport
     AgIniValue = '0'
     ExportExpression = ''
   end
-  object TRpExpression2: TRpExpression
-    Width = 970
-    Height = 220
-    PosX = 1995
-    PosY = 0
-    Type1Font = poHelvetica
-    Alignment = 2
-    DataType = rpParamInteger
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.documentoventa_numero'
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
-  object TRpExpression3: TRpExpression
-    Width = 395
-    Height = 220
-    PosX = 3080
-    PosY = 0
-    Type1Font = poHelvetica
-    Alignment = 4
-    DataType = rpParamInteger
-    GroupName = ' '
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.tipodocu_letra'
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
   object TRpExpression4: TRpExpression
-    Width = 5585
-    Height = 220
-    PosX = 3590
+    Width = 4395
+    Height = 218
+    PosX = 4785
     PosY = 0
     Type1Font = poHelvetica
     Alignment = 1
@@ -423,30 +338,6 @@ object TRpReport
     ExportDisplayFormat = ''
     AgIniValue = '0'
     ExportExpression = ''
-  end
-  object TRpShape0: TRpShape
-    Width = 55
-    Height = 230
-    PosX = 3020
-    PosY = 0
-    BrushStyle = 1
-    Shape = rpsVertLine
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-  end
-  object TRpShape1: TRpShape
-    Width = 55
-    Height = 230
-    PosX = 3535
-    PosY = 0
-    BrushStyle = 1
-    Shape = rpsVertLine
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
   end
   object TRpShape3: TRpShape
     Width = 55
@@ -523,7 +414,7 @@ object TRpReport
   end
   object TRpSection3: TRpSection
     Width = 10772
-    Height = 0
+    Height = 660
     SubReport = TRpSubReport0
     GroupName = 'GRUPO'
     ChangeBool = False
@@ -531,7 +422,46 @@ object TRpReport
     SkipPage = False
     AlignBottom = False
     SectionType = rpsecgheader
-    Components = <>
+    Components = <
+      item
+        Component = TRpLabel1
+      end
+      item
+        Component = TRpLabel2
+      end
+      item
+        Component = TRpLabel3
+      end
+      item
+        Component = TRpLabel4
+      end
+      item
+        Component = TRpShape0
+      end
+      item
+        Component = TRpShape6
+      end
+      item
+        Component = TRpShape8
+      end
+      item
+        Component = TRpShape9
+      end
+      item
+        Component = TRpShape10
+      end
+      item
+        Component = TRpShape11
+      end
+      item
+        Component = TRpLabel5
+      end
+      item
+        Component = TRpLabel6
+      end
+      item
+        Component = TRpExpression3
+      end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
     ExternalSearchField = 'REPORT_NAME'
@@ -539,9 +469,13 @@ object TRpReport
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
-    ChangeExpression = ''
+    ChangeExpression = 
+      'MONTHNAME(ALIAS_DBBORGEST.documentoventa_fecha)+STR(YEAR(ALIAS_D' +
+      'BBORGEST.documentoventa_fecha))'
     BeginPageExpression = ''
-    ChangeExpression = ''
+    ChangeExpression = 
+      'MONTHNAME(ALIAS_DBBORGEST.documentoventa_fecha)+STR(YEAR(ALIAS_D' +
+      'BBORGEST.documentoventa_fecha))'
     SkipExpreV = ''
     SkipExpreH = ''
     SkipToPageExpre = ''
@@ -578,9 +512,13 @@ object TRpReport
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
-    ChangeExpression = ''
+    ChangeExpression = 
+      'MONTHNAME(ALIAS_DBBORGEST.documentoventa_fecha)+STR(YEAR(ALIAS_D' +
+      'BBORGEST.documentoventa_fecha))'
     BeginPageExpression = ''
-    ChangeExpression = ''
+    ChangeExpression = 
+      'MONTHNAME(ALIAS_DBBORGEST.documentoventa_fecha)+STR(YEAR(ALIAS_D' +
+      'BBORGEST.documentoventa_fecha))'
     SkipExpreV = ''
     SkipExpreH = ''
     SkipToPageExpre = ''
@@ -662,155 +600,6 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     WideText = 'Total Ventas'
-  end
-  object TRpLabel1: TRpLabel
-    Width = 970
-    Height = 225
-    PosX = 115
-    PosY = 2111
-    Type1Font = poHelvetica
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'Fecha'
-  end
-  object TRpLabel2: TRpLabel
-    Width = 685
-    Height = 225
-    PosX = 1195
-    PosY = 2111
-    Type1Font = poHelvetica
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'Pto Vta.'
-  end
-  object TRpLabel3: TRpLabel
-    Width = 965
-    Height = 225
-    PosX = 1995
-    PosY = 2111
-    Type1Font = poHelvetica
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'Nro.'
-  end
-  object TRpLabel4: TRpLabel
-    Width = 395
-    Height = 225
-    PosX = 3080
-    PosY = 2111
-    Type1Font = poHelvetica
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'Tipo'
-  end
-  object TRpLabel6: TRpLabel
-    Width = 965
-    Height = 225
-    PosX = 9290
-    PosY = 2111
-    Type1Font = poHelvetica
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'Importe'
-  end
-  object TRpShape6: TRpShape
-    Width = 55
-    Height = 275
-    PosX = 9235
-    PosY = 2111
-    BrushStyle = 1
-    Shape = rpsVertLine
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-  end
-  object TRpShape8: TRpShape
-    Width = 55
-    Height = 275
-    PosX = 3535
-    PosY = 2111
-    BrushStyle = 1
-    Shape = rpsVertLine
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-  end
-  object TRpShape9: TRpShape
-    Width = 55
-    Height = 275
-    PosX = 3020
-    PosY = 2111
-    BrushStyle = 1
-    Shape = rpsVertLine
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-  end
-  object TRpShape10: TRpShape
-    Width = 55
-    Height = 275
-    PosX = 1940
-    PosY = 2111
-    BrushStyle = 1
-    Shape = rpsVertLine
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-  end
-  object TRpShape11: TRpShape
-    Width = 55
-    Height = 275
-    PosX = 1140
-    PosY = 2111
-    BrushStyle = 1
-    Shape = rpsVertLine
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-  end
-  object TRpShape12: TRpShape
-    Width = 10315
-    Height = 270
-    PosX = 60
-    PosY = 2106
-    BrushStyle = 1
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-  end
-  object TRpLabel5: TRpLabel
-    Width = 965
-    Height = 225
-    PosX = 3590
-    PosY = 2111
-    Type1Font = poHelvetica
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    WideText = 'Cliente'
   end
   object TRpLabel7: TRpLabel
     Width = 850
@@ -1076,5 +865,251 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     WideText = 'INFORME DE VENTAS'
+  end
+  object TRpLabel1: TRpLabel
+    Width = 970
+    Height = 225
+    PosX = 115
+    PosY = 401
+    Type1Font = poHelvetica
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    WideText = 'Fecha'
+  end
+  object TRpLabel2: TRpLabel
+    Width = 685
+    Height = 225
+    PosX = 1195
+    PosY = 401
+    Type1Font = poHelvetica
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    WideText = 'Pto Vta.'
+  end
+  object TRpLabel3: TRpLabel
+    Width = 1080
+    Height = 232
+    PosX = 1995
+    PosY = 398
+    Type1Font = poHelvetica
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    WideText = 'Nro.'
+  end
+  object TRpLabel4: TRpLabel
+    Width = 965
+    Height = 225
+    PosX = 9290
+    PosY = 401
+    Type1Font = poHelvetica
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    WideText = 'Importe'
+  end
+  object TRpShape0: TRpShape
+    Width = 55
+    Height = 275
+    PosX = 9235
+    PosY = 401
+    BrushStyle = 1
+    Shape = rpsVertLine
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+  end
+  object TRpShape6: TRpShape
+    Width = 55
+    Height = 275
+    PosX = 4732
+    PosY = 398
+    BrushStyle = 1
+    Shape = rpsVertLine
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+  end
+  object TRpShape8: TRpShape
+    Width = 55
+    Height = 275
+    PosX = 1940
+    PosY = 401
+    BrushStyle = 1
+    Shape = rpsVertLine
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+  end
+  object TRpShape9: TRpShape
+    Width = 55
+    Height = 275
+    PosX = 1140
+    PosY = 401
+    BrushStyle = 1
+    Shape = rpsVertLine
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+  end
+  object TRpShape10: TRpShape
+    Width = 10312
+    Height = 262
+    PosX = 60
+    PosY = 398
+    BrushStyle = 1
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+  end
+  object TRpShape11: TRpShape
+    Width = 55
+    Height = 275
+    PosX = 3135
+    PosY = 398
+    BrushStyle = 1
+    Shape = rpsVertLine
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+  end
+  object TRpLabel5: TRpLabel
+    Width = 1080
+    Height = 232
+    PosX = 3195
+    PosY = 398
+    Type1Font = poHelvetica
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    WideText = 'Equipo'
+  end
+  object TRpLabel6: TRpLabel
+    Width = 965
+    Height = 225
+    PosX = 4785
+    PosY = 398
+    Type1Font = poHelvetica
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    WideText = 'Cliente'
+  end
+  object TRpExpression3: TRpExpression
+    Width = 3075
+    Height = 270
+    PosX = 120
+    PosY = 60
+    Type1Font = poHelvetica
+    FontSize = 12
+    FontStyle = 1
+    DataType = rpParamString
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'UPPERCASE(MONTHNAME(ALIAS_DBBORGEST.documentoventa_fecha))'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpShape1: TRpShape
+    Width = 55
+    Height = 230
+    PosX = 4732
+    PosY = 0
+    BrushStyle = 1
+    Shape = rpsVertLine
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+  end
+  object TRpShape12: TRpShape
+    Width = 55
+    Height = 230
+    PosX = 3135
+    PosY = 0
+    BrushStyle = 1
+    Shape = rpsVertLine
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+  end
+  object TRpExpression2: TRpExpression
+    Width = 1080
+    Height = 225
+    PosX = 1995
+    PosY = 0
+    Type1Font = poHelvetica
+    Alignment = 2
+    DataType = rpParamInteger
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.documentoventa_numero'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
+  end
+  object TRpExpression14: TRpExpression
+    Width = 1478
+    Height = 225
+    PosX = 3195
+    PosY = 0
+    Type1Font = poHelvetica
+    Alignment = 2
+    DataType = rpParamString
+    AutoExpand = False
+    AutoContract = False
+    ExportPosition = 0
+    ExportSize = 1
+    ExportDoNewLine = False
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+    WFontName = 'Arial'
+    LFontName = 'Helvetica'
+    Expression = 'ALIAS_DBBORGEST.documentoventa_equipo1'
+    DisplayFormat = ''
+    ExportDisplayFormat = ''
+    AgIniValue = '0'
+    ExportExpression = ''
   end
 end

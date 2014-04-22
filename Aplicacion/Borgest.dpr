@@ -58,7 +58,7 @@ uses
   Unitinformesventas in 'Formularios\Ventas\Unitinformesventas.pas' {InformesVentas},
   UnitOrdenServicio in 'Formularios\Ventas\UnitOrdenServicio.pas' {ordenservicio},
   UnitListaOrdenesServicios in 'Formularios\Ventas\UnitListaOrdenesServicios.pas' {ListaOrdenesServicios},
-  UnitImprimirListaPrecios in 'UnitImprimirListaPrecios.pas' {ImprimirListaPrecios},
+  UnitImprimirListaPrecios in 'Formularios\Archivo\UnitImprimirListaPrecios.pas' {ImprimirListaPrecios},
   UnitListaPresupuestos in 'Formularios\Ventas\UnitListaPresupuestos.pas' {ListaPresupuestos},
   UnitPresupuesto in 'Formularios\Ventas\UnitPresupuesto.pas' {presupuesto},
   Unitcompradetalle in 'Formularios\Compras\Unitcompradetalle.pas' {compradetalle},
@@ -141,7 +141,9 @@ uses
   UnitEstadoIVAs in 'Formularios\Contabilidad\UnitEstadoIVAs.pas' {EstadoIVAs},
   UnitSplash in 'Formularios\UnitSplash.pas' {splash},
   UnitFacturaventa02 in 'Formularios\Ventas\UnitFacturaventa02.pas' {facturaventa02},
-  UnitProducto01 in 'Formularios\Archivo\UnitProducto01.pas' {producto01};
+  UnitProducto01 in 'Formularios\Archivo\UnitProducto01.pas' {producto01},
+  Unitlistacurvas in 'Formularios\Archivo\Unitlistacurvas.pas' {listacurvas},
+  UnitCurva in 'Formularios\Archivo\UnitCurva.pas' {Curva};
 
 {$R *.res}
 
@@ -150,5 +152,7 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Borgest - Sistema de Gestion Comercial';
   Application.CreateForm(TPrinc, Princ);
+  Application.CreateForm(Tlistacurvas, listacurvas);
+  Application.CreateForm(TCurva, Curva);
   Application.Run;
 end.

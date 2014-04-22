@@ -5,6 +5,7 @@ Archivo
 		Productos
 		Calculo Precios
 		Politicas de Precios
+		Curvas
 		Clientes
 		Conceptos Deb-Cred
 		Tarjetas de Credito

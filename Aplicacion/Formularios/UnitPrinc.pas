@@ -174,6 +174,7 @@ type
     AdvToolBarLibrosIvas: TAdvToolBar;
     btnestadoiva: TAdvGlowButton;
     Permisos1: TPermisos;
+    btncurvas: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -254,6 +255,7 @@ type
       const Rect: TRect);
     procedure TimerBarraProgresoTimer(Sender: TObject);
     procedure btnestadoivaClick(Sender: TObject);
+    procedure btncurvasClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -494,7 +496,7 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitSaldosComisionesBorradores, UnitListaLiquidacionesBorradores,
   UnitImprimirEtiquetas, UnitConsultaStock, UnitEstadoComisionesBorradores,
   UnitDetalleComisionesBorradores, UnitListaCuponesTarjetasCredito,
-  UnitSincronizarDB, UnitEstadoIVAs, UnitFacturaventa02;
+  UnitSincronizarDB, UnitEstadoIVAs, UnitFacturaventa02, Unitlistacurvas;
 
 {$R *.dfm}
 
@@ -3975,6 +3977,16 @@ begin
     finally
       ListaCuponesTarjetasCredito.campo_id:='cupontarjeta_id';
       ListaCuponesTarjetasCredito.Show;
+    end;
+end;
+
+procedure TPrinc.btncurvasClick(Sender: TObject);
+begin
+    try
+      listacurvas:=Tlistacurvas.Create(self);
+    finally
+      listacurvas.campo_id:='curva_id';
+      listacurvas.Show;
     end;
 end;
 

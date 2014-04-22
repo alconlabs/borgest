@@ -74,7 +74,7 @@ object calculoprecio: Tcalculoprecio
       Caption = 'Nombre'
     end
     object Label15: TLabel
-      Left = 13
+      Left = 16
       Top = 10
       Width = 33
       Height = 13

@@ -9,6 +9,8 @@ inherited producto01: Tproducto01
   inherited panelgrilla: TAdvPanel
     Width = 668
     Height = 328
+    ExplicitWidth = 668
+    ExplicitHeight = 328
     FullHeight = 0
     inherited btncancelar: TButton
       Left = 562
@@ -25,12 +27,13 @@ inherited producto01: Tproducto01
     inherited PageControl1: TPageControl
       Width = 668
       Height = 273
+      ExplicitWidth = 668
       ExplicitHeight = 273
       inherited TabSheet2: TTabSheet
         ExplicitLeft = 4
         ExplicitTop = 24
-        ExplicitWidth = 782
-        ExplicitHeight = 501
+        ExplicitWidth = 660
+        ExplicitHeight = 245
         inherited Label17: TLabel
           Top = 756
           Visible = False
