@@ -96,10 +96,6 @@ object productos: Tproductos
       object TabSheet2: TTabSheet
         Caption = 'Datos Principales'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label17: TLabel
           Left = 39
           Top = 156

@@ -64,7 +64,11 @@ begin
             if (MessageDlg('Seguro desea eliminar este registro?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
               eliminar;
         end;
-
+        ABM_CLONAR:begin
+            abm:=ABM_AGREGAR;
+            if control then
+              agregar;
+        end;
 
     end;
 
@@ -94,6 +98,7 @@ begin
     ZQExecSql.Sql.Add('seccion_id=:seccion_id, ');
     ZQExecSql.Sql.Add('curva_descripcion=:curva_descripcion, ');
     ZQExecSql.Sql.Add('curva_id=:curva_id ');
+
     ZQExecSql.ParamByName('rubro_id').AsString:=rubro_id.codigo;
     ZQExecSql.ParamByName('marca_id').AsString:=marca_id.codigo;
     ZQExecSql.ParamByName('seccion_id').AsString:=seccion_id.codigo;

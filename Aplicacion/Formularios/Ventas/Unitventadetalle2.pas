@@ -41,6 +41,7 @@ type
     ventadetalle_preciounitoriginal: TDBAdvEdit;
     producdepo_stockinicial: TLabel;
     ventadeta_cantidad: TMoneyEdit;
+    lblStockOtroDeposito: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnaceptarClick(Sender: TObject);
     procedure producto_idSelect(Sender: TObject);
@@ -217,7 +218,7 @@ begin
           producdepo_stockactual.Visible:=true;
 
           producdepo_stockminimo.Caption:='Stock Min: '+floattostr(minimo);
-          producdepo_stockactual.Caption:='Stock: '+floattostr(actual);
+          producdepo_stockactual.Caption:='Stock '+Princ.buscar('select deposito_nombre from depositos where deposito_id="'+Princ.dep_id+'"','deposito_nombre')+': '+floattostr(actual);
 
           producdepo_stockinicial.Caption:='Stock Inic: '+Princ.ZQProductos.FieldByName('producdepo_stockinicial').AsString;
 
@@ -226,6 +227,8 @@ begin
                 producdepo_stockactual.Font.Color:=clRed;
                 producdepo_stockactual.Font.Style:=[fsBold];
             end;
+
+          lblStockOtroDeposito.Caption:=Princ.buscar('select deposito_nombre from depositos where deposito_id<>"'+Princ.dep_id+'"','deposito_nombre')+': '+Princ.buscar('select producdepo_stockactual from productodeposito where deposito_id<>"'+Princ.dep_id+'" and producto_id="'+producto_id.Text+'"','producdepo_stockactual');
 
           Princ.ZQProductos.Active:=false;
       end;

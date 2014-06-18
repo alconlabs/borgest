@@ -9,10 +9,8 @@ inherited Curva: TCurva
   inherited panelgrilla: TAdvPanel
     Width = 452
     Height = 364
-    ExplicitLeft = 40
-    ExplicitTop = -8
-    ExplicitWidth = 699
-    ExplicitHeight = 520
+    ExplicitWidth = 452
+    ExplicitHeight = 364
     FullHeight = 0
     object Label15: TLabel [0]
       Left = 16
@@ -139,7 +137,7 @@ inherited Curva: TCurva
     object DBGrid1: TDBGrid
       Left = 55
       Top = 130
-      Width = 162
+      Width = 206
       Height = 207
       DataSource = DTSCurvadetalles
       TabOrder = 5
@@ -195,8 +193,8 @@ inherited Curva: TCurva
     Params = <>
     UpdateMode = umUpdateAll
     WhereMode = wmWhereAll
-    Left = 184
-    Top = 208
+    Left = 352
+    Top = 240
     object ZQCurvadetallescurvadetalle_id: TIntegerField
       FieldName = 'curvadetalle_id'
     end

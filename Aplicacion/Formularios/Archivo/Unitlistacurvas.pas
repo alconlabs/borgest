@@ -16,6 +16,7 @@ type
     procedure btnfiltrarClick(Sender: TObject);
     procedure btnnuevoClick(Sender: TObject);
     procedure btnmodificarClick(Sender: TObject);
+    procedure btnclonarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,6 +31,19 @@ implementation
 uses unitprinc, UnitCurva;
 
 {$R *.dfm}
+
+procedure Tlistacurvas.btnclonarClick(Sender: TObject);
+begin
+  inherited;
+    try
+      Curva:=TCurva.Create(self);
+    finally
+      Curva.abm:=ABM_CLONAR;
+      Curva.id:=ZQGrilla.FieldByName(campo_id).AsString;
+      Curva.btnguardar.Caption:='Guardar';
+      Curva.Show;
+    end;
+end;
 
 procedure Tlistacurvas.btnfiltrarClick(Sender: TObject);
 begin
@@ -65,7 +79,7 @@ end;
 procedure Tlistacurvas.btnmodificarClick(Sender: TObject);
 begin
   inherited;
-     try
+    try
       Curva:=TCurva.Create(self);
     finally
       Curva.abm:=ABM_MODIFICAR;

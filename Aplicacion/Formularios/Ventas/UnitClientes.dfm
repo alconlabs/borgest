@@ -277,7 +277,7 @@ object clientes: Tclientes
         end
         object cliente_documentonro: TEdit
           Left = 106
-          Top = 130
+          Top = 129
           Width = 206
           Height = 21
           TabOrder = 6
@@ -379,10 +379,6 @@ object clientes: Tclientes
       object TabSheet2: TTabSheet
         Caption = 'Veh'#237'culo'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label8: TLabel
           Left = 24
           Top = 12

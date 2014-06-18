@@ -54,6 +54,9 @@
     <DCCReference Include="Formularios\Archivo\UnitEmpresa.pas">
       <Form>empresa</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitImprimirFichasClientes.pas">
+      <Form>ImprimirFichasClientes</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitImprimirListaPrecios.pas">
       <Form>ImprimirListaPrecios</Form>
     </DCCReference>
@@ -68,6 +71,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\Unitlistalocalidades.pas">
       <Form>ListaLocalidades</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitListaMarcas.pas">
+      <Form>ListaMarcas</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitListaPerfiles.pas">
       <Form>ListaPerfiles</Form>
@@ -195,6 +201,9 @@
     <DCCReference Include="Formularios\Compras\UnitAjusteStock.pas">
       <Form>AjusteStock</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitAjusteStockDetalle.pas">
+      <Form>AjusteStockDetalle</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Compras\Unitcompradetalle.pas">
       <Form>compradetalle</Form>
     </DCCReference>
@@ -228,6 +237,9 @@
     <DCCReference Include="Formularios\Compras\UnitListaFacturasdeCompras.pas">
       <Form>LIstaFacturasDeCompras</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitListaMovimientosDepositos.pas">
+      <Form>ListaMovimientosDepositos</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Compras\UnitListaNotasDeCreditodeCompras.pas">
       <Form>LIstaNotasDeCreditoDeCompras</Form>
     </DCCReference>
@@ -240,6 +252,12 @@
     <DCCReference Include="Formularios\Compras\Unitlistaproveedores.pas">
       <Form>listaproveedores</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitMovimientosDepositos.pas">
+      <Form>MovimientosDepositos</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitMovimientosDepositosConfirma.pas">
+      <Form>MovimientosDepositosConfirma</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Compras\UnitMovimientosdeStock.pas">
       <Form>MovimientosdeStock</Form>
     </DCCReference>
@@ -251,6 +269,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Compras\UnitOrdendePago.pas">
       <Form>OrdendePago</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitProductosenStock.pas">
+      <Form>ProductosenStock</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Compras\UnitProveedores.pas">
       <Form>proveedores</Form>
@@ -269,6 +290,12 @@
     </DCCReference>
     <DCCReference Include="Formularios\Herramientas\UnitConfiguracion.pas">
       <Form>configuracion</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Herramientas\UnitExportarDB.pas">
+      <Form>ExportarDB</Form>
+    </DCCReference>
+    <DCCReference Include="Formularios\Herramientas\UnitImportarDB.pas">
+      <Form>ImportarDB</Form>
     </DCCReference>
     <DCCReference Include="Formularios\Herramientas\UnitImprimirEtiquetas.pas">
       <Form>ImprimirEtiquetas</Form>
@@ -455,6 +482,9 @@
     </DCCReference>
     <DCCReference Include="Formularios\Ventas\UnitventadetalleConcepto.pas">
       <Form>ventadetalleconcepto</Form>
+    </DCCReference>
+    <DCCReference Include="UnitCargaStockCurva.pas">
+      <Form>CargaStockCurvas</Form>
     </DCCReference>
   </ItemGroup>
 </Project>

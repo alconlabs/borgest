@@ -1,13 +1,24 @@
 inherited listacurvas: Tlistacurvas
   Caption = 'Curvas'
-  ExplicitWidth = 320
-  ExplicitHeight = 240
+  ExplicitWidth = 950
+  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
       FullHeight = 0
+      inherited btnnuevo: TButton
+        ExplicitLeft = 0
+        ExplicitTop = 0
+      end
+      inherited btnver: TButton
+        ExplicitTop = 205
+      end
+      inherited btnclonar: TButton
+        OnClick = btnclonarClick
+        ExplicitTop = 164
+      end
     end
     inherited DBGrid1: TDBGrid
       Columns = <
@@ -49,6 +60,9 @@ inherited listacurvas: Tlistacurvas
     end
     inherited panelfiltros: TAdvPanel
       FullHeight = 0
+      inherited fil_id: TGTBEdit
+        FieldName = 'curva_id'
+      end
       object fil_curva_descripcion: TGTBEdit
         Left = 85
         Top = 0
@@ -92,8 +106,6 @@ inherited listacurvas: Tlistacurvas
         OnKeyPress = fil_idKeyPress
         Tag2 = 0
         FieldName = 'rubro_nombre'
-        ExplicitLeft = 721
-        ExplicitTop = -6
       end
     end
   end

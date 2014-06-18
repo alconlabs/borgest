@@ -2,8 +2,8 @@ object ABMbase: TABMbase
   Left = 0
   Top = 0
   Caption = 'ABMbase'
-  ClientHeight = 312
-  ClientWidth = 541
+  ClientHeight = 501
+  ClientWidth = 616
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,8 +22,8 @@ object ABMbase: TABMbase
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 541
-    Height = 312
+    Width = 616
+    Height = 501
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -67,8 +67,8 @@ object ABMbase: TABMbase
     Styler = Princ.AdvPanelStyler1
     FullHeight = 0
     object btncancelar: TButton
-      Left = 460
-      Top = 278
+      Left = 532
+      Top = 446
       Width = 75
       Height = 25
       Caption = 'Cancelar'
@@ -76,8 +76,8 @@ object ABMbase: TABMbase
       OnClick = btncancelarClick
     end
     object btnguardar: TButton
-      Left = 379
-      Top = 278
+      Left = 451
+      Top = 446
       Width = 75
       Height = 25
       Caption = 'Guardar'

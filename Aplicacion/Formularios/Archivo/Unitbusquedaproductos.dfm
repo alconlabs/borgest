@@ -64,7 +64,6 @@ object busquedaproductos: Tbusquedaproductos
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitWidth = 1039
     FullHeight = 0
     object DBGrid1: TDBGrid
       Left = 0
@@ -197,7 +196,6 @@ object busquedaproductos: Tbusquedaproductos
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
-      ExplicitTop = 433
       FullHeight = 0
       object Button5: TButton
         Left = 1011
@@ -208,7 +206,6 @@ object busquedaproductos: Tbusquedaproductos
         Caption = 'Filtrar'
         TabOrder = 8
         OnClick = Button5Click
-        ExplicitLeft = 936
       end
       object fil_producto_precioventa1: TGTBEdit
         Left = 477
@@ -219,7 +216,7 @@ object busquedaproductos: Tbusquedaproductos
         TabOrder = 4
         Tag2 = 0
         FieldName = 'producto_precioventa1'
-        ExplicitLeft = 482
+        ExplicitHeight = 21
       end
       object fil_producto_id: TGTBEdit
         Left = 11
@@ -231,7 +228,7 @@ object busquedaproductos: Tbusquedaproductos
         OnKeyPress = fil_producto_idKeyPress
         Tag2 = 0
         FieldName = 'producto_id'
-        ExplicitLeft = 9
+        ExplicitHeight = 21
       end
       object fil_producto_nombre: TGTBEdit
         Left = 147
@@ -242,7 +239,7 @@ object busquedaproductos: Tbusquedaproductos
         TabOrder = 2
         Tag2 = 0
         FieldName = 'producto_nombre'
-        ExplicitLeft = 152
+        ExplicitHeight = 21
       end
       object fil_rubro_nombre: TGTBEdit
         Left = 667
@@ -253,7 +250,7 @@ object busquedaproductos: Tbusquedaproductos
         TabOrder = 6
         Tag2 = 0
         FieldName = 'rubro_nombre'
-        ExplicitLeft = 672
+        ExplicitHeight = 21
       end
       object fil_producto_preciocosto: TGTBEdit
         Left = 407
@@ -264,7 +261,7 @@ object busquedaproductos: Tbusquedaproductos
         TabOrder = 3
         Tag2 = 0
         FieldName = 'producto_preciocosto'
-        ExplicitLeft = 412
+        ExplicitHeight = 21
       end
       object fil_producto_codigo: TGTBEdit
         Left = 67
@@ -275,7 +272,7 @@ object busquedaproductos: Tbusquedaproductos
         TabOrder = 1
         Tag2 = 0
         FieldName = 'producto_codigo'
-        ExplicitLeft = 72
+        ExplicitHeight = 21
       end
       object fil_producdepo_stockactual: TGTBEdit
         Left = 617
@@ -286,7 +283,7 @@ object busquedaproductos: Tbusquedaproductos
         TabOrder = 5
         Tag2 = 0
         FieldName = 'producdepo_stockactual'
-        ExplicitLeft = 622
+        ExplicitHeight = 21
       end
       object fil_proveedor_nombre: TGTBEdit
         Left = 767
@@ -297,7 +294,7 @@ object busquedaproductos: Tbusquedaproductos
         TabOrder = 7
         Tag2 = 0
         FieldName = 'proveedor_nombre'
-        ExplicitLeft = 772
+        ExplicitHeight = 21
       end
       object fil_producto_precioventa2: TGTBEdit
         Left = 547
@@ -308,8 +305,7 @@ object busquedaproductos: Tbusquedaproductos
         TabOrder = 9
         Tag2 = 0
         FieldName = 'producto_precioventa2'
-        ExplicitLeft = 558
-        ExplicitTop = -6
+        ExplicitHeight = 21
       end
       object fil_producto_fechaactualizacionprecio: TGTBEdit
         Left = 917
@@ -320,8 +316,7 @@ object busquedaproductos: Tbusquedaproductos
         TabOrder = 10
         Tag2 = 0
         FieldName = 'producto_fechaactualizacionprecio'
-        ExplicitLeft = 924
-        ExplicitTop = -3
+        ExplicitHeight = 21
       end
       object Panel1: TPanel
         Left = 0
@@ -376,7 +371,6 @@ object busquedaproductos: Tbusquedaproductos
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
-      ExplicitWidth = 1039
       FullHeight = 0
       object btnbuscar: TButton
         Left = 443
@@ -471,7 +465,6 @@ object busquedaproductos: Tbusquedaproductos
       StatusBar.Color = 12560553
       StatusBar.ColorTo = 14602191
       Styler = Princ.AdvPanelStyler1
-      ExplicitWidth = 1039
       FullHeight = 0
       object btnaceptar: TButton
         Left = 832

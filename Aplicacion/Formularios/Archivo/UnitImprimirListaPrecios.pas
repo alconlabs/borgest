@@ -21,6 +21,10 @@ type
     producto_precioventa: TGTBComboBox;
     Label1: TLabel;
     producto_nombre: TEdit;
+    producto_mostrardiscontinuados: TCheckBox;
+    Label2: TLabel;
+    productos_asignarstockcero: TCheckBox;
+    Label3: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btncancelarClick(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
@@ -73,6 +77,10 @@ begin
     if producto_nombre.Text<>'' then
       tiProdcutos.Memo.Text:=tiProdcutos.Memo.Text+' and productos.producto_nombre like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(producto_nombre.Text,' ','%')+'%"';
 
+    if not producto_mostrardiscontinuados.Checked then
+      tiProdcutos.Memo.Text:=tiProdcutos.Memo.Text+'and producto_estado="DISPONIBLE" ';
+
+
     tiProdcutos.Memo.Text:=tiProdcutos.Memo.Text+' order by producto_nombre';
 
     productos.Fill;
@@ -101,10 +109,39 @@ end;
 procedure TImprimirListaPrecios.btnimprimirClick(Sender: TObject);
 var
   productoids:string;
+  producto_stockanterior:real;
 begin
   inherited;
     productos.LlenarMQuery;
     productos.GenerarWhere;
+
+    if productos_asignarstockcero.Checked then
+      begin
+          if (MessageDlg('Seguro desea asignar Stock 0 a los productos seleccionados?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+            begin
+                productos.FQChequeados.First;
+
+                while not productos.FQChequeados.Eof do
+                    begin
+                        princ.ZQuery1.Active:=false;
+                        princ.ZQuery1.Sql.Clear;
+                        princ.ZQuery1.Sql.Add('update productodeposito set ');
+                        princ.ZQuery1.Sql.Add('producdepo_stockactual=:producdepo_stockactual ');
+                        princ.ZQuery1.Sql.Add('where deposito_id=:deposito_id and ');
+                        princ.ZQuery1.Sql.Add('producto_id=:producto_id ');
+                        princ.ZQuery1.ParamByName('producdepo_stockactual').AsString:='0';
+                        princ.ZQuery1.ParamByName('deposito_id').AsString:=Princ.dep_id;
+                        princ.ZQuery1.ParamByName('producto_id').AsString:=productos.FQChequeados.FieldByName('producto_id').AsString;
+                        princ.ZQuery1.ExecSql;
+
+                        productos.FQChequeados.Next;
+                    end;
+
+            end;
+
+      end;
+
+
 
     if producto_precioventa.ItemIndex<4 then
       begin

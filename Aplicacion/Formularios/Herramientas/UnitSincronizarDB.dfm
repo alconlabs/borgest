@@ -59,14 +59,10 @@ inherited SincronizarDB: TSincronizarDB
       Top = 0
       Width = 473
       Height = 465
-      ActivePage = TabSheet2
+      ActivePage = TabSheet1
       TabOrder = 3
       object TabSheet1: TTabSheet
         Caption = 'Tablas'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object tablasinc_id: TSqlListView
           Left = 0
           Top = 0
@@ -169,16 +165,11 @@ inherited SincronizarDB: TSincronizarDB
           ConfIni = Princ.ini1
           Tag2 = 0
           ConfTodosCheckeados = False
-          ExplicitWidth = 464
         end
       end
       object TabSheet2: TTabSheet
         Caption = 'Programar Automatico'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label1: TLabel
           Left = 16
           Top = 136
@@ -188,10 +179,24 @@ inherited SincronizarDB: TSincronizarDB
         end
         object Label2: TLabel
           Left = 16
-          Top = 168
+          Top = 216
           Width = 88
           Height = 13
           Caption = 'Ejecutar desde PC'
+        end
+        object Label3: TLabel
+          Left = 38
+          Top = 184
+          Width = 66
+          Height = 13
+          Caption = 'Ejecutar cada'
+        end
+        object Label4: TLabel
+          Left = 190
+          Top = 184
+          Width = 36
+          Height = 13
+          Caption = 'minutos'
         end
         object GroupBox1: TGroupBox
           Left = 16
@@ -261,10 +266,26 @@ inherited SincronizarDB: TSincronizarDB
         end
         object PCSINCRONIZADORA: TEdit
           Left = 118
-          Top = 165
+          Top = 213
           Width = 121
           Height = 21
           TabOrder = 2
+        end
+        object SINCMINUTOS: TEdit
+          Left = 118
+          Top = 181
+          Width = 59
+          Height = 21
+          TabOrder = 3
+        end
+        object SINCSTOCK: TCheckBox
+          Left = 22
+          Top = 158
+          Width = 110
+          Height = 17
+          Alignment = taLeftJustify
+          Caption = 'Sincronizar Stock'
+          TabOrder = 4
         end
       end
     end
@@ -272,12 +293,22 @@ inherited SincronizarDB: TSincronizarDB
   inherited ZQSelect: TZQuery
     SQL.Strings = (
       'select * from tablassincronizar'
-      'where tablasinc_tipooperacion="EXPORTAR"'
+      'where tablasinc_tipooperacion=:tablasinc_tipooperacion'
       'and tablasinc_sincronizar=-1')
-    Params = <>
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'tablasinc_tipooperacion'
+        ParamType = ptUnknown
+      end>
     Left = 536
     Top = 312
-    ParamData = <>
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'tablasinc_tipooperacion'
+        ParamType = ptUnknown
+      end>
   end
   inherited ZQExecSQL: TZQuery
     Left = 536

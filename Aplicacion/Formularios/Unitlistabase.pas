@@ -28,6 +28,7 @@ type
     fil_id: TGTBEdit;
     StatusBar1: TStatusBar;
     btnver: TButton;
+    btnclonar: TButton;
     procedure btnnuevoClick(Sender: TObject);
     procedure btnmodificarClick(Sender: TObject);
     procedure btneliminarClick(Sender: TObject);
@@ -156,6 +157,7 @@ begin
     btnmodificar.Enabled:=Princ.Permisos1.Permiso_modificar;
     btneliminar.Enabled:=Princ.Permisos1.Permiso_eliminar;
     btnanular.Enabled:=Princ.Permisos1.Permiso_anular;
+    btnclonar.Enabled:=Princ.Permisos1.Permiso_clonar;
     btnver.Enabled:=Princ.Permisos1.Permiso_ver;
     btnfiltrar.Enabled:=Princ.Permisos1.Permiso_habilitado;
 

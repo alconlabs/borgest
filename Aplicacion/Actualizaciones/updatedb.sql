@@ -1926,3 +1926,150 @@ ALTER TABLE `curvas` ADD COLUMN `rubro_id` INT(11) NOT NULL  AFTER `marca_id` ,
 Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('97', '>Archivo>General>Curvas', '0', 'btncurvas', '', '0', '0', 'Tlistacurvas');
 553;
 INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,97,perfil_id,-1 from perfiles;
+554;
+ALTER TABLE `marcas` ADD COLUMN `marca_longitudcodigo` INT(3) NULL DEFAULT NULL  AFTER `marca_nombre` ;
+555;
+CREATE  TABLE IF NOT EXISTS `movimientosdepositos` (
+  `movimientodeposito_id` INT(11) NOT NULL ,
+  `movimientodeposito_fecha` DATE NULL DEFAULT NULL ,
+  `movimientodeposito_hora` TIME NULL DEFAULT NULL ,
+  `movimientodeposito_estado` VARCHAR(45) NULL DEFAULT NULL ,
+  `movimientodeposito_estadosinc` VARCHAR(45) NULL DEFAULT NULL ,
+  `movimientodeposito_observaciones` VARCHAR(255) NULL DEFAULT NULL ,
+  `deposito_idorigen` INT(11) NULL DEFAULT NULL ,
+  `deposito_iddestino` INT(11) NULL DEFAULT NULL ,
+  PRIMARY KEY (`movimientodeposito_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+556;
+CREATE  TABLE IF NOT EXISTS `movimdepodetalles` (
+  `movimdepodetalle_id` INT(11) NOT NULL ,
+  `movimdepodetalle_cantidadenviar` FLOAT(10,2) NULL DEFAULT NULL ,
+  `movimdepodetalle_cantidadrecibir` FLOAT(10,2) NULL DEFAULT NULL ,
+  `movimdepodetalle_estado` VARCHAR(45) NULL DEFAULT NULL ,
+  `producto_id` INT(11) NOT NULL ,
+  `movimientodeposito_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`movimdepodetalle_id`) ,
+  INDEX `fk_movimdepodetalles_productos1` (`producto_id` ASC) ,
+  INDEX `fk_movimdepodetalles_movimientosdepositos1` (`movimientodeposito_id` ASC) ,
+  CONSTRAINT `fk_movimdepodetalles_productos1`
+    FOREIGN KEY (`producto_id` )
+    REFERENCES `productos` (`producto_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_movimdepodetalles_movimientosdepositos1`
+    FOREIGN KEY (`movimientodeposito_id` )
+    REFERENCES `movimientosdepositos` (`movimientodeposito_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+557;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('98', '>Compras>Stock>Movimientos entre Depositos', '0', 'BtnMovimientosDepositos', '', '0', '0', 'TListaMovimientosDepositos');
+558;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,98,perfil_id,-1 from perfiles;
+560;
+CREATE  TABLE IF NOT EXISTS `curvascodigos` (
+  `curvacodigo_id` INT(11) NOT NULL ,
+  `curvacodigo_codigo` VARCHAR(45) NULL DEFAULT NULL ,
+  `marca_id` INT(11) NOT NULL ,
+  `seccion_id` INT(11) NOT NULL ,
+  `rubro_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`curvacodigo_id`) ,
+  INDEX `fk_curvascodigos_marcas1` (`marca_id` ASC) ,
+  INDEX `fk_curvascodigos_secciones1` (`seccion_id` ASC) ,
+  INDEX `fk_curvascodigos_rubros1` (`rubro_id` ASC) ,
+  CONSTRAINT `fk_curvascodigos_marcas1`
+    FOREIGN KEY (`marca_id` )
+    REFERENCES `marcas` (`marca_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_curvascodigos_secciones1`
+    FOREIGN KEY (`seccion_id` )
+    REFERENCES `secciones` (`seccion_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_curvascodigos_rubros1`
+    FOREIGN KEY (`rubro_id` )
+    REFERENCES `rubros` (`rubro_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+561;
+CREATE  TABLE IF NOT EXISTS `curvatallescodigos` (
+  `curvatallecodigo_id` INT(11) NOT NULL ,
+  `curvatallecodigo_codigo` VARCHAR(45) NULL DEFAULT NULL ,
+  `curvadetalle_id` INT(11) NOT NULL ,
+  `curvacodigo_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`curvatallecodigo_id`) ,
+  INDEX `fk_curvatallescodigos_curvadetalles1` (`curvadetalle_id` ASC) ,
+  INDEX `fk_curvatallescodigos_curvascodigos1` (`curvacodigo_id` ASC) ,
+  CONSTRAINT `fk_curvatallescodigos_curvadetalles1`
+    FOREIGN KEY (`curvadetalle_id` )
+    REFERENCES `curvadetalles` (`curvadetalle_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_curvatallescodigos_curvascodigos1`
+    FOREIGN KEY (`curvacodigo_id` )
+    REFERENCES `curvascodigos` (`curvacodigo_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+562;
+INSERT INTO `config` SET `config_nombre`='RECONECTARDB',`config_valor`='20';
+563;
+INSERT INTO `config` SET `config_nombre`='PREFIJOTABLAWEB', `config_valor`='';
+564;
+ALTER TABLE `movimientosdepositos` 
+CHANGE COLUMN `deposito_idorigen` `deposito_idorigen` INT(11) NOT NULL  , 
+CHANGE COLUMN `deposito_iddestino` `deposito_iddestino` INT(11) NOT NULL  
+, DROP PRIMARY KEY 
+, ADD PRIMARY KEY (`movimientodeposito_id`, `deposito_idorigen`, `deposito_iddestino`) ;
+565;
+UPDATE `empresas` SET `empresa_razonsocial`='CgAAAK/b181aa8tVkrfZYsvormA=\r\n' WHERE `empresa_id`=1;
+566;
+ALTER TABLE `productodeposito` 
+ADD COLUMN `producdepo_estadosinc` VARCHAR(45) NULL DEFAULT 'PENDIENTE'  AFTER `producdepo_stockinicial`;
+568;
+ALTER TABLE `productodeposito`
+  ADD PRIMARY KEY (`producdepo_id`,`producto_id`,`deposito_id`),
+  DROP PRIMARY KEY;
+569;
+ALTER TABLE `marcas` ADD COLUMN `marca_separadorcodigo` VARCHAR(5) NULL DEFAULT NULL  AFTER `marca_longitudcodigo` ;
+570;
+ALTER TABLE `productos` 
+ADD COLUMN `marca_id` INT(11) NULL DEFAULT 0  AFTER `producto_tipo` , 
+ADD COLUMN `seccion_id` INT(11) NULL DEFAULT 0  AFTER `marca_id`;
+571;
+ALTER TABLE `productos` 
+ADD COLUMN `producto_talle` VARCHAR(45) NULL DEFAULT NULL  AFTER `seccion_id`;
+572;
+INSERT INTO `config` SET `config_nombre`='DEPOSITODEFECTO',`config_valor`='1';
+573;
+INSERT INTO `tablassincronizar` SET `tablasinc_id`=131,`tablasinc_nombre`='movimientosdepositos',`tablasinc_tipooperacion`='EXPORTAR',`tablasinc_sincronizar`=0;
+574;
+INSERT INTO `tablassincronizar` SET `tablasinc_id`=132,`tablasinc_nombre`='movimdepodetalles',`tablasinc_tipooperacion`='EXPORTAR',`tablasinc_sincronizar`=0;
+575;
+INSERT INTO `tablassincronizar` SET `tablasinc_id`=133,`tablasinc_nombre`='movimientosdepositos',`tablasinc_tipooperacion`='IMPORTAR',`tablasinc_sincronizar`=0;
+576;
+INSERT INTO `tablassincronizar` SET `tablasinc_id`=134,`tablasinc_nombre`='movimdepodetalles',`tablasinc_tipooperacion`='IMPORTAR',`tablasinc_sincronizar`=0;
+577;
+INSERT INTO `config` SET `config_nombre`='SINCRONIZARSTOCKTIMER',`config_valor`='0';
+578;
+ALTER TABLE `productos` ADD COLUMN `producto_estadosinc` VARCHAR(45) NULL DEFAULT 'PENDIENTE'  AFTER `producto_talle`;
+579;
+ALTER TABLE `tablassincronizar` ADD COLUMN `tablasinc_condicion` VARCHAR(150) NULL DEFAULT '1=1'  AFTER `tablasinc_sincronizar`;
+580;
+Replace config set config_valor='0', config_nombre='EXPORTACIONSINCMINUTOS';
+581;
+Replace config set config_valor='0', config_nombre='IMPORTACIONSINCMINUTOS';
+582;
+Replace config set config_valor='0', config_nombre='EXPORTACIONSINCSTOCK';
+583;
+Replace config set config_valor='0', config_nombre='IMPORTACIONSINCSTOCK';

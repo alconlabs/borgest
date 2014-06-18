@@ -138,6 +138,8 @@ object listabase: Tlistabase
         Caption = 'Crear Nuevo'
         TabOrder = 0
         OnClick = btnnuevoClick
+        ExplicitLeft = 6
+        ExplicitTop = -6
       end
       object btnanular: TButton
         Left = 0
@@ -152,13 +154,24 @@ object listabase: Tlistabase
       end
       object btnver: TButton
         Left = 0
-        Top = 164
+        Top = 205
         Width = 103
         Height = 41
         Align = alTop
         Caption = 'Ver'
         TabOrder = 4
         Visible = False
+        ExplicitTop = 164
+      end
+      object btnclonar: TButton
+        Left = 0
+        Top = 164
+        Width = 103
+        Height = 41
+        Align = alTop
+        Caption = 'Clonar'
+        TabOrder = 5
+        ExplicitTop = 158
       end
     end
     object DBGrid1: TDBGrid

@@ -21,10 +21,7 @@ type
     ZQProducto: TZQuery;
     tipopago_id: TEditCodi;
     tarjeta_id: TEditCodi;
-    tarjeta_nombre: TEdit;
-    pagotarjeta_cuotas: TMoneyEdit;
     lbltarjeta: TLabel;
-    lblcuotas: TLabel;
     ZQDocumentoventadetallesdocumentoventadetalle_id: TIntegerField;
     ZQDocumentoventadetallesdocumentoventadetalle_descripcion: TStringField;
     ZQDocumentoventadetallesdocumentoventadetalle_cantidad: TFloatField;
@@ -49,6 +46,17 @@ type
     ZQDocumentoventadetallesdocumentoventadetalle_importe6: TFloatField;
     ZQDocumentoventadetallesdocumentoventadetalle_listaprecio: TIntegerField;
     ZQDocumentoventadetallesproducto_tipo: TStringField;
+    GroupBox2: TGroupBox;
+    Label17: TLabel;
+    cliente_nombre: TEdit;
+    Label21: TLabel;
+    cliente_domicilio1: TEdit;
+    cliente_documentonro1: TEdit;
+    Label23: TLabel;
+    cliente_mail1: TEdit;
+    Label22: TLabel;
+    Label24: TLabel;
+    documentoventa_subtotal: TMoneyEdit;
     procedure producto_idAfterSearch(Sender: TObject);
     procedure btnagregarClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -66,9 +74,11 @@ type
     procedure tipopago_idAfterSearch(Sender: TObject);
     procedure pagotarjeta_cuotasKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure btnguardarClick(Sender: TObject);
   private
     { Private declarations }
     procedure CargarQuery;
+    function CargarCliente:string;
   public
     { Public declarations }
   end;
@@ -81,6 +91,55 @@ implementation
 uses UnitPrinc;
 
 {$R *.dfm}
+
+function Tfacturaventa02.CargarCliente:string;
+var
+  cargar:boolean;
+  idcliente:string;
+begin
+    cargar:=false;
+    cargar:=cliente_nombre.Text<>cliente_id.Text;
+    cargar:=cargar or (cliente_domicilio1.Text<>cliente_domicilio.Caption);
+    cargar:=cargar or (cliente_documentonro1.Text<>cliente_documentonro.Caption);
+    cargar:=cargar or (cliente_mail1.Text<>Princ.buscar('select cliente_mail from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_mail'));
+
+    if cargar then
+      begin
+          idcliente:=Princ.codigo('clientes','cliente_id');
+
+          ZQExecSql.sql.clear;
+          ZQExecSql.sql.add('Insert into clientes (cliente_id, cliente_nombre, cliente_domicilio, ');
+          ZQExecSql.sql.add('cliente_documentonro, cliente_documentotipo, cliente_telefono, cliente_celular, ');
+          ZQExecSql.sql.add('cliente_mail, condicioniva_id, cliente_listaprecio, cliente_condicionventa, localidad_id, cliente_observaciones, personal_id, cliente_diasvenc) ');
+          ZQExecSql.sql.add('values (:cliente_id, :cliente_nombre, :cliente_domicilio, ');
+          ZQExecSql.sql.add(':cliente_documentonro, :cliente_documentotipo, :cliente_telefono, :cliente_celular, ');
+          ZQExecSql.sql.add(':cliente_mail, :condicioniva_id, :cliente_listaprecio, :cliente_condicionventa, :localidad_id, :cliente_observaciones, :personal_id, :cliente_diasvenc) ');
+
+          ZQExecSql.parambyname('cliente_id').asstring:=idcliente;
+          ZQExecSql.parambyname('cliente_nombre').asstring:=cliente_nombre.Text;
+          ZQExecSql.parambyname('cliente_domicilio').asstring:=cliente_domicilio1.Text;
+          ZQExecSql.parambyname('cliente_documentonro').asstring:=cliente_documentonro1.Text;
+
+          ZQExecSql.parambyname('cliente_documentotipo').asstring:='DNI';
+          ZQExecSql.parambyname('cliente_telefono').asstring:='';
+          ZQExecSql.parambyname('cliente_celular').asstring:='';
+          ZQExecSql.parambyname('cliente_mail').asstring:=cliente_mail1.Text;
+          ZQExecSql.parambyname('condicioniva_id').asstring:='3';
+          ZQExecSql.parambyname('cliente_listaprecio').AsInteger:=0;
+          ZQExecSql.parambyname('cliente_condicionventa').AsInteger:=0;
+          ZQExecSql.parambyname('localidad_id').asstring:='1';
+          ZQExecSql.parambyname('cliente_observaciones').asstring:='';
+          ZQExecSql.parambyname('personal_id').asstring:=personal_id.codigo;
+          ZQExecSql.parambyname('cliente_diasvenc').asstring:='0';
+          ZQExecSql.ExecSQL;
+
+      end
+    else
+      idcliente:=cliente_id.codigo;
+
+
+    result:=idcliente;
+end;
 
 procedure Tfacturaventa02.FormCreate(Sender: TObject);
 begin
@@ -99,8 +158,7 @@ begin
         VK_ESCAPE:btncancelar.Click;
         VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);
         VK_F2:begin
-                  cliente_id.SetFocus;
-                  cliente_id.DroppedDown:=true;
+                  cliente_nombre.SetFocus;
               end;
         VK_F3:begin
                   personal_id.SetFocus;
@@ -122,6 +180,11 @@ end;
 procedure Tfacturaventa02.FormShow(Sender: TObject);
 begin
   inherited;
+    cliente_nombre.Text:=cliente_id.Text;
+    cliente_domicilio1.Text:=cliente_domicilio.Caption;
+    cliente_documentonro1.Text:=cliente_documentonro.Caption;
+    cliente_mail1.Text:=Princ.buscar('select cliente_mail from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_mail');
+
     producto_id.SetFocus;
 end;
 
@@ -167,17 +230,18 @@ procedure Tfacturaventa02.tipopago_idAfterSearch(Sender: TObject);
 begin
   inherited;
     lbltarjeta.Visible:=false;
-    lblcuotas.Visible:=false;
     tarjeta_id.Visible:=false;
-    tarjeta_nombre.Visible:=false;
-    pagotarjeta_cuotas.Visible:=false;
+    Label19.Left:=115;
+    documentopago_nombre.Left:=115;
+    documentopago_nombre.Width:=251;
     if tipopago_id.Text='2' then
       begin
           lbltarjeta.Visible:=true;
-          lblcuotas.Visible:=true;
           tarjeta_id.Visible:=true;
-          tarjeta_nombre.Visible:=true;
-          pagotarjeta_cuotas.Visible:=true;
+          Label19.Left:=171;
+          documentopago_nombre.Left:=171;
+          documentopago_nombre.Width:=195;
+          tarjeta_id.SetFocus;
       end;
 
 
@@ -237,10 +301,23 @@ begin
           calculartotales;
           calculartotalpagos;
           documentopago_importe.Value:=documentoventa_saldo;
+          documentoventa_subtotal.Value:=documentoventa_total.Value;
           producto_id.Text:='-1';
           producto_id.Search('-1');
           producto_id.SetFocus;
       end;
+
+end;
+
+procedure Tfacturaventa02.btnguardarClick(Sender: TObject);
+var
+  idcliente:string;
+begin
+    idcliente:=CargarCliente;
+    cliente_id.llenarcombo;
+    cliente_id.Buscar(idcliente);
+
+  inherited;
 
 end;
 
@@ -325,24 +402,53 @@ begin
       begin
           if tipopago_id.Text<>'' then
             begin
-                if not tarjeta_id.Visible then
-                  begin
-                      ZQDocumentopagos.Insert;
-                      ZQDocumentopagos.FieldByName('documentopago_id').AsInteger:=ZQDocumentopagos.RecordCount;
-                      ZQDocumentopagos.FieldByName('documentopago_nombre').AsString:=documentopago_nombre.Text;
-                      ZQDocumentopagos.FieldByName('documentopago_importe').AsString:=documentopago_importe.Text;
-                      ZQDocumentopagos.FieldByName('tipopago_id').AsString:=tipopago_id.Text;
-                      ZQDocumentopagos.FieldByName('tipopago_nombre').AsString:=tipopago_id.valor('tipopago_nombre');
-                      ZQDocumentopagos.FieldByName('documentoventa_id').AsString:='0';
-                      ZQDocumentopagos.Post;
+                ZQDocumentopagos.Insert;
+                ZQDocumentopagos.FieldByName('documentopago_id').AsInteger:=ZQDocumentopagos.RecordCount;
+                ZQDocumentopagos.FieldByName('documentopago_nombre').AsString:=documentopago_nombre.Text;
+                ZQDocumentopagos.FieldByName('documentopago_importe').AsString:=documentopago_importe.Text;
+                ZQDocumentopagos.FieldByName('tipopago_id').AsString:=tipopago_id.Text;
+                ZQDocumentopagos.FieldByName('tipopago_nombre').AsString:=tipopago_id.valor('tipopago_nombre');
+                ZQDocumentopagos.FieldByName('documentoventa_id').AsString:='0';
+                ZQDocumentopagos.Post;
 
-                      calculartotales;
-                      calculartotalpagos;
-                      documentopago_importe.Value:=documentoventa_saldo;
-                      tipopago_id.Text:='';
-                      tipopago_id.Search('');
-                      tipopago_id.SetFocus;
-                  end;
+
+                case strtoint(tipopago_id.Text) of
+                    1:begin
+
+                      end;
+                    2:begin
+                          ZQpagotarjeta.Last;
+                          ZQpagotarjeta.Append;
+                          ZQpagotarjeta.FieldByName('pagotarjeta_id').AsInteger:=ZQpagotarjeta.RecordCount;
+                          ZQpagotarjeta.FieldByName('pagotarjeta_importe').AsString:=documentopago_importe.Text;
+                          ZQpagotarjeta.FieldByName('pagotarjeta_cuotas').AsString:='1';
+                          ZQpagotarjeta.FieldByName('pagotarjeta_cupon').AsString:='';
+                          ZQpagotarjeta.FieldByName('pagotarjeta_autoriz').AsString:='';
+                          ZQpagotarjeta.FieldByName('documentopago_id').AsInteger:=ZQDocumentopagos.RecordCount;
+                          ZQpagotarjeta.FieldByName('tarjeta_id').AsString:=tarjeta_id.Text;
+                          ZQpagotarjeta.FieldByName('pagotarjeta_titular').AsString:=cliente_id.Text;
+                          ZQpagotarjeta.FieldByName('pagotarjeta_dni').AsString:='';
+                          ZQpagotarjeta.FieldByName('pagotarjeta_telefono').AsString:='';
+                          ZQpagotarjeta.FieldByName('pagotarjeta_recargo').AsString:='0';
+                          ZQpagotarjeta.Post;
+                      end;
+                    3:begin
+
+                      end;
+                    4:begin
+
+                      end;
+                    5:begin
+
+                      end;
+                end;
+
+                calculartotales;
+                calculartotalpagos;
+                documentopago_importe.Value:=documentoventa_saldo;
+                tipopago_id.Text:='';
+                tipopago_id.Search('');
+                tipopago_id.SetFocus;
             end;
       end;
 end;

@@ -207,7 +207,7 @@ begin
     if cliente_id.Text<>'Todos' then
       Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' and documentosventas.cliente_id="'+cliente_id.codigo+'" ';
 
-    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by clientes.cliente_nombre, documentoventadetalles.documentoventadetalle_descripcion';
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by documentosventas.documentoventa_fecha, documentoventadetalles.documentoventadetalle_descripcion';
 
 
     Princ.VCLReport1.Execute;

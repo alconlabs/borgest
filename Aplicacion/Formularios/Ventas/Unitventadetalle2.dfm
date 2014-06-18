@@ -3,7 +3,7 @@ object ventadetalle2: Tventadetalle2
   Top = 0
   Caption = 'Cargar Detalle'
   ClientHeight = 208
-  ClientWidth = 708
+  ClientWidth = 755
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,7 +21,7 @@ object ventadetalle2: Tventadetalle2
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 708
+    Width = 755
     Height = 208
     Align = alClient
     BevelOuter = bvNone
@@ -65,6 +65,7 @@ object ventadetalle2: Tventadetalle2
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitWidth = 708
     FullHeight = 0
     object Label3: TLabel
       Left = 47
@@ -99,14 +100,14 @@ object ventadetalle2: Tventadetalle2
       Caption = 'Total'
     end
     object producdepo_stockminimo: TLabel
-      Left = 484
+      Left = 404
       Top = 66
       Width = 54
       Height = 13
       Caption = 'Stock Min: '
     end
     object producdepo_stockactual: TLabel
-      Left = 612
+      Left = 636
       Top = 66
       Width = 34
       Height = 13
@@ -121,14 +122,22 @@ object ventadetalle2: Tventadetalle2
       Caption = 'Fecha Act.'
     end
     object producdepo_stockinicial: TLabel
-      Left = 348
-      Top = 66
+      Left = 332
+      Top = 82
       Width = 54
       Height = 13
       Caption = 'Stock Inic: '
     end
+    object lblStockOtroDeposito: TLabel
+      Left = 636
+      Top = 82
+      Width = 34
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Stock: '
+    end
     object btncancelar: TButton
-      Left = 624
+      Left = 672
       Top = 114
       Width = 75
       Height = 25
@@ -138,7 +147,7 @@ object ventadetalle2: Tventadetalle2
       TabOrder = 6
     end
     object btnaceptar: TButton
-      Left = 543
+      Left = 591
       Top = 114
       Width = 75
       Height = 25
@@ -233,14 +242,14 @@ object ventadetalle2: Tventadetalle2
     object producto_nombre: TEdit
       Left = 229
       Top = 36
-      Width = 417
+      Width = 513
       Height = 21
       TabStop = False
       ReadOnly = True
       TabOrder = 2
     end
     object btnherramientas: TAdvGlowButton
-      Left = 658
+      Left = 698
       Top = 4
       Width = 44
       Height = 29
@@ -289,13 +298,14 @@ object ventadetalle2: Tventadetalle2
     object GroupBoxPrecios: TGroupBox
       Left = 0
       Top = 143
-      Width = 708
+      Width = 755
       Height = 47
       Align = alBottom
       Caption = 'Precios'
       ParentBackground = False
       TabOrder = 8
       TabStop = True
+      ExplicitWidth = 708
       object producto_precioventa1: TMoneyEdit
         Left = 104
         Top = 14

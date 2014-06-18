@@ -759,7 +759,7 @@ object Princ: TPrinc
       object AdvToolBarListados: TAdvToolBar
         Left = 1239
         Top = 3
-        Width = 106
+        Width = 206
         Height = 63
         AllowFloating = True
         Caption = 'Listados'
@@ -785,6 +785,44 @@ object Princ: TPrinc
           Caption = 'Lista de Precios'
           TabOrder = 0
           OnClick = btnlistapreciosClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
+        object btnfichasclientes: TAdvGlowButton
+          Left = 102
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Fichas Clientes'
+          TabOrder = 1
+          OnClick = btnfichasclientesClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -1273,7 +1311,7 @@ object Princ: TPrinc
       object AdvToolBarStock: TAdvToolBar
         Left = 930
         Top = 3
-        Width = 306
+        Width = 406
         Height = 63
         AllowFloating = True
         Caption = 'Stock'
@@ -1445,6 +1483,44 @@ object Princ: TPrinc
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
         end
+        object BtnMovimientosDepositos: TAdvGlowButton
+          Left = 302
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Movimientos entre Depositos'
+          TabOrder = 4
+          OnClick = BtnMovimientosDepositosClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
       end
     end
     object AdvPageVentas: TAdvPage
@@ -1456,7 +1532,7 @@ object Princ: TPrinc
       object AdvToolBarDocVentas: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 706
+        Width = 806
         Height = 63
         AllowFloating = True
         AutoOptionMenu = True
@@ -2014,9 +2090,47 @@ object Princ: TPrinc
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
         end
+        object BtnCargaStockCurvas: TAdvGlowButton
+          Left = 702
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Carga Stock - Curvas'
+          TabOrder = 14
+          OnClick = BtnCargaStockCurvasClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
       end
       object AdvToolBarCtasCtesVentas: TAdvToolBar
-        Left = 712
+        Left = 812
         Top = 3
         Width = 306
         Height = 63
@@ -2152,7 +2266,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarCaja: TAdvToolBar
-        Left = 1021
+        Left = 1121
         Top = 3
         Width = 306
         Height = 63
@@ -2327,7 +2441,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarInformes: TAdvToolBar
-        Left = 1330
+        Left = 1430
         Top = 3
         Width = 306
         Height = 63
@@ -3031,7 +3145,7 @@ object Princ: TPrinc
       object AdvToolBarHerramientas: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 606
+        Width = 706
         Height = 63
         AllowFloating = True
         Caption = 'Herramientas'
@@ -3246,6 +3360,45 @@ object Princ: TPrinc
           Height = 41
           Caption = 'Importar DB'
           TabOrder = 5
+          OnClick = btnimportardbClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
+        object btnsincronizartock: TAdvGlowButton
+          Left = 602
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Sincronizar Stock'
+          TabOrder = 6
+          OnClick = btnsincronizartockClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
           Appearance.BorderColorDown = 4548219
@@ -3278,7 +3431,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarSeguridad: TAdvToolBar
-        Left = 612
+        Left = 712
         Top = 3
         Width = 106
         Height = 63
@@ -4278,7 +4431,7 @@ object Princ: TPrinc
         ParamType = ptUnknown
       end>
     Left = 968
-    Top = 256
+    Top = 224
     ParamData = <
       item
         DataType = ftUnknown
@@ -4355,7 +4508,7 @@ object Princ: TPrinc
         ParamType = ptUnknown
       end>
     Left = 968
-    Top = 384
+    Top = 336
     ParamData = <
       item
         DataType = ftUnknown
@@ -4412,7 +4565,7 @@ object Princ: TPrinc
         ParamType = ptUnknown
       end>
     Left = 968
-    Top = 448
+    Top = 392
     ParamData = <
       item
         DataType = ftUnknown
@@ -4436,7 +4589,7 @@ object Princ: TPrinc
     Connection = ZBase
     Params = <>
     Left = 968
-    Top = 197
+    Top = 173
   end
   object ZQDocumentocompradocus: TZQuery
     Connection = ZBase
@@ -4454,7 +4607,7 @@ object Princ: TPrinc
         ParamType = ptUnknown
       end>
     Left = 968
-    Top = 320
+    Top = 280
     ParamData = <
       item
         DataType = ftUnknown
@@ -4505,5 +4658,192 @@ object Princ: TPrinc
     ConfIni = ini1
     Left = 288
     Top = 392
+  end
+  object TimerReconectarDB: TTimer
+    Enabled = False
+    Interval = 20000
+    OnTimer = TimerReconectarDBTimer
+    Left = 1168
+    Top = 144
+  end
+  object ZQMovimientosDepositos: TZQuery
+    Connection = ZBase
+    SQL.Strings = (
+      'select * from configcolumnas'
+      
+        'inner join configcolumnadetalles on configcolumnas.configcolumna' +
+        '_id=configcolumnadetalles.configcolumna_id'
+      'where configcolumnas.configcolumna_grilla=:configcolumna_grilla')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'configcolumna_grilla'
+        ParamType = ptUnknown
+      end>
+    Left = 968
+    Top = 448
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'configcolumna_grilla'
+        ParamType = ptUnknown
+      end>
+  end
+  object ZQRemoteExcecSql: TZQuery
+    Connection = BaseRemota
+    SQL.Strings = (
+      'select * from documentoventadetalles'
+      
+        'inner join productos on documentoventadetalles.producto_id=produ' +
+        'ctos.producto_id'
+      'inner join tipoiva on productos.tipoiva_id=tipoiva.tipoiva_id'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 688
+    Top = 510
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+  end
+  object ZQMovimDepoDetalles: TZQuery
+    Connection = ZBase
+    SQL.Strings = (
+      'select * from configcolumnas'
+      
+        'inner join configcolumnadetalles on configcolumnas.configcolumna' +
+        '_id=configcolumnadetalles.configcolumna_id'
+      'where configcolumnas.configcolumna_grilla=:configcolumna_grilla')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'configcolumna_grilla'
+        ParamType = ptUnknown
+      end>
+    Left = 968
+    Top = 504
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'configcolumna_grilla'
+        ParamType = ptUnknown
+      end>
+  end
+  object ZQProductoDeposito: TZQuery
+    Connection = ZBase
+    SQL.Strings = (
+      'select * from configcolumnas'
+      
+        'inner join configcolumnadetalles on configcolumnas.configcolumna' +
+        '_id=configcolumnadetalles.configcolumna_id'
+      'where configcolumnas.configcolumna_grilla=:configcolumna_grilla')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'configcolumna_grilla'
+        ParamType = ptUnknown
+      end>
+    Left = 1152
+    Top = 440
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'configcolumna_grilla'
+        ParamType = ptUnknown
+      end>
+  end
+  object ZQRemoteSelect: TZQuery
+    Connection = BaseRemota
+    AfterApplyUpdates = ADOConnection1BeforeConnect
+    SQL.Strings = (
+      'select * from documentoventadetalles'
+      
+        'inner join productos on documentoventadetalles.producto_id=produ' +
+        'ctos.producto_id'
+      'inner join tipoiva on productos.tipoiva_id=tipoiva.tipoiva_id'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 1152
+    Top = 502
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+  end
+  object ZQRemoteSelectDetalles: TZQuery
+    Connection = BaseRemota
+    AfterApplyUpdates = ADOConnection1BeforeConnect
+    SQL.Strings = (
+      'select * from documentoventadetalles'
+      
+        'inner join productos on documentoventadetalles.producto_id=produ' +
+        'ctos.producto_id'
+      'inner join tipoiva on productos.tipoiva_id=tipoiva.tipoiva_id'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 1152
+    Top = 374
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+  end
+  object ZQExcecSQLSinc: TZQuery
+    Connection = ZBase
+    SQL.Strings = (
+      'select * from documentoventadetalles'
+      
+        'inner join productos on documentoventadetalles.producto_id=produ' +
+        'ctos.producto_id'
+      'inner join tipoiva on productos.tipoiva_id=tipoiva.tipoiva_id'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 880
+    Top = 502
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+  end
+  object TimerSincronizarStock: TTimer
+    Enabled = False
+    Interval = 20000
+    Left = 1160
+    Top = 272
+  end
+  object TimerReconectarDBRemota: TTimer
+    Enabled = False
+    Interval = 20000
+    OnTimer = TimerReconectarDBRemotaTimer
+    Left = 1168
+    Top = 208
   end
 end

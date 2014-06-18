@@ -175,6 +175,20 @@ type
     btnestadoiva: TAdvGlowButton;
     Permisos1: TPermisos;
     btncurvas: TAdvGlowButton;
+    BtnCargaStockCurvas: TAdvGlowButton;
+    BtnMovimientosDepositos: TAdvGlowButton;
+    TimerReconectarDB: TTimer;
+    ZQMovimientosDepositos: TZQuery;
+    ZQRemoteExcecSql: TZQuery;
+    ZQMovimDepoDetalles: TZQuery;
+    ZQProductoDeposito: TZQuery;
+    ZQRemoteSelect: TZQuery;
+    ZQRemoteSelectDetalles: TZQuery;
+    btnsincronizartock: TAdvGlowButton;
+    ZQExcecSQLSinc: TZQuery;
+    TimerSincronizarStock: TTimer;
+    TimerReconectarDBRemota: TTimer;
+    btnfichasclientes: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -256,6 +270,13 @@ type
     procedure TimerBarraProgresoTimer(Sender: TObject);
     procedure btnestadoivaClick(Sender: TObject);
     procedure btncurvasClick(Sender: TObject);
+    procedure BtnCargaStockCurvasClick(Sender: TObject);
+    procedure BtnMovimientosDepositosClick(Sender: TObject);
+    procedure TimerReconectarDBTimer(Sender: TObject);
+    procedure btnsincronizartockClick(Sender: TObject);
+    procedure btnimportardbClick(Sender: TObject);
+    procedure TimerReconectarDBRemotaTimer(Sender: TObject);
+    procedure btnfichasclientesClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -289,6 +310,7 @@ type
     ultima_busqueda_productos:string;
     MOSTRAREQUIPO:boolean;
     tipospago:tstrings;
+    EXPORTACIONSINCMINUTOS:string;
     function codigo(tabla:string;campo:string):string;
     function buscar(sql:string;campo:string):string;
     function fechaservidor():TDateTime;
@@ -361,6 +383,8 @@ type
     function ProtegidoxPass(nombre:string):boolean;
     function GetPCName: string;
     function DisponibleTipoPago(tipopago_id:string):boolean;
+    procedure sincronizarstock;
+    procedure SincronizarTodo;
   end;
 
 type
@@ -496,7 +520,9 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitSaldosComisionesBorradores, UnitListaLiquidacionesBorradores,
   UnitImprimirEtiquetas, UnitConsultaStock, UnitEstadoComisionesBorradores,
   UnitDetalleComisionesBorradores, UnitListaCuponesTarjetasCredito,
-  UnitSincronizarDB, UnitEstadoIVAs, UnitFacturaventa02, Unitlistacurvas;
+  UnitSincronizarDB, UnitEstadoIVAs, UnitFacturaventa02, Unitlistacurvas,
+  UnitCargaStockCurva, UnitListaMovimientosDepositos, UnitExportarDB,
+  UnitImportarDB, UnitImprimirFichasClientes;
 
 {$R *.dfm}
 
@@ -545,6 +571,16 @@ end;
 
 
 
+procedure TPrinc.SincronizarTodo;
+begin
+//      ExportarDB:=TExportarDB.Create(Princ);
+    ExportarDB.sincronizarahora;
+    ImportarDB.sincronizarahora;
+
+    Princ.sincronizarstock;
+    Timer1.Enabled:=true;
+end;
+
 
 
 function TPrinc.GetPCName: string;
@@ -559,6 +595,499 @@ begin
   else
     Result:= '';
 end;
+
+
+procedure TPrinc.sincronizarstock;
+var
+  PREFIJOTABLAWEB:string;
+  error:integer;
+begin
+    Princ.StatusBar1.Panels.Add.Text:='Sincronizacion Stock iniciada - '+formatdatetime('HH:mm',time);
+    Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Width:=300;
+    princ.Permisos1.guardarlog(self.ClassName+'.sincronizarstock; inicio'+formatdatetime('HH:mm',time));
+
+    try
+       BaseRemota.Connect;
+       error:=0;
+    finally
+       if not BaseRemota.Connected then
+         error:=1;
+    end;
+
+
+    if error=0 then
+      begin
+//          PREFIJOTABLAWEB:=Princ.GetConfiguracion('PREFIJOTABLAWEB');
+
+          //                  SUBIR STOCK
+
+          ZQProductoDeposito.Active:=false;
+          ZQProductoDeposito.SQL.Text:='select * from productodeposito where deposito_id="'+dep_id+'" and producdepo_estadosinc="PENDIENTE"';
+          ZQProductoDeposito.Active:=true;
+          ZQProductoDeposito.First;
+
+          ZQRemoteExcecSql.Sql.Clear;
+          ZQRemoteExcecSql.Sql.Add('replace into productodeposito set ');
+          ZQRemoteExcecSql.Sql.Add('producdepo_estadosinc=:producdepo_estadosinc, ');
+          ZQRemoteExcecSql.Sql.Add('producdepo_stockinicial=:producdepo_stockinicial, ');
+          ZQRemoteExcecSql.Sql.Add('producdepo_puntorepos=:producdepo_puntorepos, ');
+          ZQRemoteExcecSql.Sql.Add('producdepo_stockminimo=:producdepo_stockminimo, ');
+          ZQRemoteExcecSql.Sql.Add('deposito_id=:deposito_id, ');
+          ZQRemoteExcecSql.Sql.Add('producto_id=:producto_id, ');
+          ZQRemoteExcecSql.Sql.Add('producdepo_stockactual=:producdepo_stockactual, ');
+          ZQRemoteExcecSql.Sql.Add('producdepo_id=:producdepo_id ');
+
+          princ.Permisos1.guardarlog(self.ClassName+'.subir_stock;');
+
+          while not ZQProductoDeposito.Eof do
+              begin
+                  try
+                  ZQRemoteExcecSql.ParamByName('producdepo_estadosinc').AsString:='DESCARGAR';
+                  ZQRemoteExcecSql.ParamByName('producdepo_stockinicial').AsString:=ZQProductoDeposito.FieldByName('producdepo_stockinicial').AsString;
+                  ZQRemoteExcecSql.ParamByName('producdepo_puntorepos').AsString:=ZQProductoDeposito.FieldByName('producdepo_puntorepos').AsString;
+                  ZQRemoteExcecSql.ParamByName('producdepo_stockminimo').AsString:=ZQProductoDeposito.FieldByName('producdepo_stockminimo').AsString;
+                  ZQRemoteExcecSql.ParamByName('deposito_id').AsString:=ZQProductoDeposito.FieldByName('deposito_id').AsString;
+                  ZQRemoteExcecSql.ParamByName('producto_id').AsString:=ZQProductoDeposito.FieldByName('producto_id').AsString;
+                  ZQRemoteExcecSql.ParamByName('producdepo_stockactual').AsString:=ZQProductoDeposito.FieldByName('producdepo_stockactual').AsString;
+                  ZQRemoteExcecSql.ParamByName('producdepo_id').AsString:='0';
+                  ZQRemoteExcecSql.ExecSql;
+                  error:=0;
+                  except
+                  error:=1;
+                  princ.Permisos1.guardarlog(self.ClassName+'.subir_stock; error='+inttostr(error));
+                  end;
+
+                  if error=0 then
+                    begin
+                        ZQExcecSQLSinc.Sql.Clear;
+                        ZQExcecSQLSinc.Sql.Add('update productodeposito set ');
+                        ZQExcecSQLSinc.Sql.Add('producdepo_estadosinc=:producdepo_estadosinc ');
+                        ZQExcecSQLSinc.Sql.Add('where producdepo_id=:producdepo_id ');
+                        ZQExcecSQLSinc.ParamByName('producdepo_estadosinc').AsString:='SINCRONIZADO';
+                        ZQExcecSQLSinc.ParamByName('producdepo_id').AsString:=ZQProductoDeposito.FieldByName('producdepo_id').AsString;
+                        ZQExcecSQLSinc.ExecSql;
+                    end;
+
+
+
+                  ZQProductoDeposito.Next;
+              end;
+
+
+          //                  DESCARGAR STOCK
+          BaseRemota.Reconnect;
+          princ.Permisos1.guardarlog(self.ClassName+'.descargar_stock;');
+          if BaseRemota.Connected then
+            begin
+                ZQRemoteSelect.Active:=false;
+                ZQRemoteSelect.SQL.Text:='select * from productodeposito where deposito_id<>"'+dep_id+'" and producdepo_estadosinc="DESCARGAR"';
+                ZQRemoteSelect.Active:=true;
+                ZQRemoteSelect.First;
+
+                ZQExcecSQLSinc.Sql.Clear;
+                ZQExcecSQLSinc.Sql.Add('replace into productodeposito set ');
+                ZQExcecSQLSinc.Sql.Add('producdepo_estadosinc=:producdepo_estadosinc, ');
+                ZQExcecSQLSinc.Sql.Add('producdepo_stockinicial=:producdepo_stockinicial, ');
+                ZQExcecSQLSinc.Sql.Add('producdepo_puntorepos=:producdepo_puntorepos, ');
+                ZQExcecSQLSinc.Sql.Add('producdepo_stockminimo=:producdepo_stockminimo, ');
+                ZQExcecSQLSinc.Sql.Add('deposito_id=:deposito_id, ');
+                ZQExcecSQLSinc.Sql.Add('producto_id=:producto_id, ');
+                ZQExcecSQLSinc.Sql.Add('producdepo_stockactual=:producdepo_stockactual, ');
+                ZQExcecSQLSinc.Sql.Add('producdepo_id=:producdepo_id ');
+
+                while not ZQRemoteSelect.Eof do
+                    begin
+                        try
+                        ZQExcecSQLSinc.ParamByName('producdepo_estadosinc').AsString:='DESCARGADO';
+                        ZQExcecSQLSinc.ParamByName('producdepo_stockinicial').AsString:=ZQRemoteSelect.FieldByName('producdepo_stockinicial').AsString;
+                        ZQExcecSQLSinc.ParamByName('producdepo_puntorepos').AsString:=ZQRemoteSelect.FieldByName('producdepo_puntorepos').AsString;
+                        ZQExcecSQLSinc.ParamByName('producdepo_stockminimo').AsString:=ZQRemoteSelect.FieldByName('producdepo_stockminimo').AsString;
+                        ZQExcecSQLSinc.ParamByName('deposito_id').AsString:=ZQRemoteSelect.FieldByName('deposito_id').AsString;
+                        ZQExcecSQLSinc.ParamByName('producto_id').AsString:=ZQRemoteSelect.FieldByName('producto_id').AsString;
+                        ZQExcecSQLSinc.ParamByName('producdepo_stockactual').AsString:=ZQRemoteSelect.FieldByName('producdepo_stockactual').AsString;
+                        ZQExcecSQLSinc.ParamByName('producdepo_id').AsString:=ZQRemoteSelect.FieldByName('producdepo_id').AsString;
+                        ZQExcecSQLSinc.ExecSql;
+                        error:=0;
+                        except
+                        error:=2;
+                        princ.Permisos1.guardarlog(self.ClassName+'.descargar_stock; error='+inttostr(error));
+                        end;
+
+                        ZQRemoteSelect.Next;
+                    end;
+
+
+            end;
+
+          //                  SUBIR MOVIMIENTOS DE DEPOSITO
+
+          BaseRemota.Reconnect;
+          princ.Permisos1.guardarlog(self.ClassName+'.subir_mov_deposito;');
+          if BaseRemota.Connected then
+            begin
+                ZQMovimientosDepositos.Active:=false;
+                ZQMovimientosDepositos.SQL.Text:='select * from movimientosdepositos where movimientodeposito_estadosinc="PENDIENTE" and deposito_idorigen='+Princ.dep_id+' order by movimientodeposito_id';
+                ZQMovimientosDepositos.Active:=true;
+                ZQMovimientosDepositos.First;
+                while not ZQMovimientosDepositos.Eof do
+                    begin
+                        try
+                        ZQRemoteExcecSql.Sql.Clear;
+                        ZQRemoteExcecSql.Sql.Add('begin');
+                        ZQRemoteExcecSql.ExecSql;
+
+
+                        ZQRemoteExcecSql.Sql.Clear;
+                        ZQRemoteExcecSql.Sql.Add('insert into movimientosdepositos set ');
+                        ZQRemoteExcecSql.Sql.Add('deposito_iddestino=:deposito_iddestino, ');
+                        ZQRemoteExcecSql.Sql.Add('deposito_idorigen=:deposito_idorigen, ');
+                        ZQRemoteExcecSql.Sql.Add('movimientodeposito_observaciones=:movimientodeposito_observaciones, ');
+                        ZQRemoteExcecSql.Sql.Add('movimientodeposito_estadosinc=:movimientodeposito_estadosinc, ');
+                        ZQRemoteExcecSql.Sql.Add('movimientodeposito_estado=:movimientodeposito_estado, ');
+                        ZQRemoteExcecSql.Sql.Add('movimientodeposito_hora=:movimientodeposito_hora, ');
+                        ZQRemoteExcecSql.Sql.Add('movimientodeposito_fecha=:movimientodeposito_fecha, ');
+                        ZQRemoteExcecSql.Sql.Add('movimientodeposito_id=:movimientodeposito_id ');
+                        ZQRemoteExcecSql.ParamByName('deposito_iddestino').AsString:=ZQMovimientosDepositos.FieldByName('deposito_iddestino').AsString;
+                        ZQRemoteExcecSql.ParamByName('deposito_idorigen').AsString:=ZQMovimientosDepositos.FieldByName('deposito_idorigen').AsString;
+                        ZQRemoteExcecSql.ParamByName('movimientodeposito_observaciones').AsString:=ZQMovimientosDepositos.FieldByName('movimientodeposito_observaciones').AsString;
+                        ZQRemoteExcecSql.ParamByName('movimientodeposito_estadosinc').AsString:='DESCARGAR';
+                        ZQRemoteExcecSql.ParamByName('movimientodeposito_estado').AsString:='PENDIENTE';
+                        ZQRemoteExcecSql.ParamByName('movimientodeposito_hora').AsString:=formatdatetime('HH:MM:SS',ZQMovimientosDepositos.FieldByName('movimientodeposito_hora').AsDateTime);
+                        ZQRemoteExcecSql.ParamByName('movimientodeposito_fecha').AsString:=formatdatetime('yyyy-mm-dd',ZQMovimientosDepositos.FieldByName('movimientodeposito_fecha').AsDateTime);
+                        ZQRemoteExcecSql.ParamByName('movimientodeposito_id').AsString:=ZQMovimientosDepositos.FieldByName('movimientodeposito_id').AsString;
+                        ZQRemoteExcecSql.ExecSql;
+
+
+                        ZQMovimDepoDetalles.Active:=false;
+                        ZQMovimDepoDetalles.SQL.Text:='select * from movimdepodetalles where movimientodeposito_id="'+ZQMovimientosDepositos.FieldByName('movimientodeposito_id').AsString+'"';
+                        ZQMovimDepoDetalles.Active:=true;
+                        ZQMovimDepoDetalles.First;
+                        while not ZQMovimDepoDetalles.Eof do
+                            begin
+                                ZQRemoteExcecSql.Sql.Clear;
+                                ZQRemoteExcecSql.Sql.Add('insert into movimdepodetalles set ');
+                                ZQRemoteExcecSql.Sql.Add('movimientodeposito_id=:movimientodeposito_id, ');
+                                ZQRemoteExcecSql.Sql.Add('producto_id=:producto_id, ');
+                                ZQRemoteExcecSql.Sql.Add('movimdepodetalle_estado=:movimdepodetalle_estado, ');
+                                ZQRemoteExcecSql.Sql.Add('movimdepodetalle_cantidadrecibir=:movimdepodetalle_cantidadrecibir, ');
+                                ZQRemoteExcecSql.Sql.Add('movimdepodetalle_cantidadenviar=:movimdepodetalle_cantidadenviar, ');
+                                ZQRemoteExcecSql.Sql.Add('movimdepodetalle_id=:movimdepodetalle_id ');
+                                ZQRemoteExcecSql.ParamByName('movimientodeposito_id').AsString:=ZQMovimientosDepositos.FieldByName('movimientodeposito_id').AsString;
+                                ZQRemoteExcecSql.ParamByName('producto_id').AsString:=ZQMovimDepoDetalles.FieldByName('producto_id').AsString;
+                                ZQRemoteExcecSql.ParamByName('movimdepodetalle_estado').AsString:='PENDIENTE';
+                                ZQRemoteExcecSql.ParamByName('movimdepodetalle_cantidadrecibir').AsString:=ZQMovimDepoDetalles.FieldByName('movimdepodetalle_cantidadrecibir').AsString;
+                                ZQRemoteExcecSql.ParamByName('movimdepodetalle_cantidadenviar').AsString:=ZQMovimDepoDetalles.FieldByName('movimdepodetalle_cantidadenviar').AsString;
+                                ZQRemoteExcecSql.ParamByName('movimdepodetalle_id').AsString:='0';
+                                ZQRemoteExcecSql.ExecSql;
+
+                                ZQMovimDepoDetalles.Next;
+                            end;
+
+                        ZQRemoteExcecSql.Sql.Clear;
+                        ZQRemoteExcecSql.Sql.Add('commit');
+                        ZQRemoteExcecSql.ExecSql;
+                        error:=0;
+                        except
+                          error:=3;
+                          princ.Permisos1.guardarlog(self.ClassName+'.subir_mov_deposito; error='+inttostr(error));
+                        end;
+
+                        if error=0 then
+                          begin
+                              ZQExcecSQLSinc.Sql.Clear;
+                              ZQExcecSQLSinc.Sql.Add('update movimientosdepositos set ');
+                              ZQExcecSQLSinc.Sql.Add('movimientodeposito_estadosinc=:movimientodeposito_estadosinc ');
+                              ZQExcecSQLSinc.Sql.Add('where movimientodeposito_id=:movimientodeposito_id ');
+                              ZQExcecSQLSinc.ParamByName('movimientodeposito_estadosinc').AsString:='EXPORTADO';
+                              ZQExcecSQLSinc.ParamByName('movimientodeposito_id').AsString:=ZQMovimientosDepositos.FieldByName('movimientodeposito_id').AsString;
+                              ZQExcecSQLSinc.ExecSql;
+
+                          end;
+
+
+                        ZQMovimientosDepositos.Next;
+                    end;
+
+
+            end;
+
+          //                  SUBIR CONFIRMACION MOVIMIENTOS DE DEPOSITO
+          BaseRemota.Reconnect;
+          princ.Permisos1.guardarlog(self.ClassName+'.subir_conf_mov_deposito;');
+          if BaseRemota.Connected then
+            begin
+                ZQMovimientosDepositos.Active:=false;
+                ZQMovimientosDepositos.SQL.Text:='select * from movimientosdepositos where movimientodeposito_estadosinc="CONFIRMAR" and deposito_iddestino='+Princ.dep_id+' order by movimientodeposito_id';
+                ZQMovimientosDepositos.Active:=true;
+                ZQMovimientosDepositos.First;
+                while not ZQMovimientosDepositos.Eof do
+                    begin
+                        try
+                        ZQRemoteExcecSql.Sql.Clear;
+                        ZQRemoteExcecSql.Sql.Add('begin');
+                        ZQRemoteExcecSql.ExecSql;
+
+
+                        ZQRemoteExcecSql.Sql.Clear;
+                        ZQRemoteExcecSql.Sql.Add('update movimientosdepositos set ');
+                        ZQRemoteExcecSql.Sql.Add('movimientodeposito_observaciones=:movimientodeposito_observaciones, ');
+                        ZQRemoteExcecSql.Sql.Add('movimientodeposito_estadosinc=:movimientodeposito_estadosinc, ');
+                        ZQRemoteExcecSql.Sql.Add('movimientodeposito_estado=:movimientodeposito_estado ');
+                        ZQRemoteExcecSql.Sql.Add('where movimientodeposito_id=:movimientodeposito_id ');
+                        ZQRemoteExcecSql.ParamByName('movimientodeposito_observaciones').AsString:=ZQMovimientosDepositos.FieldByName('movimientodeposito_observaciones').AsString;
+                        ZQRemoteExcecSql.ParamByName('movimientodeposito_estadosinc').AsString:='CONFIRMAR';
+                        ZQRemoteExcecSql.ParamByName('movimientodeposito_estado').AsString:=ZQMovimientosDepositos.FieldByName('movimientodeposito_estado').AsString;
+                        ZQRemoteExcecSql.ParamByName('movimientodeposito_id').AsString:=ZQMovimientosDepositos.FieldByName('movimientodeposito_id').AsString;
+                        ZQRemoteExcecSql.ExecSql;
+
+                        ZQRemoteExcecSql.Sql.Clear;
+                        ZQRemoteExcecSql.Sql.Add('delete from movimdepodetalles ');
+                        ZQRemoteExcecSql.Sql.Add('where movimientodeposito_id=:movimientodeposito_id ');
+                        ZQRemoteExcecSql.ParamByName('movimientodeposito_id').AsString:=ZQMovimientosDepositos.FieldByName('movimientodeposito_id').AsString;
+                        ZQRemoteExcecSql.ExecSql;
+
+                        ZQMovimDepoDetalles.Active:=false;
+                        ZQMovimDepoDetalles.SQL.Text:='select * from movimdepodetalles where movimientodeposito_id="'+ZQMovimientosDepositos.FieldByName('movimientodeposito_id').AsString+'"';
+                        ZQMovimDepoDetalles.Active:=true;
+                        ZQMovimDepoDetalles.First;
+                        while not ZQMovimDepoDetalles.Eof do
+                            begin
+                                ZQRemoteExcecSql.Sql.Clear;
+                                ZQRemoteExcecSql.Sql.Add('insert into movimdepodetalles set ');
+                                ZQRemoteExcecSql.Sql.Add('movimientodeposito_id=:movimientodeposito_id, ');
+                                ZQRemoteExcecSql.Sql.Add('producto_id=:producto_id, ');
+                                ZQRemoteExcecSql.Sql.Add('movimdepodetalle_estado=:movimdepodetalle_estado, ');
+                                ZQRemoteExcecSql.Sql.Add('movimdepodetalle_cantidadrecibir=:movimdepodetalle_cantidadrecibir, ');
+                                ZQRemoteExcecSql.Sql.Add('movimdepodetalle_cantidadenviar=:movimdepodetalle_cantidadenviar, ');
+                                ZQRemoteExcecSql.Sql.Add('movimdepodetalle_id=:movimdepodetalle_id ');
+                                ZQRemoteExcecSql.ParamByName('movimientodeposito_id').AsString:=ZQMovimientosDepositos.FieldByName('movimientodeposito_id').AsString;
+                                ZQRemoteExcecSql.ParamByName('producto_id').AsString:=ZQMovimDepoDetalles.FieldByName('producto_id').AsString;
+                                ZQRemoteExcecSql.ParamByName('movimdepodetalle_estado').AsString:='CONFIRMAR';
+                                ZQRemoteExcecSql.ParamByName('movimdepodetalle_cantidadrecibir').AsString:=ZQMovimDepoDetalles.FieldByName('movimdepodetalle_cantidadrecibir').AsString;
+                                ZQRemoteExcecSql.ParamByName('movimdepodetalle_cantidadenviar').AsString:=ZQMovimDepoDetalles.FieldByName('movimdepodetalle_cantidadenviar').AsString;
+                                ZQRemoteExcecSql.ParamByName('movimdepodetalle_id').AsString:='0';
+                                ZQRemoteExcecSql.ExecSql;
+
+                                ZQMovimDepoDetalles.Next;
+                            end;
+
+                        ZQRemoteExcecSql.Sql.Clear;
+                        ZQRemoteExcecSql.Sql.Add('commit');
+                        ZQRemoteExcecSql.ExecSql;
+                        error:=0;
+                        except
+                          error:=4;
+                          princ.Permisos1.guardarlog(self.ClassName+'.subir_conf_mov_deposito; error='+inttostr(error));
+                        end;
+
+                        if error=0 then
+                          begin
+                              ZQExcecSQLSinc.Sql.Clear;
+                              ZQExcecSQLSinc.Sql.Add('update movimientosdepositos set ');
+                              ZQExcecSQLSinc.Sql.Add('movimientodeposito_estadosinc=:movimientodeposito_estadosinc ');
+                              ZQExcecSQLSinc.Sql.Add('where movimientodeposito_id=:movimientodeposito_id ');
+                              ZQExcecSQLSinc.ParamByName('movimientodeposito_estadosinc').AsString:='CONFIRMADO';
+                              ZQExcecSQLSinc.ParamByName('movimientodeposito_id').AsString:=ZQMovimientosDepositos.FieldByName('movimientodeposito_id').AsString;
+                              ZQExcecSQLSinc.ExecSql;
+
+                          end;
+
+
+                        ZQMovimientosDepositos.Next;
+                    end;
+
+
+            end;
+
+
+
+          //                  DESCARGAR MOVIMIENTOS DE DEPOSITO
+
+          BaseRemota.Reconnect;
+          princ.Permisos1.guardarlog(self.ClassName+'.descargar_mov_deposito;');
+          if BaseRemota.Connected then
+            begin
+                ZQRemoteSelect.Active:=false;
+                ZQRemoteSelect.SQL.Text:='select * from movimientosdepositos where movimientodeposito_estadosinc="DESCARGAR" and deposito_iddestino='+Princ.dep_id+' order by movimientodeposito_id';
+                ZQRemoteSelect.Active:=true;
+                ZQRemoteSelect.First;
+                while not ZQRemoteSelect.Eof do
+                    begin
+                        try
+                        ZQExcecSQLSinc.Sql.Clear;
+                        ZQExcecSQLSinc.Sql.Add('begin');
+                        ZQExcecSQLSinc.ExecSql;
+
+                        ZQExcecSQLSinc.Sql.Clear;
+                        ZQExcecSQLSinc.Sql.Add('insert into movimientosdepositos set ');
+                        ZQExcecSQLSinc.Sql.Add('deposito_iddestino=:deposito_iddestino, ');
+                        ZQExcecSQLSinc.Sql.Add('deposito_idorigen=:deposito_idorigen, ');
+                        ZQExcecSQLSinc.Sql.Add('movimientodeposito_observaciones=:movimientodeposito_observaciones, ');
+                        ZQExcecSQLSinc.Sql.Add('movimientodeposito_estadosinc=:movimientodeposito_estadosinc, ');
+                        ZQExcecSQLSinc.Sql.Add('movimientodeposito_estado=:movimientodeposito_estado, ');
+                        ZQExcecSQLSinc.Sql.Add('movimientodeposito_hora=:movimientodeposito_hora, ');
+                        ZQExcecSQLSinc.Sql.Add('movimientodeposito_fecha=:movimientodeposito_fecha, ');
+                        ZQExcecSQLSinc.Sql.Add('movimientodeposito_id=:movimientodeposito_id ');
+                        ZQExcecSQLSinc.ParamByName('deposito_iddestino').AsString:=ZQRemoteSelect.FieldByName('deposito_iddestino').AsString;
+                        ZQExcecSQLSinc.ParamByName('deposito_idorigen').AsString:=ZQRemoteSelect.FieldByName('deposito_idorigen').AsString;
+                        ZQExcecSQLSinc.ParamByName('movimientodeposito_observaciones').AsString:=ZQRemoteSelect.FieldByName('movimientodeposito_observaciones').AsString;
+                        ZQExcecSQLSinc.ParamByName('movimientodeposito_estadosinc').AsString:='DESCARGADO';
+                        ZQExcecSQLSinc.ParamByName('movimientodeposito_estado').AsString:='PENDIENTE';
+                        ZQExcecSQLSinc.ParamByName('movimientodeposito_hora').AsString:=formatdatetime('HH:MM:SS',ZQRemoteSelect.FieldByName('movimientodeposito_hora').AsDateTime);
+                        ZQExcecSQLSinc.ParamByName('movimientodeposito_fecha').AsString:=formatdatetime('yyyy-mm-dd',ZQRemoteSelect.FieldByName('movimientodeposito_fecha').AsDateTime);
+                        ZQExcecSQLSinc.ParamByName('movimientodeposito_id').AsString:=ZQRemoteSelect.FieldByName('movimientodeposito_id').AsString;
+                        ZQExcecSQLSinc.ExecSql;
+
+                        ZQRemoteSelectDetalles.Active:=false;
+                        ZQRemoteSelectDetalles.SQL.Text:='select * from movimdepodetalles where movimientodeposito_id="'+ZQRemoteSelect.FieldByName('movimientodeposito_id').AsString+'"';
+                        ZQRemoteSelectDetalles.Active:=true;
+                        ZQRemoteSelectDetalles.First;
+                        while not ZQRemoteSelectDetalles.Eof do
+                            begin
+                                ZQExcecSQLSinc.Sql.Clear;
+                                ZQExcecSQLSinc.Sql.Add('insert into movimdepodetalles set ');
+                                ZQExcecSQLSinc.Sql.Add('movimientodeposito_id=:movimientodeposito_id, ');
+                                ZQExcecSQLSinc.Sql.Add('producto_id=:producto_id, ');
+                                ZQExcecSQLSinc.Sql.Add('movimdepodetalle_estado=:movimdepodetalle_estado, ');
+                                ZQExcecSQLSinc.Sql.Add('movimdepodetalle_cantidadrecibir=:movimdepodetalle_cantidadrecibir, ');
+                                ZQExcecSQLSinc.Sql.Add('movimdepodetalle_cantidadenviar=:movimdepodetalle_cantidadenviar, ');
+                                ZQExcecSQLSinc.Sql.Add('movimdepodetalle_id=:movimdepodetalle_id ');
+                                ZQExcecSQLSinc.ParamByName('movimientodeposito_id').AsString:=ZQRemoteSelect.FieldByName('movimientodeposito_id').AsString;
+                                ZQExcecSQLSinc.ParamByName('producto_id').AsString:=ZQRemoteSelectDetalles.FieldByName('producto_id').AsString;
+                                ZQExcecSQLSinc.ParamByName('movimdepodetalle_estado').AsString:='PENDIENTE';
+                                ZQExcecSQLSinc.ParamByName('movimdepodetalle_cantidadrecibir').AsString:=ZQRemoteSelectDetalles.FieldByName('movimdepodetalle_cantidadrecibir').AsString;
+                                ZQExcecSQLSinc.ParamByName('movimdepodetalle_cantidadenviar').AsString:=ZQRemoteSelectDetalles.FieldByName('movimdepodetalle_cantidadenviar').AsString;
+                                ZQExcecSQLSinc.ParamByName('movimdepodetalle_id').AsString:=Princ.codigo('movimdepodetalles','movimdepodetalle_id');
+                                ZQExcecSQLSinc.ExecSql;
+
+                                ZQRemoteSelectDetalles.Next;
+                            end;
+
+                        ZQExcecSQLSinc.Sql.Clear;
+                        ZQExcecSQLSinc.Sql.Add('commit');
+                        ZQExcecSQLSinc.ExecSql;
+                        error:=0;
+                        except
+                          error:=5;
+                          princ.Permisos1.guardarlog(self.ClassName+'.descargar_mov_deposito; error='+inttostr(error));
+                        end;
+
+                        if error=0 then
+                          begin
+                              ZQExcecSQLSinc.Sql.Clear;
+                              ZQExcecSQLSinc.Sql.Add('update movimientosdepositos set ');
+                              ZQExcecSQLSinc.Sql.Add('movimientodeposito_estadosinc=:movimientodeposito_estadosinc ');
+                              ZQExcecSQLSinc.Sql.Add('where movimientodeposito_id=:movimientodeposito_id ');
+                              ZQExcecSQLSinc.ParamByName('movimientodeposito_estadosinc').AsString:='EXPORTADO';
+                              ZQExcecSQLSinc.ParamByName('movimientodeposito_id').AsString:=ZQRemoteSelect.FieldByName('movimientodeposito_id').AsString;
+                              ZQExcecSQLSinc.ExecSql;
+
+                          end;
+
+                        ZQRemoteSelect.Next;
+                    end;
+
+            end;
+
+          //                  DESCARGAR CONFIRMACION MOVIMIENTOS DE DEPOSITO
+          BaseRemota.Reconnect;
+          princ.Permisos1.guardarlog(self.ClassName+'.descargar_conf_mov_deposito;');
+          if BaseRemota.Connected then
+            begin
+                ZQRemoteSelect.Active:=false;
+                ZQRemoteSelect.SQL.Text:='select * from movimientosdepositos where movimientodeposito_estadosinc="CONFIRMAR" and deposito_idorigen='+Princ.dep_id+' order by movimientodeposito_id';
+                ZQRemoteSelect.Active:=true;
+                ZQRemoteSelect.First;
+                while not ZQRemoteSelect.Eof do
+                    begin
+                        try
+                        ZQExcecSQLSinc.Sql.Clear;
+                        ZQExcecSQLSinc.Sql.Add('begin');
+                        ZQExcecSQLSinc.ExecSql;
+
+                        ZQExcecSQLSinc.Sql.Clear;
+                        ZQExcecSQLSinc.Sql.Add('update movimientosdepositos set ');
+                        ZQExcecSQLSinc.Sql.Add('movimientodeposito_observaciones=:movimientodeposito_observaciones, ');
+                        ZQExcecSQLSinc.Sql.Add('movimientodeposito_estadosinc=:movimientodeposito_estadosinc, ');
+                        ZQExcecSQLSinc.Sql.Add('movimientodeposito_estado=:movimientodeposito_estado ');
+                        ZQExcecSQLSinc.Sql.Add('where movimientodeposito_id=:movimientodeposito_id ');
+                        ZQExcecSQLSinc.ParamByName('movimientodeposito_observaciones').AsString:=ZQRemoteSelect.FieldByName('movimientodeposito_observaciones').AsString;
+                        ZQExcecSQLSinc.ParamByName('movimientodeposito_estadosinc').AsString:='CONFIRMADO';
+                        ZQExcecSQLSinc.ParamByName('movimientodeposito_estado').AsString:=ZQRemoteSelect.FieldByName('movimientodeposito_estado').AsString;
+                        ZQExcecSQLSinc.ParamByName('movimientodeposito_id').AsString:=ZQRemoteSelect.FieldByName('movimientodeposito_id').AsString;
+                        ZQExcecSQLSinc.ExecSql;
+
+                        ZQExcecSQLSinc.Sql.Clear;
+                        ZQExcecSQLSinc.Sql.Add('delete from movimdepodetalles ');
+                        ZQExcecSQLSinc.Sql.Add('where movimientodeposito_id=:movimientodeposito_id ');
+                        ZQExcecSQLSinc.ParamByName('movimientodeposito_id').AsString:=ZQRemoteSelect.FieldByName('movimientodeposito_id').AsString;
+                        ZQExcecSQLSinc.ExecSql;
+
+                        ZQRemoteSelectDetalles.Active:=false;
+                        ZQRemoteSelectDetalles.SQL.Text:='select * from movimdepodetalles where movimientodeposito_id="'+ZQRemoteSelect.FieldByName('movimientodeposito_id').AsString+'"';
+                        ZQRemoteSelectDetalles.Active:=true;
+                        ZQRemoteSelectDetalles.First;
+                        while not ZQRemoteSelectDetalles.Eof do
+                            begin
+                                ZQExcecSQLSinc.Sql.Clear;
+                                ZQExcecSQLSinc.Sql.Add('insert into movimdepodetalles set ');
+                                ZQExcecSQLSinc.Sql.Add('movimientodeposito_id=:movimientodeposito_id, ');
+                                ZQExcecSQLSinc.Sql.Add('producto_id=:producto_id, ');
+                                ZQExcecSQLSinc.Sql.Add('movimdepodetalle_estado=:movimdepodetalle_estado, ');
+                                ZQExcecSQLSinc.Sql.Add('movimdepodetalle_cantidadrecibir=:movimdepodetalle_cantidadrecibir, ');
+                                ZQExcecSQLSinc.Sql.Add('movimdepodetalle_cantidadenviar=:movimdepodetalle_cantidadenviar, ');
+                                ZQExcecSQLSinc.Sql.Add('movimdepodetalle_id=:movimdepodetalle_id ');
+                                ZQExcecSQLSinc.ParamByName('movimientodeposito_id').AsString:=ZQRemoteSelectDetalles.FieldByName('movimientodeposito_id').AsString;
+                                ZQExcecSQLSinc.ParamByName('producto_id').AsString:=ZQRemoteSelectDetalles.FieldByName('producto_id').AsString;
+                                ZQExcecSQLSinc.ParamByName('movimdepodetalle_estado').AsString:='CONFIRMADO';
+                                ZQExcecSQLSinc.ParamByName('movimdepodetalle_cantidadrecibir').AsString:=ZQRemoteSelectDetalles.FieldByName('movimdepodetalle_cantidadrecibir').AsString;
+                                ZQExcecSQLSinc.ParamByName('movimdepodetalle_cantidadenviar').AsString:=ZQRemoteSelectDetalles.FieldByName('movimdepodetalle_cantidadenviar').AsString;
+                                ZQExcecSQLSinc.ParamByName('movimdepodetalle_id').AsString:=Princ.codigo('movimdepodetalles','movimdepodetalle_id');
+                                ZQExcecSQLSinc.ExecSql;
+
+                                ZQRemoteSelectDetalles.Next;
+                            end;
+
+                        ZQExcecSQLSinc.Sql.Clear;
+                        ZQExcecSQLSinc.Sql.Add('commit');
+                        ZQExcecSQLSinc.ExecSql;
+                        error:=0;
+                        except
+                        error:=6;
+                        princ.Permisos1.guardarlog(self.ClassName+'.descargar_conf_mov_deposito; error='+inttostr(error));
+                        end;
+
+                        if error=0 then
+                          begin
+                              ZQRemoteExcecSql.Sql.Clear;
+                              ZQRemoteExcecSql.Sql.Add('update movimientosdepositos set ');
+                              ZQRemoteExcecSql.Sql.Add('movimientodeposito_estadosinc=:movimientodeposito_estadosinc ');
+                              ZQRemoteExcecSql.Sql.Add('where movimientodeposito_id=:movimientodeposito_id ');
+                              ZQRemoteExcecSql.ParamByName('movimientodeposito_estadosinc').AsString:='CONFIRMADO';
+                              ZQRemoteExcecSql.ParamByName('movimientodeposito_id').AsString:=ZQRemoteSelect.FieldByName('movimientodeposito_id').AsString;
+                              ZQRemoteExcecSql.ExecSql;
+
+                          end;
+
+                        ZQRemoteSelect.Next;
+                    end;
+
+            end;
+
+      end
+    else
+      begin
+          princ.Permisos1.guardarlog(self.ClassName+'.sincronizarstock; error='+inttostr(error));
+
+
+      end;
+
+    Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Text:='Sincronizacion Stock finalizada - '+formatdatetime('HH:mm',time);
+    Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Width:=300;
+    princ.Permisos1.guardarlog(self.ClassName+'.sincronizarstock; finalizado');
+
+end;
+
 
 procedure TPrinc.InputBoxSetPasswordChar(var Msg: TMessage);
 var
@@ -1530,12 +2059,11 @@ begin
         end;
 
 
-    ZQProcedimientosAlmacenados.SQL.Text:='CREATE PROCEDURE `actualizarsaldocompra` (id int, pago float) '+
+    ZQProcedimientosAlmacenados.SQL.Text:='CREATE PROCEDURE actualizarstockproductos (produ_id int, depo_id int, cantidad float) '+
                                           'BEGIN '+
-                                          '    update documentoscompras set documentocompra_saldo=documentocompra_saldo-(pago),  '+
-                                          '    documentocompra_pagado=documentocompra_pagado+(pago), '+
-                                          '    documentocompra_estado=if(documentocompra_saldo=0,"PAGADA","PENDIENTE") '+
-                                          '    where documentocompra_id=id; '+
+                                          '    update productodeposito set producdepo_stockactual=producdepo_stockactual+(cantidad),  '+
+                                          '    producdepo_estadosinc="PENDIENTE" '+
+                                          '    where producto_id=produ_id and deposito_id=depo_id; '+
                                           'END; ';
 
     try
@@ -3581,6 +4109,8 @@ var
   personal_usuario:string;
   personal_pass:string;
   logueado:boolean;
+  reconectardb:integer;
+  tipo_encriptacion:string;
 begin
 //MessageDlg('creando principal', mtWarning, [mbOK], 0);
 
@@ -3591,11 +4121,24 @@ begin
     MenuPrincipal.ActivePage:=AdvPageArchivo;
     personal_id_logueado:='';
     perfil_id_logueado:='';
-    dep_id:='1';
+    sucursal_actual:=Princ.GetConfiguracion('SUCURSALDEFECTO');
+    dep_id:=Princ.GetConfiguracion('DEPOSITODEFECTO');
 
     ZBase.Connect;
 
-    sucursal_actual:=Princ.GetConfiguracion('SUCURSALDEFECTO');
+    TimerReconectarDB.Enabled:=false;
+    reconectardb:=0;
+    try
+      reconectardb:=strtoint(Princ.GetConfiguracion('RECONECTARDB'));
+    except
+      reconectardb:=0;
+    end;
+
+    if reconectardb>0 then
+      begin
+          TimerReconectarDB.Interval:=reconectardb*1000;
+          TimerReconectarDB.Enabled:=true;
+      end;
 
     NOMBREPRECIO1:=Princ.GetConfiguracion('NOMBREPRECIO1');
     NOMBREPRECIO2:=Princ.GetConfiguracion('NOMBREPRECIO2');
@@ -3678,7 +4221,35 @@ begin
     if not DirectoryExists(ExtractFilePath(Application.ExeName)+'\BackupDb\') then
       CreateDir(ExtractFilePath(Application.ExeName)+'\BackupDb\');
 
-    Timer1.Enabled:=true;
+
+    BaseRemota.Database:=Princ.GetConfiguracion('DBREMOTADB');
+    BaseRemota.HostName:=Princ.GetConfiguracion('DBREMOTASERVIDOR');
+    BaseRemota.Port:=3306;
+    BaseRemota.Protocol:='mysql-5';
+    BaseRemota.User:=Princ.GetConfiguracion('DBREMOTAUSUARIO');
+    BaseRemota.Password:=Princ.GetConfiguracion('DBREMOTAPASS');
+    tipo_encriptacion:=ini1.ReadiniString('Config','Tipo','0');
+    Encriptador1.ADesencriptar:=BaseRemota.Password;
+    Encriptador1.MetodoEncriptado:=strtoint(tipo_encriptacion);
+    Encriptador1.Key:=CLAVE_ENCRIPTADO;
+    Encriptador1.Desencriptar;
+    BaseRemota.Password:=Encriptador1.Desencriptado;
+    BaseRemota.Database:=Princ.GetConfiguracion('DBREMOTADB');
+
+
+    Timer1.Enabled:=false;
+    EXPORTACIONSINCMINUTOS:=Princ.GetConfiguracion('EXPORTACIONSINCMINUTOS');
+    if (Princ.GetConfiguracion('PCSINCRONIZADORA')=Princ.GetPCName) then
+      begin
+          if (EXPORTACIONSINCMINUTOS<>'0') and (EXPORTACIONSINCMINUTOS<>'') then
+            begin
+                Timer1.Interval:=1000*60*strtoint(EXPORTACIONSINCMINUTOS);
+
+            end;
+
+          Timer1.Enabled:=true;
+      end;
+
 
     princ.XiProgressBar1.Parent:=Princ.StatusBar1;
     princ.XiProgressBar1.Visible:=false;
@@ -4058,6 +4629,16 @@ begin
     end;
 end;
 
+procedure TPrinc.BtnCargaStockCurvasClick(Sender: TObject);
+begin
+    try
+      CargaStockCurvas:=TCargaStockCurvas.Create(self);
+    finally
+//      empresa.abm:=1;
+      CargaStockCurvas.Show;
+    end;
+end;
+
 procedure TPrinc.btnempresaClick(Sender: TObject);
 begin
     try
@@ -4084,6 +4665,15 @@ begin
       estadoctasproveedores:=Testadoctasproveedores.Create(self);
     finally
       estadoctasproveedores.Show;
+    end;
+end;
+
+procedure TPrinc.btnimportardbClick(Sender: TObject);
+begin
+    try
+      ImportarDB:=TImportarDB.Create(self);
+    finally
+      ImportarDB.Show;
     end;
 end;
 
@@ -4187,6 +4777,16 @@ begin
     end;
 end;
 
+procedure TPrinc.BtnMovimientosDepositosClick(Sender: TObject);
+begin
+    try
+      ListaMovimientosDepositos:=TListaMovimientosDepositos.Create(self);
+    finally
+      ListaMovimientosDepositos.campo_id:='movimientodeposito_id';
+      ListaMovimientosDepositos.Show;
+    end;
+end;
+
 procedure TPrinc.BtnMovimientosdeStockClick(Sender: TObject);
 begin
     try
@@ -4209,7 +4809,20 @@ procedure TPrinc.Timer1Timer(Sender: TObject);
 var
   dia:string;
 begin
-    if (Princ.GetConfiguracion('PCSINCRONIZADORA')=Princ.GetPCName) then
+    Timer1.Enabled:=false;
+    if (EXPORTACIONSINCMINUTOS<>'0') and (EXPORTACIONSINCMINUTOS<>'') then
+      begin
+          CrearHilo;
+          ExportarDB:=TExportarDB.Create(Princ);
+          ImportarDB:=TImportarDB.Create(Princ);
+
+          Hilo.Ejecutar := Self.SincronizarTodo;
+          Hilo.Priority := tpNormal;
+          Hilo.Resume;
+
+
+      end
+    else
       begin
           if strtodate(Princ.GetConfiguracion('ULTIMAEXPORTACION'))<date then
             begin
@@ -4219,26 +4832,37 @@ begin
                       if strtotime(GetConfiguracion('EXPORTACIONhora'))<=time then
                         begin
                             CrearHilo;
-                            try
-                              SincronizarDB:=TSincronizarDB.Create(Princ);
-                            finally
-                              //                              SincronizarDB.Show;
+                            ExportarDB:=TExportarDB.Create(Princ);
+                            ImportarDB:=TImportarDB.Create(Princ);
 
-                              Hilo.Ejecutar := SincronizarDB.sincronizarahora;
-                              Hilo.Priority := tpNormal;
-                              Hilo.Resume;
-                            end;
+                            Hilo.Ejecutar := Self.SincronizarTodo;
+                            Hilo.Priority := tpNormal;
+                            Hilo.Resume;
 
                         end;
                   end;
             end;
+
       end;
+
+    
 end;
 
 procedure TPrinc.TimerBarraProgresoTimer(Sender: TObject);
 begin
     Princ.XiProgressBar1.Position:=Princ.UtilidadesDB1.item_actual;
     Princ.StatusBar1.Repaint;
+
+end;
+
+procedure TPrinc.TimerReconectarDBRemotaTimer(Sender: TObject);
+begin
+    BaseRemota.Reconnect;
+end;
+
+procedure TPrinc.TimerReconectarDBTimer(Sender: TObject);
+begin
+      ZBase.Reconnect;
 
 end;
 
@@ -4362,9 +4986,9 @@ end;
 procedure TPrinc.btnexportardbClick(Sender: TObject);
 begin
     try
-      SincronizarDB:=TSincronizarDB.Create(self);
+      ExportarDB:=TExportarDB.Create(self);
     finally
-      SincronizarDB.Show;
+      ExportarDB.Show;
     end;
 end;
 
@@ -4385,6 +5009,15 @@ begin
     finally
       ListaFacturasDeVenta.campo_id:='documentoventa_id';
       ListaFacturasDeVenta.Show;
+    end;
+end;
+
+procedure TPrinc.btnfichasclientesClick(Sender: TObject);
+begin
+    try
+      ImprimirFichasClientes:=TImprimirFichasClientes.Create(self);
+    finally
+      ImprimirFichasClientes.Show;
     end;
 end;
 
@@ -4574,6 +5207,18 @@ begin
     finally
       listaservices.Show;
     end;
+end;
+
+procedure TPrinc.btnsincronizartockClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea sincronizar stock?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          hilo:=Thilo.Create(true);
+          Hilo.Ejecutar := Princ.sincronizarstock;
+          Hilo.Priority := tpNormal;
+          Hilo.Resume;
+
+      end;
 end;
 
 procedure TPrinc.btnsucursalesClick(Sender: TObject);

@@ -37,6 +37,20 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
       Alignment = taRightJustify
       Caption = 'Nombre'
     end
+    object Label2: TLabel [3]
+      Left = 296
+      Top = 20
+      Width = 111
+      Height = 13
+      Caption = 'Mostrar Discontinuados'
+    end
+    object Label3: TLabel [4]
+      Left = 472
+      Top = 470
+      Width = 121
+      Height = 13
+      Caption = 'Asignar stock 0 al imprimir'
+    end
     inherited btncancelar: TButton
       Top = 464
       ExplicitTop = 464
@@ -225,6 +239,20 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
       Width = 393
       Height = 21
       TabOrder = 4
+    end
+    object producto_mostrardiscontinuados: TCheckBox
+      Left = 280
+      Top = 18
+      Width = 137
+      Height = 17
+      TabOrder = 9
+    end
+    object productos_asignarstockcero: TCheckBox
+      Left = 456
+      Top = 468
+      Width = 97
+      Height = 17
+      TabOrder = 10
     end
   end
   inherited ZQExecSQL: TZQuery

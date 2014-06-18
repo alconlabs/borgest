@@ -105,7 +105,7 @@ var
 
 implementation
 
-uses Unitprinc, Unitventadetalle2;
+uses Unitprinc, UnitAjusteStockDetalle;
 
 {$R *.dfm}
 
@@ -296,23 +296,23 @@ procedure TAjusteStock.btnagregarClick(Sender: TObject);
 begin
   inherited;
     try
-      ventadetalle2:= Tventadetalle2.Create(self);
+      AjusteStockDetalle:= TAjusteStockDetalle.Create(self);
     finally
-      ventadetalle2.producto_precioventa:=inttostr(1);
-      ventadetalle2.documentoventadetalle_listaprecio:=0;
-      if ventadetalle2.ShowModal=mrOk then
+      AjusteStockDetalle.producto_precioventa:=inttostr(1);
+      AjusteStockDetalle.documentoventadetalle_listaprecio:=0;
+      if AjusteStockDetalle.ShowModal=mrOk then
         begin
             ZQajustestockdetalles.Append;
             ZQajustestockdetalles.FieldByName('ajustestockdetalle_id').AsString:='0';
-            ZQajustestockdetalles.FieldByName('ajustestockdetalle_cantidad').AsString:=ventadetalle2.ventadeta_cantidad.Text;
+            ZQajustestockdetalles.FieldByName('ajustestockdetalle_cantidad').AsString:=AjusteStockDetalle.ventadeta_cantidad.Text;
             ZQajustestockdetalles.FieldByName('ajustestock_id').AsString:=id;
-            ZQajustestockdetalles.FieldByName('producto_id').AsString:=ventadetalle2.producto_id.Text;
-            ZQajustestockdetalles.FieldByName('producto_nombre').AsString:=ventadetalle2.producto_nombre.Text;
+            ZQajustestockdetalles.FieldByName('producto_id').AsString:=AjusteStockDetalle.producto_id.Text;
+            ZQajustestockdetalles.FieldByName('producto_nombre').AsString:=AjusteStockDetalle.producto_nombre.Text;
             ZQajustestockdetalles.Post;
 
         end;
 
-      ventadetalle2.Free;
+      AjusteStockDetalle.Free;
     end;
 end;
 
@@ -344,29 +344,29 @@ procedure TAjusteStock.btnmodificarClick(Sender: TObject);
 begin
   inherited;
     try
-      ventadetalle2:= Tventadetalle2.Create(self);
+      AjusteStockDetalle:= TAjusteStockDetalle.Create(self);
     finally
-      ventadetalle2.producto_precioventa:=inttostr(1);
-      ventadetalle2.documentoventadetalle_listaprecio:=0;
-      ventadetalle2.ventadeta_cantidad.Value:=ZQajustestockdetalles.FieldByName('ajustestockdetalle_cantidad').AsFloat;
-      ventadetalle2.producto_id.Text:=ZQajustestockdetalles.FieldByName('producto_id').AsString;
-      ventadetalle2.producto_id.Search(ZQajustestockdetalles.FieldByName('producto_id').AsString);
-//      ventadetalle2.producto_id.AfterSearch(self);
-      ventadetalle2.calculartotal;
+      AjusteStockDetalle.producto_precioventa:=inttostr(1);
+      AjusteStockDetalle.documentoventadetalle_listaprecio:=0;
+      AjusteStockDetalle.ventadeta_cantidad.Value:=ZQajustestockdetalles.FieldByName('ajustestockdetalle_cantidad').AsFloat;
+      AjusteStockDetalle.producto_id.Text:=ZQajustestockdetalles.FieldByName('producto_id').AsString;
+      AjusteStockDetalle.producto_id.Search(ZQajustestockdetalles.FieldByName('producto_id').AsString);
+//      AjusteStockDetalle.producto_id.AfterSearch(self);
+      AjusteStockDetalle.calculartotal;
 
-      if ventadetalle2.ShowModal=mrOk then
+      if AjusteStockDetalle.ShowModal=mrOk then
         begin
             ZQajustestockdetalles.Edit;
             ZQajustestockdetalles.FieldByName('ajustestockdetalle_id').AsString:='0';
-            ZQajustestockdetalles.FieldByName('ajustestockdetalle_cantidad').AsString:=ventadetalle2.ventadeta_cantidad.Text;
+            ZQajustestockdetalles.FieldByName('ajustestockdetalle_cantidad').AsString:=AjusteStockDetalle.ventadeta_cantidad.Text;
             ZQajustestockdetalles.FieldByName('ajustestock_id').AsString:=id;
-            ZQajustestockdetalles.FieldByName('producto_id').AsString:=ventadetalle2.producto_id.Text;
-            ZQajustestockdetalles.FieldByName('producto_nombre').AsString:=ventadetalle2.producto_nombre.Text;
+            ZQajustestockdetalles.FieldByName('producto_id').AsString:=AjusteStockDetalle.producto_id.Text;
+            ZQajustestockdetalles.FieldByName('producto_nombre').AsString:=AjusteStockDetalle.producto_nombre.Text;
             ZQajustestockdetalles.Post;
 
         end;
 
-      ventadetalle2.Free;
+      AjusteStockDetalle.Free;
     end;
 end;
 

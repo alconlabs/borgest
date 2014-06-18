@@ -38,6 +38,7 @@ Compras
 		Consultas de Stock
 		Ajustes de Stock
 		Movimientos de Stock
+		Movimientos entre Depositos
 Ventas
 	Documentos
 		Cotratacion

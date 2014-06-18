@@ -1373,7 +1373,9 @@ object TRpReport
     PosX = 6728
     PosY = 0
     Type1Font = poHelvetica
+    CutText = True
     Alignment = 1
+    SingleLine = True
     DataType = rpParamString
     GroupName = ' '
     AutoExpand = False

@@ -143,7 +143,17 @@ uses
   UnitFacturaventa02 in 'Formularios\Ventas\UnitFacturaventa02.pas' {facturaventa02},
   UnitProducto01 in 'Formularios\Archivo\UnitProducto01.pas' {producto01},
   Unitlistacurvas in 'Formularios\Archivo\Unitlistacurvas.pas' {listacurvas},
-  UnitCurva in 'Formularios\Archivo\UnitCurva.pas' {Curva};
+  UnitCurva in 'Formularios\Archivo\UnitCurva.pas' {Curva},
+  UnitCargaStockCurva in 'UnitCargaStockCurva.pas' {CargaStockCurvas},
+  UnitListaMarcas in 'Formularios\Archivo\UnitListaMarcas.pas' {ListaMarcas},
+  UnitMovimientosDepositos in 'Formularios\Compras\UnitMovimientosDepositos.pas' {MovimientosDepositos},
+  UnitProductosenStock in 'Formularios\Compras\UnitProductosenStock.pas' {ProductosenStock},
+  UnitListaMovimientosDepositos in 'Formularios\Compras\UnitListaMovimientosDepositos.pas' {ListaMovimientosDepositos},
+  UnitAjusteStockDetalle in 'Formularios\Compras\UnitAjusteStockDetalle.pas' {AjusteStockDetalle},
+  UnitExportarDB in 'Formularios\Herramientas\UnitExportarDB.pas' {ExportarDB},
+  UnitImportarDB in 'Formularios\Herramientas\UnitImportarDB.pas' {ImportarDB},
+  UnitMovimientosDepositosConfirma in 'Formularios\Compras\UnitMovimientosDepositosConfirma.pas' {MovimientosDepositosConfirma},
+  UnitImprimirFichasClientes in 'Formularios\Archivo\UnitImprimirFichasClientes.pas' {ImprimirFichasClientes};
 
 {$R *.res}
 
@@ -152,7 +162,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Borgest - Sistema de Gestion Comercial';
   Application.CreateForm(TPrinc, Princ);
-  Application.CreateForm(Tlistacurvas, listacurvas);
-  Application.CreateForm(TCurva, Curva);
+  Application.CreateForm(TImprimirFichasClientes, ImprimirFichasClientes);
   Application.Run;
 end.
