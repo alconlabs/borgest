@@ -24,35 +24,35 @@ object TRpReport
       Alias = 'ALIAS_COMISIONES'
       DatabaseAlias = 'CONEXION_DBBORGEST'
       SQL = 
-        'select * from liquidacionesvendedores'#13#10'inner join liquivendedeta' +
-        ' on liquidacionesvendedores.liquidacionvendedor_id=liquivendedet' +
-        'a.liquidacionvendedor_id'#13#10'inner join documentoventadetalles on l' +
-        'iquivendedeta.documentoventadetalle_id=documentoventadetalles.do' +
-        'cumentoventadetalle_id'#13#10'inner join documentosventas on documento' +
-        'ventadetalles.documentoventa_id=documentosventas.documentoventa_' +
-        'id'#13#10'inner join clientes on documentosventas.cliente_id=clientes.' +
-        'cliente_id'#13#10'inner join tiposdocumento on documentosventas.tipodo' +
-        'cu_id=tiposdocumento.tipodocu_id'#13#10'inner join puntodeventa on tip' +
-        'osdocumento.puntoventa_id=puntodeventa.puntoventa_id'#13#10'inner join' +
-        ' sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id'#13#10 +
-        'inner join personal on liquidacionesvendedores.personal_id=perso' +
-        'nal.personal_id'#13#10'where liquidacionesvendedores.liquidacionvended' +
-        'or_id=3'#13#10'order by sucursal_nombre, documentoventa_numero, docume' +
-        'ntoventadetalle_descripcion'#13#10
+        'select * from liquidacionesvendedores'#13#10'left join liquivendedeta ' +
+        'on liquidacionesvendedores.liquidacionvendedor_id=liquivendedeta' +
+        '.liquidacionvendedor_id'#13#10'left join documentoventadetalles on liq' +
+        'uivendedeta.documentoventadetalle_id=documentoventadetalles.docu' +
+        'mentoventadetalle_id'#13#10'left join documentosventas on documentoven' +
+        'tadetalles.documentoventa_id=documentosventas.documentoventa_id'#13 +
+        #10'left join clientes on documentosventas.cliente_id=clientes.clie' +
+        'nte_id'#13#10'left join tiposdocumento on documentosventas.tipodocu_id' +
+        '=tiposdocumento.tipodocu_id'#13#10'left join puntodeventa on tiposdocu' +
+        'mento.puntoventa_id=puntodeventa.puntoventa_id'#13#10'left join sucurs' +
+        'ales on puntodeventa.sucursal_id=sucursales.sucursal_id'#13#10'inner j' +
+        'oin personal on liquidacionesvendedores.personal_id=personal.per' +
+        'sonal_id'#13#10'where liquidacionesvendedores.liquidacionvendedor_id=4' +
+        '8'#13#10'order by sucursal_nombre, documentoventa_numero, documentoven' +
+        'tadetalle_descripcion'#13#10
     end
     item
       Alias = 'ALIAS_COMISIONESCREDITOS'
       DatabaseAlias = 'CONEXION_DBBORGEST'
       SQL = 
         'select * from vendedoresdebcred'#13#10'where vendedordebcred_tipo="Cre' +
-        'dito" and liquidacionvendedor_id=3'
+        'dito" and liquidacionvendedor_id=48'
     end
     item
       Alias = 'ALIAS_COMISIONESDEBITO'
       DatabaseAlias = 'CONEXION_DBBORGEST'
       SQL = 
         'select * from vendedoresdebcred'#13#10'where vendedordebcred_tipo="Deb' +
-        'ito" and liquidacionvendedor_id=3'
+        'ito" and liquidacionvendedor_id=48'
     end>
   DatabaseInfo = <
     item

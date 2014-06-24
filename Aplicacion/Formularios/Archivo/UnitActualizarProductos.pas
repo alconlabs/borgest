@@ -246,6 +246,14 @@ type
     nuevo_rubro_id: TSqlComboBox;
     ckbAplicarPolitica: TCheckBox;
     CKBAplicarIVA: TCheckBox;
+    GroupBox6: TGroupBox;
+    Label38: TLabel;
+    btnaplicarseccion: TButton;
+    nueva_seccion_id: TSqlComboBox;
+    GroupBox7: TGroupBox;
+    Label40: TLabel;
+    btnaplicarmarca: TButton;
+    nueva_marca_id: TSqlComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btnexaminarClick(Sender: TObject);
     procedure btnabrirarchivoClick(Sender: TObject);
@@ -270,6 +278,8 @@ type
     procedure BtnAplicarRubroClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
+    procedure btnaplicarseccionClick(Sender: TObject);
+    procedure btnaplicarmarcaClick(Sender: TObject);
   private
     { Private declarations }
     destino:string;
@@ -343,6 +353,29 @@ begin
 
 end;
 
+procedure TActualizarProductos.btnaplicarmarcaClick(Sender: TObject);
+begin
+    if nueva_marca_id.codigo<>'-1' then
+      begin
+          if (MessageDlg('Seguro desea aplicar esta marca?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+            begin
+                btnaplicarmarca.Enabled:=false;
+                ZQProductosAactualizar.First;
+                while not ZQProductosAactualizar.Eof do
+                    begin
+                        ZQProductosAactualizar.Edit;
+                        ZQProductosAactualizar.FieldByName('marca_id').AsString:=nueva_marca_id.codigo;
+                        ZQProductosAactualizar.Post;
+
+                        ZQProductosAactualizar.Next;
+                    end;
+                Princ.ModificarProducto(ZQProductosAactualizar);
+
+            end;
+
+      end;
+end;
+
 procedure TActualizarProductos.btnAplicarPoliticaClick(Sender: TObject);
 begin
     if nuevo_politicaprecio_id.codigo<>'-1' then
@@ -404,6 +437,29 @@ begin
                     begin
                         ZQProductosAactualizar.Edit;
                         ZQProductosAactualizar.FieldByName('rubro_id').AsString:=nuevo_rubro_id.codigo;
+                        ZQProductosAactualizar.Post;
+
+                        ZQProductosAactualizar.Next;
+                    end;
+                Princ.ModificarProducto(ZQProductosAactualizar);
+
+            end;
+
+      end;
+end;
+
+procedure TActualizarProductos.btnaplicarseccionClick(Sender: TObject);
+begin
+    if nueva_seccion_id.codigo<>'-1' then
+      begin
+          if (MessageDlg('Seguro desea aplicar esta seccion?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+            begin
+                btnaplicarseccion.Enabled:=false;
+                ZQProductosAactualizar.First;
+                while not ZQProductosAactualizar.Eof do
+                    begin
+                        ZQProductosAactualizar.Edit;
+                        ZQProductosAactualizar.FieldByName('seccion_id').AsString:=nueva_seccion_id.codigo;
                         ZQProductosAactualizar.Post;
 
                         ZQProductosAactualizar.Next;
@@ -887,6 +943,8 @@ begin
     nuevo_calculoprecio_id.llenarcombo;
     nuevo_politicaprecio_id.llenarcombo;
     nuevo_rubro_id.llenarcombo;
+    nueva_seccion_id.llenarcombo;
+    nueva_marca_id.llenarcombo;
 end;
 
 procedure TActualizarProductos.FormKeyDown(Sender: TObject; var Key: Word;

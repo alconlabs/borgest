@@ -2,7 +2,7 @@ object ActualizarProductos: TActualizarProductos
   Left = 0
   Top = 0
   Caption = 'ActualizarProductos'
-  ClientHeight = 588
+  ClientHeight = 746
   ClientWidth = 1035
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,7 +22,7 @@ object ActualizarProductos: TActualizarProductos
     Left = 0
     Top = 0
     Width = 1035
-    Height = 588
+    Height = 746
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -63,18 +63,21 @@ object ActualizarProductos: TActualizarProductos
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitHeight = 588
     FullHeight = 0
     object PgCtrlSettings: TPageControl
       Left = 0
       Top = 0
       Width = 1035
-      Height = 570
+      Height = 728
       ActivePage = TabSheet2
       Align = alClient
       TabOrder = 0
+      ExplicitHeight = 570
       object TabSheet2: TTabSheet
         Caption = 'Actualizar Productos'
         ImageIndex = 1
+        ExplicitHeight = 542
         object Label3: TLabel
           Left = 53
           Top = 12
@@ -649,7 +652,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object btnrecalculartodo: TButton
           Left = 3
-          Top = 514
+          Top = 642
           Width = 238
           Height = 25
           Caption = 'Recalcular precios de TODOS los productos'
@@ -658,7 +661,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object bnteliminarproductos: TButton
           Left = 247
-          Top = 514
+          Top = 642
           Width = 110
           Height = 25
           Caption = 'Eliminar Productos'
@@ -712,10 +715,105 @@ object ActualizarProductos: TActualizarProductos
             Tag2 = 0
           end
         end
+        object GroupBox6: TGroupBox
+          Left = 4
+          Top = 498
+          Width = 182
+          Height = 119
+          Caption = 'Seccion'
+          TabOrder = 19
+          object Label38: TLabel
+            Left = -1
+            Top = 50
+            Width = 138
+            Height = 13
+            Caption = 'Asignar nueva Seccion'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold, fsItalic]
+            ParentFont = False
+          end
+          object btnaplicarseccion: TButton
+            Left = 3
+            Top = 83
+            Width = 91
+            Height = 25
+            Caption = 'Aplicar'
+            TabOrder = 0
+            OnClick = btnaplicarseccionClick
+          end
+          object nueva_seccion_id: TSqlComboBox
+            Left = 9
+            Top = 15
+            Width = 151
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 1
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              'select * from secciones'
+              'order by seccion_nombre')
+            ConfTabla = 'secciones'
+            Confcampo_codigo = 'seccion_id'
+            Confcampo_nomb = 'seccion_nombre'
+            Tag2 = 0
+          end
+        end
+        object GroupBox7: TGroupBox
+          Left = 192
+          Top = 498
+          Width = 182
+          Height = 119
+          Caption = 'Marca'
+          TabOrder = 20
+          object Label40: TLabel
+            Left = -1
+            Top = 50
+            Width = 127
+            Height = 13
+            Caption = 'Asignar nueva Marca'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold, fsItalic]
+            ParentFont = False
+          end
+          object btnaplicarmarca: TButton
+            Left = 3
+            Top = 83
+            Width = 91
+            Height = 25
+            Caption = 'Aplicar'
+            TabOrder = 0
+            OnClick = btnaplicarmarcaClick
+          end
+          object nueva_marca_id: TSqlComboBox
+            Left = 7
+            Top = 17
+            Width = 151
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            TabOrder = 1
+            Confbase = Princ.ZBase
+            Confsql.Strings = (
+              'select * from marcas'
+              'order by marca_nombre')
+            ConfTabla = 'marcas'
+            Confcampo_codigo = 'marca_id'
+            Confcampo_nomb = 'marca_nombre'
+            Tag2 = 0
+          end
+        end
       end
       object TabSheet1: TTabSheet
         Caption = 'Actualizar desde Excel'
         ImageIndex = 1
+        ExplicitHeight = 542
         object Label2: TLabel
           Left = 40
           Top = 5
@@ -1163,13 +1261,14 @@ object ActualizarProductos: TActualizarProductos
         end
         object PanelGrillasExcel: TPanel
           Left = 0
-          Top = 197
+          Top = 355
           Width = 1027
           Height = 345
           Align = alBottom
           BevelOuter = bvNone
           Caption = 'PanelGrillasExcel'
           TabOrder = 20
+          ExplicitTop = 197
           object PgCtrlGrids: TPageControl
             Left = 0
             Top = 0

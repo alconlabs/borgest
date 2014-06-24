@@ -1,5 +1,7 @@
 inherited listasucursales: Tlistasucursales
   Caption = 'Sucursales'
+  ExplicitWidth = 950
+  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -10,6 +12,16 @@ inherited listasucursales: Tlistasucursales
       Height = 241
       ExplicitHeight = 241
       FullHeight = 0
+      inherited btnnuevo: TButton
+        ExplicitLeft = 0
+        ExplicitTop = 0
+      end
+      inherited btnver: TButton
+        ExplicitTop = 205
+      end
+      inherited btnclonar: TButton
+        ExplicitTop = 164
+      end
     end
     inherited DBGrid1: TDBGrid
       Height = 241

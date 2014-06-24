@@ -13,12 +13,20 @@ inherited ListaFacturasDeVenta: TListaFacturasDeVenta
       Left = 932
       ExplicitLeft = 932
       FullHeight = 0
+      inherited btnnuevo: TButton
+        ExplicitLeft = 0
+        ExplicitTop = 0
+      end
       inherited btnanular: TButton
         Visible = True
       end
       inherited btnver: TButton
         Visible = True
         OnClick = btnverClick
+        ExplicitTop = 205
+      end
+      inherited btnclonar: TButton
+        ExplicitTop = 164
       end
     end
     inherited DBGrid1: TDBGrid

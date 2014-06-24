@@ -42,11 +42,11 @@ begin
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     tipodocu_id.GenerarWhere;
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, '+
-                                                   'if(tipodocu_debcred="DEBITO",documentoventa_neto21,-1*documentoventa_neto21) as neto21, '+
-                                                   'if(tipodocu_debcred="DEBITO",documentoventa_neto105,-1*documentoventa_neto105) as neto105, '+
-                                                   'if(tipodocu_debcred="DEBITO",documentoventa_iva21,-1*documentoventa_iva21) as iva21, '+
-                                                   'if(tipodocu_debcred="DEBITO",documentoventa_iva105,-1*documentoventa_iva105) as iva105, '+
-                                                   'if(tipodocu_debcred="DEBITO",documentoventa_total,-1*documentoventa_total) as total '+
+                                                   'if(documentoventa_estado<>"ANULADA",if(tipodocu_debcred="DEBITO",documentoventa_neto21,-1*documentoventa_neto21),0)as neto21, '+
+                                                   'if(documentoventa_estado<>"ANULADA",if(tipodocu_debcred="DEBITO",documentoventa_neto105,-1*documentoventa_neto105),0) as neto105, '+
+                                                   'if(documentoventa_estado<>"ANULADA",if(tipodocu_debcred="DEBITO",documentoventa_iva21,-1*documentoventa_iva21),0) as iva21, '+
+                                                   'if(documentoventa_estado<>"ANULADA",if(tipodocu_debcred="DEBITO",documentoventa_iva105,-1*documentoventa_iva105),0) as iva105, '+
+                                                   'if(documentoventa_estado<>"ANULADA",if(tipodocu_debcred="DEBITO",documentoventa_total,-1*documentoventa_total),0) as total '+
                                                    'from documentosventas '+
                                                    'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
                                                    'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+

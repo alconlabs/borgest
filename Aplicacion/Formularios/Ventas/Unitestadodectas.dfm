@@ -65,7 +65,6 @@ object estadoctas: Testadoctas
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitWidth = 867
     FullHeight = 0
     object Label3: TLabel
       Left = 9

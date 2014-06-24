@@ -189,6 +189,7 @@ type
     TimerSincronizarStock: TTimer;
     TimerReconectarDBRemota: TTimer;
     btnfichasclientes: TAdvGlowButton;
+    BtnConsultaStockCurvas: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -277,6 +278,7 @@ type
     procedure btnimportardbClick(Sender: TObject);
     procedure TimerReconectarDBRemotaTimer(Sender: TObject);
     procedure btnfichasclientesClick(Sender: TObject);
+    procedure BtnConsultaStockCurvasClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -522,7 +524,7 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitDetalleComisionesBorradores, UnitListaCuponesTarjetasCredito,
   UnitSincronizarDB, UnitEstadoIVAs, UnitFacturaventa02, Unitlistacurvas,
   UnitCargaStockCurva, UnitListaMovimientosDepositos, UnitExportarDB,
-  UnitImportarDB, UnitImprimirFichasClientes;
+  UnitImportarDB, UnitImprimirFichasClientes, UnitConsultaStockCurvas;
 
 {$R *.dfm}
 
@@ -2749,11 +2751,22 @@ begin
             ZQExcecSQL.Sql.Add('producto_codigoreferencia=:producto_codigoreferencia, ');
             ZQExcecSQL.Sql.Add('proveedor_id=:proveedor_id, ');
             ZQExcecSQL.Sql.Add('rubro_id=:rubro_id, ');
+            ZQExcecSQL.Sql.Add('seccion_id=:seccion_id, ');
+            ZQExcecSQL.Sql.Add('marca_id=:marca_id, ');
             ZQExcecSQL.Sql.Add('producto_estado=:producto_estado ');
             ZQExcecSQL.Sql.Add('where producto_id=:producto_id ');
             ZQExcecSQL.parambyname('producto_codigoreferencia').asstring:=QProductos.FieldByName('producto_codigoreferencia').AsString;
             ZQExcecSQL.parambyname('proveedor_id').asstring:=QProductos.FieldByName('proveedor_id').AsString;
             ZQExcecSQL.parambyname('rubro_id').asstring:=QProductos.FieldByName('rubro_id').AsString;
+
+            ZQExcecSQL.parambyname('seccion_id').asstring:='0';
+            if QProductos.FieldByName('seccion_id').AsString<>'' then
+              ZQExcecSQL.parambyname('seccion_id').asstring:=QProductos.FieldByName('seccion_id').AsString;
+
+            ZQExcecSQL.parambyname('marca_id').asstring:='0';
+            if QProductos.FieldByName('marca_id').AsString<>'' then
+              ZQExcecSQL.parambyname('marca_id').asstring:=QProductos.FieldByName('marca_id').AsString;
+
             ZQExcecSQL.parambyname('producto_estado').asstring:=QProductos.FieldByName('producto_estado').AsString;
             ZQExcecSQL.parambyname('producto_id').asstring:=QProductos.FieldByName('producto_id').AsString;
             ZQExcecSQL.ExecSQL;
@@ -4541,6 +4554,15 @@ begin
     end;
 end;
 
+procedure TPrinc.BtnConsultaStockCurvasClick(Sender: TObject);
+begin
+    try
+      ConsultaStockCurvas:=TConsultaStockCurvas.Create(self);
+    finally
+      ConsultaStockCurvas.Show;
+    end;
+end;
+
 procedure TPrinc.BtnCuponesTarjetasClick(Sender: TObject);
 begin
     try
@@ -5004,12 +5026,13 @@ end;
 
 procedure TPrinc.btnfacturasventasClick(Sender: TObject);
 begin
-    try
-      ListaFacturasDeVenta:=TListaFacturasDeVenta.Create(self);
-    finally
-      ListaFacturasDeVenta.campo_id:='documentoventa_id';
-      ListaFacturasDeVenta.Show;
-    end;
+    Princ.AbrirDocumentoVenta('','Factura de Venta',ABM_AGREGAR);
+//    try
+//      ListaFacturasDeVenta:=TListaFacturasDeVenta.Create(self);
+//    finally
+//      ListaFacturasDeVenta.campo_id:='documentoventa_id';
+//      ListaFacturasDeVenta.Show;
+//    end;
 end;
 
 procedure TPrinc.btnfichasclientesClick(Sender: TObject);

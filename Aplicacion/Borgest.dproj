@@ -210,6 +210,9 @@
     <DCCReference Include="Formularios\Compras\UnitConsultaStock.pas">
       <Form>ConsultaStock</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Compras\UnitConsultaStockCurvas.pas">
+      <Form>ConsultaStockCurvas</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Compras\Unitdetallectasproveedores.pas">
       <Form>detallectasproveedores</Form>
     </DCCReference>

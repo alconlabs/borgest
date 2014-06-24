@@ -73,6 +73,8 @@ begin
     ZQuery2.parambyname('sucursal_tipoliquidsucursal').asstring:=sucursal_tipoliquidsucursal.text;
     ZQuery2.parambyname('sucursal_tipoliquidvendedor').asstring:=sucursal_tipoliquidvendedor.text;
     ZQuery2.parambyname('cliente_id').asstring:=cliente_id.codigo;
+    if ZQuery2.parambyname('cliente_id').asstring='' then
+      ZQuery2.parambyname('cliente_id').asstring:='0';
     ZQuery2.parambyname('sucursal_tipodocumentoliquidar').AsInteger:=sucursal_tipodocumentoliquidar.ItemIndex;
     ZQuery2.ExecSQL;
 
@@ -104,6 +106,9 @@ begin
     ZQuery2.parambyname('sucursal_tipoliquidsucursal').asstring:=sucursal_tipoliquidsucursal.text;
     ZQuery2.parambyname('sucursal_tipoliquidvendedor').asstring:=sucursal_tipoliquidvendedor.text;
     ZQuery2.parambyname('cliente_id').asstring:=cliente_id.codigo;
+    if ZQuery2.parambyname('cliente_id').asstring='' then
+      ZQuery2.parambyname('cliente_id').asstring:='0';
+
     ZQuery2.parambyname('sucursal_tipodocumentoliquidar').AsInteger:=sucursal_tipodocumentoliquidar.ItemIndex;
     ZQuery2.ExecSQL;
 

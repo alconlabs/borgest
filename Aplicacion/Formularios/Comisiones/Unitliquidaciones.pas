@@ -1084,13 +1084,13 @@ procedure Tliquidaciones.btnimprimirClick(Sender: TObject);
 begin
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'liquidacion_vendedor.rep';
     Princ.VCLReport1.Report.Datainfo.Items[0].SQL:='select * from liquidacionesvendedores '+
-                                                   'inner join liquivendedeta on liquidacionesvendedores.liquidacionvendedor_id=liquivendedeta.liquidacionvendedor_id '+
-                                                   'inner join documentoventadetalles on liquivendedeta.documentoventadetalle_id=documentoventadetalles.documentoventadetalle_id '+
-                                                   'inner join documentosventas on documentoventadetalles.documentoventa_id=documentosventas.documentoventa_id '+
-                                                   'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
-                                                   'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
-                                                   'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
-                                                   'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
+                                                   'left join liquivendedeta on liquidacionesvendedores.liquidacionvendedor_id=liquivendedeta.liquidacionvendedor_id '+
+                                                   'left join documentoventadetalles on liquivendedeta.documentoventadetalle_id=documentoventadetalles.documentoventadetalle_id '+
+                                                   'left join documentosventas on documentoventadetalles.documentoventa_id=documentosventas.documentoventa_id '+
+                                                   'left join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                                                   'left join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                                                   'left join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                                                   'left join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
                                                    'inner join personal on liquidacionesvendedores.personal_id=personal.personal_id '+
                                                    'where liquidacionesvendedores.liquidacionvendedor_id="'+id+'" '+
                                                    'order by sucursal_nombre, documentoventa_numero, documentoventadetalle_descripcion ';

@@ -153,7 +153,8 @@ uses
   UnitExportarDB in 'Formularios\Herramientas\UnitExportarDB.pas' {ExportarDB},
   UnitImportarDB in 'Formularios\Herramientas\UnitImportarDB.pas' {ImportarDB},
   UnitMovimientosDepositosConfirma in 'Formularios\Compras\UnitMovimientosDepositosConfirma.pas' {MovimientosDepositosConfirma},
-  UnitImprimirFichasClientes in 'Formularios\Archivo\UnitImprimirFichasClientes.pas' {ImprimirFichasClientes};
+  UnitImprimirFichasClientes in 'Formularios\Archivo\UnitImprimirFichasClientes.pas' {ImprimirFichasClientes},
+  UnitConsultaStockCurvas in 'Formularios\Compras\UnitConsultaStockCurvas.pas' {ConsultaStockCurvas};
 
 {$R *.res}
 
@@ -162,6 +163,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Borgest - Sistema de Gestion Comercial';
   Application.CreateForm(TPrinc, Princ);
-  Application.CreateForm(TImprimirFichasClientes, ImprimirFichasClientes);
   Application.Run;
 end.

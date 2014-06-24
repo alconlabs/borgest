@@ -2073,3 +2073,35 @@ Replace config set config_valor='0', config_nombre='IMPORTACIONSINCMINUTOS';
 Replace config set config_valor='0', config_nombre='EXPORTACIONSINCSTOCK';
 583;
 Replace config set config_valor='0', config_nombre='IMPORTACIONSINCSTOCK';
+584;
+ALTER TABLE `productos` ADD COLUMN `producto_longitudcodigo` INT(3) NULL DEFAULT 0  AFTER `producto_estadosinc`;
+585;
+ALTER TABLE `temporales` 
+ADD COLUMN `temporal_int6` INT(11) NULL DEFAULT NULL  AFTER `temporal_string10` , 
+ADD COLUMN `temporal_int7` INT(11) NULL DEFAULT NULL  AFTER `temporal_int6` , 
+ADD COLUMN `temporal_int8` INT(11) NULL DEFAULT NULL  AFTER `temporal_int7` , 
+ADD COLUMN `temporal_int9` INT(11) NULL DEFAULT NULL  AFTER `temporal_int8` , 
+ADD COLUMN `temporal_int10` INT(11) NULL DEFAULT NULL  AFTER `temporal_int9` , 
+ADD COLUMN `temporal_int11` INT(11) NULL DEFAULT NULL  AFTER `temporal_int10` , 
+ADD COLUMN `temporal_int12` INT(11) NULL DEFAULT NULL  AFTER `temporal_int11` , 
+ADD COLUMN `temporal_int13` INT(11) NULL DEFAULT NULL  AFTER `temporal_int12` , 
+ADD COLUMN `temporal_int14` INT(11) NULL DEFAULT NULL  AFTER `temporal_int13` , 
+ADD COLUMN `temporal_int15` INT(11) NULL DEFAULT NULL  AFTER `temporal_int14` , 
+ADD COLUMN `temporal_string11` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_int15` , 
+ADD COLUMN `temporal_string12` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string11` , 
+ADD COLUMN `temporal_string13` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string12` , 
+ADD COLUMN `temporal_string14` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string13` , 
+ADD COLUMN `temporal_string15` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string14` ;
+586;
+ALTER TABLE `temporales` 
+ADD COLUMN `temporal_int16` INT(11) NULL DEFAULT NULL  AFTER `temporal_string15` , 
+ADD COLUMN `temporal_int17` INT(11) NULL DEFAULT NULL  AFTER `temporal_int16` , 
+ADD COLUMN `temporal_int18` INT(11) NULL DEFAULT NULL  AFTER `temporal_int17` , 
+ADD COLUMN `temporal_int19` INT(11) NULL DEFAULT NULL  AFTER `temporal_int18` , 
+ADD COLUMN `temporal_int20` INT(11) NULL DEFAULT NULL  AFTER `temporal_int19` , 
+
+ADD COLUMN `temporal_string16` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_int20` , 
+ADD COLUMN `temporal_string17` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string16` , 
+ADD COLUMN `temporal_string18` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string17` , 
+ADD COLUMN `temporal_string19` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string18` , 
+ADD COLUMN `temporal_string20` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string19` ;
