@@ -1,13 +1,13 @@
 inherited AjusteStock: TAjusteStock
   Caption = 'Ajuste de Stock'
   ClientHeight = 405
-  ClientWidth = 722
-  ExplicitWidth = 738
+  ClientWidth = 902
+  ExplicitWidth = 918
   ExplicitHeight = 443
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Width = 722
+    Width = 902
     Height = 405
     ExplicitWidth = 722
     ExplicitHeight = 405
@@ -21,7 +21,7 @@ inherited AjusteStock: TAjusteStock
       Caption = 'Numero'
     end
     object Label2: TLabel [1]
-      Left = 573
+      Left = 749
       Top = 15
       Width = 30
       Height = 13
@@ -44,17 +44,17 @@ inherited AjusteStock: TAjusteStock
       Caption = 'Observaciones'
     end
     inherited btncancelar: TButton
-      Left = 620
+      Left = 812
       Top = 342
       TabOrder = 9
-      ExplicitLeft = 620
+      ExplicitLeft = 812
       ExplicitTop = 342
     end
     inherited btnguardar: TButton
-      Left = 539
+      Left = 731
       Top = 342
       TabOrder = 8
-      ExplicitLeft = 539
+      ExplicitLeft = 731
       ExplicitTop = 342
     end
     object ajustestock_id: TEdit
@@ -65,7 +65,7 @@ inherited AjusteStock: TAjusteStock
       TabOrder = 0
     end
     object ajustestock_fecha: TDateTimePicker
-      Left = 609
+      Left = 785
       Top = 12
       Width = 106
       Height = 21
@@ -91,7 +91,7 @@ inherited AjusteStock: TAjusteStock
     object DBGrid1: TDBGrid
       Left = 12
       Top = 61
-      Width = 693
+      Width = 877
       Height = 153
       TabStop = False
       DataSource = DTSajustestockdetalles
@@ -122,6 +122,13 @@ inherited AjusteStock: TAjusteStock
           FieldName = 'producto_nombre'
           Title.Caption = 'Producto'
           Width = 523
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'producto_codigobarras'
+          Title.Caption = 'Cod. Barras'
+          Width = 172
           Visible = True
         end>
     end
@@ -296,6 +303,27 @@ inherited AjusteStock: TAjusteStock
     object ZQajustestockdetallesproducto_tipo: TStringField
       FieldName = 'producto_tipo'
       Size = 45
+    end
+    object ZQajustestockdetallesproducto_codigobarras_1: TStringField
+      FieldName = 'producto_codigobarras_1'
+      Size = 45
+    end
+    object ZQajustestockdetallesmarca_id: TIntegerField
+      FieldName = 'marca_id'
+    end
+    object ZQajustestockdetallesseccion_id: TIntegerField
+      FieldName = 'seccion_id'
+    end
+    object ZQajustestockdetallesproducto_talle: TStringField
+      FieldName = 'producto_talle'
+      Size = 45
+    end
+    object ZQajustestockdetallesproducto_estadosinc: TStringField
+      FieldName = 'producto_estadosinc'
+      Size = 45
+    end
+    object ZQajustestockdetallesproducto_longitudcodigo: TIntegerField
+      FieldName = 'producto_longitudcodigo'
     end
   end
   object DTSajustestockdetalles: TDataSource

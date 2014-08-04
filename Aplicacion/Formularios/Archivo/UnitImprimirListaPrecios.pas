@@ -154,7 +154,7 @@ begin
     else
       begin
           Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'listado_productos.rep';
-          Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, '+Princ.CAMPO_ID_PRODUCTO+' as codigo from productos '+
+          Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, productos.'+Princ.CAMPO_ID_PRODUCTO+' as codigo from productos '+
                                                          'inner join rubros on productos.rubro_id=rubros.rubro_id '+
                                                          'inner join productodeposito on productos.producto_id=productodeposito.producto_id '+
                                                          'inner join depositos on productodeposito.deposito_id=depositos.deposito_id '+

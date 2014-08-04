@@ -88,12 +88,12 @@ object facturacompra: Tfacturacompra
       Caption = 'Proveedor'
     end
     object Label4: TLabel
-      Left = 563
+      Left = 565
       Top = 66
-      Width = 46
+      Width = 44
       Height = 13
       Alignment = taRightJustify
-      Caption = 'Vendedor'
+      Caption = 'Operador'
     end
     object Label8: TLabel
       Left = 516

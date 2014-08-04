@@ -2099,9 +2099,79 @@ ADD COLUMN `temporal_int17` INT(11) NULL DEFAULT NULL  AFTER `temporal_int16` ,
 ADD COLUMN `temporal_int18` INT(11) NULL DEFAULT NULL  AFTER `temporal_int17` , 
 ADD COLUMN `temporal_int19` INT(11) NULL DEFAULT NULL  AFTER `temporal_int18` , 
 ADD COLUMN `temporal_int20` INT(11) NULL DEFAULT NULL  AFTER `temporal_int19` , 
-
 ADD COLUMN `temporal_string16` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_int20` , 
 ADD COLUMN `temporal_string17` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string16` , 
 ADD COLUMN `temporal_string18` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string17` , 
 ADD COLUMN `temporal_string19` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string18` , 
 ADD COLUMN `temporal_string20` VARCHAR(255) NULL DEFAULT NULL  AFTER `temporal_string19` ;
+587;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('99', '>Ventas>Documentos>Carga Stock - Curvas', '0', 'BtnCargaStockCurvas', '', '0', '0', '');
+588;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,99,perfil_id,-1 from perfiles;
+589;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('100', '>Ventas>Documentos>Consultas Stock - Curvas', '0', 'BtnConsultaStockCurvas', '', '0', '0', '');
+590;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,100,perfil_id,-1 from perfiles;
+591;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('101', '>Ventas>Documentos>Factura de Venta - Directo', '0', 'BtnFacturaVentaDirecto', '', '0', '0', '');
+592;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,101,perfil_id,-1 from perfiles;
+593;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('102', '>Ventas>Documentos>Carga Stock - Lector', '0', 'BtnCargaStockLector', '', '0', '0', '');
+594;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,102,perfil_id,-1 from perfiles;
+595;
+ALTER TABLE `ajustestockdetalles` ADD COLUMN `producto_codigobarras` VARCHAR(45) NULL DEFAULT NULL  AFTER `producto_id` ;
+596;
+ALTER TABLE `tipospago` ADD COLUMN `tipopago_codigo` VARCHAR(10) NULL DEFAULT NULL  AFTER `tipopago_caja` ;
+597;
+UPDATE `tablassincronizar` SET `tablasinc_condicion`='where 1=1';
+598;
+CREATE  TABLE IF NOT EXISTS `productosinc` (
+  `productosinc_estado` VARCHAR(45) NULL DEFAULT 'PENDIENTE' ,
+  `producto_id` INT(11) NOT NULL ,
+  `sucursal_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`producto_id`, `sucursal_id`) ,
+  INDEX `fk_productosinc_productos1` (`producto_id` ASC) ,
+  INDEX `fk_productosinc_sucursales1` (`sucursal_id` ASC) ,
+  CONSTRAINT `fk_productosinc_productos1`
+    FOREIGN KEY (`producto_id` )
+    REFERENCES `productos` (`producto_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_productosinc_sucursales1`
+    FOREIGN KEY (`sucursal_id` )
+    REFERENCES `sucursales` (`sucursal_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+599;
+CREATE TRIGGER `triginssinc` AFTER INSERT ON `productos`
+  FOR EACH ROW replace INTO `productosinc` select 'PENDIENTE', NEW.producto_id, sucursal_id from sucursales;
+600;
+CREATE TRIGGER `trigupdatesinc` AFTER UPDATE ON `productos`
+  FOR EACH ROW replace INTO `productosinc` select 'PENDIENTE', NEW.producto_id, sucursal_id from sucursales;
+601;
+CREATE TRIGGER `trigdelsinc` before DELETE ON `productos`
+  FOR EACH ROW delete from `productosinc` where producto_id=OLD.producto_id;
+602;
+ALTER TABLE `tablassincronizar` 
+ADD COLUMN `tablasinc_aftersinc` VARCHAR(255) NULL DEFAULT NULL  AFTER `tablasinc_condicion` , 
+ADD COLUMN `tablasinc_campoid` VARCHAR(100) NULL DEFAULT NULL  AFTER `tablasinc_aftersinc`;
+603;
+INSERT INTO `tablassincronizar` SET `tablasinc_id`=135,`tablasinc_nombre`='secciones',`tablasinc_tipooperacion`='EXPORTAR',`tablasinc_sincronizar`=0,`tablasinc_condicion`='where 1=1';
+604;
+INSERT INTO `tablassincronizar` SET `tablasinc_id`=136,`tablasinc_nombre`='secciones',`tablasinc_tipooperacion`='IMPORTAR',`tablasinc_sincronizar`=0,`tablasinc_condicion`='where 1=1';
+605;
+INSERT INTO `tablassincronizar` SET `tablasinc_id`=137,`tablasinc_nombre`='marcas',`tablasinc_tipooperacion`='EXPORTAR',`tablasinc_sincronizar`=0,`tablasinc_condicion`='where 1=1';
+606;
+INSERT INTO `tablassincronizar` SET `tablasinc_id`=138,`tablasinc_nombre`='marcas',`tablasinc_tipooperacion`='IMPORTAR',`tablasinc_sincronizar`=0,`tablasinc_condicion`='where 1=1';
+607;
+ALTER TABLE `productodeposito`
+  CHANGE COLUMN `producdepo_id` `producdepo_id` int(11) NOT NULL,
+  ADD PRIMARY KEY (`producto_id`,`deposito_id`),
+  DROP PRIMARY KEY;
+608;
+UPDATE `empresas` SET `empresa_razonsocial`='CgAAAKiaczETyVhxtb4Bo0t8O0o=\r\n' WHERE `empresa_id`=1;

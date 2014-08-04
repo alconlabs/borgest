@@ -56,7 +56,7 @@ begin
                       try
                         productos:=Tproductos.Create(self);
                       finally
-                        productos.abm:=3;
+                        productos.abm:=ABM_ELIMINAR;
                         productos.id:=ZQGrilla.FieldByName('producto_id').AsString;
                         productos.btnguardar.Caption:='Eliminar';
                         productos.Show;
@@ -68,7 +68,7 @@ begin
                       try
                         producto01:=Tproducto01.Create(self);
                       finally
-                        producto01.abm:=2;
+                        producto01.abm:=ABM_ELIMINAR;
                         producto01.id:=ZQGrilla.FieldByName('producto_id').AsString;
                         producto01.btnguardar.Caption:='Modificar';
                         producto01.Show;

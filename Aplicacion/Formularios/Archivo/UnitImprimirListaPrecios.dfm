@@ -68,7 +68,7 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
       Width = 206
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 2
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -86,7 +86,7 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
       Width = 393
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 3
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -224,7 +224,7 @@ inherited ImprimirListaPrecios: TImprimirListaPrecios
       Width = 145
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 8
       Tag2 = 0
       valores.Strings = (

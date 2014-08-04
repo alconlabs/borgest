@@ -53,6 +53,10 @@ Ventas
 		Notas de Credito
 		Notas de Debito
 		Remitos
+		Carga Stock - Lector
+		Carga Stock - Curvas
+		Consultas Stock - Curvas
+		Factura de Venta - Directo
 		Impresora Fiscal
 	Cuenta Corriente
 		Saldos

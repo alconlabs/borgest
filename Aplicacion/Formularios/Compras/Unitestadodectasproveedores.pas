@@ -658,7 +658,6 @@ begin
                            'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
                            'inner join proveedores on documentoscompras.proveedor_id=proveedores.proveedor_id '+
                            'inner join personal on documentoscompras.personal_id=personal.personal_id '+
-                           'inner join personal as pesronalcliente on proveedores.personal_id=pesronalcliente.personal_id '+
                            'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
                            'group by grupo '+
                            'order by sucursal_nombre, personal.personal_nombre, proveedor_nombre, proveedores.proveedor_id, documentocompra_fecha, documentocompra_numero ';

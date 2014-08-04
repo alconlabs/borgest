@@ -83,6 +83,12 @@ type
     StringField6: TStringField;
     IntegerField10: TIntegerField;
     StringField7: TStringField;
+    ZQajustestockdetallesproducto_codigobarras_1: TStringField;
+    ZQajustestockdetallesmarca_id: TIntegerField;
+    ZQajustestockdetallesseccion_id: TIntegerField;
+    ZQajustestockdetallesproducto_talle: TStringField;
+    ZQajustestockdetallesproducto_estadosinc: TStringField;
+    ZQajustestockdetallesproducto_longitudcodigo: TIntegerField;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQSelectAfterOpen(DataSet: TDataSet);

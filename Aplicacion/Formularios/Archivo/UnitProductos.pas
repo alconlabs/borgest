@@ -288,8 +288,8 @@ begin
     ZQuery1.sql.add('proveedor_id=:proveedor_id, ');
     ZQuery1.sql.add('producto_fechaactualizacionprecio=:producto_fechaactualizacionprecio, ');
     ZQuery1.sql.add('producto_codigoreferencia=:producto_codigoreferencia, ');
+    ZQuery1.sql.add('producto_estadosinc=:producto_estadosinc, ');
     ZQuery1.sql.add('producto_tipo=:producto_tipo ');
-
     ZQuery1.sql.add('where producto_id=:producto_id');
     ZQuery1.parambyname('producto_id').asstring:=id;
     ZQuery1.parambyname('producto_nombre').asstring:=producto_nombre.Text;
@@ -319,6 +319,8 @@ begin
     ZQuery1.parambyname('proveedor_id').asstring:=proveedor_id.codigo;
     ZQuery1.parambyname('producto_codigoreferencia').asstring:=producto_codigoreferencia.Text;
     ZQuery1.parambyname('producto_tipo').asstring:=producto_tipo;
+    ZQuery1.parambyname('producto_estadosinc').asstring:='PENDIENTE';
+
     ZQuery1.ExecSQL;
 
 
@@ -356,11 +358,12 @@ begin
                   ZQuery1.sql.add('producdepo_stockminimo=:producdepo_stockminimo, ');
                   ZQuery1.sql.add('producdepo_stockinicial=:producdepo_stockinicial, ');
                   ZQuery1.sql.add('producdepo_estadosinc=:producdepo_estadosinc');
-                  ZQuery1.sql.add(' where producdepo_id=:producdepo_id');
+                  ZQuery1.sql.add(' where producto_id=:producto_id and deposito_id=:deposito_id');
                   ZQuery1.parambyname('producdepo_puntorepos').asstring:=MQproductodeposito.FieldByName('producdepo_puntorepos').AsString;
                   ZQuery1.parambyname('producdepo_stockactual').asstring:=MQproductodeposito.FieldByName('producdepo_stockactual').AsString;
                   ZQuery1.parambyname('producdepo_stockminimo').asstring:=MQproductodeposito.FieldByName('producdepo_stockminimo').AsString;
-                  ZQuery1.parambyname('producdepo_id').asstring:=producdepo_id;
+                  ZQuery1.parambyname('producto_id').asstring:=id;
+                  ZQuery1.parambyname('deposito_id').asstring:=MQproductodeposito.FieldByName('deposito_id').AsString;
                   ZQuery1.parambyname('producdepo_stockinicial').asstring:=MQproductodeposito.FieldByName('producdepo_stockinicial').AsString;
                   ZQuery1.parambyname('producdepo_estadosinc').asstring:='PENDIENTE';
                   ZQuery1.ExecSQL;

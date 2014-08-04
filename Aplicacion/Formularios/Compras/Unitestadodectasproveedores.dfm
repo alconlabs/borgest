@@ -187,7 +187,7 @@ object estadoctasproveedores: Testadoctasproveedores
       OnClick = btnactualizarClick
     end
     object btnimprimir: TButton
-      Left = 662
+      Left = 663
       Top = 423
       Width = 75
       Height = 25

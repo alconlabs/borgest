@@ -57,6 +57,8 @@ type
     Label22: TLabel;
     Label24: TLabel;
     documentoventa_subtotal: TMoneyEdit;
+    ZQProductoActualizar: TZQuery;
+    vendedor_id: TEditCodi;
     procedure producto_idAfterSearch(Sender: TObject);
     procedure btnagregarClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -75,6 +77,7 @@ type
     procedure pagotarjeta_cuotasKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure btnguardarClick(Sender: TObject);
+    procedure vendedor_idAfterSearch(Sender: TObject);
   private
     { Private declarations }
     procedure CargarQuery;
@@ -185,7 +188,7 @@ begin
     cliente_documentonro1.Text:=cliente_documentonro.Caption;
     cliente_mail1.Text:=Princ.buscar('select cliente_mail from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_mail');
 
-    producto_id.SetFocus;
+    vendedor_id.SetFocus;
 end;
 
 procedure Tfacturaventa02.pagotarjeta_cuotasKeyDown(Sender: TObject;
@@ -210,6 +213,7 @@ begin
                       calculartotales;
                       calculartotalpagos;
                       documentopago_importe.Value:=documentoventa_saldo;
+                      documentoventa_subtotal.Value:=documentoventa_total.Value;
                       tipopago_id.Text:='';
                       tipopago_id.Search('');
                       tipopago_id.SetFocus;
@@ -234,7 +238,7 @@ begin
     Label19.Left:=115;
     documentopago_nombre.Left:=115;
     documentopago_nombre.Width:=251;
-    if tipopago_id.Text='2' then
+    if tipopago_id.valor('tipopago_id')='2' then
       begin
           lbltarjeta.Visible:=true;
           tarjeta_id.Visible:=true;
@@ -253,10 +257,17 @@ begin
   inherited;
     if Key=VK_RETURN then
       begin
-          if (tipopago_id.Text='') and (documentopago_importe.Value=0) then
-            btnguardar.SetFocus;
+          if (tipopago_id.Text='') then
+            documentoventa_descuento.SetFocus;
 
       end;
+
+end;
+
+procedure Tfacturaventa02.vendedor_idAfterSearch(Sender: TObject);
+begin
+  inherited;
+    personal_id.Buscar(vendedor_id.Text);
 
 end;
 
@@ -266,6 +277,24 @@ begin
     calculartotales;
     calculartotalpagos;
     documentopago_importe.Value:=documentoventa_saldo;
+    documentoventa_subtotal.Value:=documentoventa_total.Value;
+
+    ZQProductoActualizar.Active:=false;
+    ZQProductoActualizar.ParamByName('producto_id').AsString:=ZQDocumentoventadetalles.FieldByName('producto_id').AsString;
+    ZQProductoActualizar.Active:=true;
+    if ZQProductoActualizar.FieldByName('producto_precioventa1').AsFloat<>ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat then
+      begin
+          ZQProductoActualizar.Edit;
+          ZQProductoActualizar.FieldByName('producto_estadosinc').AsString:='PENDIENTE';
+          ZQProductoActualizar.FieldByName('producto_precioventa1').AsFloat:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat;
+          ZQProductoActualizar.FieldByName('producto_fechaactualizacionprecio').AsDateTime:=Date;
+          ZQProductoActualizar.Post;
+
+          ZQProductoActualizar.ApplyUpdates;
+
+          ZQProductoActualizar.Active:=false;
+      end;
+
 end;
 
 procedure Tfacturaventa02.ZQDocumentoventadetallesBeforePost(DataSet: TDataSet);
@@ -406,13 +435,13 @@ begin
                 ZQDocumentopagos.FieldByName('documentopago_id').AsInteger:=ZQDocumentopagos.RecordCount;
                 ZQDocumentopagos.FieldByName('documentopago_nombre').AsString:=documentopago_nombre.Text;
                 ZQDocumentopagos.FieldByName('documentopago_importe').AsString:=documentopago_importe.Text;
-                ZQDocumentopagos.FieldByName('tipopago_id').AsString:=tipopago_id.Text;
+                ZQDocumentopagos.FieldByName('tipopago_id').AsString:=tipopago_id.valor('tipopago_id');
                 ZQDocumentopagos.FieldByName('tipopago_nombre').AsString:=tipopago_id.valor('tipopago_nombre');
                 ZQDocumentopagos.FieldByName('documentoventa_id').AsString:='0';
                 ZQDocumentopagos.Post;
 
 
-                case strtoint(tipopago_id.Text) of
+                case strtoint(tipopago_id.valor('tipopago_id')) of
                     1:begin
 
                       end;
@@ -446,6 +475,7 @@ begin
                 calculartotales;
                 calculartotalpagos;
                 documentopago_importe.Value:=documentoventa_saldo;
+                documentoventa_subtotal.Value:=documentoventa_total.Value;
                 tipopago_id.Text:='';
                 tipopago_id.Search('');
                 tipopago_id.SetFocus;

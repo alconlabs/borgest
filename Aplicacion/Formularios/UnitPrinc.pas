@@ -10,7 +10,7 @@ uses
   ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
   rpalias, GTBComboBox, ComCtrls, rpexpredlgvcl, DBClient,
   rpclientdataset, Menus, Encriptador, Utilidades, Permisos, DBGrids,
-  TablaTemporal, UtilidadesDB, ExtCtrls, XiProgressBar;
+  TablaTemporal, UtilidadesDB, ExtCtrls, XiProgressBar, BRGFocusAdmin;
 
 
 const
@@ -169,7 +169,6 @@ type
     Timer1: TTimer;
     StatusBar1: TStatusBar;
     XiProgressBar1: TXiProgressBar;
-    TimerBarraProgreso: TTimer;
     AdvPageContabilidad: TAdvPage;
     AdvToolBarLibrosIvas: TAdvToolBar;
     btnestadoiva: TAdvGlowButton;
@@ -187,9 +186,11 @@ type
     btnsincronizartock: TAdvGlowButton;
     ZQExcecSQLSinc: TZQuery;
     TimerSincronizarStock: TTimer;
-    TimerReconectarDBRemota: TTimer;
     btnfichasclientes: TAdvGlowButton;
     BtnConsultaStockCurvas: TAdvGlowButton;
+    BtnFacturaVentaDirecto: TAdvGlowButton;
+    BtnCargaStockLector: TAdvGlowButton;
+    BRGFocusAdmin1: TBRGFocusAdmin;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -268,7 +269,6 @@ type
     procedure Timer1Timer(Sender: TObject);
     procedure StatusBar1DrawPanel(StatusBar: TStatusBar; Panel: TStatusPanel;
       const Rect: TRect);
-    procedure TimerBarraProgresoTimer(Sender: TObject);
     procedure btnestadoivaClick(Sender: TObject);
     procedure btncurvasClick(Sender: TObject);
     procedure BtnCargaStockCurvasClick(Sender: TObject);
@@ -276,9 +276,12 @@ type
     procedure TimerReconectarDBTimer(Sender: TObject);
     procedure btnsincronizartockClick(Sender: TObject);
     procedure btnimportardbClick(Sender: TObject);
-    procedure TimerReconectarDBRemotaTimer(Sender: TObject);
     procedure btnfichasclientesClick(Sender: TObject);
     procedure BtnConsultaStockCurvasClick(Sender: TObject);
+    procedure BtnFacturaVentaDirectoClick(Sender: TObject);
+    procedure BtnCargaStockLectorClick(Sender: TObject);
+    procedure FormDblClick(Sender: TObject);
+    procedure AdvToolBarStockDblClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -524,7 +527,8 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitDetalleComisionesBorradores, UnitListaCuponesTarjetasCredito,
   UnitSincronizarDB, UnitEstadoIVAs, UnitFacturaventa02, Unitlistacurvas,
   UnitCargaStockCurva, UnitListaMovimientosDepositos, UnitExportarDB,
-  UnitImportarDB, UnitImprimirFichasClientes, UnitConsultaStockCurvas;
+  UnitImportarDB, UnitImprimirFichasClientes, UnitConsultaStockCurvas,
+  UnitCargaStockLector;
 
 {$R *.dfm}
 
@@ -565,7 +569,8 @@ end;
 
 procedure CrearHilo;
 begin
-  hilo:=Thilo.Create(true);
+  if Hilo=nil then
+    hilo:=Thilo.Create(true);
 //  Hilo.Ejecutar := ProcesarDatos;
 //  Hilo.Priority := tpNormal;
 //  Hilo.Resume;
@@ -603,6 +608,7 @@ procedure TPrinc.sincronizarstock;
 var
   PREFIJOTABLAWEB:string;
   error:integer;
+  cant_depositos:string;
 begin
     Princ.StatusBar1.Panels.Add.Text:='Sincronizacion Stock iniciada - '+formatdatetime('HH:mm',time);
     Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Width:=300;
@@ -641,6 +647,7 @@ begin
 
           princ.Permisos1.guardarlog(self.ClassName+'.subir_stock;');
 
+          BaseRemota.Reconnect;
           while not ZQProductoDeposito.Eof do
               begin
                   try
@@ -721,6 +728,51 @@ begin
 
             end;
 
+          //          GENERAR PRODUCTODEPOSITO PARA PRODUCTOS NUEVOS
+          princ.Permisos1.guardarlog(self.ClassName+'.Generar registros productodeposito productos nuevos;');
+
+          cant_depositos:=princ.buscar('select count(*)-1 as cant from depositos','cant');
+          ZQProductoDeposito.Active:=false;
+          ZQProductoDeposito.SQL.Text:='select *, count(producto_id) as cant from productodeposito group by producto_id having cant<='+cant_depositos;
+          ZQProductoDeposito.Active:=true;
+          ZQProductoDeposito.First;
+
+          ZQExcecSQLSinc.Sql.Clear;
+          ZQExcecSQLSinc.Sql.Add('insert into productodeposito set ');
+          ZQExcecSQLSinc.Sql.Add('producdepo_estadosinc=:producdepo_estadosinc, ');
+          ZQExcecSQLSinc.Sql.Add('producdepo_stockinicial=:producdepo_stockinicial, ');
+          ZQExcecSQLSinc.Sql.Add('producdepo_puntorepos=:producdepo_puntorepos, ');
+          ZQExcecSQLSinc.Sql.Add('producdepo_stockminimo=:producdepo_stockminimo, ');
+          ZQExcecSQLSinc.Sql.Add('deposito_id=:deposito_id, ');
+          ZQExcecSQLSinc.Sql.Add('producto_id=:producto_id, ');
+          ZQExcecSQLSinc.Sql.Add('producdepo_stockactual=:producdepo_stockactual, ');
+          ZQExcecSQLSinc.Sql.Add('producdepo_id=:producdepo_id ');
+
+
+          while not ZQProductoDeposito.Eof do
+          begin
+              ZQExcecSQLSinc.ParamByName('producdepo_estadosinc').AsString:='PENDIENTE';
+              ZQExcecSQLSinc.ParamByName('producdepo_stockinicial').AsString:=ZQProductoDeposito.FieldByName('producdepo_stockinicial').AsString;
+              ZQExcecSQLSinc.ParamByName('producdepo_puntorepos').AsString:=ZQProductoDeposito.FieldByName('producdepo_puntorepos').AsString;
+              ZQExcecSQLSinc.ParamByName('producdepo_stockminimo').AsString:=ZQProductoDeposito.FieldByName('producdepo_stockminimo').AsString;
+              ZQExcecSQLSinc.ParamByName('deposito_id').AsString:=dep_id;
+              ZQExcecSQLSinc.ParamByName('producto_id').AsString:=ZQProductoDeposito.FieldByName('producto_id').AsString;
+              ZQExcecSQLSinc.ParamByName('producdepo_stockactual').AsString:='0';
+              ZQExcecSQLSinc.ParamByName('producdepo_id').AsString:='0';
+
+              try
+                ZQExcecSQLSinc.ExecSql;
+                error:=0;
+              except
+                error:=3;
+                princ.Permisos1.guardarlog(self.ClassName+'.Generar registros productodeposito productos nuevos; error='+inttostr(error));
+              end;
+
+              ZQProductoDeposito.Next;
+          end;
+
+
+
           //                  SUBIR MOVIMIENTOS DE DEPOSITO
 
           BaseRemota.Reconnect;
@@ -790,7 +842,7 @@ begin
                         ZQRemoteExcecSql.ExecSql;
                         error:=0;
                         except
-                          error:=3;
+                          error:=4;
                           princ.Permisos1.guardarlog(self.ClassName+'.subir_mov_deposito; error='+inttostr(error));
                         end;
 
@@ -878,7 +930,7 @@ begin
                         ZQRemoteExcecSql.ExecSql;
                         error:=0;
                         except
-                          error:=4;
+                          error:=5;
                           princ.Permisos1.guardarlog(self.ClassName+'.subir_conf_mov_deposito; error='+inttostr(error));
                         end;
 
@@ -970,7 +1022,7 @@ begin
                         ZQExcecSQLSinc.ExecSql;
                         error:=0;
                         except
-                          error:=5;
+                          error:=6;
                           princ.Permisos1.guardarlog(self.ClassName+'.descargar_mov_deposito; error='+inttostr(error));
                         end;
 
@@ -1055,7 +1107,7 @@ begin
                         ZQExcecSQLSinc.ExecSql;
                         error:=0;
                         except
-                        error:=6;
+                        error:=7;
                         princ.Permisos1.guardarlog(self.ClassName+'.descargar_conf_mov_deposito; error='+inttostr(error));
                         end;
 
@@ -2531,6 +2583,7 @@ begin
             ZQProductosABM.sql.add('producto_precioventa3=:producto_precioventa3, ');
             ZQProductosABM.sql.add('producto_precioventa4=:producto_precioventa4, ');
             ZQProductosABM.sql.add('producto_precioventabase=:producto_precioventabase, ');
+            ZQProductosABM.sql.add('producto_estadosinc="PENDIENTE", ');
             ZQProductosABM.sql.add('producto_fechaactualizacionprecio=:producto_fechaactualizacionprecio ');
             ZQProductosABM.sql.add('where producto_id=:producto_id');
             ZQProductosABM.parambyname('producto_neto1').asstring:=QProductos.FieldByName('producto_neto1').AsString;
@@ -2706,6 +2759,7 @@ begin
                   ZQExcecSQL.sql.add('producto_precioventa2=:producto_precioventa2, ');
                   ZQExcecSQL.sql.add('producto_precioventa3=:producto_precioventa3, ');
                   ZQExcecSQL.sql.add('producto_precioventa4=:producto_precioventa4, ');
+                  ZQExcecSQL.sql.add('producto_estadosinc="PENDIENTE", ');
                   ZQExcecSQL.sql.add('producto_precioventabase=:producto_precioventabase');
                   ZQExcecSQL.sql.add(' where producto_id=:producto_id');
                   ZQExcecSQL.parambyname('producto_neto1').asstring:=QProductos.FieldByName('producto_neto1').AsString;
@@ -2753,6 +2807,7 @@ begin
             ZQExcecSQL.Sql.Add('rubro_id=:rubro_id, ');
             ZQExcecSQL.Sql.Add('seccion_id=:seccion_id, ');
             ZQExcecSQL.Sql.Add('marca_id=:marca_id, ');
+            ZQExcecSQL.sql.add('producto_estadosinc="PENDIENTE", ');
             ZQExcecSQL.Sql.Add('producto_estado=:producto_estado ');
             ZQExcecSQL.Sql.Add('where producto_id=:producto_id ');
             ZQExcecSQL.parambyname('producto_codigoreferencia').asstring:=QProductos.FieldByName('producto_codigoreferencia').AsString;
@@ -4272,6 +4327,11 @@ begin
 
 end;
 
+procedure TPrinc.FormDblClick(Sender: TObject);
+begin
+    AdvToolBarDocVentas.Realign;
+end;
+
 procedure TPrinc.TiposPagoDisponibles;
 begin
     tipospago:=tstringlist.Create;
@@ -4344,7 +4404,7 @@ begin
 
     MenuConfiguracion;
 
-
+    BRGFocusAdmin1.Active:=true;
 end;
 
 procedure TPrinc.ZBaseAfterConnect(Sender: TObject);
@@ -4556,7 +4616,7 @@ end;
 
 procedure TPrinc.BtnConsultaStockCurvasClick(Sender: TObject);
 begin
-    try
+   try
       ConsultaStockCurvas:=TConsultaStockCurvas.Create(self);
     finally
       ConsultaStockCurvas.Show;
@@ -4656,8 +4716,17 @@ begin
     try
       CargaStockCurvas:=TCargaStockCurvas.Create(self);
     finally
-//      empresa.abm:=1;
       CargaStockCurvas.Show;
+    end;
+end;
+
+procedure TPrinc.BtnCargaStockLectorClick(Sender: TObject);
+begin
+    try
+      CargaStockLector:=TCargaStockLector.Create(self);
+    finally
+//      empresa.abm:=1;
+      CargaStockLector.Show;
     end;
 end;
 
@@ -4835,8 +4904,11 @@ begin
     if (EXPORTACIONSINCMINUTOS<>'0') and (EXPORTACIONSINCMINUTOS<>'') then
       begin
           CrearHilo;
-          ExportarDB:=TExportarDB.Create(Princ);
-          ImportarDB:=TImportarDB.Create(Princ);
+          if ExportarDB=nil then
+            ExportarDB:=TExportarDB.Create(Princ);
+
+          if ImportarDB=nil then
+            ImportarDB:=TImportarDB.Create(Princ);
 
           Hilo.Ejecutar := Self.SincronizarTodo;
           Hilo.Priority := tpNormal;
@@ -4868,18 +4940,6 @@ begin
       end;
 
     
-end;
-
-procedure TPrinc.TimerBarraProgresoTimer(Sender: TObject);
-begin
-    Princ.XiProgressBar1.Position:=Princ.UtilidadesDB1.item_actual;
-    Princ.StatusBar1.Repaint;
-
-end;
-
-procedure TPrinc.TimerReconectarDBRemotaTimer(Sender: TObject);
-begin
-    BaseRemota.Reconnect;
 end;
 
 procedure TPrinc.TimerReconectarDBTimer(Sender: TObject);
@@ -4977,6 +5037,11 @@ begin
     ADOConnection1.ConnectionString:=CONNECTION_STRING1+EXCEL_FILE+CONNECTION_STRING3;
 end;
 
+procedure TPrinc.AdvToolBarStockDblClick(Sender: TObject);
+begin
+MessageDlg(booltostr(BtnMovimientosdeStock.visible), mtWarning, [mbOK], 0);
+end;
+
 procedure TPrinc.btnnotasdecreditocompraClick(Sender: TObject);
 begin
     try
@@ -5026,13 +5091,18 @@ end;
 
 procedure TPrinc.btnfacturasventasClick(Sender: TObject);
 begin
-    Princ.AbrirDocumentoVenta('','Factura de Venta',ABM_AGREGAR);
-//    try
-//      ListaFacturasDeVenta:=TListaFacturasDeVenta.Create(self);
-//    finally
-//      ListaFacturasDeVenta.campo_id:='documentoventa_id';
-//      ListaFacturasDeVenta.Show;
-//    end;
+//    Princ.AbrirDocumentoVenta('','Factura de Venta',ABM_AGREGAR);
+    try
+      ListaFacturasDeVenta:=TListaFacturasDeVenta.Create(self);
+    finally
+      ListaFacturasDeVenta.campo_id:='documentoventa_id';
+      ListaFacturasDeVenta.Show;
+    end;
+end;
+
+procedure TPrinc.BtnFacturaVentaDirectoClick(Sender: TObject);
+begin
+    Princ.AbrirDocumentoVenta('',TIPODOCU_FACTURAVENTA,ABM_AGREGAR);
 end;
 
 procedure TPrinc.btnfichasclientesClick(Sender: TObject);
@@ -5236,6 +5306,7 @@ procedure TPrinc.btnsincronizartockClick(Sender: TObject);
 begin
     if (MessageDlg('Seguro desea sincronizar stock?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
       begin
+//          Princ.sincronizarstock;
           hilo:=Thilo.Create(true);
           Hilo.Ejecutar := Princ.sincronizarstock;
           Hilo.Priority := tpNormal;

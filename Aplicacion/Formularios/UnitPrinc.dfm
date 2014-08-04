@@ -14,6 +14,7 @@ object Princ: TPrinc
   Position = poDesigned
   WindowState = wsMaximized
   OnCreate = FormCreate
+  OnDblClick = FormDblClick
   OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
@@ -40,7 +41,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageVentas
+    ActivePage = AdvPageCompras
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -864,7 +865,7 @@ object Princ: TPrinc
       object AdvToolBarDocCompras: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 406
+        Width = 206
         Height = 63
         AllowFloating = True
         Caption = 'Documentos'
@@ -921,7 +922,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object btnordenespago: TAdvGlowButton
-          Left = 302
+          Left = 102
           Top = 2
           Width = 100
           Height = 41
@@ -960,11 +961,12 @@ object Princ: TPrinc
         end
         object btnnotasdecreditocompra: TAdvGlowButton
           Left = 102
-          Top = 2
+          Top = 65
           Width = 100
           Height = 41
           Caption = 'Notas de Credito'
           TabOrder = 2
+          Visible = False
           OnClick = btnnotasdecreditocompraClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -997,12 +999,13 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object btnnotasdedebitocompra: TAdvGlowButton
-          Left = 202
-          Top = 2
+          Left = 102
+          Top = 65
           Width = 100
           Height = 41
           Caption = 'Notas de Debito'
           TabOrder = 3
+          Visible = False
           OnClick = btnnotasdedebitocompraClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -1036,7 +1039,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarCtasCtesCompras: TAdvToolBar
-        Left = 412
+        Left = 212
         Top = 3
         Width = 306
         Height = 63
@@ -1172,7 +1175,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarInformesCompras: TAdvToolBar
-        Left = 721
+        Left = 521
         Top = 3
         Width = 206
         Height = 63
@@ -1305,13 +1308,12 @@ object Princ: TPrinc
           Appearance.GradientDown = ggVertical
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
-          Enabled = False
         end
       end
       object AdvToolBarStock: TAdvToolBar
-        Left = 930
+        Left = 730
         Top = 3
-        Width = 406
+        Width = 306
         Height = 63
         AllowFloating = True
         Caption = 'Stock'
@@ -1329,6 +1331,7 @@ object Princ: TPrinc
         TextOptionMenu = 'Options'
         ToolBarStyler = AdvToolBarOfficeStyler1
         ParentOptionPicture = True
+        OnDblClick = AdvToolBarStockDblClick
         object AdvGlowButton3: TAdvGlowButton
           Left = 2
           Top = 65
@@ -1369,7 +1372,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object BtnAjustesdeStock: TAdvGlowButton
-          Left = 102
+          Left = 2
           Top = 2
           Width = 100
           Height = 41
@@ -1408,11 +1411,12 @@ object Princ: TPrinc
         end
         object BtnConsultasStock: TAdvGlowButton
           Left = 2
-          Top = 2
+          Top = 65
           Width = 100
           Height = 41
           Caption = 'Consultas de Stock'
           TabOrder = 2
+          Visible = False
           OnClick = BtnConsultasStockClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -1443,10 +1447,9 @@ object Princ: TPrinc
           Appearance.GradientDown = ggVertical
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
-          Enabled = False
         end
         object BtnMovimientosdeStock: TAdvGlowButton
-          Left = 202
+          Left = 102
           Top = 2
           Width = 100
           Height = 41
@@ -1484,7 +1487,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object BtnMovimientosDepositos: TAdvGlowButton
-          Left = 302
+          Left = 202
           Top = 2
           Width = 100
           Height = 41
@@ -1532,10 +1535,9 @@ object Princ: TPrinc
       object AdvToolBarDocVentas: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 906
+        Width = 606
         Height = 63
         AllowFloating = True
-        AutoOptionMenu = True
         Caption = 'Documentos'
         CaptionFont.Charset = DEFAULT_CHARSET
         CaptionFont.Color = clWindowText
@@ -1553,13 +1555,12 @@ object Princ: TPrinc
         OptionMenu = AdvPopupMenu1
         ParentOptionPicture = True
         object btnfacturasventas: TAdvGlowButton
-          Left = 302
-          Top = 65
+          Left = 2
+          Top = 2
           Width = 100
           Height = 41
           Caption = 'Facturas de Venta'
           TabOrder = 0
-          Visible = False
           OnClick = btnfacturasventasClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -1592,7 +1593,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object btnrecibodeventa: TAdvGlowButton
-          Left = 302
+          Left = 102
           Top = 2
           Width = 100
           Height = 41
@@ -1708,12 +1709,13 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object btnventasrapidas: TAdvGlowButton
-          Left = 202
-          Top = 2
+          Left = 2
+          Top = 65
           Width = 100
           Height = 41
           Caption = 'Venta Rapida'
           TabOrder = 4
+          Visible = False
           OnClick = btnventasrapidasClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -1902,11 +1904,12 @@ object Princ: TPrinc
         end
         object btnordenservicio: TAdvGlowButton
           Left = 102
-          Top = 2
+          Top = 65
           Width = 100
           Height = 41
           Caption = 'Orden de Servicio'
           TabOrder = 9
+          Visible = False
           OnClick = btnordenservicioClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -1940,11 +1943,12 @@ object Princ: TPrinc
         end
         object btnpresupuestos: TAdvGlowButton
           Left = 2
-          Top = 2
+          Top = 65
           Width = 100
           Height = 41
           Caption = 'Presupuestos'
           TabOrder = 10
+          Visible = False
           OnClick = btnpresupuestosClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -1977,12 +1981,13 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object btnnotasdedebito: TAdvGlowButton
-          Left = 502
-          Top = 2
+          Left = 202
+          Top = 65
           Width = 100
           Height = 41
           Caption = 'Notas de Debito'
           TabOrder = 11
+          Visible = False
           OnClick = btnnotasdedebitoClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -2015,12 +2020,13 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object btnremitos: TAdvGlowButton
-          Left = 602
-          Top = 2
+          Left = 502
+          Top = 65
           Width = 100
           Height = 41
           Caption = 'Remitos'
           TabOrder = 12
+          Visible = False
           OnClick = btnremitosClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -2054,11 +2060,12 @@ object Princ: TPrinc
         end
         object btnRecibosPendientes: TAdvGlowButton
           Left = 402
-          Top = 2
+          Top = 65
           Width = 100
           Height = 41
           Caption = 'Aplicar Recibos Pendientes'
           TabOrder = 13
+          Visible = False
           OnClick = btnRecibosPendientesClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -2091,7 +2098,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object BtnCargaStockCurvas: TAdvGlowButton
-          Left = 702
+          Left = 302
           Top = 2
           Width = 100
           Height = 41
@@ -2129,11 +2136,11 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object BtnConsultaStockCurvas: TAdvGlowButton
-          Left = 802
+          Left = 402
           Top = 2
           Width = 100
           Height = 41
-          Caption = 'Consultas Stock'
+          Caption = 'Consultas Stock - Curvas'
           TabOrder = 15
           OnClick = BtnConsultaStockCurvasClick
           Appearance.BorderColor = 9598070
@@ -2166,11 +2173,88 @@ object Princ: TPrinc
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
         end
+        object BtnFacturaVentaDirecto: TAdvGlowButton
+          Left = 502
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Factura de Venta'
+          TabOrder = 16
+          OnClick = BtnFacturaVentaDirectoClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
+        object BtnCargaStockLector: TAdvGlowButton
+          AlignWithMargins = True
+          Left = 202
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Carga Stock - Lector'
+          TabOrder = 17
+          OnClick = BtnCargaStockLectorClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
       end
       object AdvToolBarCtasCtesVentas: TAdvToolBar
-        Left = 912
+        Left = 612
         Top = 3
-        Width = 306
+        Width = 206
         Height = 63
         AllowFloating = True
         Caption = 'Cuenta Corriente'
@@ -2189,7 +2273,7 @@ object Princ: TPrinc
         ToolBarStyler = AdvToolBarOfficeStyler1
         ParentOptionPicture = True
         object btndetallectasventas: TAdvGlowButton
-          Left = 202
+          Left = 102
           Top = 2
           Width = 100
           Height = 41
@@ -2228,11 +2312,12 @@ object Princ: TPrinc
         end
         object tbnestadoctasventas: TAdvGlowButton
           Left = 102
-          Top = 2
+          Top = 65
           Width = 100
           Height = 41
           Caption = 'Estado de Ctas.'
           TabOrder = 1
+          Visible = False
           OnClick = tbnestadoctasventasClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -2304,9 +2389,9 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarCaja: TAdvToolBar
-        Left = 1221
+        Left = 821
         Top = 3
-        Width = 306
+        Width = 206
         Height = 63
         AllowFloating = True
         Caption = 'Cajas'
@@ -2403,11 +2488,12 @@ object Princ: TPrinc
         end
         object btncajabar: TAdvGlowButton
           Left = 102
-          Top = 2
+          Top = 65
           Width = 100
           Height = 41
           Caption = 'Caja Bar'
           TabOrder = 2
+          Visible = False
           OnClick = btncajabarClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -2440,7 +2526,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object BtnCuponesTarjetas: TAdvGlowButton
-          Left = 202
+          Left = 102
           Top = 2
           Width = 100
           Height = 41
@@ -2479,7 +2565,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarInformes: TAdvToolBar
-        Left = 1530
+        Left = 1030
         Top = 3
         Width = 306
         Height = 63
@@ -4672,7 +4758,9 @@ object Princ: TPrinc
   object UtilidadesDB1: TUtilidadesDB
     ConfBaseOrigen = ZBase
     ConfBaseDestino = BaseRemota
+    ConfBaseLocal = ZBase
     ConfTipoDestino = 'DB'
+    ConfEjecutarScript = False
     Left = 288
     Top = 128
   end
@@ -4682,13 +4770,6 @@ object Princ: TPrinc
     OnTimer = Timer1Timer
     Left = 48
     Top = 408
-  end
-  object TimerBarraProgreso: TTimer
-    Enabled = False
-    Interval = 500
-    OnTimer = TimerBarraProgresoTimer
-    Left = 48
-    Top = 464
   end
   object Permisos1: TPermisos
     abm = 0
@@ -4877,11 +4958,12 @@ object Princ: TPrinc
     Left = 1160
     Top = 272
   end
-  object TimerReconectarDBRemota: TTimer
-    Enabled = False
-    Interval = 20000
-    OnTimer = TimerReconectarDBRemotaTimer
-    Left = 1168
-    Top = 208
+  object BRGFocusAdmin1: TBRGFocusAdmin
+    Tag2 = 0
+    ColorconFoco = clLime
+    ColorsinFoco = clWhite
+    Active = False
+    Left = 184
+    Top = 448
   end
 end

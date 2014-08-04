@@ -33,7 +33,9 @@ type
     Label3: TLabel;
     SINCMINUTOS: TEdit;
     Label4: TLabel;
-    SINCSTOCK: TCheckBox;
+    EJECUTARSCRIPT: TCheckBox;
+    TIPODESTINO: TComboBox;
+    Label5: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnsincronizarClick(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
@@ -64,21 +66,19 @@ procedure TSincronizarDB.sincronizarahora;
 var
   error:integer;
 begin
-    Princ.TimerReconectarDBRemota.Interval:=20*1000;
-    Princ.TimerReconectarDBRemota.Enabled:=true;
     error:=0;
-    princ.XiProgressBar1.Visible:=true;
+//    princ.XiProgressBar1.Visible:=true;
+//
+//    try
+//      Princ.StatusBar1.Panels.Items[2].Destroy;
+//      Princ.StatusBar1.Panels.Items[3].Destroy;
+//      Princ.StatusBar1.Panels.Items[4].Destroy;
+//    except
+//    end;
 
-    try
-      Princ.StatusBar1.Panels.Items[2].Destroy;
-      Princ.StatusBar1.Panels.Items[3].Destroy;
-      Princ.StatusBar1.Panels.Items[4].Destroy;
-    except
-    end;
 
-
-    Princ.StatusBar1.Panels.Add.Text:=self.tipo_sincronizacion+' iniciada - '+formatdatetime('HH:mm',time);
-    Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Width:=200;
+//    Princ.StatusBar1.Panels.Add.Text:=self.tipo_sincronizacion+' iniciada - '+formatdatetime('HH:mm',time);
+//    Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Width:=200;
     tablasinc_id.LlenarMQuery;
     if tablasinc_id.FQChequeados.RecordCount>0 then
       begin
@@ -86,25 +86,19 @@ begin
           Princ.UtilidadesDB1.ConfBaseOrigen:=Self.baseOrigen;
           Princ.UtilidadesDB1.ConfBaseDestino:=Self.baseDestino;
 
-          Princ.UtilidadesDB1.ConfTablasSinc.Clear;
-          Princ.UtilidadesDB1.ConfTablasCondicion.Clear;
-          while not tablasinc_id.FQChequeados.Eof do
-              begin
-                  Princ.UtilidadesDB1.ConfTablasSinc.Add(tablasinc_id.FQChequeados.FieldByName('tablasinc_nombre').AsString);
-                  Princ.UtilidadesDB1.ConfTablasCondicion.Add(tablasinc_id.FQChequeados.FieldByName('tablasinc_condicion').AsString);
-                  tablasinc_id.FQChequeados.Next;
-              end;
-
-
+          Princ.UtilidadesDB1.ConfTipoDestino:=TIPODESTINO.Text;
+          Princ.UtilidadesDB1.ConfTipoOperacion:=tablasinc_tipooperacion;
+          Princ.UtilidadesDB1.ConfEjecutarScript:=EJECUTARSCRIPT.Checked;
           Princ.UtilidadesDB1.CalcularTotalRegistros;
-          Princ.XiProgressBar1.Max:=Princ.UtilidadesDB1.total_items;
-          Princ.TimerBarraProgreso.Enabled:=true;
-          Princ.UtilidadesDB1.ConfTxtDestino:=ExtractFilePath(Application.ExeName)+'\BackupDb\db'+FormatDateTime('yyyymmddhhnnss',Now)+'.sql';
-          
-          if not Princ.UtilidadesDB1.Sincronizar then
-            error:=1;
 
-          Princ.TimerBarraProgreso.Enabled:=false;
+//          Princ.XiProgressBar1.Max:=Princ.UtilidadesDB1.total_items;
+//          Princ.TimerBarraProgreso.Enabled:=true;
+          Princ.UtilidadesDB1.ConfTxtDestino:=ExtractFilePath(Application.ExeName)+'\BackupDb\db'+FormatDateTime('yyyymmddhhnnss',Now)+'.sql';
+
+          if not Princ.UtilidadesDB1.Sincronizar then
+            error:=Princ.UtilidadesDB1.error;
+
+//          Princ.TimerBarraProgreso.Enabled:=false;
           ZQExecSQL.Sql.Clear;
           ZQExecSQL.Sql.Add('update tablassincronizar set ');
           ZQExecSQL.Sql.Add('tablasinc_ultimasinc=:tablasinc_ultimasinc, ');
@@ -123,10 +117,8 @@ begin
                     error:=2;
                   end;
 
-
                   tablasinc_id.FQChequeados.Next;
               end;
-
 
           ZQExecSQL.SQL.Clear;
           ZQExecSQL.sql.add('Replace config set ');
@@ -136,15 +128,9 @@ begin
           ZQExecSQL.parambyname('config_valor').AsString:=formatdatetime('dd/mm/yyyy',date);
           ZQExecSQL.ExecSQL;
 
-      //    result:=error=0;
-
-
       end;
 
-
-
-    Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Text:=self.tipo_sincronizacion+' finalizada - '+formatdatetime('HH:mm',time);
-    Princ.TimerReconectarDBRemota.Enabled:=false;
+//    Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Text:=self.tipo_sincronizacion+' finalizada - '+formatdatetime('HH:mm',time);
 end;
 
 procedure TSincronizarDB.btnguardarClick(Sender: TObject);
@@ -204,8 +190,8 @@ begin
     ZQExecSQL.parambyname('config_valor').AsString:=booltostr(SICSABADO.Checked);
     ZQExecSQL.ExecSQL;
 
-    ZQExecSQL.parambyname('config_nombre').AsString:=self.tipo_sincronizacion+'SINCSTOCK';
-    ZQExecSQL.parambyname('config_valor').AsString:=booltostr(SINCSTOCK.Checked);
+    ZQExecSQL.parambyname('config_nombre').AsString:=self.tipo_sincronizacion+'EJECUTARSCRIPT';
+    ZQExecSQL.parambyname('config_valor').AsString:=booltostr(EJECUTARSCRIPT.Checked);
     ZQExecSQL.ExecSQL;
 
     ZQExecSQL.parambyname('config_nombre').AsString:=self.tipo_sincronizacion+'hora';
@@ -220,6 +206,11 @@ begin
     ZQExecSQL.parambyname('config_valor').AsString:=PCSINCRONIZADORA.Text;
     ZQExecSQL.ExecSQL;
 
+    ZQExecSQL.parambyname('config_nombre').AsString:=self.tipo_sincronizacion+'TIPODESTINO';
+    ZQExecSQL.parambyname('config_valor').AsInteger:=TIPODESTINO.ItemIndex;
+    ZQExecSQL.ExecSQL;
+
+
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
 end;
@@ -229,6 +220,7 @@ begin
   inherited;
     if (MessageDlg('Seguro desea realizar la sincronizacion?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
       begin
+//          sincronizarahora;
           hilo:=Thilo.Create(true);
           Hilo.Ejecutar := sincronizarahora;
           Hilo.Priority := tpNormal;
@@ -293,7 +285,7 @@ begin
       SICSABADO.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
 
     if ZQConfig.Locate('config_nombre',tipo_sincronizacion+'SINCSTOCK',[]) then
-      SINCSTOCK.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
+      EJECUTARSCRIPT.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
 
     if ZQConfig.Locate('config_nombre',tipo_sincronizacion+'hora',[]) then
       SINCHORA.Time:=strtotime(ZQConfig.FieldByName('config_valor').AsString);
@@ -303,6 +295,16 @@ begin
 
     if ZQConfig.Locate('config_nombre','PCSINCRONIZADORA',[]) then
       PCSINCRONIZADORA.Text:=ZQConfig.FieldByName('config_valor').AsString;
+
+    if ZQConfig.Locate('config_nombre',tipo_sincronizacion+'EJECUTARSCRIPT',[]) then
+      EJECUTARSCRIPT.Checked:=strtobool(ZQConfig.FieldByName('config_valor').AsString);
+
+    if ZQConfig.Locate('config_nombre',tipo_sincronizacion+'TIPODESTINO',[]) then
+      TIPODESTINO.ItemIndex:=ZQConfig.FieldByName('config_valor').AsInteger;
+
+
+
+
 
 end;
 

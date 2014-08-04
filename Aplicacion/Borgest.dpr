@@ -144,7 +144,7 @@ uses
   UnitProducto01 in 'Formularios\Archivo\UnitProducto01.pas' {producto01},
   Unitlistacurvas in 'Formularios\Archivo\Unitlistacurvas.pas' {listacurvas},
   UnitCurva in 'Formularios\Archivo\UnitCurva.pas' {Curva},
-  UnitCargaStockCurva in 'UnitCargaStockCurva.pas' {CargaStockCurvas},
+  UnitCargaStockCurva in 'Formularios\Ventas\UnitCargaStockCurva.pas' {CargaStockCurvas},
   UnitListaMarcas in 'Formularios\Archivo\UnitListaMarcas.pas' {ListaMarcas},
   UnitMovimientosDepositos in 'Formularios\Compras\UnitMovimientosDepositos.pas' {MovimientosDepositos},
   UnitProductosenStock in 'Formularios\Compras\UnitProductosenStock.pas' {ProductosenStock},
@@ -154,7 +154,8 @@ uses
   UnitImportarDB in 'Formularios\Herramientas\UnitImportarDB.pas' {ImportarDB},
   UnitMovimientosDepositosConfirma in 'Formularios\Compras\UnitMovimientosDepositosConfirma.pas' {MovimientosDepositosConfirma},
   UnitImprimirFichasClientes in 'Formularios\Archivo\UnitImprimirFichasClientes.pas' {ImprimirFichasClientes},
-  UnitConsultaStockCurvas in 'Formularios\Compras\UnitConsultaStockCurvas.pas' {ConsultaStockCurvas};
+  UnitConsultaStockCurvas in 'Formularios\Compras\UnitConsultaStockCurvas.pas' {ConsultaStockCurvas},
+  UnitCargaStockLector in 'Formularios\Ventas\UnitCargaStockLector.pas' {CargaStockLector};
 
 {$R *.res}
 

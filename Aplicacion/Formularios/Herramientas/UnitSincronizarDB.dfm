@@ -207,6 +207,13 @@ inherited SincronizarDB: TSincronizarDB
           Height = 13
           Caption = 'minutos'
         end
+        object Label5: TLabel
+          Left = 44
+          Top = 245
+          Width = 60
+          Height = 13
+          Caption = 'Tipo Destino'
+        end
         object GroupBox1: TGroupBox
           Left = 16
           Top = 11
@@ -287,14 +294,28 @@ inherited SincronizarDB: TSincronizarDB
           Height = 21
           TabOrder = 3
         end
-        object SINCSTOCK: TCheckBox
-          Left = 22
-          Top = 158
+        object EJECUTARSCRIPT: TCheckBox
+          Left = 19
+          Top = 270
           Width = 110
           Height = 17
           Alignment = taLeftJustify
-          Caption = 'Sincronizar Stock'
+          Caption = 'Ejecutar Script'
           TabOrder = 4
+        end
+        object TIPODESTINO: TComboBox
+          Left = 118
+          Top = 242
+          Width = 145
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          ItemIndex = 0
+          TabOrder = 5
+          Text = 'DB'
+          Items.Strings = (
+            'DB'
+            'SCRIPT')
         end
       end
     end

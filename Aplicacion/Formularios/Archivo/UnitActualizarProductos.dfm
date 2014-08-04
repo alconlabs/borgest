@@ -63,7 +63,6 @@ object ActualizarProductos: TActualizarProductos
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitHeight = 588
     FullHeight = 0
     object PgCtrlSettings: TPageControl
       Left = 0
@@ -73,11 +72,9 @@ object ActualizarProductos: TActualizarProductos
       ActivePage = TabSheet2
       Align = alClient
       TabOrder = 0
-      ExplicitHeight = 570
       object TabSheet2: TTabSheet
         Caption = 'Actualizar Productos'
         ImageIndex = 1
-        ExplicitHeight = 542
         object Label3: TLabel
           Left = 53
           Top = 12
@@ -111,8 +108,8 @@ object ActualizarProductos: TActualizarProductos
           Caption = 'Nombre'
         end
         object Label21: TLabel
-          Left = 455
-          Top = 36
+          Left = 63
+          Top = 156
           Width = 29
           Height = 13
           Alignment = taRightJustify
@@ -128,7 +125,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object Label14: TLabel
           Left = 402
-          Top = 60
+          Top = 36
           Width = 82
           Height = 13
           Alignment = taRightJustify
@@ -136,7 +133,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object Label8: TLabel
           Left = 443
-          Top = 83
+          Top = 59
           Width = 41
           Height = 13
           Alignment = taRightJustify
@@ -149,6 +146,22 @@ object ActualizarProductos: TActualizarProductos
           Height = 13
           Alignment = taRightJustify
           Caption = 'Proveedor'
+        end
+        object Label41: TLabel
+          Left = 53
+          Top = 108
+          Width = 39
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Seccion'
+        end
+        object Label43: TLabel
+          Left = 62
+          Top = 132
+          Width = 30
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Marca'
         end
         object fil_producto_id: TEdit
           Left = 98
@@ -179,9 +192,9 @@ object ActualizarProductos: TActualizarProductos
           TabOrder = 3
         end
         object fil_rubro_id: TSqlComboBox
-          Left = 490
-          Top = 33
-          Width = 151
+          Left = 98
+          Top = 153
+          Width = 206
           Height = 21
           Style = csDropDownList
           ItemHeight = 13
@@ -216,7 +229,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object fil_politicaprecio_id: TSqlComboBox
           Left = 490
-          Top = 57
+          Top = 33
           Width = 290
           Height = 21
           Style = csDropDownList
@@ -238,7 +251,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object fil_tipoiva_id: TSqlComboBox
           Left = 490
-          Top = 80
+          Top = 56
           Width = 121
           Height = 21
           Style = csDropDownList
@@ -274,9 +287,9 @@ object ActualizarProductos: TActualizarProductos
         end
         object DBGrid5: TDBGrid
           Left = 3
-          Top = 107
+          Top = 184
           Width = 1021
-          Height = 241
+          Height = 196
           DataSource = DTSProductosAactualizar
           Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
           TabOrder = 10
@@ -354,8 +367,8 @@ object ActualizarProductos: TActualizarProductos
             end>
         end
         object btnfiltrar: TButton
-          Left = 690
-          Top = 78
+          Left = 490
+          Top = 153
           Width = 90
           Height = 25
           Caption = 'Filtrar'
@@ -364,7 +377,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object GroupBox1: TGroupBox
           Left = 3
-          Top = 378
+          Top = 410
           Width = 182
           Height = 119
           Caption = 'Precio Compra'
@@ -448,10 +461,10 @@ object ActualizarProductos: TActualizarProductos
         end
         object GroupBox2: TGroupBox
           Left = 191
-          Top = 378
+          Top = 410
           Width = 182
           Height = 119
-          Caption = 'Precio Venta'
+          Caption = 'Precio Venta %'
           TabOrder = 12
           object Label30: TLabel
             Left = 10
@@ -519,7 +532,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object GroupBox3: TGroupBox
           Left = 380
-          Top = 378
+          Top = 410
           Width = 182
           Height = 119
           Caption = 'Calculo de precio'
@@ -579,7 +592,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object GroupBox4: TGroupBox
           Left = 568
-          Top = 378
+          Top = 410
           Width = 182
           Height = 119
           Caption = 'Politica de Precio'
@@ -643,7 +656,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object btnquitarAactualizar: TButton
           Left = 3
-          Top = 351
+          Top = 383
           Width = 99
           Height = 25
           Caption = 'Quitar de la lista'
@@ -652,7 +665,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object btnrecalculartodo: TButton
           Left = 3
-          Top = 642
+          Top = 674
           Width = 238
           Height = 25
           Caption = 'Recalcular precios de TODOS los productos'
@@ -661,7 +674,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object bnteliminarproductos: TButton
           Left = 247
-          Top = 642
+          Top = 674
           Width = 110
           Height = 25
           Caption = 'Eliminar Productos'
@@ -670,7 +683,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object GroupBox5: TGroupBox
           Left = 756
-          Top = 378
+          Top = 410
           Width = 182
           Height = 119
           Caption = 'Rubro'
@@ -717,7 +730,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object GroupBox6: TGroupBox
           Left = 4
-          Top = 498
+          Top = 530
           Width = 182
           Height = 119
           Caption = 'Seccion'
@@ -764,7 +777,7 @@ object ActualizarProductos: TActualizarProductos
         end
         object GroupBox7: TGroupBox
           Left = 192
-          Top = 498
+          Top = 530
           Width = 182
           Height = 119
           Caption = 'Marca'
@@ -809,11 +822,104 @@ object ActualizarProductos: TActualizarProductos
             Tag2 = 0
           end
         end
+        object GroupBox8: TGroupBox
+          Left = 381
+          Top = 530
+          Width = 182
+          Height = 119
+          Caption = 'Precio Venta $'
+          TabOrder = 21
+          object Label39: TLabel
+            Left = 1
+            Top = 18
+            Width = 73
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Nuevo precio $'
+          end
+          object Label42: TLabel
+            Left = 2
+            Top = 50
+            Width = 180
+            Height = 13
+            Caption = 'Aplicar sobre precios de venta'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold, fsItalic]
+            ParentFont = False
+          end
+          object importe_nuevoprecioventa: TDBAdvEdit
+            Left = 96
+            Top = 15
+            Width = 73
+            Height = 21
+            EditType = etFloat
+            Precision = 2
+            LabelFont.Charset = DEFAULT_CHARSET
+            LabelFont.Color = clWindowText
+            LabelFont.Height = -11
+            LabelFont.Name = 'Tahoma'
+            LabelFont.Style = []
+            Lookup.Separator = ';'
+            Color = clWindow
+            Enabled = True
+            TabOrder = 0
+            Text = '0,00'
+            Visible = True
+            Version = '2.7.0.5'
+          end
+          object btnAplicarPVentaImporte: TButton
+            Left = 10
+            Top = 83
+            Width = 91
+            Height = 25
+            Caption = 'Aplicar'
+            TabOrder = 1
+            OnClick = btnAplicarPVentaImporteClick
+          end
+        end
+        object seccion_id: TSqlComboBox
+          Left = 98
+          Top = 105
+          Width = 206
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          TabOrder = 22
+          Confbase = Princ.ZBase
+          Confsql.Strings = (
+            'select * from secciones'
+            'order by seccion_nombre')
+          ConfTabla = 'secciones'
+          Confcampo_codigo = 'seccion_id'
+          Confcampo_nomb = 'seccion_nombre'
+          Tag2 = 0
+          ConfNuevo = True
+        end
+        object marca_id: TSqlComboBox
+          Left = 98
+          Top = 129
+          Width = 206
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          TabOrder = 23
+          Confbase = Princ.ZBase
+          Confsql.Strings = (
+            'select * from marcas'
+            'order by marca_nombre')
+          ConfTabla = 'marcas'
+          Confcampo_codigo = 'marca_id'
+          Confcampo_nomb = 'marca_nombre'
+          Tag2 = 0
+          ConfNuevo = True
+        end
       end
       object TabSheet1: TTabSheet
         Caption = 'Actualizar desde Excel'
         ImageIndex = 1
-        ExplicitHeight = 542
         object Label2: TLabel
           Left = 40
           Top = 5
@@ -1268,7 +1374,6 @@ object ActualizarProductos: TActualizarProductos
           BevelOuter = bvNone
           Caption = 'PanelGrillasExcel'
           TabOrder = 20
-          ExplicitTop = 197
           object PgCtrlGrids: TPageControl
             Left = 0
             Top = 0

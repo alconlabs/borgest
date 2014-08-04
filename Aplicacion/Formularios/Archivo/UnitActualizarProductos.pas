@@ -254,6 +254,15 @@ type
     Label40: TLabel;
     btnaplicarmarca: TButton;
     nueva_marca_id: TSqlComboBox;
+    GroupBox8: TGroupBox;
+    Label39: TLabel;
+    Label42: TLabel;
+    importe_nuevoprecioventa: TDBAdvEdit;
+    btnAplicarPVentaImporte: TButton;
+    Label41: TLabel;
+    seccion_id: TSqlComboBox;
+    Label43: TLabel;
+    marca_id: TSqlComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btnexaminarClick(Sender: TObject);
     procedure btnabrirarchivoClick(Sender: TObject);
@@ -280,6 +289,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnaplicarseccionClick(Sender: TObject);
     procedure btnaplicarmarcaClick(Sender: TObject);
+    procedure btnAplicarPVentaImporteClick(Sender: TObject);
   private
     { Private declarations }
     destino:string;
@@ -423,6 +433,31 @@ begin
 
 
     Princ.ActualizarPrecios(ZQProductosAactualizar);
+end;
+
+procedure TActualizarProductos.btnAplicarPVentaImporteClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea actualizar precios?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+//          btnAplicarPVentaImporte.Enabled:=false;
+          ZQProductosAactualizar.First;
+          while not ZQProductosAactualizar.Eof do
+              begin
+                  ZQProductosAactualizar.Edit;
+                  ZQProductosAactualizar.FieldByName('producto_precioventa1').AsFloat:=importe_nuevoprecioventa.FloatValue;
+                  ZQProductosAactualizar.FieldByName('producto_precioventa2').AsFloat:=importe_nuevoprecioventa.FloatValue;
+                  ZQProductosAactualizar.FieldByName('producto_precioventa3').AsFloat:=importe_nuevoprecioventa.FloatValue;
+                  ZQProductosAactualizar.FieldByName('producto_precioventa4').AsFloat:=importe_nuevoprecioventa.FloatValue;
+                  ZQProductosAactualizar.Post;
+
+                  ZQProductosAactualizar.Next;
+              end;
+
+      end;
+
+
+    Princ.ActualizarPrecios(ZQProductosAactualizar);
+    MessageDlg('Datos guardados', mtInformation, [mbOK], 0);
 end;
 
 procedure TActualizarProductos.BtnAplicarRubroClick(Sender: TObject);
