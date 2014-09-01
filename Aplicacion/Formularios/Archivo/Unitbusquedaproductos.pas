@@ -157,6 +157,9 @@ begin
         3:begin
               producto_campo:='producto_nombre';
           end;
+        4:begin
+              producto_campo:='producto_codigoreferencia';
+          end;
 
 
     end;

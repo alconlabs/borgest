@@ -395,7 +395,8 @@ object busquedaproductos: Tbusquedaproductos
           'Codigo'
           'Codigo 2'
           'Codigo de Barras'
-          'Nombre')
+          'Nombre'
+          'Cod. Referencia')
       end
       object buscar: TEdit
         Left = 144
