@@ -78,6 +78,11 @@ end;
 procedure Tpresupuesto.FormShow(Sender: TObject);
 begin
   inherited;
+    if Princ.GetConfiguracion('PRESUPUESTOMOSTRAR2DOPRECIO')='-1' then
+      begin
+          DBGrid1.Columns.Items[4].Visible:=true;
+      end;
+      
     case abm of
         1:btnguardar.Caption:='Guardar';
         2:btnguardar.Caption:='Guardar';

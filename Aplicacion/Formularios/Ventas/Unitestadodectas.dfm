@@ -448,7 +448,7 @@ object estadoctas: Testadoctas
       ConfField = Titles1
       ConfIni = Princ.ini1
       Tag2 = 0
-      ConfTodosCheckeados = True
+      ConfTodosCheckeados = False
     end
     object BtnDetalleImputacion: TButton
       Left = 765
@@ -458,6 +458,15 @@ object estadoctas: Testadoctas
       Caption = 'Detalle de Imputacion'
       TabOrder = 8
       OnClick = BtnDetalleImputacionClick
+    end
+    object BtnCtasCobrar: TButton
+      Left = 662
+      Top = 423
+      Width = 99
+      Height = 25
+      Caption = 'Ctas a Cobrar'
+      TabOrder = 9
+      OnClick = BtnCtasCobrarClick
     end
   end
   object ZQuery2: TZQuery

@@ -47,6 +47,9 @@ type
     Remito: TLabel;
     StringGridEnvio: TStringGrid;
     btnenviarstock: TButton;
+    MQProductosTallesproducto_precioventa1: TFloatField;
+    MQDepositosDestinos: TMQuery;
+    ZQmovimdepodetalles: TZQuery;
     procedure FormCreate(Sender: TObject);
     procedure producto_nombreEnter(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
@@ -55,9 +58,12 @@ type
     procedure seccion_idExit(Sender: TObject);
     procedure Eliminar1Click(Sender: TObject);
     procedure producto_codigobarrasExit(Sender: TObject);
+    procedure producto_precioventa1Exit(Sender: TObject);
+    procedure btnenviarstockClick(Sender: TObject);
   private
     { Private declarations }
     longitud:integer;
+    function ControlStock:boolean;
   public
     { Public declarations }
   end;
@@ -70,6 +76,14 @@ implementation
 uses Unitprinc;
 
 {$R *.dfm}
+
+function TCargaStockCurvas.ControlStock:boolean;
+begin
+
+
+
+
+end;
 
 procedure TCargaStockCurvas.btnaplicarstockClick(Sender: TObject);
 var
@@ -136,9 +150,116 @@ begin
           MessageDlg('Stock Actualizado.', mtInformation, [mbOK], 0);
 
           producto_codigobarras.OnExit(self);
-          producto_codigobarras.SetFocus;
+          StringGridEnvio.SetFocus;
 
       end;
+end;
+
+procedure TCargaStockCurvas.btnenviarstockClick(Sender: TObject);
+var
+  cantidad:real;
+  movimientodeposito_id:string;
+begin
+  inherited;
+    if (MessageDlg('Seguro desea realizar el envio?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          MQDepositosDestinos.First;
+          while not MQDepositosDestinos.Eof do
+              begin
+                  ZQmovimdepodetalles.Active:=false;
+                  ZQmovimdepodetalles.ParamByName('movimientodeposito_id').AsString:='-1';
+                  ZQmovimdepodetalles.Active:=true;
+                  ZQProductosTalles.First;
+
+                  while not ZQProductosTalles.Eof do
+                      begin
+                          cantidad:=0;
+                          if StringGridEnvio.Cells[ZQProductosTalles.RecNo,MQDepositosDestinos.RecNo]<>'' then
+                            cantidad:=strtofloat(StringGridEnvio.Cells[ZQProductosTalles.RecNo,MQDepositosDestinos.RecNo]);
+
+                          if cantidad>0 then
+                            begin
+                                ZQmovimdepodetalles.Insert;
+                                ZQmovimdepodetalles.FieldByName('movimdepodetalle_id').AsString:='0';
+                                ZQmovimdepodetalles.FieldByName('movimdepodetalle_cantidadenviar').AsFloat:=cantidad;
+                                ZQmovimdepodetalles.FieldByName('movimdepodetalle_cantidadrecibir').AsString:='0';
+                                ZQmovimdepodetalles.FieldByName('movimdepodetalle_estado').AsString:='ENVIADO';
+                                ZQmovimdepodetalles.FieldByName('producto_id').AsString:=ZQProductosTalles.FieldByName('producto_id').AsString;
+                                ZQmovimdepodetalles.FieldByName('movimientodeposito_id').AsString:='0';
+
+                                ZQmovimdepodetalles.Post;
+                            end;
+
+                          ZQProductosTalles.Next;
+                      end;
+
+                  if ZQmovimdepodetalles.RecordCount>0 then
+                    begin
+                        ZQExecSQL.Sql.Clear;
+                        ZQExecSQL.Sql.Add('begin');
+                        ZQExecSQL.ExecSQL;
+
+                        movimientodeposito_id:=princ.codigo('movimientosdepositos','movimientodeposito_id');
+                        ZQExecSQL.Sql.Clear;
+                        ZQExecSQL.Sql.Add('insert into movimientosdepositos set ');
+                        ZQExecSQL.Sql.Add('deposito_iddestino=:deposito_iddestino, ');
+                        ZQExecSQL.Sql.Add('deposito_idorigen=:deposito_idorigen, ');
+                        ZQExecSQL.Sql.Add('movimientodeposito_observaciones=:movimientodeposito_observaciones, ');
+                        ZQExecSQL.Sql.Add('movimientodeposito_estadosinc=:movimientodeposito_estadosinc, ');
+                        ZQExecSQL.Sql.Add('movimientodeposito_estado=:movimientodeposito_estado, ');
+                        ZQExecSQL.Sql.Add('movimientodeposito_hora=:movimientodeposito_hora, ');
+                        ZQExecSQL.Sql.Add('movimientodeposito_fecha=:movimientodeposito_fecha, ');
+                        ZQExecSQL.Sql.Add('movimientodeposito_id=:movimientodeposito_id ');
+                        ZQExecSQL.ParamByName('deposito_iddestino').AsString:=MQDepositosDestinos.FieldByName('deposito_id').AsString;
+                        ZQExecSQL.ParamByName('deposito_idorigen').AsString:=princ.dep_id;
+                        ZQExecSQL.ParamByName('movimientodeposito_observaciones').AsString:='GENERADO DESDE CARGA STOCK CURVAS';
+                        ZQExecSQL.ParamByName('movimientodeposito_estadosinc').AsString:=Princ.GetConfiguracion('MOVIMDEPOESTADOSINCALCREAR');
+                        ZQExecSQL.ParamByName('movimientodeposito_estado').AsString:='PENDIENTE';
+                        ZQExecSQL.ParamByName('movimientodeposito_hora').AsTime:=Time;
+                        ZQExecSQL.ParamByName('movimientodeposito_fecha').AsString:=FormatDateTime('yyyy-mm-dd',Date);
+                        ZQExecSQL.ParamByName('movimientodeposito_id').AsString:=movimientodeposito_id;
+                        ZQExecSQL.ExecSql;
+
+                        ZQmovimdepodetalles.First;
+                        while not ZQmovimdepodetalles.Eof do
+                            begin
+                                ZQExecSQL.Sql.Clear;
+                                ZQExecSQL.Sql.Add('insert into movimdepodetalles set ');
+                                ZQExecSQL.Sql.Add('movimientodeposito_id=:movimientodeposito_id, ');
+                                ZQExecSQL.Sql.Add('producto_id=:producto_id, ');
+                                ZQExecSQL.Sql.Add('movimdepodetalle_estado=:movimdepodetalle_estado, ');
+                                ZQExecSQL.Sql.Add('movimdepodetalle_cantidadrecibir=:movimdepodetalle_cantidadrecibir, ');
+                                ZQExecSQL.Sql.Add('movimdepodetalle_cantidadenviar=:movimdepodetalle_cantidadenviar, ');
+                                ZQExecSQL.Sql.Add('deposito_iddestino=:deposito_iddestino, ');
+                                ZQExecSQL.Sql.Add('deposito_idorigen=:deposito_idorigen, ');
+                                ZQExecSQL.Sql.Add('movimdepodetalle_id=:movimdepodetalle_id ');
+                                ZQExecSQL.ParamByName('movimientodeposito_id').AsString:=movimientodeposito_id;
+                                ZQExecSQL.ParamByName('producto_id').AsString:=ZQmovimdepodetalles.FieldByName('producto_id').AsString;
+                                ZQExecSQL.ParamByName('movimdepodetalle_estado').AsString:='ENVIADO';
+                                ZQExecSQL.ParamByName('movimdepodetalle_cantidadrecibir').AsString:=ZQmovimdepodetalles.FieldByName('movimdepodetalle_cantidadrecibir').AsString;
+                                ZQExecSQL.ParamByName('movimdepodetalle_cantidadenviar').AsString:=ZQmovimdepodetalles.FieldByName('movimdepodetalle_cantidadenviar').AsString;
+                                ZQExecSQL.ParamByName('movimdepodetalle_id').AsString:=princ.codigo('movimdepodetalles','movimdepodetalle_id');
+                                ZQExecSQL.ParamByName('deposito_iddestino').AsString:=MQDepositosDestinos.FieldByName('deposito_id').AsString;
+                                ZQExecSQL.ParamByName('deposito_idorigen').AsString:=princ.dep_id;
+                                ZQExecSQL.ExecSql;
+
+                                Princ.actualizarstock(ZQmovimdepodetalles.FieldByName('producto_id').AsString,ZQmovimdepodetalles.FieldByName('movimdepodetalle_cantidadenviar').AsFloat*-1,'',false);
+
+                                ZQmovimdepodetalles.Next;
+                            end;
+                        ZQExecSQL.Sql.Clear;
+                        ZQExecSQL.Sql.Add('commit');
+                        ZQExecSQL.ExecSQL;
+
+                    end;
+
+                  MQDepositosDestinos.Next;
+              end;
+          MessageDlg('Envio realizado.', mtInformation, [mbOK], 0);
+          producto_codigobarras.OnExit(self);
+          producto_codigobarras.SetFocus;
+      end;
+
 end;
 
 procedure TCargaStockCurvas.btnguardarClick(Sender: TObject);
@@ -160,7 +281,7 @@ begin
                         ZQExecSQL.Sql.Add('producto_longitudcodigo=:producto_longitudcodigo, ');
                         ZQExecSQL.Sql.Add('seccion_id=:seccion_id, ');
                         ZQExecSQL.Sql.Add('marca_id=:marca_id, ');
-                        if producto_precioventa1.FloatValue<>ZQProducto.FieldByName('producto_precioventa1').AsFloat then
+                        if MQProductosTalles.FieldByName('producto_precioventa1').AsFloat<>ZQProducto.FieldByName('producto_precioventa1').AsFloat then
                           ZQExecSQL.Sql.Add('producto_fechaactualizacionprecio=:producto_fechaactualizacionprecio, ');
                         ZQExecSQL.Sql.Add('rubro_id=:rubro_id, ');
                         ZQExecSQL.Sql.Add('producto_precioventa1=:producto_precioventa1, ');
@@ -171,10 +292,10 @@ begin
                         ZQExecSQL.ParamByName('producto_talle').AsString:=MQProductosTalles.FieldByName('producto_talle').AsString;
                         ZQExecSQL.ParamByName('seccion_id').AsString:=seccion_id.codigo;
                         ZQExecSQL.ParamByName('marca_id').AsString:=marca_id.codigo;
-                        if producto_precioventa1.FloatValue<>ZQProducto.FieldByName('producto_precioventa1').AsFloat then
+                        if MQProductosTalles.FieldByName('producto_precioventa1').AsFloat<>ZQProducto.FieldByName('producto_precioventa1').AsFloat then
                           ZQExecSQL.ParamByName('producto_fechaactualizacionprecio').AsString:=formatdatetime('yyyy-mm-dd',Princ.fechaservidor);
                         ZQExecSQL.ParamByName('rubro_id').AsString:=rubro_id.codigo;
-                        ZQExecSQL.ParamByName('producto_precioventa1').AsString:=producto_precioventa1.Text;
+                        ZQExecSQL.ParamByName('producto_precioventa1').AsString:=MQProductosTalles.FieldByName('producto_precioventa1').AsString;
                         ZQExecSQL.ParamByName('producto_observaciones').AsString:='modificado desde curvas/stock';
                         ZQExecSQL.ParamByName('producto_nombre').AsString:=producto_nombre.Text;
                         ZQExecSQL.ParamByName('producto_id').AsString:=MQProductosTalles.FieldByName('producto_id').AsString;
@@ -246,7 +367,7 @@ begin
                         ZQExecSQL.ParamByName('producto_precioventa2').AsString:='0';
                         ZQExecSQL.ParamByName('rubro_id').AsString:=rubro_id.codigo;
                         ZQExecSQL.ParamByName('tipoiva_id').AsString:='2';
-                        ZQExecSQL.ParamByName('producto_precioventa1').AsString:=producto_precioventa1.Text;
+                        ZQExecSQL.ParamByName('producto_precioventa1').AsString:=MQProductosTalles.FieldByName('producto_precioventa1').AsString;
                         ZQExecSQL.ParamByName('producto_estado').AsString:='DISPONIBLE';
                         ZQExecSQL.ParamByName('producto_precioventabase').AsString:='0';
                         ZQExecSQL.ParamByName('producto_preciocosto').AsString:='0';
@@ -327,6 +448,8 @@ begin
 end;
 
 procedure TCargaStockCurvas.producto_codigobarrasExit(Sender: TObject);
+var
+  filaenvio:integer;
 begin
   inherited;
     ZQProducto.Active:=false;
@@ -334,6 +457,8 @@ begin
 //                          'inner join marcas on productos.marca_id=marcas.marca_id '+
                           'where producto_codigobarras="'+producto_codigobarras.Text+'"';
     ZQProducto.Active:=true;
+    MQProductosTalles.Active:=false;
+    MQProductosTalles.Active:=true;
     if ZQProducto.RecordCount>0 then
       begin
           id:=ZQProducto.FieldByName('producto_id').AsString;
@@ -360,9 +485,9 @@ begin
 //          StringGrid1.Cols.Clear;
 
           StringGridStock.ColCount:=ZQProductosTalles.RecordCount+1;
+          StringGridEnvio.ColCount:=ZQProductosTalles.RecordCount+1;
           ZQProductosTalles.First;
-          MQProductosTalles.Active:=false;
-          MQProductosTalles.Active:=true;
+
           while not ZQProductosTalles.Eof do
               begin
                   StringGrid1.Cells[ZQProductosTalles.RecNo-1,0]:=ZQProductosTalles.FieldByName('producto_talle').AsString;
@@ -370,7 +495,8 @@ begin
 
 
                   StringGridStock.Cells[ZQProductosTalles.RecNo,0]:=ZQProductosTalles.FieldByName('producto_talle').AsString;
-
+                  StringGridEnvio.Cells[ZQProductosTalles.RecNo,0]:=ZQProductosTalles.FieldByName('producto_talle').AsString;
+                  filaenvio:=1;
                   ZQProductoDeposito.Active:=false;
                   ZQProductoDeposito.SQL.Text:='select * from productodeposito where producto_id="'+ZQProductosTalles.FieldByName('producto_id').AsString+'" order by deposito_id';
                   ZQProductoDeposito.Active:=true;
@@ -378,6 +504,16 @@ begin
                   while not ZQProductoDeposito.Eof do
                       begin
                           StringGridStock.Cells[ZQProductosTalles.RecNo,ZQProductoDeposito.RecNo]:=ZQProductoDeposito.FieldByName('producdepo_stockactual').AsString;
+
+                          if ZQProductoDeposito.FieldByName('deposito_id').AsString<>Princ.dep_id then
+                            begin
+                                StringGridEnvio.Cells[ZQProductosTalles.RecNo,filaenvio]:='0';
+
+                                filaenvio:=filaenvio+1;
+
+
+                            end;
+
 
                           ZQProductoDeposito.Next;
                       end;
@@ -389,6 +525,7 @@ begin
                   MQProductosTalles.FieldByName('producto_talle').AsString:=ZQProductosTalles.FieldByName('producto_talle').AsString;
                   MQProductosTalles.FieldByName('producto_tallecodigo').AsString:=ZQProductosTalles.FieldByName('producto_tallecodigo').AsString;
                   MQProductosTalles.FieldByName('producto_talleorden').AsString:='0';
+                  MQProductosTalles.FieldByName('producto_precioventa1').AsString:=ZQProductosTalles.FieldByName('producto_precioventa1').AsString;
                   MQProductosTalles.Post;
                   
                   ZQProductosTalles.Next;
@@ -398,12 +535,19 @@ begin
     else
       begin
           producto_codigoarticulo.Text:=producto_codigobarras.Text;
+          seccion_id.Buscar('');
+          marca_id.Buscar('');
+          rubro_id.Buscar('');
+          producto_nombre.Text:='';
+          producto_precioventa1.Text:='0';
           StringGrid1.Hide;
           btnaplicarstock.Hide;
           DBGrid2.Show;
           btnguardar.Show;
           StringGridStock.ColCount:=2;
+          StringGridEnvio.ColCount:=2;
           StringGridStock.RowCount:=1+ZQDepositos.RecordCount;
+          StringGridEnvio.RowCount:=ZQDepositos.RecordCount;
 
       end;
 end;
@@ -412,6 +556,20 @@ procedure TCargaStockCurvas.producto_nombreEnter(Sender: TObject);
 begin
   inherited;
      producto_nombre.Text:=rubro_id.Text + ' ' +marca_id.Text+ ' ' +' Articulo '+producto_codigoarticulo.Text;  
+end;
+
+procedure TCargaStockCurvas.producto_precioventa1Exit(Sender: TObject);
+begin
+  inherited;
+    MQProductosTalles.First;
+    while not MQProductosTalles.Eof do
+        begin
+            MQProductosTalles.Edit;
+            MQProductosTalles.FieldByName('producto_precioventa1').AsString:=producto_precioventa1.Text;
+            MQProductosTalles.Post;
+
+            MQProductosTalles.Next;
+        end;
 end;
 
 procedure TCargaStockCurvas.seccion_idExit(Sender: TObject);
@@ -436,6 +594,7 @@ begin
                         MQProductosTalles.FieldByName('producto_talle').AsString:=ZQCurva.FieldByName('curvadetalle_talle').AsString;
                         MQProductosTalles.FieldByName('producto_tallecodigo').AsString:=ZQCurva.FieldByName('curvadetalle_talle').AsString;
                         MQProductosTalles.FieldByName('producto_talleorden').AsString:='0';
+                        MQProductosTalles.FieldByName('producto_precioventa1').AsString:='0';
 
                         ZQCurva.Next;
                     end;
@@ -449,6 +608,8 @@ begin
 end;
 
 procedure TCargaStockCurvas.FormCreate(Sender: TObject);
+var
+  filaenvio:integer;
 begin
   inherited;
     seccion_id.llenarcombo;
@@ -460,10 +621,27 @@ begin
 
 
     StringGridStock.RowCount:=1+ZQDepositos.RecordCount;
+    StringGridEnvio.RowCount:=ZQDepositos.RecordCount;
+    filaenvio:=1;
+    MQDepositosDestinos.Active:=false;
+    MQDepositosDestinos.Active:=true;
     ZQDepositos.First;
     while not ZQDepositos.Eof do
         begin
             StringGridStock.Cells[0,ZQDepositos.RecNo]:=ZQDepositos.FieldByName('deposito_nombre').AsString;
+
+            if ZQDepositos.FieldByName('deposito_id').AsString<>Princ.dep_id then
+              begin
+                  StringGridEnvio.Cells[0,filaenvio]:=ZQDepositos.FieldByName('deposito_nombre').AsString;
+                  MQDepositosDestinos.Last;
+                  MQDepositosDestinos.Next;
+                  MQDepositosDestinos.Insert;
+                  MQDepositosDestinos.FieldByName('deposito_id').AsString:=ZQDepositos.FieldByName('deposito_id').AsString;
+                  MQDepositosDestinos.Post;
+
+                  filaenvio:=filaenvio+1;
+              end;
+
 
             ZQDepositos.Next;
 

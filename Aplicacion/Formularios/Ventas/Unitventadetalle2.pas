@@ -42,6 +42,8 @@ type
     producdepo_stockinicial: TLabel;
     ventadeta_cantidad: TMoneyEdit;
     lblStockOtroDeposito: TLabel;
+    lblprecio2: TLabel;
+    documentoventadetalle_importe_2: TDBAdvEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnaceptarClick(Sender: TObject);
     procedure producto_idSelect(Sender: TObject);
@@ -178,6 +180,11 @@ begin
           ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidadpendiente').AsString:='0';
           ZQDocumentoventadetalles.FieldByName('documentoventa_id').AsString:='0';
           ZQDocumentoventadetalles.FieldByName('documentoventadetalle_listaprecio').AsInteger:=documentoventadetalle_listaprecio;
+          if documentoventadetalle_importe_2.Visible then
+            begin
+                ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe2').AsString:=documentoventadetalle_importe_2.Text;
+            end;
+
           ZQDocumentoventadetalles.Post;
 
       end;
@@ -404,6 +411,18 @@ begin
 
     producdepo_stockinicial.Visible:=Princ.PRODUCTOSTOCKINICIAL;
     documentoventadetalle_id:='0';
+
+    if self.Owner.ClassName='Tpresupuesto' then
+      begin
+          if Princ.GetConfiguracion('PRESUPUESTOMOSTRAR2DOPRECIO')='-1' then
+            begin
+                lblStockOtroDeposito.Visible:=true;
+                documentoventadetalle_importe_2.Visible:=true;
+            end;
+
+      end;
+
+
 end;
 
 procedure Tventadetalle2.FormKeyDown(Sender: TObject; var Key: Word;
@@ -436,6 +455,7 @@ begin
 
       end;
     princ.Permisos1.guardarlog(self.ClassName+'.Show');
+    
 end;
 
 procedure Tventadetalle2.ventadetalle_preciounitarioExit(Sender: TObject);

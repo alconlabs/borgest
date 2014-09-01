@@ -59,6 +59,7 @@ type
     Button1: TButton;
     Button2: TButton;
     MQProductosNuevosproducto_estadostock: TStringField;
+    MQProductosTallesproducto_precioventa1: TFloatField;
     procedure FormCreate(Sender: TObject);
     procedure producto_nombreEnter(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
@@ -73,6 +74,7 @@ type
     procedure btnlimpiarClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure BtnAgregarStockNuevosClick(Sender: TObject);
+    procedure producto_precioventa1Exit(Sender: TObject);
   private
     { Private declarations }
     longitud:integer;
@@ -128,6 +130,7 @@ begin
                         MQProductosTalles.FieldByName('producto_id').AsString:=ZQProductosTalles.FieldByName('producto_id').AsString;
                         MQProductosTalles.FieldByName('producto_talle').AsString:=ZQProductosTalles.FieldByName('producto_talle').AsString;
                         MQProductosTalles.FieldByName('producto_tallecodigo').AsString:=ZQProductosTalles.FieldByName('producto_tallecodigo').AsString;
+                        MQProductosTalles.FieldByName('producto_precioventa1').AsString:=ZQProductosTalles.FieldByName('producto_precioventa1').AsString;
                         MQProductosTalles.FieldByName('producto_talleorden').AsString:='0';
                         MQProductosTalles.Post;
 
@@ -326,7 +329,8 @@ begin
           MQProductosTalles.First;
           while not MQProductosTalles.Eof do
               begin
-                  if MQProductosTalles.FieldByName('producto_id').AsString<>'' then
+                  productoid:=Princ.buscar('select producto_id from productos where producto_codigobarras="'+producto_codigoarticulo.Text+MQProductosTalles.FieldByName('producto_tallecodigo').AsString+'"','producto_id');
+                  if productoid<>'' then
                     begin
                         ZQExecSQL.Sql.Clear;
                         ZQExecSQL.Sql.Add('update productos set ');
@@ -335,7 +339,7 @@ begin
                         ZQExecSQL.Sql.Add('producto_longitudcodigo=:producto_longitudcodigo, ');
                         ZQExecSQL.Sql.Add('seccion_id=:seccion_id, ');
                         ZQExecSQL.Sql.Add('marca_id=:marca_id, ');
-                        if producto_precioventa1.FloatValue<>ZQProducto.FieldByName('producto_precioventa1').AsFloat then
+                        if MQProductosTalles.FieldByName('producto_precioventa1').AsFloat<>ZQProducto.FieldByName('producto_precioventa1').AsFloat then
                           ZQExecSQL.Sql.Add('producto_fechaactualizacionprecio=:producto_fechaactualizacionprecio, ');
                         ZQExecSQL.Sql.Add('rubro_id=:rubro_id, ');
                         ZQExecSQL.Sql.Add('producto_precioventa1=:producto_precioventa1, ');
@@ -346,10 +350,10 @@ begin
                         ZQExecSQL.ParamByName('producto_talle').AsString:=MQProductosTalles.FieldByName('producto_talle').AsString;
                         ZQExecSQL.ParamByName('seccion_id').AsString:=seccion_id.codigo;
                         ZQExecSQL.ParamByName('marca_id').AsString:=marca_id.codigo;
-                        if producto_precioventa1.FloatValue<>ZQProducto.FieldByName('producto_precioventa1').AsFloat then
+                        if MQProductosTalles.FieldByName('producto_precioventa1').AsFloat<>ZQProducto.FieldByName('producto_precioventa1').AsFloat then
                           ZQExecSQL.ParamByName('producto_fechaactualizacionprecio').AsString:=formatdatetime('yyyy-mm-dd',Princ.fechaservidor);
                         ZQExecSQL.ParamByName('rubro_id').AsString:=rubro_id.codigo;
-                        ZQExecSQL.ParamByName('producto_precioventa1').AsString:=producto_precioventa1.Text;
+                        ZQExecSQL.ParamByName('producto_precioventa1').AsString:=MQProductosTalles.FieldByName('producto_precioventa1').AsString;
                         ZQExecSQL.ParamByName('producto_observaciones').AsString:='modificado desde curvas/stock';
                         ZQExecSQL.ParamByName('producto_nombre').AsString:=producto_nombre.Text;
                         ZQExecSQL.ParamByName('producto_id').AsString:=MQProductosTalles.FieldByName('producto_id').AsString;
@@ -421,7 +425,7 @@ begin
                         ZQExecSQL.ParamByName('producto_precioventa2').AsString:='0';
                         ZQExecSQL.ParamByName('rubro_id').AsString:=rubro_id.codigo;
                         ZQExecSQL.ParamByName('tipoiva_id').AsString:='2';
-                        ZQExecSQL.ParamByName('producto_precioventa1').AsString:=producto_precioventa1.Text;
+                        ZQExecSQL.ParamByName('producto_precioventa1').AsString:=MQProductosTalles.FieldByName('producto_precioventa1').AsString;
                         ZQExecSQL.ParamByName('producto_estado').AsString:='DISPONIBLE';
                         ZQExecSQL.ParamByName('producto_precioventabase').AsString:='0';
                         ZQExecSQL.ParamByName('producto_preciocosto').AsString:='0';
@@ -566,6 +570,20 @@ begin
      producto_nombre.Text:=rubro_id.Text + ' ' +marca_id.Text+ ' ' +' Articulo '+producto_codigoarticulo.Text;  
 end;
 
+procedure TCargaStockLector.producto_precioventa1Exit(Sender: TObject);
+begin
+  inherited;
+    MQProductosTalles.First;
+    while not MQProductosTalles.Eof do
+        begin
+            MQProductosTalles.Edit;
+            MQProductosTalles.FieldByName('producto_precioventa1').AsString:=producto_precioventa1.Text;
+            MQProductosTalles.Post;
+
+            MQProductosTalles.Next;
+        end;
+end;
+
 procedure TCargaStockLector.seccion_idExit(Sender: TObject);
 begin
   inherited;
@@ -588,6 +606,7 @@ begin
                         MQProductosTalles.FieldByName('producto_talle').AsString:=ZQCurva.FieldByName('curvadetalle_talle').AsString;
                         MQProductosTalles.FieldByName('producto_tallecodigo').AsString:=ZQCurva.FieldByName('curvadetalle_talle').AsString;
                         MQProductosTalles.FieldByName('producto_talleorden').AsString:='0';
+                        MQProductosTalles.FieldByName('producto_precioventa1').AsString:='0';
 
                         ZQCurva.Next;
                     end;

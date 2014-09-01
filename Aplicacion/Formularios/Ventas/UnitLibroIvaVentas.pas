@@ -46,7 +46,8 @@ begin
                                                    'if(documentoventa_estado<>"ANULADA",if(tipodocu_debcred="DEBITO",documentoventa_neto105,-1*documentoventa_neto105),0) as neto105, '+
                                                    'if(documentoventa_estado<>"ANULADA",if(tipodocu_debcred="DEBITO",documentoventa_iva21,-1*documentoventa_iva21),0) as iva21, '+
                                                    'if(documentoventa_estado<>"ANULADA",if(tipodocu_debcred="DEBITO",documentoventa_iva105,-1*documentoventa_iva105),0) as iva105, '+
-                                                   'if(documentoventa_estado<>"ANULADA",if(tipodocu_debcred="DEBITO",documentoventa_total,-1*documentoventa_total),0) as total '+
+                                                   'if(documentoventa_estado<>"ANULADA",if(tipodocu_debcred="DEBITO",documentoventa_total,-1*documentoventa_total),0) as total, '+
+                                                   'if(documentoventa_estado<>"ANULADA",clientes.cliente_nombre,"ANULADA") as clientenombre '+
                                                    'from documentosventas '+
                                                    'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
                                                    'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+

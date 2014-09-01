@@ -85,7 +85,7 @@ object TRpReport
   end
   object TRpSection1: TRpSection
     Width = 15874
-    Height = 190
+    Height = 180
     SubReport = TRpSubReport0
     ChangeBool = False
     PageRepeat = False
@@ -130,7 +130,7 @@ object TRpReport
         Component = TRpExpression38
       end
       item
-        Component = TRpExpression40
+        Component = producto_nombre
       end
       item
         Component = TRpShape1
@@ -190,10 +190,10 @@ object TRpReport
         Component = TRpExpression4
       end
       item
-        Component = TRpExpression0
+        Component = deposito_nombre
       end
       item
-        Component = TRpExpression16
+        Component = producto_prodcodigo
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -945,8 +945,8 @@ object TRpReport
   end
   object TRpExpression24: TRpExpression
     Width = 510
-    Height = 218
-    PosX = 12369
+    Height = 170
+    PosX = 12370
     PosY = 0
     Type1Font = poHelvetica
     FontSize = 8
@@ -969,8 +969,8 @@ object TRpReport
   end
   object TRpExpression32: TRpExpression
     Width = 510
-    Height = 218
-    PosX = 12942
+    Height = 170
+    PosX = 12940
     PosY = 0
     Type1Font = poHelvetica
     FontSize = 8
@@ -1041,8 +1041,8 @@ object TRpReport
   end
   object TRpExpression38: TRpExpression
     Width = 510
-    Height = 218
-    PosX = 11802
+    Height = 170
+    PosX = 11800
     PosY = 0
     Type1Font = poHelvetica
     FontSize = 8
@@ -1063,13 +1063,13 @@ object TRpReport
     AgIniValue = '0'
     ExportExpression = ''
   end
-  object TRpExpression40: TRpExpression
-    Width = 3015
+  object producto_nombre: TRpExpression
+    Width = 3360
     Height = 165
     PosX = 120
     PosY = 0
     Type1Font = poHelvetica
-    FontSize = 8
+    FontSize = 9
     CutText = True
     SingleLine = True
     AutoExpand = False
@@ -1097,7 +1097,7 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1108,7 +1108,7 @@ object TRpReport
     PosX = 52
     PosY = 172
     BrushStyle = 1
-    PenWidth = 0
+    PenWidth = 23
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1121,7 +1121,7 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsHorzLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1147,7 +1147,7 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1160,7 +1160,7 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1173,7 +1173,7 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1186,7 +1186,7 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1199,7 +1199,7 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1212,7 +1212,7 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1225,7 +1225,7 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1238,7 +1238,7 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1251,7 +1251,7 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1264,7 +1264,7 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1277,7 +1277,7 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1287,9 +1287,10 @@ object TRpReport
     Height = 170
     PosX = 7241
     PosY = 170
+    Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1299,9 +1300,10 @@ object TRpReport
     Height = 170
     PosX = 7811
     PosY = 170
+    Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1313,7 +1315,7 @@ object TRpReport
     PosY = 170
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1323,9 +1325,10 @@ object TRpReport
     Height = 170
     PosX = 8951
     PosY = 170
+    Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1335,9 +1338,10 @@ object TRpReport
     Height = 170
     PosX = 9521
     PosY = 170
+    Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1347,9 +1351,10 @@ object TRpReport
     Height = 170
     PosX = 10091
     PosY = 170
+    Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1359,9 +1364,10 @@ object TRpReport
     Height = 170
     PosX = 10661
     PosY = 170
+    Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1371,9 +1377,10 @@ object TRpReport
     Height = 170
     PosX = 11231
     PosY = 170
+    Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1383,9 +1390,10 @@ object TRpReport
     Height = 170
     PosX = 11801
     PosY = 170
+    Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1395,9 +1403,10 @@ object TRpReport
     Height = 170
     PosX = 12371
     PosY = 170
+    Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1410,15 +1419,15 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
   end
   object TRpExpression33: TRpExpression
-    Width = 510
-    Height = 218
-    PosX = 13506
+    Width = 505
+    Height = 170
+    PosX = 13510
     PosY = 0
     Type1Font = poHelvetica
     FontSize = 8
@@ -1447,15 +1456,15 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
   end
   object TRpExpression1: TRpExpression
-    Width = 510
-    Height = 218
-    PosX = 14076
+    Width = 505
+    Height = 170
+    PosX = 14080
     PosY = 0
     Type1Font = poHelvetica
     FontSize = 8
@@ -1484,15 +1493,15 @@ object TRpReport
     Align = rpaltopbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
   end
   object TRpExpression4: TRpExpression
-    Width = 510
-    Height = 218
-    PosX = 14646
+    Width = 505
+    Height = 170
+    PosX = 14650
     PosY = 0
     Type1Font = poHelvetica
     FontSize = 8
@@ -1543,9 +1552,10 @@ object TRpReport
     Height = 170
     PosX = 12941
     PosY = 170
+    Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1555,9 +1565,10 @@ object TRpReport
     Height = 170
     PosX = 13511
     PosY = 170
+    Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1617,9 +1628,10 @@ object TRpReport
     Height = 170
     PosX = 14081
     PosY = 170
+    Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1629,9 +1641,10 @@ object TRpReport
     Height = 170
     PosX = 14651
     PosY = 170
+    Align = rpalbottom
     BrushStyle = 1
     Shape = rpsVertLine
-    PenWidth = 0
+    PenWidth = 40
     PrintCondition = ''
     DoBeforePrint = ''
     DoAfterPrint = ''
@@ -1661,10 +1674,10 @@ object TRpReport
     AgIniValue = '0'
     ExportExpression = ''
   end
-  object TRpExpression0: TRpExpression
+  object deposito_nombre: TRpExpression
     Width = 1765
     Height = 170
-    PosX = 5071
+    PosX = 5356
     PosY = 0
     Type1Font = poHelvetica
     FontSize = 8
@@ -1686,10 +1699,10 @@ object TRpReport
     AgIniValue = '0'
     ExportExpression = ''
   end
-  object TRpExpression16: TRpExpression
+  object producto_prodcodigo: TRpExpression
     Width = 1765
     Height = 170
-    PosX = 3247
+    PosX = 3532
     PosY = 0
     Type1Font = poHelvetica
     FontSize = 8

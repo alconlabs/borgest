@@ -7,7 +7,7 @@ uses
   Dialogs, Unitfacturasventa, Menus, AdvMenus, DB, ZAbstractRODataset,
   ZAbstractDataset, ZDataset, StdCtrls, AdvGlowButton, MoneyEdit, Grids,
   DBGrids, UnitSqlComboBox, ComCtrls, ExtCtrls, AdvPanel, AdvEdit, AdvEdBtn,
-  EditCodi, math;
+  EditCodi, math, Buttons, GTBMemo;
 
 type
   Tfacturaventa02 = class(Tfacturasventa)
@@ -59,6 +59,58 @@ type
     documentoventa_subtotal: TMoneyEdit;
     ZQProductoActualizar: TZQuery;
     vendedor_id: TEditCodi;
+    Label25: TLabel;
+    CBDevolucion: TCheckBox;
+    PageControl1: TPageControl;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
+    Label26: TLabel;
+    DateTimePicker1: TDateTimePicker;
+    Label27: TLabel;
+    deposito_iddestino: TSqlComboBox;
+    Label28: TLabel;
+    MovProducto_id: TEditCodi;
+    DBGrid3: TDBGrid;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
+    Label29: TLabel;
+    movimientodeposito_observaciones: TGTBMemo;
+    btnguardarmov: TButton;
+    btncancelarmov: TButton;
+    ZQmovimdepodetalles: TZQuery;
+    ZQmovimdepodetallesmovimdepodetalle_id: TIntegerField;
+    ZQmovimdepodetallesmovimdepodetalle_cantidadenviar: TFloatField;
+    ZQmovimdepodetallesmovimdepodetalle_cantidadrecibir: TFloatField;
+    ZQmovimdepodetallesmovimdepodetalle_estado: TStringField;
+    ZQmovimdepodetallesproducto_id: TIntegerField;
+    ZQmovimdepodetallesmovimientodeposito_id: TIntegerField;
+    ZQmovimdepodetallesproducto_id_1: TIntegerField;
+    ZQmovimdepodetallesproducto_nombre: TStringField;
+    ZQmovimdepodetallesproducto_observaciones: TStringField;
+    ZQmovimdepodetallesproducto_codigo: TStringField;
+    ZQmovimdepodetallesproducto_codigobarras: TStringField;
+    ZQmovimdepodetallesproducto_preciocosto: TFloatField;
+    ZQmovimdepodetallesproducto_precioventabase: TFloatField;
+    ZQmovimdepodetallesproducto_estado: TStringField;
+    ZQmovimdepodetallesproducto_precioventa1: TFloatField;
+    ZQmovimdepodetallestipoiva_id: TIntegerField;
+    ZQmovimdepodetallesrubro_id: TIntegerField;
+    ZQmovimdepodetallesproducto_precioventa2: TFloatField;
+    ZQmovimdepodetallesproducto_precioventa3: TFloatField;
+    ZQmovimdepodetallesproducto_precioventa4: TFloatField;
+    ZQmovimdepodetallescalculoprecio_id: TIntegerField;
+    ZQmovimdepodetallespoliticaprecio_id: TIntegerField;
+    ZQmovimdepodetallesproducto_neto1: TFloatField;
+    ZQmovimdepodetallesproducto_neto2: TFloatField;
+    ZQmovimdepodetallesproducto_neto3: TFloatField;
+    ZQmovimdepodetallesproducto_neto4: TFloatField;
+    ZQmovimdepodetallesproveedor_id: TIntegerField;
+    ZQmovimdepodetallesproducto_fechaactualizacionprecio: TDateField;
+    ZQmovimdepodetallesproducto_codigoreferencia: TStringField;
+    ZQmovimdepodetallesproducto_imprimir: TIntegerField;
+    ZQmovimdepodetallesproducto_tipo: TStringField;
+    DTSmovimdepodetalles: TDataSource;
     procedure producto_idAfterSearch(Sender: TObject);
     procedure btnagregarClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -78,8 +130,15 @@ type
       Shift: TShiftState);
     procedure btnguardarClick(Sender: TObject);
     procedure vendedor_idAfterSearch(Sender: TObject);
+    procedure CBDevolucionClick(Sender: TObject);
+    procedure MovProducto_idAfterSearch(Sender: TObject);
+    procedure btnguardarmovClick(Sender: TObject);
+    procedure DTSDocumentoventadetalleStateChange(Sender: TObject);
   private
     { Private declarations }
+    precio_old:real;
+    precio_new:real;
+
     procedure CargarQuery;
     function CargarCliente:string;
   public
@@ -151,6 +210,16 @@ begin
     producto_id.ConfCampoBusqueda1:=Princ.CODIGOPRODUCTOBUSQUEDA1;
     producto_id.ConfCampoBusqueda2:=Princ.CODIGOPRODUCTOBUSQUEDA2;
     producto_id.ConfCampoBusqueda3:=Princ.CODIGOPRODUCTOBUSQUEDA3;
+
+    MovProducto_id.ConfSql.Text:='select * from productos left join politicasdeprecios on productos.politicaprecio_id=politicasdeprecios.politicaprecio_id where producto_estado="DISPONIBLE" and producto_tipo="PRODUCTO" order by producto_nombre';
+    MovProducto_id.ConfCampoBusqueda1:=Princ.CODIGOPRODUCTOBUSQUEDA1;
+    MovProducto_id.ConfCampoBusqueda2:=Princ.CODIGOPRODUCTOBUSQUEDA2;
+    MovProducto_id.ConfCampoBusqueda3:=Princ.CODIGOPRODUCTOBUSQUEDA3;
+
+    deposito_iddestino.Confsql.Text:='select * from depositos where deposito_id<>"'+princ.dep_id+'" order by deposito_nombre';
+    deposito_iddestino.llenarcombo;
+    deposito_iddestino.ItemIndex:=0;
+
 end;
 
 procedure Tfacturaventa02.FormKeyDown(Sender: TObject; var Key: Word;
@@ -183,12 +252,20 @@ end;
 procedure Tfacturaventa02.FormShow(Sender: TObject);
 begin
   inherited;
+    PageControl1.Align:=alClient;
+    PageControl1.ActivePage:=TabSheet1;
+    panelgrilla.Parent:=TabSheet1;
+
     cliente_nombre.Text:=cliente_id.Text;
     cliente_domicilio1.Text:=cliente_domicilio.Caption;
     cliente_documentonro1.Text:=cliente_documentonro.Caption;
     cliente_mail1.Text:=Princ.buscar('select cliente_mail from clientes where cliente_id="'+cliente_id.codigo+'"','cliente_mail');
 
     vendedor_id.SetFocus;
+
+    ZQmovimdepodetalles.Active:=false;
+    ZQmovimdepodetalles.ParamByName('movimientodeposito_id').AsString:='-1';
+    ZQmovimdepodetalles.Active:=true;
 end;
 
 procedure Tfacturaventa02.pagotarjeta_cuotasKeyDown(Sender: TObject;
@@ -302,6 +379,21 @@ var
   tipoiva_valor:real;
 begin
   inherited;
+    //ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').CurValue;
+//    ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').OldValue;
+//    ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').NewValue;
+    if ZQDocumentoventadetalles.State in [dsEdit] then
+      begin
+          precio_new:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat;
+          if precio_old<>precio_new then
+            if Princ.IdentificaUsuario('') then
+              ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat:=precio_old;
+
+      end;
+
+
+
+
     ZQDocumentoventadetalles.FieldByName('documentoventadetalle_total').AsFloat:=roundto(ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidad').AsFloat*ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat,-2);
     ZQDocumentoventadetalles.FieldByName('documentoventadetalle_neto21').AsFloat:=0;
     ZQDocumentoventadetalles.FieldByName('documentoventadetalle_iva21').AsFloat:=0;
@@ -350,6 +442,76 @@ begin
 
 end;
 
+procedure Tfacturaventa02.btnguardarmovClick(Sender: TObject);
+var
+  movimientodeposito_id:string;
+begin
+  inherited;
+    movimientodeposito_id:=princ.codigo('movimientosdepositos','movimientodeposito_id');
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('begin');
+    ZQExecSQL.ExecSQL;
+
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('insert into movimientosdepositos set ');
+    ZQExecSQL.Sql.Add('deposito_iddestino=:deposito_iddestino, ');
+    ZQExecSQL.Sql.Add('deposito_idorigen=:deposito_idorigen, ');
+    ZQExecSQL.Sql.Add('movimientodeposito_observaciones=:movimientodeposito_observaciones, ');
+    ZQExecSQL.Sql.Add('movimientodeposito_estadosinc=:movimientodeposito_estadosinc, ');
+    ZQExecSQL.Sql.Add('movimientodeposito_estado=:movimientodeposito_estado, ');
+    ZQExecSQL.Sql.Add('movimientodeposito_hora=:movimientodeposito_hora, ');
+    ZQExecSQL.Sql.Add('movimientodeposito_fecha=:movimientodeposito_fecha, ');
+    ZQExecSQL.Sql.Add('movimientodeposito_id=:movimientodeposito_id ');
+    ZQExecSQL.ParamByName('deposito_iddestino').AsString:=deposito_iddestino.codigo;
+    ZQExecSQL.ParamByName('deposito_idorigen').AsString:=princ.dep_id;
+    ZQExecSQL.ParamByName('movimientodeposito_observaciones').AsString:='GENERADO DESDE VENTAS 02';
+    ZQExecSQL.ParamByName('movimientodeposito_estadosinc').AsString:=Princ.GetConfiguracion('MOVIMDEPOESTADOSINCALCREAR');
+    ZQExecSQL.ParamByName('movimientodeposito_estado').AsString:='PENDIENTE';
+    ZQExecSQL.ParamByName('movimientodeposito_hora').AsTime:=Time;
+    ZQExecSQL.ParamByName('movimientodeposito_fecha').AsString:=FormatDateTime('yyyy-mm-dd',Date);
+    ZQExecSQL.ParamByName('movimientodeposito_id').AsString:=movimientodeposito_id;
+    ZQExecSQL.ExecSql;
+
+    ZQmovimdepodetalles.First;
+    while not ZQmovimdepodetalles.Eof do
+        begin
+            ZQExecSQL.Sql.Clear;
+            ZQExecSQL.Sql.Add('insert into movimdepodetalles set ');
+            ZQExecSQL.Sql.Add('movimientodeposito_id=:movimientodeposito_id, ');
+            ZQExecSQL.Sql.Add('producto_id=:producto_id, ');
+            ZQExecSQL.Sql.Add('movimdepodetalle_estado=:movimdepodetalle_estado, ');
+            ZQExecSQL.Sql.Add('movimdepodetalle_cantidadrecibir=:movimdepodetalle_cantidadrecibir, ');
+            ZQExecSQL.Sql.Add('movimdepodetalle_cantidadenviar=:movimdepodetalle_cantidadenviar, ');
+            ZQExecSQL.Sql.Add('deposito_iddestino=:deposito_iddestino, ');
+            ZQExecSQL.Sql.Add('deposito_idorigen=:deposito_idorigen, ');
+            ZQExecSQL.Sql.Add('movimdepodetalle_id=:movimdepodetalle_id ');
+            ZQExecSQL.ParamByName('movimientodeposito_id').AsString:=movimientodeposito_id;
+            ZQExecSQL.ParamByName('producto_id').AsString:=ZQmovimdepodetalles.FieldByName('producto_id').AsString;
+            ZQExecSQL.ParamByName('movimdepodetalle_estado').AsString:='ENVIADO';
+            ZQExecSQL.ParamByName('movimdepodetalle_cantidadrecibir').AsString:=ZQmovimdepodetalles.FieldByName('movimdepodetalle_cantidadrecibir').AsString;
+            ZQExecSQL.ParamByName('movimdepodetalle_cantidadenviar').AsString:=ZQmovimdepodetalles.FieldByName('movimdepodetalle_cantidadenviar').AsString;
+            ZQExecSQL.ParamByName('movimdepodetalle_id').AsString:=princ.codigo('movimdepodetalles','movimdepodetalle_id');
+            ZQExecSQL.ParamByName('deposito_iddestino').AsString:=deposito_iddestino.codigo;
+            ZQExecSQL.ParamByName('deposito_idorigen').AsString:=princ.dep_id;
+            ZQExecSQL.ExecSql;
+
+            Princ.actualizarstock(ZQmovimdepodetalles.FieldByName('producto_id').AsString,ZQmovimdepodetalles.FieldByName('movimdepodetalle_cantidadenviar').AsFloat*-1,'',false);
+
+            ZQmovimdepodetalles.Next;
+        end;
+
+    ZQExecSQL.Sql.Clear;
+    ZQExecSQL.Sql.Add('commit');
+    ZQExecSQL.ExecSQL;
+
+    princ.Permisos1.guardarlog(self.ClassName+'.Guardar_movimiento_deposito; movimientodeposito_id='+movimientodeposito_id);
+
+    MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
+
+    PageControl1.ActivePage:=TabSheet1;
+    facturaventa02.OnShow(self);
+end;
+
 procedure Tfacturaventa02.btnquitarpagoClick(Sender: TObject);
 begin
   inherited;
@@ -370,6 +532,13 @@ begin
           ZQProducto.FieldByName('documentoventadetalle_id').AsString:='0';
           ZQProducto.FieldByName('documentoventadetalle_descripcion').AsString:=producto_id.valor('producto_nombre');
           ZQProducto.FieldByName('documentoventadetalle_cantidad').AsString:='1';
+          if CBDevolucion.Checked then
+            begin
+                ZQProducto.FieldByName('documentoventadetalle_cantidad').AsString:='-1';
+                CBDevolucion.Checked:= false;
+
+            end;
+
           ZQProducto.FieldByName('documentoventadetalle_precio').AsString:=producto_id.valor('producto_precioventa1');
           ZQProducto.FieldByName('documentoventadetalle_total').AsString:=producto_id.valor('producto_precioventa1');
 
@@ -405,6 +574,12 @@ begin
 
 
 
+end;
+
+procedure Tfacturaventa02.CBDevolucionClick(Sender: TObject);
+begin
+  inherited;
+    producto_id.SetFocus;
 end;
 
 procedure Tfacturaventa02.DBGrid1KeyPress(Sender: TObject; var Key: Char);
@@ -489,6 +664,39 @@ begin
     if tipopago_id.Text='' then
       tipopago_id.SetFocus;
 
+end;
+
+procedure Tfacturaventa02.DTSDocumentoventadetalleStateChange(Sender: TObject);
+begin
+  inherited;
+    if ZQDocumentoventadetalles.State in [dsEdit] then
+      begin
+          precio_old:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat;
+
+      end
+
+end;
+
+procedure Tfacturaventa02.MovProducto_idAfterSearch(Sender: TObject);
+begin
+  inherited;
+    if (MovProducto_id.Text<>'') then
+      begin
+          ZQmovimdepodetalles.Insert;
+          ZQmovimdepodetalles.FieldByName('movimdepodetalle_id').AsString:='0';
+          ZQmovimdepodetalles.FieldByName('movimdepodetalle_cantidadenviar').AsInteger:=1;
+          ZQmovimdepodetalles.FieldByName('movimdepodetalle_cantidadrecibir').AsString:='0';
+          ZQmovimdepodetalles.FieldByName('movimdepodetalle_estado').AsString:='ENVIADO';
+          ZQmovimdepodetalles.FieldByName('producto_id').AsString:=MovProducto_id.Text;
+          ZQmovimdepodetalles.FieldByName('movimientodeposito_id').AsString:='0';
+          ZQmovimdepodetalles.FieldByName('producto_nombre').AsString:=MovProducto_id.valor('producto_nombre');
+
+          ZQmovimdepodetalles.Post;
+
+          MovProducto_id.Text:='-1';
+          MovProducto_id.Search('-1');
+          MovProducto_id.SetFocus;
+      end;
 end;
 
 end.

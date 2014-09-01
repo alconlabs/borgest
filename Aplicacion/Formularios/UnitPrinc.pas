@@ -266,7 +266,6 @@ type
     procedure BtnCuponesTarjetasClick(Sender: TObject);
     procedure BaseRemotaBeforeConnect(Sender: TObject);
     procedure btnexportardbClick(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
     procedure StatusBar1DrawPanel(StatusBar: TStatusBar; Panel: TStatusPanel;
       const Rect: TRect);
     procedure btnestadoivaClick(Sender: TObject);
@@ -386,10 +385,10 @@ type
     function ControlDocumentoComprarepetido(tipodocu_id:string; documentocompra_puntoventa:string; documentocompra_numero:string; proveedor_id:string):boolean;
     procedure CargarDocumentoCompraDetalle(QDocumentoCompraDetalles:TDataset; Detalle:TDataset; abm:integer=1; bm:pointer=nil);
     function ProtegidoxPass(nombre:string):boolean;
+    function IdentificaUsuario(nombre: string):boolean;
     function GetPCName: string;
     function DisponibleTipoPago(tipopago_id:string):boolean;
     procedure sincronizarstock;
-    procedure SincronizarTodo;
   end;
 
 type
@@ -528,7 +527,7 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitSincronizarDB, UnitEstadoIVAs, UnitFacturaventa02, Unitlistacurvas,
   UnitCargaStockCurva, UnitListaMovimientosDepositos, UnitExportarDB,
   UnitImportarDB, UnitImprimirFichasClientes, UnitConsultaStockCurvas,
-  UnitCargaStockLector;
+  UnitCargaStockLector, UnitIdentificarUsuario;
 
 {$R *.dfm}
 
@@ -569,23 +568,14 @@ end;
 
 procedure CrearHilo;
 begin
-  if Hilo=nil then
+    try
+      Hilo.Free;
+    except
+    end;
     hilo:=Thilo.Create(true);
 //  Hilo.Ejecutar := ProcesarDatos;
 //  Hilo.Priority := tpNormal;
 //  Hilo.Resume;
-end;
-
-
-
-procedure TPrinc.SincronizarTodo;
-begin
-//      ExportarDB:=TExportarDB.Create(Princ);
-    ExportarDB.sincronizarahora;
-    ImportarDB.sincronizarahora;
-
-    Princ.sincronizarstock;
-    Timer1.Enabled:=true;
 end;
 
 
@@ -609,10 +599,24 @@ var
   PREFIJOTABLAWEB:string;
   error:integer;
   cant_depositos:string;
+  SINCSUBIRSTOCK:string;
+  SINCDESCARGARSTOCK:string;
 begin
-    Princ.StatusBar1.Panels.Add.Text:='Sincronizacion Stock iniciada - '+formatdatetime('HH:mm',time);
-    Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Width:=300;
+
+//    Princ.StatusBar1.Panels.Add.Text:='Sincronizacion Stock iniciada - '+formatdatetime('HH:mm',time);
+    Princ.StatusBar1.Panels.Items[1].Text:='Sincronizacion Stock iniciada - '+formatdatetime('HH:mm',time);
     princ.Permisos1.guardarlog(self.ClassName+'.sincronizarstock; inicio'+formatdatetime('HH:mm',time));
+
+    SINCSUBIRSTOCK:=Princ.GetConfiguracion('SINCSUBIRSTOCK');
+    if SINCSUBIRSTOCK='' then
+      SINCSUBIRSTOCK:='0';
+
+    SINCDESCARGARSTOCK:=Princ.GetConfiguracion('SINCDESCARGARSTOCK');
+    if SINCDESCARGARSTOCK='' then
+      SINCDESCARGARSTOCK:='0';
+
+
+
 
     try
        BaseRemota.Connect;
@@ -625,109 +629,6 @@ begin
 
     if error=0 then
       begin
-//          PREFIJOTABLAWEB:=Princ.GetConfiguracion('PREFIJOTABLAWEB');
-
-          //                  SUBIR STOCK
-
-          ZQProductoDeposito.Active:=false;
-          ZQProductoDeposito.SQL.Text:='select * from productodeposito where deposito_id="'+dep_id+'" and producdepo_estadosinc="PENDIENTE"';
-          ZQProductoDeposito.Active:=true;
-          ZQProductoDeposito.First;
-
-          ZQRemoteExcecSql.Sql.Clear;
-          ZQRemoteExcecSql.Sql.Add('replace into productodeposito set ');
-          ZQRemoteExcecSql.Sql.Add('producdepo_estadosinc=:producdepo_estadosinc, ');
-          ZQRemoteExcecSql.Sql.Add('producdepo_stockinicial=:producdepo_stockinicial, ');
-          ZQRemoteExcecSql.Sql.Add('producdepo_puntorepos=:producdepo_puntorepos, ');
-          ZQRemoteExcecSql.Sql.Add('producdepo_stockminimo=:producdepo_stockminimo, ');
-          ZQRemoteExcecSql.Sql.Add('deposito_id=:deposito_id, ');
-          ZQRemoteExcecSql.Sql.Add('producto_id=:producto_id, ');
-          ZQRemoteExcecSql.Sql.Add('producdepo_stockactual=:producdepo_stockactual, ');
-          ZQRemoteExcecSql.Sql.Add('producdepo_id=:producdepo_id ');
-
-          princ.Permisos1.guardarlog(self.ClassName+'.subir_stock;');
-
-          BaseRemota.Reconnect;
-          while not ZQProductoDeposito.Eof do
-              begin
-                  try
-                  ZQRemoteExcecSql.ParamByName('producdepo_estadosinc').AsString:='DESCARGAR';
-                  ZQRemoteExcecSql.ParamByName('producdepo_stockinicial').AsString:=ZQProductoDeposito.FieldByName('producdepo_stockinicial').AsString;
-                  ZQRemoteExcecSql.ParamByName('producdepo_puntorepos').AsString:=ZQProductoDeposito.FieldByName('producdepo_puntorepos').AsString;
-                  ZQRemoteExcecSql.ParamByName('producdepo_stockminimo').AsString:=ZQProductoDeposito.FieldByName('producdepo_stockminimo').AsString;
-                  ZQRemoteExcecSql.ParamByName('deposito_id').AsString:=ZQProductoDeposito.FieldByName('deposito_id').AsString;
-                  ZQRemoteExcecSql.ParamByName('producto_id').AsString:=ZQProductoDeposito.FieldByName('producto_id').AsString;
-                  ZQRemoteExcecSql.ParamByName('producdepo_stockactual').AsString:=ZQProductoDeposito.FieldByName('producdepo_stockactual').AsString;
-                  ZQRemoteExcecSql.ParamByName('producdepo_id').AsString:='0';
-                  ZQRemoteExcecSql.ExecSql;
-                  error:=0;
-                  except
-                  error:=1;
-                  princ.Permisos1.guardarlog(self.ClassName+'.subir_stock; error='+inttostr(error));
-                  end;
-
-                  if error=0 then
-                    begin
-                        ZQExcecSQLSinc.Sql.Clear;
-                        ZQExcecSQLSinc.Sql.Add('update productodeposito set ');
-                        ZQExcecSQLSinc.Sql.Add('producdepo_estadosinc=:producdepo_estadosinc ');
-                        ZQExcecSQLSinc.Sql.Add('where producdepo_id=:producdepo_id ');
-                        ZQExcecSQLSinc.ParamByName('producdepo_estadosinc').AsString:='SINCRONIZADO';
-                        ZQExcecSQLSinc.ParamByName('producdepo_id').AsString:=ZQProductoDeposito.FieldByName('producdepo_id').AsString;
-                        ZQExcecSQLSinc.ExecSql;
-                    end;
-
-
-
-                  ZQProductoDeposito.Next;
-              end;
-
-
-          //                  DESCARGAR STOCK
-          BaseRemota.Reconnect;
-          princ.Permisos1.guardarlog(self.ClassName+'.descargar_stock;');
-          if BaseRemota.Connected then
-            begin
-                ZQRemoteSelect.Active:=false;
-                ZQRemoteSelect.SQL.Text:='select * from productodeposito where deposito_id<>"'+dep_id+'" and producdepo_estadosinc="DESCARGAR"';
-                ZQRemoteSelect.Active:=true;
-                ZQRemoteSelect.First;
-
-                ZQExcecSQLSinc.Sql.Clear;
-                ZQExcecSQLSinc.Sql.Add('replace into productodeposito set ');
-                ZQExcecSQLSinc.Sql.Add('producdepo_estadosinc=:producdepo_estadosinc, ');
-                ZQExcecSQLSinc.Sql.Add('producdepo_stockinicial=:producdepo_stockinicial, ');
-                ZQExcecSQLSinc.Sql.Add('producdepo_puntorepos=:producdepo_puntorepos, ');
-                ZQExcecSQLSinc.Sql.Add('producdepo_stockminimo=:producdepo_stockminimo, ');
-                ZQExcecSQLSinc.Sql.Add('deposito_id=:deposito_id, ');
-                ZQExcecSQLSinc.Sql.Add('producto_id=:producto_id, ');
-                ZQExcecSQLSinc.Sql.Add('producdepo_stockactual=:producdepo_stockactual, ');
-                ZQExcecSQLSinc.Sql.Add('producdepo_id=:producdepo_id ');
-
-                while not ZQRemoteSelect.Eof do
-                    begin
-                        try
-                        ZQExcecSQLSinc.ParamByName('producdepo_estadosinc').AsString:='DESCARGADO';
-                        ZQExcecSQLSinc.ParamByName('producdepo_stockinicial').AsString:=ZQRemoteSelect.FieldByName('producdepo_stockinicial').AsString;
-                        ZQExcecSQLSinc.ParamByName('producdepo_puntorepos').AsString:=ZQRemoteSelect.FieldByName('producdepo_puntorepos').AsString;
-                        ZQExcecSQLSinc.ParamByName('producdepo_stockminimo').AsString:=ZQRemoteSelect.FieldByName('producdepo_stockminimo').AsString;
-                        ZQExcecSQLSinc.ParamByName('deposito_id').AsString:=ZQRemoteSelect.FieldByName('deposito_id').AsString;
-                        ZQExcecSQLSinc.ParamByName('producto_id').AsString:=ZQRemoteSelect.FieldByName('producto_id').AsString;
-                        ZQExcecSQLSinc.ParamByName('producdepo_stockactual').AsString:=ZQRemoteSelect.FieldByName('producdepo_stockactual').AsString;
-                        ZQExcecSQLSinc.ParamByName('producdepo_id').AsString:=ZQRemoteSelect.FieldByName('producdepo_id').AsString;
-                        ZQExcecSQLSinc.ExecSql;
-                        error:=0;
-                        except
-                        error:=2;
-                        princ.Permisos1.guardarlog(self.ClassName+'.descargar_stock; error='+inttostr(error));
-                        end;
-
-                        ZQRemoteSelect.Next;
-                    end;
-
-
-            end;
-
           //          GENERAR PRODUCTODEPOSITO PARA PRODUCTOS NUEVOS
           princ.Permisos1.guardarlog(self.ClassName+'.Generar registros productodeposito productos nuevos;');
 
@@ -747,7 +648,6 @@ begin
           ZQExcecSQLSinc.Sql.Add('producto_id=:producto_id, ');
           ZQExcecSQLSinc.Sql.Add('producdepo_stockactual=:producdepo_stockactual, ');
           ZQExcecSQLSinc.Sql.Add('producdepo_id=:producdepo_id ');
-
 
           while not ZQProductoDeposito.Eof do
           begin
@@ -770,6 +670,115 @@ begin
 
               ZQProductoDeposito.Next;
           end;
+
+//          PREFIJOTABLAWEB:=Princ.GetConfiguracion('PREFIJOTABLAWEB');
+
+          //                  SUBIR STOCK
+          if strtobool(SINCSUBIRSTOCK) then
+            begin
+                ZQProductoDeposito.Active:=false;
+                ZQProductoDeposito.SQL.Text:='select * from productodeposito where deposito_id="'+dep_id+'" and producdepo_estadosinc="PENDIENTE"';
+                ZQProductoDeposito.Active:=true;
+                ZQProductoDeposito.First;
+
+                ZQRemoteExcecSql.Sql.Clear;
+                ZQRemoteExcecSql.Sql.Add('replace into productodeposito set ');
+                ZQRemoteExcecSql.Sql.Add('producdepo_estadosinc=:producdepo_estadosinc, ');
+                ZQRemoteExcecSql.Sql.Add('producdepo_stockinicial=:producdepo_stockinicial, ');
+                ZQRemoteExcecSql.Sql.Add('producdepo_puntorepos=:producdepo_puntorepos, ');
+                ZQRemoteExcecSql.Sql.Add('producdepo_stockminimo=:producdepo_stockminimo, ');
+                ZQRemoteExcecSql.Sql.Add('deposito_id=:deposito_id, ');
+                ZQRemoteExcecSql.Sql.Add('producto_id=:producto_id, ');
+                ZQRemoteExcecSql.Sql.Add('producdepo_stockactual=:producdepo_stockactual, ');
+                ZQRemoteExcecSql.Sql.Add('producdepo_id=:producdepo_id ');
+
+                princ.Permisos1.guardarlog(self.ClassName+'.subir_stock;');
+
+                BaseRemota.Reconnect;
+                while not ZQProductoDeposito.Eof do
+                    begin
+                        try
+                        ZQRemoteExcecSql.ParamByName('producdepo_estadosinc').AsString:='DESCARGAR';
+                        ZQRemoteExcecSql.ParamByName('producdepo_stockinicial').AsString:=ZQProductoDeposito.FieldByName('producdepo_stockinicial').AsString;
+                        ZQRemoteExcecSql.ParamByName('producdepo_puntorepos').AsString:=ZQProductoDeposito.FieldByName('producdepo_puntorepos').AsString;
+                        ZQRemoteExcecSql.ParamByName('producdepo_stockminimo').AsString:=ZQProductoDeposito.FieldByName('producdepo_stockminimo').AsString;
+                        ZQRemoteExcecSql.ParamByName('deposito_id').AsString:=ZQProductoDeposito.FieldByName('deposito_id').AsString;
+                        ZQRemoteExcecSql.ParamByName('producto_id').AsString:=ZQProductoDeposito.FieldByName('producto_id').AsString;
+                        ZQRemoteExcecSql.ParamByName('producdepo_stockactual').AsString:=ZQProductoDeposito.FieldByName('producdepo_stockactual').AsString;
+                        ZQRemoteExcecSql.ParamByName('producdepo_id').AsString:='0';
+                        ZQRemoteExcecSql.ExecSql;
+                        error:=0;
+                        except
+                        error:=1;
+                        princ.Permisos1.guardarlog(self.ClassName+'.subir_stock; error='+inttostr(error));
+                        end;
+
+                        if error=0 then
+                          begin
+                              ZQExcecSQLSinc.Sql.Clear;
+                              ZQExcecSQLSinc.Sql.Add('update productodeposito set ');
+                              ZQExcecSQLSinc.Sql.Add('producdepo_estadosinc=:producdepo_estadosinc ');
+                              ZQExcecSQLSinc.Sql.Add('where producto_id=:producto_id and deposito_id=:deposito_id ');
+                              ZQExcecSQLSinc.ParamByName('producdepo_estadosinc').AsString:='SINCRONIZADO';
+                              ZQExcecSQLSinc.ParamByName('producto_id').AsString:=ZQProductoDeposito.FieldByName('producto_id').AsString;
+                              ZQExcecSQLSinc.ParamByName('deposito_id').AsString:=ZQProductoDeposito.FieldByName('deposito_id').AsString;
+                              ZQExcecSQLSinc.ExecSql;
+                          end;
+
+                        ZQProductoDeposito.Next;
+                    end;
+
+            end;
+
+          //                  DESCARGAR STOCK
+          if strtobool(SINCDESCARGARSTOCK) then
+            begin
+                BaseRemota.Reconnect;
+                princ.Permisos1.guardarlog(self.ClassName+'.descargar_stock;');
+                if BaseRemota.Connected then
+                  begin
+                      ZQRemoteSelect.Active:=false;
+                      ZQRemoteSelect.SQL.Text:='select * from productodeposito where deposito_id<>"'+dep_id+'" and producdepo_estadosinc="DESCARGAR"';
+                      ZQRemoteSelect.Active:=true;
+                      ZQRemoteSelect.First;
+
+                      ZQExcecSQLSinc.Sql.Clear;
+                      ZQExcecSQLSinc.Sql.Add('replace into productodeposito set ');
+                      ZQExcecSQLSinc.Sql.Add('producdepo_estadosinc=:producdepo_estadosinc, ');
+                      ZQExcecSQLSinc.Sql.Add('producdepo_stockinicial=:producdepo_stockinicial, ');
+                      ZQExcecSQLSinc.Sql.Add('producdepo_puntorepos=:producdepo_puntorepos, ');
+                      ZQExcecSQLSinc.Sql.Add('producdepo_stockminimo=:producdepo_stockminimo, ');
+                      ZQExcecSQLSinc.Sql.Add('deposito_id=:deposito_id, ');
+                      ZQExcecSQLSinc.Sql.Add('producto_id=:producto_id, ');
+                      ZQExcecSQLSinc.Sql.Add('producdepo_stockactual=:producdepo_stockactual, ');
+                      ZQExcecSQLSinc.Sql.Add('producdepo_id=:producdepo_id ');
+
+                      while not ZQRemoteSelect.Eof do
+                          begin
+                              try
+                              ZQExcecSQLSinc.ParamByName('producdepo_estadosinc').AsString:='DESCARGADO';
+                              ZQExcecSQLSinc.ParamByName('producdepo_stockinicial').AsString:=ZQRemoteSelect.FieldByName('producdepo_stockinicial').AsString;
+                              ZQExcecSQLSinc.ParamByName('producdepo_puntorepos').AsString:=ZQRemoteSelect.FieldByName('producdepo_puntorepos').AsString;
+                              ZQExcecSQLSinc.ParamByName('producdepo_stockminimo').AsString:=ZQRemoteSelect.FieldByName('producdepo_stockminimo').AsString;
+                              ZQExcecSQLSinc.ParamByName('deposito_id').AsString:=ZQRemoteSelect.FieldByName('deposito_id').AsString;
+                              ZQExcecSQLSinc.ParamByName('producto_id').AsString:=ZQRemoteSelect.FieldByName('producto_id').AsString;
+                              ZQExcecSQLSinc.ParamByName('producdepo_stockactual').AsString:=ZQRemoteSelect.FieldByName('producdepo_stockactual').AsString;
+                              ZQExcecSQLSinc.ParamByName('producdepo_id').AsString:=ZQRemoteSelect.FieldByName('producdepo_id').AsString;
+                              ZQExcecSQLSinc.ExecSql;
+                              error:=0;
+                              except
+                              error:=2;
+                              princ.Permisos1.guardarlog(self.ClassName+'.descargar_stock; error='+inttostr(error));
+                              end;
+
+                              ZQRemoteSelect.Next;
+                          end;
+
+
+                  end;
+
+
+            end;
 
 
 
@@ -1136,9 +1145,8 @@ begin
 
       end;
 
-    Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Text:='Sincronizacion Stock finalizada - '+formatdatetime('HH:mm',time);
-    Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Width:=300;
-    princ.Permisos1.guardarlog(self.ClassName+'.sincronizarstock; finalizado');
+    Princ.StatusBar1.Panels.Items[1].Text:='Sincronizacion Stock finalizada - '+formatdatetime('HH:mm',time);
+    princ.Permisos1.guardarlog(self.ClassName+'.sincronizarstock; finalizado; error='+inttostr(error));
 
 end;
 
@@ -1186,6 +1194,29 @@ begin
 
     Result:=error=0;
 end;
+
+
+function TPrinc.IdentificaUsuario(nombre: string):boolean;
+var
+  error:integer;
+  passingresada:string;
+  personal_id:string;
+begin
+    error:=1;
+
+    if Princ.GetConfiguracion('IDENTIFICARUSUARIO')='-1' then
+      begin
+          IdentificarUsuario:=TIdentificarUsuario.Create(self);
+          if IdentificarUsuario.ShowModal<>mrOk then
+            begin
+                error:=1;
+            end;
+          IdentificarUsuario.Free;
+      end;
+
+    Result:=error=0;
+end;
+
 
 function TPrinc.ControlDocumentoComprarepetido(tipodocu_id:string; documentocompra_puntoventa:string; documentocompra_numero:string; proveedor_id:string):boolean;
 var
@@ -2678,14 +2709,15 @@ begin
 
             ZQProductosABM.sql.clear;
             ZQProductosABM.sql.add('Insert into productodeposito ');
-            ZQProductosABM.sql.add('select 0, 0, '+id+', deposito_id, 0, 0, 0 from depositos');
+            ZQProductosABM.sql.add('select 0, 0, '+id+', deposito_id, 0, 0, 0, "PENDIENTE" from depositos');
             ZQProductosABM.ExecSQL;
 
             if existe_campo_stock then
               begin
                   ZQProductosABM.sql.clear;
                   ZQProductosABM.sql.add('update productodeposito set');
-                  ZQProductosABM.sql.add('producdepo_stockactual=:producdepo_stockactual ');
+                  ZQProductosABM.sql.add('producdepo_stockactual=:producdepo_stockactual, ');
+				  ZQProductosABM.sql.add('producdepo_estadosinc="PENDIENTE", ');
                   ZQProductosABM.sql.add('where producto_id=:producto_id and ');
                   ZQProductosABM.sql.add('deposito_id=:deposito_id');
                   ZQProductosABM.ParamByName('producdepo_stockactual').AsString:=QProductos.FieldByName('producdepo_stockactual').AsString;
@@ -4305,20 +4337,6 @@ begin
     BaseRemota.Database:=Princ.GetConfiguracion('DBREMOTADB');
 
 
-    Timer1.Enabled:=false;
-    EXPORTACIONSINCMINUTOS:=Princ.GetConfiguracion('EXPORTACIONSINCMINUTOS');
-    if (Princ.GetConfiguracion('PCSINCRONIZADORA')=Princ.GetPCName) then
-      begin
-          if (EXPORTACIONSINCMINUTOS<>'0') and (EXPORTACIONSINCMINUTOS<>'') then
-            begin
-                Timer1.Interval:=1000*60*strtoint(EXPORTACIONSINCMINUTOS);
-
-            end;
-
-          Timer1.Enabled:=true;
-      end;
-
-
     princ.XiProgressBar1.Parent:=Princ.StatusBar1;
     princ.XiProgressBar1.Visible:=false;
 
@@ -4894,52 +4912,6 @@ begin
     finally
       estadoctas.Show;
     end;
-end;
-
-procedure TPrinc.Timer1Timer(Sender: TObject);
-var
-  dia:string;
-begin
-    Timer1.Enabled:=false;
-    if (EXPORTACIONSINCMINUTOS<>'0') and (EXPORTACIONSINCMINUTOS<>'') then
-      begin
-          CrearHilo;
-          if ExportarDB=nil then
-            ExportarDB:=TExportarDB.Create(Princ);
-
-          if ImportarDB=nil then
-            ImportarDB:=TImportarDB.Create(Princ);
-
-          Hilo.Ejecutar := Self.SincronizarTodo;
-          Hilo.Priority := tpNormal;
-          Hilo.Resume;
-
-
-      end
-    else
-      begin
-          if strtodate(Princ.GetConfiguracion('ULTIMAEXPORTACION'))<date then
-            begin
-                dia:=formatdatetime('dddd',date);
-                if strtobool(GetConfiguracion('EXPORTACION'+dia)) then
-                  begin
-                      if strtotime(GetConfiguracion('EXPORTACIONhora'))<=time then
-                        begin
-                            CrearHilo;
-                            ExportarDB:=TExportarDB.Create(Princ);
-                            ImportarDB:=TImportarDB.Create(Princ);
-
-                            Hilo.Ejecutar := Self.SincronizarTodo;
-                            Hilo.Priority := tpNormal;
-                            Hilo.Resume;
-
-                        end;
-                  end;
-            end;
-
-      end;
-
-    
 end;
 
 procedure TPrinc.TimerReconectarDBTimer(Sender: TObject);

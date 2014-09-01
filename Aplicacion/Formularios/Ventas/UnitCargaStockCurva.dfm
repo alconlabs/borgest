@@ -1,16 +1,16 @@
 inherited CargaStockCurvas: TCargaStockCurvas
   Caption = 'Carga de Stock - Curvas'
-  ClientHeight = 595
+  ClientHeight = 581
   ClientWidth = 1011
   ExplicitWidth = 1027
-  ExplicitHeight = 633
+  ExplicitHeight = 619
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Width = 1011
-    Height = 595
+    Height = 581
     ExplicitWidth = 1011
-    ExplicitHeight = 595
+    ExplicitHeight = 581
     FullHeight = 0
     object Label15: TLabel [0]
       Left = 40
@@ -97,14 +97,14 @@ inherited CargaStockCurvas: TCargaStockCurvas
       ExplicitTop = 403
     end
     inherited btnguardar: TButton
-      Left = 255
-      Top = 347
+      Left = 223
+      Top = 378
       Width = 98
       Caption = 'Guardar Cambios'
       TabOrder = 8
       Visible = False
-      ExplicitLeft = 255
-      ExplicitTop = 347
+      ExplicitLeft = 223
+      ExplicitTop = 378
       ExplicitWidth = 98
     end
     object producto_codigoarticulo: TEdit
@@ -198,12 +198,13 @@ inherited CargaStockCurvas: TCargaStockCurvas
       TabOrder = 6
       Text = '0,00'
       Visible = True
+      OnExit = producto_precioventa1Exit
       Version = '2.7.0.5'
     end
     object DBGrid2: TDBGrid
       Left = 79
       Top = 210
-      Width = 170
+      Width = 298
       Height = 162
       DataSource = DTSProductosTallesCodigos
       PopupMenu = PopupMenu1
@@ -219,14 +220,21 @@ inherited CargaStockCurvas: TCargaStockCurvas
           Expanded = False
           FieldName = 'producto_tallecodigo'
           Title.Caption = 'Codigo'
-          Width = 60
+          Width = 76
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'producto_talle'
           Title.Caption = 'Talle'
-          Width = 60
+          Width = 83
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'producto_precioventa1'
+          Title.Caption = 'Precio'
+          Width = 89
           Visible = True
         end>
     end
@@ -294,12 +302,12 @@ inherited CargaStockCurvas: TCargaStockCurvas
     end
     object btnenviarstock: TButton
       Left = 896
-      Top = 533
+      Top = 531
       Width = 97
       Height = 25
       Caption = 'Confirmar Envio'
       TabOrder = 15
-      Visible = False
+      OnClick = btnenviarstockClick
     end
   end
   inherited ZQSelect: TZQuery
@@ -356,15 +364,17 @@ inherited CargaStockCurvas: TCargaStockCurvas
     SQL.Strings = (
       
         'select t as producto_id,t as producto_talle,t as producto_tallec' +
-        'odigo,i as producto_talleorden from temp ')
+        'odigo,i as producto_talleorden,d as producto_precioventa1 from t' +
+        'emp ')
     Params = <>
     ConfCampos.Strings = (
       'producto_id,t'
       'producto_talle,t'
       'producto_tallecodigo,t'
-      'producto_talleorden,i')
-    Left = 360
-    Top = 256
+      'producto_talleorden,i'
+      'producto_precioventa1,d')
+    Left = 280
+    Top = 288
     object MQProductosTallesproducto_id: TStringField
       FieldName = 'producto_id'
       Size = 255
@@ -379,6 +389,9 @@ inherited CargaStockCurvas: TCargaStockCurvas
     end
     object MQProductosTallesproducto_talleorden: TIntegerField
       FieldName = 'producto_talleorden'
+    end
+    object MQProductosTallesproducto_precioventa1: TFloatField
+      FieldName = 'producto_precioventa1'
     end
   end
   object DTSProductosTallesCodigos: TDataSource
@@ -455,5 +468,39 @@ inherited CargaStockCurvas: TCargaStockCurvas
     Params = <>
     Left = 784
     Top = 128
+  end
+  object MQDepositosDestinos: TMQuery
+    Connection = Princ.ZBase
+    SortedFields = 'deposito_id'
+    CachedUpdates = True
+    SQL.Strings = (
+      'select i as deposito_id from temp ')
+    Params = <>
+    IndexFieldNames = 'deposito_id Asc'
+    ConfCampos.Strings = (
+      'deposito_id,i')
+    Left = 352
+    Top = 440
+  end
+  object ZQmovimdepodetalles: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select * from movimdepodetalles'
+      'where movimientodeposito_id=:movimientodeposito_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'movimientodeposito_id'
+        ParamType = ptUnknown
+      end>
+    Left = 200
+    Top = 440
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'movimientodeposito_id'
+        ParamType = ptUnknown
+      end>
   end
 end

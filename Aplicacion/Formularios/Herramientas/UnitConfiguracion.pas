@@ -124,6 +124,9 @@ type
     PCSERVIDOR: TLabel;
     btnactualizardbremotafile: TButton;
     SOLICITARPASSVENDEDORVENTAS: TCheckBox;
+    CheckBox1: TCheckBox;
+    CheckBox2: TCheckBox;
+    CheckBox3: TCheckBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);

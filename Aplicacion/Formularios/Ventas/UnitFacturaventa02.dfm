@@ -1,20 +1,21 @@
 inherited facturaventa02: Tfacturaventa02
   Caption = 'Venta'
-  ClientHeight = 657
+  ClientHeight = 680
   ClientWidth = 997
   Position = poScreenCenter
   ExplicitWidth = 1013
-  ExplicitHeight = 695
+  ExplicitHeight = 718
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
     Width = 997
-    Height = 657
+    Height = 680
     Color = 14858940
+    TabOrder = 1
     ColorTo = 12017495
     Styler = nil
     ExplicitWidth = 997
-    ExplicitHeight = 657
+    ExplicitHeight = 680
     FullHeight = 0
     inherited Label2: TLabel
       Left = 671
@@ -168,6 +169,13 @@ inherited facturaventa02: Tfacturaventa02
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object Label25: TLabel [20]
+      Left = 154
+      Top = 168
+      Width = 35
+      Height = 13
+      Caption = 'Cambio'
+    end
     inherited documentoventa_numero: TEdit
       Left = 88
       Top = 12
@@ -273,27 +281,27 @@ inherited facturaventa02: Tfacturaventa02
         end>
     end
     inherited btnagregar: TButton
-      Left = 141
+      Left = 749
       Top = 163
       TabOrder = 4
       TabStop = False
-      ExplicitLeft = 141
+      ExplicitLeft = 749
       ExplicitTop = 163
     end
     inherited btnquitar: TButton
-      Left = 287
+      Left = 895
       Top = 163
       TabOrder = 6
       TabStop = False
-      ExplicitLeft = 287
+      ExplicitLeft = 895
       ExplicitTop = 163
     end
     inherited btnmodificar: TButton
-      Left = 214
+      Left = 822
       Top = 163
       TabOrder = 5
       TabStop = False
-      ExplicitLeft = 214
+      ExplicitLeft = 822
       ExplicitTop = 163
     end
     inherited GroupBox1: TGroupBox
@@ -775,6 +783,218 @@ inherited facturaventa02: Tfacturaventa02
       ConfSearchLimpio = True
       ConfCampoBusqueda1 = 'personal_id'
     end
+    object CBDevolucion: TCheckBox
+      Left = 154
+      Top = 167
+      Width = 72
+      Height = 17
+      Alignment = taLeftJustify
+      TabOrder = 33
+      OnClick = CBDevolucionClick
+    end
+  end
+  object PageControl1: TPageControl [1]
+    Left = 72
+    Top = 379
+    Width = 981
+    Height = 638
+    ActivePage = TabSheet2
+    TabOrder = 0
+    object TabSheet1: TTabSheet
+      Caption = 'Venta'
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'Envio'
+      ImageIndex = 1
+      object Label26: TLabel
+        Left = 672
+        Top = 15
+        Width = 29
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Fecha'
+      end
+      object Label27: TLabel
+        Left = 13
+        Top = 34
+        Width = 81
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Deposito Destino'
+      end
+      object Label28: TLabel
+        Left = 16
+        Top = 145
+        Width = 82
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Codigo de Barras'
+      end
+      object Label29: TLabel
+        Left = 16
+        Top = 387
+        Width = 71
+        Height = 13
+        Caption = 'Observaciones'
+      end
+      object DateTimePicker1: TDateTimePicker
+        Left = 707
+        Top = 12
+        Width = 106
+        Height = 21
+        Date = 40384.000000000000000000
+        Time = 40384.000000000000000000
+        TabOrder = 0
+        TabStop = False
+        OnExit = documentoventa_fechaExit
+      end
+      object deposito_iddestino: TSqlComboBox
+        Left = 100
+        Top = 31
+        Width = 317
+        Height = 21
+        Style = csDropDownList
+        ItemHeight = 13
+        TabOrder = 1
+        Confbase = Princ.ZBase
+        Confsql.Strings = (
+          'select * from depositos'
+          'order by deposito_nombre')
+        Confcampo_codigo = 'deposito_id'
+        Confcampo_nomb = 'deposito_nombre'
+        Tag2 = 0
+      end
+      object MovProducto_id: TEditCodi
+        Left = 16
+        Top = 164
+        Width = 121
+        Height = 21
+        Flat = False
+        LabelFont.Charset = DEFAULT_CHARSET
+        LabelFont.Color = clWindowText
+        LabelFont.Height = -11
+        LabelFont.Name = 'Tahoma'
+        LabelFont.Style = []
+        Lookup.Separator = ';'
+        Color = clWindow
+        Enabled = True
+        TabOrder = 2
+        Visible = True
+        Version = '1.3.0.1'
+        ButtonStyle = bsButton
+        ButtonWidth = 16
+        Etched = False
+        abm = False
+        ConfCampoCodigo = 'producto_id'
+        ConfCampoCodigo1 = 'producto_codigo'
+        ConfCampoCodigo2 = 'producto_codigobarras'
+        ConfCampoTexto = 'producto_nombre'
+        ConfSqlConnection = Princ.ZBase
+        ConfSql.Strings = (
+          'select * from productos'
+          
+            'left join politicasdeprecios on productos.politicaprecio_id=poli' +
+            'ticasdeprecios.politicaprecio_id'
+          'where producto_tipo="PRODUCTO"'
+          'order by producto_nombre')
+        AfterSearch = MovProducto_idAfterSearch
+        ConfIni = Princ.ini1
+        ConfLimpiar = True
+        ConfSearchLimpio = True
+        ConfCampoBusqueda1 = 'producto_codigo'
+      end
+      object DBGrid3: TDBGrid
+        Left = 16
+        Top = 194
+        Width = 957
+        Height = 153
+        TabStop = False
+        DataSource = DTSmovimdepodetalles
+        TabOrder = 6
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = []
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'producto_id'
+            ReadOnly = True
+            Title.Caption = 'Codigo'
+            Width = 125
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'producto_nombre'
+            ReadOnly = True
+            Title.Caption = 'Producto'
+            Width = 426
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'movimdepodetalle_cantidadenviar'
+            Title.Caption = 'Cant.'
+            Width = 91
+            Visible = True
+          end>
+      end
+      object Button3: TButton
+        Left = 749
+        Top = 163
+        Width = 75
+        Height = 25
+        Caption = 'Agregar'
+        TabOrder = 3
+        TabStop = False
+      end
+      object Button4: TButton
+        Left = 895
+        Top = 163
+        Width = 75
+        Height = 25
+        Caption = 'Quitar'
+        TabOrder = 5
+        TabStop = False
+      end
+      object Button5: TButton
+        Left = 822
+        Top = 163
+        Width = 75
+        Height = 25
+        Caption = 'Modificar'
+        TabOrder = 4
+        TabStop = False
+      end
+      object movimientodeposito_observaciones: TGTBMemo
+        Left = 16
+        Top = 406
+        Width = 521
+        Height = 98
+        TabStop = False
+        TabOrder = 7
+        Tag2 = 0
+      end
+      object btnguardarmov: TButton
+        Left = 626
+        Top = 602
+        Width = 75
+        Height = 25
+        Caption = 'Guardar'
+        TabOrder = 8
+        OnClick = btnguardarmovClick
+      end
+      object btncancelarmov: TButton
+        Left = 707
+        Top = 602
+        Width = 94
+        Height = 25
+        Caption = 'Cancelar'
+        TabOrder = 9
+      end
+    end
   end
   inherited ZQuery2: TZQuery
     Left = 592
@@ -870,6 +1090,7 @@ inherited facturaventa02: Tfacturaventa02
     end
   end
   inherited DTSDocumentoventadetalle: TDataSource
+    OnStateChange = DTSDocumentoventadetalleStateChange
     Left = 408
     Top = 272
   end
@@ -940,5 +1161,135 @@ inherited facturaventa02: Tfacturaventa02
         Name = 'producto_id'
         ParamType = ptUnknown
       end>
+  end
+  object ZQmovimdepodetalles: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select * from movimdepodetalles'
+      
+        'inner join productos on movimdepodetalles.producto_id=productos.' +
+        'producto_id'
+      'where movimientodeposito_id=:movimientodeposito_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'movimientodeposito_id'
+        ParamType = ptUnknown
+      end>
+    Left = 568
+    Top = 128
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'movimientodeposito_id'
+        ParamType = ptUnknown
+      end>
+    object ZQmovimdepodetallesmovimdepodetalle_id: TIntegerField
+      FieldName = 'movimdepodetalle_id'
+    end
+    object ZQmovimdepodetallesmovimdepodetalle_cantidadenviar: TFloatField
+      FieldName = 'movimdepodetalle_cantidadenviar'
+    end
+    object ZQmovimdepodetallesmovimdepodetalle_cantidadrecibir: TFloatField
+      FieldName = 'movimdepodetalle_cantidadrecibir'
+    end
+    object ZQmovimdepodetallesmovimdepodetalle_estado: TStringField
+      FieldName = 'movimdepodetalle_estado'
+      Size = 45
+    end
+    object ZQmovimdepodetallesproducto_id: TIntegerField
+      FieldName = 'producto_id'
+    end
+    object ZQmovimdepodetallesmovimientodeposito_id: TIntegerField
+      FieldName = 'movimientodeposito_id'
+    end
+    object ZQmovimdepodetallesproducto_id_1: TIntegerField
+      FieldName = 'producto_id_1'
+    end
+    object ZQmovimdepodetallesproducto_nombre: TStringField
+      FieldName = 'producto_nombre'
+      Size = 150
+    end
+    object ZQmovimdepodetallesproducto_observaciones: TStringField
+      FieldName = 'producto_observaciones'
+      Size = 255
+    end
+    object ZQmovimdepodetallesproducto_codigo: TStringField
+      FieldName = 'producto_codigo'
+      Size = 45
+    end
+    object ZQmovimdepodetallesproducto_codigobarras: TStringField
+      FieldName = 'producto_codigobarras'
+      Size = 45
+    end
+    object ZQmovimdepodetallesproducto_preciocosto: TFloatField
+      FieldName = 'producto_preciocosto'
+    end
+    object ZQmovimdepodetallesproducto_precioventabase: TFloatField
+      FieldName = 'producto_precioventabase'
+    end
+    object ZQmovimdepodetallesproducto_estado: TStringField
+      FieldName = 'producto_estado'
+      Size = 45
+    end
+    object ZQmovimdepodetallesproducto_precioventa1: TFloatField
+      FieldName = 'producto_precioventa1'
+    end
+    object ZQmovimdepodetallestipoiva_id: TIntegerField
+      FieldName = 'tipoiva_id'
+    end
+    object ZQmovimdepodetallesrubro_id: TIntegerField
+      FieldName = 'rubro_id'
+    end
+    object ZQmovimdepodetallesproducto_precioventa2: TFloatField
+      FieldName = 'producto_precioventa2'
+    end
+    object ZQmovimdepodetallesproducto_precioventa3: TFloatField
+      FieldName = 'producto_precioventa3'
+    end
+    object ZQmovimdepodetallesproducto_precioventa4: TFloatField
+      FieldName = 'producto_precioventa4'
+    end
+    object ZQmovimdepodetallescalculoprecio_id: TIntegerField
+      FieldName = 'calculoprecio_id'
+    end
+    object ZQmovimdepodetallespoliticaprecio_id: TIntegerField
+      FieldName = 'politicaprecio_id'
+    end
+    object ZQmovimdepodetallesproducto_neto1: TFloatField
+      FieldName = 'producto_neto1'
+    end
+    object ZQmovimdepodetallesproducto_neto2: TFloatField
+      FieldName = 'producto_neto2'
+    end
+    object ZQmovimdepodetallesproducto_neto3: TFloatField
+      FieldName = 'producto_neto3'
+    end
+    object ZQmovimdepodetallesproducto_neto4: TFloatField
+      FieldName = 'producto_neto4'
+    end
+    object ZQmovimdepodetallesproveedor_id: TIntegerField
+      FieldName = 'proveedor_id'
+    end
+    object ZQmovimdepodetallesproducto_fechaactualizacionprecio: TDateField
+      FieldName = 'producto_fechaactualizacionprecio'
+    end
+    object ZQmovimdepodetallesproducto_codigoreferencia: TStringField
+      FieldName = 'producto_codigoreferencia'
+      Size = 45
+    end
+    object ZQmovimdepodetallesproducto_imprimir: TIntegerField
+      FieldName = 'producto_imprimir'
+    end
+    object ZQmovimdepodetallesproducto_tipo: TStringField
+      FieldName = 'producto_tipo'
+      Size = 45
+    end
+  end
+  object DTSmovimdepodetalles: TDataSource
+    DataSet = ZQmovimdepodetalles
+    Left = 480
+    Top = 192
   end
 end

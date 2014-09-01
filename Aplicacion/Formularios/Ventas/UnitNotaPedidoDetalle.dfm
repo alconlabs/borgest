@@ -128,7 +128,7 @@ inherited NotapedidoDetalle: TNotapedidoDetalle
     inherited ventadetalle_total: TDBAdvEdit
       Left = 488
       Top = 115
-      TabOrder = 10
+      TabOrder = 16
       ExplicitLeft = 488
       ExplicitTop = 115
     end

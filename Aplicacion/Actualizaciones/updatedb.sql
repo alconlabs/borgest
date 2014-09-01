@@ -2175,3 +2175,36 @@ ALTER TABLE `productodeposito`
   DROP PRIMARY KEY;
 608;
 UPDATE `empresas` SET `empresa_razonsocial`='CgAAAKiaczETyVhxtb4Bo0t8O0o=\r\n' WHERE `empresa_id`=1;
+609;
+INSERT INTO `config` SET `config_nombre`='SINCSUBIRSTOCK',`config_valor`='-1';
+610;
+INSERT INTO `config` SET `config_nombre`='SINCDESCARGARSTOCK',`config_valor`='-1';
+611;
+INSERT INTO `config` SET `config_nombre`='MOVIMDEPOCONFIRMAUTO',`config_valor`='-1';
+612;
+INSERT INTO `config` SET `config_nombre`='MOVIMDEPOPROCESAR',`config_valor`='-1';
+613;
+INSERT INTO `config` SET `config_nombre`='MOVIMDEPOSUBIR',`config_valor`='-1';
+614;
+INSERT INTO `config` SET `config_nombre`='MOVIMDEPOSUBIRCONFIRMACION',`config_valor`='-1';
+615;
+INSERT INTO `config` SET `config_nombre`='MOVIMDEPODESCARGAR',`config_valor`='-1';
+616;
+INSERT INTO `config` SET `config_nombre`='MOVIMDEPODESCARGARCONFIRM',`config_valor`='-1';
+617;
+INSERT INTO `config` SET `config_nombre`='COMPRADETALLESINIVA',`config_valor`='-1';
+618;
+ALTER TABLE `movimdepodetalles` 
+ADD COLUMN `deposito_idorigen` INT(11) NULL DEFAULT NULL  AFTER `movimientodeposito_id` , 
+ADD COLUMN `deposito_iddestino` INT(11) NULL DEFAULT NULL  AFTER `deposito_idorigen`;
+619;
+INSERT INTO `config` SET `config_nombre`='MOVIMDEPOESTADOSINCALCREAR',`config_valor`='PENDIENTE';
+620;
+INSERT INTO `config` SET `config_nombre`='MOVIMDEPOESTADOSINCALSUBIR',`config_valor`='DESCARGAR';
+621;
+ALTER TABLE `movimdepodetalles` 
+CHANGE COLUMN `movimdepodetalle_id` `movimdepodetalle_id` INT(11) NOT NULL AUTO_INCREMENT;
+622;
+INSERT INTO `config` SET `config_nombre`='PRESUPUESTOMOSTRAR2DOPRECIO',`config_valor`='0';
+623;
+INSERT INTO `config` SET `config_nombre`='IDENTIFICARUSUARIO',`config_valor`='0';

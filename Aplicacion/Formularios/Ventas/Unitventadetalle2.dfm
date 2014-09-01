@@ -2,7 +2,7 @@ object ventadetalle2: Tventadetalle2
   Left = 0
   Top = 0
   Caption = 'Cargar Detalle'
-  ClientHeight = 208
+  ClientHeight = 225
   ClientWidth = 755
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,7 +22,7 @@ object ventadetalle2: Tventadetalle2
     Left = 0
     Top = 0
     Width = 755
-    Height = 208
+    Height = 225
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -65,7 +65,7 @@ object ventadetalle2: Tventadetalle2
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitWidth = 708
+    ExplicitHeight = 208
     FullHeight = 0
     object Label3: TLabel
       Left = 47
@@ -93,7 +93,7 @@ object ventadetalle2: Tventadetalle2
     end
     object Label2: TLabel
       Left = 66
-      Top = 98
+      Top = 114
       Width = 24
       Height = 13
       Alignment = taRightJustify
@@ -136,23 +136,32 @@ object ventadetalle2: Tventadetalle2
       Alignment = taRightJustify
       Caption = 'Stock: '
     end
+    object lblprecio2: TLabel
+      Left = 51
+      Top = 90
+      Width = 39
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Precio 2'
+      Visible = False
+    end
     object btncancelar: TButton
       Left = 672
-      Top = 114
+      Top = 130
       Width = 75
       Height = 25
       Cancel = True
       Caption = 'Cancelar'
       ModalResult = 2
-      TabOrder = 6
+      TabOrder = 7
     end
     object btnaceptar: TButton
       Left = 591
-      Top = 114
+      Top = 130
       Width = 75
       Height = 25
       Caption = 'Aceptar'
-      TabOrder = 5
+      TabOrder = 6
       OnClick = btnaceptarClick
     end
     object ventadetalle_preciounitario: TDBAdvEdit
@@ -178,7 +187,7 @@ object ventadetalle2: Tventadetalle2
     end
     object ventadetalle_total: TDBAdvEdit
       Left = 104
-      Top = 95
+      Top = 111
       Width = 121
       Height = 21
       EditType = etFloat
@@ -191,7 +200,7 @@ object ventadetalle2: Tventadetalle2
       Lookup.Separator = ';'
       Color = clWindow
       Enabled = True
-      TabOrder = 4
+      TabOrder = 5
       Text = '0,00'
       Visible = True
       OnExit = ventadetalle_totalExit
@@ -273,7 +282,7 @@ object ventadetalle2: Tventadetalle2
         3F5D01274A8C4EE13C58D84F0413E234322F8CB59750A8542F773078EB7AA472
         15D04CF43FBBCF3860C180A355E4CD17C86F12C72B4BDFD335AA7A853CDA5C4E
         8D954EE03623C27BBF60F1EEC71A58306199CFFFD9}
-      TabOrder = 7
+      TabOrder = 8
       OnClick = btnherramientasClick
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
@@ -297,15 +306,15 @@ object ventadetalle2: Tventadetalle2
     end
     object GroupBoxPrecios: TGroupBox
       Left = 0
-      Top = 143
+      Top = 160
       Width = 755
       Height = 47
       Align = alBottom
       Caption = 'Precios'
       ParentBackground = False
-      TabOrder = 8
+      TabOrder = 9
       TabStop = True
-      ExplicitWidth = 708
+      ExplicitTop = 143
       object producto_precioventa1: TMoneyEdit
         Left = 104
         Top = 14
@@ -431,7 +440,7 @@ object ventadetalle2: Tventadetalle2
     end
     object ventadetalle_preciounitoriginal: TDBAdvEdit
       Left = 288
-      Top = 95
+      Top = 111
       Width = 121
       Height = 21
       TabStop = False
@@ -445,7 +454,7 @@ object ventadetalle2: Tventadetalle2
       Lookup.Separator = ';'
       Color = clWindow
       Enabled = True
-      TabOrder = 9
+      TabOrder = 10
       Text = '0,00'
       Visible = False
       OnExit = ventadetalle_preciounitarioExit
@@ -468,6 +477,27 @@ object ventadetalle2: Tventadetalle2
       CalculatorLook.Font.Style = []
       TabOrder = 0
       Version = '1.1.0.1'
+    end
+    object documentoventadetalle_importe_2: TDBAdvEdit
+      Left = 104
+      Top = 87
+      Width = 121
+      Height = 21
+      EditType = etFloat
+      Precision = 2
+      LabelFont.Charset = DEFAULT_CHARSET
+      LabelFont.Color = clWindowText
+      LabelFont.Height = -11
+      LabelFont.Name = 'Tahoma'
+      LabelFont.Style = []
+      Lookup.Separator = ';'
+      Color = clWindow
+      Enabled = True
+      TabOrder = 4
+      Text = '0,00'
+      Visible = False
+      OnExit = ventadetalle_preciounitarioExit
+      Version = '2.7.0.5'
     end
   end
   object ZQDocumentoventadetalles: TZQuery

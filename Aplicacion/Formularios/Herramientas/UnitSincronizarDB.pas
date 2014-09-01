@@ -77,8 +77,8 @@ begin
 //    end;
 
 
-//    Princ.StatusBar1.Panels.Add.Text:=self.tipo_sincronizacion+' iniciada - '+formatdatetime('HH:mm',time);
-//    Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Width:=200;
+//    Princ.StatusBar1.Panels.Items[1].Text:=self.tipo_sincronizacion+' iniciada - '+formatdatetime('HH:mm',time);
+    princ.Permisos1.guardarlog(self.ClassName+self.tipo_sincronizacion+' iniciada - '+formatdatetime('HH:mm',time));
     tablasinc_id.LlenarMQuery;
     if tablasinc_id.FQChequeados.RecordCount>0 then
       begin
@@ -130,7 +130,8 @@ begin
 
       end;
 
-//    Princ.StatusBar1.Panels.Items[Princ.StatusBar1.Panels.Count-1].Text:=self.tipo_sincronizacion+' finalizada - '+formatdatetime('HH:mm',time);
+    princ.Permisos1.guardarlog(self.ClassName+self.tipo_sincronizacion+' finalizada - '+formatdatetime('HH:mm',time));
+//    Princ.StatusBar1.Panels.Items[1].Text:=self.tipo_sincronizacion+' finalizada - '+formatdatetime('HH:mm',time);
 end;
 
 procedure TSincronizarDB.btnguardarClick(Sender: TObject);

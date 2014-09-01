@@ -1,9 +1,9 @@
-object ABMbase: TABMbase
+object IdentificarUsuario: TIdentificarUsuario
   Left = 0
   Top = 0
-  Caption = 'ABMbase'
-  ClientHeight = 501
-  ClientWidth = 616
+  Caption = 'IdentificarUsuario'
+  ClientHeight = 145
+  ClientWidth = 293
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,8 +22,8 @@ object ABMbase: TABMbase
   object panelgrilla: TAdvPanel
     Left = 0
     Top = 0
-    Width = 616
-    Height = 501
+    Width = 293
+    Height = 145
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -51,7 +51,6 @@ object ABMbase: TABMbase
     CollapsColor = clHighlight
     CollapsDelay = 0
     ColorTo = 11769496
-    FreeOnClose = True
     ShadowColor = clBlack
     ShadowOffset = 0
     StatusBar.BorderColor = clNone
@@ -64,24 +63,63 @@ object ABMbase: TABMbase
     StatusBar.Color = 12560553
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
+    Styler = Princ.AdvPanelStyler1
     FullHeight = 0
+    object Label7: TLabel
+      Left = 10
+      Top = 57
+      Width = 54
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Contrase'#241'a'
+    end
+    object Label11: TLabel
+      Left = 28
+      Top = 33
+      Width = 36
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Usuario'
+    end
+    object lvlerror: TLabel
+      Left = 28
+      Top = 9
+      Width = 3
+      Height = 13
+    end
     object btncancelar: TButton
-      Left = 532
-      Top = 446
+      Left = 198
+      Top = 86
       Width = 75
       Height = 25
+      Cancel = True
       Caption = 'Cancelar'
-      TabOrder = 1
-      OnClick = btncancelarClick
+      ModalResult = 2
+      TabOrder = 3
     end
     object btnguardar: TButton
-      Left = 451
-      Top = 446
+      Left = 117
+      Top = 86
       Width = 75
       Height = 25
-      Caption = 'Guardar'
-      TabOrder = 0
+      Caption = 'Aceptar'
+      TabOrder = 2
       OnClick = btnguardarClick
+    end
+    object personal_usuario: TEdit
+      Left = 70
+      Top = 30
+      Width = 203
+      Height = 21
+      TabOrder = 0
+    end
+    object personal_pass: TEdit
+      Left = 70
+      Top = 54
+      Width = 203
+      Height = 21
+      PasswordChar = '*'
+      TabOrder = 1
     end
   end
   object ZQSelect: TZQuery
@@ -95,8 +133,7 @@ object ABMbase: TABMbase
         Name = 'cliente_id'
         ParamType = ptUnknown
       end>
-    Left = 472
-    Top = 104
+    Left = 144
     ParamData = <
       item
         DataType = ftUnknown
@@ -115,13 +152,19 @@ object ABMbase: TABMbase
         Name = 'cliente_id'
         ParamType = ptUnknown
       end>
-    Left = 480
-    Top = 16
+    Left = 224
+    Top = 8
     ParamData = <
       item
         DataType = ftUnknown
         Name = 'cliente_id'
         ParamType = ptUnknown
       end>
+  end
+  object Timer1: TTimer
+    Enabled = False
+    OnTimer = Timer1Timer
+    Left = 24
+    Top = 64
   end
 end

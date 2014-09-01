@@ -90,7 +90,7 @@ object configuracion: Tconfiguracion
       Top = 0
       Width = 589
       Height = 465
-      ActivePage = TabSheet4
+      ActivePage = TabSheet7
       Align = alTop
       TabOrder = 2
       object TabSheet1: TTabSheet
@@ -1148,6 +1148,8 @@ object configuracion: Tconfiguracion
       object TabSheet7: TTabSheet
         Caption = 'Sincronizacion'
         ImageIndex = 6
+        ExplicitLeft = 0
+        ExplicitTop = 28
         object GroupBox7: TGroupBox
           Left = 25
           Top = 24
@@ -1216,6 +1218,30 @@ object configuracion: Tconfiguracion
             PasswordChar = '*'
             TabOrder = 3
           end
+        end
+        object CheckBox1: TCheckBox
+          Left = 48
+          Top = 163
+          Width = 105
+          Height = 17
+          Caption = 'Enviar Stock'
+          TabOrder = 1
+        end
+        object CheckBox2: TCheckBox
+          Left = 48
+          Top = 179
+          Width = 105
+          Height = 17
+          Caption = 'Descargar Stock'
+          TabOrder = 2
+        end
+        object CheckBox3: TCheckBox
+          Left = 48
+          Top = 195
+          Width = 185
+          Height = 17
+          Caption = 'Confirmar Recepcion de productos'
+          TabOrder = 3
         end
       end
     end

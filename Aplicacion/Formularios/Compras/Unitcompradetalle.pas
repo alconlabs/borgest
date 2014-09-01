@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, AdvEdit, DBAdvEd, UnitSqlComboBox, ExtCtrls, AdvPanel, DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, AdvEdBtn, EditCodi,
-  AdvGlowButton, Menus, AdvMenus, MoneyEdit;
+  AdvGlowButton, Menus, AdvMenus, MoneyEdit, math;
 
 type
   Tcompradetalle = class(TForm)
@@ -138,25 +138,54 @@ begin
           ZQDocumentocompradetalles.FieldByName('documentocompradetalle_id').AsString:='0';
           ZQDocumentocompradetalles.FieldByName('documentocompradetalle_descripcion').AsString:=producto_nombre.Text;
           ZQDocumentocompradetalles.FieldByName('documentocompradetalle_cantidad').AsString:=cantidad.Text;
-          ZQDocumentocompradetalles.FieldByName('documentocompradetalle_precio').AsString:=preciounitario.Text;
-          ZQDocumentocompradetalles.FieldByName('documentocompradetalle_total').AsString:=total.Text;
-
-          ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto21').AsFloat:=0;
-          ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva21').AsFloat:=0;
-          ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto105').AsFloat:=0;
-          ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva105').AsFloat:=0;
-
           tipoiva_valor:=strtofloat(Princ.buscar('select tipoiva_valor from tipoiva inner join productos on tipoiva.tipoiva_id=productos.tipoiva_id where producto_id="'+producto_id.Text+'"','tipoiva_valor'));
-          if tipoiva_valor>10.5 then
+          if Princ.GetConfiguracion('COMPRADETALLESINIVA')<>'-1' then
             begin
-                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto21').AsFloat:=100*total.FloatValue/(100+tipoiva_valor);
-                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva21').AsFloat:=tipoiva_valor*total.FloatValue/(100+tipoiva_valor);
+                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_precio').AsString:=preciounitario.Text;
+                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_total').AsString:=total.Text;
+
+                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto21').AsFloat:=0;
+                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva21').AsFloat:=0;
+                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto105').AsFloat:=0;
+                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva105').AsFloat:=0;
+
+                if tipoiva_valor>10.5 then
+                  begin
+                      ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto21').AsFloat:=100*total.FloatValue/(100+tipoiva_valor);
+                      ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva21').AsFloat:=tipoiva_valor*total.FloatValue/(100+tipoiva_valor);
+                  end
+                else
+                  begin
+                      ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto105').AsFloat:=100*total.FloatValue/(100+tipoiva_valor);
+                      ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva105').AsFloat:=tipoiva_valor*total.FloatValue/(100+tipoiva_valor);
+                  end;
+
+
             end
           else
             begin
-                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto105').AsFloat:=100*total.FloatValue/(100+tipoiva_valor);
-                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva105').AsFloat:=tipoiva_valor*total.FloatValue/(100+tipoiva_valor);
+                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_precio').AsFloat:=preciounitario.FloatValue+(roundto(preciounitario.FloatValue*tipoiva_valor/100,-2));
+                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_total').AsFloat:=total.FloatValue+(roundto(total.FloatValue*tipoiva_valor/100,-2));
+
+                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto21').AsFloat:=0;
+                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva21').AsFloat:=0;
+                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto105').AsFloat:=0;
+                ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva105').AsFloat:=0;
+
+
+                if tipoiva_valor>10.5 then
+                  begin
+                      ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto21').AsFloat:=total.FloatValue;
+                      ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva21').AsFloat:=tipoiva_valor*total.FloatValue/100;
+                  end
+                else
+                  begin
+                      ZQDocumentocompradetalles.FieldByName('documentocompradetalle_neto105').AsFloat:=total.FloatValue;
+                      ZQDocumentocompradetalles.FieldByName('documentocompradetalle_iva105').AsFloat:=tipoiva_valor*total.FloatValue/(100);
+                  end;
+
             end;
+
 
           ZQDocumentocompradetalles.FieldByName('documentocompradetalle_estado').AsString:='FACTURADO';
           ZQDocumentocompradetalles.FieldByName('documentocompradetalle_observacion').AsString:='';

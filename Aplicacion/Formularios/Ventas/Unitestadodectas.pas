@@ -165,6 +165,7 @@ type
     ZQPendientespersonal_auxint1: TIntegerField;
     ZQPendientespersonal_auxint1_1: TIntegerField;
     ZQPendientesdocumentoventa_diasvenc: TIntegerField;
+    BtnCtasCobrar: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnimprimirClick(Sender: TObject);
@@ -179,12 +180,13 @@ type
     procedure BtnDetalleImputacionClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure BtnCtasCobrarClick(Sender: TObject);
   private
     { Private declarations }
     temporal_idproceso:string;
     clientes_ids_sin_deuda:string;
     procedure SetNotRequired;
-    function GenerarWhere:string;
+    function GenerarWhere(desde:boolean=false):string;
     function WhereClienteSinDeuda:string;
   public
     { Public declarations }
@@ -212,7 +214,7 @@ begin
 end;
 
 
-function Testadoctas.GenerarWhere:string;
+function Testadoctas.GenerarWhere(desde:boolean=false):string;
 var
   where:string;
 begin
@@ -241,6 +243,17 @@ begin
 
     if cbhastafechavenc.Checked then
       where:=where+'and documentosventas.documentoventa_fechavenc<="'+formatdatetime('yyyy-mm-dd',hasta_fecha_venc.Date)+'" ';
+
+
+    if desde then
+      begin
+          if cbdesdefecha.Checked then
+            where:=where+'and documentosventas.documentoventa_fecha>="'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'" ';
+
+          if cbdesdefechavenc.Checked then
+            where:=where+'and documentosventas.documentoventa_fechavenc>="'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'" ';
+
+      end;
 
     Result:=where;
 
@@ -486,6 +499,41 @@ begin
 
 end;
 
+procedure Testadoctas.BtnCtasCobrarClick(Sender: TObject);
+begin
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'cuentas_a_cobrar_vendedor.rep';
+    if cbdesdefecha.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
+    if cbhastafecha.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
+    if cbdesdefechavenc.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHAVENC').AsString:=datetostr(desde_fecha_venc.Date);
+    if cbhastafechavenc.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHAVENC').AsString:=datetostr(hasta_fecha_venc.Date);
+
+
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select sucursales.sucursal_id,personal_nombre, sucursal_nombre,'+
+                           'sum(if(documentoventa_fechavenc<=curdate(),if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas.documentoventa_saldo,documentosventas.documentoventa_saldo*-1),0)) as vencido, '+
+                           'sum(if(documentoventa_fechavenc>curdate(),if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas.documentoventa_saldo,documentosventas.documentoventa_saldo*-1),0)) as porvencer, '+
+                           'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",documentosventas.documentoventa_saldo,documentosventas.documentoventa_saldo*-1)) as total '+
+                           'from documentosventas '+
+                           'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                           'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                           'inner join personal on clientes.personal_id=personal.personal_id '+
+                           'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                           'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
+                           'where documentoventa_saldo>0 and documentoventa_estado="PENDIENTE" '+
+                           'group by personal.personal_id, sucursales.sucursal_id '+
+                           'order by sucursales.sucursal_nombre ';
+
+
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.GTBUtilidades1.AgregarWhere(Princ.VCLReport1.Report.Datainfo.Items[0].sql,GenerarWhere(true));
+
+    Princ.VCLReport1.Execute;
+end;
+
 procedure Testadoctas.BtnDetalleImputacionClick(Sender: TObject);
 var
   orden:integer;
@@ -704,7 +752,7 @@ begin
                            'inner join personal on documentosventas.personal_id=personal.personal_id '+
                            'inner join personal as pesronalcliente on clientes.personal_id=pesronalcliente.personal_id '+
                            'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
-                           'left join documentopagos on documentosventas.documentoventa_id=documentopagos.documentoventa_id '+ 
+                           'left join documentopagos on documentosventas.documentoventa_id=documentopagos.documentoventa_id '+
                            'group by grupo '+
                            'order by sucursal_nombre, pesronalcliente.personal_nombre, cliente_nombre, clientes.cliente_id, documentoventa_fecha, documentoventa_numero ';
 

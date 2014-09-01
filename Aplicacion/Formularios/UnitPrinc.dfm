@@ -41,7 +41,7 @@ object Princ: TPrinc
     Top = 0
     Width = 1362
     Height = 100
-    ActivePage = AdvPageCompras
+    ActivePage = AdvPageVentas
     Caption.Visible = False
     Caption.Height = 0
     CaptionButtons = []
@@ -3627,9 +3627,10 @@ object Princ: TPrinc
         Width = 300
       end
       item
-        Style = psOwnerDraw
-        Text = 'panelprogreso'
-        Width = 210
+        Width = 300
+      end
+      item
+        Width = 300
       end>
     OnDrawPanel = StatusBar1DrawPanel
   end
@@ -4511,8 +4512,8 @@ object Princ: TPrinc
         Name = 'producto_id'
         ParamType = ptUnknown
       end>
-    Left = 808
-    Top = 496
+    Left = 800
+    Top = 520
     ParamData = <
       item
         DataType = ftUnknown
@@ -4767,7 +4768,6 @@ object Princ: TPrinc
   object Timer1: TTimer
     Enabled = False
     Interval = 360000
-    OnTimer = Timer1Timer
     Left = 48
     Top = 408
   end
@@ -4943,8 +4943,8 @@ object Princ: TPrinc
         Name = 'documentoventa_id'
         ParamType = ptUnknown
       end>
-    Left = 880
-    Top = 502
+    Left = 1232
+    Top = 478
     ParamData = <
       item
         DataType = ftUnknown

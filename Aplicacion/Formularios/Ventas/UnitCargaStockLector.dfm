@@ -1,15 +1,15 @@
 inherited CargaStockLector: TCargaStockLector
   Caption = 'Carga de Stock - Lector'
   ClientHeight = 540
-  ClientWidth = 655
-  ExplicitWidth = 671
+  ClientWidth = 790
+  ExplicitWidth = 806
   ExplicitHeight = 578
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
-    Width = 655
+    Width = 790
     Height = 540
-    ExplicitWidth = 655
+    ExplicitWidth = 790
     ExplicitHeight = 540
     FullHeight = 0
     object Label15: TLabel [0]
@@ -178,12 +178,13 @@ inherited CargaStockLector: TCargaStockLector
       TabOrder = 6
       Text = '0,00'
       Visible = True
+      OnExit = producto_precioventa1Exit
       Version = '2.7.0.5'
     end
     object DBGrid2: TDBGrid
       Left = 463
-      Top = 18
-      Width = 170
+      Top = 15
+      Width = 323
       Height = 162
       DataSource = DTSProductosTallesCodigos
       PopupMenu = PopupMenu1
@@ -198,14 +199,21 @@ inherited CargaStockLector: TCargaStockLector
           Expanded = False
           FieldName = 'producto_tallecodigo'
           Title.Caption = 'Codigo'
-          Width = 60
+          Width = 86
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'producto_talle'
           Title.Caption = 'Talle'
-          Width = 60
+          Width = 88
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'producto_precioventa1'
+          Title.Caption = 'Precio'
+          Width = 90
           Visible = True
         end>
     end
@@ -220,7 +228,7 @@ inherited CargaStockLector: TCargaStockLector
     object PageControl1: TPageControl
       Left = 0
       Top = 214
-      Width = 655
+      Width = 790
       Height = 308
       ActivePage = TabSheet1
       Align = alBottom
@@ -231,7 +239,7 @@ inherited CargaStockLector: TCargaStockLector
         object DBGrid1: TDBGrid
           Left = 0
           Top = 0
-          Width = 647
+          Width = 782
           Height = 246
           Align = alTop
           DataSource = DTSProductosStock
@@ -286,7 +294,7 @@ inherited CargaStockLector: TCargaStockLector
         object DBGrid3: TDBGrid
           Left = 0
           Top = 0
-          Width = 647
+          Width = 782
           Height = 246
           Align = alTop
           DataSource = DTSProductosNuevos
@@ -404,13 +412,15 @@ inherited CargaStockLector: TCargaStockLector
     SQL.Strings = (
       
         'select t as producto_id,t as producto_talle,t as producto_tallec' +
-        'odigo,i as producto_talleorden from temp ')
+        'odigo,i as producto_talleorden,d as producto_precioventa1 from t' +
+        'emp ')
     Params = <>
     ConfCampos.Strings = (
       'producto_id,t'
       'producto_talle,t'
       'producto_tallecodigo,t'
-      'producto_talleorden,i')
+      'producto_talleorden,i'
+      'producto_precioventa1,d')
     Left = 312
     Top = 392
     object MQProductosTallesproducto_id: TStringField
@@ -428,11 +438,14 @@ inherited CargaStockLector: TCargaStockLector
     object MQProductosTallesproducto_talleorden: TIntegerField
       FieldName = 'producto_talleorden'
     end
+    object MQProductosTallesproducto_precioventa1: TFloatField
+      FieldName = 'producto_precioventa1'
+    end
   end
   object DTSProductosTallesCodigos: TDataSource
     DataSet = MQProductosTalles
-    Left = 344
-    Top = 80
+    Left = 376
+    Top = 88
   end
   object ZQCurva: TZQuery
     Connection = Princ.ZBase
