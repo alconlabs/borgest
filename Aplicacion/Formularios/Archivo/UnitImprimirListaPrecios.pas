@@ -146,6 +146,7 @@ begin
     if producto_precioventa.ItemIndex<4 then
       begin
           Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'lista_precios_productos.rep';
+          Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
           Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, '+producto_precioventa.codigo+' as precio, '+Princ.CAMPO_ID_PRODUCTO+' as codigo from productos '+
                                                          'inner join rubros on productos.rubro_id=rubros.rubro_id '+
                                                          'where 1=1 and '+productos.where+' order by producto_nombre';
@@ -154,6 +155,7 @@ begin
     else
       begin
           Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'listado_productos.rep';
+          Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
           Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, productos.'+Princ.CAMPO_ID_PRODUCTO+' as codigo from productos '+
                                                          'inner join rubros on productos.rubro_id=rubros.rubro_id '+
                                                          'inner join productodeposito on productos.producto_id=productodeposito.producto_id '+

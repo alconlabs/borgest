@@ -61,7 +61,7 @@ inherited MovimientosDepositosConfirma: TMovimientosDepositosConfirma
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 2
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -168,7 +168,7 @@ inherited MovimientosDepositosConfirma: TMovimientosDepositosConfirma
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 9
       Confbase = Princ.ZBase
       Confsql.Strings = (

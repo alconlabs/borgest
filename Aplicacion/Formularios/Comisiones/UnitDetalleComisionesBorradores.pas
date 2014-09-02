@@ -147,6 +147,7 @@ begin
     Princ.TablaTemporal1.CargarTemporales(MQDetalles);
 
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'estado_ctas_borradores.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
 
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from temporales '+
                                                    'where temporal_idproceso="'+Princ.TablaTemporal1.Conftemporal_idproceso+'" '+

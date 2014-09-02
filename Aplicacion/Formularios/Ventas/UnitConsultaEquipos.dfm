@@ -86,6 +86,10 @@ inherited ConsultaEquipos: TConsultaEquipos
       TabOrder = 2
       object TabSheet1: TTabSheet
         Caption = 'Notas de Pedido'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label1: TLabel
           Left = 3
           Top = 189
@@ -279,7 +283,7 @@ inherited ConsultaEquipos: TConsultaEquipos
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 8
       Confbase = Princ.ZBase
       Confsql.Strings = (

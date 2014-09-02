@@ -34,6 +34,7 @@ procedure TLibroIvaCompras.btnguardarClick(Sender: TObject);
 begin
   inherited;
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'libro_iva_compras.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
 

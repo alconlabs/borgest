@@ -1083,6 +1083,7 @@ end;
 procedure Tliquidaciones.btnimprimirClick(Sender: TObject);
 begin
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'liquidacion_vendedor.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Datainfo.Items[0].SQL:='select * from liquidacionesvendedores '+
                                                    'left join liquivendedeta on liquidacionesvendedores.liquidacionvendedor_id=liquivendedeta.liquidacionvendedor_id '+
                                                    'left join documentoventadetalles on liquivendedeta.documentoventadetalle_id=documentoventadetalles.documentoventadetalle_id '+

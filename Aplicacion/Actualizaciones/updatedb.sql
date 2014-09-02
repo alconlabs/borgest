@@ -2192,7 +2192,7 @@ INSERT INTO `config` SET `config_nombre`='MOVIMDEPODESCARGAR',`config_valor`='-1
 616;
 INSERT INTO `config` SET `config_nombre`='MOVIMDEPODESCARGARCONFIRM',`config_valor`='-1';
 617;
-INSERT INTO `config` SET `config_nombre`='COMPRADETALLESINIVA',`config_valor`='-1';
+INSERT INTO `config` SET `config_nombre`='COMPRADETALLESINIVA',`config_valor`='0';
 618;
 ALTER TABLE `movimdepodetalles` 
 ADD COLUMN `deposito_idorigen` INT(11) NULL DEFAULT NULL  AFTER `movimientodeposito_id` , 

@@ -191,7 +191,7 @@ object OrdendePago: TOrdendePago
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 0
       OnSelect = proveedor_idSelect
       Confbase = Princ.ZBase
@@ -208,7 +208,7 @@ object OrdendePago: TOrdendePago
       Width = 220
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 1
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -433,7 +433,7 @@ object OrdendePago: TOrdendePago
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 15
       OnSelect = puntoventa_idSelect
       Confbase = Princ.ZBase
@@ -449,7 +449,7 @@ object OrdendePago: TOrdendePago
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 16
       OnSelect = tipodocu_idSelect
       Confbase = Princ.ZBase
@@ -591,7 +591,7 @@ object OrdendePago: TOrdendePago
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 14
       OnSelect = sucursal_idSelect
       Confbase = Princ.ZBase

@@ -707,7 +707,6 @@ inherited DocumentoVentaExcel: TDocumentoVentaExcel
       Left = 49
       Top = 7
       TabOrder = 25
-      OnExit = documentoventa_fechaExit
       ExplicitLeft = 49
       ExplicitTop = 7
     end

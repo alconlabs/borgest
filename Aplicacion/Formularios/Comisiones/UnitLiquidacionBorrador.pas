@@ -590,6 +590,7 @@ procedure TLiquidacionBorrador.btnimprimirClick(Sender: TObject);
 begin
   inherited;
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'liquidacion_borradores.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from liquidacionesborradores '+
                                                    'inner join personal on liquidacionesborradores.personal_id=personal.personal_id '+
                                                    'inner join liquidacionborradordetalles on liquidacionesborradores.liquidacionborrador_id=liquidacionborradordetalles.liquidacionborrador_id '+

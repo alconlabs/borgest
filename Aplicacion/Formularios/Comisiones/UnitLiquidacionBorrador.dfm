@@ -103,7 +103,7 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       Width = 354
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 2
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -162,6 +162,10 @@ inherited LiquidacionBorrador: TLiquidacionBorrador
       TabOrder = 7
       object TabSheet1: TTabSheet
         Caption = 'Borradores'
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label6: TLabel
           Left = 672
           Top = 159

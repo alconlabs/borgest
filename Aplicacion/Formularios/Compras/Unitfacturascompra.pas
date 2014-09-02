@@ -382,6 +382,7 @@ begin
     tipodocu_archivoimpresion:=Princ.GetConfigTipoDocumento(id,'','tipodocu_archivoimpresion');
 
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+tipodocu_archivoimpresion;
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from documentosventas '+
                                              'inner join documentoventadetalles on documentosventas.documentocompra_id=documentoventadetalles.documentocompra_id '+
                                              'inner join clientes on documentosventas.proveedor_id=clientes.proveedor_id '+

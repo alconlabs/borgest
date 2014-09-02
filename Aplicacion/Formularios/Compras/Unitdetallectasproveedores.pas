@@ -600,6 +600,7 @@ begin
     Princ.ZQExcecSQL.ExecSql;
 
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'detalle_imputacion.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     if cbdesdefecha.Checked then
       Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     if cbhastafecha.Checked then
@@ -630,6 +631,7 @@ var
   grupo, condicion_saldoanterior:string;
 begin
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'detalle_de_ctasctes.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     if cbdesdefecha.Checked then
       Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     if cbhastafecha.Checked then

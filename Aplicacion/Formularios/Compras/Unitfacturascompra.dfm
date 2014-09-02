@@ -188,7 +188,7 @@ object facturacompra: Tfacturacompra
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 5
       OnExit = proveedor_idExit
       OnSelect = proveedor_idSelect
@@ -206,7 +206,7 @@ object facturacompra: Tfacturacompra
       Width = 220
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 6
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -748,7 +748,7 @@ object facturacompra: Tfacturacompra
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 1
       OnExit = proveedor_idExit
       OnSelect = puntoventa_idSelect
@@ -765,7 +765,7 @@ object facturacompra: Tfacturacompra
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 2
       OnExit = proveedor_idExit
       Confbase = Princ.ZBase
@@ -856,7 +856,7 @@ object facturacompra: Tfacturacompra
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 0
       OnExit = proveedor_idExit
       OnSelect = sucursal_idSelect

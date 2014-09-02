@@ -82,7 +82,7 @@ inherited ConsultaStockCurvas: TConsultaStockCurvas
       Width = 271
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 2
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -100,7 +100,7 @@ inherited ConsultaStockCurvas: TConsultaStockCurvas
       Width = 271
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 3
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -118,7 +118,7 @@ inherited ConsultaStockCurvas: TConsultaStockCurvas
       Width = 271
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 4
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -150,7 +150,7 @@ inherited ConsultaStockCurvas: TConsultaStockCurvas
       Width = 271
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 7
       Confbase = Princ.ZBase
       Confsql.Strings = (

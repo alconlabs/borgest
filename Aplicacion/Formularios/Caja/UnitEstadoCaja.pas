@@ -136,6 +136,7 @@ procedure TEstadoCaja.btnimprimirClick(Sender: TObject);
 begin
   inherited;
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_caja.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select documentopagos.*, tipospago.*,  sum(documentopago_importe) as importe from documentopagos '+
                                                    'inner join tipospago on documentopagos.tipopago_id=tipospago.tipopago_id '+
                                                    'inner join documentosventas on documentopagos.documentoventa_id=documentosventas.documentoventa_id '+
@@ -176,6 +177,7 @@ procedure TEstadoCaja.BtnImprimirResumenTarjetasClick(Sender: TObject);
 begin
   inherited;
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_caja_tarjetas.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select documentopagos.*, tipospago.*,  sum(documentopago_importe) as importe,  '+
                                                    'count(documentopagos.documentopago_nombre) as cantidad '+
                                                    'from documentopagos '+

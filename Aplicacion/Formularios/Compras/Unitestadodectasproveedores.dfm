@@ -88,7 +88,7 @@ object estadoctasproveedores: Testadoctasproveedores
       Width = 597
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 0
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -325,7 +325,7 @@ object estadoctasproveedores: Testadoctasproveedores
       Width = 209
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 4
       Confbase = Princ.ZBase
       Confsql.Strings = (

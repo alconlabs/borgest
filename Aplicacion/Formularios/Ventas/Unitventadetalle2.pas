@@ -180,6 +180,7 @@ begin
           ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidadpendiente').AsString:='0';
           ZQDocumentoventadetalles.FieldByName('documentoventa_id').AsString:='0';
           ZQDocumentoventadetalles.FieldByName('documentoventadetalle_listaprecio').AsInteger:=documentoventadetalle_listaprecio;
+          ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe2').AsString:='0';
           if documentoventadetalle_importe_2.Visible then
             begin
                 ZQDocumentoventadetalles.FieldByName('documentoventadetalle_importe2').AsString:=documentoventadetalle_importe_2.Text;

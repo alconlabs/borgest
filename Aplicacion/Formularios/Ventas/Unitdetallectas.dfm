@@ -86,7 +86,7 @@ object detallectas: Tdetallectas
       Width = 608
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 0
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -335,7 +335,7 @@ object detallectas: Tdetallectas
       Width = 209
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 3
       Confbase = Princ.ZBase
       Confsql.Strings = (

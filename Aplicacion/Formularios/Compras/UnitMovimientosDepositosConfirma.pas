@@ -273,6 +273,7 @@ procedure TMovimientosDepositosConfirma.btnimprimirClick(Sender: TObject);
 begin
   inherited;
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'remito_motoslabanda.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from movimientosdepositos '+
                                              'inner join movimdepodetalles on movimientosdepositos.movimientodeposito_id=movimdepodetalles.movimientodeposito_id '+
                                              'inner join productos on movimdepodetalles.producto_id=productos.producto_id '+

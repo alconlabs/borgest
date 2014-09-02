@@ -110,6 +110,7 @@ begin
 
 
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'etiquetas.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
 
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from temporales '+
                                                    'where temporal_idproceso="'+temporal_idproceso+'" ';

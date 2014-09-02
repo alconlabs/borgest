@@ -502,6 +502,7 @@ end;
 procedure Testadoctas.BtnCtasCobrarClick(Sender: TObject);
 begin
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'cuentas_a_cobrar_vendedor.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     if cbdesdefecha.Checked then
       Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     if cbhastafecha.Checked then
@@ -667,6 +668,7 @@ begin
     Princ.ZQExcecSQL.ExecSql;
 
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'detalle_imputacion.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     if cbdesdefecha.Checked then
       Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     if cbhastafecha.Checked then
@@ -725,6 +727,7 @@ begin
       end;
 
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'estado_de_ctasctes.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     if cbdesdefecha.Checked then
       Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     if cbhastafecha.Checked then

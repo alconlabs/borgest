@@ -65,7 +65,6 @@ object ventadetalle2: Tventadetalle2
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
-    ExplicitHeight = 208
     FullHeight = 0
     object Label3: TLabel
       Left = 47
@@ -314,7 +313,6 @@ object ventadetalle2: Tventadetalle2
       ParentBackground = False
       TabOrder = 9
       TabStop = True
-      ExplicitTop = 143
       object producto_precioventa1: TMoneyEdit
         Left = 104
         Top = 14

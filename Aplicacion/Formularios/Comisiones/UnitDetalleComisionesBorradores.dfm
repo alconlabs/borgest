@@ -40,7 +40,7 @@ inherited DetalleComisionesBorradores: TDetalleComisionesBorradores
       Width = 386
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 2
       Confbase = Princ.ZBase
       Confsql.Strings = (

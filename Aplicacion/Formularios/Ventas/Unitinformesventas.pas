@@ -57,6 +57,7 @@ uses UnitPrinc;
 procedure TInformesVentas.InformedeCuponesTarjetas;
 begin
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_cupones_tarjetas.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select documentopagos.*, tipospago.*,  sum(documentopago_importe) as importe,  '+
@@ -87,6 +88,7 @@ procedure TInformesVentas.InformedeEquipos;
 begin
     puntoventa_id.GenerarWhere;
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_equipos.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
@@ -121,6 +123,7 @@ procedure TInformesVentas.RankingProductos;
 begin
     puntoventa_id.GenerarWhere;
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'ranking_ventas_productos.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
 
@@ -152,6 +155,7 @@ procedure TInformesVentas.InformedeVentas;
 begin
     puntoventa_id.GenerarWhere;
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_ventas.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
@@ -184,6 +188,7 @@ procedure TInformesVentas.InformedeVentasProductos;
 begin
     puntoventa_id.GenerarWhere;
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_ventas_productos.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
@@ -218,6 +223,7 @@ procedure TInformesVentas.InformedeVentasProductosCantidad;
 begin
     puntoventa_id.GenerarWhere;
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_ventas_productos_cantidades.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
@@ -262,6 +268,7 @@ procedure TInformesVentas.InformedeVentasCEquipos;
 begin
     puntoventa_id.GenerarWhere;
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_ventas_equipos.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
@@ -296,8 +303,10 @@ procedure TInformesVentas.InformedeCobros;
 begin
     puntoventa_id.GenerarWhere;
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_cobros.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
 //    Princ.VCLReport1.ConnectionName:=Princ.GetConfiguracion('CONEXIONREPORTES');
 //    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_cobros.rep';
+
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
@@ -334,6 +343,7 @@ procedure TInformesVentas.InformeVentasPrecios;
 begin
     puntoventa_id.GenerarWhere;
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_ventas_precios.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('NOMBREPRECIO1').AsString:=Princ.NOMBREPRECIO1;
@@ -373,6 +383,7 @@ begin
     puntoventa_id.GenerarWhere;
 
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_costos_ventas.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
     Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, sum(documentoventadetalles.documentoventadetalle_cantidad) as cantidad_vendida from documentosventas '+

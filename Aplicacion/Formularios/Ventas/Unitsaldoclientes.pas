@@ -423,6 +423,7 @@ begin
     Princ.ZQExcecSQL.ExecSql;
 
     Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'detalle_imputacion.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from temporales '+
                                                    'where temporal_idproceso="'+temporal_idproceso+'" '+
                                                    'order by temporal_string2, temporal_id, temporal_int4 ';
