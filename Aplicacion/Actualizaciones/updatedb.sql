@@ -2208,3 +2208,40 @@ CHANGE COLUMN `movimdepodetalle_id` `movimdepodetalle_id` INT(11) NOT NULL AUTO_
 INSERT INTO `config` SET `config_nombre`='PRESUPUESTOMOSTRAR2DOPRECIO',`config_valor`='0';
 623;
 INSERT INTO `config` SET `config_nombre`='IDENTIFICARUSUARIO',`config_valor`='0';
+624;
+CREATE  TABLE IF NOT EXISTS `bancos` (
+  `banco_id` INT(11) NOT NULL ,
+  `banco_nombre` VARCHAR(100) NULL DEFAULT NULL ,
+  PRIMARY KEY (`banco_id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+625;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('103', '>Archivo>General>Bancos', '0', 'BtnBancos', '', '0', '0', 'TListaBancos');
+626;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,103,perfil_id,-1 from perfiles;
+627;
+CREATE  TABLE IF NOT EXISTS `cheques` (
+  `cheque_id` INT(11) NOT NULL ,
+  `cheque_numero` VARCHAR(45) NULL DEFAULT NULL ,
+  `cheque_fechavenc` DATE NULL DEFAULT NULL ,
+  `cheque_importe` FLOAT(20,2) NULL DEFAULT NULL ,
+  `documentopago_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`cheque_id`) ,
+  INDEX `fk_cheques_documentopagos1` (`documentopago_id` ASC) ,
+  CONSTRAINT `fk_cheques_documentopagos1`
+    FOREIGN KEY (`documentopago_id` )
+    REFERENCES `documentopagos` (`documentopago_id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+628;
+ALTER TABLE `cheques` ADD COLUMN `banco_id` INT(11) NOT NULL  AFTER `documentopago_id` , 
+  ADD CONSTRAINT `fk_cheques_bancos1`
+  FOREIGN KEY (`banco_id` )
+  REFERENCES `bancos` (`banco_id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+, ADD INDEX `fk_cheques_bancos1` (`banco_id` ASC) ;

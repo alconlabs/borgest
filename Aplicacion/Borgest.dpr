@@ -156,7 +156,8 @@ uses
   UnitImprimirFichasClientes in 'Formularios\Archivo\UnitImprimirFichasClientes.pas' {ImprimirFichasClientes},
   UnitConsultaStockCurvas in 'Formularios\Compras\UnitConsultaStockCurvas.pas' {ConsultaStockCurvas},
   UnitCargaStockLector in 'Formularios\Ventas\UnitCargaStockLector.pas' {CargaStockLector},
-  UnitIdentificarUsuario in 'Formularios\Herramientas\UnitIdentificarUsuario.pas' {IdentificarUsuario};
+  UnitIdentificarUsuario in 'Formularios\Herramientas\UnitIdentificarUsuario.pas' {IdentificarUsuario},
+  UnitListaBancos in 'Formularios\Archivo\UnitListaBancos.pas' {ListaBancos};
 
 {$R *.res}
 

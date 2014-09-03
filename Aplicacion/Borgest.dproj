@@ -60,6 +60,9 @@
     <DCCReference Include="Formularios\Archivo\UnitImprimirListaPrecios.pas">
       <Form>ImprimirListaPrecios</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitListaBancos.pas">
+      <Form>ListaBancos</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitListaCalculosPrecios1.pas">
       <Form>ListaCalculosPrecios1</Form>
     </DCCReference>

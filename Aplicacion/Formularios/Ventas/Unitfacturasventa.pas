@@ -1181,7 +1181,7 @@ procedure Tfacturasventa.btnagregarpagoClick(Sender: TObject);
 begin
     calculartotales;
     calculartotalpagos;
-    if Princ.CargarPago(documentoventa_saldo,ZQDocumentopagos, ZQpagotarjeta) then
+    if Princ.CargarPago(documentoventa_saldo,ZQDocumentopagos, ZQpagotarjeta, nil) then
       begin
           calculartotales;
           calculartotalpagos;

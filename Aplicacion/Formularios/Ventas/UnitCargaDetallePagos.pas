@@ -68,6 +68,13 @@ type
     retencion_importe: TMoneyEdit;
     btncancelarretencion: TButton;
     btnretencion: TButton;
+    Label21: TLabel;
+    banco_id: TSqlComboBox;
+    BtnAbmBancos: TButton;
+    Label22: TLabel;
+    cheque_numero: TEdit;
+    Label23: TLabel;
+    cheque_fechavenc: TDateTimePicker;
     procedure efectivo_importeExit(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure TabSheetEfectivoShow(Sender: TObject);
@@ -79,10 +86,11 @@ type
     procedure btnchequeClick(Sender: TObject);
     procedure btndepositoClick(Sender: TObject);
     procedure tarjeta_idSelect(Sender: TObject);
-    procedure btnabmtarjetasClick(Sender: TObject);
     procedure TabSheetRetencionShow(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnretencionClick(Sender: TObject);
+    procedure BtnAbmBancosClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -104,10 +112,10 @@ uses Unitprinc;
 
 {$R *.dfm}
 
-procedure TCargaDetallePagos.btnabmtarjetasClick(Sender: TObject);
+procedure TCargaDetallePagos.BtnAbmBancosClick(Sender: TObject);
 begin
   inherited;
-    princ.btntarjetas.Click;
+    princ.BtnBancos.Click;
 end;
 
 procedure TCargaDetallePagos.btnchequeClick(Sender: TObject);
@@ -172,6 +180,13 @@ begin
   inherited;
     cobrado.Text:=efectivo_importe.Text;
     cambio.Text:='0';
+end;
+
+procedure TCargaDetallePagos.FormCreate(Sender: TObject);
+begin
+  inherited;
+    banco_id.llenarcombo;
+    cheque_fechavenc.Date:=Date;
 end;
 
 procedure TCargaDetallePagos.FormKeyDown(Sender: TObject; var Key: Word;

@@ -207,7 +207,7 @@ object recibosventa: Trecibosventa
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       OnSelect = cliente_idSelect
       Confbase = Princ.ZBase
@@ -224,7 +224,7 @@ object recibosventa: Trecibosventa
       Width = 220
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 1
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -449,7 +449,7 @@ object recibosventa: Trecibosventa
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 17
       OnSelect = puntoventa_idSelect
       Confbase = Princ.ZBase
@@ -465,7 +465,7 @@ object recibosventa: Trecibosventa
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 18
       OnSelect = tipodocu_idSelect
       Confbase = Princ.ZBase
@@ -624,7 +624,7 @@ object recibosventa: Trecibosventa
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 16
       OnSelect = sucursal_idSelect
       Confbase = Princ.ZBase
@@ -1139,6 +1139,30 @@ object recibosventa: Trecibosventa
       end>
     Left = 440
     Top = 24
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+  end
+  object ZQCheques: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select cheques.* from cheques'
+      
+        'inner join documentopagos on cheques.documentopago_id=documentop' +
+        'agos.documentopago_id'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 440
+    Top = 296
     ParamData = <
       item
         DataType = ftUnknown

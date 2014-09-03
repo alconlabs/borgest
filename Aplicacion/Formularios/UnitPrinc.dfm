@@ -61,7 +61,7 @@ object Princ: TPrinc
       object AdvToolBarGeneral: TAdvToolBar
         Left = 3
         Top = 3
-        Width = 506
+        Width = 606
         Height = 63
         AllowFloating = True
         Caption = 'General'
@@ -424,9 +424,47 @@ object Princ: TPrinc
           Appearance.GradientMirrorDown = ggVertical
           Appearance.GradientChecked = ggVertical
         end
+        object BtnBancos: TAdvGlowButton
+          Left = 502
+          Top = 2
+          Width = 100
+          Height = 41
+          Caption = 'Bancos'
+          TabOrder = 9
+          OnClick = BtnBancosClick
+          Appearance.BorderColor = 9598070
+          Appearance.BorderColorHot = 10079963
+          Appearance.BorderColorDown = 4548219
+          Appearance.BorderColorChecked = 4548219
+          Appearance.Color = 15586496
+          Appearance.ColorTo = 15128792
+          Appearance.ColorChecked = 11918331
+          Appearance.ColorCheckedTo = 7915518
+          Appearance.ColorDisabled = 15921906
+          Appearance.ColorDisabledTo = 15921906
+          Appearance.ColorDown = 7778289
+          Appearance.ColorDownTo = 4296947
+          Appearance.ColorHot = 15465983
+          Appearance.ColorHotTo = 11332863
+          Appearance.ColorMirror = 15586496
+          Appearance.ColorMirrorTo = 13152947
+          Appearance.ColorMirrorHot = 5888767
+          Appearance.ColorMirrorHotTo = 10807807
+          Appearance.ColorMirrorDown = 946929
+          Appearance.ColorMirrorDownTo = 5021693
+          Appearance.ColorMirrorChecked = 10480637
+          Appearance.ColorMirrorCheckedTo = 5682430
+          Appearance.ColorMirrorDisabled = 11974326
+          Appearance.ColorMirrorDisabledTo = 15921906
+          Appearance.GradientHot = ggVertical
+          Appearance.GradientMirrorHot = ggVertical
+          Appearance.GradientDown = ggVertical
+          Appearance.GradientMirrorDown = ggVertical
+          Appearance.GradientChecked = ggVertical
+        end
       end
       object AdvToolBarProveedores: TAdvToolBar
-        Left = 512
+        Left = 612
         Top = 3
         Width = 106
         Height = 63
@@ -486,7 +524,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarLocalidades: TAdvToolBar
-        Left = 621
+        Left = 721
         Top = 3
         Width = 206
         Height = 63
@@ -584,7 +622,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarEmpresa: TAdvToolBar
-        Left = 830
+        Left = 930
         Top = 3
         Width = 406
         Height = 63
@@ -758,7 +796,7 @@ object Princ: TPrinc
         end
       end
       object AdvToolBarListados: TAdvToolBar
-        Left = 1239
+        Left = 1339
         Top = 3
         Width = 206
         Height = 63
@@ -4965,5 +5003,29 @@ object Princ: TPrinc
     Active = False
     Left = 184
     Top = 448
+  end
+  object ZQCheques: TZQuery
+    Connection = ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      'select cheques.* from cheques'
+      
+        'inner join documentopagos on cheques.documentopago_id=documentop' +
+        'agos.documentopago_id'
+      'where documentoventa_id=:documentoventa_id')
+    Params = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
+    Left = 712
+    Top = 440
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'documentoventa_id'
+        ParamType = ptUnknown
+      end>
   end
 end

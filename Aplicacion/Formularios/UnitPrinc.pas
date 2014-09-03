@@ -191,6 +191,8 @@ type
     BtnFacturaVentaDirecto: TAdvGlowButton;
     BtnCargaStockLector: TAdvGlowButton;
     BRGFocusAdmin1: TBRGFocusAdmin;
+    BtnBancos: TAdvGlowButton;
+    ZQCheques: TZQuery;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -281,6 +283,7 @@ type
     procedure BtnCargaStockLectorClick(Sender: TObject);
     procedure FormDblClick(Sender: TObject);
     procedure AdvToolBarStockDblClick(Sender: TObject);
+    procedure BtnBancosClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -325,8 +328,8 @@ type
     procedure ActualizarSaldoDocumentoVenta(id:string; importe:real; inversa:boolean=false);
     function AgregarDocumentoVenta(Cabecera:TDataset; Detalle:TDataset; Documentoventadocu:TDataset; Pagos:TDataset):string;
     Procedure ModificarDocumentoVenta(Cabecera: TDataSet; Detalle: TDataSet; Documentoventadocu: TDataSet; Pagos: TDataSet; pagostarjeta: TDataSet);
-    procedure AgregarRecibo(ZQCabecera:TDataset; ZQDetalle:TDataset; ZQPagos:TDataset);
-    function CargarPago(importe:real; QDocumentopagos:TDataset; QPagoTarjeta:TDataset): boolean;
+    procedure AgregarRecibo(ZQCabecera:TDataset; ZQDetalle:TDataset; ZQPagos:TDataset; ZQCheques: TDataset);
+    function CargarPago(importe:real; QDocumentopagos:TDataset; QPagoTarjeta:TDataset; QPagoCheque:TDataset): boolean;
     procedure ActualizarNumeroDocumento(tipodocu_id: string; tipodocu_ultimonumero:string);
     function CargarDocumentoVentaDocu(cliente_id: string; QDocumentoVentaDocus:TDataset;documentoventa_apagar:real;AgregarAutomatico:boolean;where_tipodocu:string=' and 1=1 '):boolean;
     function ImprimirFiscal(id:string; puntoventa_id:string=''):boolean;
@@ -527,7 +530,7 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitSincronizarDB, UnitEstadoIVAs, UnitFacturaventa02, Unitlistacurvas,
   UnitCargaStockCurva, UnitListaMovimientosDepositos, UnitExportarDB,
   UnitImportarDB, UnitImprimirFichasClientes, UnitConsultaStockCurvas,
-  UnitCargaStockLector, UnitIdentificarUsuario;
+  UnitCargaStockLector, UnitIdentificarUsuario, UnitListaBancos;
 
 {$R *.dfm}
 
@@ -1922,6 +1925,23 @@ begin
             ZQpagotarjeta.Next;
         end;
 
+    ZQCheques.Active:=false;
+    ZQCheques.ParamByName('documentoventa_id').AsString:=documentoventa_id;
+    ZQCheques.Active:=true;
+    ZQCheques.First;
+    while not ZQCheques.Eof do
+        begin
+            ZQExcecSQL.SQL.Text:='delete from cheques where cheque_id="'+ZQCheques.FieldByName('cheque_id').AsString+'"';
+            try
+              ZQExcecSQL.ExecSQL;
+            except
+              error:=1;
+            end;
+
+
+            ZQCheques.Next;
+        end;
+
 
     ZQExcecSQL.SQL.Text:='delete from documentopagos where documentoventa_id="'+documentoventa_id+'"';
     try
@@ -1998,6 +2018,16 @@ begin
     finally
       ListaAjustedeStock.campo_id:='ajustestock_id';
       ListaAjustedeStock.Show;
+    end;
+end;
+
+procedure TPrinc.BtnBancosClick(Sender: TObject);
+begin
+    try
+      ListaBancos:=TListaBancos.Create(self);
+    finally
+      ListaBancos.campo_id:='banco_id';
+      ListaBancos.Show;
     end;
 end;
 
@@ -3712,7 +3742,7 @@ begin
 end;
 
 
-function TPrinc.CargarPago(importe:real; QDocumentopagos: TDataSet; QPagoTarjeta:TDataset):boolean;
+function TPrinc.CargarPago(importe:real; QDocumentopagos:TDataset; QPagoTarjeta:TDataset; QPagoCheque:TDataset): boolean;
 begin
     CargaDetallePagos:=TCargaDetallePagos.Create(self);
     CargaDetallePagos.documentopago_importe:=importe;
@@ -3752,7 +3782,15 @@ begin
                     QPagoTarjeta.Post;
                 end;
               3:begin
-
+                    QPagoCheque.Last;
+                    QPagoCheque.Append;
+                    QPagoCheque.FieldByName('cheque_id').AsFloat:=QPagoCheque.RecordCount;
+                    QPagoCheque.FieldByName('cheque_importe').AsFloat:=CargaDetallePagos.documentopago_importe;
+                    QPagoCheque.FieldByName('cheque_numero').AsString:=CargaDetallePagos.cheque_numero.Text;
+                    QPagoCheque.FieldByName('banco_id').AsString:=CargaDetallePagos.banco_id.codigo;
+                    QPagoCheque.FieldByName('cheque_fechavenc').AsDateTime:=CargaDetallePagos.cheque_fechavenc.Date;
+                    QPagoCheque.FieldByName('documentopago_id').AsString:=QDocumentopagos.FieldByName('documentopago_id').AsString;
+                    QPagoCheque.Post;
                 end;
               4:begin
 
@@ -3798,9 +3836,10 @@ begin
 
 end;
 
-procedure TPrinc.AgregarRecibo(ZQCabecera: TDataset; ZQDetalle: TDataset; ZQPagos: TDataset);
+procedure TPrinc.AgregarRecibo(ZQCabecera: TDataset; ZQDetalle: TDataset; ZQPagos: TDataset; ZQCheques: TDataset);
 var
   id:string;
+  documentopago_id:string;
 begin
     ZQRecibos.SQL.Clear;
     ZQRecibos.SQL.Add('begin');
@@ -3886,6 +3925,7 @@ begin
           ZQPagos.First;
           while not ZQPagos.Eof do
               begin
+                  documentopago_id:=codigo('documentopagos', 'documentopago_id');
                   ZQRecibos.sql.clear;
                   ZQRecibos.sql.add('Insert into documentopagos (documentopago_id, ');
                   ZQRecibos.sql.add('documentopago_importe, documentopago_nombre, ');
@@ -3893,14 +3933,49 @@ begin
                   ZQRecibos.sql.add('values (:documentopago_id, :documentopago_importe, ');
                   ZQRecibos.sql.add(':documentopago_nombre, :documentoventa_id, ');
                   ZQRecibos.sql.add(':tipopago_id)');
-                  ZQRecibos.parambyname('documentopago_id').asstring:=codigo('documentopagos', 'documentopago_id');
+                  ZQRecibos.parambyname('documentopago_id').asstring:=documentopago_id;
                   ZQRecibos.parambyname('documentopago_importe').asstring:=ZQPagos.FieldByName('documentopago_importe').AsString;
                   ZQRecibos.parambyname('documentopago_nombre').asstring:=ZQPagos.FieldByName('documentopago_nombre').AsString;
                   ZQRecibos.parambyname('documentoventa_id').asstring:=id;
                   ZQRecibos.parambyname('tipopago_id').asstring:=ZQPagos.FieldByName('tipopago_id').AsString;
                   ZQRecibos.ExecSQL;
 
+                  if ZQCheques.Locate('documentopago_id',ZQPagos.FieldByName('documentopago_id').AsString,[]) then
+                    begin
+                        ZQCheques.Edit;
+                        ZQCheques.FieldByName('documentopago_id').AsString:=documentopago_id;
+                        ZQCheques.Post;
+                    end;
+
+
                   ZQPagos.Next;
+              end;
+
+      end;
+
+    if ZQCheques<>nil then
+      begin
+          ZQCheques.First;
+          while not ZQCheques.Eof do
+              begin
+                  ZQRecibos.Sql.Clear;
+                  ZQRecibos.Sql.Add('insert into cheques set ');
+                  ZQRecibos.Sql.Add('documentopago_id=:documentopago_id, ');
+                  ZQRecibos.Sql.Add('cheque_importe=:cheque_importe, ');
+                  ZQRecibos.Sql.Add('cheque_fechavenc=:cheque_fechavenc, ');
+                  ZQRecibos.Sql.Add('cheque_numero=:cheque_numero, ');
+                  ZQRecibos.Sql.Add('banco_id=:banco_id, ');
+                  ZQRecibos.Sql.Add('cheque_id=:cheque_id ');
+                  ZQRecibos.ParamByName('documentopago_id').AsString:=ZQCheques.FieldByName('documentopago_id').AsString;
+                  ZQRecibos.ParamByName('cheque_importe').AsString:=ZQCheques.FieldByName('cheque_importe').AsString;
+                  ZQRecibos.ParamByName('cheque_fechavenc').AsString:=FormatDateTime('yyyy-mm-dd',ZQCheques.FieldByName('cheque_fechavenc').AsDateTime);
+                  ZQRecibos.ParamByName('cheque_numero').AsString:=ZQCheques.FieldByName('cheque_numero').AsString;
+                  ZQRecibos.ParamByName('banco_id').AsString:=ZQCheques.FieldByName('banco_id').AsString;
+                  ZQRecibos.ParamByName('cheque_id').AsString:=codigo('cheques', 'cheque_id');
+                  ZQRecibos.ExecSql;
+
+
+                  ZQCheques.Next;
               end;
 
       end;

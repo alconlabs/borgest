@@ -9,6 +9,7 @@ Archivo
 		Clientes
 		Conceptos Deb-Cred
 		Tarjetas de Credito
+		Bancos
 	Proveedores
 		Proveedores
 	Localidades

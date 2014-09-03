@@ -1,11 +1,14 @@
 inherited CargaDetallePagos: TCargaDetallePagos
   Caption = 'CargaDetallePagos'
-  ExplicitWidth = 557
-  ExplicitHeight = 350
+  ClientHeight = 307
+  ExplicitWidth = 632
+  ExplicitHeight = 345
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
+    Height = 307
     StatusBar.Text = 'Crtl + (Nro pesta'#241'a)'
+    ExplicitHeight = 307
     FullHeight = 0
     inherited btncancelar: TButton
       Left = 340
@@ -22,14 +25,18 @@ inherited CargaDetallePagos: TCargaDetallePagos
     object PageControl1: TPageControl
       Left = 0
       Top = 0
-      Width = 541
-      Height = 294
-      ActivePage = TabSheetEfectivo
+      Width = 616
+      Height = 289
+      ActivePage = TabSheetCheque
       Align = alClient
       TabOrder = 2
       object TabSheetEfectivo: TTabSheet
         Caption = '1 - Efectivo'
         OnShow = TabSheetEfectivoShow
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label1: TLabel
           Left = 38
           Top = 25
@@ -154,6 +161,10 @@ inherited CargaDetallePagos: TCargaDetallePagos
         Caption = '2 - Tarjeta'
         ImageIndex = 1
         OnShow = TabSheetTarjetaShow
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label9: TLabel
           Left = 69
           Top = 15
@@ -278,7 +289,7 @@ inherited CargaDetallePagos: TCargaDetallePagos
           Width = 317
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
+          ItemHeight = 0
           TabOrder = 0
           OnSelect = tarjeta_idSelect
           Confbase = Princ.ZBase
@@ -429,7 +440,6 @@ inherited CargaDetallePagos: TCargaDetallePagos
           Caption = '...'
           TabOrder = 13
           TabStop = False
-          OnClick = btnabmtarjetasClick
         end
       end
       object TabSheetCheque: TTabSheet
@@ -437,20 +447,20 @@ inherited CargaDetallePagos: TCargaDetallePagos
         ImageIndex = 2
         OnShow = TabSheetChequeShow
         object Label4: TLabel
-          Left = 38
-          Top = 25
+          Left = 46
+          Top = 87
           Width = 56
           Height = 13
           Alignment = taRightJustify
           Caption = 'Descripcion'
         end
         object Label6: TLabel
-          Left = 12
-          Top = 49
-          Width = 82
+          Left = 59
+          Top = 111
+          Width = 43
           Height = 13
           Alignment = taRightJustify
-          Caption = 'Total a Cobrar'
+          Caption = 'Importe'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -458,16 +468,40 @@ inherited CargaDetallePagos: TCargaDetallePagos
           Font.Style = [fsBold]
           ParentFont = False
         end
+        object Label21: TLabel
+          Left = 71
+          Top = 15
+          Width = 31
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Banco'
+        end
+        object Label22: TLabel
+          Left = 65
+          Top = 39
+          Width = 37
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Numero'
+        end
+        object Label23: TLabel
+          Left = 41
+          Top = 63
+          Width = 61
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Fecha Venc.'
+        end
         object cheque_nombre: TEdit
-          Left = 100
-          Top = 22
+          Left = 108
+          Top = 84
           Width = 381
           Height = 21
-          TabOrder = 0
+          TabOrder = 4
         end
         object cheque_importe: TMoneyEdit
-          Left = 100
-          Top = 46
+          Left = 108
+          Top = 108
           Width = 109
           Height = 21
           CalculatorLook.ButtonWidth = 24
@@ -480,7 +514,7 @@ inherited CargaDetallePagos: TCargaDetallePagos
           CalculatorLook.Font.Height = -11
           CalculatorLook.Font.Name = 'Tahoma'
           CalculatorLook.Font.Style = []
-          TabOrder = 1
+          TabOrder = 5
           Version = '1.1.0.1'
         end
         object btncancelarcheques: TButton
@@ -489,7 +523,7 @@ inherited CargaDetallePagos: TCargaDetallePagos
           Width = 75
           Height = 25
           Caption = 'Cancelar'
-          TabOrder = 3
+          TabOrder = 7
           OnClick = btncancelarClick
         end
         object btncheque: TButton
@@ -498,14 +532,60 @@ inherited CargaDetallePagos: TCargaDetallePagos
           Width = 75
           Height = 25
           Caption = 'Guardar'
-          TabOrder = 2
+          TabOrder = 6
           OnClick = btnchequeClick
+        end
+        object banco_id: TSqlComboBox
+          Left = 108
+          Top = 12
+          Width = 317
+          Height = 21
+          Style = csDropDownList
+          ItemHeight = 13
+          TabOrder = 0
+          Confbase = Princ.ZBase
+          Confsql.Strings = (
+            'select * from bancos'
+            'order by banco_nombre')
+          Confcampo_codigo = 'banco_id'
+          Confcampo_nomb = 'banco_nombre'
+          Tag2 = 0
+        end
+        object BtnAbmBancos: TButton
+          Left = 429
+          Top = 12
+          Width = 21
+          Height = 21
+          Caption = '...'
+          TabOrder = 1
+          TabStop = False
+          OnClick = BtnAbmBancosClick
+        end
+        object cheque_numero: TEdit
+          Left = 108
+          Top = 36
+          Width = 197
+          Height = 21
+          TabOrder = 2
+        end
+        object cheque_fechavenc: TDateTimePicker
+          Left = 108
+          Top = 60
+          Width = 141
+          Height = 21
+          Date = 41885.498139710650000000
+          Time = 41885.498139710650000000
+          TabOrder = 3
         end
       end
       object TabSheetDeposito: TTabSheet
         Caption = '4 - Deposito'
         ImageIndex = 3
         OnShow = TabSheetDepositoShow
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label7: TLabel
           Left = 38
           Top = 25
@@ -576,6 +656,10 @@ inherited CargaDetallePagos: TCargaDetallePagos
         Caption = '5 - Retencion'
         ImageIndex = 4
         OnShow = TabSheetRetencionShow
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object Label12: TLabel
           Left = 38
           Top = 25

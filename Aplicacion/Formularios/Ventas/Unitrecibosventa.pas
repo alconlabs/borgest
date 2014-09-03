@@ -154,6 +154,7 @@ type
     ZQdocumentoventadocuspuntoventa_controladorfiscalmodelo: TIntegerField;
     ZQdocumentoventadocuspuntoventa_controladorfiscalpuerto: TIntegerField;
     ZQExecSql: TZQuery;
+    ZQCheques: TZQuery;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -517,6 +518,10 @@ begin
     ZQpagotarjeta.ParamByName('documentoventa_id').AsString:=id;
     ZQpagotarjeta.Active:=true;
 
+    ZQCheques.Active:=false;
+    ZQCheques.ParamByName('documentoventa_id').AsString:=id;
+    ZQCheques.Active:=true;
+
     calculartotales;
     calculartotalpagos;
 end;
@@ -587,7 +592,7 @@ begin
 //          ZQDocumentopagos.FieldByName('tipopago_id').asstring:='1';
 //          ZQDocumentopagos.Post;
 
-    Princ.AgregarRecibo(ZQRecibo,ZQdocumentoventadocus,ZQDocumentopagos);
+    Princ.AgregarRecibo(ZQRecibo,ZQdocumentoventadocus,ZQDocumentopagos, ZQCheques);
 
     ZQExecSql.SQL.Clear;
     ZQExecSql.SQL.Add('commit');
@@ -620,7 +625,7 @@ end;
 procedure Trecibosventa.btnagregarpagoClick(Sender: TObject);
 begin
     calculartotales;
-    if Princ.CargarPago(documentoventa_pagado,ZQDocumentopagos, ZQpagotarjeta) then
+    if Princ.CargarPago(documentoventa_pagado,ZQDocumentopagos, ZQpagotarjeta, ZQCheques) then
       calculartotalpagos;
 end;
 
@@ -682,6 +687,19 @@ procedure Trecibosventa.btnquitarpagoClick(Sender: TObject);
 begin
     if (MessageDlg('Seguro desea quitar este pago?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
       begin
+          case ZQDocumentopagos.FieldByName('tipopago_id').AsInteger of
+
+              3:begin
+                    if ZQCheques.Locate('documentopago_id',ZQDocumentopagos.FieldByName('documentopago_id').AsString,[]) then
+                      try
+                        ZQCheques.Delete;
+                      finally
+                      end;
+                end;
+
+          end;
+
+
           try
             ZQDocumentopagos.Delete;
           finally
