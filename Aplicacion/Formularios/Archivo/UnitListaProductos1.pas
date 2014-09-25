@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Unitlistabase, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
-  ComCtrls, StdCtrls, GBTEdit, Grids, DBGrids, ExtCtrls, AdvPanel;
+  ComCtrls, StdCtrls, GBTEdit, Grids, DBGrids, ExtCtrls, AdvPanel, Buttons;
 
 type
   TListaProductos1 = class(Tlistabase)
@@ -118,8 +118,8 @@ begin
     if fil_producto_fechaactualizacionprecio.Text<>'' then
       ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' and producto_fechaactualizacionprecio "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_producto_fechaactualizacionprecio.Text,' ','%',false,0)+'%"';
 
-    if Princ.GetConfiguracion('MOSTRARPRODUCTOSOCULTOS')<>'-1' then
-      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'and producto_estado="DISPONIBLE" ';
+    if Princ.GetConfiguracion('MOSTRARPRODUCTOSOCULTOSLISTA')<>'-1' then
+      ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'and (producto_estado="DISPONIBLE" or producto_estado="REVISAR") ';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+' order by producto_nombre';
 

@@ -2245,3 +2245,9 @@ ALTER TABLE `cheques` ADD COLUMN `banco_id` INT(11) NOT NULL  AFTER `documentopa
   ON DELETE NO ACTION
   ON UPDATE NO ACTION
 , ADD INDEX `fk_cheques_bancos1` (`banco_id` ASC) ;
+629;
+INSERT INTO `config` select 'MOSTRARPRODUCTOSOCULTOSLISTA', config_valor from config where config_nombre='MOSTRARPRODUCTOSOCULTOS';
+630;
+Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('104', '>Ventas>Caja>Cheques', '0', 'BtnCheques', '', '0', '0', '');
+631;
+INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,104,perfil_id,-1 from perfiles;

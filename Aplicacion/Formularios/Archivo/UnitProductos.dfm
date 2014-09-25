@@ -307,7 +307,8 @@ object productos: Tproductos
           Items.Strings = (
             'DISPONIBLE'
             'DISCONTINUADO'
-            'EN PAPELERA')
+            'EN PAPELERA'
+            'REVISAR')
         end
         object producto_id: TEdit
           Left = 114

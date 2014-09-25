@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, AdvPanel, AdvGlowButton, Grids, DBGrids, StdCtrls, DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, UnitNumEdit, UnitSqlComboBox,
-  GBTEdit, ComCtrls;
+  GBTEdit, ComCtrls, Buttons;
 
 type
   Tlistabase = class(TForm)
@@ -29,6 +29,7 @@ type
     StatusBar1: TStatusBar;
     btnver: TButton;
     btnclonar: TButton;
+    BitBtn1: TBitBtn;
     procedure btnnuevoClick(Sender: TObject);
     procedure btnmodificarClick(Sender: TObject);
     procedure btneliminarClick(Sender: TObject);

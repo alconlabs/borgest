@@ -111,6 +111,9 @@ type
     ZQmovimdepodetallesproducto_imprimir: TIntegerField;
     ZQmovimdepodetallesproducto_tipo: TStringField;
     DTSmovimdepodetalles: TDataSource;
+    BtnConsultaStock: TButton;
+    ZQDocumentoventadetallesproducto_codigo: TStringField;
+    ZQDocumentoventadetallesproducto_codigobarras: TStringField;
     procedure producto_idAfterSearch(Sender: TObject);
     procedure btnagregarClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -134,10 +137,13 @@ type
     procedure MovProducto_idAfterSearch(Sender: TObject);
     procedure btnguardarmovClick(Sender: TObject);
     procedure DTSDocumentoventadetalleStateChange(Sender: TObject);
+    procedure BtnConsultaStockClick(Sender: TObject);
+    procedure producto_idEnter(Sender: TObject);
   private
     { Private declarations }
     precio_old:real;
     precio_new:real;
+    abm_detalle:integer;
 
     procedure CargarQuery;
     function CargarCliente:string;
@@ -150,7 +156,7 @@ var
 
 implementation
 
-uses UnitPrinc;
+uses UnitPrinc, UnitConsultarStockCurva;
 
 {$R *.dfm}
 
@@ -307,6 +313,12 @@ begin
 end;
 
 
+procedure Tfacturaventa02.producto_idEnter(Sender: TObject);
+begin
+  inherited;
+    abm_detalle:=ABM_AGREGAR;
+end;
+
 procedure Tfacturaventa02.tipopago_idAfterSearch(Sender: TObject);
 begin
   inherited;
@@ -386,7 +398,7 @@ begin
       begin
           precio_new:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat;
           if precio_old<>precio_new then
-            if Princ.IdentificaUsuario('') then
+            if not Princ.IdentificaUsuario('') then
               ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat:=precio_old;
 
       end;
@@ -418,7 +430,7 @@ begin
     if (producto_id.Text<>'') then
       begin
           CargarQuery;
-          princ.CargarDocumentoVentaDetalle(ZQDocumentoventadetalles, ZQProducto);
+          princ.CargarDocumentoVentaDetalle(ZQDocumentoventadetalles, ZQProducto, abm_detalle, nil);
           calculartotales;
           calculartotalpagos;
           documentopago_importe.Value:=documentoventa_saldo;
@@ -426,19 +438,38 @@ begin
           producto_id.Text:='-1';
           producto_id.Search('-1');
           producto_id.SetFocus;
+      end
+    else
+      begin
+          if ZQDocumentoventadetalles.State in [dsInsert] then
+            ZQDocumentoventadetalles.Cancel;
+
+
       end;
 
+end;
+
+procedure Tfacturaventa02.BtnConsultaStockClick(Sender: TObject);
+begin
+  inherited;
+    ConsultarStockCurvas:=TConsultarStockCurvas.Create(self);
+    ConsultarStockCurvas.Show;
 end;
 
 procedure Tfacturaventa02.btnguardarClick(Sender: TObject);
 var
   idcliente:string;
 begin
-    idcliente:=CargarCliente;
-    cliente_id.llenarcombo;
-    cliente_id.Buscar(idcliente);
+    if (MessageDlg('Confirma la venta?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          idcliente:=CargarCliente;
+          cliente_id.llenarcombo;
+          cliente_id.Buscar(idcliente);
 
-  inherited;
+          inherited;
+      end
+    else
+      Self.OnShow(self);
 
 end;
 
@@ -564,6 +595,8 @@ begin
           ZQProducto.FieldByName('documentoventadetalle_estado').AsString:='FACTURADO';
           ZQProducto.FieldByName('documentoventadetalle_observacion').AsString:='';
           ZQProducto.FieldByName('producto_id').AsString:=producto_id.Text;
+          ZQProducto.FieldByName('producto_codigo').AsString:=producto_id.valor('producto_codigo');
+          ZQProducto.FieldByName('producto_codigobarras').AsString:=producto_id.valor('producto_codigobarras');
           ZQProducto.FieldByName('documentoventadetalle_idorig').AsString:='0';
           ZQProducto.FieldByName('documentoventadetalle_cantidadpendiente').AsString:='0';
           ZQProducto.FieldByName('documentoventa_id').AsString:='0';
@@ -593,7 +626,27 @@ begin
                 DBGrid1.SetFocus;
             end;
 
+          if ZQDocumentoventadetalles.State in [dsInsert] then
+            begin
+                if DBGrid1.SelectedIndex=0 then
+                  begin
+                      abm_detalle:=ABM_MODIFICAR;
+                      producto_id.Text:=DBGrid1.SelectedField.Value;
+                      producto_id.Search(producto_id.Text);
+                      DBGrid1.SetFocus;
 
+                      ZQDocumentoventadetalles.Last;
+                      ZQDocumentoventadetalles.Next;
+                      ZQDocumentoventadetalles.Append;;
+                      DBGrid1.SelectedIndex:=0;
+
+                  end;
+
+
+
+
+
+            end;
       end;
 
 end;

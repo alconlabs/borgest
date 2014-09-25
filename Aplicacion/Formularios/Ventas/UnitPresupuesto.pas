@@ -10,6 +10,8 @@ uses
 
 type
   Tpresupuesto = class(Tdocumentoventabase)
+    ZQDocumentoventadetallesproducto_codigo: TStringField;
+    ZQDocumentoventadetallesproducto_codigobarras: TStringField;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private

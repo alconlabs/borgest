@@ -150,7 +150,7 @@ object liquidacionessucu: Tliquidacionessucu
       Top = 33
       Width = 354
       Height = 21
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 1
       OnSelect = sucursal_idSelect
       Confbase = Princ.ZBase
@@ -253,10 +253,6 @@ object liquidacionessucu: Tliquidacionessucu
       TabOrder = 5
       object TabSheet1: TTabSheet
         Caption = 'Comisiones'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label5: TLabel
           Left = 814
           Top = 286
@@ -403,10 +399,6 @@ object liquidacionessucu: Tliquidacionessucu
       object TabSheet4: TTabSheet
         Caption = 'Recibos'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label18: TLabel
           Left = 37
           Top = 18
@@ -515,10 +507,6 @@ object liquidacionessucu: Tliquidacionessucu
       object TabSheet2: TTabSheet
         Caption = 'Debitos y Creditos'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label7: TLabel
           Left = 814
           Top = 287
@@ -609,10 +597,6 @@ object liquidacionessucu: Tliquidacionessucu
       object TabSheet3: TTabSheet
         Caption = 'Facturar Liquidacion'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label6: TLabel
           Left = 489
           Top = 7
@@ -738,7 +722,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 317
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 4
           OnSelect = cliente_idSelect
           Confbase = Princ.ZBase
@@ -755,7 +739,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 220
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 7
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -784,7 +768,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 52
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 1
           OnSelect = puntoventa_idSelect
           Confbase = Princ.ZBase
@@ -800,7 +784,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 52
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 2
           OnSelect = tipodocu_idSelect
           Confbase = Princ.ZBase
@@ -834,7 +818,7 @@ object liquidacionessucu: Tliquidacionessucu
           Width = 317
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 0
           OnSelect = sucursalfactura_idSelect
           Confbase = Princ.ZBase
@@ -1261,7 +1245,12 @@ object liquidacionessucu: Tliquidacionessucu
     Connection = Princ.ZBase
     CachedUpdates = True
     SQL.Strings = (
-      'select * from documentoventadetalles'
+      
+        'select documentoventadetalles.*, productos.producto_codigo, prod' +
+        'uctos.producto_codigobarras from documentoventadetalles'
+      
+        'inner join productos on documentoventadetalles.producto_id=produ' +
+        'ctos.producto_id'
       'where documentoventa_id=:documentoventa_id')
     Params = <
       item

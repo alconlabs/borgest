@@ -178,11 +178,13 @@ begin
     proveedor_id.ItemIndex:=0;
 
     producto_precioventa.Items.Clear;
+    producto_precioventa.Items.Add('COSTO');
     producto_precioventa.Items.Add(Princ.NOMBREPRECIO1);
     producto_precioventa.Items.Add(Princ.NOMBREPRECIO2);
     producto_precioventa.Items.Add(Princ.NOMBREPRECIO3);
     producto_precioventa.Items.Add(Princ.NOMBREPRECIO4);
     producto_precioventa.Items.Add('SIN PRECIOS');
+
     producto_precioventa.ItemIndex:=0;
 
     tiProdcutos.Titulos.Clear;

@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UnitABMbase, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
-  StdCtrls, ExtCtrls, AdvPanel, UnitSqlComboBox;
+  StdCtrls, ExtCtrls, AdvPanel, UnitSqlComboBox, rplabelitem;
 
 type
   TConsultaStockCurvas = class(TABMbase)
@@ -22,6 +22,7 @@ type
     Label4: TLabel;
     Label5: TLabel;
     deposito_id: TSqlComboBox;
+    producto_enstock: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -58,13 +59,18 @@ begin
                        'inner join depositos on productodeposito.deposito_id=depositos.deposito_id '+
                        'where producto_tipo="PRODUCTO"';
 
+    if producto_enstock.Checked then
+      begin
+          ZQSelect.SQL.Text:=ZQSelect.SQL.Text+' and productodeposito.producdepo_stockactual>0 ';
+
+      end;
 
     if fil_producto_nombre.Text<>'' then
       ZQSelect.SQL.Text:=ZQSelect.SQL.Text+' and productos.producto_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_nombre.Text,' ','%',false,0)+'%" ';
 
 
     if fil_producto_codigobarras.Text<>'' then
-      ZQSelect.SQL.Text:=ZQSelect.SQL.Text+' and productos.producto_codigobarras like "'+fil_producto_codigobarras.Text+'%" ';
+      ZQSelect.SQL.Text:=ZQSelect.SQL.Text+' and productos.producto_codigobarras like "%'+fil_producto_codigobarras.Text+'%" ';
 
     if seccion_id.codigo<>'-1' then
       ZQSelect.SQL.Add('and seccion_id="'+seccion_id.codigo+'" ');
@@ -155,9 +161,6 @@ begin
                   ZQExecSQL.ParamByName('temporal_int'+inttostr(i)).AsString:='0';
               end;
 
-
-
-
             nro_columna:=6;
             pasar_siguiente:=true;
             while pasar_siguiente do
@@ -185,6 +188,7 @@ begin
                                                    'where temporal_idproceso="'+temporal_idproceso+'" '+
                                                    'order by temporal_string1 ';
 
+     
     Princ.VCLReport1.Execute;
 
     if temporal_idproceso<>'' then

@@ -802,7 +802,12 @@ object facturasventa: Tfacturasventa
     Connection = Princ.ZBase
     CachedUpdates = True
     SQL.Strings = (
-      'select * from documentoventadetalles')
+      
+        'select documentoventadetalles.*, productos.producto_codigo, prod' +
+        'uctos.producto_codigobarras from documentoventadetalles'
+      
+        'inner join productos on documentoventadetalles.producto_id=produ' +
+        'ctos.producto_id')
     Params = <>
     Left = 240
     Top = 168

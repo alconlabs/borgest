@@ -243,8 +243,7 @@ inherited facturaventa02: Tfacturaventa02
       Columns = <
         item
           Expanded = False
-          FieldName = 'producto_id'
-          ReadOnly = True
+          FieldName = 'producto_codigobarras'
           Title.Caption = 'Codigo'
           Width = 125
           Visible = True
@@ -539,6 +538,7 @@ inherited facturaventa02: Tfacturaventa02
       Enabled = True
       TabOrder = 3
       Visible = True
+      OnEnter = producto_idEnter
       Version = '1.3.0.1'
       ButtonStyle = bsButton
       ButtonWidth = 16
@@ -792,10 +792,20 @@ inherited facturaventa02: Tfacturaventa02
       TabOrder = 33
       OnClick = CBDevolucionClick
     end
+    object BtnConsultaStock: TButton
+      Left = 301
+      Top = 163
+      Width = 108
+      Height = 25
+      Caption = 'Consulta Stock'
+      TabOrder = 34
+      TabStop = False
+      OnClick = BtnConsultaStockClick
+    end
   end
   object PageControl1: TPageControl [1]
-    Left = 72
-    Top = 379
+    Left = -9
+    Top = -11
     Width = 981
     Height = 638
     ActivePage = TabSheet2
@@ -1088,6 +1098,14 @@ inherited facturaventa02: Tfacturaventa02
       FieldName = 'producto_tipo'
       Size = 45
     end
+    object ZQDocumentoventadetallesproducto_codigo: TStringField
+      FieldName = 'producto_codigo'
+      Size = 45
+    end
+    object ZQDocumentoventadetallesproducto_codigobarras: TStringField
+      FieldName = 'producto_codigobarras'
+      Size = 45
+    end
   end
   inherited DTSDocumentoventadetalle: TDataSource
     OnStateChange = DTSDocumentoventadetalleStateChange
@@ -1135,7 +1153,12 @@ inherited facturaventa02: Tfacturaventa02
     Connection = Princ.ZBase
     CachedUpdates = True
     SQL.Strings = (
-      'select * from documentoventadetalles'
+      
+        'select documentoventadetalles.*, productos.producto_codigo, prod' +
+        'uctos.producto_codigobarras from documentoventadetalles'
+      
+        'inner join productos on documentoventadetalles.producto_id=produ' +
+        'ctos.producto_id'
       'where documentoventa_id=-1')
     Params = <>
     Left = 824

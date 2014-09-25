@@ -288,31 +288,11 @@ end;
 
 procedure Tsaldoproveedores.btnimprimirClick(Sender: TObject);
 begin
-//    cargatemporal;
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'saldoproveedores.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=ZQSaldos.SQL.Text;
 
-////    if tipo_resumen.ItemIndex=0 then  //DETALLE DE CTA
-//    begin
-//
-//        VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'ventas\detallecuenta.rep';
-//        VCLReport1.Report.Datainfo.Items[0].sql:='select * from tempestacuenta '+
-//                                                 'order by fecha';
-//
-//        VCLReport1.Report.Datainfo.Items[0].sql:=VCLReport1.Report.Datainfo.Items[0].sql;
-//        VCLReport1.Execute;
-//
-//    end
-////    else
-//    begin
-//
-//        VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'ventas\saldocuenta.rep';
-//        VCLReport1.Report.Datainfo.Items[0].sql:='select * from tempestacuenta '+
-//                                                 'order by fecha';
-//
-//        VCLReport1.Report.Datainfo.Items[0].sql:=VCLReport1.Report.Datainfo.Items[0].sql;
-//        VCLReport1.Execute;
-//
-//    end;
-
+    Princ.VCLReport1.Execute;
 
 
 

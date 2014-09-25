@@ -98,7 +98,7 @@ object saldoproveedores: Tsaldoproveedores
         item
           Expanded = False
           FieldName = 'proveedor_nombre'
-          Title.Caption = 'Cliente'
+          Title.Caption = 'Proveedor'
           Width = 514
           Visible = True
         end
@@ -126,7 +126,6 @@ object saldoproveedores: Tsaldoproveedores
       Height = 25
       Caption = 'Imprimir'
       TabOrder = 2
-      Visible = False
       OnClick = btnimprimirClick
     end
     object btnestado: TButton
@@ -153,7 +152,7 @@ object saldoproveedores: Tsaldoproveedores
       Top = 33
       Width = 297
       Height = 21
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 5
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -169,7 +168,7 @@ object saldoproveedores: Tsaldoproveedores
       Top = 9
       Width = 297
       Height = 21
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 6
       Confbase = Princ.ZBase
       Confsql.Strings = (

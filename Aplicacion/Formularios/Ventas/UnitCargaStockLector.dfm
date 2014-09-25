@@ -230,7 +230,7 @@ inherited CargaStockLector: TCargaStockLector
       Top = 214
       Width = 790
       Height = 308
-      ActivePage = TabSheet1
+      ActivePage = TabSheet2
       Align = alBottom
       TabOrder = 10
       object TabSheet1: TTabSheet
@@ -345,7 +345,7 @@ inherited CargaStockLector: TCargaStockLector
           Height = 25
           Caption = 'Limpiar Lista'
           TabOrder = 2
-          OnClick = Button1Click
+          OnClick = Button2Click
         end
       end
     end

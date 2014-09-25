@@ -1,7 +1,5 @@
 inherited presupuesto: Tpresupuesto
   Caption = 'Presupuesto'
-  ExplicitWidth = 867
-  ExplicitHeight = 542
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel
@@ -54,6 +52,14 @@ inherited presupuesto: Tpresupuesto
   inherited ZQDocumentoventadetalles: TZQuery
     inherited ZQDocumentoventadetallesdocumentoventadetalle_importe2: TFloatField
       DisplayFormat = '0.00'
+    end
+    object ZQDocumentoventadetallesproducto_codigo: TStringField
+      FieldName = 'producto_codigo'
+      Size = 45
+    end
+    object ZQDocumentoventadetallesproducto_codigobarras: TStringField
+      FieldName = 'producto_codigobarras'
+      Size = 45
     end
   end
 end

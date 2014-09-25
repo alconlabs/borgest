@@ -502,7 +502,12 @@ object ventadetalle2: Tventadetalle2
     Connection = Princ.ZBase
     CachedUpdates = True
     SQL.Strings = (
-      'select * from documentoventadetalles'
+      
+        'select documentoventadetalles.*, productos.producto_codigo, prod' +
+        'uctos.producto_codigobarras from documentoventadetalles'
+      
+        'inner join productos on documentoventadetalles.producto_id=produ' +
+        'ctos.producto_id'
       'where documentoventa_id=-1')
     Params = <>
     Left = 296

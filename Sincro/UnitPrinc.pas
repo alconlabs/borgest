@@ -473,12 +473,16 @@ begin
                                       ZQRemoteExcecSql.Sql.Add('movimdepodetalle_estado=:movimdepodetalle_estado, ');
                                       ZQRemoteExcecSql.Sql.Add('movimdepodetalle_cantidadrecibir=:movimdepodetalle_cantidadrecibir, ');
                                       ZQRemoteExcecSql.Sql.Add('movimdepodetalle_cantidadenviar=:movimdepodetalle_cantidadenviar, ');
+                                      ZQRemoteExcecSql.Sql.Add('deposito_idorigen=:deposito_idorigen, ');
+                                      ZQRemoteExcecSql.Sql.Add('deposito_iddestino=:deposito_iddestino, ');
                                       ZQRemoteExcecSql.Sql.Add('movimdepodetalle_id=:movimdepodetalle_id ');
                                       ZQRemoteExcecSql.ParamByName('movimientodeposito_id').AsString:=ZQMovimientosDepositos.FieldByName('movimientodeposito_id').AsString;
                                       ZQRemoteExcecSql.ParamByName('producto_id').AsString:=ZQMovimDepoDetalles.FieldByName('producto_id').AsString;
                                       ZQRemoteExcecSql.ParamByName('movimdepodetalle_estado').AsString:='CONFIRMAR';
                                       ZQRemoteExcecSql.ParamByName('movimdepodetalle_cantidadrecibir').AsString:=ZQMovimDepoDetalles.FieldByName('movimdepodetalle_cantidadrecibir').AsString;
                                       ZQRemoteExcecSql.ParamByName('movimdepodetalle_cantidadenviar').AsString:=ZQMovimDepoDetalles.FieldByName('movimdepodetalle_cantidadenviar').AsString;
+                                      ZQRemoteExcecSql.ParamByName('deposito_idorigen').AsString:=ZQMovimDepoDetalles.FieldByName('deposito_idorigen').AsString;
+                                      ZQRemoteExcecSql.ParamByName('deposito_iddestino').AsString:=ZQMovimDepoDetalles.FieldByName('deposito_iddestino').AsString;
                                       ZQRemoteExcecSql.ParamByName('movimdepodetalle_id').AsString:='0';
                                       ZQRemoteExcecSql.ExecSql;
 
@@ -679,12 +683,16 @@ begin
                                       ZQExcecSQLSinc.Sql.Add('movimdepodetalle_estado=:movimdepodetalle_estado, ');
                                       ZQExcecSQLSinc.Sql.Add('movimdepodetalle_cantidadrecibir=:movimdepodetalle_cantidadrecibir, ');
                                       ZQExcecSQLSinc.Sql.Add('movimdepodetalle_cantidadenviar=:movimdepodetalle_cantidadenviar, ');
+                                      ZQExcecSQLSinc.Sql.Add('deposito_idorigen=:deposito_idorigen, ');
+                                      ZQExcecSQLSinc.Sql.Add('deposito_iddestino=:deposito_iddestino, ');
                                       ZQExcecSQLSinc.Sql.Add('movimdepodetalle_id=:movimdepodetalle_id ');
                                       ZQExcecSQLSinc.ParamByName('movimientodeposito_id').AsString:=ZQRemoteSelectDetalles.FieldByName('movimientodeposito_id').AsString;
                                       ZQExcecSQLSinc.ParamByName('producto_id').AsString:=ZQRemoteSelectDetalles.FieldByName('producto_id').AsString;
                                       ZQExcecSQLSinc.ParamByName('movimdepodetalle_estado').AsString:='CONFIRMADO';
                                       ZQExcecSQLSinc.ParamByName('movimdepodetalle_cantidadrecibir').AsString:=ZQRemoteSelectDetalles.FieldByName('movimdepodetalle_cantidadrecibir').AsString;
                                       ZQExcecSQLSinc.ParamByName('movimdepodetalle_cantidadenviar').AsString:=ZQRemoteSelectDetalles.FieldByName('movimdepodetalle_cantidadenviar').AsString;
+                                      ZQExcecSQLSinc.ParamByName('deposito_idorigen').AsString:=ZQRemoteSelectDetalles.FieldByName('deposito_idorigen').AsString;
+                                      ZQExcecSQLSinc.ParamByName('deposito_iddestino').AsString:=ZQRemoteSelectDetalles.FieldByName('deposito_iddestino').AsString;
                                       ZQExcecSQLSinc.ParamByName('movimdepodetalle_id').AsString:=Princ.codigo('movimdepodetalles','movimdepodetalle_id');
                                       ZQExcecSQLSinc.ExecSql;
 

@@ -68,6 +68,7 @@ Ventas
 		Caja
 		Caja Bar
 		Cupones Tarjetas
+		Cheques
 	Informes
 		Informes
 		Detalle de Pagos

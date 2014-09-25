@@ -84,10 +84,14 @@ inherited NotaPedido: TNotaPedido
     end
     inherited btnagregar: TButton
       Left = 5
+      TabOrder = 4
       ExplicitLeft = 5
     end
+    inherited btnquitar: TButton
+      TabOrder = 6
+    end
     inherited btnmodificar: TButton
-      TabOrder = 4
+      TabOrder = 5
     end
     inherited GroupBox1: TGroupBox
       Left = 626
@@ -95,6 +99,7 @@ inherited NotaPedido: TNotaPedido
       Width = 214
       Height = 57
       Caption = ''
+      TabOrder = 11
       ExplicitLeft = 626
       ExplicitTop = 397
       ExplicitWidth = 214
@@ -166,7 +171,7 @@ inherited NotaPedido: TNotaPedido
       Top = 342
       Width = 189
       Height = 98
-      TabOrder = 6
+      TabOrder = 8
       Tag2 = 0
       FieldName = 'documentoventa_formapago'
     end
@@ -175,7 +180,7 @@ inherited NotaPedido: TNotaPedido
       Top = 342
       Width = 121
       Height = 21
-      TabOrder = 10
+      TabOrder = 9
       Tag2 = 0
       FieldName = 'documentoventa_equipo1'
     end
@@ -184,7 +189,7 @@ inherited NotaPedido: TNotaPedido
       Top = 366
       Width = 121
       Height = 21
-      TabOrder = 11
+      TabOrder = 10
       Tag2 = 0
       FieldName = 'documentoventa_equipo2'
     end
@@ -200,6 +205,7 @@ inherited NotaPedido: TNotaPedido
     inherited documentoventa_observacion: TGTBMemo
       Width = 189
       TabStop = True
+      TabOrder = 7
       FieldName = 'documentoventa_observacion'
       ExplicitWidth = 189
     end
@@ -207,6 +213,16 @@ inherited NotaPedido: TNotaPedido
   inherited ZQuery2: TZQuery
     Left = 400
     Top = 128
+  end
+  inherited ZQDocumentoventadetalles: TZQuery
+    object ZQDocumentoventadetallesproducto_codigo: TStringField
+      FieldName = 'producto_codigo'
+      Size = 45
+    end
+    object ZQDocumentoventadetallesproducto_codigobarras: TStringField
+      FieldName = 'producto_codigobarras'
+      Size = 45
+    end
   end
   inherited DTSDocumentoventadetalle: TDataSource
     Left = 344

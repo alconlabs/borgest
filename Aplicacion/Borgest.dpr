@@ -157,7 +157,9 @@ uses
   UnitConsultaStockCurvas in 'Formularios\Compras\UnitConsultaStockCurvas.pas' {ConsultaStockCurvas},
   UnitCargaStockLector in 'Formularios\Ventas\UnitCargaStockLector.pas' {CargaStockLector},
   UnitIdentificarUsuario in 'Formularios\Herramientas\UnitIdentificarUsuario.pas' {IdentificarUsuario},
-  UnitListaBancos in 'Formularios\Archivo\UnitListaBancos.pas' {ListaBancos};
+  UnitListaBancos in 'Formularios\Archivo\UnitListaBancos.pas' {ListaBancos},
+  UnitConsultarStockCurva in 'Formularios\Ventas\UnitConsultarStockCurva.pas' {ConsultarStockCurvas},
+  UnitConsultaCheques in 'Formularios\Caja\UnitConsultaCheques.pas' {ConsultaCheques};
 
 {$R *.res}
 
@@ -166,5 +168,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Borgest - Sistema de Gestion Comercial';
   Application.CreateForm(TPrinc, Princ);
+  Application.CreateForm(TConsultaCheques, ConsultaCheques);
   Application.Run;
 end.

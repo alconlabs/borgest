@@ -137,7 +137,7 @@ begin
     ZQGrilla.SQL.Text:='select * from productos inner join rubros on productos.rubro_id=rubros.rubro_id '+
                        'inner join proveedores on productos.proveedor_id=proveedores.proveedor_id '+
                        'inner join productodeposito on productos.producto_id=productodeposito.producto_id '+
-                       'where 1=1 and deposito_id="'+Princ.dep_id+'" and producto_estado="DISPONIBLE" and producto_tipo="PRODUCTO" ';
+                       'where 1=1 and deposito_id="'+Princ.dep_id+'" and (producto_estado="DISPONIBLE" or producto_estado="REVISAR") and producto_tipo="PRODUCTO" ';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'and producto_codigoreferencia '+producto_codigoreferencia;
 

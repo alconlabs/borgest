@@ -186,7 +186,7 @@ object NotadeCredito2: TNotadeCredito2
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       OnSelect = cliente_idSelect
       Confbase = Princ.ZBase
@@ -203,7 +203,7 @@ object NotadeCredito2: TNotadeCredito2
       Width = 220
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 1
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -413,7 +413,7 @@ object NotadeCredito2: TNotadeCredito2
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 9
       OnSelect = puntoventa_idSelect
       Confbase = Princ.ZBase
@@ -429,7 +429,7 @@ object NotadeCredito2: TNotadeCredito2
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 10
       OnSelect = tipodocu_idSelect
       Confbase = Princ.ZBase
@@ -462,7 +462,7 @@ object NotadeCredito2: TNotadeCredito2
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 8
       OnSelect = sucursal_idSelect
       Confbase = Princ.ZBase
@@ -491,10 +491,6 @@ object NotadeCredito2: TNotadeCredito2
       TabOrder = 13
       object TabSheet1: TTabSheet
         Caption = 'Productos'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGrid1: TDBGrid
           Left = 0
           Top = 0
@@ -578,10 +574,6 @@ object NotadeCredito2: TNotadeCredito2
       object TabSheet2: TTabSheet
         Caption = 'Conceptos'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object DBGrid2: TDBGrid
           Left = 0
           Top = 0
@@ -650,10 +642,6 @@ object NotadeCredito2: TNotadeCredito2
       object TabSheet3: TTabSheet
         Caption = 'Facturas'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label17: TLabel
           Left = 677
           Top = 129
@@ -821,7 +809,12 @@ object NotadeCredito2: TNotadeCredito2
     Connection = Princ.ZBase
     CachedUpdates = True
     SQL.Strings = (
-      'select * from documentoventadetalles')
+      
+        'select documentoventadetalles.*, productos.producto_codigo, prod' +
+        'uctos.producto_codigobarras from documentoventadetalles'
+      
+        'inner join productos on documentoventadetalles.producto_id=produ' +
+        'ctos.producto_id')
     Params = <>
     Left = 328
     Top = 224
@@ -908,6 +901,14 @@ object NotadeCredito2: TNotadeCredito2
     end
     object ZQDocumentoventadetallesproducto_tipo: TStringField
       FieldName = 'producto_tipo'
+      Size = 45
+    end
+    object ZQDocumentoventadetallesproducto_codigo: TStringField
+      FieldName = 'producto_codigo'
+      Size = 45
+    end
+    object ZQDocumentoventadetallesproducto_codigobarras: TStringField
+      FieldName = 'producto_codigobarras'
       Size = 45
     end
   end

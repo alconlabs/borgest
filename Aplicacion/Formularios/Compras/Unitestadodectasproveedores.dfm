@@ -88,7 +88,7 @@ object estadoctasproveedores: Testadoctasproveedores
       Width = 597
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -325,7 +325,7 @@ object estadoctasproveedores: Testadoctasproveedores
       Width = 209
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 4
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -444,6 +444,7 @@ object estadoctasproveedores: Testadoctasproveedores
       Height = 25
       Caption = 'Detalle de Imputacion'
       TabOrder = 8
+      Visible = False
       OnClick = BtnDetalleImputacionClick
     end
   end

@@ -176,6 +176,8 @@ begin
           ZQDocumentoventadetalles.FieldByName('documentoventadetalle_estado').AsString:='FACTURADO';
           ZQDocumentoventadetalles.FieldByName('documentoventadetalle_observacion').AsString:='';
           ZQDocumentoventadetalles.FieldByName('producto_id').AsString:=producto_id.Text;
+          ZQDocumentoventadetalles.FieldByName('producto_codigo').AsString:=producto_id.valor('producto_codigo');
+          ZQDocumentoventadetalles.FieldByName('producto_codigobarras').AsString:=producto_id.valor('producto_codigobarras');
           ZQDocumentoventadetalles.FieldByName('documentoventadetalle_idorig').AsString:='0';
           ZQDocumentoventadetalles.FieldByName('documentoventadetalle_cantidadpendiente').AsString:='0';
           ZQDocumentoventadetalles.FieldByName('documentoventa_id').AsString:='0';
@@ -405,7 +407,7 @@ begin
     btnprecio3.Caption:=Princ.NOMBREPRECIO3;
     btnprecio4.Caption:=Princ.NOMBREPRECIO4;
 
-    producto_id.ConfSql.Text:='select * from productos left join politicasdeprecios on productos.politicaprecio_id=politicasdeprecios.politicaprecio_id where producto_estado="DISPONIBLE" and producto_tipo="PRODUCTO" order by producto_nombre';
+    producto_id.ConfSql.Text:='select * from productos left join politicasdeprecios on productos.politicaprecio_id=politicasdeprecios.politicaprecio_id where (producto_estado="DISPONIBLE" or producto_estado="REVISAR") and producto_tipo="PRODUCTO" order by producto_nombre';
     producto_id.ConfCampoBusqueda1:=Princ.CODIGOPRODUCTOBUSQUEDA1;
     producto_id.ConfCampoBusqueda2:=Princ.CODIGOPRODUCTOBUSQUEDA2;
     producto_id.ConfCampoBusqueda3:=Princ.CODIGOPRODUCTOBUSQUEDA3;

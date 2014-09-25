@@ -10,7 +10,7 @@ uses
   ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
   rpalias, GTBComboBox, ComCtrls, rpexpredlgvcl, DBClient,
   rpclientdataset, Menus, Encriptador, Utilidades, Permisos, DBGrids,
-  TablaTemporal, UtilidadesDB, ExtCtrls, XiProgressBar, BRGFocusAdmin;
+  TablaTemporal, UtilidadesDB, ExtCtrls, XiProgressBar, BRGFocusAdmin, rplabelitem;
 
 
 const
@@ -193,6 +193,7 @@ type
     BRGFocusAdmin1: TBRGFocusAdmin;
     BtnBancos: TAdvGlowButton;
     ZQCheques: TZQuery;
+    BtnCheques: TAdvGlowButton;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -284,6 +285,7 @@ type
     procedure FormDblClick(Sender: TObject);
     procedure AdvToolBarStockDblClick(Sender: TObject);
     procedure BtnBancosClick(Sender: TObject);
+    procedure BtnChequesClick(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -530,7 +532,8 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
   UnitSincronizarDB, UnitEstadoIVAs, UnitFacturaventa02, Unitlistacurvas,
   UnitCargaStockCurva, UnitListaMovimientosDepositos, UnitExportarDB,
   UnitImportarDB, UnitImprimirFichasClientes, UnitConsultaStockCurvas,
-  UnitCargaStockLector, UnitIdentificarUsuario, UnitListaBancos;
+  UnitCargaStockLector, UnitIdentificarUsuario, UnitListaBancos,
+  UnitConsultaCheques;
 
 {$R *.dfm}
 
@@ -1210,9 +1213,9 @@ begin
     if Princ.GetConfiguracion('IDENTIFICARUSUARIO')='-1' then
       begin
           IdentificarUsuario:=TIdentificarUsuario.Create(self);
-          if IdentificarUsuario.ShowModal<>mrOk then
+          if IdentificarUsuario.ShowModal=mrOk then
             begin
-                error:=1;
+                error:=0;
             end;
           IdentificarUsuario.Free;
       end;
@@ -2676,7 +2679,7 @@ var
   existe_campo_stock:boolean;
 begin
     QProductos.First;
-    
+
     try
       QProductos.FieldByName('producdepo_stockactual').AsString;
       existe_campo_stock:=true;
@@ -2696,7 +2699,9 @@ begin
             ZQProductosABM.sql.add('producto_precioventa1, producto_precioventa2, ');
             ZQProductosABM.sql.add('producto_precioventa3, producto_precioventa4, ');
             ZQProductosABM.sql.add('producto_precioventabase, proveedor_id, rubro_id, ');
-            ZQProductosABM.sql.add('tipoiva_id,producto_fechaactualizacionprecio, producto_codigoreferencia) values (:calculoprecio_id, ');
+            ZQProductosABM.sql.add('tipoiva_id,producto_fechaactualizacionprecio, producto_codigoreferencia, ');
+            ZQProductosABM.sql.add('producto_talle, producto_longitudcodigo) ');
+            ZQProductosABM.sql.add('values (:calculoprecio_id, ');
             ZQProductosABM.sql.add(':politicaprecio_id, :producto_codigo, :producto_codigobarras, ');
             ZQProductosABM.sql.add(':producto_estado, :producto_id, :producto_neto1, ');
             ZQProductosABM.sql.add(':producto_neto2, :producto_neto3, :producto_neto4, ');
@@ -2704,7 +2709,8 @@ begin
             ZQProductosABM.sql.add(':producto_preciocosto, :producto_precioventa1, ');
             ZQProductosABM.sql.add(':producto_precioventa2, :producto_precioventa3, ');
             ZQProductosABM.sql.add(':producto_precioventa4, :producto_precioventabase, ');
-            ZQProductosABM.sql.add(':proveedor_id, :rubro_id, :tipoiva_id, :producto_fechaactualizacionprecio, :producto_codigoreferencia)');
+            ZQProductosABM.sql.add(':proveedor_id, :rubro_id, :tipoiva_id, :producto_fechaactualizacionprecio, :producto_codigoreferencia, ');
+            ZQProductosABM.sql.add(':producto_talle, :producto_longitudcodigo) ');
             ZQProductosABM.parambyname('calculoprecio_id').asstring:=QProductos.FieldByName('calculoprecio_id').AsString;
             ZQProductosABM.parambyname('politicaprecio_id').asstring:=QProductos.FieldByName('politicaprecio_id').AsString;
 
@@ -2735,6 +2741,8 @@ begin
             ZQProductosABM.parambyname('tipoiva_id').asstring:=QProductos.FieldByName('tipoiva_id').AsString;
             ZQProductosABM.parambyname('producto_fechaactualizacionprecio').asstring:=formatdatetime('yyyy-mm-dd',Princ.fechaservidor);
             ZQProductosABM.parambyname('producto_codigoreferencia').asstring:=QProductos.FieldByName('producto_codigoreferencia').AsString;
+            ZQProductosABM.parambyname('producto_talle').asstring:=QProductos.FieldByName('producto_talle').AsString;
+            ZQProductosABM.parambyname('producto_longitudcodigo').asstring:=QProductos.FieldByName('producto_longitudcodigo').AsString;
             ZQProductosABM.ExecSQL;
 
 
@@ -2743,12 +2751,12 @@ begin
             ZQProductosABM.sql.add('select 0, 0, '+id+', deposito_id, 0, 0, 0, "PENDIENTE" from depositos');
             ZQProductosABM.ExecSQL;
 
-            if existe_campo_stock then
+            if existe_campo_stock and (QProductos.FieldByName('producdepo_stockactual').AsFloat>0) then
               begin
                   ZQProductosABM.sql.clear;
                   ZQProductosABM.sql.add('update productodeposito set');
                   ZQProductosABM.sql.add('producdepo_stockactual=:producdepo_stockactual, ');
-				  ZQProductosABM.sql.add('producdepo_estadosinc="PENDIENTE", ');
+				          ZQProductosABM.sql.add('producdepo_estadosinc="PENDIENTE" ');
                   ZQProductosABM.sql.add('where producto_id=:producto_id and ');
                   ZQProductosABM.sql.add('deposito_id=:deposito_id');
                   ZQProductosABM.ParamByName('producdepo_stockactual').AsString:=QProductos.FieldByName('producdepo_stockactual').AsString;
@@ -4824,6 +4832,16 @@ begin
     end;
 end;
 
+procedure TPrinc.BtnChequesClick(Sender: TObject);
+begin
+    try
+      ConsultaCheques:=TConsultaCheques.Create(self);
+    finally
+//      empresa.abm:=1;
+      ConsultaCheques.Show;
+    end;
+end;
+
 procedure TPrinc.btnempresaClick(Sender: TObject);
 begin
     try
@@ -4998,7 +5016,166 @@ end;
 
 procedure TPrinc.VCLReport1BeforePrint(Sender: TObject);
 begin
-    
+    if Princ.VCLReport1.Filename=Princ.ruta_carpeta_reportes+'consulta_stock_curvas.rep' then
+      begin
+          (Princ.VCLReport1.Report.FindComponent('deposito_nombre') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression17') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression18') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression19') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression20') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression21') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression22') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression23') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression24') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression37') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression38') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression32') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression33') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression1') as TRpExpression).FontColor := clWhite;
+          (Princ.VCLReport1.Report.FindComponent('TRpExpression4') as TRpExpression).FontColor := clWhite;
+          
+          if (Princ.VCLReport1.Report.FindComponent('deposito_nombre') as TRpExpression).IdenExpression.Value='RICETTO' then
+            begin
+                (Princ.VCLReport1.Report.FindComponent('deposito_nombre') as TRpExpression).FontColor := clRed;
+                (Princ.VCLReport1.Report.FindComponent('TRpExpression17') as TRpExpression).FontColor := clRed;
+
+                if (Princ.VCLReport1.Report.FindComponent('TRpExpression3') as TRpExpression).IdenExpression.Value<>'' then
+                  (Princ.VCLReport1.Report.FindComponent('TRpExpression18') as TRpExpression).FontColor := clRed;
+
+                if (Princ.VCLReport1.Report.FindComponent('TRpExpression5') as TRpExpression).IdenExpression.Value<>'' then
+                (Princ.VCLReport1.Report.FindComponent('TRpExpression19') as TRpExpression).FontColor := clRed;
+
+                if (Princ.VCLReport1.Report.FindComponent('TRpExpression8') as TRpExpression).IdenExpression.Value<>'' then
+                (Princ.VCLReport1.Report.FindComponent('TRpExpression20') as TRpExpression).FontColor := clRed;
+
+                if (Princ.VCLReport1.Report.FindComponent('TRpExpression9') as TRpExpression).IdenExpression.Value<>'' then
+                (Princ.VCLReport1.Report.FindComponent('TRpExpression21') as TRpExpression).FontColor := clRed;
+
+                if (Princ.VCLReport1.Report.FindComponent('TRpExpression12') as TRpExpression).IdenExpression.Value<>'' then
+                (Princ.VCLReport1.Report.FindComponent('TRpExpression22') as TRpExpression).FontColor := clRed;
+
+                if (Princ.VCLReport1.Report.FindComponent('TRpExpression13') as TRpExpression).IdenExpression.Value<>'' then
+                (Princ.VCLReport1.Report.FindComponent('TRpExpression23') as TRpExpression).FontColor := clRed;
+
+                if (Princ.VCLReport1.Report.FindComponent('TRpExpression26') as TRpExpression).IdenExpression.Value<>'' then
+                (Princ.VCLReport1.Report.FindComponent('TRpExpression24') as TRpExpression).FontColor := clRed;
+
+                if (Princ.VCLReport1.Report.FindComponent('TRpExpression14') as TRpExpression).IdenExpression.Value<>'' then
+                (Princ.VCLReport1.Report.FindComponent('TRpExpression37') as TRpExpression).FontColor := clRed;
+
+                if (Princ.VCLReport1.Report.FindComponent('TRpExpression25') as TRpExpression).IdenExpression.Value<>'' then
+                (Princ.VCLReport1.Report.FindComponent('TRpExpression38') as TRpExpression).FontColor := clRed;
+
+                if (Princ.VCLReport1.Report.FindComponent('TRpExpression27') as TRpExpression).IdenExpression.Value<>'' then
+                (Princ.VCLReport1.Report.FindComponent('TRpExpression32') as TRpExpression).FontColor := clRed;
+
+                if (Princ.VCLReport1.Report.FindComponent('TRpExpression28') as TRpExpression).IdenExpression.Value<>'' then
+                (Princ.VCLReport1.Report.FindComponent('TRpExpression33') as TRpExpression).FontColor := clRed;
+
+                if (Princ.VCLReport1.Report.FindComponent('TRpExpression15') as TRpExpression).IdenExpression.Value<>'' then
+                (Princ.VCLReport1.Report.FindComponent('TRpExpression1') as TRpExpression).FontColor := clRed;
+
+                if (Princ.VCLReport1.Report.FindComponent('TRpExpression6') as TRpExpression).IdenExpression.Value<>'' then
+                (Princ.VCLReport1.Report.FindComponent('TRpExpression4') as TRpExpression).FontColor := clRed;
+            end
+          else
+            begin
+                if (Princ.VCLReport1.Report.FindComponent('deposito_nombre') as TRpExpression).IdenExpression.Value='EL PALACIO' then
+                  begin
+                      (Princ.VCLReport1.Report.FindComponent('deposito_nombre') as TRpExpression).FontColor := clGreen;
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression17') as TRpExpression).FontColor := clGreen;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression3') as TRpExpression).IdenExpression.Value<>'' then
+                        (Princ.VCLReport1.Report.FindComponent('TRpExpression18') as TRpExpression).FontColor := clGreen;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression5') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression19') as TRpExpression).FontColor := clGreen;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression8') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression20') as TRpExpression).FontColor := clGreen;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression9') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression21') as TRpExpression).FontColor := clGreen;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression12') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression22') as TRpExpression).FontColor := clGreen;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression13') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression23') as TRpExpression).FontColor := clGreen;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression26') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression24') as TRpExpression).FontColor := clGreen;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression14') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression37') as TRpExpression).FontColor := clGreen;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression25') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression38') as TRpExpression).FontColor := clGreen;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression27') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression32') as TRpExpression).FontColor := clGreen;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression28') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression33') as TRpExpression).FontColor := clGreen;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression15') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression1') as TRpExpression).FontColor := clGreen;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression6') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression4') as TRpExpression).FontColor := clGreen;
+
+                  end
+
+                else
+                  begin
+                      (Princ.VCLReport1.Report.FindComponent('deposito_nombre') as TRpExpression).FontColor := clBlue;
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression17') as TRpExpression).FontColor := clBlue;
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression3') as TRpExpression).IdenExpression.Value<>'' then
+                        (Princ.VCLReport1.Report.FindComponent('TRpExpression18') as TRpExpression).FontColor := clBlue;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression5') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression19') as TRpExpression).FontColor := clBlue;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression8') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression20') as TRpExpression).FontColor := clBlue;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression9') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression21') as TRpExpression).FontColor := clBlue;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression12') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression22') as TRpExpression).FontColor := clBlue;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression13') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression23') as TRpExpression).FontColor := clBlue;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression26') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression24') as TRpExpression).FontColor := clBlue;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression14') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression37') as TRpExpression).FontColor := clBlue;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression25') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression38') as TRpExpression).FontColor := clBlue;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression27') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression32') as TRpExpression).FontColor := clBlue;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression28') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression33') as TRpExpression).FontColor := clBlue;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression15') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression1') as TRpExpression).FontColor := clBlue;
+
+                      if (Princ.VCLReport1.Report.FindComponent('TRpExpression6') as TRpExpression).IdenExpression.Value<>'' then
+                      (Princ.VCLReport1.Report.FindComponent('TRpExpression4') as TRpExpression).FontColor := clBlue;
+
+                  end;
+
+
+            end;
+
+      end;
+
     VCLReport1.Report.SetLanguage(1);
     
 end;

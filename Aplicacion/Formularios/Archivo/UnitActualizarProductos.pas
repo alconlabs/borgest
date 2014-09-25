@@ -263,6 +263,48 @@ type
     seccion_id: TSqlComboBox;
     Label43: TLabel;
     marca_id: TSqlComboBox;
+    BtnSinCambios: TButton;
+    TabSheet7: TTabSheet;
+    DBGrid6: TDBGrid;
+    DTSSinPrecios: TDataSource;
+    MQSinPrecios: TMQuery;
+    MQSinPreciosproducto_id: TIntegerField;
+    MQSinPreciosproducto_nombre: TStringField;
+    MQSinPreciosproducto_codigo: TStringField;
+    MQSinPreciosproducto_codigobarras: TStringField;
+    MQSinPreciosproducto_preciocosto: TFloatField;
+    MQSinPreciosproducto_precioventabase: TFloatField;
+    MQSinPreciosproducto_precioventa1: TFloatField;
+    MQSinPreciosproducto_precioventa2: TFloatField;
+    MQSinPreciosproducto_precioventa3: TFloatField;
+    MQSinPreciosproducto_precioventa4: TFloatField;
+    MQSinPrecioscalculoprecio_id: TIntegerField;
+    MQSinPreciospoliticaprecio_id: TIntegerField;
+    MQSinPreciostipoiva_id: TIntegerField;
+    MQSinPreciosrubro_id: TIntegerField;
+    MQSinPreciosproveedor_id: TIntegerField;
+    MQSinPreciosproducto_neto1: TFloatField;
+    MQSinPreciosproducto_neto2: TFloatField;
+    MQSinPreciosproducto_neto3: TFloatField;
+    MQSinPreciosproducto_neto4: TFloatField;
+    MQSinPreciosproducdepo_stockminimo: TFloatField;
+    MQSinPreciosproducdepo_stockactual: TFloatField;
+    MQSinPreciosproducto_codigoreferencia: TStringField;
+    BtnQuitarSinPrecio: TButton;
+    BtnQuitarSinCambios: TButton;
+    lblcantidadsinprecio: TLabel;
+    BtnSinPrecio: TButton;
+    MQSinPreciosseccion_id: TIntegerField;
+    MQSinPreciosmarca_id: TIntegerField;
+    MQSinPreciosproducto_estado: TStringField;
+    producto_estado: TComboBox;
+    Label44: TLabel;
+    Label45: TLabel;
+    xls_producto_estado: TComboBox;
+    MQNuevosproducto_talle: TStringField;
+    MQNuevosproducto_longitudcodigo: TIntegerField;
+    Label46: TLabel;
+    separador_codigo: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnexaminarClick(Sender: TObject);
     procedure btnabrirarchivoClick(Sender: TObject);
@@ -290,6 +332,10 @@ type
     procedure btnaplicarseccionClick(Sender: TObject);
     procedure btnaplicarmarcaClick(Sender: TObject);
     procedure btnAplicarPVentaImporteClick(Sender: TObject);
+    procedure BtnSinCambiosClick(Sender: TObject);
+    procedure BtnQuitarSinPrecioClick(Sender: TObject);
+    procedure BtnQuitarSinCambiosClick(Sender: TObject);
+    procedure BtnSinPrecioClick(Sender: TObject);
   private
     { Private declarations }
     destino:string;
@@ -506,6 +552,26 @@ begin
       end;
 end;
 
+procedure TActualizarProductos.BtnSinPrecioClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea modificar el estado?', mtConfirmation, [mbOK, mbCancel], 0) in [mrOk, mrNone]) then
+      begin
+          MQSinPrecios.First;
+          while not MQSinPrecios.Eof do
+              begin
+                  MQSinPrecios.Edit;
+                  MQSinPrecios.FieldByName('producto_estado').AsString:=producto_estado.Text;
+                  MQSinPrecios.Post;
+                  
+                  MQSinPrecios.Next;
+              end;
+
+          BtnSinPrecio.Enabled:=false;
+          Princ.ModificarProducto(MQSinPrecios);
+
+      end;
+end;
+
 procedure TActualizarProductos.btndisminuirpreciosClick(Sender: TObject);
 begin
     if (MessageDlg('Seguro desea actualizar estos precios?', mtConfirmation, [mbOK, mbCancel], 0) in [mrOk, mrNone]) then
@@ -658,6 +724,28 @@ begin
       end;
 end;
 
+procedure TActualizarProductos.BtnQuitarSinCambiosClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea quitar de la lista?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          try
+            MQSincambios.Delete;
+          except
+          end;
+      end;
+end;
+
+procedure TActualizarProductos.BtnQuitarSinPrecioClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea quitar de la lista?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          try
+            MQSinPrecios.Delete;
+          except
+          end;
+      end;
+end;
+
 procedure TActualizarProductos.btnrecalculartodoClick(Sender: TObject);
 begin
     if (MessageDlg('Seguro desea actualizar los precios de todos los productos?'+#13+#10+'Se pedira una segunda confirmacion.', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
@@ -670,6 +758,16 @@ begin
             end;
 
 
+
+      end;
+end;
+
+procedure TActualizarProductos.BtnSinCambiosClick(Sender: TObject);
+begin
+    if (MessageDlg('Seguro desea actualizar la fecha de actualizacion?', mtConfirmation, [mbOK, mbCancel], 0) in [mrOk, mrNone]) then
+      begin
+          BtnSinCambios.Enabled:=false;
+          Princ.ActualizarPrecios(MQSincambios);
 
       end;
 end;
@@ -755,6 +853,7 @@ end;
 procedure TActualizarProductos.btnabrirarchivoClick(Sender: TObject);
 var
   producto_codigobuscado:string;
+  longitudcodigo:integer;
 begin
     if princ.ADOConnection1.Connected then
       begin
@@ -775,6 +874,9 @@ begin
 
           MQSincambios.Active:=false;
           MQSincambios.Active:=true;
+
+          MQSinPrecios.Active:=false;
+          MQSinPrecios.Active:=true;
 
           ZQproductos.SQL.Text:='select * from productos where '+campo_codigo+'=:id';
 
@@ -801,7 +903,7 @@ begin
                               MQNuevos.FieldByName('tipoiva_id').AsString:=xls_tipoiva_id.codigo;
                               MQNuevos.FieldByName('rubro_id').AsString:=xls_rubro_id.codigo;
                               MQNuevos.FieldByName('proveedor_id').AsString:=xls_proveedor_id.codigo;
-                              MQNuevos.FieldByName('producto_estado').AsString:='DISPONIBLE';
+                              MQNuevos.FieldByName('producto_estado').AsString:=xls_producto_estado.Text;
                               MQNuevos.FieldByName('producto_observaciones').AsString:='Importado desde Excel';
                               MQNuevos.FieldByName('producto_codigoreferencia').AsString:='';
                               if columna_codigoreferencia.ItemIndex>-1 then
@@ -811,101 +913,158 @@ begin
                               if columna_stockactual.ItemIndex>-1 then
                                 MQNuevos.FieldByName('producdepo_stockactual').AsString:=Princ.ADODataSet1.Fields[columna_stockactual.ItemIndex].AsString;
 
+                              MQNuevos.FieldByName('producto_talle').AsString:='';
+                              MQNuevos.FieldByName('producto_longitudcodigo').AsString:='0';
+                              if separador_codigo.Text<>'' then
+                                begin
+                                    longitudcodigo:=pos(separador_codigo.Text,Princ.ADODataSet1.Fields[columna_codigo.ItemIndex].AsString);
+                                    if longitudcodigo>0 then
+                                      begin
+                                          MQNuevos.FieldByName('producto_longitudcodigo').AsInteger:=longitudcodigo-1;
+                                          MQNuevos.FieldByName('producto_talle').AsString:=copy(Princ.ADODataSet1.Fields[columna_codigo.ItemIndex].AsString,longitudcodigo, length(Princ.ADODataSet1.Fields[columna_codigo.ItemIndex].AsString)-longitudcodigo+1);
+
+
+                                      end;
+
+
+
+                                end;
+
+
+
                               MQNuevos.Post;
                           end
                         else
-                          begin   //PRODUCTO A ACTUALIZAR
-                              if roundto(ZQproductos.FieldByName('producto_preciocosto').AsFloat,-2)<roundto(Princ.ADODataSet1.Fields[columna_preciocompra.ItemIndex].AsFloat,-2) then
+                          begin
+                              if roundto(Princ.ADODataSet1.Fields[columna_preciocompra.ItemIndex].AsFloat,-2)=0 then //PRODUCTO SIN PRECIO
                                 begin
-                                    MQIncrementar.Insert;
-                                    MQIncrementar.FieldByName('producto_id').AsString:=ZQproductos.FieldByName('producto_id').AsString;
-                                    MQIncrementar.FieldByName('producto_codigo').AsString:=ZQproductos.FieldByName('producto_codigo').AsString;
-                                    MQIncrementar.FieldByName('producto_codigobarras').AsString:=ZQproductos.FieldByName('producto_codigobarras').AsString;
-                                    MQIncrementar.FieldByName('producto_nombre').AsString:=ZQproductos.FieldByName('producto_nombre').AsString;
-                                    MQIncrementar.FieldByName('producto_preciocostoprev').AsString:=ZQproductos.FieldByName('producto_preciocosto').AsString;
-                                    MQIncrementar.FieldByName('producto_preciocosto').AsFloat:=roundto(Princ.ADODataSet1.Fields[columna_preciocompra.ItemIndex].AsFloat,-2);
-                                    MQIncrementar.FieldByName('calculoprecio_id').AsString:=ZQproductos.FieldByName('calculoprecio_id').AsString;
-                                    MQIncrementar.FieldByName('politicaprecio_id').AsString:=ZQproductos.FieldByName('politicaprecio_id').AsString;
-                                    if ckbAplicarPolitica.Checked then
-                                      begin
-                                          MQIncrementar.FieldByName('politicaprecio_id').AsString:=xls_politicaprecio_id.codigo;
-                                      end;
-
-                                    MQIncrementar.FieldByName('tipoiva_id').AsString:=ZQproductos.FieldByName('tipoiva_id').AsString;
-
-                                    if CKBAplicarIVA.Checked then
-                                      begin
-                                          MQIncrementar.FieldByName('tipoiva_id').AsString:=xls_tipoiva_id.codigo;
-                                      end;
-                                    MQIncrementar.FieldByName('rubro_id').AsString:=ZQproductos.FieldByName('rubro_id').AsString;
-                                    MQIncrementar.FieldByName('proveedor_id').AsString:=ZQproductos.FieldByName('proveedor_id').AsString;
-                                    MQIncrementar.FieldByName('diferencia').AsFloat:=MQIncrementar.FieldByName('producto_preciocostoprev').AsFloat-MQIncrementar.FieldByName('producto_preciocosto').AsFloat;
-                                    MQIncrementar.FieldByName('producto_codigoreferencia').AsString:='';
+                                    MQSinPrecios.Insert;
+                                    MQSinPrecios.FieldByName('producto_id').AsString:=ZQproductos.FieldByName('producto_id').AsString;
+                                    MQSinPrecios.FieldByName('producto_nombre').AsString:=ZQproductos.FieldByName('producto_nombre').AsString;
+                                    MQSinPrecios.FieldByName('producto_codigo').AsString:=ZQproductos.FieldByName('producto_codigo').AsString;
+                                    MQSinPrecios.FieldByName('producto_codigobarras').AsString:=ZQproductos.FieldByName('producto_codigobarras').AsString;
+                                    MQSinPrecios.FieldByName('producto_preciocosto').AsString:=ZQproductos.FieldByName('producto_preciocosto').AsString;
+                                    MQSinPrecios.FieldByName('producto_precioventabase').AsString:=ZQproductos.FieldByName('producto_precioventabase').AsString;
+                                    MQSinPrecios.FieldByName('producto_precioventa1').AsString:=ZQproductos.FieldByName('producto_precioventa1').AsString;
+                                    MQSinPrecios.FieldByName('producto_precioventa2').AsString:=ZQproductos.FieldByName('producto_precioventa2').AsString;
+                                    MQSinPrecios.FieldByName('producto_precioventa3').AsString:=ZQproductos.FieldByName('producto_precioventa3').AsString;
+                                    MQSinPrecios.FieldByName('producto_precioventa4').AsString:=ZQproductos.FieldByName('producto_precioventa4').AsString;
+                                    MQSinPrecios.FieldByName('calculoprecio_id').AsString:=ZQproductos.FieldByName('calculoprecio_id').AsString;
+                                    MQSinPrecios.FieldByName('politicaprecio_id').AsString:=ZQproductos.FieldByName('politicaprecio_id').AsString;
+                                    MQSinPrecios.FieldByName('tipoiva_id').AsString:=ZQproductos.FieldByName('tipoiva_id').AsString;
+                                    MQSinPrecios.FieldByName('rubro_id').AsString:=ZQproductos.FieldByName('rubro_id').AsString;
+                                    MQSinPrecios.FieldByName('proveedor_id').AsString:=ZQproductos.FieldByName('proveedor_id').AsString;
+                                    MQSinPrecios.FieldByName('producto_neto1').AsString:=ZQproductos.FieldByName('producto_neto1').AsString;
+                                    MQSinPrecios.FieldByName('producto_neto2').AsString:=ZQproductos.FieldByName('producto_neto2').AsString;
+                                    MQSinPrecios.FieldByName('producto_neto3').AsString:=ZQproductos.FieldByName('producto_neto3').AsString;
+                                    MQSinPrecios.FieldByName('producto_neto4').AsString:=ZQproductos.FieldByName('producto_neto4').AsString;
+                                    MQSinPrecios.FieldByName('producto_codigoreferencia').AsString:='';
                                     if columna_codigoreferencia.ItemIndex>-1 then
-                                      MQIncrementar.FieldByName('producto_codigoreferencia').AsString:=Princ.ADODataSet1.Fields[columna_codigoreferencia.ItemIndex].AsString;
-                                    MQIncrementar.Post;
+                                      MQSinPrecios.FieldByName('producto_codigoreferencia').AsString:=Princ.ADODataSet1.Fields[columna_codigoreferencia.ItemIndex].AsString;
+                                    MQSinPrecios.FieldByName('seccion_id').AsString:=ZQproductos.FieldByName('seccion_id').AsString;
+                                    MQSinPrecios.FieldByName('marca_id').AsString:=ZQproductos.FieldByName('marca_id').AsString;
+                                    MQSinPrecios.FieldByName('producto_estado').AsString:=ZQproductos.FieldByName('producto_estado').AsString;
+
+                                    MQSinPrecios.Post;
                                 end
                               else
-                                begin
-                                    if roundto(ZQproductos.FieldByName('producto_preciocosto').AsFloat,-2)=roundto(Princ.ADODataSet1.Fields[columna_preciocompra.ItemIndex].AsFloat,-2) then
+                                begin  //PRODUCTO A ACTUALIZAR
+                                    if roundto(ZQproductos.FieldByName('producto_preciocosto').AsFloat,-2)<roundto(Princ.ADODataSet1.Fields[columna_preciocompra.ItemIndex].AsFloat,-2) then
                                       begin
-                                          MQSincambios.Insert;
-                                          MQSincambios.FieldByName('producto_id').AsString:=ZQproductos.FieldByName('producto_id').AsString;
-                                          MQSincambios.FieldByName('producto_nombre').AsString:=ZQproductos.FieldByName('producto_nombre').AsString;
-                                          MQSincambios.FieldByName('producto_codigo').AsString:=ZQproductos.FieldByName('producto_codigo').AsString;
-                                          MQSincambios.FieldByName('producto_codigobarras').AsString:=ZQproductos.FieldByName('producto_codigobarras').AsString;
-                                          MQSincambios.FieldByName('producto_preciocosto').AsString:=ZQproductos.FieldByName('producto_preciocosto').AsString;
-                                          MQSincambios.FieldByName('producto_precioventabase').AsString:=ZQproductos.FieldByName('producto_precioventabase').AsString;
-                                          MQSincambios.FieldByName('producto_precioventa1').AsString:=ZQproductos.FieldByName('producto_precioventa1').AsString;
-                                          MQSincambios.FieldByName('producto_precioventa2').AsString:=ZQproductos.FieldByName('producto_precioventa2').AsString;
-                                          MQSincambios.FieldByName('producto_precioventa3').AsString:=ZQproductos.FieldByName('producto_precioventa3').AsString;
-                                          MQSincambios.FieldByName('producto_precioventa4').AsString:=ZQproductos.FieldByName('producto_precioventa4').AsString;
-                                          MQSincambios.FieldByName('calculoprecio_id').AsString:=ZQproductos.FieldByName('calculoprecio_id').AsString;
-                                          MQSincambios.FieldByName('politicaprecio_id').AsString:=ZQproductos.FieldByName('politicaprecio_id').AsString;
-                                          MQSincambios.FieldByName('tipoiva_id').AsString:=ZQproductos.FieldByName('tipoiva_id').AsString;
-                                          MQSincambios.FieldByName('rubro_id').AsString:=ZQproductos.FieldByName('rubro_id').AsString;
-                                          MQSincambios.FieldByName('proveedor_id').AsString:=ZQproductos.FieldByName('proveedor_id').AsString;
-                                          MQSincambios.FieldByName('producto_neto1').AsString:=ZQproductos.FieldByName('producto_neto1').AsString;
-                                          MQSincambios.FieldByName('producto_neto2').AsString:=ZQproductos.FieldByName('producto_neto2').AsString;
-                                          MQSincambios.FieldByName('producto_neto3').AsString:=ZQproductos.FieldByName('producto_neto3').AsString;
-                                          MQSincambios.FieldByName('producto_neto4').AsString:=ZQproductos.FieldByName('producto_neto4').AsString;
-                                          MQSincambios.FieldByName('producto_codigoreferencia').AsString:='';
-                                          if columna_codigoreferencia.ItemIndex>-1 then
-                                            MQSincambios.FieldByName('producto_codigoreferencia').AsString:=Princ.ADODataSet1.Fields[columna_codigoreferencia.ItemIndex].AsString;
-                                          MQSincambios.Post;
-                                      end
-                                    else
-                                      begin
-                                          MQDisminuir.Insert;
-                                          MQDisminuir.FieldByName('producto_id').AsString:=ZQproductos.FieldByName('producto_id').AsString;
-                                          MQDisminuir.FieldByName('producto_codigo').AsString:=ZQproductos.FieldByName('producto_codigo').AsString;
-                                          MQDisminuir.FieldByName('producto_codigobarras').AsString:=ZQproductos.FieldByName('producto_codigobarras').AsString;
-                                          MQDisminuir.FieldByName('producto_nombre').AsString:=ZQproductos.FieldByName('producto_nombre').AsString;
-                                          MQDisminuir.FieldByName('producto_preciocostoprev').AsString:=ZQproductos.FieldByName('producto_preciocosto').AsString;
-                                          MQDisminuir.FieldByName('producto_preciocosto').AsFloat:=roundto(Princ.ADODataSet1.Fields[columna_preciocompra.ItemIndex].AsFloat,-2);
-                                          MQDisminuir.FieldByName('calculoprecio_id').AsString:=ZQproductos.FieldByName('calculoprecio_id').AsString;
-                                          MQDisminuir.FieldByName('politicaprecio_id').AsString:=ZQproductos.FieldByName('politicaprecio_id').AsString;
+                                          MQIncrementar.Insert;
+                                          MQIncrementar.FieldByName('producto_id').AsString:=ZQproductos.FieldByName('producto_id').AsString;
+                                          MQIncrementar.FieldByName('producto_codigo').AsString:=ZQproductos.FieldByName('producto_codigo').AsString;
+                                          MQIncrementar.FieldByName('producto_codigobarras').AsString:=ZQproductos.FieldByName('producto_codigobarras').AsString;
+                                          MQIncrementar.FieldByName('producto_nombre').AsString:=ZQproductos.FieldByName('producto_nombre').AsString;
+                                          MQIncrementar.FieldByName('producto_preciocostoprev').AsString:=ZQproductos.FieldByName('producto_preciocosto').AsString;
+                                          MQIncrementar.FieldByName('producto_preciocosto').AsFloat:=roundto(Princ.ADODataSet1.Fields[columna_preciocompra.ItemIndex].AsFloat,-2);
+                                          MQIncrementar.FieldByName('calculoprecio_id').AsString:=ZQproductos.FieldByName('calculoprecio_id').AsString;
+                                          MQIncrementar.FieldByName('politicaprecio_id').AsString:=ZQproductos.FieldByName('politicaprecio_id').AsString;
                                           if ckbAplicarPolitica.Checked then
                                             begin
-                                                MQDisminuir.FieldByName('politicaprecio_id').AsString:=xls_politicaprecio_id.codigo;
+                                                MQIncrementar.FieldByName('politicaprecio_id').AsString:=xls_politicaprecio_id.codigo;
                                             end;
 
-                                          MQDisminuir.FieldByName('tipoiva_id').AsString:=ZQproductos.FieldByName('tipoiva_id').AsString;
+                                          MQIncrementar.FieldByName('tipoiva_id').AsString:=ZQproductos.FieldByName('tipoiva_id').AsString;
 
                                           if CKBAplicarIVA.Checked then
                                             begin
-                                                MQDisminuir.FieldByName('tipoiva_id').AsString:=xls_tipoiva_id.codigo;
+                                                MQIncrementar.FieldByName('tipoiva_id').AsString:=xls_tipoiva_id.codigo;
                                             end;
-
-                                          MQDisminuir.FieldByName('rubro_id').AsString:=ZQproductos.FieldByName('rubro_id').AsString;
-                                          MQDisminuir.FieldByName('proveedor_id').AsString:=ZQproductos.FieldByName('proveedor_id').AsString;
-                                          MQDisminuir.FieldByName('diferencia').AsFloat:=MQDisminuir.FieldByName('producto_preciocostoprev').AsFloat-MQDisminuir.FieldByName('producto_preciocosto').AsFloat;
-                                          MQDisminuir.FieldByName('producto_codigoreferencia').AsString:='';
+                                          MQIncrementar.FieldByName('rubro_id').AsString:=ZQproductos.FieldByName('rubro_id').AsString;
+                                          MQIncrementar.FieldByName('proveedor_id').AsString:=ZQproductos.FieldByName('proveedor_id').AsString;
+                                          MQIncrementar.FieldByName('diferencia').AsFloat:=MQIncrementar.FieldByName('producto_preciocostoprev').AsFloat-MQIncrementar.FieldByName('producto_preciocosto').AsFloat;
+                                          MQIncrementar.FieldByName('producto_codigoreferencia').AsString:='';
                                           if columna_codigoreferencia.ItemIndex>-1 then
-                                            MQDisminuir.FieldByName('producto_codigoreferencia').AsString:=Princ.ADODataSet1.Fields[columna_codigoreferencia.ItemIndex].AsString;
-                                          MQDisminuir.Post;
+                                            MQIncrementar.FieldByName('producto_codigoreferencia').AsString:=Princ.ADODataSet1.Fields[columna_codigoreferencia.ItemIndex].AsString;
+                                          MQIncrementar.Post;
+                                      end
+                                    else
+                                      begin
+                                          if roundto(ZQproductos.FieldByName('producto_preciocosto').AsFloat,-2)=roundto(Princ.ADODataSet1.Fields[columna_preciocompra.ItemIndex].AsFloat,-2) then
+                                            begin
+                                                MQSincambios.Insert;
+                                                MQSincambios.FieldByName('producto_id').AsString:=ZQproductos.FieldByName('producto_id').AsString;
+                                                MQSincambios.FieldByName('producto_nombre').AsString:=ZQproductos.FieldByName('producto_nombre').AsString;
+                                                MQSincambios.FieldByName('producto_codigo').AsString:=ZQproductos.FieldByName('producto_codigo').AsString;
+                                                MQSincambios.FieldByName('producto_codigobarras').AsString:=ZQproductos.FieldByName('producto_codigobarras').AsString;
+                                                MQSincambios.FieldByName('producto_preciocosto').AsString:=ZQproductos.FieldByName('producto_preciocosto').AsString;
+                                                MQSincambios.FieldByName('producto_precioventabase').AsString:=ZQproductos.FieldByName('producto_precioventabase').AsString;
+                                                MQSincambios.FieldByName('producto_precioventa1').AsString:=ZQproductos.FieldByName('producto_precioventa1').AsString;
+                                                MQSincambios.FieldByName('producto_precioventa2').AsString:=ZQproductos.FieldByName('producto_precioventa2').AsString;
+                                                MQSincambios.FieldByName('producto_precioventa3').AsString:=ZQproductos.FieldByName('producto_precioventa3').AsString;
+                                                MQSincambios.FieldByName('producto_precioventa4').AsString:=ZQproductos.FieldByName('producto_precioventa4').AsString;
+                                                MQSincambios.FieldByName('calculoprecio_id').AsString:=ZQproductos.FieldByName('calculoprecio_id').AsString;
+                                                MQSincambios.FieldByName('politicaprecio_id').AsString:=ZQproductos.FieldByName('politicaprecio_id').AsString;
+                                                MQSincambios.FieldByName('tipoiva_id').AsString:=ZQproductos.FieldByName('tipoiva_id').AsString;
+                                                MQSincambios.FieldByName('rubro_id').AsString:=ZQproductos.FieldByName('rubro_id').AsString;
+                                                MQSincambios.FieldByName('proveedor_id').AsString:=ZQproductos.FieldByName('proveedor_id').AsString;
+                                                MQSincambios.FieldByName('producto_neto1').AsString:=ZQproductos.FieldByName('producto_neto1').AsString;
+                                                MQSincambios.FieldByName('producto_neto2').AsString:=ZQproductos.FieldByName('producto_neto2').AsString;
+                                                MQSincambios.FieldByName('producto_neto3').AsString:=ZQproductos.FieldByName('producto_neto3').AsString;
+                                                MQSincambios.FieldByName('producto_neto4').AsString:=ZQproductos.FieldByName('producto_neto4').AsString;
+                                                MQSincambios.FieldByName('producto_codigoreferencia').AsString:='';
+                                                if columna_codigoreferencia.ItemIndex>-1 then
+                                                  MQSincambios.FieldByName('producto_codigoreferencia').AsString:=Princ.ADODataSet1.Fields[columna_codigoreferencia.ItemIndex].AsString;
+                                                MQSincambios.Post;
+                                            end
+                                          else
+                                            begin
+                                                MQDisminuir.Insert;
+                                                MQDisminuir.FieldByName('producto_id').AsString:=ZQproductos.FieldByName('producto_id').AsString;
+                                                MQDisminuir.FieldByName('producto_codigo').AsString:=ZQproductos.FieldByName('producto_codigo').AsString;
+                                                MQDisminuir.FieldByName('producto_codigobarras').AsString:=ZQproductos.FieldByName('producto_codigobarras').AsString;
+                                                MQDisminuir.FieldByName('producto_nombre').AsString:=ZQproductos.FieldByName('producto_nombre').AsString;
+                                                MQDisminuir.FieldByName('producto_preciocostoprev').AsString:=ZQproductos.FieldByName('producto_preciocosto').AsString;
+                                                MQDisminuir.FieldByName('producto_preciocosto').AsFloat:=roundto(Princ.ADODataSet1.Fields[columna_preciocompra.ItemIndex].AsFloat,-2);
+                                                MQDisminuir.FieldByName('calculoprecio_id').AsString:=ZQproductos.FieldByName('calculoprecio_id').AsString;
+                                                MQDisminuir.FieldByName('politicaprecio_id').AsString:=ZQproductos.FieldByName('politicaprecio_id').AsString;
+                                                if ckbAplicarPolitica.Checked then
+                                                  begin
+                                                      MQDisminuir.FieldByName('politicaprecio_id').AsString:=xls_politicaprecio_id.codigo;
+                                                  end;
+
+                                                MQDisminuir.FieldByName('tipoiva_id').AsString:=ZQproductos.FieldByName('tipoiva_id').AsString;
+
+                                                if CKBAplicarIVA.Checked then
+                                                  begin
+                                                      MQDisminuir.FieldByName('tipoiva_id').AsString:=xls_tipoiva_id.codigo;
+                                                  end;
+
+                                                MQDisminuir.FieldByName('rubro_id').AsString:=ZQproductos.FieldByName('rubro_id').AsString;
+                                                MQDisminuir.FieldByName('proveedor_id').AsString:=ZQproductos.FieldByName('proveedor_id').AsString;
+                                                MQDisminuir.FieldByName('diferencia').AsFloat:=MQDisminuir.FieldByName('producto_preciocostoprev').AsFloat-MQDisminuir.FieldByName('producto_preciocosto').AsFloat;
+                                                MQDisminuir.FieldByName('producto_codigoreferencia').AsString:='';
+                                                if columna_codigoreferencia.ItemIndex>-1 then
+                                                  MQDisminuir.FieldByName('producto_codigoreferencia').AsString:=Princ.ADODataSet1.Fields[columna_codigoreferencia.ItemIndex].AsString;
+                                                MQDisminuir.Post;
+                                            end;
                                       end;
+
+
                                 end;
+
+
                           end;
                     end;
 
@@ -920,6 +1079,8 @@ begin
           lblcantidadincrementar.Caption:=inttostr(MQIncrementar.RecordCount)+' Registros';
           lblcantidadisminuir.Caption:=inttostr(MQDisminuir.RecordCount)+' Registros';
           lblcantidadsincambios.Caption:=inttostr(MQSincambios.RecordCount)+' Registros';
+          lblcantidadsinprecio.Caption:=inttostr(MQSinPrecios.RecordCount)+' Registros';
+
 
           btnagregarnuevos.Enabled:=true;
           btnincrementarprecios.Enabled:=true;
@@ -980,6 +1141,8 @@ begin
     nuevo_rubro_id.llenarcombo;
     nueva_seccion_id.llenarcombo;
     nueva_marca_id.llenarcombo;
+
+    PgCtrlGrids.ActivePage:=TabSheet3;
 end;
 
 procedure TActualizarProductos.FormKeyDown(Sender: TObject; var Key: Word;

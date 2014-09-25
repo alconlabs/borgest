@@ -535,9 +535,9 @@ begin
     else
       begin
           producto_codigoarticulo.Text:=producto_codigobarras.Text;
-          seccion_id.Buscar('');
-          marca_id.Buscar('');
-          rubro_id.Buscar('');
+          //seccion_id.Buscar('');
+//          marca_id.Buscar('');
+//          rubro_id.Buscar('');
           producto_nombre.Text:='';
           producto_precioventa1.Text:='0';
           StringGrid1.Hide;

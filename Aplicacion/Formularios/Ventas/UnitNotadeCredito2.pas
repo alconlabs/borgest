@@ -210,6 +210,8 @@ type
     ZQDocumentoventadetallesConceptosproducto_tipo: TStringField;
     btnimprimir: TButton;
     ZQdocumentoventadocusdocumentoventadoc_tiporelacion: TStringField;
+    ZQDocumentoventadetallesproducto_codigo: TStringField;
+    ZQDocumentoventadetallesproducto_codigobarras: TStringField;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -744,7 +746,7 @@ begin
 
 
     ZQDocumentoventadetalles.Active:=false;
-    ZQDocumentoventadetalles.SQL.Text:='select * from documentoventadetalles where documentoventa_id="'+id+'" and producto_tipo="PRODUCTO"';
+    ZQDocumentoventadetalles.SQL.Text:='select documentoventadetalles.*, productos.producto_codigo, productos.producto_codigobarras from documentoventadetalles inner join productos on documentoventadetalles.producto_id=productos.producto_id  where documentoventa_id="'+id+'" and productos.producto_tipo="PRODUCTO"';
     ZQDocumentoventadetalles.Active:=true;
 
     ZQDocumentoventadetallesConceptos.Active:=false;

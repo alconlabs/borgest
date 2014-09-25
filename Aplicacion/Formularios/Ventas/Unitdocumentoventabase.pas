@@ -640,7 +640,7 @@ begin
 
 
     ZQDocumentoventadetalles.Active:=false;
-    ZQDocumentoventadetalles.SQL.Text:='select * from documentoventadetalles where documentoventa_id="'+id+'"';
+    ZQDocumentoventadetalles.SQL.Text:='select documentoventadetalles.*, productos.producto_codigo, productos.producto_codigobarras from documentoventadetalles inner join productos on documentoventadetalles.producto_id=productos.producto_id where documentoventa_id="'+id+'"';
     ZQDocumentoventadetalles.Active:=true;
 
     calculartotales;

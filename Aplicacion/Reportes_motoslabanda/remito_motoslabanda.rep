@@ -61,7 +61,7 @@ object TRpReport
   end
   object TRpSection1: TRpSection
     Width = 10772
-    Height = 235
+    Height = 232
     SubReport = TRpSubReport0
     ChangeBool = False
     PageRepeat = False
@@ -89,6 +89,9 @@ object TRpReport
       end
       item
         Component = TRpExpression4
+      end
+      item
+        Component = TRpShape3
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -588,18 +591,6 @@ object TRpReport
     DoBeforePrint = ''
     DoAfterPrint = ''
   end
-  object TRpShape2: TRpShape
-    Width = 9750
-    Height = 225
-    PosX = 112
-    PosY = 0
-    BrushStyle = 1
-    Shape = rpsHorzLine
-    PenWidth = 0
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-  end
   object TRpLabel3: TRpLabel
     Width = 3435
     Height = 510
@@ -627,5 +618,29 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     WideText = 'Av. San Martin esq Guatemala'
+  end
+  object TRpShape2: TRpShape
+    Width = 9750
+    Height = 225
+    PosX = 112
+    PosY = 0
+    BrushStyle = 1
+    Shape = rpsHorzLine
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+  end
+  object TRpShape3: TRpShape
+    Width = 9750
+    Height = 60
+    PosX = 112
+    PosY = 228
+    BrushStyle = 1
+    Shape = rpsHorzLine
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
   end
 end

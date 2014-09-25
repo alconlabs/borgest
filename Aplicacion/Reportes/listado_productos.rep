@@ -60,7 +60,7 @@ object TRpReport
   end
   object TRpSection1: TRpSection
     Width = 10772
-    Height = 225
+    Height = 240
     SubReport = TRpSubReport0
     ChangeBool = False
     PageRepeat = False
@@ -78,9 +78,6 @@ object TRpReport
         Component = TRpExpression1
       end
       item
-        Component = TRpExpression2
-      end
-      item
         Component = TRpShape3
       end
       item
@@ -88,6 +85,9 @@ object TRpReport
       end
       item
         Component = TRpShape5
+      end
+      item
+        Component = TRpShape1
       end>
     ExternalTable = 'REPMAN_REPORTS'
     ExternalField = 'REPORT'
@@ -239,32 +239,6 @@ object TRpReport
     WFontName = 'Arial'
     LFontName = 'Helvetica'
     Expression = 'ALIAS_DBBORGEST.producto_nombre'
-    DisplayFormat = ''
-    ExportDisplayFormat = ''
-    AgIniValue = '0'
-    ExportExpression = ''
-  end
-  object TRpExpression2: TRpExpression
-    Width = 1765
-    Height = 220
-    PosX = 8550
-    PosY = 0
-    Type1Font = poHelvetica
-    CutText = True
-    Alignment = 1
-    SingleLine = True
-    DataType = rpParamString
-    AutoExpand = False
-    AutoContract = False
-    ExportPosition = 0
-    ExportSize = 1
-    ExportDoNewLine = False
-    PrintCondition = ''
-    DoBeforePrint = ''
-    DoAfterPrint = ''
-    WFontName = 'Arial'
-    LFontName = 'Helvetica'
-    Expression = 'ALIAS_DBBORGEST.rubro_nombre'
     DisplayFormat = ''
     ExportDisplayFormat = ''
     AgIniValue = '0'
@@ -437,7 +411,7 @@ object TRpReport
     DoAfterPrint = ''
     WFontName = 'Arial'
     LFontName = 'Helvetica'
-    WideText = 'Rubro'
+    WideText = 'Cantidad'
   end
   object TRpShape12: TRpShape
     Width = 10320
@@ -455,6 +429,18 @@ object TRpReport
     Height = 55
     PosX = 55
     PosY = 0
+    BrushStyle = 1
+    Shape = rpsHorzLine
+    PenWidth = 0
+    PrintCondition = ''
+    DoBeforePrint = ''
+    DoAfterPrint = ''
+  end
+  object TRpShape1: TRpShape
+    Width = 10320
+    Height = 55
+    PosX = 55
+    PosY = 230
     BrushStyle = 1
     Shape = rpsHorzLine
     PenWidth = 0

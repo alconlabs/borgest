@@ -75,6 +75,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure BtnAgregarStockNuevosClick(Sender: TObject);
     procedure producto_precioventa1Exit(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
     longitud:integer;
@@ -153,11 +154,11 @@ procedure TCargaStockLector.LimpiarVentana;
 begin
     producto_codigobarras.Text:='';
     producto_codigoarticulo.Text:='';
-    seccion_id.ItemIndex:=-1;
-    marca_id.ItemIndex:=-1;
-    rubro_id.ItemIndex:=-1;
-    producto_nombre.Text:='';
-    producto_precioventa1.FloatValue:=0;
+    //seccion_id.ItemIndex:=-1;
+//    marca_id.ItemIndex:=-1;
+//    rubro_id.ItemIndex:=-1;
+//    producto_nombre.Text:='';
+//    producto_precioventa1.FloatValue:=0;
     MQProductosTalles.Active:=false;
     MQProductosTalles.Active:=true;
 //    DBGrid2.Hide;
@@ -470,6 +471,18 @@ begin
           MQProductosStock.Active:=false;
           MQProductosStock.Active:=true;
 
+          producto_codigobarras.SetFocus;
+
+
+      end;
+end;
+
+procedure TCargaStockLector.Button2Click(Sender: TObject);
+begin
+  inherited;
+    if (MessageDlg('Seguro desea limpiar la lista de codigos?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+      begin
+          LimpiarVentana;
           MQProductosNuevos.Active:=false;
           MQProductosNuevos.Active:=true;
 
@@ -520,7 +533,8 @@ begin
           if ZQProducto.RecordCount>0 then
             begin
                 MQProductosStock.Last;
-                MQProductosStock.Insert;
+                MQProductosStock.Next;
+                MQProductosStock.Append;
                 MQProductosStock.FieldByName('producto_id').AsString:=ZQProducto.FieldByName('producto_id').AsString;
                 MQProductosStock.FieldByName('producto_codigobarras').AsString:=ZQProducto.FieldByName('producto_codigobarras').AsString;
                 MQProductosStock.FieldByName('producto_nombre').AsString:=ZQProducto.FieldByName('producto_nombre').AsString;
@@ -529,7 +543,8 @@ begin
           else
             begin
                 MQProductosNuevos.Last;
-                MQProductosNuevos.Insert;
+                MQProductosNuevos.Next;
+                MQProductosNuevos.Append;
                 MQProductosNuevos.FieldByName('producto_id').AsString:='';
                 MQProductosNuevos.FieldByName('producto_codigobarras').AsString:=producto_codigobarras.Text;
                 MQProductosNuevos.FieldByName('producto_nombre').AsString:='';

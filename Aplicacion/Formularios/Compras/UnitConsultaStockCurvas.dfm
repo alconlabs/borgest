@@ -82,7 +82,7 @@ inherited ConsultaStockCurvas: TConsultaStockCurvas
       Width = 271
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 2
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -100,7 +100,7 @@ inherited ConsultaStockCurvas: TConsultaStockCurvas
       Width = 271
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 3
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -118,7 +118,7 @@ inherited ConsultaStockCurvas: TConsultaStockCurvas
       Width = 271
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 4
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -150,7 +150,7 @@ inherited ConsultaStockCurvas: TConsultaStockCurvas
       Width = 271
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 7
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -161,6 +161,15 @@ inherited ConsultaStockCurvas: TConsultaStockCurvas
       Confcampo_nomb = 'deposito_nombre'
       Tag2 = 0
       ConfTodos = True
+    end
+    object producto_enstock: TCheckBox
+      Left = 79
+      Top = 174
+      Width = 141
+      Height = 17
+      Caption = 'Solo Productos en stock'
+      Enabled = False
+      TabOrder = 8
     end
   end
   inherited ZQSelect: TZQuery

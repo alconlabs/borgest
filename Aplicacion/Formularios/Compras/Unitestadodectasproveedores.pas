@@ -602,35 +602,35 @@ procedure Testadoctasproveedores.btnimprimirClick(Sender: TObject);
 var
   condicion_saldoanterior, grupo:string;
 begin
-    grupo:='(documentoscompras.documentocompra_id)';
-    condicion_saldoanterior:='1=2';
-    if cbdesdefecha.Checked then
-      begin
-          grupo:=' if(documentoscompras.documentocompra_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",concat(sucursales.sucursal_id,"-",documentoscompras.proveedor_id),documentoscompras.documentocompra_id) ';
-          condicion_saldoanterior:='documentoscompras.documentocompra_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'"';
+//    grupo:='(documentoscompras.documentocompra_id)';
+//    condicion_saldoanterior:='1=2';
+//    if cbdesdefecha.Checked then
+//      begin
+//          grupo:=' if(documentoscompras.documentocompra_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",concat(sucursales.sucursal_id,"-",documentoscompras.proveedor_id),documentoscompras.documentocompra_id) ';
+//          condicion_saldoanterior:='documentoscompras.documentocompra_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'"';
+//
+//      end;
+//
+//    if cbdesdefechavenc.Checked and cbdesdefecha.Checked then
+//      begin
+//          if desde_fecha_venc.Date<desde_fecha.Date then
+//            begin
+//                grupo:=' if(documentoscompras.documentocompra_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat(sucursales.sucursal_id,"-",documentoscompras.proveedor_id),documentoscompras.documentocompra_id) ';
+//                condicion_saldoanterior:='documentoscompras.documentocompra_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
+//
+//            end;
+//
+//      end
+//    else
+//      begin
+//          if cbdesdefechavenc.Checked then
+//            begin
+//                grupo:=' if(documentoscompras.documentocompra_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat(sucursales.sucursal_id,"-",documentoscompras.proveedor_id),documentoscompras.documentocompra_id) ';
+//                condicion_saldoanterior:='documentoscompras.documentocompra_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
+//            end;
+//      end;
 
-      end;
-
-    if cbdesdefechavenc.Checked and cbdesdefecha.Checked then
-      begin
-          if desde_fecha_venc.Date<desde_fecha.Date then
-            begin
-                grupo:=' if(documentoscompras.documentocompra_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat(sucursales.sucursal_id,"-",documentoscompras.proveedor_id),documentoscompras.documentocompra_id) ';
-                condicion_saldoanterior:='documentoscompras.documentocompra_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
-
-            end;
-
-      end
-    else
-      begin
-          if cbdesdefechavenc.Checked then
-            begin
-                grupo:=' if(documentoscompras.documentocompra_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat(sucursales.sucursal_id,"-",documentoscompras.proveedor_id),documentoscompras.documentocompra_id) ';
-                condicion_saldoanterior:='documentoscompras.documentocompra_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
-            end;
-      end;
-
-    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'estado_de_ctasctes.rep';
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'estado_de_ctasctes_proveedores.rep';
     Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
     if cbdesdefecha.Checked then
       Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
@@ -643,34 +643,34 @@ begin
 
 
 
-    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, '+
-                           'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",documentoscompras.documentocompra_saldo,0)) as debito, '+
-                           'sum(if(tiposdocumento.tipodocu_debcred="CREDITO",documentoscompras.documentocompra_saldo,0)) as credito, '+
-                           '0.00 as acumulado, '+grupo+' as grupo, '+
-                           'if('+condicion_saldoanterior+',"Saldo anterior",CONCAT(tiposdocumento.tipodocu_nombreabrev," ",tiposdocumento.tipodocu_letra)) as documento_nombre, '+
-                           'if('+condicion_saldoanterior+',"'+formatdatetime('dd/mm/yyyy',desde_fecha.Date)+'",DATE_FORMAT(documentoscompras.documentocompra_fecha,"%d/%m/%Y")) as documentocomprafecha, '+
-                           'puntodeventa.puntoventa_id as puntoventanumero, '+
-                           'if('+condicion_saldoanterior+',"0",documentoscompras.documentocompra_numero) as documentocompranumero '+
+//    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, '+
+//                           'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",documentoscompras.documentocompra_saldo,0)) as debito, '+
+//                           'sum(if(tiposdocumento.tipodocu_debcred="CREDITO",documentoscompras.documentocompra_saldo,0)) as credito, '+
+//                           '0.00 as acumulado, '+grupo+' as grupo, '+
+//                           'if('+condicion_saldoanterior+',"Saldo anterior",CONCAT(tiposdocumento.tipodocu_nombreabrev," ",tiposdocumento.tipodocu_letra)) as documento_nombre, '+
+//                           'if('+condicion_saldoanterior+',"'+formatdatetime('dd/mm/yyyy',desde_fecha.Date)+'",DATE_FORMAT(documentoscompras.documentocompra_fecha,"%d/%m/%Y")) as documentocomprafecha, '+
+//                           'puntodeventa.puntoventa_id as puntoventanumero, '+
+//                           'if('+condicion_saldoanterior+',"0",documentoscompras.documentocompra_numero) as documentocompranumero '+
+//
+//                           'from documentoscompras '+
+////                           'left join documentocompradetalles on documentoscompras.documentocompra_id=documentocompradetalles.documentocompra_id '+
+////                           'left join documentocompradetalles documentocompradetalles2 on documentocompradetalles.documentocompradetalle_idorig=documentocompradetalles2.documentocompradetalle_id '+
+////                           'left join documentoscompras documentoscompras2 on documentocompradetalles2.documentocompra_id=documentoscompras2.documentocompra_id '+
+//                           'inner join tiposdocumento on documentoscompras.tipodocu_id=tiposdocumento.tipodocu_id '+
+//                           'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+//                           'inner join proveedores on documentoscompras.proveedor_id=proveedores.proveedor_id '+
+//                           'inner join personal on documentoscompras.personal_id=personal.personal_id '+
+//                           'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
+//                           'group by grupo '+
+//                           'order by sucursal_nombre, personal.personal_nombre, proveedor_nombre, proveedores.proveedor_id, documentocompra_fecha, documentocompra_numero ';
+//
+//
+//
+//    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.GTBUtilidades1.AgregarWhere(Princ.VCLReport1.Report.Datainfo.Items[0].sql,GenerarWhere);
+//
+//    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.GTBUtilidades1.AgregarWhere(Princ.VCLReport1.Report.Datainfo.Items[0].sql,'proveedores.proveedor_id not in ('+self.proveedores_ids_sin_deuda+')');
 
-                           'from documentoscompras '+
-//                           'left join documentocompradetalles on documentoscompras.documentocompra_id=documentocompradetalles.documentocompra_id '+
-//                           'left join documentocompradetalles documentocompradetalles2 on documentocompradetalles.documentocompradetalle_idorig=documentocompradetalles2.documentocompradetalle_id '+
-//                           'left join documentoscompras documentoscompras2 on documentocompradetalles2.documentocompra_id=documentoscompras2.documentocompra_id '+
-                           'inner join tiposdocumento on documentoscompras.tipodocu_id=tiposdocumento.tipodocu_id '+
-                           'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
-                           'inner join proveedores on documentoscompras.proveedor_id=proveedores.proveedor_id '+
-                           'inner join personal on documentoscompras.personal_id=personal.personal_id '+
-                           'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
-                           'group by grupo '+
-                           'order by sucursal_nombre, personal.personal_nombre, proveedor_nombre, proveedores.proveedor_id, documentocompra_fecha, documentocompra_numero ';
-
-
-
-    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.GTBUtilidades1.AgregarWhere(Princ.VCLReport1.Report.Datainfo.Items[0].sql,GenerarWhere);
-
-    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.GTBUtilidades1.AgregarWhere(Princ.VCLReport1.Report.Datainfo.Items[0].sql,'proveedores.proveedor_id not in ('+self.proveedores_ids_sin_deuda+')');
-
-
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=ZQPendientes.SQL.Text;
     Princ.VCLReport1.Execute;
 
 end;
