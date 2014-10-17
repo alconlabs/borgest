@@ -67,17 +67,33 @@ inherited InformesVentas: TInformesVentas
       Alignment = taRightJustify
       Caption = 'Provincia'
     end
-    inherited btncancelar: TButton
-      Left = 293
+    object btnimprimir: TAdvToolButton [7]
+      Left = 390
       Top = 176
-      ExplicitLeft = 293
+      Width = 75
+      Height = 25
+      AutoThemeAdapt = False
+      ColorDown = 14210002
+      ColorHot = 13289415
+      DropDownButton = True
+      DropDownMenu = Princ.MenuImpresion
+      Caption = 'Imprimir'
+      OnClick = btnimprimirClick
+      OnDropDown = btnimprimirDropDown
+      Version = '1.2.1.0'
+    end
+    inherited btncancelar: TButton
+      Left = 189
+      Top = 176
+      ExplicitLeft = 189
       ExplicitTop = 176
     end
     inherited btnguardar: TButton
-      Left = 387
+      Left = 84
       Top = 176
       Caption = 'Imprimir'
-      ExplicitLeft = 387
+      Visible = False
+      ExplicitLeft = 84
       ExplicitTop = 176
     end
     object desde_fecha: TDateTimePicker

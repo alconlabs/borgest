@@ -840,7 +840,7 @@ procedure TPrinc.Timer1Timer(Sender: TObject);
 var
   dia:string;
 begin
-        if (EXPORTACIONSINCMINUTOS<>'0') and (EXPORTACIONSINCMINUTOS<>'') then
+    if (EXPORTACIONSINCMINUTOS<>'0') and (EXPORTACIONSINCMINUTOS<>'') then
       begin
           CrearHilo;
           if ExportarDB=nil then

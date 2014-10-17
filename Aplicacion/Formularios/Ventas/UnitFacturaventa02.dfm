@@ -807,15 +807,17 @@ inherited facturaventa02: Tfacturaventa02
     Left = -9
     Top = -11
     Width = 981
-    Height = 638
+    Height = 668
     ActivePage = TabSheet2
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Venta'
+      ExplicitHeight = 610
     end
     object TabSheet2: TTabSheet
       Caption = 'Envio'
       ImageIndex = 1
+      ExplicitHeight = 610
       object Label26: TLabel
         Left = 672
         Top = 15

@@ -22,13 +22,15 @@ type
     Label4: TLabel;
     Label5: TLabel;
     deposito_id: TSqlComboBox;
-    producto_enstock: TCheckBox;
+    btnseleccionarproductos: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnseleccionarproductosClick(Sender: TObject);
   private
     { Private declarations }
     temporal_idproceso:string;
+    producto_ids:string;
   public
     { Public declarations }
   end;
@@ -38,7 +40,7 @@ var
 
 implementation
 
-uses UnitPrinc;
+uses UnitPrinc, UnitSeleccionarProductos;
 
 {$R *.dfm}
 
@@ -53,17 +55,12 @@ begin
     ZQSelect.Active:=false;
     ZQSelect.SQL.Text:='select substring(producto_codigobarras,1,producto_longitudcodigo) as producto_prodcodigo, '+
                        'concat(substring(producto_codigobarras,1,producto_longitudcodigo),productodeposito.deposito_id) as prod_depo, '+
-                       'productos.producto_nombre, depositos.deposito_nombre, productos.producto_talle, productodeposito.producdepo_stockactual '+
+                       'productos.producto_nombre, depositos.deposito_nombre, productos.producto_talle, productodeposito.producdepo_stockactual, marca_usatalles '+
                        'from productos '+
                        'inner join productodeposito on productos.producto_id=productodeposito.producto_id '+
                        'inner join depositos on productodeposito.deposito_id=depositos.deposito_id '+
-                       'where producto_tipo="PRODUCTO"';
-
-    if producto_enstock.Checked then
-      begin
-          ZQSelect.SQL.Text:=ZQSelect.SQL.Text+' and productodeposito.producdepo_stockactual>0 ';
-
-      end;
+                       'inner join marcas on productos.marca_id=marcas.marca_id '+
+                       'where producto_tipo="PRODUCTO" and '+producto_ids;
 
     if fil_producto_nombre.Text<>'' then
       ZQSelect.SQL.Text:=ZQSelect.SQL.Text+' and productos.producto_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_nombre.Text,' ','%',false,0)+'%" ';
@@ -76,13 +73,16 @@ begin
       ZQSelect.SQL.Add('and seccion_id="'+seccion_id.codigo+'" ');
 
     if marca_id.codigo<>'-1' then
-      ZQSelect.SQL.Add('and marca_id="'+marca_id.codigo+'" ');
+      ZQSelect.SQL.Add('and marcas.marca_id="'+marca_id.codigo+'" ');
 
     if rubro_id.codigo<>'-1' then
       ZQSelect.SQL.Add('and rubro_id="'+rubro_id.codigo+'" ');
 
     if deposito_id.codigo<>'-1' then
       ZQSelect.SQL.Add('and depositos.deposito_id="'+deposito_id.codigo+'" ');
+
+
+
 
     ZQSelect.SQL.Add('order by prod_depo, producto_codigobarras ');
     ZQSelect.Active:=true;
@@ -160,24 +160,32 @@ begin
                   ZQExecSQL.ParamByName('temporal_string'+inttostr(i)).AsString:='';
                   ZQExecSQL.ParamByName('temporal_int'+inttostr(i)).AsString:='0';
               end;
-
             nro_columna:=6;
-            pasar_siguiente:=true;
-            while pasar_siguiente do
-             begin
-                 ZQExecSQL.ParamByName('temporal_string5').AsString:=ZQExecSQL.ParamByName('temporal_string5').AsString+ZQSelect.FieldByName('producto_talle').AsString;
-                 ZQExecSQL.ParamByName('temporal_string'+inttostr(nro_columna)).AsString:=ZQSelect.FieldByName('producto_talle').AsString;
-                 ZQExecSQL.ParamByName('temporal_int'+inttostr(nro_columna)).AsString:=ZQSelect.FieldByName('producdepo_stockactual').AsString;
-                 producto_prodcodigoant:=ZQSelect.FieldByName('prod_depo').AsString;
-                 nro_columna:=nro_columna+1;
+            if 0=0 then
+              begin
+                  pasar_siguiente:=true;
+                  while pasar_siguiente do
+                   begin
+                       ZQExecSQL.ParamByName('temporal_string5').AsString:=ZQExecSQL.ParamByName('temporal_string5').AsString+ZQSelect.FieldByName('producto_talle').AsString;
+                       ZQExecSQL.ParamByName('temporal_string'+inttostr(nro_columna)).AsString:=ZQSelect.FieldByName('producto_talle').AsString;
+                       ZQExecSQL.ParamByName('temporal_int'+inttostr(nro_columna)).AsString:=ZQSelect.FieldByName('producdepo_stockactual').AsString;
+                       producto_prodcodigoant:=ZQSelect.FieldByName('prod_depo').AsString;
+                       nro_columna:=nro_columna+1;
 
-                 ZQSelect.Next;
-                 pasar_siguiente:=(producto_prodcodigoant=ZQSelect.FieldByName('prod_depo').AsString) and (not ZQSelect.Eof) and (nro_columna<21);
-             end;
+                       ZQSelect.Next;
+                       pasar_siguiente:=(producto_prodcodigoant=ZQSelect.FieldByName('prod_depo').AsString) and (not ZQSelect.Eof) and (nro_columna<21);
+                   end;
 
+              end
+            else
+              begin
+                  ZQExecSQL.ParamByName('temporal_string5').AsString:=ZQSelect.FieldByName('producto_prodcodigo').AsString;
+                  ZQExecSQL.ParamByName('temporal_string'+inttostr(nro_columna)).AsString:='STOCK';
+                  ZQExecSQL.ParamByName('temporal_int'+inttostr(nro_columna)).AsString:=ZQSelect.FieldByName('producdepo_stockactual').AsString;
+                  ZQSelect.Next;
+              end;
 
             ZQExecSQL.ExecSql;
-
         end;
 
 
@@ -188,7 +196,6 @@ begin
                                                    'where temporal_idproceso="'+temporal_idproceso+'" '+
                                                    'order by temporal_string1 ';
 
-     
     Princ.VCLReport1.Execute;
 
     if temporal_idproceso<>'' then
@@ -200,8 +207,31 @@ begin
           Princ.ZQExcecSQL.ExecSql;
       end;
 
+    producto_ids:=' productos.producto_id>0 ';
 
+end;
 
+procedure TConsultaStockCurvas.btnseleccionarproductosClick(Sender: TObject);
+begin
+  inherited;
+    SeleccionarProductos:=TSeleccionarProductos.Create(self);
+    SeleccionarProductos.producto_nombre:=fil_producto_nombre.Text;
+    SeleccionarProductos.producto_codigobarras:=fil_producto_codigobarras.Text;
+    SeleccionarProductos.seccion_id:=seccion_id.codigo;
+    SeleccionarProductos.marca_id:=marca_id.codigo;
+    SeleccionarProductos.rubro_id:=rubro_id.codigo;
+
+    producto_ids:=' productos.producto_id>0 ';
+
+    if SeleccionarProductos.ShowModal=mrOk then
+      begin
+          SeleccionarProductos.productos.LlenarMQuery;
+          SeleccionarProductos.productos.GenerarWhere;
+          producto_ids:=SeleccionarProductos.productos.where;
+          btnguardar.Click;
+      end;
+
+    SeleccionarProductos.Free;
 
 
 

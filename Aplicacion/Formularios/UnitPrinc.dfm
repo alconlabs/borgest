@@ -5066,4 +5066,34 @@ object Princ: TPrinc
         ParamType = ptUnknown
       end>
   end
+  object MenuImpresion: TAdvPopupMenu
+    MenuStyler = AdvMenuStyler1
+    Version = '2.0.0.0'
+    Left = 392
+    Top = 440
+    object Imprimir1: TMenuItem
+      Caption = 'Imprimir'
+      OnClick = Imprimir1Click
+    end
+    object Excel1: TMenuItem
+      Caption = 'Excel'
+      OnClick = Excel1Click
+    end
+    object PDF1: TMenuItem
+      Caption = 'PDF'
+      OnClick = PDF1Click
+    end
+    object exto1: TMenuItem
+      Caption = 'Texto'
+      OnClick = exto1Click
+    end
+  end
+  object ImageList1: TImageList
+    Left = 576
+    Top = 376
+  end
+  object SaveDialog1: TSaveDialog
+    Left = 48
+    Top = 464
+  end
 end

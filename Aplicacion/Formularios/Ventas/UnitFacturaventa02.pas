@@ -540,7 +540,9 @@ begin
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
 
     PageControl1.ActivePage:=TabSheet1;
-    facturaventa02.OnShow(self);
+    ZQmovimdepodetalles.Active:=false;
+    ZQmovimdepodetalles.ParamByName('movimientodeposito_id').AsString:='-1';
+    ZQmovimdepodetalles.Active:=true;
 end;
 
 procedure Tfacturaventa02.btnquitarpagoClick(Sender: TObject);

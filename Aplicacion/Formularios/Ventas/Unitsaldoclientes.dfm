@@ -153,7 +153,7 @@ object saldoclientes: Tsaldoclientes
       Top = 33
       Width = 297
       Height = 21
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 5
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -169,7 +169,7 @@ object saldoclientes: Tsaldoclientes
       Top = 9
       Width = 297
       Height = 21
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 6
       Confbase = Princ.ZBase
       Confsql.Strings = (

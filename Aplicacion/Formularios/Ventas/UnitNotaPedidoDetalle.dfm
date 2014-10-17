@@ -170,6 +170,9 @@ inherited NotapedidoDetalle: TNotapedidoDetalle
       ExplicitLeft = 72
       ExplicitTop = 31
     end
+    inherited documentoventadetalle_importe_2: TDBAdvEdit
+      TabOrder = 10
+    end
     object documentoventadetalle_importe3: TDBAdvEdit
       Left = 72
       Top = 91

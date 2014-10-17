@@ -126,6 +126,9 @@
     <DCCReference Include="Formularios\Archivo\Unitprovincias.pas">
       <Form>provincias</Form>
     </DCCReference>
+    <DCCReference Include="Formularios\Archivo\UnitSeleccionarProductos.pas">
+      <Form>SeleccionarProductos</Form>
+    </DCCReference>
     <DCCReference Include="Formularios\Archivo\UnitServicios.pas">
       <Form>servicios</Form>
     </DCCReference>

@@ -82,13 +82,58 @@ object estadoctas: Testadoctas
       Alignment = taRightJustify
       Caption = 'Vendedor'
     end
+    object BtnCtasCobrar: TAdvToolButton
+      Left = 633
+      Top = 423
+      Width = 104
+      Height = 25
+      AutoThemeAdapt = False
+      ColorDown = 14210002
+      ColorHot = 13289415
+      DropDownButton = True
+      DropDownMenu = MenuImpresion
+      Caption = 'Ctas a Cobrar'
+      OnClick = BtnCtasCobrarClick
+      OnDropDown = BtnCtasCobrarDropDown
+      Version = '1.2.1.0'
+    end
+    object BtnDetalleImputacion: TAdvToolButton
+      Left = 743
+      Top = 423
+      Width = 145
+      Height = 25
+      AutoThemeAdapt = False
+      ColorDown = 14210002
+      ColorHot = 13289415
+      DropDownButton = True
+      DropDownMenu = MenuImpresion
+      Caption = 'Detalle de Imputacion'
+      OnClick = BtnDetalleImputacionClick
+      OnDropDown = BtnDetalleImputacionDropDown
+      Version = '1.2.1.0'
+    end
+    object btnimprimir: TAdvToolButton
+      Left = 894
+      Top = 423
+      Width = 75
+      Height = 25
+      AutoThemeAdapt = False
+      ColorDown = 14210002
+      ColorHot = 13289415
+      DropDownButton = True
+      DropDownMenu = MenuImpresion
+      Caption = 'Imprimir'
+      OnClick = btnimprimirClick
+      OnDropDown = btnimprimirDropDown
+      Version = '1.2.1.0'
+    end
     object cliente_id: TSqlComboBox
       Left = 48
       Top = 9
       Width = 608
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -198,15 +243,6 @@ object estadoctas: Testadoctas
       Caption = 'Actualizar'
       TabOrder = 5
       OnClick = btnactualizarClick
-    end
-    object btnimprimir: TButton
-      Left = 894
-      Top = 423
-      Width = 75
-      Height = 25
-      Caption = 'Imprimir'
-      TabOrder = 7
-      OnClick = btnimprimirClick
     end
     object GroupBox1: TGroupBox
       Left = 10
@@ -338,7 +374,7 @@ object estadoctas: Testadoctas
       Width = 209
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 4
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -449,24 +485,6 @@ object estadoctas: Testadoctas
       ConfIni = Princ.ini1
       Tag2 = 0
       ConfTodosCheckeados = False
-    end
-    object BtnDetalleImputacion: TButton
-      Left = 765
-      Top = 423
-      Width = 124
-      Height = 25
-      Caption = 'Detalle de Imputacion'
-      TabOrder = 8
-      OnClick = BtnDetalleImputacionClick
-    end
-    object BtnCtasCobrar: TButton
-      Left = 662
-      Top = 423
-      Width = 99
-      Height = 25
-      Caption = 'Ctas a Cobrar'
-      TabOrder = 9
-      OnClick = BtnCtasCobrarClick
     end
   end
   object ZQuery2: TZQuery
@@ -1220,5 +1238,27 @@ object estadoctas: Testadoctas
     Params = <>
     Left = 216
     Top = 352
+  end
+  object MenuImpresion: TAdvPopupMenu
+    MenuStyler = Princ.AdvMenuStyler1
+    Version = '2.0.0.0'
+    Left = 504
+    Top = 136
+    object Imprimir1: TMenuItem
+      Caption = 'Imprimir'
+      OnClick = Imprimir1Click
+    end
+    object Excel1: TMenuItem
+      Caption = 'Excel'
+      OnClick = Excel1Click
+    end
+    object PDF1: TMenuItem
+      Caption = 'PDF'
+      OnClick = PDF1Click
+    end
+    object exto1: TMenuItem
+      Caption = 'Texto'
+      OnClick = exto1Click
+    end
   end
 end

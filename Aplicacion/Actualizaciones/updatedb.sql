@@ -2251,3 +2251,5 @@ INSERT INTO `config` select 'MOSTRARPRODUCTOSOCULTOSLISTA', config_valor from co
 Insert into menu (menu_id, menu_path, menu_tipo, menu_nomb, menu_form, menu_enabled, menu_visible, menu_lista) values ('104', '>Ventas>Caja>Cheques', '0', 'BtnCheques', '', '0', '0', '');
 631;
 INSERT INTO menuperfil select 0, -1,-1,-1,-1,-1,-1,-1,104,perfil_id,-1 from perfiles;
+632;
+ALTER TABLE `marcas` ADD COLUMN `marca_usatalles` INT(3) NULL DEFAULT -1  AFTER `marca_separadorcodigo` ;

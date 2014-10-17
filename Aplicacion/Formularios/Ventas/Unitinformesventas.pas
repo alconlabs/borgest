@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UnitABMInibase, StdCtrls, GTBComboBox, ComCtrls, DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, ExtCtrls, AdvPanel,
-  UnitSqlComboBox, AdvListV, UnitSqlListView, Titles;
+  UnitSqlComboBox, AdvListV, UnitSqlListView, Titles, AdvToolBtn;
 
 type
   TInformesVentas = class(TABMInibase)
@@ -25,8 +25,11 @@ type
     cliente_id: TSqlComboBox;
     Label7: TLabel;
     provincia_id: TSqlComboBox;
+    btnimprimir: TAdvToolButton;
     procedure FormCreate(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
+    procedure btnimprimirDropDown(Sender: TObject);
+    procedure btnimprimirClick(Sender: TObject);
   private
     { Private declarations }
     procedure InformeCostosporVentas;
@@ -80,7 +83,7 @@ begin
                                                    '(cupontarjeta_fecha<="'+formatdatetime('yyyy-mm-dd',hasta_fecha.Date)+'") '+
                                                    'group by cuponestarjetas.tarjeta_id, cuponestarjetas.cupontarjeta_cuotas ';
 
-    Princ.VCLReport1.Execute;
+//    Princ.VCLReport1.Execute;
 
 end;
 
@@ -113,7 +116,7 @@ begin
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero';
 
 
-    Princ.VCLReport1.Execute;
+//    Princ.VCLReport1.Execute;
 
 end;
 
@@ -146,7 +149,7 @@ begin
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+'order by cantidad desc, documentoventadetalle_descripcion';
 
 
-    Princ.VCLReport1.Execute;
+//    Princ.VCLReport1.Execute;
 
 end;
 
@@ -180,7 +183,7 @@ begin
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero';
 
 
-    Princ.VCLReport1.Execute;
+//    Princ.VCLReport1.Execute;
 
 end;
 
@@ -215,7 +218,7 @@ begin
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by documentosventas.documentoventa_fecha, documentoventadetalles.documentoventadetalle_descripcion';
 
 
-    Princ.VCLReport1.Execute;
+//    Princ.VCLReport1.Execute;
 
 end;
 
@@ -259,7 +262,7 @@ begin
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by sucursales.sucursal_id, documentoventadetalle_descripcion';
 
 
-    Princ.VCLReport1.Execute;
+//    Princ.VCLReport1.Execute;
 
 end;
 
@@ -293,7 +296,7 @@ begin
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero';
 
 
-    Princ.VCLReport1.Execute;
+//    Princ.VCLReport1.Execute;
 
 end;
 
@@ -332,7 +335,7 @@ begin
     Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.VCLReport1.Report.Datainfo.Items[0].sql+' order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero';
 
 
-    Princ.VCLReport1.Execute;
+//    Princ.VCLReport1.Execute;
 
 end;
 
@@ -372,7 +375,7 @@ begin
                                              'group by productos.producto_id '+
                                              'order by productos.producto_nombre';
 
-    Princ.VCLReport1.Execute;
+//    Princ.VCLReport1.Execute;
 
 
 end;
@@ -400,7 +403,6 @@ begin
                                              ' and '+puntoventa_id.where+
                                              ' group by productos.producto_id '+
                                              'order by productos.producto_nombre';
-    Princ.VCLReport1.Execute;
 
 end;
 
@@ -449,6 +451,60 @@ begin
 
     end;
 
+end;
+
+procedure TInformesVentas.btnimprimirClick(Sender: TObject);
+begin
+  inherited;
+    btnimprimir.OnDropDown(self);
+    Princ.impresion_tipo:=IMPRESION_IMPRIMIR;
+    Princ.ImprimirReporte;
+end;
+
+procedure TInformesVentas.btnimprimirDropDown(Sender: TObject);
+begin
+  inherited;
+    case informe_tipo.ItemIndex of
+        0:begin
+              InformeCostosporVentas;
+          end;
+        1:begin
+              InformeVentasPrecios;
+          end;
+        2:begin
+              InformedeVentas;
+
+          end;
+        3:begin
+              InformedeVentasProductos;
+
+          end;
+        4:begin
+              InformedeVentasProductosCantidad;
+
+          end;
+        5:begin
+              InformedeCobros;
+
+          end;
+        6:begin
+              RankingProductos;
+
+          end;
+        7:begin
+              InformedeVentasCEquipos;
+
+          end;
+        8:begin
+              InformedeEquipos;
+
+          end;
+        9:begin
+              InformedeCuponesTarjetas;
+
+          end;
+
+    end;
 end;
 
 procedure TInformesVentas.FormCreate(Sender: TObject);

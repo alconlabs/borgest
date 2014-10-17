@@ -479,6 +479,8 @@ begin
 end;
 
 procedure TNotaPedidoComisiones.btnagregarClick(Sender: TObject);
+var
+  i:integer;
 begin
     try
       NotapedidoComisionesDetalle:= TNotapedidoComisionesDetalle.Create(self);
@@ -486,8 +488,22 @@ begin
       NotapedidoComisionesDetalle.producto_precioventa:=inttostr(documentoventa_listaprecio.ItemIndex+1);
       if NotapedidoComisionesDetalle.ShowModal=mrOk then
         begin
+            ZQDocumentoventadetalles.Last;
+//          QDocumentoventadetalles.Next;
+            ZQDocumentoventadetalles.Append;
 
-            princ.CargarDocumentoVentaDetalle(ZQDocumentoventadetalles, NotapedidoComisionesDetalle.ZQDocumentoventadetalles);
+            for i := 0 to ZQDocumentoventadetalles.FieldCount-1 do
+              begin
+                  try
+                    ZQDocumentoventadetalles.Fields[i].Value:=NotapedidoComisionesDetalle.ZQDocumentoventadetalles.FieldByName(ZQDocumentoventadetalles.Fields[i].FieldName).Value;
+                  except
+                  end;
+
+              end;
+            ZQDocumentoventadetalles.Post;
+
+
+//            princ.CargarDocumentoVentaDetalle(ZQDocumentoventadetalles, NotapedidoComisionesDetalle.ZQDocumentoventadetalles);
 
         end;
 

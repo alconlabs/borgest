@@ -10,7 +10,8 @@ uses
   ZSqlProcessor, WinINet, Math, UnitBackupdb, ZSqlMonitor,
   rpalias, GTBComboBox, ComCtrls, rpexpredlgvcl, DBClient,
   rpclientdataset, Menus, Encriptador, Utilidades, Permisos, DBGrids,
-  TablaTemporal, UtilidadesDB, ExtCtrls, XiProgressBar, BRGFocusAdmin, rplabelitem;
+  TablaTemporal, UtilidadesDB, ExtCtrls, XiProgressBar, BRGFocusAdmin, rplabelitem,
+  ImgList;
 
 
 const
@@ -194,6 +195,13 @@ type
     BtnBancos: TAdvGlowButton;
     ZQCheques: TZQuery;
     BtnCheques: TAdvGlowButton;
+    MenuImpresion: TAdvPopupMenu;
+    Imprimir1: TMenuItem;
+    Excel1: TMenuItem;
+    PDF1: TMenuItem;
+    exto1: TMenuItem;
+    ImageList1: TImageList;
+    SaveDialog1: TSaveDialog;
     procedure FormCreate(Sender: TObject);
     procedure tbnestadoctasventasClick(Sender: TObject);
     procedure btninformeventasClick(Sender: TObject);
@@ -286,6 +294,10 @@ type
     procedure AdvToolBarStockDblClick(Sender: TObject);
     procedure BtnBancosClick(Sender: TObject);
     procedure BtnChequesClick(Sender: TObject);
+    procedure Imprimir1Click(Sender: TObject);
+    procedure Excel1Click(Sender: TObject);
+    procedure PDF1Click(Sender: TObject);
+    procedure exto1Click(Sender: TObject);
   private
     { Private declarations }
     procedure MenuConfiguracion;
@@ -320,6 +332,7 @@ type
     MOSTRAREQUIPO:boolean;
     tipospago:tstrings;
     EXPORTACIONSINCMINUTOS:string;
+    impresion_tipo:integer;
     function codigo(tabla:string;campo:string):string;
     function buscar(sql:string;campo:string):string;
     function fechaservidor():TDateTime;
@@ -394,6 +407,7 @@ type
     function GetPCName: string;
     function DisponibleTipoPago(tipopago_id:string):boolean;
     procedure sincronizarstock;
+    procedure ImprimirReporte;
   end;
 
 type
@@ -480,6 +494,11 @@ const
   ABM_ANULAR=5;
   ABM_VER=6;
   ABM_CLONAR=7;
+
+  IMPRESION_IMPRIMIR=1;
+  IMPRESION_XLS=2;
+  IMPRESION_PDF=3;
+  IMPRESION_TXT=4;
 
 //  CONNECTION_STRING1='Provider=Microsoft.Jet.OLEDB.4.0;User ID=Admin;Data Source=';
 //  CONNECTION_STRING3=';Mode=Share Deny None;Jet OLEDB:System database="";Jet OLEDB:Registry Path="";Jet OLEDB:Database Password="";Jet OLEDB:Engine Type=35;'+
@@ -597,6 +616,50 @@ begin
     Result:= String(PChar(@Buffer))
   else
     Result:= '';
+end;
+
+
+procedure TPrinc.ImprimirReporte;
+var
+  archivo:string;
+begin
+    case impresion_tipo of
+        IMPRESION_IMPRIMIR:begin
+            VCLReport1.Execute;
+        end;
+
+        IMPRESION_XLS:begin
+            SaveDialog1.Filter:='Excel|*.xls';
+            if SaveDialog1.Execute() then
+              begin
+                  archivo:=SaveDialog1.FileName;
+              end;
+
+            VCLReport1.SaveToExcel(archivo);
+        end;
+
+        IMPRESION_PDF:begin
+            SaveDialog1.Filter:='PDF|*.pdf';
+            if SaveDialog1.Execute() then
+              begin
+                  archivo:=SaveDialog1.FileName;
+              end;
+
+            VCLReport1.SaveToPDF(archivo);
+        end;
+
+        IMPRESION_TXT:begin
+            SaveDialog1.Filter:='Texto|*.txt';
+            if SaveDialog1.Execute() then
+              begin
+                  archivo:=SaveDialog1.FileName;
+              end;
+
+            VCLReport1.SaveToText(archivo);
+        end;
+    end;
+
+    impresion_tipo:=IMPRESION_IMPRIMIR;
 end;
 
 
@@ -1175,6 +1238,12 @@ begin
 end;
 
 
+procedure TPrinc.PDF1Click(Sender: TObject);
+begin
+    impresion_tipo:=IMPRESION_PDF;
+    Princ.ImprimirReporte;
+end;
+
 function TPrinc.ProtegidoxPass(nombre: string):boolean;
 var
   error:integer;
@@ -1422,6 +1491,12 @@ begin
 
 end;
 
+
+procedure TPrinc.Imprimir1Click(Sender: TObject);
+begin
+    impresion_tipo:=IMPRESION_IMPRIMIR;
+    Princ.ImprimirReporte;
+end;
 
 procedure TPrinc.ImprimirDocumentoVenta(id: string);
 var
@@ -2278,6 +2353,18 @@ end;
 
 
 
+procedure TPrinc.Excel1Click(Sender: TObject);
+begin
+    impresion_tipo:=IMPRESION_XLS;
+    Princ.ImprimirReporte;
+end;
+
+procedure TPrinc.exto1Click(Sender: TObject);
+begin
+    impresion_tipo:=IMPRESION_TXT;
+    Princ.ImprimirReporte;
+end;
+
 procedure TPrinc.AbrirModificarProducto(id:string);
 begin
     try
@@ -2525,7 +2612,7 @@ begin
       begin
           QDocumentoventadetalles.Last;
 //          QDocumentoventadetalles.Next;
-          QDocumentoventadetalles.Append;;
+          QDocumentoventadetalles.Append;
 
       end;
     if abm=2 then
@@ -4507,6 +4594,8 @@ begin
     MenuConfiguracion;
 
     BRGFocusAdmin1.Active:=true;
+
+    impresion_tipo:=IMPRESION_IMPRIMIR;
 end;
 
 procedure TPrinc.ZBaseAfterConnect(Sender: TObject);

@@ -162,19 +162,19 @@ inherited ConsultaStockCurvas: TConsultaStockCurvas
       Tag2 = 0
       ConfTodos = True
     end
-    object producto_enstock: TCheckBox
-      Left = 79
-      Top = 174
-      Width = 141
-      Height = 17
-      Caption = 'Solo Productos en stock'
-      Enabled = False
+    object btnseleccionarproductos: TButton
+      Left = 83
+      Top = 170
+      Width = 118
+      Height = 25
+      Caption = 'Seleccionar Productos'
       TabOrder = 8
+      OnClick = btnseleccionarproductosClick
     end
   end
   inherited ZQSelect: TZQuery
-    Left = 336
-    Top = 216
+    Left = 360
+    Top = 176
   end
   inherited ZQExecSQL: TZQuery
     Left = 344
