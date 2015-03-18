@@ -28,7 +28,7 @@ type
     ZQProductosTalles: TZQuery;
     btnaplicarstock: TButton;
     MQProductosTalles: TMQuery;
-    Button1: TButton;
+    btnhabilitaredicion: TButton;
     DTSProductosTallesCodigos: TDataSource;
     MQProductosTallesproducto_id: TStringField;
     MQProductosTallesproducto_talle: TStringField;
@@ -54,7 +54,7 @@ type
     procedure producto_nombreEnter(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
     procedure btnaplicarstockClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure btnhabilitaredicionClick(Sender: TObject);
     procedure seccion_idExit(Sender: TObject);
     procedure Eliminar1Click(Sender: TObject);
     procedure producto_codigobarrasExit(Sender: TObject);
@@ -399,7 +399,7 @@ begin
 
 end;
 
-procedure TCargaStockCurvas.Button1Click(Sender: TObject);
+procedure TCargaStockCurvas.btnhabilitaredicionClick(Sender: TObject);
 begin
   inherited;
     StringGrid1.Hide;
@@ -612,6 +612,8 @@ var
   filaenvio:integer;
 begin
   inherited;
+    btnhabilitaredicion.Enabled:=Princ.GetPermisoEspecial('MODIFICARPRODUCTOS','0')='-1';
+
     seccion_id.llenarcombo;
     marca_id.llenarcombo;
     rubro_id.llenarcombo;
@@ -649,4 +651,4 @@ begin
 
 end;
 
-end.             9
+end.             

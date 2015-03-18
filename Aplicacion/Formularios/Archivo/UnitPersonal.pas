@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Unitlistabase, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
   StdCtrls, GBTEdit, Grids, DBGrids, ExtCtrls, AdvPanel, ComCtrls,
-  UnitSqlComboBox;
+  UnitSqlComboBox, AdvEdit, DBAdvEd, Buttons;
 
 type
   Tpersonal = class(Tlistabase)
@@ -33,11 +33,14 @@ type
     Label8: TLabel;
     Label21: TLabel;
     perfil_id: TSqlComboBox;
+    lblpersonal_ivaliquidaciones: TLabel;
+    personal_ivaliquidaciones: TDBAdvEdit;
     procedure btnfiltrarClick(Sender: TObject);
     procedure btnnuevoClick(Sender: TObject);
     procedure btnmodificarClick(Sender: TObject);
     procedure btneliminarClick(Sender: TObject);
     procedure btnguardarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     procedure agregar;
@@ -122,9 +125,9 @@ begin
     id:=princ.codigo('personal','personal_id');
     ZQuery2.sql.clear;
     ZQuery2.sql.add('Insert into personal (personal_id, personal_nombre, personal_domicilio, ');
-    ZQuery2.sql.add('personal_telefono, personal_mail, personal_celular, personal_usuario, personal_pass, perfil_id) ');
+    ZQuery2.sql.add('personal_telefono, personal_mail, personal_celular, personal_usuario, personal_pass, perfil_id, personal_ivaliquidaciones) ');
     ZQuery2.sql.add('values (:personal_id, :personal_nombre, :personal_domicilio, ');
-    ZQuery2.sql.add(':personal_telefono, :personal_mail, :personal_celular, :personal_usuario, :personal_pass, :perfil_id) ');
+    ZQuery2.sql.add(':personal_telefono, :personal_mail, :personal_celular, :personal_usuario, :personal_pass, :perfil_id, :personal_ivaliquidaciones) ');
     ZQuery2.parambyname('personal_id').asstring:=id;
     ZQuery2.parambyname('personal_nombre').asstring:=personal_nombre.text;
     ZQuery2.parambyname('personal_domicilio').asstring:=personal_domicilio.text;
@@ -139,6 +142,7 @@ begin
     ZQuery2.parambyname('personal_pass').asstring:=Princ.Encriptador1.Encriptado;
 //    ZQuery2.parambyname('personal_pass').asstring:='';
     ZQuery2.parambyname('perfil_id').asstring:=perfil_id.codigo;
+    ZQuery2.parambyname('personal_ivaliquidaciones').asstring:=personal_ivaliquidaciones.Text;
     ZQuery2.ExecSQL;
 
     MessageDlg('Datos guardados correctamente.', mtInformation, [mbOK], 0);
@@ -160,7 +164,8 @@ begin
     ZQuery2.sql.add('personal_mail=:personal_mail, ');
     ZQuery2.sql.add('personal_usuario=:personal_usuario, ');
     ZQuery2.sql.add('personal_pass=:personal_pass, ');
-    ZQuery2.sql.add('perfil_id=:perfil_id ');
+    ZQuery2.sql.add('perfil_id=:perfil_id, ');
+    ZQuery2.sql.add('personal_ivaliquidaciones=:personal_ivaliquidaciones ');
     ZQuery2.sql.add('where personal_id=:personal_id');
     ZQuery2.parambyname('personal_id').asstring:=id;
     ZQuery2.parambyname('personal_nombre').asstring:=personal_nombre.text;
@@ -175,6 +180,7 @@ begin
     Princ.Encriptador1.Encriptar;
     ZQuery2.parambyname('personal_pass').asstring:=Princ.Encriptador1.Encriptado;
     ZQuery2.parambyname('perfil_id').asstring:=perfil_id.codigo;
+    ZQuery2.parambyname('personal_ivaliquidaciones').asstring:=personal_ivaliquidaciones.Text;
 //    ZQuery2.parambyname('personal_pass').asstring:='';
     ZQuery2.ExecSQL;
 
@@ -200,6 +206,14 @@ begin
 
 end;
 
+
+procedure Tpersonal.FormShow(Sender: TObject);
+begin
+  inherited;
+    lblpersonal_ivaliquidaciones.Visible:=Princ.GetConfiguracion('LIQUIDACIONVENDEDOR')='-1';
+    personal_ivaliquidaciones.Visible:=Princ.GetConfiguracion('LIQUIDACIONVENDEDOR')='-1';
+
+end;
 
 procedure Tpersonal.btneliminarClick(Sender: TObject);
 begin
@@ -278,6 +292,7 @@ begin
                 personal_pass2.Text:=Princ.Encriptador1.Desencriptado;
                 perfil_id.llenarcombo;
                 perfil_id.Buscar(ZQGrilla.FieldByName('perfil_id').AsString);
+                personal_ivaliquidaciones.Text:=ZQGrilla.FieldByName('personal_ivaliquidaciones').AsString;
 
                 personal_nombre.SetFocus;
             end;
@@ -301,6 +316,7 @@ begin
     personal_pass2.Text:='';
     perfil_id.llenarcombo;
     perfil_id.ItemIndex:=0;
+    personal_ivaliquidaciones.Text:='0';
 
 end;
 

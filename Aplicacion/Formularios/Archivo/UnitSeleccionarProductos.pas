@@ -128,6 +128,8 @@ begin
 
     sql:=sql+'order by producto_nombre, producto_codigobarras ';
 
+    sql:=sql+'order by producto_nombre, producto_codigobarras ';
+
     tiProdcutos.Memo.Text:=sql;
     productos.Fill;
 

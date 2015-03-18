@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Unitlistabase, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
-  StdCtrls, GBTEdit, Grids, DBGrids, ExtCtrls, AdvPanel, ComCtrls;
+  StdCtrls, GBTEdit, Grids, DBGrids, ExtCtrls, AdvPanel, ComCtrls, Buttons;
 
 type
   TListaPerfiles = class(Tlistabase)
@@ -13,6 +13,8 @@ type
     procedure btnfiltrarClick(Sender: TObject);
     procedure btnnuevoClick(Sender: TObject);
     procedure btnmodificarClick(Sender: TObject);
+    procedure btnclonarClick(Sender: TObject);
+    procedure btneliminarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -24,9 +26,35 @@ var
 
 implementation
 
-uses UnitPrinc;
+uses UnitPrinc, UnitPerfil;
 
 {$R *.dfm}
+
+procedure TListaPerfiles.btnclonarClick(Sender: TObject);
+begin
+  inherited;
+    try
+      Perfil:=TPerfil.Create(self);
+    finally
+      Perfil.abm:=ABM_CLONAR;
+      Perfil.id:=ZQGrilla.FieldByName('perfil_id').AsString;
+      Perfil.btnguardar.Caption:='Clonar';
+      Perfil.Show;
+    end;
+end;
+
+procedure TListaPerfiles.btneliminarClick(Sender: TObject);
+begin
+  inherited;
+    try
+      Perfil:=TPerfil.Create(self);
+    finally
+      Perfil.abm:=ABM_ELIMINAR;
+      Perfil.id:=ZQGrilla.FieldByName('perfil_id').AsString;
+      Perfil.btnguardar.Caption:='Eliminar';
+      Perfil.Show;
+    end;
+end;
 
 procedure TListaPerfiles.btnfiltrarClick(Sender: TObject);
 begin

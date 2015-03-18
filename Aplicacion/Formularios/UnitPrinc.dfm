@@ -1351,7 +1351,7 @@ object Princ: TPrinc
       object AdvToolBarStock: TAdvToolBar
         Left = 730
         Top = 3
-        Width = 306
+        Width = 406
         Height = 63
         AllowFloating = True
         Caption = 'Stock'
@@ -1410,7 +1410,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object BtnAjustesdeStock: TAdvGlowButton
-          Left = 2
+          Left = 102
           Top = 2
           Width = 100
           Height = 41
@@ -1449,12 +1449,11 @@ object Princ: TPrinc
         end
         object BtnConsultasStock: TAdvGlowButton
           Left = 2
-          Top = 65
+          Top = 2
           Width = 100
           Height = 41
           Caption = 'Consultas de Stock'
           TabOrder = 2
-          Visible = False
           OnClick = BtnConsultasStockClick
           Appearance.BorderColor = 9598070
           Appearance.BorderColorHot = 10079963
@@ -1487,7 +1486,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object BtnMovimientosdeStock: TAdvGlowButton
-          Left = 102
+          Left = 202
           Top = 2
           Width = 100
           Height = 41
@@ -1525,7 +1524,7 @@ object Princ: TPrinc
           Appearance.GradientChecked = ggVertical
         end
         object BtnMovimientosDepositos: TAdvGlowButton
-          Left = 202
+          Left = 302
           Top = 2
           Width = 100
           Height = 41

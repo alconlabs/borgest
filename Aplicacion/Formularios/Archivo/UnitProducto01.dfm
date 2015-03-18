@@ -30,8 +30,6 @@ inherited producto01: Tproducto01
       ExplicitWidth = 668
       ExplicitHeight = 273
       inherited TabSheet2: TTabSheet
-        ExplicitLeft = 4
-        ExplicitTop = 24
         ExplicitWidth = 660
         ExplicitHeight = 245
         inherited Label17: TLabel

@@ -10,6 +10,7 @@ object ActualizarProductos: TActualizarProductos
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   Position = poMainFormCenter
   OnClose = FormClose
@@ -75,10 +76,6 @@ object ActualizarProductos: TActualizarProductos
       object TabSheet2: TTabSheet
         Caption = 'Actualizar Productos'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label3: TLabel
           Left = 53
           Top = 12
@@ -201,7 +198,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 206
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 6
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -219,7 +216,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 151
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 5
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -237,7 +234,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 290
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 7
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -259,7 +256,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 121
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 8
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -277,7 +274,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 271
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 4
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -582,7 +579,7 @@ object ActualizarProductos: TActualizarProductos
             Width = 151
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 1
             Confbase = Princ.ZBase
             Confsql.Strings = (
@@ -642,7 +639,7 @@ object ActualizarProductos: TActualizarProductos
             Width = 151
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 1
             Confbase = Princ.ZBase
             Confsql.Strings = (
@@ -720,7 +717,7 @@ object ActualizarProductos: TActualizarProductos
             Width = 151
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 1
             Confbase = Princ.ZBase
             Confsql.Strings = (
@@ -767,7 +764,7 @@ object ActualizarProductos: TActualizarProductos
             Width = 151
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 1
             Confbase = Princ.ZBase
             Confsql.Strings = (
@@ -814,7 +811,7 @@ object ActualizarProductos: TActualizarProductos
             Width = 151
             Height = 21
             Style = csDropDownList
-            ItemHeight = 0
+            ItemHeight = 13
             TabOrder = 1
             Confbase = Princ.ZBase
             Confsql.Strings = (
@@ -890,7 +887,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 206
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 22
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -908,7 +905,7 @@ object ActualizarProductos: TActualizarProductos
           Width = 206
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 23
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -920,14 +917,64 @@ object ActualizarProductos: TActualizarProductos
           Tag2 = 0
           ConfNuevo = True
         end
+        object GroupBox9: TGroupBox
+          Left = 568
+          Top = 530
+          Width = 182
+          Height = 119
+          Caption = 'Precio Venta $'
+          TabOrder = 24
+          object Label47: TLabel
+            Left = 9
+            Top = 18
+            Width = 33
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Estado'
+          end
+          object Label48: TLabel
+            Left = 2
+            Top = 50
+            Width = 180
+            Height = 13
+            Caption = 'Aplicar sobre precios de venta'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold, fsItalic]
+            ParentFont = False
+          end
+          object btnAplicarEstado: TButton
+            Left = 10
+            Top = 83
+            Width = 91
+            Height = 25
+            Caption = 'Aplicar'
+            TabOrder = 0
+            OnClick = btnAplicarEstadoClick
+          end
+          object nuevo_producto_estado: TComboBox
+            Left = 61
+            Top = 15
+            Width = 108
+            Height = 21
+            Style = csDropDownList
+            ItemHeight = 13
+            ItemIndex = 0
+            TabOrder = 1
+            Text = 'DISPONIBLE'
+            Items.Strings = (
+              'DISPONIBLE'
+              'DISCONTINUADO'
+              'EN PAPELERA'
+              'REVISAR')
+          end
+        end
       end
       object TabSheet1: TTabSheet
         Caption = 'Actualizar desde Excel'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label2: TLabel
           Left = 40
           Top = 5
@@ -1102,7 +1149,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 26
           Width = 271
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 3
         end
         object xls_rubro_id: TSqlComboBox
@@ -1110,7 +1157,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 50
           Width = 151
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 16
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -1126,7 +1173,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 2
           Width = 271
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 14
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -1142,7 +1189,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 26
           Width = 151
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 15
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -1158,7 +1205,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 74
           Width = 271
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 17
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -1178,7 +1225,7 @@ object ActualizarProductos: TActualizarProductos
           Top = 98
           Width = 121
           Height = 21
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 18
           Confbase = Princ.ZBase
           Confsql.Strings = (
@@ -1403,16 +1450,12 @@ object ActualizarProductos: TActualizarProductos
             Top = 0
             Width = 1027
             Height = 468
-            ActivePage = TabSheet3
+            ActivePage = TabSheet7
             Align = alClient
             TabOrder = 0
             object TabSheet3: TTabSheet
               Caption = 'Productos Nuevos'
               ImageIndex = 1
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
               object lblcantidadnuevos: TLabel
                 Left = 7
                 Top = 357
@@ -1529,10 +1572,6 @@ object ActualizarProductos: TActualizarProductos
             object TabSheet4: TTabSheet
               Caption = 'A Incrementar'
               ImageIndex = 2
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
               object lblcantidadincrementar: TLabel
                 Left = 7
                 Top = 357
@@ -1668,10 +1707,6 @@ object ActualizarProductos: TActualizarProductos
             object TabSheet5: TTabSheet
               Caption = 'A Disminuir'
               ImageIndex = 3
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
               object lblcantidadisminuir: TLabel
                 Left = 7
                 Top = 357
@@ -1807,10 +1842,6 @@ object ActualizarProductos: TActualizarProductos
             object TabSheet7: TTabSheet
               Caption = 'Sin Precio'
               ImageIndex = 4
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
               object lblcantidadsinprecio: TLabel
                 Left = 7
                 Top = 357
@@ -1943,10 +1974,6 @@ object ActualizarProductos: TActualizarProductos
             object TabSheet6: TTabSheet
               Caption = 'Sin Cambios'
               ImageIndex = 3
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
               object lblcantidadsincambios: TLabel
                 Left = 7
                 Top = 357

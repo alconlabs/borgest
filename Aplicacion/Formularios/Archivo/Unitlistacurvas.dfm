@@ -8,16 +8,8 @@ inherited listacurvas: Tlistacurvas
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
       FullHeight = 0
-      inherited btnnuevo: TButton
-        ExplicitLeft = 0
-        ExplicitTop = 0
-      end
-      inherited btnver: TButton
-        ExplicitTop = 205
-      end
       inherited btnclonar: TButton
         OnClick = btnclonarClick
-        ExplicitTop = 164
       end
     end
     inherited DBGrid1: TDBGrid

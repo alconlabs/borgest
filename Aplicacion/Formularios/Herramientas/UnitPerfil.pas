@@ -111,21 +111,26 @@ procedure TPerfil.btnguardarClick(Sender: TObject);
 begin
   inherited;
     case abm of
-        1:begin
+        ABM_AGREGAR:begin
               if control then
                 agregar;
 
-          end;
-        2:begin
+        end;
+        ABM_MODIFICAR:begin
               if control then
                 modificar;
 
-          end;
-        3:begin
+        end;
+        ABM_ELIMINAR:begin
               if (MessageDlg('Seguro desea eliminar este Perfil?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
                 eliminar;
 
-          end;
+        end;
+        ABM_CLONAR:begin
+            abm:=ABM_AGREGAR;
+            if control then
+              agregar;
+        end;
     end;
 end;
 
@@ -191,6 +196,12 @@ procedure TPerfil.eliminar;
 begin
     ZQExecSQL.sql.clear;
     ZQExecSQL.sql.add('begin');
+    ZQExecSQL.ExecSQL;
+
+    ZQExecSQL.sql.clear;
+    ZQExecSQL.sql.add('Delete from permisosespecialesperfil');
+    ZQExecSQL.sql.add(' where perfil_id=:perfil_id');
+    ZQExecSQL.parambyname('perfil_id').asstring:=id;
     ZQExecSQL.ExecSQL;
 
     ZQExecSQL.sql.clear;

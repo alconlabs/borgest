@@ -36,6 +36,7 @@ type
     abm:integer;
     liberar_al_cerrar:boolean;
     personal_id:string;
+    perfil_id:string;
   end;
 
 var
@@ -72,9 +73,11 @@ begin
                 ZQSelect.parambyname('personal_pass').asstring:=Princ.Encriptador1.Encriptado;
                 ZQSelect.Active:=true;
                 personal_id:='';
+                perfil_id:='';
                 if ZQSelect.RecordCount>0 then
                   begin
                       personal_id:=ZQSelect.FieldByName('personal_id').AsString;
+                      perfil_id:=ZQSelect.FieldByName('perfil_id').AsString;
                       Self.ModalResult:=mrOk;
                   end
                 else

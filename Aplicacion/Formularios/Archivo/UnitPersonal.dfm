@@ -166,6 +166,14 @@ inherited personal: Tpersonal
       Alignment = taRightJustify
       Caption = 'Perfil de seguridad'
     end
+    object lblpersonal_ivaliquidaciones: TLabel [10]
+      Left = 400
+      Top = 129
+      Width = 96
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'IVA Liquidaciones %'
+    end
     inherited btnguardar: TButton
       TabOrder = 9
       OnClick = btnguardarClick
@@ -261,6 +269,26 @@ inherited personal: Tpersonal
       Confcampo_codigo = 'perfil_id'
       Confcampo_nomb = 'perfil_nombre'
       Tag2 = 0
+    end
+    object personal_ivaliquidaciones: TDBAdvEdit
+      Left = 502
+      Top = 126
+      Width = 59
+      Height = 21
+      EditType = etFloat
+      Precision = 2
+      LabelFont.Charset = DEFAULT_CHARSET
+      LabelFont.Color = clWindowText
+      LabelFont.Height = -11
+      LabelFont.Name = 'Tahoma'
+      LabelFont.Style = []
+      Lookup.Separator = ';'
+      Color = clWindow
+      Enabled = True
+      TabOrder = 12
+      Text = '0,00'
+      Visible = True
+      Version = '2.7.0.5'
     end
   end
   inherited StatusBar1: TStatusBar

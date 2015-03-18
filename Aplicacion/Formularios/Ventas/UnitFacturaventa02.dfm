@@ -3,6 +3,7 @@ inherited facturaventa02: Tfacturaventa02
   ClientHeight = 680
   ClientWidth = 997
   Position = poScreenCenter
+  ExplicitTop = -157
   ExplicitWidth = 1013
   ExplicitHeight = 718
   PixelsPerInch = 96
@@ -147,15 +148,7 @@ inherited facturaventa02: Tfacturaventa02
       Height = 13
       Caption = 'Importe'
     end
-    object lbltarjeta: TLabel [18]
-      Left = 115
-      Top = 362
-      Width = 33
-      Height = 13
-      Caption = 'Tarjeta'
-      Visible = False
-    end
-    object Label24: TLabel [19]
+    object Label24: TLabel [18]
       Left = 730
       Top = 361
       Width = 58
@@ -169,7 +162,7 @@ inherited facturaventa02: Tfacturaventa02
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object Label25: TLabel [20]
+    object Label25: TLabel [19]
       Left = 154
       Top = 168
       Width = 35
@@ -180,14 +173,14 @@ inherited facturaventa02: Tfacturaventa02
       Left = 88
       Top = 12
       TabStop = False
-      TabOrder = 25
+      TabOrder = 24
       ExplicitLeft = 88
       ExplicitTop = 12
     end
     inherited documentoventa_fecha: TDateTimePicker
       Left = 707
       Top = 12
-      TabOrder = 26
+      TabOrder = 25
       TabStop = False
       ExplicitLeft = 707
       ExplicitTop = 12
@@ -195,7 +188,7 @@ inherited facturaventa02: Tfacturaventa02
     inherited cliente_id: TSqlComboBox
       Left = 539
       Top = 756
-      TabOrder = 18
+      TabOrder = 17
       Visible = False
       ExplicitLeft = 539
       ExplicitTop = 756
@@ -204,6 +197,7 @@ inherited facturaventa02: Tfacturaventa02
       Left = 154
       Top = 36
       TabStop = False
+      OnChange = personal_idChange
       ExplicitLeft = 154
       ExplicitTop = 36
     end
@@ -212,7 +206,7 @@ inherited facturaventa02: Tfacturaventa02
       Top = 602
       Width = 94
       Caption = 'Esc - Cancelar'
-      TabOrder = 16
+      TabOrder = 15
       ExplicitLeft = 707
       ExplicitTop = 602
       ExplicitWidth = 94
@@ -221,14 +215,14 @@ inherited facturaventa02: Tfacturaventa02
       Left = 626
       Top = 602
       Caption = 'F9 - Guardar'
-      TabOrder = 15
+      TabOrder = 14
       ExplicitLeft = 626
       ExplicitTop = 602
     end
     inherited documentoventa_condicionventa: TComboBox
       Left = 637
       Top = 828
-      TabOrder = 20
+      TabOrder = 19
       Visible = False
       ExplicitLeft = 637
       ExplicitTop = 828
@@ -239,6 +233,7 @@ inherited facturaventa02: Tfacturaventa02
       Width = 968
       Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
       TabOrder = 7
+      OnEnter = DBGrid1Enter
       OnKeyPress = DBGrid1KeyPress
       Columns = <
         item
@@ -308,7 +303,7 @@ inherited facturaventa02: Tfacturaventa02
       Top = 475
       Width = 360
       Height = 121
-      TabOrder = 14
+      TabOrder = 13
       TabStop = True
       ExplicitLeft = 625
       ExplicitTop = 475
@@ -396,7 +391,7 @@ inherited facturaventa02: Tfacturaventa02
     inherited puntoventa_id: TSqlComboBox
       Left = 72
       Top = 908
-      TabOrder = 23
+      TabOrder = 22
       Visible = False
       ExplicitLeft = 72
       ExplicitTop = 908
@@ -404,7 +399,7 @@ inherited facturaventa02: Tfacturaventa02
     inherited tipodocu_id: TSqlComboBox
       Left = 130
       Top = 908
-      TabOrder = 24
+      TabOrder = 23
       Visible = False
       ExplicitLeft = 130
       ExplicitTop = 908
@@ -412,7 +407,7 @@ inherited facturaventa02: Tfacturaventa02
     inherited documentoventa_listaprecio: TComboBox
       Left = 637
       Top = 852
-      TabOrder = 21
+      TabOrder = 20
       Visible = False
       ExplicitLeft = 637
       ExplicitTop = 852
@@ -422,6 +417,7 @@ inherited facturaventa02: Tfacturaventa02
       Top = 410
       Width = 602
       Height = 186
+      TabOrder = 12
       Columns = <
         item
           Expanded = False
@@ -450,7 +446,7 @@ inherited facturaventa02: Tfacturaventa02
       Top = 379
       Width = 142
       Caption = 'Agregar Pago'
-      TabOrder = 12
+      TabOrder = 11
       Visible = False
       ExplicitLeft = 477
       ExplicitTop = 379
@@ -461,7 +457,7 @@ inherited facturaventa02: Tfacturaventa02
       Top = 602
       Width = 108
       Caption = 'F8 - Quitar Pago'
-      TabOrder = 17
+      TabOrder = 16
       ExplicitLeft = 414
       ExplicitTop = 602
       ExplicitWidth = 108
@@ -469,7 +465,7 @@ inherited facturaventa02: Tfacturaventa02
     inherited sucursal_id: TSqlComboBox
       Left = 72
       Top = 884
-      TabOrder = 22
+      TabOrder = 21
       Visible = False
       ExplicitLeft = 72
       ExplicitTop = 884
@@ -477,7 +473,7 @@ inherited facturaventa02: Tfacturaventa02
     inherited btnherramientas: TAdvGlowButton
       Left = 794
       Top = 884
-      TabOrder = 28
+      TabOrder = 27
       Visible = False
       ExplicitLeft = 794
       ExplicitTop = 884
@@ -485,7 +481,7 @@ inherited facturaventa02: Tfacturaventa02
     inherited btnimprimirventa: TButton
       Left = 889
       Top = 912
-      TabOrder = 29
+      TabOrder = 28
       Visible = False
       ExplicitLeft = 889
       ExplicitTop = 912
@@ -493,7 +489,7 @@ inherited facturaventa02: Tfacturaventa02
     inherited btnagregarcliente: TButton
       Left = 862
       Top = 756
-      TabOrder = 19
+      TabOrder = 18
       Visible = False
       ExplicitLeft = 862
       ExplicitTop = 756
@@ -501,7 +497,7 @@ inherited facturaventa02: Tfacturaventa02
     inherited documentoventa_fechavenc: TDateTimePicker
       Left = 625
       Top = 908
-      TabOrder = 27
+      TabOrder = 26
       Visible = False
       ExplicitLeft = 625
       ExplicitTop = 908
@@ -509,7 +505,7 @@ inherited facturaventa02: Tfacturaventa02
     inherited btnobservaciones: TButton
       Left = 889
       Top = 882
-      TabOrder = 30
+      TabOrder = 29
       Visible = False
       ExplicitLeft = 889
       ExplicitTop = 882
@@ -517,7 +513,7 @@ inherited facturaventa02: Tfacturaventa02
     inherited VENTASEMITIRREMITOCTACTE: TCheckBox
       Left = 436
       Top = 910
-      TabOrder = 31
+      TabOrder = 30
       Visible = False
       ExplicitLeft = 436
       ExplicitTop = 910
@@ -567,7 +563,7 @@ inherited facturaventa02: Tfacturaventa02
       Top = 381
       Width = 251
       Height = 21
-      TabOrder = 10
+      TabOrder = 9
       OnEnter = documentopago_nombreEnter
     end
     object documentopago_importe: TMoneyEdit
@@ -585,7 +581,7 @@ inherited facturaventa02: Tfacturaventa02
       CalculatorLook.Font.Height = -11
       CalculatorLook.Font.Name = 'Tahoma'
       CalculatorLook.Font.Style = []
-      TabOrder = 11
+      TabOrder = 10
       Version = '1.1.0.1'
       OnKeyDown = documentopago_importeKeyDown
     end
@@ -606,56 +602,24 @@ inherited facturaventa02: Tfacturaventa02
       TabOrder = 8
       Visible = True
       OnKeyDown = tipopago_idKeyDown
+      OnKeyPress = tipopago_idKeyPress
       Version = '1.3.0.1'
       ButtonStyle = bsButton
       ButtonWidth = 16
       Etched = False
+      OnClickBtn = tipopago_idClickBtn
       abm = False
-      ConfCampoCodigo = 'tipopago_codigo'
+      ConfCampoCodigo = 'tipopago_id'
       ConfCampoTexto = 'tipopago_nombre'
       ConfSqlConnection = Princ.ZBase
       ConfSql.Strings = (
         'select * from tipospago'
         'order by tipopago_id')
       ConfTexto = documentopago_nombre
-      AfterSearch = tipopago_idAfterSearch
       ConfIni = Princ.ini1
       ConfLimpiar = True
       ConfSearchLimpio = True
-      ConfCampoBusqueda1 = 'tipopago_codigo'
-    end
-    object tarjeta_id: TEditCodi
-      Left = 115
-      Top = 381
-      Width = 50
-      Height = 21
-      Flat = False
-      LabelFont.Charset = DEFAULT_CHARSET
-      LabelFont.Color = clWindowText
-      LabelFont.Height = -11
-      LabelFont.Name = 'Tahoma'
-      LabelFont.Style = []
-      Lookup.Separator = ';'
-      Color = clWindow
-      Enabled = True
-      TabOrder = 9
-      Visible = False
-      OnKeyDown = tipopago_idKeyDown
-      Version = '1.3.0.1'
-      ButtonStyle = bsButton
-      ButtonWidth = 16
-      Etched = False
-      abm = False
-      ConfCampoCodigo = 'tarjeta_id'
-      ConfCampoTexto = 'tarjeta_nombre'
-      ConfSqlConnection = Princ.ZBase
-      ConfSql.Strings = (
-        'select * from tarjetas')
-      ConfTexto = documentopago_nombre
-      ConfIni = Princ.ini1
-      ConfLimpiar = True
-      ConfSearchLimpio = True
-      ConfCampoBusqueda1 = 'tarjeta_id'
+      ConfCampoBusqueda1 = 'tipopago_id'
     end
     object GroupBox2: TGroupBox
       Left = 15
@@ -665,6 +629,7 @@ inherited facturaventa02: Tfacturaventa02
       Caption = 'Cliente'
       ParentBackground = False
       TabOrder = 2
+      OnEnter = GroupBox2Enter
       object Label17: TLabel
         Left = 15
         Top = 20
@@ -747,7 +712,7 @@ inherited facturaventa02: Tfacturaventa02
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 32
+      TabOrder = 31
       Version = '1.1.0.1'
     end
     object vendedor_id: TEditCodi
@@ -789,7 +754,7 @@ inherited facturaventa02: Tfacturaventa02
       Width = 72
       Height = 17
       Alignment = taLeftJustify
-      TabOrder = 33
+      TabOrder = 32
       OnClick = CBDevolucionClick
     end
     object BtnConsultaStock: TButton
@@ -798,26 +763,46 @@ inherited facturaventa02: Tfacturaventa02
       Width = 108
       Height = 25
       Caption = 'Consulta Stock'
-      TabOrder = 34
+      TabOrder = 33
       TabStop = False
       OnClick = BtnConsultaStockClick
     end
+    object combotipopago_id: TSqlComboBox
+      Left = 17
+      Top = 381
+      Width = 94
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      TabOrder = 34
+      TabStop = False
+      Visible = False
+      OnExit = combotipopago_idExit
+      OnSelect = combotipopago_idSelect
+      Confbase = Princ.ZBase
+      Confsql.Strings = (
+        
+          'select *,concat(tipopago_id,'#39' - '#39',tipopago_nombre) as nombre fro' +
+          'm tipospago'
+        'order by tipopago_id')
+      Confcampo_codigo = 'tipopago_id'
+      Confcampo_nomb = 'nombre'
+      Tag2 = 0
+    end
   end
   object PageControl1: TPageControl [1]
-    Left = -9
-    Top = -11
+    Left = 72
+    Top = 268
     Width = 981
     Height = 668
     ActivePage = TabSheet2
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Venta'
-      ExplicitHeight = 610
     end
     object TabSheet2: TTabSheet
       Caption = 'Envio'
       ImageIndex = 1
-      ExplicitHeight = 610
       object Label26: TLabel
         Left = 672
         Top = 15
@@ -836,7 +821,7 @@ inherited facturaventa02: Tfacturaventa02
       end
       object Label28: TLabel
         Left = 16
-        Top = 145
+        Top = 57
         Width = 82
         Height = 13
         Alignment = taRightJustify
@@ -844,12 +829,19 @@ inherited facturaventa02: Tfacturaventa02
       end
       object Label29: TLabel
         Left = 16
-        Top = 387
+        Top = 267
         Width = 71
         Height = 13
         Caption = 'Observaciones'
       end
-      object DateTimePicker1: TDateTimePicker
+      object Label31: TLabel
+        Left = 16
+        Top = 379
+        Width = 122
+        Height = 13
+        Caption = 'Ultimos Envios Realizados'
+      end
+      object movimientodeposito_fecha: TDateTimePicker
         Left = 707
         Top = 12
         Width = 106
@@ -858,7 +850,6 @@ inherited facturaventa02: Tfacturaventa02
         Time = 40384.000000000000000000
         TabOrder = 0
         TabStop = False
-        OnExit = documentoventa_fechaExit
       end
       object deposito_iddestino: TSqlComboBox
         Left = 100
@@ -878,7 +869,7 @@ inherited facturaventa02: Tfacturaventa02
       end
       object MovProducto_id: TEditCodi
         Left = 16
-        Top = 164
+        Top = 76
         Width = 121
         Height = 21
         Flat = False
@@ -917,7 +908,7 @@ inherited facturaventa02: Tfacturaventa02
       end
       object DBGrid3: TDBGrid
         Left = 16
-        Top = 194
+        Top = 106
         Width = 957
         Height = 153
         TabStop = False
@@ -955,7 +946,7 @@ inherited facturaventa02: Tfacturaventa02
       end
       object Button3: TButton
         Left = 749
-        Top = 163
+        Top = 75
         Width = 75
         Height = 25
         Caption = 'Agregar'
@@ -964,7 +955,7 @@ inherited facturaventa02: Tfacturaventa02
       end
       object Button4: TButton
         Left = 895
-        Top = 163
+        Top = 75
         Width = 75
         Height = 25
         Caption = 'Quitar'
@@ -973,7 +964,7 @@ inherited facturaventa02: Tfacturaventa02
       end
       object Button5: TButton
         Left = 822
-        Top = 163
+        Top = 75
         Width = 75
         Height = 25
         Caption = 'Modificar'
@@ -982,16 +973,16 @@ inherited facturaventa02: Tfacturaventa02
       end
       object movimientodeposito_observaciones: TGTBMemo
         Left = 16
-        Top = 406
-        Width = 521
-        Height = 98
+        Top = 286
+        Width = 954
+        Height = 33
         TabStop = False
         TabOrder = 7
         Tag2 = 0
       end
       object btnguardarmov: TButton
         Left = 626
-        Top = 602
+        Top = 322
         Width = 75
         Height = 25
         Caption = 'Guardar'
@@ -1000,11 +991,62 @@ inherited facturaventa02: Tfacturaventa02
       end
       object btncancelarmov: TButton
         Left = 707
-        Top = 602
+        Top = 322
         Width = 94
         Height = 25
         Caption = 'Cancelar'
         TabOrder = 9
+      end
+      object DBGrid4: TDBGrid
+        Left = 16
+        Top = 398
+        Width = 957
+        Height = 196
+        TabStop = False
+        DataSource = DTSEnviosRealizados
+        TabOrder = 10
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = []
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'movimientodeposito_fecha'
+            ReadOnly = True
+            Title.Caption = 'Fecha'
+            Width = 108
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'deposito_nombre'
+            ReadOnly = True
+            Title.Caption = 'Destino'
+            Width = 168
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'producto_codigobarras'
+            Title.Caption = 'Codigo'
+            Width = 125
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'producto_nombre'
+            Title.Caption = 'Producto'
+            Width = 337
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'movimdepodetalle_cantidadenviar'
+            Title.Caption = 'Cantidad'
+            Visible = True
+          end>
       end
     end
   end
@@ -1119,12 +1161,12 @@ inherited facturaventa02: Tfacturaventa02
     Top = 392
   end
   inherited ZQdocumentoventadocus: TZQuery
-    Left = 472
-    Top = 408
+    Left = 448
+    Top = 368
   end
   inherited ZQDocumentopagos: TZQuery
-    Left = 320
-    Top = 416
+    Left = 280
+    Top = 352
   end
   inherited DTSPagos: TDataSource
     Left = 680
@@ -1148,8 +1190,8 @@ inherited facturaventa02: Tfacturaventa02
     Top = 368
   end
   inherited ZQRemitoDetalles: TZQuery
-    Left = 312
-    Top = 376
+    Left = 376
+    Top = 352
   end
   object ZQProducto: TZQuery
     Connection = Princ.ZBase
@@ -1163,8 +1205,8 @@ inherited facturaventa02: Tfacturaventa02
         'ctos.producto_id'
       'where documentoventa_id=-1')
     Params = <>
-    Left = 824
-    Top = 400
+    Left = 816
+    Top = 464
   end
   object ZQProductoActualizar: TZQuery
     Connection = Princ.ZBase
@@ -1316,5 +1358,36 @@ inherited facturaventa02: Tfacturaventa02
     DataSet = ZQmovimdepodetalles
     Left = 480
     Top = 192
+  end
+  object DTSEnviosRealizados: TDataSource
+    DataSet = ZQEnviosRealizados
+    Left = 264
+    Top = 544
+  end
+  object ZQEnviosRealizados: TZQuery
+    Connection = Princ.ZBase
+    CachedUpdates = True
+    SQL.Strings = (
+      
+        'select movimientosdepositos.movimientodeposito_fecha, depositos.' +
+        'deposito_nombre,'
+      
+        'productos.producto_codigobarras, productos.producto_nombre, movi' +
+        'mdepodetalles.movimdepodetalle_cantidadenviar'
+      'from movimientosdepositos'
+      
+        'inner join depositos on movimientosdepositos.deposito_iddestino=' +
+        'depositos.deposito_id'
+      
+        'inner join movimdepodetalles on movimientosdepositos.movimientod' +
+        'eposito_id=movimdepodetalles.movimientodeposito_id'
+      
+        'inner join productos on movimdepodetalles.producto_id=productos.' +
+        'producto_id'
+      'where movimientosdepositos.deposito_idorigen=1'
+      'order by movimdepodetalles.movimdepodetalle_id desc')
+    Params = <>
+    Left = 544
+    Top = 512
   end
 end

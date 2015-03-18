@@ -120,6 +120,14 @@ object liquidaciones: Tliquidaciones
       Alignment = taRightJustify
       Caption = 'Sucursales'
     end
+    object lblIVA: TLabel
+      Left = 553
+      Top = 518
+      Width = 17
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'IVA'
+    end
     object liquidacionvendedor_id: TEdit
       Left = 60
       Top = 9
@@ -142,7 +150,7 @@ object liquidaciones: Tliquidaciones
       Top = 57
       Width = 354
       Height = 21
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 3
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -328,10 +336,6 @@ object liquidaciones: Tliquidaciones
       TabOrder = 7
       object TabSheet1: TTabSheet
         Caption = 'Vendedor por defecto'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label15: TLabel
           Left = 814
           Top = 286
@@ -473,10 +477,6 @@ object liquidaciones: Tliquidaciones
       object TabSheet2: TTabSheet
         Caption = 'En Facturas'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label5: TLabel
           Left = 814
           Top = 286
@@ -618,10 +618,6 @@ object liquidaciones: Tliquidaciones
       object TabSheet3: TTabSheet
         Caption = 'En Otros'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label6: TLabel
           Left = 814
           Top = 286
@@ -763,10 +759,6 @@ object liquidaciones: Tliquidaciones
       object TabSheet4: TTabSheet
         Caption = 'Debitos y Creditos'
         ImageIndex = 3
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object Label7: TLabel
           Left = 814
           Top = 286
@@ -850,7 +842,7 @@ object liquidaciones: Tliquidaciones
       end
     end
     object btncalcular: TButton
-      Left = 624
+      Left = 442
       Top = 513
       Width = 91
       Height = 25
@@ -866,6 +858,26 @@ object liquidaciones: Tliquidaciones
       Caption = 'Imprimir'
       TabOrder = 12
       OnClick = btnimprimirClick
+    end
+    object liquidacionvendedor_iva: TDBAdvEdit
+      Left = 576
+      Top = 515
+      Width = 121
+      Height = 21
+      EditType = etFloat
+      Precision = 2
+      LabelFont.Charset = DEFAULT_CHARSET
+      LabelFont.Color = clWindowText
+      LabelFont.Height = -11
+      LabelFont.Name = 'Tahoma'
+      LabelFont.Style = []
+      Lookup.Separator = ';'
+      Color = clWindow
+      Enabled = True
+      TabOrder = 13
+      Text = '0,00'
+      Visible = True
+      Version = '2.7.0.5'
     end
   end
   object ZQuery2: TZQuery

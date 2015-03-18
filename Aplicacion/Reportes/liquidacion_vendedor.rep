@@ -3,7 +3,7 @@ object TRpReport
   GridEnabled = False
   GridWidth = 57
   GridHeight = 57
-  PageOrientation = rpOrientationPortrait
+  PageOrientation = rpOrientationLandscape
   Pagesize = rpPageSizeCustom
   PageHeight = 8120
   PageWidth = 5742

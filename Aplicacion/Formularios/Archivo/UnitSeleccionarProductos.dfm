@@ -2,6 +2,7 @@ inherited SeleccionarProductos: TSeleccionarProductos
   Caption = 'Imprimir Lista de Precios'
   ClientHeight = 519
   ClientWidth = 865
+  ExplicitTop = -134
   ExplicitWidth = 881
   ExplicitHeight = 557
   PixelsPerInch = 96

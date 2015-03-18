@@ -325,134 +325,140 @@ var
   productoid:string;
 begin
   inherited;
-    if (MessageDlg('Seguro desea guardar cambios?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+    if Princ.GetPermisoEspecial('MODIFICARPRODUCTOS','0')='-1' then
       begin
-          MQProductosTalles.First;
-          while not MQProductosTalles.Eof do
-              begin
-                  productoid:=Princ.buscar('select producto_id from productos where producto_codigobarras="'+producto_codigoarticulo.Text+MQProductosTalles.FieldByName('producto_tallecodigo').AsString+'"','producto_id');
-                  if productoid<>'' then
+          if (MessageDlg('Seguro desea guardar cambios?', mtConfirmation, [mbOK, mbCancel], 0) = mrOk) then
+            begin
+                MQProductosTalles.First;
+                while not MQProductosTalles.Eof do
                     begin
-                        ZQExecSQL.Sql.Clear;
-                        ZQExecSQL.Sql.Add('update productos set ');
-                        ZQExecSQL.Sql.Add('producto_talle=:producto_talle, ');
-                        ZQExecSQL.Sql.Add('producto_codigobarras=:producto_codigobarras, ');
-                        ZQExecSQL.Sql.Add('producto_longitudcodigo=:producto_longitudcodigo, ');
-                        ZQExecSQL.Sql.Add('seccion_id=:seccion_id, ');
-                        ZQExecSQL.Sql.Add('marca_id=:marca_id, ');
-                        if MQProductosTalles.FieldByName('producto_precioventa1').AsFloat<>ZQProducto.FieldByName('producto_precioventa1').AsFloat then
-                          ZQExecSQL.Sql.Add('producto_fechaactualizacionprecio=:producto_fechaactualizacionprecio, ');
-                        ZQExecSQL.Sql.Add('rubro_id=:rubro_id, ');
-                        ZQExecSQL.Sql.Add('producto_precioventa1=:producto_precioventa1, ');
-                        ZQExecSQL.Sql.Add('producto_observaciones=:producto_observaciones, ');
-                        ZQExecSQL.sql.add('producto_estadosinc="PENDIENTE", ');
-                        ZQExecSQL.Sql.Add('producto_nombre=:producto_nombre ');
-                        ZQExecSQL.Sql.Add('where producto_id=:producto_id ');
-                        ZQExecSQL.ParamByName('producto_talle').AsString:=MQProductosTalles.FieldByName('producto_talle').AsString;
-                        ZQExecSQL.ParamByName('seccion_id').AsString:=seccion_id.codigo;
-                        ZQExecSQL.ParamByName('marca_id').AsString:=marca_id.codigo;
-                        if MQProductosTalles.FieldByName('producto_precioventa1').AsFloat<>ZQProducto.FieldByName('producto_precioventa1').AsFloat then
-                          ZQExecSQL.ParamByName('producto_fechaactualizacionprecio').AsString:=formatdatetime('yyyy-mm-dd',Princ.fechaservidor);
-                        ZQExecSQL.ParamByName('rubro_id').AsString:=rubro_id.codigo;
-                        ZQExecSQL.ParamByName('producto_precioventa1').AsString:=MQProductosTalles.FieldByName('producto_precioventa1').AsString;
-                        ZQExecSQL.ParamByName('producto_observaciones').AsString:='modificado desde curvas/stock';
-                        ZQExecSQL.ParamByName('producto_nombre').AsString:=producto_nombre.Text;
-                        ZQExecSQL.ParamByName('producto_id').AsString:=MQProductosTalles.FieldByName('producto_id').AsString;
-                        ZQExecSQL.ParamByName('producto_codigobarras').AsString:=producto_codigoarticulo.Text+MQProductosTalles.FieldByName('producto_tallecodigo').AsString;
-                        ZQExecSQL.ParamByName('producto_longitudcodigo').AsInteger:=length(producto_codigoarticulo.Text);
-                        ZQExecSQL.ExecSql;
+                        productoid:=Princ.buscar('select producto_id from productos where producto_codigobarras="'+producto_codigoarticulo.Text+MQProductosTalles.FieldByName('producto_tallecodigo').AsString+'"','producto_id');
+                        if productoid<>'' then
+                          begin
+                              ZQExecSQL.Sql.Clear;
+                              ZQExecSQL.Sql.Add('update productos set ');
+                              ZQExecSQL.Sql.Add('producto_talle=:producto_talle, ');
+                              ZQExecSQL.Sql.Add('producto_codigobarras=:producto_codigobarras, ');
+                              ZQExecSQL.Sql.Add('producto_longitudcodigo=:producto_longitudcodigo, ');
+                              ZQExecSQL.Sql.Add('seccion_id=:seccion_id, ');
+                              ZQExecSQL.Sql.Add('marca_id=:marca_id, ');
+                              if MQProductosTalles.FieldByName('producto_precioventa1').AsFloat<>ZQProducto.FieldByName('producto_precioventa1').AsFloat then
+                                ZQExecSQL.Sql.Add('producto_fechaactualizacionprecio=:producto_fechaactualizacionprecio, ');
+                              ZQExecSQL.Sql.Add('rubro_id=:rubro_id, ');
+                              ZQExecSQL.Sql.Add('producto_precioventa1=:producto_precioventa1, ');
+                              ZQExecSQL.Sql.Add('producto_observaciones=:producto_observaciones, ');
+                              ZQExecSQL.sql.add('producto_estadosinc="PENDIENTE", ');
+                              ZQExecSQL.Sql.Add('producto_nombre=:producto_nombre ');
+                              ZQExecSQL.Sql.Add('where producto_id=:producto_id ');
+                              ZQExecSQL.ParamByName('producto_talle').AsString:=MQProductosTalles.FieldByName('producto_talle').AsString;
+                              ZQExecSQL.ParamByName('seccion_id').AsString:=seccion_id.codigo;
+                              ZQExecSQL.ParamByName('marca_id').AsString:=marca_id.codigo;
+                              if MQProductosTalles.FieldByName('producto_precioventa1').AsFloat<>ZQProducto.FieldByName('producto_precioventa1').AsFloat then
+                                ZQExecSQL.ParamByName('producto_fechaactualizacionprecio').AsString:=formatdatetime('yyyy-mm-dd',Princ.fechaservidor);
+                              ZQExecSQL.ParamByName('rubro_id').AsString:=rubro_id.codigo;
+                              ZQExecSQL.ParamByName('producto_precioventa1').AsString:=MQProductosTalles.FieldByName('producto_precioventa1').AsString;
+                              ZQExecSQL.ParamByName('producto_observaciones').AsString:='modificado desde curvas/stock';
+                              ZQExecSQL.ParamByName('producto_nombre').AsString:=producto_nombre.Text;
+                              ZQExecSQL.ParamByName('producto_id').AsString:=MQProductosTalles.FieldByName('producto_id').AsString;
+                              ZQExecSQL.ParamByName('producto_codigobarras').AsString:=producto_codigoarticulo.Text+MQProductosTalles.FieldByName('producto_tallecodigo').AsString;
+                              ZQExecSQL.ParamByName('producto_longitudcodigo').AsInteger:=length(producto_codigoarticulo.Text);
+                              ZQExecSQL.ExecSql;
 
-                        ZQExecSQL.Sql.Clear;
-                        ZQExecSQL.Sql.Add('update productos,marcas,rubros set ');
-                        ZQExecSQL.sql.add('producto_estadosinc="PENDIENTE", ');
-                        ZQExecSQL.Sql.Add('producto_talle=:talletitulo ');
-                        ZQExecSQL.Sql.Add('where productos.marca_id=marcas.marca_id ');
-                        ZQExecSQL.Sql.Add('productos.rubro_id=rubros.rubro_id  and marca_id=:marca_id ');
-                        ZQExecSQL.Sql.Add('and producto_talle=:tallecodigo ');
+                              ZQExecSQL.Sql.Clear;
+                              ZQExecSQL.Sql.Add('update productos,marcas,rubros set ');
+                              ZQExecSQL.sql.add('producto_estadosinc="PENDIENTE", ');
+                              ZQExecSQL.Sql.Add('producto_talle=:talletitulo ');
+                              ZQExecSQL.Sql.Add('where productos.marca_id=marcas.marca_id ');
+                              ZQExecSQL.Sql.Add('productos.rubro_id=rubros.rubro_id  and marca_id=:marca_id ');
+                              ZQExecSQL.Sql.Add('and producto_talle=:tallecodigo ');
 
-                    end
-                  else
-                    begin
-                        productoid:=Princ.codigo('productos','producto_id');
-                        ZQExecSQL.Sql.Clear;
-                        ZQExecSQL.Sql.Add('insert into productos set ');
-                        ZQExecSQL.Sql.Add('producto_estadosinc=:producto_estadosinc, ');
-                        ZQExecSQL.Sql.Add('producto_talle=:producto_talle, ');
-                        ZQExecSQL.Sql.Add('seccion_id=:seccion_id, ');
-                        ZQExecSQL.Sql.Add('marca_id=:marca_id, ');
-                        ZQExecSQL.Sql.Add('producto_tipo=:producto_tipo, ');
-                        ZQExecSQL.Sql.Add('producto_imprimir=:producto_imprimir, ');
-                        ZQExecSQL.Sql.Add('producto_codigoreferencia=:producto_codigoreferencia, ');
-                        ZQExecSQL.Sql.Add('producto_fechaactualizacionprecio=:producto_fechaactualizacionprecio, ');
-                        ZQExecSQL.Sql.Add('proveedor_id=:proveedor_id, ');
-                        ZQExecSQL.Sql.Add('producto_neto4=:producto_neto4, ');
-                        ZQExecSQL.Sql.Add('producto_neto3=:producto_neto3, ');
-                        ZQExecSQL.Sql.Add('producto_neto2=:producto_neto2, ');
-                        ZQExecSQL.Sql.Add('producto_neto1=:producto_neto1, ');
-                        ZQExecSQL.Sql.Add('politicaprecio_id=:politicaprecio_id, ');
-                        ZQExecSQL.Sql.Add('calculoprecio_id=:calculoprecio_id, ');
-                        ZQExecSQL.Sql.Add('producto_precioventa4=:producto_precioventa4, ');
-                        ZQExecSQL.Sql.Add('producto_precioventa3=:producto_precioventa3, ');
-                        ZQExecSQL.Sql.Add('producto_precioventa2=:producto_precioventa2, ');
-                        ZQExecSQL.Sql.Add('rubro_id=:rubro_id, ');
-                        ZQExecSQL.Sql.Add('tipoiva_id=:tipoiva_id, ');
-                        ZQExecSQL.Sql.Add('producto_precioventa1=:producto_precioventa1, ');
-                        ZQExecSQL.Sql.Add('producto_estado=:producto_estado, ');
-                        ZQExecSQL.Sql.Add('producto_precioventabase=:producto_precioventabase, ');
-                        ZQExecSQL.Sql.Add('producto_preciocosto=:producto_preciocosto, ');
-                        ZQExecSQL.Sql.Add('producto_codigobarras=:producto_codigobarras, ');
-                        ZQExecSQL.Sql.Add('producto_codigo=:producto_codigo, ');
-                        ZQExecSQL.Sql.Add('producto_observaciones=:producto_observaciones, ');
-                        ZQExecSQL.Sql.Add('producto_nombre=:producto_nombre, ');
-                        ZQExecSQL.Sql.Add('producto_longitudcodigo=:producto_longitudcodigo, ');
-                        ZQExecSQL.Sql.Add('producto_id=:producto_id ');
-                        ZQExecSQL.ParamByName('producto_estadosinc').AsString:='PENDIENTE';
-                        ZQExecSQL.ParamByName('producto_talle').AsString:=MQProductosTalles.FieldByName('producto_talle').AsString;
-                        ZQExecSQL.ParamByName('seccion_id').AsString:=seccion_id.codigo;
-                        ZQExecSQL.ParamByName('marca_id').AsString:=marca_id.codigo;
-                        ZQExecSQL.ParamByName('producto_tipo').AsString:='PRODUCTO';
-                        ZQExecSQL.ParamByName('producto_imprimir').AsString:='0';
-                        ZQExecSQL.ParamByName('producto_codigoreferencia').AsString:='';
-                        ZQExecSQL.ParamByName('producto_fechaactualizacionprecio').AsString:=formatdatetime('yyyy-mm-dd',Date);
-                        ZQExecSQL.ParamByName('proveedor_id').AsString:='1';
-                        ZQExecSQL.ParamByName('producto_neto4').AsString:='0';
-                        ZQExecSQL.ParamByName('producto_neto3').AsString:='0';
-                        ZQExecSQL.ParamByName('producto_neto2').AsString:='0';
-                        ZQExecSQL.ParamByName('producto_neto1').AsString:='0';
-                        ZQExecSQL.ParamByName('politicaprecio_id').AsString:='1';
-                        ZQExecSQL.ParamByName('calculoprecio_id').AsString:='1';
-                        ZQExecSQL.ParamByName('producto_precioventa4').AsString:='0';
-                        ZQExecSQL.ParamByName('producto_precioventa3').AsString:='0';
-                        ZQExecSQL.ParamByName('producto_precioventa2').AsString:='0';
-                        ZQExecSQL.ParamByName('rubro_id').AsString:=rubro_id.codigo;
-                        ZQExecSQL.ParamByName('tipoiva_id').AsString:='2';
-                        ZQExecSQL.ParamByName('producto_precioventa1').AsString:=MQProductosTalles.FieldByName('producto_precioventa1').AsString;
-                        ZQExecSQL.ParamByName('producto_estado').AsString:='DISPONIBLE';
-                        ZQExecSQL.ParamByName('producto_precioventabase').AsString:='0';
-                        ZQExecSQL.ParamByName('producto_preciocosto').AsString:='0';
-                        ZQExecSQL.ParamByName('producto_codigobarras').AsString:=producto_codigoarticulo.Text+MQProductosTalles.FieldByName('producto_tallecodigo').AsString;;
-                        ZQExecSQL.ParamByName('producto_codigo').AsString:=productoid;
-                        ZQExecSQL.ParamByName('producto_observaciones').AsString:='INGRESADO DESDE CARGA STOCK LECTOR';
-                        ZQExecSQL.ParamByName('producto_nombre').AsString:=producto_nombre.Text;
-                        ZQExecSQL.ParamByName('producto_id').AsString:=productoid;
-                        ZQExecSQL.ParamByName('producto_longitudcodigo').AsInteger:=length(producto_codigoarticulo.Text);
-                        ZQExecSQL.ExecSql;
+                          end
+                        else
+                          begin
+                              productoid:=Princ.codigo('productos','producto_id');
+                              ZQExecSQL.Sql.Clear;
+                              ZQExecSQL.Sql.Add('insert into productos set ');
+                              ZQExecSQL.Sql.Add('producto_estadosinc=:producto_estadosinc, ');
+                              ZQExecSQL.Sql.Add('producto_talle=:producto_talle, ');
+                              ZQExecSQL.Sql.Add('seccion_id=:seccion_id, ');
+                              ZQExecSQL.Sql.Add('marca_id=:marca_id, ');
+                              ZQExecSQL.Sql.Add('producto_tipo=:producto_tipo, ');
+                              ZQExecSQL.Sql.Add('producto_imprimir=:producto_imprimir, ');
+                              ZQExecSQL.Sql.Add('producto_codigoreferencia=:producto_codigoreferencia, ');
+                              ZQExecSQL.Sql.Add('producto_fechaactualizacionprecio=:producto_fechaactualizacionprecio, ');
+                              ZQExecSQL.Sql.Add('proveedor_id=:proveedor_id, ');
+                              ZQExecSQL.Sql.Add('producto_neto4=:producto_neto4, ');
+                              ZQExecSQL.Sql.Add('producto_neto3=:producto_neto3, ');
+                              ZQExecSQL.Sql.Add('producto_neto2=:producto_neto2, ');
+                              ZQExecSQL.Sql.Add('producto_neto1=:producto_neto1, ');
+                              ZQExecSQL.Sql.Add('politicaprecio_id=:politicaprecio_id, ');
+                              ZQExecSQL.Sql.Add('calculoprecio_id=:calculoprecio_id, ');
+                              ZQExecSQL.Sql.Add('producto_precioventa4=:producto_precioventa4, ');
+                              ZQExecSQL.Sql.Add('producto_precioventa3=:producto_precioventa3, ');
+                              ZQExecSQL.Sql.Add('producto_precioventa2=:producto_precioventa2, ');
+                              ZQExecSQL.Sql.Add('rubro_id=:rubro_id, ');
+                              ZQExecSQL.Sql.Add('tipoiva_id=:tipoiva_id, ');
+                              ZQExecSQL.Sql.Add('producto_precioventa1=:producto_precioventa1, ');
+                              ZQExecSQL.Sql.Add('producto_estado=:producto_estado, ');
+                              ZQExecSQL.Sql.Add('producto_precioventabase=:producto_precioventabase, ');
+                              ZQExecSQL.Sql.Add('producto_preciocosto=:producto_preciocosto, ');
+                              ZQExecSQL.Sql.Add('producto_codigobarras=:producto_codigobarras, ');
+                              ZQExecSQL.Sql.Add('producto_codigo=:producto_codigo, ');
+                              ZQExecSQL.Sql.Add('producto_observaciones=:producto_observaciones, ');
+                              ZQExecSQL.Sql.Add('producto_nombre=:producto_nombre, ');
+                              ZQExecSQL.Sql.Add('producto_longitudcodigo=:producto_longitudcodigo, ');
+                              ZQExecSQL.Sql.Add('producto_id=:producto_id ');
+                              ZQExecSQL.ParamByName('producto_estadosinc').AsString:='PENDIENTE';
+                              ZQExecSQL.ParamByName('producto_talle').AsString:=MQProductosTalles.FieldByName('producto_talle').AsString;
+                              ZQExecSQL.ParamByName('seccion_id').AsString:=seccion_id.codigo;
+                              ZQExecSQL.ParamByName('marca_id').AsString:=marca_id.codigo;
+                              ZQExecSQL.ParamByName('producto_tipo').AsString:='PRODUCTO';
+                              ZQExecSQL.ParamByName('producto_imprimir').AsString:='0';
+                              ZQExecSQL.ParamByName('producto_codigoreferencia').AsString:='';
+                              ZQExecSQL.ParamByName('producto_fechaactualizacionprecio').AsString:=formatdatetime('yyyy-mm-dd',Date);
+                              ZQExecSQL.ParamByName('proveedor_id').AsString:='1';
+                              ZQExecSQL.ParamByName('producto_neto4').AsString:='0';
+                              ZQExecSQL.ParamByName('producto_neto3').AsString:='0';
+                              ZQExecSQL.ParamByName('producto_neto2').AsString:='0';
+                              ZQExecSQL.ParamByName('producto_neto1').AsString:='0';
+                              ZQExecSQL.ParamByName('politicaprecio_id').AsString:='1';
+                              ZQExecSQL.ParamByName('calculoprecio_id').AsString:='1';
+                              ZQExecSQL.ParamByName('producto_precioventa4').AsString:='0';
+                              ZQExecSQL.ParamByName('producto_precioventa3').AsString:='0';
+                              ZQExecSQL.ParamByName('producto_precioventa2').AsString:='0';
+                              ZQExecSQL.ParamByName('rubro_id').AsString:=rubro_id.codigo;
+                              ZQExecSQL.ParamByName('tipoiva_id').AsString:='2';
+                              ZQExecSQL.ParamByName('producto_precioventa1').AsString:=MQProductosTalles.FieldByName('producto_precioventa1').AsString;
+                              ZQExecSQL.ParamByName('producto_estado').AsString:='DISPONIBLE';
+                              ZQExecSQL.ParamByName('producto_precioventabase').AsString:='0';
+                              ZQExecSQL.ParamByName('producto_preciocosto').AsString:='0';
+                              ZQExecSQL.ParamByName('producto_codigobarras').AsString:=producto_codigoarticulo.Text+MQProductosTalles.FieldByName('producto_tallecodigo').AsString;;
+                              ZQExecSQL.ParamByName('producto_codigo').AsString:=productoid;
+                              ZQExecSQL.ParamByName('producto_observaciones').AsString:='INGRESADO DESDE CARGA STOCK LECTOR';
+                              ZQExecSQL.ParamByName('producto_nombre').AsString:=producto_nombre.Text;
+                              ZQExecSQL.ParamByName('producto_id').AsString:=productoid;
+                              ZQExecSQL.ParamByName('producto_longitudcodigo').AsInteger:=length(producto_codigoarticulo.Text);
+                              ZQExecSQL.ExecSql;
 
-                        ZQExecSQL.Sql.Clear;
-                        ZQExecSQL.Sql.Add('insert into productodeposito select 0, 0, :producto_id, deposito_id,0, 0, 0, "PENDIENTE" from depositos');
-                        ZQExecSQL.ParamByName('producto_id').AsString:=productoid;
-                        ZQExecSQL.ExecSQL;
+                              ZQExecSQL.Sql.Clear;
+                              ZQExecSQL.Sql.Add('insert into productodeposito select 0, 0, :producto_id, deposito_id,0, 0, 0, "PENDIENTE" from depositos');
+                              ZQExecSQL.ParamByName('producto_id').AsString:=productoid;
+                              ZQExecSQL.ExecSQL;
 
 
+                          end;
+
+                        MQProductosTalles.Next;
                     end;
 
-                  MQProductosTalles.Next;
-              end;
+                MessageDlg('Datos Guardados.', mtConfirmation, [mbOK], 0);
 
-          MessageDlg('Datos Guardados.', mtConfirmation, [mbOK], 0);
+            end;
           LimpiarVentana;
           btnguardar.Enabled:=false;
       end;
+
+
 
 end;
 
@@ -495,13 +501,15 @@ end;
 procedure TCargaStockLector.DBGrid1DblClick(Sender: TObject);
 begin
   inherited;
-    MostrarDatosProducto(MQProductosStock.FieldByName('producto_codigobarras').AsString);
+    if Princ.GetPermisoEspecial('MODIFICARPRODUCTOS','0')='-1' then
+      MostrarDatosProducto(MQProductosStock.FieldByName('producto_codigobarras').AsString);
 end;
 
 procedure TCargaStockLector.DBGrid3DblClick(Sender: TObject);
 begin
   inherited;
-    MostrarDatosProducto(MQProductosNuevos.FieldByName('producto_codigobarras').AsString);
+    if Princ.GetPermisoEspecial('MODIFICARPRODUCTOS','0')='-1' then
+      MostrarDatosProducto(MQProductosNuevos.FieldByName('producto_codigobarras').AsString);
 end;
 
 procedure TCargaStockLector.Eliminar1Click(Sender: TObject);

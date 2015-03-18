@@ -3,7 +3,7 @@ object facturasventa: Tfacturasventa
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Factura Venta'
-  ClientHeight = 540
+  ClientHeight = 563
   ClientWidth = 851
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -24,7 +24,7 @@ object facturasventa: Tfacturasventa
     Left = 0
     Top = 0
     Width = 851
-    Height = 540
+    Height = 563
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -230,7 +230,7 @@ object facturasventa: Tfacturasventa
     end
     object btncancelar: TButton
       Left = 763
-      Top = 489
+      Top = 513
       Width = 75
       Height = 25
       Caption = 'Cancelar'
@@ -239,7 +239,7 @@ object facturasventa: Tfacturasventa
     end
     object btnguardar: TButton
       Left = 682
-      Top = 489
+      Top = 513
       Width = 75
       Height = 25
       Caption = 'Guardar'
@@ -340,10 +340,10 @@ object facturasventa: Tfacturasventa
       OnClick = btnmodificarClick
     end
     object GroupBox1: TGroupBox
-      Left = 4
+      Left = 9
       Top = 308
       Width = 316
-      Height = 145
+      Height = 165
       Caption = 'Totales'
       ParentBackground = False
       TabOrder = 8
@@ -381,7 +381,7 @@ object facturasventa: Tfacturasventa
       end
       object Label10: TLabel
         Left = 111
-        Top = 105
+        Top = 121
         Width = 47
         Height = 24
         Alignment = taRightJustify
@@ -408,6 +408,14 @@ object facturasventa: Tfacturasventa
         Height = 13
         Alignment = taRightJustify
         Caption = 'Descuento'
+      end
+      object lblperciva: TLabel
+        Left = 12
+        Top = 89
+        Width = 42
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'Perc IVA'
       end
       object documentoventa_neto21: TMoneyEdit
         Left = 68
@@ -493,7 +501,7 @@ object facturasventa: Tfacturasventa
       end
       object documentoventa_total: TMoneyEdit
         Left = 164
-        Top = 102
+        Top = 118
         Width = 134
         Height = 32
         TabStop = False
@@ -555,6 +563,25 @@ object facturasventa: Tfacturasventa
         Version = '1.1.0.1'
         OnExit = documentoventa_recargoExit
       end
+      object documentoventa_perciva: TMoneyEdit
+        Left = 68
+        Top = 86
+        Width = 70
+        Height = 21
+        TabStop = False
+        CalculatorLook.ButtonWidth = 24
+        CalculatorLook.ButtonHeight = 24
+        CalculatorLook.ButtonColor = clSilver
+        CalculatorLook.Color = clWhite
+        CalculatorLook.Flat = False
+        CalculatorLook.Font.Charset = DEFAULT_CHARSET
+        CalculatorLook.Font.Color = clWindowText
+        CalculatorLook.Font.Height = -11
+        CalculatorLook.Font.Name = 'Tahoma'
+        CalculatorLook.Font.Style = []
+        TabOrder = 7
+        Version = '1.1.0.1'
+      end
     end
     object puntoventa_id: TSqlComboBox
       Left = 68
@@ -609,7 +636,7 @@ object facturasventa: Tfacturasventa
       Left = 331
       Top = 306
       Width = 509
-      Height = 147
+      Height = 167
       TabStop = False
       DataSource = DTSPagos
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
@@ -644,7 +671,7 @@ object facturasventa: Tfacturasventa
     end
     object btnagregarpago: TButton
       Left = 331
-      Top = 459
+      Top = 483
       Width = 75
       Height = 25
       Caption = 'Agregar'
@@ -653,7 +680,7 @@ object facturasventa: Tfacturasventa
     end
     object btnquitarpago: TButton
       Left = 405
-      Top = 459
+      Top = 483
       Width = 75
       Height = 25
       Caption = 'Quitar'
@@ -725,7 +752,7 @@ object facturasventa: Tfacturasventa
     end
     object btnimprimirventa: TButton
       Left = 4
-      Top = 489
+      Top = 513
       Width = 75
       Height = 25
       Caption = 'Imprimir'
@@ -753,7 +780,7 @@ object facturasventa: Tfacturasventa
     end
     object btnobservaciones: TButton
       Left = 4
-      Top = 459
+      Top = 483
       Width = 83
       Height = 25
       Caption = 'Observaciones'
@@ -762,7 +789,7 @@ object facturasventa: Tfacturasventa
     end
     object VENTASEMITIRREMITOCTACTE: TCheckBox
       Left = 554
-      Top = 493
+      Top = 517
       Width = 86
       Height = 17
       TabStop = False

@@ -561,6 +561,7 @@ begin
     ZQExecSql.sql.add('update documentoscompras set ');
     ZQExecSql.sql.add('documentocompra_numero=:documentocompra_numero, ');
     ZQExecSql.sql.add('documentocompra_fecha=:documentocompra_fecha, ');
+    ZQExecSql.sql.add('documentocompra_fechaiva=:documentocompra_fecha, ');
     ZQExecSql.sql.add('documentocompra_hora=:documentocompra_hora, ');
     ZQExecSql.sql.add('documentocompra_neto21=:documentocompra_neto21, ');
     ZQExecSql.sql.add('documentocompra_iva21=:documentocompra_iva21, ');
@@ -798,14 +799,14 @@ begin
 
 
     ZQExecSql.sql.clear;
-    ZQExecSql.sql.add('Insert into documentoscompras (documentocompra_id, documentocompra_numero, documentocompra_fecha, documentocompra_hora, ');
+    ZQExecSql.sql.add('Insert into documentoscompras (documentocompra_id, documentocompra_numero, documentocompra_fecha, documentocompra_fechaiva, documentocompra_hora, ');
     ZQExecSql.sql.add('documentocompra_neto21, documentocompra_iva21, documentocompra_neto105, documentocompra_iva105, ');
     ZQExecSql.sql.add('documentocompra_total, documentocompra_estado, documentocompra_pagado, documentocompra_saldo, documentocompra_observacion, ');
     ZQExecSql.sql.add('proveedor_id, personal_id, tipodocu_id, documentocompra_condicionventa, documentocompra_fechavenc, documentocompra_puntoventa, ');
     ZQExecSql.sql.add('documentocompra_neto27, documentocompra_iva27, documentocompra_nogravado, ');
     ZQExecSql.sql.add('documentocompra_tishhperc, documentocompra_ivaret, documentocompra_ivaperc, ');
     ZQExecSql.sql.add('documentocompra_dgrret, documentocompra_dgrperc, documentocompra_otrosimpuestos) ');
-    ZQExecSql.sql.add('values (:documentocompra_id, :documentocompra_numero, :documentocompra_fecha, :documentocompra_hora, ');
+    ZQExecSql.sql.add('values (:documentocompra_id, :documentocompra_numero, :documentocompra_fecha, :documentocompra_fecha, :documentocompra_hora, ');
     ZQExecSql.sql.add(':documentocompra_neto21, :documentocompra_iva21, :documentocompra_neto105, :documentocompra_iva105, ');
     ZQExecSql.sql.add(':documentocompra_total, :documentocompra_estado, :documentocompra_pagado, :documentocompra_saldo, :documentocompra_observacion, ');
     ZQExecSql.sql.add(':proveedor_id, :personal_id, :tipodocu_id, :documentocompra_condicionventa, :documentocompra_fechavenc, :documentocompra_puntoventa, ');

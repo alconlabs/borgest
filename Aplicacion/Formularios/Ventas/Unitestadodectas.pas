@@ -171,6 +171,7 @@ type
     exto1: TMenuItem;
     BtnDetalleImputacion: TAdvToolButton;
     btnimprimir: TAdvToolButton;
+    BtnDetalleImpFactura: TAdvToolButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnactualizarClick(Sender: TObject);
@@ -193,6 +194,9 @@ type
     procedure BtnDetalleImputacionDropDown(Sender: TObject);
     procedure btnimprimirClick(Sender: TObject);
     procedure btnimprimirDropDown(Sender: TObject);
+    procedure DSCPendientesDataChange(Sender: TObject; Field: TField);
+    procedure BtnDetalleImpFacturaClick(Sender: TObject);
+    procedure BtnDetalleImpFacturaDropDown(Sender: TObject);
   private
     { Private declarations }
     temporal_idproceso:string;
@@ -206,6 +210,7 @@ type
     procedure cargatemporal;
     procedure PrepararRepCtasCobrar;
     procedure PrepararDetalleImputacion;
+    procedure PrepararDetalleImputacionFactura;
     procedure PrepararImprimir;
 
 
@@ -220,6 +225,156 @@ uses UnitPrinc, Unitventadetalle;
 
 {$R *.dfm}
 
+
+procedure Testadoctas.PrepararDetalleImputacionFactura;
+var
+  orden:integer;
+begin
+    if temporal_idproceso<>'' then
+      begin
+          Princ.ZQExcecSQL.Sql.Clear;
+          Princ.ZQExcecSQL.Sql.Add('delete from temporales ');
+          Princ.ZQExcecSQL.Sql.Add('where temporal_idproceso=:temporal_idproceso ');
+          Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+          Princ.ZQExcecSQL.ExecSql;
+      end;
+
+    temporal_idproceso:=Princ.codigo('temporales','temporal_idproceso');
+    ZQDebitos.Active:=false;
+    ZQDebitos.SQL.Text:='select * from documentosventas '+
+                        'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                        'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                        'where documentosventas.documentoventa_estado<>"ANULADA" '+
+                        'and documentosventas.documentoventa_id="'+ZQPendientes.FieldByName('documentoventa_id').AsString+'" and '+
+                        'tiposdocumento.tipodocu_tipo="Venta" and tiposdocumento.tipodocu_debcred="DEBITO" '+Princ.empresa_where+
+                        ' order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero ';
+
+    if cliente_id.Text<>'Todos' then
+     ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,' clientes.cliente_id="'+cliente_id.codigo+'" ');
+
+    if cbdesdefecha.Checked then
+     ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,' documentosventas.documentoventa_fecha>="'+FormatDateTime('yyyy-mm-dd',desde_fecha.Date)+'" ');
+
+    if cbhastafecha.Checked then
+     ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,' documentosventas.documentoventa_fecha<="'+FormatDateTime('yyyy-mm-dd',hasta_fecha.Date)+'" ');
+
+    if cbdesdefechavenc.Checked then
+     ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,' documentosventas.documentoventa_fechavenc>="'+FormatDateTime('yyyy-mm-dd',desde_fecha_venc.Date)+'" ');
+
+    if cbhastafechavenc.Checked then
+     ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,' documentosventas.documentoventa_fechavenc<="'+FormatDateTime('yyyy-mm-dd',hasta_fecha_venc.Date)+'" ');
+
+    puntoventa_id.GenerarWhere;
+    ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,puntoventa_id.where);
+
+    if personal_id.Text<>'Todos' then
+     ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,' documentosventas.personal_id="'+personal_id.codigo+'" ');
+
+    if not strtobool(Princ.GetConfiguracion('VENTASCTDOVENTANACTACTE')) then
+      ZQDebitos.SQL.Text:=ZQDebitos.SQL.Text+' and documentosventas.documentoventa_condicionventa="'+CONDICIONVENTA_CTACTE+'" ';
+
+    ZQDebitos.Active:=true;
+    ZQDebitos.First;
+    ZQCreditos.Active:=false;
+    ZQCreditos.SQL.Text:='select * from documentoventadocus '+
+                         'inner join documentosventas on documentoventadocus.documentoventa_id=documentosventas.documentoventa_id '+
+                         'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                         'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                         'where documentoventadocus.documentoventa_idpago=:documentoventa_idpago and documentoventadoc_tiporelacion="IMPUTACION"';
+
+    Princ.ZQExcecSQL.Sql.Clear;
+    Princ.ZQExcecSQL.Sql.Add('begin');
+    Princ.ZQExcecSQL.ExecSql;
+
+    while not ZQDebitos.Eof do
+        begin
+            orden:=1;
+            Princ.ZQExcecSQL.Sql.Clear;
+            Princ.ZQExcecSQL.Sql.Add('insert into temporales set ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_fecha1=:temporal_fecha1, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_int4=:temporal_int4, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_int3=:temporal_int3, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_int2=:temporal_int2, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_int1=:temporal_int1, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_float2=:temporal_float2, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_float1=:temporal_float1, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string1=:temporal_string1, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string2=:temporal_string2, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string3=:temporal_string3, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_idproceso=:temporal_idproceso ');
+            Princ.ZQExcecSQL.ParamByName('temporal_fecha1').AsString:=formatdatetime('yyyy-mm-dd',ZQDebitos.FieldByName('documentoventa_fecha').AsDateTime);
+            Princ.ZQExcecSQL.ParamByName('temporal_int4').AsInteger:=orden;
+            Princ.ZQExcecSQL.ParamByName('temporal_int3').AsString:=ZQDebitos.FieldByName('documentoventa_id').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_int2').AsString:=ZQDebitos.FieldByName('documentoventa_numero').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_int1').AsString:=ZQDebitos.FieldByName('puntoventa_numero').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_float2').AsString:=ZQDebitos.FieldByName('documentoventa_total').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_float1').AsString:='0';
+            Princ.ZQExcecSQL.ParamByName('temporal_string1').AsString:=ZQDebitos.FieldByName('tipodocu_nombreabrev').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_string2').AsString:=ZQDebitos.FieldByName('cliente_nombre').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_string3').AsString:=ZQDebitos.FieldByName('documentoventa_equipo1').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+            Princ.ZQExcecSQL.ExecSql;
+
+            ZQCreditos.Active:=false;
+            ZQCreditos.ParamByName('documentoventa_idpago').AsString:= ZQDebitos.FieldByName('documentoventa_id').AsString;
+            ZQCreditos.Active:=true;
+            ZQCreditos.First;
+            while not ZQCreditos.Eof do
+                begin
+                    orden:=orden+1;
+                    Princ.ZQExcecSQL.Sql.Clear;
+                    Princ.ZQExcecSQL.Sql.Add('insert into temporales set ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_fecha1=:temporal_fecha1, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_int4=:temporal_int4, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_int3=:temporal_int3, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_int2=:temporal_int2, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_int1=:temporal_int1, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_float2=:temporal_float2, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_float1=:temporal_float1, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_string1=:temporal_string1, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_string2=:temporal_string2, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_string3=:temporal_string3, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_idproceso=:temporal_idproceso ');
+                    Princ.ZQExcecSQL.ParamByName('temporal_fecha1').AsString:=formatdatetime('yyyy-mm-dd',ZQCreditos.FieldByName('documentoventa_fecha').AsDateTime);
+                    Princ.ZQExcecSQL.ParamByName('temporal_int4').AsInteger:=orden;
+                    Princ.ZQExcecSQL.ParamByName('temporal_int3').AsString:=ZQDebitos.FieldByName('documentoventa_id').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_int2').AsString:=ZQCreditos.FieldByName('documentoventa_numero').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_int1').AsString:=ZQCreditos.FieldByName('puntoventa_numero').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_float2').AsFloat:=ZQCreditos.FieldByName('documentoventadoc_importe').AsFloat*-1;
+                    Princ.ZQExcecSQL.ParamByName('temporal_float1').AsString:='0';
+                    Princ.ZQExcecSQL.ParamByName('temporal_string1').AsString:=ZQCreditos.FieldByName('tipodocu_nombreabrev').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_string2').AsString:=ZQDebitos.FieldByName('cliente_nombre').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_string3').AsString:=ZQDebitos.FieldByName('documentoventa_equipo1').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+                    Princ.ZQExcecSQL.ExecSql;
+
+                    ZQCreditos.Next;
+                end;
+
+            ZQDebitos.Next;
+        end;
+
+    Princ.ZQExcecSQL.Sql.Clear;
+    Princ.ZQExcecSQL.Sql.Add('commit');
+    Princ.ZQExcecSQL.ExecSql;
+
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'detalle_imputacion.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
+    if cbdesdefecha.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
+    if cbhastafecha.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
+    if cbdesdefechavenc.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHAVENC').AsString:=datetostr(desde_fecha_venc.Date);
+    if cbhastafechavenc.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHAVENC').AsString:=datetostr(hasta_fecha_venc.Date);
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from temporales '+
+                                                   'where temporal_idproceso="'+temporal_idproceso+'" '+
+                                                   'order by temporal_string2, temporal_id, temporal_int4 ';
+
+end;
 
 procedure Testadoctas.PrepararImprimir;
 var
@@ -678,6 +833,16 @@ begin
       end;
 end;
 
+procedure Testadoctas.DSCPendientesDataChange(Sender: TObject; Field: TField);
+begin
+    BtnDetalleImpFactura.Enabled:=false;
+    if ZQPendientes.FieldByName('tipodocu_nombre').AsString='Factura de Venta' then
+      begin
+          BtnDetalleImpFactura.Caption:='Detalle Imp. Fac '+ZQPendientes.FieldByName('documentoventanumero').AsString;
+          BtnDetalleImpFactura.Enabled:=true;
+      end;
+end;
+
 procedure Testadoctas.Excel1Click(Sender: TObject);
 begin
     Princ.impresion_tipo:=IMPRESION_XLS;
@@ -807,6 +972,27 @@ end;
 procedure Testadoctas.BtnCtasCobrarDropDown(Sender: TObject);
 begin
     PrepararRepCtasCobrar;
+end;
+
+procedure Testadoctas.BtnDetalleImpFacturaClick(Sender: TObject);
+begin
+    PrepararDetalleImputacionFactura;
+    Princ.impresion_tipo:=IMPRESION_IMPRIMIR;
+    Princ.ImprimirReporte;
+
+    if temporal_idproceso<>'' then
+      begin
+          Princ.ZQExcecSQL.Sql.Clear;
+          Princ.ZQExcecSQL.Sql.Add('delete from temporales ');
+          Princ.ZQExcecSQL.Sql.Add('where temporal_idproceso=:temporal_idproceso ');
+          Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+          Princ.ZQExcecSQL.ExecSql;
+      end;
+end;
+
+procedure Testadoctas.BtnDetalleImpFacturaDropDown(Sender: TObject);
+begin
+    PrepararDetalleImputacionFactura;
 end;
 
 procedure Testadoctas.BtnDetalleImputacionClick(Sender: TObject);

@@ -3,7 +3,7 @@ object documentocomprabase: Tdocumentocomprabase
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Factura Compra'
-  ClientHeight = 558
+  ClientHeight = 598
   ClientWidth = 851
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -24,7 +24,7 @@ object documentocomprabase: Tdocumentocomprabase
     Left = 0
     Top = 0
     Width = 851
-    Height = 558
+    Height = 598
     Align = alClient
     BevelOuter = bvNone
     Color = 15524577
@@ -70,6 +70,7 @@ object documentocomprabase: Tdocumentocomprabase
     StatusBar.ColorTo = 14602191
     StatusBar.Visible = True
     Styler = Princ.AdvPanelStyler1
+    ExplicitHeight = 558
     FullHeight = 0
     object Label2: TLabel
       Left = 693
@@ -89,7 +90,7 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object Label4: TLabel
       Left = 563
-      Top = 66
+      Top = 90
       Width = 46
       Height = 13
       Alignment = taRightJustify
@@ -97,7 +98,7 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object Label8: TLabel
       Left = 516
-      Top = 93
+      Top = 117
       Width = 93
       Height = 13
       Alignment = taRightJustify
@@ -143,7 +144,7 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object Label12: TLabel
       Left = 534
-      Top = 117
+      Top = 141
       Width = 75
       Height = 13
       Alignment = taRightJustify
@@ -160,10 +161,18 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object Label13: TLabel
       Left = 12
-      Top = 431
+      Top = 455
       Width = 71
       Height = 13
       Caption = 'Observaciones'
+    end
+    object Label24: TLabel
+      Left = 673
+      Top = 63
+      Width = 50
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'Fecha IVA'
     end
     object documentocompra_numero: TEdit
       Left = 184
@@ -188,7 +197,7 @@ object documentocomprabase: Tdocumentocomprabase
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 5
       OnExit = proveedor_idExit
       OnSelect = proveedor_idSelect
@@ -202,11 +211,11 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object personal_id: TSqlComboBox
       Left = 614
-      Top = 63
+      Top = 87
       Width = 220
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 6
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -217,7 +226,7 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object btncancelar: TButton
       Left = 763
-      Top = 505
+      Top = 529
       Width = 75
       Height = 25
       Caption = 'Cancelar'
@@ -226,7 +235,7 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object btnguardar: TButton
       Left = 682
-      Top = 505
+      Top = 529
       Width = 75
       Height = 25
       Caption = 'Guardar'
@@ -235,7 +244,7 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object documentocompra_condicionventa: TComboBox
       Left = 615
-      Top = 90
+      Top = 114
       Width = 219
       Height = 21
       Style = csDropDownList
@@ -249,7 +258,7 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object DBGrid1: TDBGrid
       Left = 4
-      Top = 138
+      Top = 162
       Width = 836
       Height = 148
       TabStop = False
@@ -307,7 +316,7 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object btnagregar: TButton
       Left = 5
-      Top = 292
+      Top = 316
       Width = 75
       Height = 25
       Caption = 'Agregar'
@@ -316,7 +325,7 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object btnquitar: TButton
       Left = 151
-      Top = 292
+      Top = 316
       Width = 75
       Height = 25
       Caption = 'Quitar'
@@ -325,7 +334,7 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object btnmodificar: TButton
       Left = 78
-      Top = 292
+      Top = 316
       Width = 75
       Height = 25
       Caption = 'Modificar'
@@ -333,7 +342,7 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object GroupBox1: TGroupBox
       Left = 4
-      Top = 320
+      Top = 344
       Width = 836
       Height = 105
       Caption = 'Totales'
@@ -748,7 +757,7 @@ object documentocomprabase: Tdocumentocomprabase
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 1
       OnExit = proveedor_idExit
       OnSelect = puntoventa_idSelect
@@ -765,7 +774,7 @@ object documentocomprabase: Tdocumentocomprabase
       Width = 52
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 2
       OnExit = proveedor_idExit
       Confbase = Princ.ZBase
@@ -778,7 +787,7 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object documentocompra_listaprecio: TComboBox
       Left = 615
-      Top = 114
+      Top = 138
       Width = 219
       Height = 21
       Style = csDropDownList
@@ -799,7 +808,7 @@ object documentocomprabase: Tdocumentocomprabase
       Width = 317
       Height = 21
       Style = csDropDownList
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       OnExit = proveedor_idExit
       OnSelect = sucursal_idSelect
@@ -836,7 +845,7 @@ object documentocomprabase: Tdocumentocomprabase
         3F5D01274A8C4EE13C58D84F0413E234322F8CB59750A8542F773078EB7AA472
         15D04CF43FBBCF3860C180A355E4CD17C86F12C72B4BDFD335AA7A853CDA5C4E
         8D954EE03623C27BBF60F1EEC71A58306199CFFFD9}
-      TabOrder = 17
+      TabOrder = 18
       Appearance.ColorChecked = 16111818
       Appearance.ColorCheckedTo = 16367008
       Appearance.ColorDisabled = 15921906
@@ -860,11 +869,11 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object btnimprimirventa: TButton
       Left = 4
-      Top = 505
+      Top = 529
       Width = 75
       Height = 25
       Caption = 'Imprimir'
-      TabOrder = 18
+      TabOrder = 19
       Visible = False
       OnClick = btnimprimirventaClick
     end
@@ -878,10 +887,19 @@ object documentocomprabase: Tdocumentocomprabase
     end
     object documentocompra_observacion: TMemo
       Left = 12
-      Top = 450
+      Top = 474
       Width = 431
       Height = 47
-      TabOrder = 19
+      TabOrder = 20
+    end
+    object documentocompra_fechaiva: TDateTimePicker
+      Left = 728
+      Top = 60
+      Width = 106
+      Height = 21
+      Date = 40384.000000000000000000
+      Time = 40384.000000000000000000
+      TabOrder = 17
     end
   end
   object ZQuery2: TZQuery
@@ -923,6 +941,153 @@ object documentocomprabase: Tdocumentocomprabase
     Params = <>
     Left = 240
     Top = 168
+    object ZQDocumentocompradetallesdocumentocompradetalle_id: TIntegerField
+      FieldName = 'documentocompradetalle_id'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_descripcion: TStringField
+      FieldName = 'documentocompradetalle_descripcion'
+      Size = 150
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_cantidad: TFloatField
+      FieldName = 'documentocompradetalle_cantidad'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_precio: TFloatField
+      FieldName = 'documentocompradetalle_precio'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_total: TFloatField
+      FieldName = 'documentocompradetalle_total'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_estado: TStringField
+      FieldName = 'documentocompradetalle_estado'
+      Size = 45
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_observacion: TStringField
+      FieldName = 'documentocompradetalle_observacion'
+      Size = 255
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_idorig: TIntegerField
+      FieldName = 'documentocompradetalle_idorig'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_cantidadpendiente: TFloatField
+      FieldName = 'documentocompradetalle_cantidadpendiente'
+    end
+    object ZQDocumentocompradetallesproducto_id: TIntegerField
+      FieldName = 'producto_id'
+    end
+    object ZQDocumentocompradetallesdocumentocompra_id: TIntegerField
+      FieldName = 'documentocompra_id'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_neto21: TFloatField
+      FieldName = 'documentocompradetalle_neto21'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_neto105: TFloatField
+      FieldName = 'documentocompradetalle_neto105'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_iva21: TFloatField
+      FieldName = 'documentocompradetalle_iva21'
+    end
+    object ZQDocumentocompradetallesdocumentocompradetalle_iva105: TFloatField
+      FieldName = 'documentocompradetalle_iva105'
+    end
+    object ZQDocumentocompradetallesproducto_id_1: TIntegerField
+      FieldName = 'producto_id_1'
+    end
+    object ZQDocumentocompradetallesproducto_nombre: TStringField
+      FieldName = 'producto_nombre'
+      Size = 150
+    end
+    object ZQDocumentocompradetallesproducto_observaciones: TStringField
+      FieldName = 'producto_observaciones'
+      Size = 255
+    end
+    object ZQDocumentocompradetallesproducto_codigo: TStringField
+      FieldName = 'producto_codigo'
+      Size = 45
+    end
+    object ZQDocumentocompradetallesproducto_codigobarras: TStringField
+      FieldName = 'producto_codigobarras'
+      Size = 45
+    end
+    object ZQDocumentocompradetallesproducto_preciocosto: TFloatField
+      FieldName = 'producto_preciocosto'
+    end
+    object ZQDocumentocompradetallesproducto_precioventabase: TFloatField
+      FieldName = 'producto_precioventabase'
+    end
+    object ZQDocumentocompradetallesproducto_estado: TStringField
+      FieldName = 'producto_estado'
+      Size = 45
+    end
+    object ZQDocumentocompradetallesproducto_precioventa1: TFloatField
+      FieldName = 'producto_precioventa1'
+    end
+    object ZQDocumentocompradetallestipoiva_id: TIntegerField
+      FieldName = 'tipoiva_id'
+    end
+    object ZQDocumentocompradetallesrubro_id: TIntegerField
+      FieldName = 'rubro_id'
+    end
+    object ZQDocumentocompradetallesproducto_precioventa2: TFloatField
+      FieldName = 'producto_precioventa2'
+    end
+    object ZQDocumentocompradetallesproducto_precioventa3: TFloatField
+      FieldName = 'producto_precioventa3'
+    end
+    object ZQDocumentocompradetallesproducto_precioventa4: TFloatField
+      FieldName = 'producto_precioventa4'
+    end
+    object ZQDocumentocompradetallescalculoprecio_id: TIntegerField
+      FieldName = 'calculoprecio_id'
+    end
+    object ZQDocumentocompradetallespoliticaprecio_id: TIntegerField
+      FieldName = 'politicaprecio_id'
+    end
+    object ZQDocumentocompradetallesproducto_neto1: TFloatField
+      FieldName = 'producto_neto1'
+    end
+    object ZQDocumentocompradetallesproducto_neto2: TFloatField
+      FieldName = 'producto_neto2'
+    end
+    object ZQDocumentocompradetallesproducto_neto3: TFloatField
+      FieldName = 'producto_neto3'
+    end
+    object ZQDocumentocompradetallesproducto_neto4: TFloatField
+      FieldName = 'producto_neto4'
+    end
+    object ZQDocumentocompradetallesproveedor_id: TIntegerField
+      FieldName = 'proveedor_id'
+    end
+    object ZQDocumentocompradetallesproducto_fechaactualizacionprecio: TDateField
+      FieldName = 'producto_fechaactualizacionprecio'
+    end
+    object ZQDocumentocompradetallesproducto_codigoreferencia: TStringField
+      FieldName = 'producto_codigoreferencia'
+      Size = 45
+    end
+    object ZQDocumentocompradetallesproducto_imprimir: TIntegerField
+      FieldName = 'producto_imprimir'
+    end
+    object ZQDocumentocompradetallesproducto_tipo: TStringField
+      FieldName = 'producto_tipo'
+      Size = 45
+    end
+    object ZQDocumentocompradetallesmarca_id: TIntegerField
+      FieldName = 'marca_id'
+    end
+    object ZQDocumentocompradetallesseccion_id: TIntegerField
+      FieldName = 'seccion_id'
+    end
+    object ZQDocumentocompradetallesproducto_talle: TStringField
+      FieldName = 'producto_talle'
+      Size = 45
+    end
+    object ZQDocumentocompradetallesproducto_estadosinc: TStringField
+      FieldName = 'producto_estadosinc'
+      Size = 45
+    end
+    object ZQDocumentocompradetallesproducto_longitudcodigo: TIntegerField
+      FieldName = 'producto_longitudcodigo'
+    end
   end
   object DTSDocumentocompradetalle: TDataSource
     DataSet = ZQDocumentocompradetalles

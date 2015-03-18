@@ -305,6 +305,11 @@ type
     MQNuevosproducto_longitudcodigo: TIntegerField;
     Label46: TLabel;
     separador_codigo: TEdit;
+    GroupBox9: TGroupBox;
+    Label47: TLabel;
+    Label48: TLabel;
+    btnAplicarEstado: TButton;
+    nuevo_producto_estado: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btnexaminarClick(Sender: TObject);
     procedure btnabrirarchivoClick(Sender: TObject);
@@ -336,6 +341,7 @@ type
     procedure BtnQuitarSinPrecioClick(Sender: TObject);
     procedure BtnQuitarSinCambiosClick(Sender: TObject);
     procedure BtnSinPrecioClick(Sender: TObject);
+    procedure btnAplicarEstadoClick(Sender: TObject);
   private
     { Private declarations }
     destino:string;
@@ -344,6 +350,8 @@ type
     id:string;
     abm:integer;
     campo_codigo:string;
+    tipo_busqueda:integer;
+    primercaracter:string;
   end;
 
 var
@@ -407,6 +415,29 @@ begin
 
       end;
 
+end;
+
+procedure TActualizarProductos.btnAplicarEstadoClick(Sender: TObject);
+begin
+    if nuevo_producto_estado.ItemIndex>-1 then
+      begin
+          if (MessageDlg('Seguro desea aplicar estado?', mtWarning, [mbOK, mbCancel], 0) = mrOk) then
+            begin
+                btnAplicarEstado.Enabled:=false;
+                ZQProductosAactualizar.First;
+                while not ZQProductosAactualizar.Eof do
+                    begin
+                        ZQProductosAactualizar.Edit;
+                        ZQProductosAactualizar.FieldByName('producto_estado').AsString:=nuevo_producto_estado.Text;
+                        ZQProductosAactualizar.Post;
+
+                        ZQProductosAactualizar.Next;
+                    end;
+                Princ.ModificarProducto(ZQProductosAactualizar);
+
+            end;
+
+      end;
 end;
 
 procedure TActualizarProductos.btnaplicarmarcaClick(Sender: TObject);
@@ -621,6 +652,17 @@ end;
 
 procedure TActualizarProductos.btnfiltrarClick(Sender: TObject);
 begin
+    primercaracter:='%';
+    case tipo_busqueda of
+              1:begin
+                    primercaracter:='%';
+              end;
+
+              2:begin
+                    primercaracter:='';
+              end;
+    end;
+
     ZQProductosAactualizar.Active:=false;
     ZQProductosAactualizar.SQL.Text:='select * from productos '+
                                      'inner join rubros on productos.rubro_id=rubros.rubro_id '+
@@ -639,7 +681,7 @@ begin
       ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.producto_codigobarras like "%'+fil_producto_codigobarras.Text+'%"');
 
     if fil_producto_nombre.Text<>'' then
-      ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.producto_nombre like "%'+Princ.GTBUtilidades1.Reemplazar(fil_producto_nombre.Text,' ','%')+'%"');
+      ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.producto_nombre like "'+primercaracter+Princ.GTBUtilidades1.Reemplazar(fil_producto_nombre.Text,' ','%')+'%"');
 
     if fil_proveedor_id.codigo<>'-1' then
       ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.proveedor_id="'+fil_proveedor_id.codigo+'"');
@@ -656,7 +698,7 @@ begin
     if fil_tipoiva_id.codigo<>'-1' then
       ZQProductosAactualizar.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQProductosAactualizar.SQL.Text,'productos.tipoiva_id="'+fil_tipoiva_id.codigo+'"');
 
-
+    ZQProductosAactualizar.SQL.Text:=ZQProductosAactualizar.SQL.Text+' order by productos.producto_nombre';
 
 
     btnAplcarPCompra.Enabled:=true;
@@ -664,6 +706,10 @@ begin
     btnAplicarCalculo.Enabled:=true;
     btnAplicarPolitica.Enabled:=true;
     BtnAplicarRubro.Enabled:=true;
+    btnaplicarseccion.Enabled:=true;
+    btnaplicarmarca.Enabled:=true;
+    btnAplicarPVentaImporte.Enabled:=true;
+    btnAplicarEstado.Enabled:=true;
 
     ZQProductosAactualizar.Active:=true;
 
@@ -1143,17 +1189,28 @@ begin
     nueva_marca_id.llenarcombo;
 
     PgCtrlGrids.ActivePage:=TabSheet3;
+
+    tipo_busqueda:=1;
 end;
 
 procedure TActualizarProductos.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
     Princ.OnKeyDown(sender, Key, Shift);
+    if Key=VK_F2 then
+      begin
+          if tipo_busqueda=1 then
+            tipo_busqueda:=2
+          else
+            tipo_busqueda:=1;
+          
+      end;
 end;
 
 procedure TActualizarProductos.FormShow(Sender: TObject);
 begin
     princ.Permisos1.guardarlog(self.ClassName+'.Show');
+    tipo_busqueda:=strtoint(Princ.GetConfiguracion('TIPOBUSQUEDA'));
 end;
 
 procedure TActualizarProductos.tipo_codigoSelect(Sender: TObject);

@@ -127,13 +127,28 @@ object estadoctas: Testadoctas
       OnDropDown = btnimprimirDropDown
       Version = '1.2.1.0'
     end
+    object BtnDetalleImpFactura: TAdvToolButton
+      Left = 482
+      Top = 423
+      Width = 145
+      Height = 25
+      AutoThemeAdapt = False
+      ColorDown = 14210002
+      ColorHot = 13289415
+      DropDownButton = True
+      DropDownMenu = MenuImpresion
+      Caption = 'Detalle Imp. Fac '
+      OnClick = BtnDetalleImpFacturaClick
+      OnDropDown = BtnDetalleImpFacturaDropDown
+      Version = '1.2.1.0'
+    end
     object cliente_id: TSqlComboBox
       Left = 48
       Top = 9
       Width = 608
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 0
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -374,7 +389,7 @@ object estadoctas: Testadoctas
       Width = 209
       Height = 21
       Style = csDropDownList
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 4
       Confbase = Princ.ZBase
       Confsql.Strings = (
@@ -1033,6 +1048,7 @@ object estadoctas: Testadoctas
   object DSCPendientes: TDataSource
     AutoEdit = False
     DataSet = ZQPendientes
+    OnDataChange = DSCPendientesDataChange
     Left = 312
     Top = 176
   end

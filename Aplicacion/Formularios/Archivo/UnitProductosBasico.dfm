@@ -1,7 +1,6 @@
 inherited ProductosBasico: TProductosBasico
   Caption = 'Producto'
   ClientHeight = 501
-  ExplicitWidth = 320
   ExplicitHeight = 539
   PixelsPerInch = 96
   TextHeight = 13
@@ -19,10 +18,8 @@ inherited ProductosBasico: TProductosBasico
     end
     inherited PageControl1: TPageControl
       Height = 449
-      ExplicitTop = -1
       ExplicitHeight = 449
       inherited TabSheet2: TTabSheet
-        ExplicitWidth = 0
         ExplicitHeight = 421
         inherited Label17: TLabel
           Top = 273

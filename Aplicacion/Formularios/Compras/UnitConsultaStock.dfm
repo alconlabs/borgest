@@ -36,17 +36,33 @@ inherited ConsultaStock: TConsultaStock
       Caption = 'En Stock'
       OnClick = Label3Click
     end
+    object btnStockValorizado: TAdvToolButton [3]
+      Left = 856
+      Top = 415
+      Width = 112
+      Height = 25
+      AutoThemeAdapt = False
+      ColorDown = 14210002
+      ColorHot = 13289415
+      DropDownButton = True
+      DropDownMenu = Princ.MenuImpresion
+      Caption = 'Stock Valorizado'
+      OnClick = btnStockValorizadoClick
+      OnDropDown = btnStockValorizadoDropDown
+      Version = '1.2.1.0'
+    end
     inherited btncancelar: TButton
-      Left = 588
-      Top = 414
-      ExplicitLeft = 588
-      ExplicitTop = 414
+      Left = 16
+      Top = 415
+      ExplicitLeft = 16
+      ExplicitTop = 415
     end
     inherited btnguardar: TButton
-      Left = 894
+      Left = 288
       Top = 415
       Caption = 'Imprimir'
-      ExplicitLeft = 894
+      Visible = False
+      ExplicitLeft = 288
       ExplicitTop = 415
     end
     object DBGrid1: TDBGrid
@@ -131,6 +147,30 @@ inherited ConsultaStock: TConsultaStock
       Width = 17
       Height = 17
       TabOrder = 6
+    end
+    object producto_precio: TGTBComboBox
+      Left = 705
+      Top = 417
+      Width = 145
+      Height = 21
+      Style = csDropDownList
+      ItemHeight = 13
+      ItemIndex = 0
+      TabOrder = 7
+      Text = 'Precio Compra'
+      Items.Strings = (
+        'Precio Compra'
+        'Precio Venta1'
+        'Precio Venta2'
+        'Precio Venta3'
+        'Precio Venta4')
+      Tag2 = 0
+      valores.Strings = (
+        'producto_preciocosto'
+        'producto_precioventa1'
+        'producto_precioventa2'
+        'producto_precioventa3'
+        'producto_precioventa4')
     end
   end
   inherited ZQSelect: TZQuery

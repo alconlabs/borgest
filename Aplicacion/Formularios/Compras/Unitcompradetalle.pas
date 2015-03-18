@@ -286,6 +286,7 @@ procedure Tcompradetalle.producto_idClickBtn(Sender: TObject);
 begin
     busquedaproductos:=Tbusquedaproductos.Create(self);
     busquedaproductos.ConfCampoBusqueda1:=producto_id.ConfCampoBusqueda1;
+    busquedaproductos.producto_estado:=' productos.producto_estado<>"" ';
     if busquedaproductos.ShowModal=mrOk then
       begin
           producto_id.Text:=busquedaproductos.producto_id;

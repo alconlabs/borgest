@@ -260,14 +260,14 @@ inherited CargaStockCurvas: TCargaStockCurvas
       Visible = False
       OnClick = btnaplicarstockClick
     end
-    object Button1: TButton
+    object btnhabilitaredicion: TButton
       Left = 206
       Top = 53
       Width = 98
       Height = 25
       Caption = 'Habilitar Edicion'
       TabOrder = 12
-      OnClick = Button1Click
+      OnClick = btnhabilitaredicionClick
     end
     object StringGridStock: TStringGrid
       Left = 456

@@ -27,11 +27,12 @@ type
     provincia_id: TSqlComboBox;
     btnimprimir: TAdvToolButton;
     procedure FormCreate(Sender: TObject);
-    procedure btnguardarClick(Sender: TObject);
     procedure btnimprimirDropDown(Sender: TObject);
     procedure btnimprimirClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
+    temporal_idproceso:string;
     procedure InformeCostosporVentas;
     procedure InformeVentasPrecios;
     procedure InformedeVentas;
@@ -41,6 +42,7 @@ type
     procedure RankingProductos;
     procedure InformedeVentasCEquipos;
     procedure InformedeEquipos;
+    procedure InformedeEquiposGrafico;
     procedure InformedeCuponesTarjetas;
 
   public
@@ -55,6 +57,77 @@ implementation
 uses UnitPrinc;
 
 {$R *.dfm}
+
+
+procedure TInformesVentas.InformedeEquiposGrafico;
+var
+  desdemes, hastames:tdate;
+begin
+    if desde_fecha.Date<hasta_fecha.Date then
+      begin
+          if temporal_idproceso<>'' then
+            begin
+                Princ.ZQExcecSQL.Sql.Clear;
+                Princ.ZQExcecSQL.Sql.Add('delete from temporales ');
+                Princ.ZQExcecSQL.Sql.Add('where temporal_idproceso=:temporal_idproceso ');
+                Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+                Princ.ZQExcecSQL.ExecSql;
+            end;
+
+          temporal_idproceso:=Princ.codigo('temporales','temporal_idproceso');  
+          puntoventa_id.GenerarWhere;
+          desdemes:=desde_fecha.Date;
+          hastames:=hasta_fecha.Date;
+          ZQSelect.Active:=false;
+          ZQSelect.SQL.Text:='select documentoventa_id '+
+                             'from documentosventas '+
+                             'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                             'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                             'where documentosventas.documentoventa_estado<>"ANULADA" and '+
+                             'documentosventas.personal_id="'+personal_id.codigo+'" '+
+                             'and tipodocu_nombre="'+TIPODOCU_FACTURAVENTA+'" '+
+                             'and date_format(documentoventa_fecha,"%Y%m")= :aniomes '+
+                             'and documentoventa_equipo1<>"" '+Princ.empresa_where+
+                             ' and '+puntoventa_id.where+
+                             ' group by documentoventa_equipo1 ';
+
+
+          while desdemes<=hastames do
+            begin
+                ZQSelect.Active:=false;
+                ZQSelect.ParamByName('aniomes').AsString:=formatdatetime('yyyymm',desdemes);
+                ZQSelect.Active:=true;
+
+
+                ZQExecSQL.Sql.Clear;
+                ZQExecSQL.Sql.Add('insert into temporales set ');
+                ZQExecSQL.Sql.Add('temporal_int1=:temporal_int1, ');
+                ZQExecSQL.Sql.Add('temporal_string2=:temporal_string2, ');
+                ZQExecSQL.Sql.Add('temporal_string1=:temporal_string1, ');
+                ZQExecSQL.Sql.Add('temporal_idproceso=:temporal_idproceso ');
+                ZQExecSQL.ParamByName('temporal_int1').AsInteger:=ZQSelect.RecordCount;
+                ZQExecSQL.ParamByName('temporal_string2').AsString:=formatdatetime('yyyymm',desdemes);
+                ZQExecSQL.ParamByName('temporal_string1').AsString:=formatdatetime('mm-yyyy',desdemes);
+                ZQExecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+                ZQExecSQL.ExecSql;
+
+
+
+                desdemes:=IncMonth(desdemes,1);
+
+            end;
+
+
+          Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'informe_equipos_grafico.rep';
+          Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
+          Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
+          Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
+          Princ.VCLReport1.Report.Params.ParamByName('PERSONAL_NOMBRE').AsString:=personal_id.Text;
+          Princ.VCLReport1.Report.Params.ParamByName('CLIENTE_NOMBRE').AsString:=cliente_id.Text;
+          Princ.VCLReport1.Report.Params.ParamByName('SUCURSAL_NOMBRE').AsString:=princ.buscar('select sucursal_nombre from sucursales inner join puntodeventa on sucursales.sucursal_id=puntodeventa.sucursal_id where '+puntoventa_id.where,'sucursal_nombre');
+          Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from temporales where temporal_idproceso="'+temporal_idproceso+'" order by temporal_string2';
+      end;
+end;
 
 
 procedure TInformesVentas.InformedeCuponesTarjetas;
@@ -406,53 +479,6 @@ begin
 
 end;
 
-procedure TInformesVentas.btnguardarClick(Sender: TObject);
-begin
-  inherited;
-    case informe_tipo.ItemIndex of
-        0:begin
-              InformeCostosporVentas;
-          end;
-        1:begin
-              InformeVentasPrecios;
-          end;
-        2:begin
-              InformedeVentas;
-
-          end;
-        3:begin
-              InformedeVentasProductos;
-
-          end;
-        4:begin
-              InformedeVentasProductosCantidad;
-
-          end;
-        5:begin
-              InformedeCobros;
-
-          end;
-        6:begin
-              RankingProductos;
-
-          end;
-        7:begin
-              InformedeVentasCEquipos;
-
-          end;
-        8:begin
-              InformedeEquipos;
-
-          end;
-        9:begin
-              InformedeCuponesTarjetas;
-
-          end;
-
-    end;
-
-end;
-
 procedure TInformesVentas.btnimprimirClick(Sender: TObject);
 begin
   inherited;
@@ -500,11 +526,29 @@ begin
 
           end;
         9:begin
+              InformedeEquiposGrafico;
+
+          end;
+       10:begin
               InformedeCuponesTarjetas;
 
           end;
 
     end;
+end;
+
+procedure TInformesVentas.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+    if temporal_idproceso<>'' then
+      begin
+          Princ.ZQExcecSQL.Sql.Clear;
+          Princ.ZQExcecSQL.Sql.Add('delete from temporales ');
+          Princ.ZQExcecSQL.Sql.Add('where temporal_idproceso=:temporal_idproceso ');
+          Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+          Princ.ZQExcecSQL.ExecSql;
+      end;
+  inherited;
+
 end;
 
 procedure TInformesVentas.FormCreate(Sender: TObject);

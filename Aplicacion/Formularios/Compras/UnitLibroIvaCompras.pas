@@ -58,8 +58,8 @@ begin
                                                    'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
                                                    'where tiposdocumento.tipodocu_iva=-1 and '+
                                                    'tipodocu_debcred<>"N/A" and '+
-                                                   'documentoscompras.documentocompra_fecha >="'+FormatDateTime('yyyy-mm-dd',desde_fecha.Date)+'" and '+
-                                                   'documentoscompras.documentocompra_fecha <="'+FormatDateTime('yyyy-mm-dd',hasta_fecha.Date)+'" '+Princ.empresa_where+
+                                                   'documentoscompras.documentocompra_fechaiva >="'+FormatDateTime('yyyy-mm-dd',desde_fecha.Date)+'" and '+
+                                                   'documentoscompras.documentocompra_fechaiva <="'+FormatDateTime('yyyy-mm-dd',hasta_fecha.Date)+'" '+Princ.empresa_where+
                                                    ' order by documentocompra_fecha, tipodocu_letra, documentocompra_numero';
 
     Princ.VCLReport1.Execute;

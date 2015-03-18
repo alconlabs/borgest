@@ -2,7 +2,6 @@ inherited ListaProductos1: TListaProductos1
   Caption = 'Productos'
   ClientWidth = 1045
   ExplicitWidth = 1061
-  ExplicitHeight = 494
   PixelsPerInch = 96
   TextHeight = 13
   inherited panelgrilla: TAdvPanel

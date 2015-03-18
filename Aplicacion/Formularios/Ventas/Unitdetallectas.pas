@@ -7,7 +7,7 @@ uses
   Dialogs, ExtCtrls, AdvPanel, AdvGlowButton, Grids, DBGrids, StdCtrls, DB,
   ZAbstractRODataset, ZAbstractDataset, ZDataset, UnitNumEdit, ComCtrls,
   UnitSqlComboBox, AdvEdit, DBAdvEd, Titles, MQuery, CustomizeGrid, math,
-  AdvListV, UnitSqlListView;
+  AdvListV, UnitSqlListView, Menus, AdvMenus, AdvToolBtn;
 
 type
   Tdetallectas = class(TForm)
@@ -22,7 +22,6 @@ type
     DSCPendientes: TDataSource;
     tipagos: TTitles;
     btnactualizar: TButton;
-    btnimprimir: TButton;
     ZQsolicitud: TZQuery;
     Tisolicitud: TTitles;
     Ticobros: TTitles;
@@ -49,7 +48,6 @@ type
     personal_id: TSqlComboBox;
     puntoventa_id: TSqlListView;
     Titles1: TTitles;
-    BtnDetalleImputacion: TButton;
     ZQDebitos: TZQuery;
     ZQCreditos: TZQuery;
     ZQPendientesdocumentoventa_id: TIntegerField;
@@ -164,9 +162,16 @@ type
     ZQPendientespersonal_auxint1: TIntegerField;
     ZQPendientespersonal_auxint1_1: TIntegerField;
     ZQPendientesdocumentoventa_diasvenc: TIntegerField;
+    MenuImpresion: TAdvPopupMenu;
+    Imprimir1: TMenuItem;
+    Excel1: TMenuItem;
+    PDF1: TMenuItem;
+    exto1: TMenuItem;
+    BtnDetalleImputacion: TAdvToolButton;
+    btnimprimir: TAdvToolButton;
+    BtnDetalleImpFactura: TAdvToolButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure btnimprimirClick(Sender: TObject);
     procedure btnactualizarClick(Sender: TObject);
     procedure CustomizeGrid1PaintRow(DS: TDataSet; var RowColor: TColor;
       var ChangeColor: Boolean);
@@ -175,9 +180,18 @@ type
     procedure cbhastafechaClick(Sender: TObject);
     procedure cbdesdefechavencClick(Sender: TObject);
     procedure cbhastafechavencClick(Sender: TObject);
-    procedure BtnDetalleImputacionClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
+    procedure Imprimir1Click(Sender: TObject);
+    procedure Excel1Click(Sender: TObject);
+    procedure PDF1Click(Sender: TObject);
+    procedure exto1Click(Sender: TObject);
+    procedure BtnDetalleImputacionClick(Sender: TObject);
+    procedure BtnDetalleImputacionDropDown(Sender: TObject);
+    procedure btnimprimirClick(Sender: TObject);
+    procedure DSCPendientesDataChange(Sender: TObject; Field: TField);
+    procedure BtnDetalleImpFacturaClick(Sender: TObject);
+    procedure BtnDetalleImpFacturaDropDown(Sender: TObject);
   private
     { Private declarations }
     temporal_idproceso:string;
@@ -187,6 +201,9 @@ type
   public
     { Public declarations }
     procedure cargatemporal;
+    procedure PrepararDetalleImputacion;
+    procedure PrepararDetalleImputacionFactura;
+    procedure PrepararImprimir;
 
 
   end;
@@ -200,6 +217,230 @@ uses UnitPrinc;
 
 {$R *.dfm}
 
+
+procedure Tdetallectas.PrepararDetalleImputacionFactura;
+var
+  orden:integer;
+begin
+    if temporal_idproceso<>'' then
+      begin
+          Princ.ZQExcecSQL.Sql.Clear;
+          Princ.ZQExcecSQL.Sql.Add('delete from temporales ');
+          Princ.ZQExcecSQL.Sql.Add('where temporal_idproceso=:temporal_idproceso ');
+          Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+          Princ.ZQExcecSQL.ExecSql;
+      end;
+
+    temporal_idproceso:=Princ.codigo('temporales','temporal_idproceso');
+    ZQDebitos.Active:=false;
+    ZQDebitos.SQL.Text:='select * from documentosventas '+
+                        'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                        'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                        'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                        'where documentosventas.documentoventa_estado<>"ANULADA" '+
+                        'and documentosventas.documentoventa_id="'+ZQPendientes.FieldByName('documentoventa_id').AsString+'" and '+
+                        'tiposdocumento.tipodocu_tipo="Venta" and tiposdocumento.tipodocu_debcred="DEBITO" '+Princ.empresa_where+
+                        ' order by documentosventas.documentoventa_fecha, documentosventas.documentoventa_numero ';
+
+    if cliente_id.Text<>'Todos' then
+     ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,' clientes.cliente_id="'+cliente_id.codigo+'" ');
+
+    if cbdesdefecha.Checked then
+     ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,' documentosventas.documentoventa_fecha>="'+FormatDateTime('yyyy-mm-dd',desde_fecha.Date)+'" ');
+
+    if cbhastafecha.Checked then
+     ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,' documentosventas.documentoventa_fecha<="'+FormatDateTime('yyyy-mm-dd',hasta_fecha.Date)+'" ');
+
+    if cbdesdefechavenc.Checked then
+     ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,' documentosventas.documentoventa_fechavenc>="'+FormatDateTime('yyyy-mm-dd',desde_fecha_venc.Date)+'" ');
+
+    if cbhastafechavenc.Checked then
+     ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,' documentosventas.documentoventa_fechavenc<="'+FormatDateTime('yyyy-mm-dd',hasta_fecha_venc.Date)+'" ');
+
+    puntoventa_id.GenerarWhere;
+    ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,puntoventa_id.where);
+
+    if personal_id.Text<>'Todos' then
+     ZQDebitos.SQL.Text:=Princ.GTBUtilidades1.AgregarWhere(ZQDebitos.SQL.Text,' documentosventas.personal_id="'+personal_id.codigo+'" ');
+
+    if not strtobool(Princ.GetConfiguracion('VENTASCTDOVENTANACTACTE')) then
+      ZQDebitos.SQL.Text:=ZQDebitos.SQL.Text+' and documentosventas.documentoventa_condicionventa="'+CONDICIONVENTA_CTACTE+'" ';
+
+    ZQDebitos.Active:=true;
+    ZQDebitos.First;
+    ZQCreditos.Active:=false;
+    ZQCreditos.SQL.Text:='select * from documentoventadocus '+
+                         'inner join documentosventas on documentoventadocus.documentoventa_id=documentosventas.documentoventa_id '+
+                         'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                         'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                         'where documentoventadocus.documentoventa_idpago=:documentoventa_idpago and documentoventadoc_tiporelacion="IMPUTACION"';
+
+    Princ.ZQExcecSQL.Sql.Clear;
+    Princ.ZQExcecSQL.Sql.Add('begin');
+    Princ.ZQExcecSQL.ExecSql;
+
+    while not ZQDebitos.Eof do
+        begin
+            orden:=1;
+            Princ.ZQExcecSQL.Sql.Clear;
+            Princ.ZQExcecSQL.Sql.Add('insert into temporales set ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_fecha1=:temporal_fecha1, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_int4=:temporal_int4, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_int3=:temporal_int3, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_int2=:temporal_int2, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_int1=:temporal_int1, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_float2=:temporal_float2, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_float1=:temporal_float1, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string1=:temporal_string1, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string2=:temporal_string2, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_string3=:temporal_string3, ');
+            Princ.ZQExcecSQL.Sql.Add('temporal_idproceso=:temporal_idproceso ');
+            Princ.ZQExcecSQL.ParamByName('temporal_fecha1').AsString:=formatdatetime('yyyy-mm-dd',ZQDebitos.FieldByName('documentoventa_fecha').AsDateTime);
+            Princ.ZQExcecSQL.ParamByName('temporal_int4').AsInteger:=orden;
+            Princ.ZQExcecSQL.ParamByName('temporal_int3').AsString:=ZQDebitos.FieldByName('documentoventa_id').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_int2').AsString:=ZQDebitos.FieldByName('documentoventa_numero').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_int1').AsString:=ZQDebitos.FieldByName('puntoventa_numero').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_float2').AsString:=ZQDebitos.FieldByName('documentoventa_total').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_float1').AsString:='0';
+            Princ.ZQExcecSQL.ParamByName('temporal_string1').AsString:=ZQDebitos.FieldByName('tipodocu_nombreabrev').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_string2').AsString:=ZQDebitos.FieldByName('cliente_nombre').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_string3').AsString:=ZQDebitos.FieldByName('documentoventa_equipo1').AsString;
+            Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+            Princ.ZQExcecSQL.ExecSql;
+
+            ZQCreditos.Active:=false;
+            ZQCreditos.ParamByName('documentoventa_idpago').AsString:= ZQDebitos.FieldByName('documentoventa_id').AsString;
+            ZQCreditos.Active:=true;
+            ZQCreditos.First;
+            while not ZQCreditos.Eof do
+                begin
+                    orden:=orden+1;
+                    Princ.ZQExcecSQL.Sql.Clear;
+                    Princ.ZQExcecSQL.Sql.Add('insert into temporales set ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_fecha1=:temporal_fecha1, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_int4=:temporal_int4, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_int3=:temporal_int3, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_int2=:temporal_int2, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_int1=:temporal_int1, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_float2=:temporal_float2, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_float1=:temporal_float1, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_string1=:temporal_string1, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_string2=:temporal_string2, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_string3=:temporal_string3, ');
+                    Princ.ZQExcecSQL.Sql.Add('temporal_idproceso=:temporal_idproceso ');
+                    Princ.ZQExcecSQL.ParamByName('temporal_fecha1').AsString:=formatdatetime('yyyy-mm-dd',ZQCreditos.FieldByName('documentoventa_fecha').AsDateTime);
+                    Princ.ZQExcecSQL.ParamByName('temporal_int4').AsInteger:=orden;
+                    Princ.ZQExcecSQL.ParamByName('temporal_int3').AsString:=ZQDebitos.FieldByName('documentoventa_id').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_int2').AsString:=ZQCreditos.FieldByName('documentoventa_numero').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_int1').AsString:=ZQCreditos.FieldByName('puntoventa_numero').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_float2').AsFloat:=ZQCreditos.FieldByName('documentoventadoc_importe').AsFloat*-1;
+                    Princ.ZQExcecSQL.ParamByName('temporal_float1').AsString:='0';
+                    Princ.ZQExcecSQL.ParamByName('temporal_string1').AsString:=ZQCreditos.FieldByName('tipodocu_nombreabrev').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_string2').AsString:=ZQDebitos.FieldByName('cliente_nombre').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_string3').AsString:=ZQDebitos.FieldByName('documentoventa_equipo1').AsString;
+                    Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+                    Princ.ZQExcecSQL.ExecSql;
+
+                    ZQCreditos.Next;
+                end;
+
+            ZQDebitos.Next;
+        end;
+
+    Princ.ZQExcecSQL.Sql.Clear;
+    Princ.ZQExcecSQL.Sql.Add('commit');
+    Princ.ZQExcecSQL.ExecSql;
+
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'detalle_imputacion.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
+    if cbdesdefecha.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
+    if cbhastafecha.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
+    if cbdesdefechavenc.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHAVENC').AsString:=datetostr(desde_fecha_venc.Date);
+    if cbhastafechavenc.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHAVENC').AsString:=datetostr(hasta_fecha_venc.Date);
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select * from temporales '+
+                                                   'where temporal_idproceso="'+temporal_idproceso+'" '+
+                                                   'order by temporal_string2, temporal_id, temporal_int4 ';
+
+end;
+
+procedure Tdetallectas.PrepararImprimir;
+var
+  grupo, condicion_saldoanterior:string;
+begin
+    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'detalle_de_ctasctes.rep';
+    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
+    if cbdesdefecha.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
+    if cbhastafecha.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
+    if cbdesdefechavenc.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHAVENC').AsString:=datetostr(desde_fecha_venc.Date);
+    if cbhastafechavenc.Checked then
+      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHAVENC').AsString:=datetostr(hasta_fecha_venc.Date);
+
+
+
+    grupo:='(documentosventas.documentoventa_id)';
+    condicion_saldoanterior:='1=2';
+    if cbdesdefecha.Checked then
+      begin
+          grupo:=' if(documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",concat(sucursales.sucursal_id,"-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
+          condicion_saldoanterior:='documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'"';
+
+      end;
+
+    if cbdesdefechavenc.Checked and cbdesdefecha.Checked then
+      begin
+          if desde_fecha_venc.Date<desde_fecha.Date then
+            begin
+                grupo:=' if(documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat(sucursales.sucursal_id,"-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
+                condicion_saldoanterior:='documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
+
+            end;
+
+      end
+    else
+      begin
+          if cbdesdefechavenc.Checked then
+            begin
+                grupo:=' if(documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat(sucursales.sucursal_id,"-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
+                condicion_saldoanterior:='documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
+            end;
+      end;
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, '+
+                           'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",if(isnull(documentopagos.documentopago_id),documentosventas.documentoventa_total,documentopagos.documentopago_importe),0)) as debito, '+
+                           'sum(if(tiposdocumento.tipodocu_debcred="CREDITO",if(isnull(documentopagos.documentopago_id),documentosventas.documentoventa_total,documentopagos.documentopago_importe),0)) as credito, '+
+                           '0.00 as acumulado, '+grupo+' as grupo, '+
+                           'if('+condicion_saldoanterior+',"Saldo anterior",CONCAT(tiposdocumento.tipodocu_nombreabrev," ",tiposdocumento.tipodocu_letra)) as documento_nombre, '+
+                           'if('+condicion_saldoanterior+',"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",DATE_FORMAT(documentosventas.documentoventa_fecha,"%d/%m/%Y")) as documentoventafecha, '+
+                           'puntodeventa.puntoventa_id as puntoventanumero, '+
+                           'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero, '+
+                           'if(documentosventas.documentoventa_estado="PENDIENTE",DATEDIFF(documentoventa_fechavenc,curdate()),0) as documentoventa_diasvenc '+
+                           'from documentosventas '+
+//                           'left join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
+//                           'left join documentoventadetalles documentoventadetalles2 on documentoventadetalles.documentoventadetalle_idorig=documentoventadetalles2.documentoventadetalle_id '+
+//                           'left join documentosventas documentosventas2 on documentoventadetalles2.documentoventa_id=documentosventas2.documentoventa_id '+
+                           'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
+                           'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
+                           'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
+                           'inner join personal on documentosventas.personal_id=personal.personal_id '+
+                           'inner join personal as pesronalcliente on clientes.personal_id=pesronalcliente.personal_id '+
+                           'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
+                           'left join documentopagos on documentosventas.documentoventa_id=documentopagos.documentoventa_id '+
+                           'group by grupo '+
+                           'order by pesronalcliente.personal_nombre, sucursal_nombre, cliente_nombre, clientes.cliente_id, documentoventa_fecha, documentoventa_numero ';
+
+
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.GTBUtilidades1.AgregarWhere(Princ.VCLReport1.Report.Datainfo.Items[0].sql,GenerarWhere);
+    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.GTBUtilidades1.AgregarWhere(Princ.VCLReport1.Report.Datainfo.Items[0].sql,'clientes.cliente_id not in ('+self.clientes_ids_sin_deuda+')');
+    
+end;
 
 function Tdetallectas.GenerarWhere:string;
 var
@@ -235,6 +476,18 @@ begin
 end;
 
 
+
+procedure Tdetallectas.Imprimir1Click(Sender: TObject);
+begin
+    Princ.impresion_tipo:=IMPRESION_IMPRIMIR;
+    Princ.ImprimirReporte;
+end;
+
+procedure Tdetallectas.PDF1Click(Sender: TObject);
+begin
+    Princ.impresion_tipo:=IMPRESION_PDF;
+    Princ.ImprimirReporte;
+end;
 
 procedure Tdetallectas.SetNotRequired;
 var
@@ -374,6 +627,29 @@ begin
       end;
 end;
 
+procedure Tdetallectas.DSCPendientesDataChange(Sender: TObject; Field: TField);
+begin
+    BtnDetalleImpFactura.Enabled:=false;
+    if ZQPendientes.FieldByName('tipodocu_nombre').AsString='Factura de Venta' then
+      begin
+          BtnDetalleImpFactura.Caption:='Detalle Imp. Fac '+ZQPendientes.FieldByName('documentoventanumero').AsString;
+          BtnDetalleImpFactura.Enabled:=true;
+      end;
+
+end;
+
+procedure Tdetallectas.Excel1Click(Sender: TObject);
+begin
+    Princ.impresion_tipo:=IMPRESION_XLS;
+    Princ.ImprimirReporte;
+end;
+
+procedure Tdetallectas.exto1Click(Sender: TObject);
+begin
+    Princ.impresion_tipo:=IMPRESION_TXT;
+    Princ.ImprimirReporte;
+end;
+
 procedure Tdetallectas.btnactualizarClick(Sender: TObject);
 var
   acumulado:real;
@@ -477,7 +753,8 @@ begin
 
 end;
 
-procedure Tdetallectas.BtnDetalleImputacionClick(Sender: TObject);
+
+procedure Tdetallectas.PrepararDetalleImputacion;
 var
   orden:integer;
 begin
@@ -624,7 +901,13 @@ begin
                                                    'where temporal_idproceso="'+temporal_idproceso+'" '+
                                                    'order by temporal_string2, temporal_id, temporal_int4 ';
 
-    Princ.VCLReport1.Execute;
+end;
+
+procedure Tdetallectas.BtnDetalleImpFacturaClick(Sender: TObject);
+begin
+    PrepararDetalleImputacionFactura;
+    Princ.impresion_tipo:=IMPRESION_IMPRIMIR;
+    Princ.ImprimirReporte;
 
     if temporal_idproceso<>'' then
       begin
@@ -636,82 +919,37 @@ begin
       end;
 end;
 
-procedure Tdetallectas.btnimprimirClick(Sender: TObject);
-var
-  grupo, condicion_saldoanterior:string;
+procedure Tdetallectas.BtnDetalleImpFacturaDropDown(Sender: TObject);
 begin
-    Princ.VCLReport1.Filename:=Princ.ruta_carpeta_reportes+'detalle_de_ctasctes.rep';
-    Princ.VCLReport1.Report.DatabaseInfo[0].ZConnection:=Princ.ZBase;
-    if cbdesdefecha.Checked then
-      Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHA').AsString:=datetostr(desde_fecha.Date);
-    if cbhastafecha.Checked then
-      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHA').AsString:=datetostr(hasta_fecha.Date);
-    if cbdesdefechavenc.Checked then
-      Princ.VCLReport1.Report.Params.ParamByName('DESDE_FECHAVENC').AsString:=datetostr(desde_fecha_venc.Date);
-    if cbhastafechavenc.Checked then
-      Princ.VCLReport1.Report.Params.ParamByName('HASTA_FECHAVENC').AsString:=datetostr(hasta_fecha_venc.Date);
+    PrepararDetalleImputacionFactura;
+end;
 
+procedure Tdetallectas.BtnDetalleImputacionClick(Sender: TObject);
+begin
+    PrepararDetalleImputacion;
+    Princ.impresion_tipo:=IMPRESION_IMPRIMIR;
+    Princ.ImprimirReporte;
 
-
-    grupo:='(documentosventas.documentoventa_id)';
-    condicion_saldoanterior:='1=2';
-    if cbdesdefecha.Checked then
+    if temporal_idproceso<>'' then
       begin
-          grupo:=' if(documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",concat(sucursales.sucursal_id,"-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
-          condicion_saldoanterior:='documentosventas.documentoventa_fecha<"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'"';
-
+          Princ.ZQExcecSQL.Sql.Clear;
+          Princ.ZQExcecSQL.Sql.Add('delete from temporales ');
+          Princ.ZQExcecSQL.Sql.Add('where temporal_idproceso=:temporal_idproceso ');
+          Princ.ZQExcecSQL.ParamByName('temporal_idproceso').AsString:=temporal_idproceso;
+          Princ.ZQExcecSQL.ExecSql;
       end;
+end;
 
-    if cbdesdefechavenc.Checked and cbdesdefecha.Checked then
-      begin
-          if desde_fecha_venc.Date<desde_fecha.Date then
-            begin
-                grupo:=' if(documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat(sucursales.sucursal_id,"-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
-                condicion_saldoanterior:='documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
+procedure Tdetallectas.BtnDetalleImputacionDropDown(Sender: TObject);
+begin
+    PrepararDetalleImputacion;
+end;
 
-            end;
-
-      end
-    else
-      begin
-          if cbdesdefechavenc.Checked then
-            begin
-                grupo:=' if(documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'",concat(sucursales.sucursal_id,"-",documentosventas.cliente_id),documentosventas.documentoventa_id) ';
-                condicion_saldoanterior:='documentosventas.documentoventa_fechavenc<"'+formatdatetime('yyyy-mm-dd',desde_fecha_venc.Date)+'"';
-            end;
-      end;
-
-    Princ.VCLReport1.Report.Datainfo.Items[0].sql:='select *, '+
-                           'sum(if(tiposdocumento.tipodocu_debcred="DEBITO",if(isnull(documentopagos.documentopago_id),documentosventas.documentoventa_total,documentopagos.documentopago_importe),0)) as debito, '+
-                           'sum(if(tiposdocumento.tipodocu_debcred="CREDITO",if(isnull(documentopagos.documentopago_id),documentosventas.documentoventa_total,documentopagos.documentopago_importe),0)) as credito, '+
-                           '0.00 as acumulado, '+grupo+' as grupo, '+
-                           'if('+condicion_saldoanterior+',"Saldo anterior",CONCAT(tiposdocumento.tipodocu_nombreabrev," ",tiposdocumento.tipodocu_letra)) as documento_nombre, '+
-                           'if('+condicion_saldoanterior+',"'+formatdatetime('yyyy-mm-dd',desde_fecha.Date)+'",DATE_FORMAT(documentosventas.documentoventa_fecha,"%d/%m/%Y")) as documentoventafecha, '+
-                           'puntodeventa.puntoventa_id as puntoventanumero, '+
-                           'if('+condicion_saldoanterior+',"0",documentosventas.documentoventa_numero) as documentoventanumero, '+
-                           'if(documentosventas.documentoventa_estado="PENDIENTE",DATEDIFF(documentoventa_fechavenc,curdate()),0) as documentoventa_diasvenc '+
-                           'from documentosventas '+
-//                           'left join documentoventadetalles on documentosventas.documentoventa_id=documentoventadetalles.documentoventa_id '+
-//                           'left join documentoventadetalles documentoventadetalles2 on documentoventadetalles.documentoventadetalle_idorig=documentoventadetalles2.documentoventadetalle_id '+
-//                           'left join documentosventas documentosventas2 on documentoventadetalles2.documentoventa_id=documentosventas2.documentoventa_id '+
-                           'inner join tiposdocumento on documentosventas.tipodocu_id=tiposdocumento.tipodocu_id '+
-                           'inner join puntodeventa on tiposdocumento.puntoventa_id=puntodeventa.puntoventa_id '+
-                           'inner join clientes on documentosventas.cliente_id=clientes.cliente_id '+
-                           'inner join personal on documentosventas.personal_id=personal.personal_id '+
-                           'inner join personal as pesronalcliente on clientes.personal_id=pesronalcliente.personal_id '+
-                           'inner join sucursales on puntodeventa.sucursal_id=sucursales.sucursal_id '+
-                           'left join documentopagos on documentosventas.documentoventa_id=documentopagos.documentoventa_id '+
-                           'group by grupo '+
-                           'order by pesronalcliente.personal_nombre, sucursal_nombre, cliente_nombre, clientes.cliente_id, documentoventa_fecha, documentoventa_numero ';
-
-
-    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.GTBUtilidades1.AgregarWhere(Princ.VCLReport1.Report.Datainfo.Items[0].sql,GenerarWhere);
-    Princ.VCLReport1.Report.Datainfo.Items[0].sql:=Princ.GTBUtilidades1.AgregarWhere(Princ.VCLReport1.Report.Datainfo.Items[0].sql,'clientes.cliente_id not in ('+self.clientes_ids_sin_deuda+')');
-    
-    Princ.VCLReport1.Execute;
-
-
-
+procedure Tdetallectas.btnimprimirClick(Sender: TObject);
+begin
+    PrepararImprimir;
+    Princ.impresion_tipo:=IMPRESION_IMPRIMIR;
+    Princ.ImprimirReporte;
 end;
 
 end.

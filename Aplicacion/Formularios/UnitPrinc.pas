@@ -304,6 +304,7 @@ type
     procedure RefrescarMenu;
     procedure InputBoxSetPasswordChar(var Msg: TMessage); message InputBoxMessage;
     procedure TiposPagoDisponibles;
+
     
   public
     { Public declarations }
@@ -333,6 +334,9 @@ type
     tipospago:tstrings;
     EXPORTACIONSINCMINUTOS:string;
     impresion_tipo:integer;
+    TIPOREDONDEOIMPORTE:string;
+    MOSTRARSTOCKSEGUNDODEPOSITO:string;
+    SEGUNDODEPOSITODEFECTO:string;
     function codigo(tabla:string;campo:string):string;
     function buscar(sql:string;campo:string):string;
     function fechaservidor():TDateTime;
@@ -403,11 +407,14 @@ type
     function ControlDocumentoComprarepetido(tipodocu_id:string; documentocompra_puntoventa:string; documentocompra_numero:string; proveedor_id:string):boolean;
     procedure CargarDocumentoCompraDetalle(QDocumentoCompraDetalles:TDataset; Detalle:TDataset; abm:integer=1; bm:pointer=nil);
     function ProtegidoxPass(nombre:string):boolean;
-    function IdentificaUsuario(nombre: string):boolean;
+    function IdentificaUsuario(permisoespecialperfil_nombre:string;valor_esperado:string):boolean;
     function GetPCName: string;
     function DisponibleTipoPago(tipopago_id:string):boolean;
     procedure sincronizarstock;
     procedure ImprimirReporte;
+    function RedondearImporte(importe:real):real;
+    function GetPermisoEspecial(nombre: string; valor_defecto: string;perfil_id:string=''):string;
+
   end;
 
 type
@@ -557,6 +564,44 @@ uses Unitestadodectas, Unitinformesventas, UnitCargarPagos,
 {$R *.dfm}
 
 
+function TPrinc.GetPermisoEspecial(nombre: string; valor_defecto: string;perfil_id:string=''):string;
+var
+  valor:string;
+begin
+    if perfil_id='' then
+      perfil_id:=perfil_id_logueado;
+
+    valor:=Princ.buscar('select permisoespecialperfil_valor from permisosespecialesperfil where perfil_id="'+perfil_id+'" and permisoespecialperfil_nombre="'+nombre+'"','permisoespecialperfil_valor');
+    if valor='' then
+      valor:=valor_defecto;
+
+    Result:=valor;
+end;
+
+function TPrinc.RedondearImporte(importe: Real):real;
+var
+  resultado:real;
+begin
+    resultado:=importe;
+    if TIPOREDONDEOIMPORTE='0' then
+      resultado:=importe;
+
+    if TIPOREDONDEOIMPORTE='0.50' then
+      begin
+          if importe-int(importe)=0 then
+            resultado:=importe
+          else
+            begin
+                if importe-int(importe)>0.5 then
+                  resultado:=importe+(1-(importe-int(importe)))
+                else
+                  resultado:=importe+(0.5-(importe-int(importe)));
+            end;
+      end;
+
+    Result:=resultado;
+end;
+
 
 //procedure THilo.ActualizarProgreso;
 //begin
@@ -665,7 +710,6 @@ end;
 
 procedure TPrinc.sincronizarstock;
 var
-  PREFIJOTABLAWEB:string;
   error:integer;
   cant_depositos:string;
   SINCSUBIRSTOCK:string;
@@ -1222,17 +1266,12 @@ end;
 
 procedure TPrinc.InputBoxSetPasswordChar(var Msg: TMessage);
 var
-  hInputForm, hEdit, hButton: HWND;
+  hInputForm, hEdit: HWND;
 begin
   hInputForm := Screen.Forms[0].Handle;
   if (hInputForm <> 0) then
   begin
     hEdit := FindWindowEx(hInputForm, 0, 'TEdit', nil);
-    {
-      // Change button text:
-      hButton := FindWindowEx(hInputForm, 0, 'TButton', nil);
-      SendMessage(hButton, WM_SETTEXT, 0, Integer(PChar('Cancel')));
-    }
     SendMessage(hEdit, EM_SETPASSWORDCHAR, Ord('*'), 0);
   end;
 end;
@@ -1271,11 +1310,9 @@ begin
 end;
 
 
-function TPrinc.IdentificaUsuario(nombre: string):boolean;
+function TPrinc.IdentificaUsuario(permisoespecialperfil_nombre:string;valor_esperado:string):boolean;
 var
   error:integer;
-  passingresada:string;
-  personal_id:string;
 begin
     error:=1;
 
@@ -1284,7 +1321,13 @@ begin
           IdentificarUsuario:=TIdentificarUsuario.Create(self);
           if IdentificarUsuario.ShowModal=mrOk then
             begin
-                error:=0;
+                if permisoespecialperfil_nombre<>'' then
+                  begin
+                      if GetPermisoEspecial(permisoespecialperfil_nombre,'',IdentificarUsuario.perfil_id)=valor_esperado then
+                        error:=0;
+                  end
+                else
+                  error:=0;
             end;
           IdentificarUsuario.Free;
       end;
@@ -2891,10 +2934,10 @@ begin
 
             tipoiva_valor:=strtofloat(Princ.buscar('select tipoiva_valor from tipoiva where tipoiva_id="'+QProductos.FieldByName('tipoiva_id').asstring+'"','tipoiva_valor'));
 
-            QProductos.FieldByName('producto_precioventa1').AsFloat:=roundto((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica1/100))+((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica1/100))*tipoiva_valor/100),-2);
-            QProductos.FieldByName('producto_precioventa2').AsFloat:=roundto((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica2/100))+((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica2/100))*tipoiva_valor/100),-2);
-            QProductos.FieldByName('producto_precioventa3').AsFloat:=roundto((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica3/100))+((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica3/100))*tipoiva_valor/100),-2);
-            QProductos.FieldByName('producto_precioventa4').AsFloat:=roundto((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica4/100))+((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica4/100))*tipoiva_valor/100),-2);
+            QProductos.FieldByName('producto_precioventa1').AsFloat:=Princ.RedondearImporte(roundto((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica1/100))+((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica1/100))*tipoiva_valor/100),-2));
+            QProductos.FieldByName('producto_precioventa2').AsFloat:=Princ.RedondearImporte(roundto((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica2/100))+((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica2/100))*tipoiva_valor/100),-2));
+            QProductos.FieldByName('producto_precioventa3').AsFloat:=Princ.RedondearImporte(roundto((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica3/100))+((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica3/100))*tipoiva_valor/100),-2));
+            QProductos.FieldByName('producto_precioventa4').AsFloat:=Princ.RedondearImporte(roundto((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica4/100))+((QProductos.FieldByName('producto_precioventabase').AsFloat+(QProductos.FieldByName('producto_precioventabase').AsFloat*politicaprecio_politica4/100))*tipoiva_valor/100),-2));
 
             QProductos.Post;
 
@@ -4420,6 +4463,7 @@ begin
     PRODUCTOSTOCKINICIAL:=strtobool(Princ.GetConfiguracion('PRODUCTOSTOCKINICIAL'));
 
 
+
     empresa_where:='and puntodeventa.puntoventa_id not in ('+Princ.buscar('select empresa_where from empresas','empresa_where')+') ';
 
     personal_usuario:='';
@@ -4513,7 +4557,10 @@ begin
 
     TiposPagoDisponibles;
 
-    
+    TIPOREDONDEOIMPORTE:=Princ.GetConfiguracion('TIPOREDONDEOIMPORTE');
+
+    MOSTRARSTOCKSEGUNDODEPOSITO:=Princ.GetConfiguracion('MOSTRARSTOCKSEGUNDODEPOSITO');
+    SEGUNDODEPOSITODEFECTO:=Princ.GetConfiguracion('SEGUNDODEPOSITODEFECTO');
 end;
 
 procedure TPrinc.FormDblClick(Sender: TObject);

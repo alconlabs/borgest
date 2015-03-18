@@ -361,14 +361,13 @@ inherited ComisionesVendedores: TComisionesVendedores
     SQL.Strings = (
       'select * from personal'
       
-        'left join comisionesvendedor on personal.personal_id=comisionesv' +
-        'endedor.personal_id'
+        'inner join comisionesvendedor on personal.personal_id=comisiones' +
+        'vendedor.personal_id'
       
-        'left join productos on comisionesvendedor.producto_id=productos.' +
-        'producto_id'
-      
-        'where isnull(productos.producto_id) or productos.producto_id=:pr' +
-        'oducto_id')
+        'inner join productos on comisionesvendedor.producto_id=productos' +
+        '.producto_id'
+      'where productos.producto_id=:producto_id'
+      'order by personal.personal_nombre')
     Params = <
       item
         DataType = ftUnknown

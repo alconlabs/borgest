@@ -53,8 +53,8 @@ var
 begin
   inherited;
     ZQSelect.Active:=false;
-    ZQSelect.SQL.Text:='select substring(producto_codigobarras,1,producto_longitudcodigo) as producto_prodcodigo, '+
-                       'concat(substring(producto_codigobarras,1,producto_longitudcodigo),productodeposito.deposito_id) as prod_depo, '+
+    ZQSelect.SQL.Text:='select if(marca_usatalles=-1,substring(producto_codigobarras,1,producto_longitudcodigo),producto_codigobarras) as producto_prodcodigo, '+
+                       'concat(if(marca_usatalles=-1,substring(producto_codigobarras,1,producto_longitudcodigo),producto_codigobarras),productodeposito.deposito_id) as prod_depo, '+
                        'productos.producto_nombre, depositos.deposito_nombre, productos.producto_talle, productodeposito.producdepo_stockactual, marca_usatalles '+
                        'from productos '+
                        'inner join productodeposito on productos.producto_id=productodeposito.producto_id '+
@@ -161,7 +161,7 @@ begin
                   ZQExecSQL.ParamByName('temporal_int'+inttostr(i)).AsString:='0';
               end;
             nro_columna:=6;
-            if 0=0 then
+            if ZQSelect.FieldByName('marca_usatalles').AsString='-1' then
               begin
                   pasar_siguiente:=true;
                   while pasar_siguiente do

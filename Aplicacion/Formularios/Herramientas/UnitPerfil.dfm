@@ -2,7 +2,6 @@ inherited Perfil: TPerfil
   Caption = 'Perfil'
   ClientHeight = 447
   ClientWidth = 520
-  OnShow = FormShow
   ExplicitWidth = 536
   ExplicitHeight = 485
   PixelsPerInch = 96
@@ -24,7 +23,6 @@ inherited Perfil: TPerfil
       Left = 347
       Top = 398
       TabOrder = 1
-      OnClick = btnguardarClick
       ExplicitLeft = 347
       ExplicitTop = 398
     end

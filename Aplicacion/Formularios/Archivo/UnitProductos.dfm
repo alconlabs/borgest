@@ -613,7 +613,7 @@ object productos: Tproductos
         end
         object DBGrid1: TDBGrid
           Left = 377
-          Top = 401
+          Top = 403
           Width = 399
           Height = 95
           TabStop = False
@@ -628,7 +628,6 @@ object productos: Tproductos
             item
               Expanded = False
               FieldName = 'deposito_nombre'
-              ReadOnly = True
               Title.Caption = 'Deposito'
               Width = 150
               Visible = True

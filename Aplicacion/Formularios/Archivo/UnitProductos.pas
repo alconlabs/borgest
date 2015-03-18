@@ -196,10 +196,10 @@ begin
 
 
 
-    producto_precioventa1.FloatValue:=subtotal1;
-    producto_precioventa2.FloatValue:=subtotal2;
-    producto_precioventa3.FloatValue:=subtotal3;
-    producto_precioventa4.FloatValue:=subtotal4;
+    producto_precioventa1.FloatValue:=princ.RedondearImporte(subtotal1);
+    producto_precioventa2.FloatValue:=princ.RedondearImporte(subtotal2);
+    producto_precioventa3.FloatValue:=princ.RedondearImporte(subtotal3);
+    producto_precioventa4.FloatValue:=princ.RedondearImporte(subtotal4);
 
 end;
 
@@ -708,7 +708,10 @@ begin
 
     producto_tipo:='PRODUCTO';
 
+    DBGrid1.ReadOnly:=Princ.GetConfiguracion('CARGARSTOCKENPRODUCTOS')<>'-1';
+
     controlar_codigos:=true;
+
 
 end;
 

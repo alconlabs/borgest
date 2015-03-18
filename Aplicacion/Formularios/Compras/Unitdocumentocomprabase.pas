@@ -92,6 +92,53 @@ type
     documentocompra_dgrperc: TMoneyEdit;
     Label13: TLabel;
     documentocompra_observacion: TMemo;
+    Label24: TLabel;
+    documentocompra_fechaiva: TDateTimePicker;
+    ZQDocumentocompradetallesdocumentocompradetalle_id: TIntegerField;
+    ZQDocumentocompradetallesdocumentocompradetalle_descripcion: TStringField;
+    ZQDocumentocompradetallesdocumentocompradetalle_cantidad: TFloatField;
+    ZQDocumentocompradetallesdocumentocompradetalle_precio: TFloatField;
+    ZQDocumentocompradetallesdocumentocompradetalle_total: TFloatField;
+    ZQDocumentocompradetallesdocumentocompradetalle_estado: TStringField;
+    ZQDocumentocompradetallesdocumentocompradetalle_observacion: TStringField;
+    ZQDocumentocompradetallesdocumentocompradetalle_idorig: TIntegerField;
+    ZQDocumentocompradetallesdocumentocompradetalle_cantidadpendiente: TFloatField;
+    ZQDocumentocompradetallesproducto_id: TIntegerField;
+    ZQDocumentocompradetallesdocumentocompra_id: TIntegerField;
+    ZQDocumentocompradetallesdocumentocompradetalle_neto21: TFloatField;
+    ZQDocumentocompradetallesdocumentocompradetalle_neto105: TFloatField;
+    ZQDocumentocompradetallesdocumentocompradetalle_iva21: TFloatField;
+    ZQDocumentocompradetallesdocumentocompradetalle_iva105: TFloatField;
+    ZQDocumentocompradetallesproducto_id_1: TIntegerField;
+    ZQDocumentocompradetallesproducto_nombre: TStringField;
+    ZQDocumentocompradetallesproducto_observaciones: TStringField;
+    ZQDocumentocompradetallesproducto_codigo: TStringField;
+    ZQDocumentocompradetallesproducto_codigobarras: TStringField;
+    ZQDocumentocompradetallesproducto_preciocosto: TFloatField;
+    ZQDocumentocompradetallesproducto_precioventabase: TFloatField;
+    ZQDocumentocompradetallesproducto_estado: TStringField;
+    ZQDocumentocompradetallesproducto_precioventa1: TFloatField;
+    ZQDocumentocompradetallestipoiva_id: TIntegerField;
+    ZQDocumentocompradetallesrubro_id: TIntegerField;
+    ZQDocumentocompradetallesproducto_precioventa2: TFloatField;
+    ZQDocumentocompradetallesproducto_precioventa3: TFloatField;
+    ZQDocumentocompradetallesproducto_precioventa4: TFloatField;
+    ZQDocumentocompradetallescalculoprecio_id: TIntegerField;
+    ZQDocumentocompradetallespoliticaprecio_id: TIntegerField;
+    ZQDocumentocompradetallesproducto_neto1: TFloatField;
+    ZQDocumentocompradetallesproducto_neto2: TFloatField;
+    ZQDocumentocompradetallesproducto_neto3: TFloatField;
+    ZQDocumentocompradetallesproducto_neto4: TFloatField;
+    ZQDocumentocompradetallesproveedor_id: TIntegerField;
+    ZQDocumentocompradetallesproducto_fechaactualizacionprecio: TDateField;
+    ZQDocumentocompradetallesproducto_codigoreferencia: TStringField;
+    ZQDocumentocompradetallesproducto_imprimir: TIntegerField;
+    ZQDocumentocompradetallesproducto_tipo: TStringField;
+    ZQDocumentocompradetallesmarca_id: TIntegerField;
+    ZQDocumentocompradetallesseccion_id: TIntegerField;
+    ZQDocumentocompradetallesproducto_talle: TStringField;
+    ZQDocumentocompradetallesproducto_estadosinc: TStringField;
+    ZQDocumentocompradetallesproducto_longitudcodigo: TIntegerField;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -394,6 +441,7 @@ end;
 procedure Tdocumentocomprabase.FormCreate(Sender: TObject);
 begin
     id:='';
+    abm:=ABM_AGREGAR;
     limpiar_al_guardar:=true;
 
     sucursal_id.llenarcombo;
@@ -423,6 +471,7 @@ begin
      documentocompra_numero.Text:='';
 
     documentocompra_fecha.Date:=date;
+    documentocompra_fechaiva.Date:=date;
 
 //    documentocompra_listaprecio.Items.Clear;
 //    documentocompra_listaprecio.Items.Add(Princ.NOMBREPRECIO1);
@@ -487,6 +536,7 @@ begin
     ZQExecSql.sql.add('update documentoscompras set ');
     ZQExecSql.sql.add('documentocompra_numero=:documentocompra_numero, ');
     ZQExecSql.sql.add('documentocompra_fecha=:documentocompra_fecha, ');
+    ZQExecSql.sql.add('documentocompra_fechaiva=:documentocompra_fechaiva, ');
     ZQExecSql.sql.add('documentocompra_hora=:documentocompra_hora, ');
     ZQExecSql.sql.add('documentocompra_neto21=:documentocompra_neto21, ');
     ZQExecSql.sql.add('documentocompra_iva21=:documentocompra_iva21, ');
@@ -518,6 +568,7 @@ begin
     ZQExecSql.ParamByName('documentocompra_id').AsString:=id;
     ZQExecSql.ParamByName('documentocompra_numero').AsString:=documentocompra_numero.Text;
     ZQExecSql.ParamByName('documentocompra_fecha').AsString:=formatdatetime('yyyy-mm-dd',documentocompra_fecha.Date);
+    ZQExecSql.ParamByName('documentocompra_fechaiva').AsString:=formatdatetime('yyyy-mm-dd',documentocompra_fechaiva.Date);
     ZQExecSql.ParamByName('documentocompra_hora').AsString:=timetostr(Princ.horaservidor);
     ZQExecSql.ParamByName('documentocompra_neto21').AsString:=documentocompra_neto21.Text;
     ZQExecSql.ParamByName('documentocompra_iva21').AsString:=documentocompra_iva21.Text;
@@ -651,6 +702,7 @@ begin
     if abm=1 then
       begin
           documentocompra_fecha.Date:=date;
+          documentocompra_fechaiva.Date:=date;
           documentocompra_puntoventa.Text:='';
           documentocompra_numero.Text:='';
           proveedor_id.ItemIndex:=-1;
@@ -668,6 +720,7 @@ begin
     else
       begin
           documentocompra_fecha.Date:=ZQuery2.FieldByName('documentocompra_fecha').AsDateTime;
+          documentocompra_fechaiva.Date:=ZQuery2.FieldByName('documentocompra_fechaiva').AsDateTime;
           sucursal_id.Buscar(ZQuery2.FieldByName('sucursal_id').AsString);
           sucursal_id.OnSelect(self);
           puntoventa_id.Buscar(ZQuery2.FieldByName('puntoventa_id').AsString);
@@ -725,14 +778,14 @@ begin
 
 
     ZQExecSql.sql.clear;
-    ZQExecSql.sql.add('Insert into documentoscompras (documentocompra_id, documentocompra_numero, documentocompra_fecha, documentocompra_hora, ');
+    ZQExecSql.sql.add('Insert into documentoscompras (documentocompra_id, documentocompra_numero, documentocompra_fecha, documentocompra_fechaiva, documentocompra_hora, ');
     ZQExecSql.sql.add('documentocompra_neto21, documentocompra_iva21, documentocompra_neto105, documentocompra_iva105, ');
     ZQExecSql.sql.add('documentocompra_total, documentocompra_estado, documentocompra_pagado, documentocompra_saldo, documentocompra_observacion, ');
     ZQExecSql.sql.add('proveedor_id, personal_id, tipodocu_id, documentocompra_condicionventa, documentocompra_fechavenc, documentocompra_puntoventa, ');
     ZQExecSql.sql.add('documentocompra_neto27, documentocompra_iva27, documentocompra_nogravado, ');
     ZQExecSql.sql.add('documentocompra_tishhperc, documentocompra_ivaret, documentocompra_ivaperc, ');
     ZQExecSql.sql.add('documentocompra_dgrret, documentocompra_dgrperc, documentocompra_otrosimpuestos) ');
-    ZQExecSql.sql.add('values (:documentocompra_id, :documentocompra_numero, :documentocompra_fecha, :documentocompra_hora, ');
+    ZQExecSql.sql.add('values (:documentocompra_id, :documentocompra_numero, :documentocompra_fecha, :documentocompra_fechaiva, :documentocompra_hora, ');
     ZQExecSql.sql.add(':documentocompra_neto21, :documentocompra_iva21, :documentocompra_neto105, :documentocompra_iva105, ');
     ZQExecSql.sql.add(':documentocompra_total, :documentocompra_estado, :documentocompra_pagado, :documentocompra_saldo, :documentocompra_observacion, ');
     ZQExecSql.sql.add(':proveedor_id, :personal_id, :tipodocu_id, :documentocompra_condicionventa, :documentocompra_fechavenc, :documentocompra_puntoventa, ');
@@ -742,6 +795,7 @@ begin
     ZQExecSql.ParamByName('documentocompra_id').AsString:=id;
     ZQExecSql.ParamByName('documentocompra_numero').AsString:=documentocompra_numero.Text;
     ZQExecSql.ParamByName('documentocompra_fecha').AsString:=formatdatetime('yyyy-mm-dd',documentocompra_fecha.Date);
+    ZQExecSql.ParamByName('documentocompra_fechaiva').AsString:=formatdatetime('yyyy-mm-dd',documentocompra_fechaiva.Date);
     ZQExecSql.ParamByName('documentocompra_hora').AsString:=timetostr(Princ.horaservidor);
     ZQExecSql.ParamByName('documentocompra_neto21').AsString:=documentocompra_neto21.Text;
     ZQExecSql.ParamByName('documentocompra_iva21').AsString:=documentocompra_iva21.Text;

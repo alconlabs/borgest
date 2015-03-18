@@ -80,6 +80,22 @@ type
     fil_producto_precioventa2: TGTBEdit;
     fil_producto_fechaactualizacionprecio: TGTBEdit;
     Panel1: TPanel;
+    ZQGrillaproducto_tipo: TStringField;
+    ZQGrillamarca_id: TIntegerField;
+    ZQGrillaseccion_id: TIntegerField;
+    ZQGrillaproducto_talle: TStringField;
+    ZQGrillaproducto_estadosinc: TStringField;
+    ZQGrillaproducto_longitudcodigo: TIntegerField;
+    ZQGrillaproducdepo_stockinicial: TFloatField;
+    ZQGrillaproducdepo_estadosinc: TStringField;
+    ZQGrillaproducdepo_id_1: TIntegerField;
+    ZQGrillaproducdepo_stockactual_1: TFloatField;
+    ZQGrillaproducto_id_2: TIntegerField;
+    ZQGrilladeposito_id_1: TIntegerField;
+    ZQGrillaproducdepo_stockminimo_1: TFloatField;
+    ZQGrillaproducdepo_puntorepos_1: TFloatField;
+    ZQGrillaproducdepo_stockinicial_1: TFloatField;
+    ZQGrillaproducdepo_estadosinc_1: TStringField;
     procedure Button5Click(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure buscarKeyPress(Sender: TObject; var Key: Char);
@@ -97,6 +113,7 @@ type
     producto_id:string;
     producto_codigoreferencia:string;
     ConfCampoBusqueda1:string;
+    producto_estado:string;
   end;
 
 var
@@ -136,8 +153,9 @@ begin
     ZQGrilla.Active:=false;
     ZQGrilla.SQL.Text:='select * from productos inner join rubros on productos.rubro_id=rubros.rubro_id '+
                        'inner join proveedores on productos.proveedor_id=proveedores.proveedor_id '+
-                       'inner join productodeposito on productos.producto_id=productodeposito.producto_id '+
-                       'where 1=1 and deposito_id="'+Princ.dep_id+'" and (producto_estado="DISPONIBLE" or producto_estado="REVISAR") and producto_tipo="PRODUCTO" ';
+                       'inner join productodeposito on productos.producto_id=productodeposito.producto_id and deposito_id="'+Princ.dep_id+'"'+
+                       'left join productodeposito as deposito2 on productos.producto_id=deposito2.producto_id and deposito2.deposito_id="'+Princ.SEGUNDODEPOSITODEFECTO+'" '+
+                       'where 1=1  and '+producto_estado+' and producto_tipo="PRODUCTO" ';
 
     ZQGrilla.SQL.Text:=ZQGrilla.SQL.Text+'and producto_codigoreferencia '+producto_codigoreferencia;
 
@@ -235,6 +253,7 @@ begin
     producto_codigoreferencia:='<>"-1"';
     ConfCampoBusqueda1:='producto_id';
     buscar.Text:=princ.ultima_busqueda_productos;
+    producto_estado:=' (producto_estado="DISPONIBLE" or producto_estado="REVISAR") ';
 end;
 
 procedure Tbusquedaproductos.FormKeyDown(Sender: TObject; var Key: Word;

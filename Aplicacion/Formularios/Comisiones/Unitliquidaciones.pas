@@ -135,6 +135,8 @@ type
     MQPorDefectodocumentoventadetalle_id: TStringField;
     MQEnFacturasdocumentoventadetalle_id: TStringField;
     MQEnObservacionesdocumentoventadetalle_id: TStringField;
+    lblIVA: TLabel;
+    liquidacionvendedor_iva: TDBAdvEdit;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -535,13 +537,19 @@ end;
 
 
 procedure Tliquidaciones.CalularTotales;
+var
+  personal_ivaliquidaciones:real;
 begin
     CalcularTotal(MQPorDefecto,liquidacionvendedor_subtotal1);
     CalcularTotal(MQEnFacturas,liquidacionvendedor_subtotal2);
     CalcularTotal(MQEnObservaciones,liquidacionvendedor_subtotal3);
     CalcularTotalDebCred;
 
-    liquidacionvendedor_total.FloatValue:=liquidacionvendedor_subtotal1.FloatValue+liquidacionvendedor_subtotal2.FloatValue+liquidacionvendedor_subtotal3.FloatValue+liquidacionvendedor_subtotal4.FloatValue;
+    personal_ivaliquidaciones:=strtofloat(Princ.buscar('select personal_ivaliquidaciones from personal where personal_id="'+personal_id.codigo+'"','personal_ivaliquidaciones'));
+
+    liquidacionvendedor_iva.FloatValue:=roundto((liquidacionvendedor_subtotal1.FloatValue+liquidacionvendedor_subtotal2.FloatValue+liquidacionvendedor_subtotal3.FloatValue+liquidacionvendedor_subtotal4.FloatValue)*personal_ivaliquidaciones/100,-2);
+
+    liquidacionvendedor_total.FloatValue:=liquidacionvendedor_iva.FloatValue+liquidacionvendedor_subtotal1.FloatValue+liquidacionvendedor_subtotal2.FloatValue+liquidacionvendedor_subtotal3.FloatValue+liquidacionvendedor_subtotal4.FloatValue;
 
 end;
 

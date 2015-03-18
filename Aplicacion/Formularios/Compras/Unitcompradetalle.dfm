@@ -202,7 +202,7 @@ object compradetalle: Tcompradetalle
       Version = '2.7.0.5'
     end
     object producto_id: TEditCodi
-      Left = 102
+      Left = 104
       Top = 7
       Width = 121
       Height = 21

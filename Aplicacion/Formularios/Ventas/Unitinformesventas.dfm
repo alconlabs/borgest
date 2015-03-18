@@ -132,6 +132,7 @@ inherited InformesVentas: TInformesVentas
         'Ranking de Ventas de Productos'
         'Informe de ventas C/Equipos'
         'Informe de Equipos'
+        'Informe de Equipos - Grafico'
         'Informe de Cupones de Tarjetas')
       Tag2 = 0
       valores.Strings = (
@@ -144,7 +145,8 @@ inherited InformesVentas: TInformesVentas
         '6'
         '7'
         '8'
-        '9')
+        '9'
+        '10')
     end
     object personal_id: TSqlComboBox
       Left = 84

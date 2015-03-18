@@ -20,8 +20,6 @@ type
     documentopago_importe: TMoneyEdit;
     ZQProducto: TZQuery;
     tipopago_id: TEditCodi;
-    tarjeta_id: TEditCodi;
-    lbltarjeta: TLabel;
     ZQDocumentoventadetallesdocumentoventadetalle_id: TIntegerField;
     ZQDocumentoventadetallesdocumentoventadetalle_descripcion: TStringField;
     ZQDocumentoventadetallesdocumentoventadetalle_cantidad: TFloatField;
@@ -65,7 +63,7 @@ type
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
     Label26: TLabel;
-    DateTimePicker1: TDateTimePicker;
+    movimientodeposito_fecha: TDateTimePicker;
     Label27: TLabel;
     deposito_iddestino: TSqlComboBox;
     Label28: TLabel;
@@ -114,6 +112,11 @@ type
     BtnConsultaStock: TButton;
     ZQDocumentoventadetallesproducto_codigo: TStringField;
     ZQDocumentoventadetallesproducto_codigobarras: TStringField;
+    DBGrid4: TDBGrid;
+    Label31: TLabel;
+    DTSEnviosRealizados: TDataSource;
+    ZQEnviosRealizados: TZQuery;
+    combotipopago_id: TSqlComboBox;
     procedure producto_idAfterSearch(Sender: TObject);
     procedure btnagregarClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -128,9 +131,6 @@ type
     procedure ZQDocumentoventadetallesBeforePost(DataSet: TDataSet);
     procedure DBGrid1KeyPress(Sender: TObject; var Key: Char);
     procedure ZQDocumentoventadetallesAfterPost(DataSet: TDataSet);
-    procedure tipopago_idAfterSearch(Sender: TObject);
-    procedure pagotarjeta_cuotasKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
     procedure btnguardarClick(Sender: TObject);
     procedure vendedor_idAfterSearch(Sender: TObject);
     procedure CBDevolucionClick(Sender: TObject);
@@ -139,6 +139,13 @@ type
     procedure DTSDocumentoventadetalleStateChange(Sender: TObject);
     procedure BtnConsultaStockClick(Sender: TObject);
     procedure producto_idEnter(Sender: TObject);
+    procedure GroupBox2Enter(Sender: TObject);
+    procedure personal_idChange(Sender: TObject);
+    procedure DBGrid1Enter(Sender: TObject);
+    procedure tipopago_idClickBtn(Sender: TObject);
+    procedure combotipopago_idSelect(Sender: TObject);
+    procedure combotipopago_idExit(Sender: TObject);
+    procedure tipopago_idKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     precio_old:real;
@@ -226,6 +233,8 @@ begin
     deposito_iddestino.llenarcombo;
     deposito_iddestino.ItemIndex:=0;
 
+    combotipopago_id.llenarcombo;
+    movimientodeposito_fecha.Date:=date;
 end;
 
 procedure Tfacturaventa02.FormKeyDown(Sender: TObject; var Key: Word;
@@ -234,7 +243,10 @@ begin
     Princ.OnKeyDown(sender, Key, Shift);
     case key of
         VK_ESCAPE:btncancelar.Click;
-        VK_RETURN:Perform(WM_NEXTDLGCTL, 0, 0);
+        VK_RETURN:begin
+          if not(Sender is TDBGrid) then
+            Perform(WM_NEXTDLGCTL, 0, 0);
+        end;
         VK_F2:begin
                   cliente_nombre.SetFocus;
               end;
@@ -272,37 +284,45 @@ begin
     ZQmovimdepodetalles.Active:=false;
     ZQmovimdepodetalles.ParamByName('movimientodeposito_id').AsString:='-1';
     ZQmovimdepodetalles.Active:=true;
+
+    ZQEnviosRealizados.Active:=false;
+    ZQEnviosRealizados.SQL.Clear;
+    ZQEnviosRealizados.SQL.Add('select movimientosdepositos.movimientodeposito_fecha, depositos.deposito_nombre, ');
+    ZQEnviosRealizados.SQL.Add('productos.producto_codigobarras, productos.producto_nombre, movimdepodetalles.movimdepodetalle_cantidadenviar ');
+    ZQEnviosRealizados.SQL.Add('from movimientosdepositos ');
+    ZQEnviosRealizados.SQL.Add('inner join depositos on movimientosdepositos.deposito_iddestino=depositos.deposito_id ');
+    ZQEnviosRealizados.SQL.Add('inner join movimdepodetalles on movimientosdepositos.movimientodeposito_id=movimdepodetalles.movimientodeposito_id ');
+    ZQEnviosRealizados.SQL.Add('inner join productos on movimdepodetalles.producto_id=productos.producto_id ');
+    ZQEnviosRealizados.SQL.Add('where movimientosdepositos.deposito_idorigen="'+Princ.dep_id+'"');
+    ZQEnviosRealizados.SQL.Add('and movimientosdepositos.movimientodeposito_fecha=curdate() ');
+    ZQEnviosRealizados.SQL.Add('order by movimdepodetalles.movimdepodetalle_id desc ');
+
+
+
+    ZQEnviosRealizados.Active:=true;
 end;
 
-procedure Tfacturaventa02.pagotarjeta_cuotasKeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
+procedure Tfacturaventa02.GroupBox2Enter(Sender: TObject);
 begin
   inherited;
-    if key=VK_RETURN then
+    if vendedor_id.Text='' then
       begin
-          if tipopago_id.Text<>'' then
-            begin
-                if tarjeta_id.Text<>'' then
-                  begin
-                      ZQDocumentopagos.Insert;
-                      ZQDocumentopagos.FieldByName('documentopago_id').AsInteger:=ZQDocumentopagos.RecordCount;
-                      ZQDocumentopagos.FieldByName('documentopago_nombre').AsString:=documentopago_nombre.Text;
-                      ZQDocumentopagos.FieldByName('documentopago_importe').AsString:=documentopago_importe.Text;
-                      ZQDocumentopagos.FieldByName('tipopago_id').AsString:=tipopago_id.Text;
-                      ZQDocumentopagos.FieldByName('tipopago_nombre').AsString:=tipopago_id.valor('tipopago_nombre');
-                      ZQDocumentopagos.FieldByName('documentoventa_id').AsString:='0';
-                      ZQDocumentopagos.Post;
+          MessageDlg('Seleccione un vendedor.', mtError, [mbOK], 0);
+          vendedor_id.SetFocus;
 
-                      calculartotales;
-                      calculartotalpagos;
-                      documentopago_importe.Value:=documentoventa_saldo;
-                      documentoventa_subtotal.Value:=documentoventa_total.Value;
-                      tipopago_id.Text:='';
-                      tipopago_id.Search('');
-                      tipopago_id.SetFocus;
-                  end;
-            end;
       end;
+
+end;
+
+procedure Tfacturaventa02.personal_idChange(Sender: TObject);
+begin
+  inherited;
+    if vendedor_id.Text='' then
+      begin
+          vendedor_id.Text:=personal_id.codigo;
+
+      end;
+
 end;
 
 procedure Tfacturaventa02.producto_idAfterSearch(Sender: TObject);
@@ -316,28 +336,22 @@ end;
 procedure Tfacturaventa02.producto_idEnter(Sender: TObject);
 begin
   inherited;
+    if vendedor_id.Text='' then
+      begin
+          MessageDlg('Seleccione un vendedor.', mtError, [mbOK], 0);
+          vendedor_id.SetFocus;
+
+      end;
     abm_detalle:=ABM_AGREGAR;
 end;
 
-procedure Tfacturaventa02.tipopago_idAfterSearch(Sender: TObject);
+procedure Tfacturaventa02.tipopago_idClickBtn(Sender: TObject);
+var
+  Key: Char;
 begin
   inherited;
-    lbltarjeta.Visible:=false;
-    tarjeta_id.Visible:=false;
-    Label19.Left:=115;
-    documentopago_nombre.Left:=115;
-    documentopago_nombre.Width:=251;
-    if tipopago_id.valor('tipopago_id')='2' then
-      begin
-          lbltarjeta.Visible:=true;
-          tarjeta_id.Visible:=true;
-          Label19.Left:=171;
-          documentopago_nombre.Left:=171;
-          documentopago_nombre.Width:=195;
-          tarjeta_id.SetFocus;
-      end;
-
-
+    Key:='+';
+    tipopago_id.OnKeyPress(self,Key);
 end;
 
 procedure Tfacturaventa02.tipopago_idKeyDown(Sender: TObject; var Key: Word;
@@ -348,6 +362,19 @@ begin
       begin
           if (tipopago_id.Text='') then
             documentoventa_descuento.SetFocus;
+
+      end;
+
+end;
+
+procedure Tfacturaventa02.tipopago_idKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+    if Key='+' then
+      begin
+          Key:=#0;
+          combotipopago_id.Show;
+          combotipopago_id.SetFocus;
 
       end;
 
@@ -398,7 +425,7 @@ begin
       begin
           precio_new:=ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat;
           if precio_old<>precio_new then
-            if not Princ.IdentificaUsuario('') then
+            if not Princ.IdentificaUsuario('MODIFICARPRODUCTOS','-1') then
               ZQDocumentoventadetalles.FieldByName('documentoventadetalle_precio').AsFloat:=precio_old;
 
       end;
@@ -543,6 +570,10 @@ begin
     ZQmovimdepodetalles.Active:=false;
     ZQmovimdepodetalles.ParamByName('movimientodeposito_id').AsString:='-1';
     ZQmovimdepodetalles.Active:=true;
+
+    ZQEnviosRealizados.Active:=false;
+    ZQEnviosRealizados.Active:=true;
+
 end;
 
 procedure Tfacturaventa02.btnquitarpagoClick(Sender: TObject);
@@ -617,6 +648,37 @@ begin
     producto_id.SetFocus;
 end;
 
+procedure Tfacturaventa02.combotipopago_idExit(Sender: TObject);
+begin
+  inherited;
+    combotipopago_id.Hide;
+end;
+
+procedure Tfacturaventa02.combotipopago_idSelect(Sender: TObject);
+begin
+  inherited;
+    if combotipopago_id.Text<>'' then
+      begin
+          tipopago_id.Text:=combotipopago_id.codigo;
+          tipopago_id.Search(tipopago_id.Text);
+          combotipopago_id.Hide;
+          tipopago_id.SetFocus;
+
+
+      end;
+end;
+
+procedure Tfacturaventa02.DBGrid1Enter(Sender: TObject);
+begin
+  inherited;
+    if vendedor_id.Text='' then
+      begin
+          MessageDlg('Seleccione un vendedor.', mtError, [mbOK], 0);
+          vendedor_id.SetFocus;
+
+      end;
+end;
+
 procedure Tfacturaventa02.DBGrid1KeyPress(Sender: TObject; var Key: Char);
 begin
   inherited;
@@ -644,11 +706,19 @@ begin
 
                   end;
 
-
-
-
-
             end;
+
+          case DBGrid1.SelectedIndex of
+              0:begin
+                    DBGrid1.SelectedIndex:=2; 
+              end;
+              2:begin
+                    DBGrid1.SelectedIndex:=3;
+              end;
+              3:begin
+                    DBGrid1.SelectedIndex:=5;
+              end;
+          end;
       end;
 
 end;
@@ -671,36 +741,36 @@ begin
                 ZQDocumentopagos.Post;
 
 
-                case strtoint(tipopago_id.valor('tipopago_id')) of
-                    1:begin
-
-                      end;
-                    2:begin
-                          ZQpagotarjeta.Last;
-                          ZQpagotarjeta.Append;
-                          ZQpagotarjeta.FieldByName('pagotarjeta_id').AsInteger:=ZQpagotarjeta.RecordCount;
-                          ZQpagotarjeta.FieldByName('pagotarjeta_importe').AsString:=documentopago_importe.Text;
-                          ZQpagotarjeta.FieldByName('pagotarjeta_cuotas').AsString:='1';
-                          ZQpagotarjeta.FieldByName('pagotarjeta_cupon').AsString:='';
-                          ZQpagotarjeta.FieldByName('pagotarjeta_autoriz').AsString:='';
-                          ZQpagotarjeta.FieldByName('documentopago_id').AsInteger:=ZQDocumentopagos.RecordCount;
-                          ZQpagotarjeta.FieldByName('tarjeta_id').AsString:=tarjeta_id.Text;
-                          ZQpagotarjeta.FieldByName('pagotarjeta_titular').AsString:=cliente_id.Text;
-                          ZQpagotarjeta.FieldByName('pagotarjeta_dni').AsString:='';
-                          ZQpagotarjeta.FieldByName('pagotarjeta_telefono').AsString:='';
-                          ZQpagotarjeta.FieldByName('pagotarjeta_recargo').AsString:='0';
-                          ZQpagotarjeta.Post;
-                      end;
-                    3:begin
-
-                      end;
-                    4:begin
-
-                      end;
-                    5:begin
-
-                      end;
-                end;
+//                case strtoint(tipopago_id.valor('tipopago_id')) of
+//                    1:begin
+//
+//                      end;
+//                    2:begin
+//                          ZQpagotarjeta.Last;
+//                          ZQpagotarjeta.Append;
+//                          ZQpagotarjeta.FieldByName('pagotarjeta_id').AsInteger:=ZQpagotarjeta.RecordCount;
+//                          ZQpagotarjeta.FieldByName('pagotarjeta_importe').AsString:=documentopago_importe.Text;
+//                          ZQpagotarjeta.FieldByName('pagotarjeta_cuotas').AsString:='1';
+//                          ZQpagotarjeta.FieldByName('pagotarjeta_cupon').AsString:='';
+//                          ZQpagotarjeta.FieldByName('pagotarjeta_autoriz').AsString:='';
+//                          ZQpagotarjeta.FieldByName('documentopago_id').AsInteger:=ZQDocumentopagos.RecordCount;
+//                          ZQpagotarjeta.FieldByName('tarjeta_id').AsString:=tarjeta_id.Text;
+//                          ZQpagotarjeta.FieldByName('pagotarjeta_titular').AsString:=cliente_id.Text;
+//                          ZQpagotarjeta.FieldByName('pagotarjeta_dni').AsString:='';
+//                          ZQpagotarjeta.FieldByName('pagotarjeta_telefono').AsString:='';
+//                          ZQpagotarjeta.FieldByName('pagotarjeta_recargo').AsString:='0';
+//                          ZQpagotarjeta.Post;
+//                      end;
+//                    3:begin
+//
+//                      end;
+//                    4:begin
+//
+//                      end;
+//                    5:begin
+//
+//                      end;
+//                end;
 
                 calculartotales;
                 calculartotalpagos;

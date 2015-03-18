@@ -132,6 +132,12 @@ object busquedaproductos: Tbusquedaproductos
         end
         item
           Expanded = False
+          FieldName = 'producdepo_stockactual_1'
+          Title.Caption = 'Stock2'
+          Visible = True
+        end
+        item
+          Expanded = False
           FieldName = 'rubro_nombre'
           Title.Caption = 'Rubro'
           Width = 100
@@ -500,6 +506,9 @@ object busquedaproductos: Tbusquedaproductos
       
         'inner join productodeposito on productos.producto_id=productodep' +
         'osito.producto_id'
+      
+        'inner join productodeposito as deposito2 on productos.producto_i' +
+        'd=deposito2.producto_id'
       'order by producto_nombre')
     Params = <>
     Left = 216
@@ -674,6 +683,62 @@ object busquedaproductos: Tbusquedaproductos
     end
     object ZQGrillaproducdepo_puntorepos: TFloatField
       FieldName = 'producdepo_puntorepos'
+    end
+    object ZQGrillaproducto_tipo: TStringField
+      FieldName = 'producto_tipo'
+      Size = 45
+    end
+    object ZQGrillamarca_id: TIntegerField
+      FieldName = 'marca_id'
+    end
+    object ZQGrillaseccion_id: TIntegerField
+      FieldName = 'seccion_id'
+    end
+    object ZQGrillaproducto_talle: TStringField
+      FieldName = 'producto_talle'
+      Size = 45
+    end
+    object ZQGrillaproducto_estadosinc: TStringField
+      FieldName = 'producto_estadosinc'
+      Size = 45
+    end
+    object ZQGrillaproducto_longitudcodigo: TIntegerField
+      FieldName = 'producto_longitudcodigo'
+    end
+    object ZQGrillaproducdepo_stockinicial: TFloatField
+      FieldName = 'producdepo_stockinicial'
+    end
+    object ZQGrillaproducdepo_estadosinc: TStringField
+      FieldName = 'producdepo_estadosinc'
+      Size = 45
+    end
+    object ZQGrillaproducdepo_id_1: TIntegerField
+      FieldName = 'producdepo_id_1'
+      Required = True
+    end
+    object ZQGrillaproducdepo_stockactual_1: TFloatField
+      FieldName = 'producdepo_stockactual_1'
+    end
+    object ZQGrillaproducto_id_2: TIntegerField
+      FieldName = 'producto_id_2'
+      Required = True
+    end
+    object ZQGrilladeposito_id_1: TIntegerField
+      FieldName = 'deposito_id_1'
+      Required = True
+    end
+    object ZQGrillaproducdepo_stockminimo_1: TFloatField
+      FieldName = 'producdepo_stockminimo_1'
+    end
+    object ZQGrillaproducdepo_puntorepos_1: TFloatField
+      FieldName = 'producdepo_puntorepos_1'
+    end
+    object ZQGrillaproducdepo_stockinicial_1: TFloatField
+      FieldName = 'producdepo_stockinicial_1'
+    end
+    object ZQGrillaproducdepo_estadosinc_1: TStringField
+      FieldName = 'producdepo_estadosinc_1'
+      Size = 45
     end
   end
   object DSCProveedores: TDataSource

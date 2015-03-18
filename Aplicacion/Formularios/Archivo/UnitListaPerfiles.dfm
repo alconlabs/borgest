@@ -8,6 +8,9 @@ inherited ListaPerfiles: TListaPerfiles
     FullHeight = 0
     inherited panelbotonera: TAdvPanel
       FullHeight = 0
+      inherited btnclonar: TButton
+        OnClick = btnclonarClick
+      end
     end
     inherited DBGrid1: TDBGrid
       Columns = <

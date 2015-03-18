@@ -86,6 +86,8 @@ type
     documentoventa_recargo: TMoneyEdit;
     Label30: TLabel;
     documentoventa_descuento: TMoneyEdit;
+    lblperciva: TLabel;
+    documentoventa_perciva: TMoneyEdit;
     procedure btnguardarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ZQuery2AfterOpen(DataSet: TDataSet);
@@ -121,6 +123,7 @@ type
     VENTASCTDOVENTANACTACTE:boolean;
     documentoventa_equipo1:string;
     documentoventa_equipo2:string;
+    sucursal_percivaporc:real;
     function control:boolean;
     function ControlAnular:boolean;
     procedure agregar;
@@ -477,6 +480,7 @@ begin
 
     documentoventa_neto21.Value:=roundto(documentoventa_recargo.Value/1.21,-2)-roundto(documentoventa_descuento.Value/1.21,-2);
     documentoventa_iva21.Value:=roundto(documentoventa_neto21.Value*21/100,-2);
+
     documentoventa_neto105.Text:='0';
     documentoventa_iva105.Text:='0';
     documentoventa_total.Value:=documentoventa_recargo.Value-documentoventa_descuento.Value;
@@ -494,7 +498,8 @@ begin
 
     ZQDocumentoventadetalles.GotoBookmark(bm);
 
-
+    documentoventa_perciva.Value:=roundto((documentoventa_neto21.Value+documentoventa_neto105.Value)*sucursal_percivaporc/100,-2);
+    documentoventa_total.Value:=documentoventa_total.Value+documentoventa_perciva.Value;
 end;
 
 procedure Tfacturasventa.cliente_idSelect(Sender: TObject);
@@ -806,6 +811,8 @@ begin
      end;
 
     puntoventa_id.OnSelect(self);
+
+    sucursal_percivaporc:=strtofloat(Princ.buscar('select sucursal_percivaporc from sucursales where sucursal_id="'+sucursal_id.codigo+'"','sucursal_percivaporc'));
 end;
 
 procedure Tfacturasventa.puntoventa_idSelect(Sender: TObject);
@@ -1369,18 +1376,14 @@ begin
       end
     else
       begin
-          if documentoventa_numero.Text<>'0' then
+          if abm=ABM_MODIFICAR then
             begin
-                if abm=ABM_AGREGAR then
-                  begin
-                      if Princ.buscar('select documentoventa_id from documentosventas where documentoventa_numero="'+documentoventa_numero.Text+'" and tipodocu_id="'+tipodocu_id.codigo+'"', 'documentoventa_id')<>'' then
-                        error:=11;
-                  end;
-                if abm=ABM_MODIFICAR then
+                if documentoventa_numero.Text<>'0' then
                   begin
                       if Princ.buscar('select documentoventa_id from documentosventas where documentoventa_numero="'+documentoventa_numero.Text+'" and tipodocu_id="'+tipodocu_id.codigo+'" and documentoventa_id<>"'+id+'"', 'documentoventa_id')<>'' then
                         error:=11;
                   end;
+
             end;
       end;
 
